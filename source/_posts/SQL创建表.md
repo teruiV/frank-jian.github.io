@@ -14,6 +14,15 @@ CREATE TABLE Products(
  PRIMARY KEY  (prod_id)
 )ENGINE=InnoDB;
 
+# 创建索引
+CREATE INDEX indexname ON Products(prod_name);
+
+# 索引的作用
+1、索引用于数据过滤和数据排序
+2、索引改善检索操作性能，但降低了数据插入、修改、删除的性能；
+3、索引要占大量的存储空间
+
+
 # 添加列
 ALTER TABLE Products ADD prod_price INT;
 
@@ -29,6 +38,9 @@ FOREIGN KEY(vend_id) REFERENCES Vendor(vend_id);
 
 #定义外键的好处
 两张表关联,保证数据的一致性
+
+#创建外键的条件
+外键是表中的一列，其值必须列在另一表的主键中；
 
 #重命名表
 RENAME TABLE Customers TO customers;

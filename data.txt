@@ -1,8 +1,0 @@
-.
-..
-.git
-.ssh
-data.txt
-file
-file2
-source
