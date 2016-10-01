@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ES6常见的坑 | 记录点滴成长</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言ECMAScript6.0（简称ES6）是JavaScript语言的标准。
+推荐资源
+
+ES2015学习 
+在线编辑器
+
+let 和 constvar示例
+123456789101112131415//示例1var a = &amp;apos;永和&amp;apos;,    b = &amp;apos;新马泰&amp;apos;;function fn()&amp;#123;  console.log(a); //1  conso">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6常见的坑">
+<meta property="og:url" content="http://jianwl.com/2016/08/22/ES6常见的坑/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="前言ECMAScript6.0（简称ES6）是JavaScript语言的标准。
+推荐资源
+
+ES2015学习 
+在线编辑器
+
+let 和 constvar示例
+123456789101112131415//示例1var a = &amp;apos;永和&amp;apos;,    b = &amp;apos;新马泰&amp;apos;;function fn()&amp;#123;  console.log(a); //1  conso">
+<meta property="og:updated_time" content="2016-10-01T13:10:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6常见的坑">
+<meta name="twitter:description" content="前言ECMAScript6.0（简称ES6）是JavaScript语言的标准。
+推荐资源
+
+ES2015学习 
+在线编辑器
+
+let 和 constvar示例
+123456789101112131415//示例1var a = &amp;apos;永和&amp;apos;,    b = &amp;apos;新马泰&amp;apos;;function fn()&amp;#123;  console.log(a); //1  conso">
+  
+    <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">记录点滴成长</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://jianwl.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ES6常见的坑" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/08/22/ES6常见的坑/" class="article-date">
+  <time datetime="2016-08-22T14:53:14.000Z" itemprop="datePublished">2016-08-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ES6常见的坑
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>ECMAScript6.0（简称ES6）是JavaScript语言的标准。</p>
+<p>推荐资源</p>
+<ul>
+<li><a href="[https://babeljs.io/docs/learn-es2015/](https://babeljs.io/docs/learn-es2015/">ES2015学习</a> </li>
+<li><a href="[https://babeljs.io/repl/](https://babeljs.io/repl/">在线编辑器</a></li>
+</ul>
+<h3 id="let-和-const"><a href="#let-和-const" class="headerlink" title="let 和 const"></a>let 和 const</h3><p><strong>var示例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//示例1</div><div class="line">var a = &apos;永和&apos;,</div><div class="line">    b = &apos;新马泰&apos;;</div><div class="line">function fn()&#123;</div><div class="line">  console.log(a); //1</div><div class="line">  console.log(b);// 2</div><div class="line">  var a = &apos;真功夫&apos;; //3</div><div class="line">  console.log(a); // 4</div><div class="line">&#125;</div><div class="line">fn();</div><div class="line">console.log(a); //5</div><div class="line"></div><div class="line">//示例2</div><div class="line">for(var i=0;i&lt;10;i++)&#123;&#125;</div><div class="line">console.log(i);//?</div></pre></td></tr></table></figure>
+<p>你知道示例1和示例2会输出什么答案么？示例1的答案是<code>undefined、新马泰、真功夫、永和</code>为何？<code>//3定义a为var变量，当//1访问a变量时，变量a会提升至函数开始位置，定义变量a但未赋值，故//1为undefined;函数中定义的变量，之作用域块级域中，故//5为永和</code>示例2的答案为<code>10</code>，因为非块级元素的定义，在块级之外是有效的。</p>
+<p><strong>let示例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">      let a = 1;</div><div class="line">      &#123;</div><div class="line">          console.log(a);//?</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">  console.log(a);//?</div></pre></td></tr></table></figure>
+<p>结果为<code>1 、undefined</code>因为变量a的作用域在块级域内。</p>
+<p><strong>let不存在变量提升</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//示例1</div><div class="line">function fn()&#123;</div><div class="line">    console.log(a);</div><div class="line">    let a = 1;</div><div class="line">&#125;</div><div class="line">fn();//?</div><div class="line">//示例2</div><div class="line">var a = 123;</div><div class="line">if (true) &#123;</div><div class="line">  a = &apos;abc&apos;;//?</div><div class="line">  let a;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果为<code>均报引用错误</code>，为何？示例1中，由于在函数中let声明的变量a，变量不能提升，其在使用之后声明故出现引用错误。示例2中，由于在块级作用域中用let声明了a变量，变量不能被提升且因为声明在块内声明了变量a，故不能访问块外的变量a，所以报引用错误。</p>
+<p><strong>let不允许重复声明</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">//ES5 示例1</div><div class="line">   var a = 1;</div><div class="line">   var a = 2;</div><div class="line">   </div><div class="line">   //ES6 示例2</div><div class="line">   let b = 1;</div><div class="line">   let b = 2;//或者var b = 2;</div><div class="line">  </div><div class="line">  //Switch 示例3</div><div class="line">   let a = 1;</div><div class="line">   switch(a)&#123;</div><div class="line">       case 1:</div><div class="line">           let a = 1;</div><div class="line">           break;</div><div class="line">       case 2:</div><div class="line">           let a = 2;</div><div class="line">           break;</div><div class="line">       default:</div><div class="line">           let a = 0;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>上述示例1、2、3是否会报错呢？<code>示例1正确、示例2、3错误</code>，let变量不允许重复声明，特别注意在switch cast中，即使仅能执行一个case，示例3仍会报错，编译器把其看成重复声明。</p>
+<p><strong>const示例</strong></p>
+<p>块级变量 + 常量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">//示例1</div><div class="line">  const weipeng = &apos;真功夫&apos;;</div><div class="line">  //?</div><div class="line">  weipeng = &apos;张伟鹏&apos;;</div><div class="line">  //示例2</div><div class="line">  const weipeng;</div><div class="line">  //示例3</div><div class="line">  &#123;</div><div class="line">      const a = 1；</div><div class="line">  &#125;</div><div class="line">  //?</div><div class="line">  console.log(a);</div><div class="line">  </div><div class="line">  //示例4</div><div class="line">  const array = [1, 2, 3];</div><div class="line">  //？</div><div class="line">  array.push(4);</div><div class="line">  //？</div><div class="line">  array.length = 0;</div><div class="line">  //？</div><div class="line">  array = [1, 2, 3, 4];</div></pre></td></tr></table></figure>
+<p>结果<code>示例1、示例2、示例3均报错，示例1，const声明的为常量，不能改变其引用。示例2，声明常量要有初始值。示例3，常量a作用域为块内</code>；示例4会出现什么结果呢？<code>push、length设为0均可成功，将数组指向另外一个引用错误。</code></p>
+<p><strong>从属关系</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//示例1</div><div class="line">var a = 1; </div><div class="line">b = 2; //1</div><div class="line">window.c = 3;//2</div><div class="line">console.log(a, b, c);//?</div><div class="line">//示例2</div><div class="line">let a = 1;</div><div class="line">const b= 2;</div><div class="line">console.log(window.a, window.b);</div></pre></td></tr></table></figure>
+<p>结果为<code>示例1结果为1，2，3；示例2结果为undefined,undefined</code>为何？示例1中<code>//1</code>声明的变量b相当于<code>window.b全局变量</code>而示例2中<code>window.a和window.b</code>都没有被声明</p>
+<h3 id="解构赋值"><a href="#解构赋值" class="headerlink" title="解构赋值"></a>解构赋值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">//示例1</div><div class="line">   var a = 1,</div><div class="line">       b = 2,</div><div class="line">       c = 3;</div><div class="line">   var [a, b, c] = [1, 2, 3];</div><div class="line">   </div><div class="line">   //示例2</div><div class="line">   var [a, , c] = [1, 2, 3];</div><div class="line">   console.log(a, c); // 1,3</div><div class="line">   </div><div class="line">   //示例3</div><div class="line">   var [a, ...other] = [1, 2, 3, 4, 5, 6];</div><div class="line">   console.log(a, other); // 1 ,[2,3,4,5,6]</div><div class="line">   </div><div class="line">   //示例4</div><div class="line">   var [a, b] = [&apos;真功夫&apos;];</div><div class="line">   console.log(a, b); // 真功夫，undefined</div><div class="line">   </div><div class="line">   //示例5</div><div class="line">   var [a, b=&apos;伟鹏&apos;] = [&apos;真功夫&apos;];</div><div class="line">   console.log(a, b);// 真功夫，伟鹏</div><div class="line">   </div><div class="line">   //示例7</div><div class="line">   var [a, b=&apos;永和&apos;, ...other] = [&apos;蒸功夫&apos;];</div><div class="line">   console.log(a, b, other);// 蒸功夫,永和,[]</div></pre></td></tr></table></figure>
+<p><strong>数组合并</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//示例1</div><div class="line">let arr1 = [1, 2, 3];</div><div class="line">let arr2 = [4, 5, 6];</div><div class="line">let arr = [...arr1, ...arr2];</div><div class="line">console.log(arr); //[1,2,3,4,5,6]</div></pre></td></tr></table></figure>
+<p><strong>对象解构</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//示例1</div><div class="line">var &#123; name, age, sex &#125; = &#123; name: &apos;郎平&apos;, age: 53&#125;;</div><div class="line">console.log(name, age, sex); // 郎平,53,undefined</div><div class="line"></div><div class="line">//示例2</div><div class="line">var &#123; name, ...others &#125; = &#123; name: &apos;郎平&apos;&#125;;</div><div class="line">console.log(name, others);//郎平,&#123;&#125;</div><div class="line"></div><div class="line">//示例3</div><div class="line">var &#123; name: value &#125; = &#123;name : &apos;郎平&apos;&#125;;</div><div class="line">console.log(name, value);// 郎平,郎平</div><div class="line"></div><div class="line">//示例4</div><div class="line">var &#123; name=&quot;郎平&quot; &#125; = &#123;&#125;;</div><div class="line">console.log(name);//郎平</div></pre></td></tr></table></figure>
+<p>对象合并</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">let obj1 = &#123;</div><div class="line">     name: &apos;郎平&apos;</div><div class="line"> &#125;;</div><div class="line"> let obj2 = &#123;</div><div class="line">     age: 53</div><div class="line"> &#125;</div><div class="line"> let obj = &#123;</div><div class="line">     ...obj1,</div><div class="line">     ...obj2</div><div class="line"> &#125;;</div></pre></td></tr></table></figure>
+<p>解构扩展</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let &#123; length &#125; = &apos;hello&apos;; // 等价于 var _hello = &quot;hello&quot;; var length = _hello.length;</div><div class="line"> let &#123; toString &#125; = 123;</div><div class="line"> let &#123; toString &#125; = true;</div><div class="line"> let [a, b, c] = &apos;hello&apos;;</div><div class="line"> let array = [...&apos;hello&apos;];</div></pre></td></tr></table></figure>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">//示例1</div><div class="line"> fn(&#123;</div><div class="line">     name: &apos;fn&apos;,</div><div class="line">     id: 1</div><div class="line"> &#125;);</div><div class="line"> function fn(&#123; name, id &#125;)&#123;</div><div class="line">     do something...</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> //示例2</div><div class="line"> fuction fn(&#123; name=&apos;真功夫&apos;, id &#125;)&#123;</div><div class="line">     do something...</div><div class="line"> &#125;;</div><div class="line"> </div><div class="line"> //示例3</div><div class="line"> fn(1, 2, 3);</div><div class="line"> function fn(...params)&#123;</div><div class="line">     console.log(params);//[1，2，3]</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> //示例4</div><div class="line"> fn([1, 2, 3]);//怎么做?</div><div class="line"> function fn(a, b, c)&#123;</div><div class="line">     console.log(a, b, c); //[1,2,3]</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p><strong>默认参数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//示例1</div><div class="line">function fn(page=1, pageNo=10)&#123;</div><div class="line">    do something...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>参数作用域</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//示例1</div><div class="line">var a = 1;</div><div class="line">function fn(a, b=a)&#123;</div><div class="line">    console.log(a, b);</div><div class="line">&#125;</div><div class="line">fn(5);// 5,5</div></pre></td></tr></table></figure>
+<p><strong>箭头函数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let fn = () =&gt; &#123;</div><div class="line">        do something...</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><strong>默认return</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//示例1</div><div class="line"> let fn = (name) =&gt; name;</div><div class="line"> let result = fn(&apos;hello&apos;);</div><div class="line"> console.log(result)//hello</div><div class="line"> </div><div class="line"> //示例2</div><div class="line"> let fn = name =&gt; name;</div><div class="line"> let result = fn(&apos;hello&apos;);</div><div class="line"> console.log(result)//hello</div></pre></td></tr></table></figure>
+<p><strong>不能作为构造函数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//示例1(✅)</div><div class="line">  function Person(name, age)&#123;</div><div class="line">      this.name = name;</div><div class="line">      this.age = age;</div><div class="line">  &#125;</div><div class="line">  let p1 = new Person(&apos;郎平&apos;, 53);</div><div class="line">  </div><div class="line">  //示例2(❌)</div><div class="line">  const Person = (name ,age) =&gt; &#123;</div><div class="line">      this.name = name;</div><div class="line">      this.age = age;</div><div class="line">  &#125;</div><div class="line">  let p1 = new Person(&apos;郎平&apos;, 53);</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/08/22/ES6常见的坑/" data-id="citr7yhys0008w093iberb9kx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/08/24/SpringBoot集成Swagger/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          SpringBoot集成Swagger
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/08/21/Java之枚举/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Java之枚举</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-ES6常见的坑" data-title="ES6常见的坑" data-url="http://jianwl.com/2016/08/22/ES6常见的坑/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'jianwl'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/">Hystrix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Intellij-IDEA/">Intellij IDEA</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JOOQ/">JOOQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScirpt/">JavaScirpt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MYSQL/">MYSQL</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Play/">Play</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit/">Retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit2/">Retrofit2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprng-MVC/">Sprng MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thymeleaf/">Thymeleaf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思绪/">思绪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/HTTP/" style="font-size: 17px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 12px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 10px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 11px;">Intellij IDEA</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/JOOQ/" style="font-size: 11px;">JOOQ</a> <a href="/tags/JavaScirpt/" style="font-size: 10px;">JavaScirpt</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/MYSQL/" style="font-size: 19px;">MYSQL</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/PHP/" style="font-size: 18px;">PHP</a> <a href="/tags/Play/" style="font-size: 11px;">Play</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Redis/" style="font-size: 14px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/Retrofit2/" style="font-size: 10px;">Retrofit2</a> <a href="/tags/SQL/" style="font-size: 18px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spring/" style="font-size: 12px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 16px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/Sprng-MVC/" style="font-size: 10px;">Sprng MVC</a> <a href="/tags/Thymeleaf/" style="font-size: 10px;">Thymeleaf</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/思绪/" style="font-size: 12px;">思绪</a> <a href="/tags/算法/" style="font-size: 11px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">25</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/01/test2/">test2</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/29/规划好技术路线，如何将想法落地？/">规划好技术路线，如何将想法落地?</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/29/天天写「业务代码」，如何成为「技术大牛」/">天天写「业务代码」，如何成为「技术大牛」</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/25/多线程设计模式之保护性暂挂-Guarged-Suspension/">多线程设计模式之保护性暂挂(Guarged Suspension)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/25/Java之不可变对象/">Java之不可变对象</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_pv">
+<h3 class="widget-title">访问量</h3>
+<div class="widget"> 本站总访问量<span id="busuanzi_value_site_pv"></span>次 </div>
+</span>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 流云<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

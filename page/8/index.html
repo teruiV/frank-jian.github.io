@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>记录点滴成长</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="每天进步一点">
+<meta property="og:type" content="website">
+<meta property="og:title" content="记录点滴成长">
+<meta property="og:url" content="http://jianwl.com/page/8/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="每天进步一点">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记录点滴成长">
+<meta name="twitter:description" content="每天进步一点">
+  
+    <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">记录点滴成长</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://jianwl.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Mysql-for-Mac-安装和基本操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/06/09/Mysql-for-Mac-安装和基本操作/" class="article-date">
+  <time datetime="2016-06-09T09:28:23.000Z" itemprop="datePublished">2016-06-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MYSQL/">MYSQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/09/Mysql-for-Mac-安装和基本操作/">Mysql for Mac 安装和基本操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="mysql安装"><a href="#mysql安装" class="headerlink" title="mysql安装"></a>mysql安装</h3><p><a href="http://pan.baidu.com/s/1kVNb7bp" target="_blank" rel="external">mysql for mac 百度云下载链接</a></p>
+<h3 id="mysql启动"><a href="#mysql启动" class="headerlink" title="mysql启动"></a>mysql启动</h3><p><img src="/images/mysql启动.png" alt="image"></p>
+<h3 id="mysql关闭"><a href="#mysql关闭" class="headerlink" title="mysql关闭"></a>mysql关闭</h3><p><img src="/images/mysql关闭.png" alt="image"></p>
+<h3 id="修改初始密码"><a href="#修改初始密码" class="headerlink" title="修改初始密码"></a>修改初始密码</h3><pre><code>／usr/local/mysql/bin/mysqladmin -u root password &quot;新密码&quot;
+</code></pre><h3 id="卸载mysql"><a href="#卸载mysql" class="headerlink" title="卸载mysql"></a>卸载mysql</h3><pre><code>sudo rm /usr/local/mysql
+sudo rm -rf /usr/local/mysql*
+sudo rm -rf /Library/StartupItems/MySQLCOM
+sudo rm -rf /Library/PreferencePanes/My*
+vim /etc/hostconfig  (and removed the line MYSQLCOM=-YES-)
+rm -rf ~/Library/PreferencePanes/My*
+sudo rm -rf /Library/Receipts/mysql*
+sudo rm -rf /Library/Receipts/MySQL*
+sudo rm -rf /var/db/receipts/com.mysql.*
+</code></pre><h3 id="将mysql-server的路径添加到PATH路径下"><a href="#将mysql-server的路径添加到PATH路径下" class="headerlink" title="将mysql.server的路径添加到PATH路径下"></a>将mysql.server的路径添加到PATH路径下</h3><pre><code>vi /etc/bashrc
+# 在bashrc文件下增加以下内容
+export PATH=/usr/local/mysql/support-files:$PATH
+</code></pre><h3 id="保存只读文件bashrc"><a href="#保存只读文件bashrc" class="headerlink" title="保存只读文件bashrc"></a>保存只读文件bashrc</h3><p>向只读文件中添加内容，用wq保存出现以下错误</p>
+<pre><code>E45: &apos;readonly&apos; option is set (add ! to override)
+</code></pre><p>解决的方法：</p>
+<pre><code>:w !sudo tee %
+
+＃解释
+:w – write
+!sudo – call shell sudo command
+tee – the output of write (:w) command is redirected using tee
+% – current file name
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/06/09/Mysql-for-Mac-安装和基本操作/" data-id="citr7yi1s0054w093ixa72sal" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MYSQL/">MYSQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-HTTP之重定向和请求转发" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/06/05/HTTP之重定向和请求转发/" class="article-date">
+  <time datetime="2016-06-05T10:00:47.000Z" itemprop="datePublished">2016-06-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HTTP/">HTTP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/05/HTTP之重定向和请求转发/">HTTP之重定向和请求转发</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="重定向、请求转发是什么？举例说明"><a href="#重定向、请求转发是什么？举例说明" class="headerlink" title="重定向、请求转发是什么？举例说明"></a>重定向、请求转发是什么？举例说明</h6><p>假设你去办执照。</p>
+<p><strong>重定向：</strong>你先去了A局，A局的人说：”这事不归我们管，去B局”，然后你就从A退了回来，自己乘车去了B局。</p>
+<p><strong>请求转发：</strong>你先去了A局，A局看了以后，知道这个事情其实应该B局来管，但是他没有把你退回来，而是让你坐一会儿，自己到后面办公室联系了B局的人，让他们办好后，送过来。</p>
+<p>重定向是客户端行为，其实是两次Request请求，第一次，客户端Request A，服务器响应，并Response回来，告诉浏览器，你应该去找B。这个时候可以看到浏览器地址变了。重定向可以访问自己Web应用以外的资源。在重定向的过程中，传输的信息会被丢失。</p>
+<p>请求转发是服务器行为，服务器内部把一个Request的处理权，转发给同一个Web容器下的其他URL。(注意，不能转发到其他的Web容器的资源)对于客户端而言，它只知道自己最早请求的那个A，而不知道中间的B、C、D，传输的信息不会丢失。</p>
+<h6 id="Servlet中调用请求转发和重定向"><a href="#Servlet中调用请求转发和重定向" class="headerlink" title="Servlet中调用请求转发和重定向"></a>Servlet中调用请求转发和重定向</h6><ul>
+<li>请求转发到welcome.jsp页面</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">request.getRequestDispatcher(&quot;welcome.jsp&quot;).forward(request,response);</div></pre></td></tr></table></figure>
+<ul>
+<li>重定向到success.jsp页面</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">response.sendRedirect(&quot;success.jsp&quot;);</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/06/05/HTTP之重定向和请求转发/" data-id="citr7yhz1000kw093a0fuk6w7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Simplest-SpringMVC教程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/06/05/Simplest-SpringMVC教程/" class="article-date">
+  <time datetime="2016-06-05T07:34:30.000Z" itemprop="datePublished">2016-06-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Spring-MVC/">Spring MVC</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/05/Simplest-SpringMVC教程/">Simplest SpringMVC教程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h6><p>Spring MVC框架已经近1年没有接触了，以前的基础也忘的差不多了。既然如此，那就忘去过去所学Spring MVC的知识，一切重新学起。创建第一个Spring MVC项目，网上有很多教程，但感觉都过于复杂，也不够简单明了。</p>
+<h6 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h6><p>IntelliJ IDEA – (IDE)<br>Maven – (项目Jar包管理构建工具 3.2.x版本)<br>Tomcat – (Web容器 7.x版本)</p>
+<h6 id="操作流程"><a href="#操作流程" class="headerlink" title="操作流程"></a>操作流程</h6><p>1、创建Maven项目<br><img src="/images/创建maven项目.png" alt=""><br><img src="/images/创建maven项目02.png" alt=""><br><img src="/images/创建maven项目03.png" alt=""><br><img src="/images/maven配置.png" alt=""><br><img src="/images/创建maven项目04.png" alt=""><br>2、配置pom.xml文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;</div><div class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line">  &lt;groupId&gt;com.youzu&lt;/groupId&gt;</div><div class="line">  &lt;artifactId&gt;springmvc&lt;/artifactId&gt;</div><div class="line">  &lt;packaging&gt;war&lt;/packaging&gt;</div><div class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</div><div class="line">  &lt;name&gt;mvc-demo Maven Webapp&lt;/name&gt;</div><div class="line">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</div><div class="line"></div><div class="line">  &lt;dependencies&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;4.2.5.RELEASE&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;spring-aop&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;4.2.5.RELEASE&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;4.2.5.RELEASE&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;spring-web&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;4.2.5.RELEASE&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;jstl&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;1.2&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;commons-logging&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;commons-logging&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;1.1.3&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">  &lt;/dependencies&gt;</div><div class="line"></div><div class="line">  &lt;build&gt;</div><div class="line">      &lt;plugins&gt;</div><div class="line">        &lt;plugin&gt;</div><div class="line">          &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">          &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</div><div class="line">          &lt;configuration&gt;</div><div class="line">            &lt;source&gt;1.7&lt;/source&gt;</div><div class="line">            &lt;target&gt;1.7&lt;/target&gt;</div><div class="line">          &lt;/configuration&gt;</div><div class="line">        &lt;/plugin&gt;</div><div class="line">      &lt;/plugins&gt;</div><div class="line">  &lt;/build&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure></p>
+<p>3、新建Spring配置文件<code>/webapp/WEB-INF/springmvc-servlet.xml</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">	xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot; xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</div><div class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xsi:schemaLocation=&quot;</div><div class="line">        http://www.springframework.org/schema/beans     </div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">        http://www.springframework.org/schema/mvc </div><div class="line">        http://www.springframework.org/schema/mvc/spring-mvc.xsd</div><div class="line">        http://www.springframework.org/schema/context </div><div class="line">        http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;</div><div class="line"> </div><div class="line">	&lt;context:component-scan base-package=&quot;com.youzu.controller&quot; /&gt;</div><div class="line"> </div><div class="line">	&lt;bean id=&quot;viewResolver&quot;</div><div class="line">		class=&quot;org.springframework.web.servlet.view.UrlBasedViewResolver&quot;&gt;</div><div class="line">		&lt;property name=&quot;viewClass&quot;</div><div class="line">			value=&quot;org.springframework.web.servlet.view.JstlView&quot; /&gt;</div><div class="line">		&lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot; /&gt;</div><div class="line">		&lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot; /&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure></p>
+<p>在springmvc-servlet.xml配置文件中，我们定义了<code>&lt;context:component-scan&gt;</code>,这个配置允许spring扫描<code>com.youzu.controller</code>这个目录和其子目录下的所有注解,将注解类注册为Bean。同时定义了视图解析类viewResolver，这个类将会解析视图名(增加前缀<code>/WEB-INF/jsp/</code>和后缀<code>.jsp</code>)。<br>4、配置web.xml文件：webapp/WEB-INF/web.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot; version=&quot;3.0&quot;&gt;</div><div class="line">    &lt;display-name&gt;spring mvc&lt;/display-name&gt;</div><div class="line">    &lt;welcome-file-list&gt;</div><div class="line">        &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</div><div class="line">    &lt;/welcome-file-list&gt;</div><div class="line"></div><div class="line">    &lt;servlet&gt;</div><div class="line">        &lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;</div><div class="line">        &lt;servlet-class&gt;</div><div class="line">            org.springframework.web.servlet.DispatcherServlet</div><div class="line">        &lt;/servlet-class&gt;</div><div class="line">        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</div><div class="line">    &lt;/servlet&gt;</div><div class="line">    &lt;servlet-mapping&gt;</div><div class="line">        &lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;</div><div class="line">        &lt;url-pattern&gt;/&lt;/url-pattern&gt;</div><div class="line">    &lt;/servlet-mapping&gt;</div><div class="line">&lt;/web-app&gt;</div></pre></td></tr></table></figure></p>
+<p>特别注意在web.xml中定义了servlet-name,当DispatcherServlet初始化时，它将自动加载WEB-INF文件夹下文件名为[servlet-name]-servlet.xml的文件。即：本例中步骤3定义的springmvc-servlet.xml文件<br>5、创建StudentAction.class文件<code>com.youzu.controller.StudentAction.class</code></p>
+<ul>
+<li>在main文件夹下，新建一个名为“java”的文件夹<br><img src="/images/创建java文件夹.png" alt=""></li>
+<li>将java文件夹设为源文件目录<br><img src="/images/java设为源文件夹.png" alt=""></li>
+<li>在java文件夹下创建com.youzu.controller文件夹<br><img src="/images/创建文件夹.png" alt=""></li>
+<li>创建类StudentAction.class</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">package com.youzu.controller;</div><div class="line"></div><div class="line">import org.springframework.stereotype.Controller;</div><div class="line">import org.springframework.web.bind.annotation.RequestMapping;</div><div class="line">import org.springframework.web.servlet.ModelAndView;</div><div class="line"></div><div class="line">/**</div><div class="line"> * User: jianwl</div><div class="line"> * Date: 2016/6/5</div><div class="line"> * Time: 16:29</div><div class="line"> */</div><div class="line">@Controller</div><div class="line">public class StudentAction &#123;</div><div class="line">    @RequestMapping(&quot;/info&quot;)</div><div class="line">    public ModelAndView info()&#123;</div><div class="line">        String stuInfo = &quot;my name is zhangsan,i am 13 years old,i am come from china&quot;;</div><div class="line">        return new ModelAndView(&quot;info&quot;,&quot;stuInfo&quot;,stuInfo);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>@Controller的作用是，当spring扫描文件夹时，会将StudentAction视为Controller Bean类。<br>@RequestMapping的作用是，告知spring，当请求访问的URL地址以/info开头时，该控制器将会执行该请求。<br>6、创建info.jsp文件<code>/webapp/WEB-INF/jsp/info.jsp</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;title&gt;Spring MVC 教程&lt;/title&gt;</div><div class="line">    &lt;style type=&quot;text/css&quot;&gt;</div><div class="line">        body &#123;</div><div class="line">            background-image: url(&apos;http://crunchify.com/bg.png&apos;);</div><div class="line">        &#125;</div><div class="line">    &lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">$&#123;stuInfo&#125;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>7、maven打包<br><img src="/images/maven打包.png" alt=""><br>8、配置Tomcat</p>
+<ul>
+<li>编辑配置<br><img src="/images/配置tomcat01.png" alt=""></li>
+<li>新增本地Tomcat配置<br><img src="/images/配置tomcat02.png" alt=""></li>
+<li>Tomcat配置详情<br><img src="/images/配置tomcat03.png" alt=""></li>
+<li>在Tomcat中添加需要发布的war包<br><img src="/images/配置tomcat04.png" alt=""></li>
+<li>运行Tomcat<br><img src="/images/启动tomcat.png" alt=""></li>
+</ul>
+<p>9、浏览器成功访问/info地址：<code>localhost:8080/info</code><br><img src="/images/springmvc成功访问.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/06/05/Simplest-SpringMVC教程/" data-id="citr7yi3i008kw093d606n7zq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sprng-MVC/">Sprng MVC</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Hexo博客的云端备份和迁移" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/06/04/Hexo博客的云端备份和迁移/" class="article-date">
+  <time datetime="2016-06-04T10:23:50.000Z" itemprop="datePublished">2016-06-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/04/Hexo博客的云端备份和迁移/">Hexo博客的云端备份和迁移</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h6><p>使用Hexo写博客，在一台电脑上写博客，更新博客倒没什么问题，可是如果你要换一台电脑然后更新博客发现就比较麻烦了。网上类似的源码迁移也有提到，不过我个人感觉操作过于复杂，我自己用了一个比较简单的方法，用Oschina的代码托管做了一个Hexo的源码的备份。下次你要在其他的电脑上写博客也很简单。利用Git实现同步源码，当然这其中需要相关的Git和Hexo环境配置。</p>
+<h6 id="操作流程"><a href="#操作流程" class="headerlink" title="操作流程"></a>操作流程</h6><p>1、Oschina注册账号，建立私有代码库。为何选用Oschina而不是Github做代码托管呢，因为Github上建立私有库不是免费的，而Oschina没有限制。(备忘：Oschina git上注册的邮箱：jianwl999@gmail.com)<br>2、在你的电脑上创建一个文件夹，随意命名。然后git init初始化git环境，创建仓库。git clone你的Oschina上的分支，特别注意：在Oschina创建私有库的时候，最少要添加一个README文件，否则空的仓库同步过程会有问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">git init</div><div class="line">git clone git@git.oschina.net:shuangziliuyun/Hexo.git</div><div class="line">touch README.md</div><div class="line">git add -A</div><div class="line">git commit -m &quot;first commit&quot;</div><div class="line">git pull origin master</div><div class="line">git push origin master</div></pre></td></tr></table></figure></p>
+<p>3、将你的Hexo源码拷贝到该文件夹下，public不用拷贝，这个是由Hexo编译自动生成的。并在Git bash客户端中执行以下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git status   //查看本地代码库和云端代码库的差异</div><div class="line">git add -A //添加修改的文件到本地分支，跟踪修改</div><div class="line">git commit -m &quot;commit hexo source to oschina&quot; //提交跟踪修改的文件到本地仓库分支</div><div class="line">git pull origin master //从云端代码库拉取最新的分支代码</div><div class="line">git push origin master //提交本地仓库的代码到云端仓库</div></pre></td></tr></table></figure></p>
+<p>4、提交代码成功后表示你备份已经完成了，现在假设你在另外一个电脑上要编辑hexo博客并部署到github上。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">1、在本机上创建一个文件夹</div><div class="line">2、git init</div><div class="line">3、git clone git@git.oschina.net:shuangziliuyun/Hexo.git</div><div class="line">4、安装Node.js，[下载链接](http://pan.baidu.com/s/1pK9fHR9)</div><div class="line">5、在Hexo文件下，执行npm install hexo</div><div class="line">6、npm install</div><div class="line">7、npm install hexo-deployer-git (注意，不需要hexo init这条指令)</div></pre></td></tr></table></figure></p>
+<p>5、至此完成了Hexo博客的迁移，可以在另一台电脑上的Hexo目录下，对博客进行更新。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">hexo new &quot;新文章&quot;</div><div class="line">hexo clean</div><div class="line">hexo generate</div><div class="line">hexo deploy</div></pre></td></tr></table></figure></p>
+<h6 id="遇见的坑"><a href="#遇见的坑" class="headerlink" title="遇见的坑"></a>遇见的坑</h6><p>在执行 hexo deploy发布指令时，总是报以下的错误。将发布项目的地址改为ssh的地址之后，仍旧报错。最后发现是Node.js版本不一致造成的。原先那台电脑上安装的node.js版本，和要迁移到的这电脑上的node.js版本不一致，最后同步以下版本，解决了这个问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fatal: could not read Username for &apos;https://github.com&apos;: No error</div><div class="line">at ChildProcess.&lt;anonymous&gt; (D:\software\Git\Hexo\node_modules\hexo-deployer-git\node_modules\hexo-util\lib\spawn.js:42:17)</div><div class="line">    at ChildProcess.emit (events.js:110:17)</div><div class="line">    at maybeClose (child_process.js:1015:16)</div><div class="line">    at Socket.&lt;anonymous&gt; (child_process.js:1183:11)</div><div class="line">    at Socket.emit (events.js:107:17)</div><div class="line">    at Pipe.close (net.js:485:12)</div></pre></td></tr></table></figure></p>
+<p>参考资料：<br>1、<a href="https://www.zhihu.com/question/21193762" target="_blank" rel="external">使用hexo，如果换了电脑怎么更新博客？</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/06/04/Hexo博客的云端备份和迁移/" data-id="citr7yhzh0017w093khksjgp9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-PlayFramework调试" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/05/31/PlayFramework调试/" class="article-date">
+  <time datetime="2016-05-31T09:44:04.000Z" itemprop="datePublished">2016-05-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Play/">Play</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/31/PlayFramework调试/">PlayFramework调试</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在Intellij Idea的IDE下，调试PlayFramework的步骤:</p>
+<ul>
+<li><p>启动play debug模式，监听端口9999<br><img src="/images/play调试.jpg" alt=""></p>
+</li>
+<li><p>Intellij Idea新建Remote监听<br><img src="/images/idea创建监听端口.jpg" alt=""></p>
+</li>
+<li><p>Intellij Idea创建远程Socket监听<br><img src="/images/Idea创建监听socket连接端口.png" alt=""></p>
+</li>
+<li><p>运行play<br><img src="/images/运行play.png" alt=""></p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/05/31/PlayFramework调试/" data-id="citr7yi2h006cw093t7c6j72h" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Play/">Play</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-翻墙教程之VPS搭建Shadowsocks代理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/" class="article-date">
+  <time datetime="2016-05-20T04:45:02.000Z" itemprop="datePublished">2016-05-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/VPS/">VPS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/">翻墙教程之VPS搭建Shadowsocks代理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>做为一个开发人员，具备翻墙的能力，是最基本的；最近打算在VPS上搭建一个shadowsocks代理来实现翻墙，将操作步骤记录下来，备忘。</p>
+<h6 id="购买VPS"><a href="#购买VPS" class="headerlink" title="购买VPS"></a>购买VPS</h6><p>到vultr的<a href="https://www.vultr.com/freetrial/" target="_blank" rel="external">官网</a>注册账户，目前注册的新用户给你$50,用2个月，超给力的。需要注意的是，你得有支持外币支付的信用卡，并且这个优惠活动不支持paypal，反正我用民生银行的VISA信用卡是没有注册成功，最后采用了paypal的方式支付的。</p>
+<h6 id="vps部署"><a href="#vps部署" class="headerlink" title="vps部署"></a>vps部署</h6><p>选择日本或者美国西海岸的服务器，速度相对比较快，我选的是日本的。操作系统是CentOS 6 x64,选择的硬件是$5/month的；以下截图是购买成功之后的VPS服务器实例;<br><img src="/images/vultr服务器.png" alt=""></p>
+<h6 id="下载并安装Xshell5"><a href="#下载并安装Xshell5" class="headerlink" title="下载并安装Xshell5"></a>下载并安装Xshell5</h6><p><a href="http://pan.baidu.com/s/1eRRETaU" target="_blank" rel="external">Xshell5百度云下载链接</a></p>
+<h6 id="Xshell5连接vps"><a href="#Xshell5连接vps" class="headerlink" title="Xshell5连接vps"></a>Xshell5连接vps</h6><p><img src="/images/vultr服务器详情.png" alt="vps的详情"><br>打开Xshell5,新建会话，输入IP地址,点击确定<br><img src="/images/xshell连接vps.png" alt=""><br>输入用户名<br><img src="/images/vultr输入用户名.png" alt=""><br>输入密码<br><img src="/images/vultr输入密码.png" alt=""><br>xshell5成功登陆vps服务器<br><img src="/images/xshell成功登陆vps.png" alt=""></p>
+<h6 id="部署shadowsocks"><a href="#部署shadowsocks" class="headerlink" title="部署shadowsocks"></a>部署shadowsocks</h6><p>1、用Shadowsocks Python版一键安装脚本,<a href="https://teddysun.com/342.html" target="_blank" rel="external">原文链接</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</div><div class="line">chmod +x shadowsocks.sh</div><div class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</div></pre></td></tr></table></figure></p>
+<p>执行后需要输入密码(shadowsocks的密码)<br><img src="/images/ss01.png" alt=""><br>2、输入shadowsocks的端口,我喜欢用8388<br><img src="/images/ss输入端口.png" alt=""><br>3、看到这句时，按任意键(比如回车)<br><img src="/images/ss成功.png" alt=""><br>4、等待安装结束，出现下图就表示安装成功了.<br><img src="/images/ss安装成功.png" alt=""></p>
+<h6 id="开启TFO-TCP-Fast-Open"><a href="#开启TFO-TCP-Fast-Open" class="headerlink" title="开启TFO(TCP Fast Open)"></a>开启TFO(TCP Fast Open)</h6><p>编辑rc.local<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/rc.local</div></pre></td></tr></table></figure></p>
+<p>在rc.local最后一行添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo 3 &gt; /proc/sys/net/ipv4/tcp_fastopen</div></pre></td></tr></table></figure></p>
+<p>编辑sysctl.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/sysctl.conf</div></pre></td></tr></table></figure></p>
+<p>在sysctl.conf中输入并保存<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net.ipv4.tcp_fastopen = 3</div></pre></td></tr></table></figure></p>
+<p>打开ss配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/shadowsocks.json</div></pre></td></tr></table></figure></p>
+<p>修改fast_open的值为true并保存。<br>重启shadowsocks<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/shadowsocks restart</div></pre></td></tr></table></figure></p>
+<h6 id="windows端运行shadowsocks客户端"><a href="#windows端运行shadowsocks客户端" class="headerlink" title="windows端运行shadowsocks客户端"></a>windows端运行shadowsocks客户端</h6><p><a href="http://pan.baidu.com/s/1hrFz8uo" target="_blank" rel="external">shadowsocks客户端百度云下载链接</a><br>解压后运行shadowsocks.exe,并配置shadowsocks<br><img src="/images/ss客户端配置.png" alt=""></p>
+<h6 id="科学上网"><a href="#科学上网" class="headerlink" title="科学上网"></a>科学上网</h6><p>使用代理，虽然可以访问国外的网站，但网速会比较慢。理想的情况下，我们想要在访问国外网站的时候使用代理，访问国内的网站的时候不使用代理,保证效率最大化。</p>
+<p>我们使用SwitchyOmega来消除shadowsocks全局代理的副作用，<a href="http://pan.baidu.com/s/1mhX8r7i" target="_blank" rel="external">SwitchyOmega</a>是Chrome下非常好用的代理管理插件(.crx是插件,.bak是备份文件);</p>
+<h6 id="安装SwitchyOmega"><a href="#安装SwitchyOmega" class="headerlink" title="安装SwitchyOmega"></a>安装SwitchyOmega</h6><p>将SwitchyOmega.crx插件直接拖到扩展程序中，即可实现安装<br><img src="/images/安装SwitchyOmega.png" alt=""></p>
+<h6 id="配置SwitchyOmega"><a href="#配置SwitchyOmega" class="headerlink" title="配置SwitchyOmega"></a>配置SwitchyOmega</h6><p><img src="/images/配置SwitchyOmega01.png" alt=""><br><img src="/images/配置SwitchyOmega02.png" alt=""><br><img src="/images/配置SwitchyOmega03.png" alt=""><br><img src="/images/配置SwitchyOmega04.png" alt=""><br><img src="/images/配置SwitchyOmega05.png" alt=""><br>至此，把Shadowsocks客户端的模式改为了自动模式，<strong>通过Chrome访问的网址都会经过代理服务器;通过其他浏览器如：FireFox访问的网址则不经过代理服务器</strong>;说明了局部代理成功。</p>
+<h6 id="Shadowsocks原理"><a href="#Shadowsocks原理" class="headerlink" title="Shadowsocks原理"></a>Shadowsocks原理</h6><p>简单理解的话，Shadowsocks是将以前通过SSH创建的Socks5协议拆分成Server端和Client端，下面这个原理图能简单介绍其翻墙原理，基本上和利用SSH tunnel大致类似：<br><img src="/images/shadowsocks原理.jpg" alt=""><br>PC客户端发出请求基于Socks5协议跟SS-Local端进行通讯，由于这个SS-Local一般是本机或路由器等局域网的其他机器，不经过GFW,所以解决GFW通过特征分析进行干扰的问题。</p>
+<p>SS-Local和SS-Server两端通过多种可选的加密方法进行通讯，经过GFW的时候因为是常规的TCP包，没有明显特征码GFW也无法对通讯进行解密，因此通讯放行。</p>
+<p>SS-Server将收到的加密数据进行解密，还原初始请求，在发送用户需要访问的服务网站，响应原路返回SS-04,返回途中依然使用了加密，使得流量是普通的TCP包，并成功穿过GFW防火墙。</p>
+<p>因此，Shadowsocks的优点在于它解决了GFW通过分析流量特征从而干扰的问题，这是它优于SSH和VPN的地方。</p>
+<p>参考资料：<br>1、<a href="http://mpc2008cn.github.io/2015/10/22/vps/" target="_blank" rel="external">Vultr的vps搭建shadowsocks翻墙</a><br>2、<a href="https://teddysun.com/342.html" target="_blank" rel="external">Shadowsocks Python版一键安装脚本</a><br>3、<a href="http://www.shadowsocks.co.uk/shadowsocks-tcp-fast-open/" target="_blank" rel="external">Shadowsocks设置:ShadowSocks 服务器开启TCP Fast Open</a><br>4、<a href="http://shadowsocks.blogspot.tw/" target="_blank" rel="external">shadowsocks搭建教程</a><br>5、<a href="http://www.jianshu.com/p/37ef0b9ecc08" target="_blank" rel="external">shadowsocks配合SwitchyOmega科学上网</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/" data-id="citr7yi4r00bkw093idvttpoi" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VPS/">VPS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-HTTP报文详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/05/17/HTTP报文详解/" class="article-date">
+  <time datetime="2016-05-17T04:15:05.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HTTP/">HTTP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/HTTP报文详解/">HTTP报文详解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="Http协议通用首部字段："><a href="#Http协议通用首部字段：" class="headerlink" title="Http协议通用首部字段："></a>Http协议通用首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Cache-Control  控制缓存行为</div><div class="line">Connection 控制不再转发给代理的首部字段、管理持久连接</div><div class="line">Date 创建报文的日期时间</div><div class="line">Pragma 报文指令</div><div class="line">Trailer 报文末端的首部一览</div><div class="line">Transfer-Encoding 指定报文主体的传输编码方式</div><div class="line">Upgrade 升级为其他协议</div><div class="line">Via 代理服务器相关信息</div><div class="line">Warning 错误通知</div></pre></td></tr></table></figure>
+<h6 id="Http请求首部字段："><a href="#Http请求首部字段：" class="headerlink" title="Http请求首部字段："></a>Http请求首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Accept 用户代理可处理的媒体类型</div><div class="line">Accept-Charset 优先的字符集</div><div class="line">Accept-Encoding 优先的内容编码</div><div class="line">Accept-Language 优先的语言</div><div class="line">Authrization Web认证信息</div><div class="line">Expect 期待服务器的特定行为</div><div class="line">From 用户的电子邮箱地址</div><div class="line">Host 请求资源所在服务器</div><div class="line">If-Match 比较实体标记(Etag)</div><div class="line">If-Modified-Since 比较资源的更新时间</div><div class="line">if-None-Match 比较实体标记(与If-Match相反)</div><div class="line">If-Range 资源未更新时发送实体Byte的范围请求</div><div class="line">If-Unmodified-Since 比较资源的更新时间</div><div class="line">Max-forwards 最大传输逐跳数</div><div class="line">Proxy-Authorization 代理服务器要求客户端的认证信息</div><div class="line">Range 实体的字节范围请求</div><div class="line">Referer 对请求中的URI的原始获取方</div><div class="line">TE 传输编码的优先级</div><div class="line">User-Agent HTTP客户端程序的信息</div><div class="line">Cookie 服务器接收到的Cookie信息</div></pre></td></tr></table></figure>
+<h6 id="Http响应首部字段："><a href="#Http响应首部字段：" class="headerlink" title="Http响应首部字段："></a>Http响应首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Accept-Ranges 是否接受字节范围</div><div class="line">Age 推算资源创建经过时间</div><div class="line">Etag 资源匹配信息</div><div class="line">Location 令客户端重定向至指定URI</div><div class="line">Proxy-Authenticate 代理服务器对客户端的认证信息</div><div class="line">Retry-After 对再次发起请求的时机要求</div><div class="line">Server HTTP服务器的安装信息</div><div class="line">Vary 代理服务器缓存的管理信息</div><div class="line">WWW-Authenticate 服务器对客户端的认证信息</div><div class="line">Set-Cookie 开始状态管理所使用的Cookie信息</div></pre></td></tr></table></figure>
+<h6 id="实体首部字段："><a href="#实体首部字段：" class="headerlink" title="实体首部字段："></a>实体首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Allow 资源可支持的HTTP方法</div><div class="line">Content-Encoding 实体主体适用的编码方式</div><div class="line">Content-Length 实体主体的自然语言</div><div class="line">Content-Location 替代对应资源的URI</div><div class="line">Content-MD5 实体主体的报文摘要</div><div class="line">Content-Range 实体主体的位置范围</div><div class="line">Content-Type 实体主体的媒体类型</div><div class="line">Expires 实体主体的过期时间</div><div class="line">Last-Modified 资源的最后修改时间</div></pre></td></tr></table></figure>
+<h6 id="为Cookie服务的首部字段"><a href="#为Cookie服务的首部字段" class="headerlink" title="为Cookie服务的首部字段"></a>为Cookie服务的首部字段</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Set-Cookie</div><div class="line">Cookie</div></pre></td></tr></table></figure>
+<h6 id="请求和响应报文的组成"><a href="#请求和响应报文的组成" class="headerlink" title="请求和响应报文的组成"></a>请求和响应报文的组成</h6><p>请求报文<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">请求报文由报文首部+空行（CR+LF）+报文主体构成；</div><div class="line">报文首部由：请求行+ 请求首部字段+通用首部字段+实体首部字段+其他</div></pre></td></tr></table></figure></p>
+<p>响应报文<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">响应报文由报文首部+空行（CR+LF）+报文主体构成；</div><div class="line">报文首部由：状态行+ 响应首部字段+通用首部字段+实体首部字段+其他</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/05/17/HTTP报文详解/" data-id="citr7yhz7000xw093k2dwy7qk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-HTTP请求报文详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/05/17/HTTP请求报文详解/" class="article-date">
+  <time datetime="2016-05-17T03:52:51.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HTTP/">HTTP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/HTTP请求报文详解/">HTTP请求报文详解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="Http协议通用首部字段："><a href="#Http协议通用首部字段：" class="headerlink" title="Http协议通用首部字段："></a>Http协议通用首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Cache-Control  控制缓存行为</div><div class="line">Connection 控制不再转发给代理的首部字段、管理持久连接</div><div class="line">Date 创建报文的日期时间</div><div class="line">Pragma 报文指令</div><div class="line">Trailer 报文末端的首部一览</div><div class="line">Transfer-Encoding 指定报文主体的传输编码方式</div><div class="line">Upgrade 升级为其他协议</div><div class="line">Via 代理服务器相关信息</div><div class="line">Warning 错误通知</div></pre></td></tr></table></figure>
+<h6 id="Http请求首部字段："><a href="#Http请求首部字段：" class="headerlink" title="Http请求首部字段："></a>Http请求首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Accept 用户代理可处理的媒体类型</div><div class="line">Accept-Charset 优先的字符集</div><div class="line">Accept-Encoding 优先的内容编码</div><div class="line">Accept-Language 优先的语言</div><div class="line">Authrization Web认证信息</div><div class="line">Expect 期待服务器的特定行为</div><div class="line">From 用户的电子邮箱地址</div><div class="line">Host 请求资源所在服务器</div><div class="line">If-Match 比较实体标记(Etag)</div><div class="line">If-Modified-Since 比较资源的更新时间</div><div class="line">if-None-Match 比较实体标记(与If-Match相反)</div><div class="line">If-Range 资源未更新时发送实体Byte的范围请求</div><div class="line">If-Unmodified-Since 比较资源的更新时间</div><div class="line">Max-forwards 最大传输逐跳数</div><div class="line">Proxy-Authorization 代理服务器要求客户端的认证信息</div><div class="line">Range 实体的字节范围请求</div><div class="line">Referer 对请求中的URI的原始获取方</div><div class="line">TE 传输编码的优先级</div><div class="line">User-Agent HTTP客户端程序的信息</div><div class="line">Cookie 服务器接收到的Cookie信息</div></pre></td></tr></table></figure>
+<h6 id="Http响应首部字段："><a href="#Http响应首部字段：" class="headerlink" title="Http响应首部字段："></a>Http响应首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Accept-Ranges 是否接受字节范围</div><div class="line">Age 推算资源创建经过时间</div><div class="line">Etag 资源匹配信息</div><div class="line">Location 令客户端重定向至指定URI</div><div class="line">Proxy-Authenticate 代理服务器对客户端的认证信息</div><div class="line">Retry-After 对再次发起请求的时机要求</div><div class="line">Server HTTP服务器的安装信息</div><div class="line">Vary 代理服务器缓存的管理信息</div><div class="line">WWW-Authenticate 服务器对客户端的认证信息</div><div class="line">Set-Cookie 开始状态管理所使用的Cookie信息</div></pre></td></tr></table></figure>
+<h6 id="实体首部字段："><a href="#实体首部字段：" class="headerlink" title="实体首部字段："></a>实体首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Allow 资源可支持的HTTP方法</div><div class="line">Content-Encoding 实体主体适用的编码方式</div><div class="line">Content-Length 实体主体的自然语言</div><div class="line">Content-Location 替代对应资源的URI</div><div class="line">Content-MD5 实体主体的报文摘要</div><div class="line">Content-Range 实体主体的位置范围</div><div class="line">Content-Type 实体主体的媒体类型</div><div class="line">Expires 实体主体的过期时间</div><div class="line">Last-Modified 资源的最后修改时间</div></pre></td></tr></table></figure>
+<h6 id="为Cookie服务的首部字段"><a href="#为Cookie服务的首部字段" class="headerlink" title="为Cookie服务的首部字段"></a>为Cookie服务的首部字段</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Set-Cookie</div><div class="line">Cookie</div></pre></td></tr></table></figure>
+<h6 id="请求和响应报文的组成"><a href="#请求和响应报文的组成" class="headerlink" title="请求和响应报文的组成"></a>请求和响应报文的组成</h6><p>请求报文<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">请求报文由报文首部+空行（CR+LF）+报文主体构成；</div><div class="line">报文首部由：请求行+ 请求首部字段+通用首部字段+实体首部字段+其他</div></pre></td></tr></table></figure></p>
+<p>响应报文<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">响应报文由报文首部+空行（CR+LF）+报文主体构成；</div><div class="line">报文首部由：状态行+ 响应首部字段+通用首部字段+实体首部字段+其他</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/05/17/HTTP请求报文详解/" data-id="citr7yhz9000zw093j78doolz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-MYSQL存储引擎" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/05/17/MYSQL存储引擎/" class="article-date">
+  <time datetime="2016-05-17T02:43:13.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MYSQL/">MYSQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/MYSQL存储引擎/">MYSQL存储引擎</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/05/17/MYSQL存储引擎/" data-id="citr7yi13003yw0935yzlfmbw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MYSQL/">MYSQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-MYSQL存储引擎优化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/05/17/MYSQL存储引擎优化/" class="article-date">
+  <time datetime="2016-05-17T02:43:13.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MYSQL/">MYSQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/MYSQL存储引擎优化/">MYSQL存储引擎优化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
+<li>MyISAM</li>
+<li>InnoDB</li>
+</ul>
+<h6 id="MyISAM特性"><a href="#MyISAM特性" class="headerlink" title="MyISAM特性"></a>MyISAM特性</h6><p>MyISAM存储引擎不支持事务，支持全文检索,其锁定机制是表级索引，虽然可以让锁定的实现成本变得很小，但同时也大大降低了其并发性能。</p>
+<p>不仅会在写入的时候阻塞读取，MyISAM还会在读取的时候阻塞写入，但读本身并不会阻塞另外的读。MyISAM可以通过key_buffer缓存以大大提高访问性能减少磁盘IO，但是这个缓存区只会缓存索引，而不会缓存数据。</p>
+<h6 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h6><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
+<h6 id="InnoDB特性"><a href="#InnoDB特性" class="headerlink" title="InnoDB特性"></a>InnoDB特性</h6><p>InnoDB完全支持4个事务隔离级别，但不支持全文检索,通过索引实现了行级锁定，但全表扫描仍然会表锁，使用的时候注意间隙锁的影响。并且读写阻塞与事务隔离级别相关，具有非常高效的缓存特性，能够缓存索引，也能缓存数据。整个表和主键以CLUSTER方式存储；</p>
+<h6 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h6><p>InnoDB具有较好的事务特性，也就是事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h5 id="4个事务隔离级别"><a href="#4个事务隔离级别" class="headerlink" title="4个事务隔离级别"></a>4个事务隔离级别</h5><ol>
+<li>未授权读取（Read Uncommitted）: 读未提交数据，这是事务最低的隔离级别，在并发的事务中，它允许一个事务可以读到另一个事务未提交的更新数据。（会出现脏读，不可重复读和幻读）</li>
+<li>授权读取(Read Committed)：读已提交数据，保证并发的事务中，一个事务修改的数据提交后才能被另外一个事务读取到。（会出现不可重复读和幻读）</li>
+<li>可重复读取(Repeatable Read):可重复读，这种事务隔离级别可以防止脏读，不可重复读，但是可能出现幻读。一般是使用“快照”的方式来实现。</li>
+<li>序列化(Serializable):事务被处理为顺序执行，这是花费最高的，但也是最可靠的事务隔离级别，能够有效避免脏读、不可重复读、幻读。</li>
+</ol>
+<h5 id="脏读、不可重复读、幻读的概念"><a href="#脏读、不可重复读、幻读的概念" class="headerlink" title="脏读、不可重复读、幻读的概念"></a>脏读、不可重复读、幻读的概念</h5><h6 id="脏读"><a href="#脏读" class="headerlink" title="脏读"></a>脏读</h6><p>一个事务读取到另一事务未提交的更新新据。当一个事务正在访问数据，并且对数据进行了修改，而这种修改还没有<br>提交到数据库中，这时，另外一个事务也访问这个数据，然后使用了这个数据。因为这个数据是还没有提交的数据， 那么另<br>外一个事务读到的这个数据是脏数据，依据脏数据所做的操作也可能是不正确的</p>
+<h6 id="不可重复读"><a href="#不可重复读" class="headerlink" title="不可重复读"></a>不可重复读</h6><p>在同一事务中，多次读取同一数据返回的结果有所不同。换句话说就是，后续读取可以读到另一事务已提交的<br>更新数据。相反，“可重复读”在同一事务中多次读取数据时，能够保证所读数据一样，也就是，后续读取不能读到另一事务<br>已提交的更新数据。</p>
+<h6 id="幻读"><a href="#幻读" class="headerlink" title="幻读"></a>幻读</h6><p>事务T1执行一次查询，然后事务T2新插入一行记录，这行记录恰好可以满足T1所使用的查询的条件。然后T1又使用相同<br>的查询再次对表进行检索，但是此时却看到了事务T2刚才插入的新行。这个新行就称为“幻像”，因为对T1来说这一行就像突然<br>出现的一样。</p>
+<h5 id="数据库事务的4个特性"><a href="#数据库事务的4个特性" class="headerlink" title="数据库事务的4个特性"></a>数据库事务的4个特性</h5><h6 id="原子性-Atomic"><a href="#原子性-Atomic" class="headerlink" title="原子性(Atomic)"></a>原子性(Atomic)</h6><p>组成一个事务的多个数据库操作是一个不可分割的原子单元；只有所有操作执行成功，整个事务才提交，其中一个操作失败，都必须回滚到初始状态。</p>
+<h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
+<h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
+<h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/05/17/MYSQL存储引擎优化/" data-id="citr7yi150041w093slf9eii3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MYSQL/">MYSQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/7/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/9/">__('next') &raquo;</a>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/">Hystrix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Intellij-IDEA/">Intellij IDEA</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JOOQ/">JOOQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScirpt/">JavaScirpt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MYSQL/">MYSQL</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Play/">Play</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit/">Retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit2/">Retrofit2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprng-MVC/">Sprng MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thymeleaf/">Thymeleaf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思绪/">思绪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/HTTP/" style="font-size: 17px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 12px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 10px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 11px;">Intellij IDEA</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/JOOQ/" style="font-size: 11px;">JOOQ</a> <a href="/tags/JavaScirpt/" style="font-size: 10px;">JavaScirpt</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/MYSQL/" style="font-size: 19px;">MYSQL</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/PHP/" style="font-size: 18px;">PHP</a> <a href="/tags/Play/" style="font-size: 11px;">Play</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Redis/" style="font-size: 14px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/Retrofit2/" style="font-size: 10px;">Retrofit2</a> <a href="/tags/SQL/" style="font-size: 18px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spring/" style="font-size: 12px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 16px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/Sprng-MVC/" style="font-size: 10px;">Sprng MVC</a> <a href="/tags/Thymeleaf/" style="font-size: 10px;">Thymeleaf</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/思绪/" style="font-size: 12px;">思绪</a> <a href="/tags/算法/" style="font-size: 11px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">25</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/01/test2/">test2</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/29/规划好技术路线，如何将想法落地？/">规划好技术路线，如何将想法落地?</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/29/天天写「业务代码」，如何成为「技术大牛」/">天天写「业务代码」，如何成为「技术大牛」</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/25/多线程设计模式之保护性暂挂-Guarged-Suspension/">多线程设计模式之保护性暂挂(Guarged Suspension)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/25/Java之不可变对象/">Java之不可变对象</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_pv">
+<h3 class="widget-title">访问量</h3>
+<div class="widget"> 本站总访问量<span id="busuanzi_value_site_pv"></span>次 </div>
+</span>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 流云<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
