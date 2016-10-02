@@ -4,12 +4,6 @@
   
     
     <entry>
-      <title><![CDATA[test2]]></title>
-      <url>http://jianwl.com/2016/10/01/test2/</url>
-      <content type="html"></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[规划好技术路线，如何将想法落地?]]></title>
       <url>http://jianwl.com/2016/09/29/%E8%A7%84%E5%88%92%E5%A5%BD%E6%8A%80%E6%9C%AF%E8%B7%AF%E7%BA%BF%EF%BC%8C%E5%A6%82%E4%BD%95%E5%B0%86%E6%83%B3%E6%B3%95%E8%90%BD%E5%9C%B0%EF%BC%9F/</url>
       <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>作为一个工程师，多多少少都有自己的技术路线的规划，怎么这些规划落地，真正地去磨练技术，这是个值得思考的问题？本文介绍一个方法<code>三段分解法</code>，即：<code>将一个宏大或者长远的目标经过三次分解，得到一个个短期内能够达到的小目标。</code></p>

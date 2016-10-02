@@ -51,9 +51,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://jianwl.com"></form>
@@ -63,118 +63,6 @@
 </header>
       <div class="outer">
         <section id="main">
-  
-    <article id="post-Python之文件与异常" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-
-    <a href="/2016/08/19/Python之文件与异常/" class="article-date">
-  <time datetime="2016-08-19T13:24:38.000Z" itemprop="datePublished">2016-08-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/19/Python之文件与异常/">Python之文件与异常</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这一节，主要用代码来增强对Python文件读取和异常处理的理解。</p>
-<h3 id="Python文件输入"><a href="#Python文件输入" class="headerlink" title="Python文件输入"></a>Python文件输入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># This allows you to use the Python 3.0 style print function </div><div class="line">from __future__ import print_function</div><div class="line"></div><div class="line">data = open(&apos;../resource/data.txt&apos;)</div><div class="line">print(data.readline(), end=&apos;&apos;)</div><div class="line">print(data.readline(), end=&apos;&apos;)</div><div class="line">print(data.readline(), end=&apos;&apos;)</div><div class="line">print (&quot;&lt;/br&gt;&quot;)</div><div class="line"></div><div class="line"># 返回文件的起始位置</div><div class="line">data.seek(0)</div><div class="line">for each_line in data:</div><div class="line">    print(each_line,end=&apos;&apos;)</div><div class="line"></div><div class="line"># 关闭文件</div><div class="line">data.close()</div></pre></td></tr></table></figure>
-<h3 id="数据文件内容data-txt"><a href="#数据文件内容data-txt" class="headerlink" title="数据文件内容data.txt"></a>数据文件内容<code>data.txt</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Man :Is this the right room for an argument?</div><div class="line">Other Man :I&apos;ve told you once.</div><div class="line">Man :No you haven&apos;t</div><div class="line">Other Man :Yea I have.</div><div class="line">Man : You most certainly did not!</div><div class="line">Other Man : Now let&apos;s get one thing quite clear: I most definityly toly you!</div><div class="line">pause</div><div class="line">pause</div></pre></td></tr></table></figure>
-<h3 id="抽取数据行中的各部分"><a href="#抽取数据行中的各部分" class="headerlink" title="抽取数据行中的各部分"></a>抽取数据行中的各部分</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># This allows you to use the Python 3.0 style print function</div><div class="line">from __future__ import print_function</div><div class="line"></div><div class="line">data = open(&apos;../resource/data.txt&apos;)</div><div class="line">for each_line in data:</div><div class="line">    (role, line_spoken) = each_line.split(&apos;:&apos;)</div><div class="line">    print(role, end=&apos;&apos;)</div><div class="line">    print(&apos;said: &apos;, end=&apos;&apos;)</div><div class="line">    print(line_spoken, end=&apos;&apos;)</div><div class="line">data.close()</div></pre></td></tr></table></figure>
-<p>运行程序，发现一个运行时错误,为何？原因在于<code>Other Man : Now let&#39;s get one thing quite clear: I most definityly toly you!</code>这行数据有两个冒号，split()方法将这一行为3部分。代码没有告诉split()如何处理第3部分，所以Python解释器会产生ValueError，抱怨值过多，然后终止。如何处理呢？<code>split(&#39;:&#39;,1)</code>这个方法只会处理第一个为冒号的分割字符。修改之后的代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># This allows you to use the Python 3.0 style print function</div><div class="line">from __future__ import print_function</div><div class="line"></div><div class="line">data = open(&apos;../resource/data.txt&apos;)</div><div class="line">for each_line in data:</div><div class="line">    (role, line_spoken) = each_line.split(&apos;:&apos;,1)</div><div class="line">    print(role, end=&apos;&apos;)</div><div class="line">    print(&apos;said: &apos;, end=&apos;&apos;)</div><div class="line">    print(line_spoken, end=&apos;&apos;)</div><div class="line">data.close()</div></pre></td></tr></table></figure>
-<p>运行之后，仍然有错，为何？原因在于<code>pause</code>这一行数据中没有冒号，故Python解释器在抱怨没有足够的数据来处理。如何处理呢？两种方案</p>
-<ol>
-<li>增加额外的逻辑来处理意外的情况</li>
-<li>允许这些错误发生，然后只需在各个错误发生时，相应处理即可。</li>
-</ol>
-<p><strong>方案1</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">from __future__ import print_function</div><div class="line">data = open(&apos;../resource/data.txt&apos;)</div><div class="line">for each_line in data:</div><div class="line">    if not each_line.find(&quot;:&quot;) == -1:</div><div class="line">        (role, line_spoken) = each_line.split(&apos;:&apos;)</div><div class="line">        print(role, end=&apos;&apos;)</div><div class="line">        print(&apos;said: &apos;, end=&apos;&apos;)</div><div class="line">        print(line_spoken, end=&apos;&apos;)</div><div class="line">data.close()</div></pre></td></tr></table></figure>
-<p><strong>方案2</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">from __future__ import print_function</div><div class="line">data = open(&apos;../resource/data.txt&apos;)</div><div class="line">for each_line in data:</div><div class="line">    try:</div><div class="line">        (role, line_spoken) = each_line.split(&apos;:&apos;, 1)</div><div class="line">        print(role, end=&apos;&apos;)</div><div class="line">        print(&apos;said: &apos;, end=&apos;&apos;)</div><div class="line">        print(line_spoken, end=&apos;&apos;)</div><div class="line">    except ValueError:</div><div class="line">        pass</div><div class="line">data.close()</div></pre></td></tr></table></figure>
-<p><strong>方案1和方案2哪种方案好呢？</strong></p>
-<p>使用方案1，随着考虑的情况越来越多，增加额外的逻辑代码也会越来越多，方案的复杂性随之增加，之后最后可能掩盖程序本来的作用。</p>
-<p>使用方案2，你可以关注代码真正需要什么，而不必操心哪里出现问题。</p>
-<p><strong>附上完整代码</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">from __future__ import print_function</div><div class="line">try:</div><div class="line">    data = open(&apos;../resource/data.txt&apos;)</div><div class="line">    for each_line in data:</div><div class="line">        try:</div><div class="line">            (role, line_spoken) = each_line.split(&apos;:&apos;, 1)</div><div class="line">            print(role, end=&apos;&apos;)</div><div class="line">            print(&apos;said: &apos;, end=&apos;&apos;)</div><div class="line">            print(line_spoken, end=&apos;&apos;)</div><div class="line">        except ValueError:</div><div class="line">            print(&quot;inner error&quot;)</div><div class="line">            pass</div><div class="line">    data.close()</div><div class="line">except IOError:</div><div class="line">    print(&apos;the data file is missing!&apos;)</div></pre></td></tr></table></figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">方法/关键字</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">open()</td>
-<td style="text-align:left"><code>打开一个磁盘文件</code></td>
-</tr>
-<tr>
-<td style="text-align:left">readline()</td>
-<td style="text-align:left"><code>从一个打开文件中读取一行数据</code></td>
-</tr>
-<tr>
-<td style="text-align:left">seek()</td>
-<td style="text-align:left"><code>将文件退回到起始位置</code></td>
-</tr>
-<tr>
-<td style="text-align:left">close()</td>
-<td style="text-align:left"><code>关闭之前打开的文件</code></td>
-</tr>
-<tr>
-<td style="text-align:left">split()</td>
-<td style="text-align:left"><code>将一个字符串分解为子串列表</code></td>
-</tr>
-<tr>
-<td style="text-align:left">find()</td>
-<td style="text-align:left"><code>方法会在一个字符串中查找特定子串</code></td>
-</tr>
-<tr>
-<td style="text-align:left">not</td>
-<td style="text-align:left"><code>将条件取反</code></td>
-</tr>
-<tr>
-<td style="text-align:left">try/except</td>
-<td style="text-align:left"><code>提供异常处理机制</code></td>
-</tr>
-<tr>
-<td style="text-align:left">pass</td>
-<td style="text-align:left"><code>Python的空语句或null语句，它什么也不做</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>Head First Python</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/08/19/Python之文件与异常/" data-id="citrwsptt006h6d93hkbmebgh" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
   
     <article id="post-JAVA之正则表达式" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -252,7 +140,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/08/19/JAVA之正则表达式/" data-id="citrwspr2001p6d93otodipfm" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/08/19/JAVA之正则表达式/" data-id="citsc6ost001mfc93g924eekv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li></ul>
@@ -325,7 +213,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/08/18/Python入门篇/" data-id="citrwspty006n6d93f8srdygm" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/08/18/Python入门篇/" data-id="citsc6ow3007efc93mcrnnc5d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
@@ -504,7 +392,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/08/16/JAVA之异常/" data-id="citrwspqy001l6d93qjjwajjb" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/08/16/JAVA之异常/" data-id="citsc6osz001sfc93vuw7g96c" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li></ul>
@@ -612,7 +500,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/08/14/JAVA线程池/" data-id="citrwspr8001v6d93xkbawz9j" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/08/14/JAVA线程池/" data-id="citsc6ot70021fc93tytx60fp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li></ul>
@@ -673,7 +561,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/08/14/生产者-消费者模式/" data-id="citrwspw000b76d93ed2p7v8t" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/08/14/生产者-消费者模式/" data-id="citsc6oy100bqfc93i3j9bfzr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li></ul>
@@ -825,7 +713,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/08/13/排序算法/" data-id="citrwspvy00az6d933ocv7tcy" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/08/13/排序算法/" data-id="citsc6oxz00bnfc93ybmjkz01" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
@@ -880,7 +768,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/08/13/算法入门篇/" data-id="citrwspw200ba6d93203bx5sv" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/08/13/算法入门篇/" data-id="citsc6oy300bvfc930i25orjj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
@@ -927,7 +815,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/08/13/MySQL逻辑架构/" data-id="citrwspsz004q6d93v93f883h" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/08/13/MySQL逻辑架构/" data-id="citsc6ov10052fc93lbdo9byt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MYSQL/">MYSQL</a></li></ul>
@@ -1024,7 +912,70 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/08/13/MYSQL之事务隔离级别/" data-id="citrwspsb003o6d93dp3fmanj" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/08/13/MYSQL之事务隔离级别/" data-id="citsc6oua003rfc93muqxu5aj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MYSQL/">MYSQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-MYSQL之事务" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/08/13/MYSQL之事务/" class="article-date">
+  <time datetime="2016-08-13T03:07:35.000Z" itemprop="datePublished">2016-08-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MYSQL/">MYSQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/13/MYSQL之事务/">MYSQL之事务</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h3><p>一组原子性的SQL查询，事务内的语句要么全部执行成功，要么全部执行失败。</p>
+<h3 id="场景示例"><a href="#场景示例" class="headerlink" title="场景示例"></a>场景示例</h3><p>假设一个银行的数据库有两张表:支票(checking)表和储蓄(savings)表，现在用户Jane的支票账户转移200美元到她的储蓄账户，那么需要至少三个步骤：</p>
+<ol>
+<li>检查支票账户的余额高于200美元</li>
+<li>从支票账户余额中减去200美元</li>
+<li>在储蓄账户余额中增加200美元</li>
+</ol>
+<p>上述三个步骤必须打包在一个事务中，任何一个步骤失败，则必须回滚所有的步骤。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">START TRANSACTION;</div><div class="line">SELECT balance FROM checking where customer_id =  10233276;</div><div class="line">UPDATE checking SET balance = balance - 200.00 WHERE customer_id = 10233276;</div><div class="line">UPDATE savings SET balance = balance + 200.00  WHERE customer_id = 10233276;</div><div class="line">COMMIT</div></pre></td></tr></table></figure></p>
+<p>但是….. 单纯的事务概念并不是故事的全部，可能会出现以下场景….</p>
+<blockquote>
+<ol>
+<li>执行第4条语句时，服务器崩溃了 – 可能用户会损失200美金</li>
+<li>在执行第3条语句和第4条语句之间，另外一个进程要删除支票账户的所有余额 – 银行在不知道这个逻辑的情况下， 可能白白给了Jane200美金。</li>
+</ol>
+</blockquote>
+<h3 id="如何保障事务"><a href="#如何保障事务" class="headerlink" title="如何保障事务"></a>如何保障事务</h3><p>除非系统通过严格的ACID测试，否则空谈事务的概念是远远不够的。ACID分别表示原子性、一致性、隔离性、持久性。</p>
+<p><strong>原子性(atomicity)</strong><br>一个事务必须被视为一个不可分割的最小工作单元，整个事务要么全部提交成功，要么全部失败回滚。</p>
+<p><strong>一致性(consistency)</strong><br>数据库总是从一个一致性的状态转换到另外一个一致性的状态。例如：在前面的例子中，即使在执行第3、4条语句之间系统崩溃了，支票账户也不会损失200美元，因为事务最终没有被提交，事务中所做的修改也不会保存到数据库中。</p>
+<p><strong>隔离性(isolation)</strong><br>一个事务所做的修改在最终提交以前，对其他事务是不可见的。例如：在前面的例子中，当执行完第3条语句，第4条语句还没有开始时，此时另外一个账号汇总程序开始运行，则其看到的支票账户的余额并没有被减去200美元。</p>
+<p><strong>持久性(durability)</strong><br>一旦事务提交，则其所作的修改就会永久保存到数据库中，此时即使系统崩溃，修改的数据也不会丢失。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/08/13/MYSQL之事务/" data-id="citsc6oub003wfc9399sypkhx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MYSQL/">MYSQL</a></li></ul>
@@ -1047,7 +998,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Catégories</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li></ul>
     </div>
@@ -1057,7 +1008,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/">Hystrix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Intellij-IDEA/">Intellij IDEA</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JOOQ/">JOOQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScirpt/">JavaScirpt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MYSQL/">MYSQL</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Play/">Play</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit/">Retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit2/">Retrofit2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprng-MVC/">Sprng MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thymeleaf/">Thymeleaf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思绪/">思绪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li></ul>
     </div>
@@ -1067,7 +1018,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/HTTP/" style="font-size: 17px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 12px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 10px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 11px;">Intellij IDEA</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/JOOQ/" style="font-size: 11px;">JOOQ</a> <a href="/tags/JavaScirpt/" style="font-size: 10px;">JavaScirpt</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/MYSQL/" style="font-size: 19px;">MYSQL</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/PHP/" style="font-size: 18px;">PHP</a> <a href="/tags/Play/" style="font-size: 11px;">Play</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Redis/" style="font-size: 14px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/Retrofit2/" style="font-size: 10px;">Retrofit2</a> <a href="/tags/SQL/" style="font-size: 18px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spring/" style="font-size: 12px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 16px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/Sprng-MVC/" style="font-size: 10px;">Sprng MVC</a> <a href="/tags/Thymeleaf/" style="font-size: 10px;">Thymeleaf</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/思绪/" style="font-size: 12px;">思绪</a> <a href="/tags/算法/" style="font-size: 11px;">算法</a>
     </div>
@@ -1078,7 +1029,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">25</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">25</span></li></ul>
     </div>
   </div>
 
@@ -1086,13 +1037,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
-        
-          <li>
-            <a href="/2016/10/01/test2/">test2</a>
-          </li>
         
           <li>
             <a href="/2016/09/29/规划好技术路线，如何将想法落地？/">规划好技术路线，如何将想法落地?</a>
@@ -1108,6 +1055,10 @@
         
           <li>
             <a href="/2016/09/25/Java之不可变对象/">Java之不可变对象</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/24/Java序列化/">Java序列化</a>
           </li>
         
       </ul>
@@ -1131,7 +1082,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 流云<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 

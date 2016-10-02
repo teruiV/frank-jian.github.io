@@ -51,9 +51,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://jianwl.com"></form>
@@ -63,58 +63,6 @@
 </header>
       <div class="outer">
         <section id="main">
-  
-    <article id="post-PHP字符串" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-
-    <a href="/2016/05/04/PHP字符串/" class="article-date">
-  <time datetime="2016-05-04T02:00:24.000Z" itemprop="datePublished">2016-05-04</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/PHP/">PHP</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/04/PHP字符串/">PHP字符串</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h6 id="字符串常见的函数"><a href="#字符串常见的函数" class="headerlink" title="字符串常见的函数"></a>字符串常见的函数</h6><p>chop(); 移除右端字符<br>trim()；移除左右两端字符<br>ltirm(); 移除左端字符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$msg = &quot;hello world \r\n&quot;;</div><div class="line">$name = trim($msg);</div></pre></td></tr></table></figure></p>
-<p>printf();格式化字符串<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$total = &quot;222&quot;;</div><div class="line">printf(&quot;total amount of order is %s.&quot;,$total);</div></pre></td></tr></table></figure></p>
-<p>strtoupper();将字符串转换为大写；<br>strtolower;将字符串转为小写；<br>ucfirst(); 将字符串的第一个字符转换成大写；<br>unwords()；将字符串的每个单词的第一个字符转换为大写；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$total = 111;</div><div class="line">$msg = &quot;hello wORld&quot;;</div><div class="line">echo strtoupper($msg).&quot;&lt;/br&gt;&quot;;</div><div class="line">echo strtolower($msg).&quot;&lt;/br&gt;&quot;;</div><div class="line">echo ucfirst($msg).&quot;&lt;/br&gt;&quot;;</div><div class="line">echo ucwords($msg).&quot;&lt;/br&gt;&quot;;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<p>explode() 分割字符串；<br>strok(); 分割字符串，但一次只返回一个片段；<br>implode() 指定连接符连接数组中的每个元素组成字符串；<br>join() 指定连接符连接数组中的每个元素组成字符串;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$msg = &quot;hello world!&quot;;</div><div class="line">$array = explode(&quot; &quot;,$msg);</div><div class="line">$msg3 = join(&quot;===&quot;,$array);</div><div class="line">echo $msg3;</div><div class="line"></div><div class="line">$msg = &quot;hello world!&quot;;</div><div class="line"></div><div class="line">#测试strtok();</div><div class="line">$array = strtok($msg,&quot;o&quot;);</div><div class="line">echo $array;</div><div class="line">while($array != &quot;&quot;)&#123;</div><div class="line">  $array = strtok(&quot;o&quot;);</div><div class="line">  echo &quot;====&quot;.$array;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<p>substr(); 返回部分字符串;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$msg = &quot;hello world!&quot;;</div><div class="line">echo &quot;count = &quot;.strlen($msg);</div><div class="line">echo substr($msg,0,-1).&quot;&lt;/br&gt;&quot;; //得到 hello world</div><div class="line">echo substr($msg,-5).&quot;&lt;/br&gt;&quot;; //得到 orld!</div><div class="line">echo substr($msg,0,strlen($msg)); //得到hello world!</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<p>字符串比较<br>strcmp();//按字典排序，2大于12<br>strcasecmp();//忽略大小写，按字典排序<br>strnatcmp(); //按自然排序字符串，2小于12；</p>
-<p>strlen(); //获取字符串长度<br>strstr();//查找字符串,返回从匹配关键字起的内容；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$msg = &quot;hello world!&quot;;</div><div class="line">echo strstr($msg,&quot;llo&quot;); //结果为llo world！</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<p>str_replace(string new_str,string replacement,string info); //字符串替换<br>substr_replace(string string, string replace,int start);//用字符串替换指定位置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$msg = &quot;hello world!&quot;;</div><div class="line">echo substr_replace($msg,&quot;==&quot;,-1);//结果为hello world==</div><div class="line"></div><div class="line">$msg = &quot;hello world!&quot;;</div><div class="line">echo str_replace(&quot;o&quot;,&quot;===&quot;,$msg); //结果为hell===w===rld!</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<h5 id="转义和反转义函数"><a href="#转义和反转义函数" class="headerlink" title="转义和反转义函数"></a>转义和反转义函数</h5><p>addslashes($str); //将单引号和双引号等需要转义的字符，用反斜杠转义<br>strislashes($str);//将字符串中的转义反斜杠去掉</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/05/04/PHP字符串/" data-id="citrwspt500566d93pxo7mgv7" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
   
     <article id="post-PHP语法基础" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -173,7 +121,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/05/04/PHP语法基础/" data-id="citrwspte005p6d93ovuyyckt" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/05/04/PHP语法基础/" data-id="citsc6ovi0069fc93davbzhpe" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li></ul>
@@ -221,7 +169,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/05/04/PHP数组/" data-id="citrwspta005i6d934mrfqqow" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/05/04/PHP数组/" data-id="citsc6ove0060fc93wwgmr6rk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li></ul>
@@ -284,7 +232,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/05/04/PHP读写文件/" data-id="citrwsptg005t6d93dn0yqix2" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/05/04/PHP读写文件/" data-id="citsc6ovl006dfc93svh25jzw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li></ul>
@@ -332,7 +280,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/05/04/PHP编码准则/" data-id="citrwsptd005n6d93l0r83rna" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/05/04/PHP编码准则/" data-id="citsc6ovg0066fc93k03mbv5x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li></ul>
@@ -382,7 +330,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/05/04/MySQL权限系统介绍/" data-id="citrwspsy004o6d93x3ik025m" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/05/04/MySQL权限系统介绍/" data-id="citsc6ov0004zfc93bwkavjp2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MYSQL/">MYSQL</a></li></ul>
@@ -452,7 +400,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/05/04/MYSQL练习/" data-id="citrwspst004c6d93qyup316v" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/05/04/MYSQL练习/" data-id="citsc6ouv004kfc93clzq07s6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MYSQL/">MYSQL</a></li></ul>
@@ -505,7 +453,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/05/04/MySQL配置文件设置my-ini/" data-id="citrwspt0004u6d932mnyjrof" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/05/04/MySQL配置文件设置my-ini/" data-id="citsc6ov20056fc93vdqk6q2f" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MYSQL/">MYSQL</a></li></ul>
@@ -563,7 +511,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/05/03/MYSQL数据库设计准则/" data-id="citrwspsr00476d9388mosuym" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/05/03/MYSQL数据库设计准则/" data-id="citsc6out004ffc937nvshdwt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
@@ -616,10 +564,57 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://jianwl.com/2016/05/03/PHP错误和异常处理/" data-id="citrwspti005v6d93d56huwny" class="article-share-link">Partager</a>
+      <a data-url="http://jianwl.com/2016/05/03/PHP错误和异常处理/" data-id="citsc6ovn006gfc93ffi05170" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Redis介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/05/03/Redis介绍/" class="article-date">
+  <time datetime="2016-05-03T05:46:25.000Z" itemprop="datePublished">2016-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/03/Redis介绍/">Redis介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="Redis是什么？"><a href="#Redis是什么？" class="headerlink" title="Redis是什么？"></a>Redis是什么？</h5><ul>
+<li><p>Redis是REmote DIctionary Server(远程字典服务器)的缩写，它以字典结构存储数据，并允许其他应用通过TCP协议读写字典中的内容。</p>
+</li>
+<li><p>Redis是一个开源的、高性能的基于键值对的缓存与存储系统，通过提供多种键值数据类型来适应不同的场景与存储需求；同时Redis的诸多高层级功能使其可以胜任消息队列、任务队列等不同的角色。</p>
+</li>
+</ul>
+<h5 id="Redis究竟有什么魅力吸引了如此多的用户，它有什么优势？"><a href="#Redis究竟有什么魅力吸引了如此多的用户，它有什么优势？" class="headerlink" title="Redis究竟有什么魅力吸引了如此多的用户，它有什么优势？"></a>Redis究竟有什么魅力吸引了如此多的用户，它有什么优势？</h5><h6 id="内存存储与持久化"><a href="#内存存储与持久化" class="headerlink" title="内存存储与持久化"></a>内存存储与持久化</h6><p>Redis数据库中所有的数据都存在于内存中，内存的读写速度远快于硬盘，因此Redis在性能上对比其他基于硬盘存储的数据库有非常明显的优势。将数据存储在内存也有一定的问题，比如程序退出后，内存中的数据会丢失，不过Redis提供了对持久化的支持，即可以将内存中的数据异步写入硬盘中，同时不影响继续提供服务。</p>
+<h6 id="功能丰富"><a href="#功能丰富" class="headerlink" title="功能丰富"></a>功能丰富</h6><p>Redis可以为每个键设置生存时间(Time To Live,TTL),生存时间到期后会自动被删除，同时Redis支持丰富的数据类型和持久化的功能，让Redis可以作为缓存系统来使用；作为缓存系统，Redis还可以限制数据占用的最大内存，在数据达到空间限制后，可以按一定的规则，淘汰不需要的键。</p>
+<h6 id="简单稳定"><a href="#简单稳定" class="headerlink" title="简单稳定"></a>简单稳定</h6>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/05/03/Redis介绍/" data-id="citsc6ow6007nfc93j9fw406g" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
 
     </footer>
   </div>
@@ -639,7 +634,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Catégories</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li></ul>
     </div>
@@ -649,7 +644,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/">Hystrix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Intellij-IDEA/">Intellij IDEA</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JOOQ/">JOOQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScirpt/">JavaScirpt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MYSQL/">MYSQL</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Play/">Play</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit/">Retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit2/">Retrofit2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprng-MVC/">Sprng MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thymeleaf/">Thymeleaf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思绪/">思绪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li></ul>
     </div>
@@ -659,7 +654,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/HTTP/" style="font-size: 17px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 12px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 10px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 11px;">Intellij IDEA</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/JOOQ/" style="font-size: 11px;">JOOQ</a> <a href="/tags/JavaScirpt/" style="font-size: 10px;">JavaScirpt</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/MYSQL/" style="font-size: 19px;">MYSQL</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/PHP/" style="font-size: 18px;">PHP</a> <a href="/tags/Play/" style="font-size: 11px;">Play</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Redis/" style="font-size: 14px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/Retrofit2/" style="font-size: 10px;">Retrofit2</a> <a href="/tags/SQL/" style="font-size: 18px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spring/" style="font-size: 12px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 16px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/Sprng-MVC/" style="font-size: 10px;">Sprng MVC</a> <a href="/tags/Thymeleaf/" style="font-size: 10px;">Thymeleaf</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/思绪/" style="font-size: 12px;">思绪</a> <a href="/tags/算法/" style="font-size: 11px;">算法</a>
     </div>
@@ -670,7 +665,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">25</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">25</span></li></ul>
     </div>
   </div>
 
@@ -678,13 +673,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
-        
-          <li>
-            <a href="/2016/10/01/test2/">test2</a>
-          </li>
         
           <li>
             <a href="/2016/09/29/规划好技术路线，如何将想法落地？/">规划好技术路线，如何将想法落地?</a>
@@ -700,6 +691,10 @@
         
           <li>
             <a href="/2016/09/25/Java之不可变对象/">Java之不可变对象</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/24/Java序列化/">Java序列化</a>
           </li>
         
       </ul>
@@ -723,7 +718,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 流云<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 
