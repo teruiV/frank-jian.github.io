@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Java设计模式之策略模式 | 记录点滴成长</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="设计原则
+1、逻辑代码独立到单独的方法中,注重封装性-易读，易复用;2、写类、写方法、写功能时，应考虑其移植性，复用性，防止一次性代码；3、熟练运用继承的思想:找出应用中相同之处，且不容易发生变化的东西，把它们抽取到抽象类中，让子类去继承它们；4、熟练运用接口的思想：找出应用中可能需要变化之处，把它们独立出来，不要和那些不需要变化的代码混在一起;
+
+通过以下示例，我们来感受一下设计模式的好处;场景">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java设计模式之策略模式">
+<meta property="og:url" content="http://jianwl.com/2016/05/10/Java设计模式之策略模式/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="设计原则
+1、逻辑代码独立到单独的方法中,注重封装性-易读，易复用;2、写类、写方法、写功能时，应考虑其移植性，复用性，防止一次性代码；3、熟练运用继承的思想:找出应用中相同之处，且不容易发生变化的东西，把它们抽取到抽象类中，让子类去继承它们；4、熟练运用接口的思想：找出应用中可能需要变化之处，把它们独立出来，不要和那些不需要变化的代码混在一起;
+
+通过以下示例，我们来感受一下设计模式的好处;场景">
+<meta property="og:updated_time" content="2016-10-01T13:10:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java设计模式之策略模式">
+<meta name="twitter:description" content="设计原则
+1、逻辑代码独立到单独的方法中,注重封装性-易读，易复用;2、写类、写方法、写功能时，应考虑其移植性，复用性，防止一次性代码；3、熟练运用继承的思想:找出应用中相同之处，且不容易发生变化的东西，把它们抽取到抽象类中，让子类去继承它们；4、熟练运用接口的思想：找出应用中可能需要变化之处，把它们独立出来，不要和那些不需要变化的代码混在一起;
+
+通过以下示例，我们来感受一下设计模式的好处;场景">
+  
+    <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">记录点滴成长</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://jianwl.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Java设计模式之策略模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/05/10/Java设计模式之策略模式/" class="article-date">
+  <time datetime="2016-05-10T03:37:45.000Z" itemprop="datePublished">2016-05-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java设计模式之策略模式
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h6><blockquote>
+<p>1、逻辑代码独立到单独的方法中,注重封装性-易读，易复用;<br>2、写类、写方法、写功能时，应考虑其移植性，复用性，防止一次性代码；<br>3、熟练运用继承的思想:找出应用中相同之处，且不容易发生变化的东西，把它们抽取到抽象类中，让子类去继承它们；<br>4、熟练运用接口的思想：找出应用中可能需要变化之处，把它们独立出来，不要和那些不需要变化的代码混在一起;</p>
+</blockquote>
+<p>通过以下示例，我们来感受一下设计模式的好处;<br><strong>场景：</strong><br>模拟鸭子游戏的应用程序，要求，游戏中的会出现各种颜色外形的鸭子，一边游戏洗水，一边呱呱叫。</p>
+<h6 id="实现1：一次性代码"><a href="#实现1：一次性代码" class="headerlink" title="实现1：一次性代码"></a>实现1：一次性代码</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">直接编写出各种鸭子的类：MallardDuck,RedHeadDuck各个类有三个方法：</div><div class="line">quack() 叫的方法；</div><div class="line">swim()  游水的方法；</div><div class="line">display()： 外形的方法;</div></pre></td></tr></table></figure>
+<h6 id="实现2：继承"><a href="#实现2：继承" class="headerlink" title="实现2：继承"></a>实现2：继承</h6><p>设计一个鸭子的超类，并让各个鸭子继承这个超类,将其中共同的部分提取出来，避免重复编程;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public abstract class Duck&#123;</div><div class="line">	public void quack()&#123;</div><div class="line">    	System.out.println(&quot;呱呱叫&quot;);</div><div class="line">    &#125;</div><div class="line">    public void swim()&#123;</div><div class="line">    	System.out.println(&quot;游泳&quot;);</div><div class="line">    &#125;</div><div class="line">    public abstract display(); //外观不一样，由子类决定</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class MallardDuck extends Duck&#123;</div><div class="line">	public void display()&#123;</div><div class="line">    	System.out.println(&quot;野鸭的颜色是绿色的&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class RedHeadDuc extends Duck&#123;</div><div class="line">	public void display()&#123;</div><div class="line">    	System.out.println(&quot;红头鸭的颜色是红色的&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>不幸的是，现在客户又提出了新的需求，想让鸭子飞起来。这个对于OO程序员，在简单不过了，在超类中在加一个方法就可以了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class Duck&#123;</div><div class="line">	public void quack()&#123;</div><div class="line">    	System.out.println(&quot;呱呱叫&quot;);</div><div class="line">    &#125;</div><div class="line">    public void swim()&#123;</div><div class="line">    	System.out.println(&quot;游泳&quot;);</div><div class="line">    &#125;</div><div class="line">    public void fly()&#123;</div><div class="line">    	System.out.println(&quot;飞啦&quot;);</div><div class="line">    &#125;</div><div class="line">    public abstract display(); //外观不一样，由子类决定</div><div class="line">&#125;</div><div class="line"></div><div class="line">//对于不能飞的鸭子，在子类中只需简单覆盖</div><div class="line">public class DisabledDuck extends Duck&#123;</div><div class="line">	public void display()&#123;</div><div class="line">    	System.out.println(&quot;残废鸭的颜色.&quot;);</div><div class="line">    &#125;</div><div class="line">    public void fly()&#123;</div><div class="line">		//覆盖，什么事都不做</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>实现2点评<br>对于上面的设计，你可能会发现一些弊端，如果超类有新的特性，子类都必须变动，这是我们开发最不喜欢看到的，故继承耦合性太高了。</p>
+<h6 id="实现3-接口"><a href="#实现3-接口" class="headerlink" title="实现3:接口"></a>实现3:接口</h6><p>我们把容易变化的部分提取出来并封装，来应付以后的变化，虽然代码量加大了，但可用性提高了，耦合度也降低了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">public interface Flyable()&#123;</div><div class="line">	public void fly();</div><div class="line">&#125;</div><div class="line"></div><div class="line">public interface Quackable()&#123;</div><div class="line">	public void quack();</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class Duck()&#123;</div><div class="line">	public void swim()&#123;</div><div class="line">    	System.out.println(&quot;游泳&quot;);</div><div class="line">    &#125;</div><div class="line">    public abstract void display();</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class MallardDuck extends Duck implements Flyable,Quackable&#123;</div><div class="line">	public void display()&#123;</div><div class="line">    	System.out.println(&quot;野鸭的颜色是绿色的&quot;);</div><div class="line">    &#125;</div><div class="line">    public void fly()&#123;</div><div class="line">    	System.out.println(&quot;飞啦&quot;);</div><div class="line">    &#125;</div><div class="line">    public void quack()&#123;</div><div class="line">    	System.out.println(&quot;呱呱叫&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class DisabledDuck extends Duck implements Quackable&#123;</div><div class="line">	public void display()&#123;</div><div class="line">    	System.out.println(&quot;能叫不能飞的残废鸭颜色....&quot;);</div><div class="line">    &#125;</div><div class="line">    public void quack()&#123;</div><div class="line">    	System.out.println(&quot;呱呱叫&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>实现3接口点评<br>好处是，这样的设计，降低了程序之间的耦合度；<br>缺点是，Flyable和Quackable接口一开始似乎还挺不错的，解决了问题，只有会飞的鸭子才实现Flyable,但是Java接口不具有实现代码，所以实现接口无法达到的复用。</p>
+<h6 id="实现四，策略模式"><a href="#实现四，策略模式" class="headerlink" title="实现四，策略模式"></a>实现四，策略模式</h6><p>为了要分开变化和不变化的部分，准备建立两组类,一个是Fly相关的，另一个是Quack相关的，每组类实现各自的动作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">public interface FlyBehavior&#123;</div><div class="line">	public void fly();</div><div class="line">&#125;</div><div class="line"></div><div class="line">public interface QuackBehavior&#123;</div><div class="line">	public void quack();</div><div class="line">&#125;</div><div class="line">public class FlyWithWings implements FlyBehavior&#123;</div><div class="line">	public void fly()&#123;</div><div class="line">    	System.out.println(&quot;飞啦&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">public class FlyNoWay implements FlyBehavior&#123;</div><div class="line">	public void fly()&#123;</div><div class="line">    	System.out.println(&quot;什么都不做，不会飞啊&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class Quack implements QuackBehavior&#123;</div><div class="line">	public void quack()&#123;</div><div class="line">    	System.out.println(&quot;呱呱叫&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class MuteQuack implements QuackBehavior&#123;</div><div class="line">	public void quack()&#123;</div><div class="line">    	System.out.println(&quot;什么都不做，不会叫&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样的设计可以让飞行和呱呱叫的动作被其他的对象复用，因为这些行为已经和鸭子类无关了，而我们增加一些新的行为，不会影响到既有的行为类，也不会影响使用到的飞行行为的鸭子类；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">public abstract class Duck &#123;</div><div class="line">	FlyBehavior flyBehavior;</div><div class="line">    QuackBehavior quackBehavior;</div><div class="line">    </div><div class="line">    public Duck()&#123;&#125;</div><div class="line">   </div><div class="line">    public void swim()&#123;</div><div class="line">    	System.out.println(&quot;游泳&quot;);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public abstract void display();</div><div class="line">    </div><div class="line">    public void performFly()&#123;</div><div class="line">    	flyBehavior.fly();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public void performQuack()&#123;</div><div class="line">    	quackBehavior.quack();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">public MallardDuck extends Duck&#123;</div><div class="line">	public MallardDuck()&#123;</div><div class="line">    	this.flyBehavior = new FlyWithWings();</div><div class="line">        this.quackBehavior = new MuteQuack();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public void display()&#123;</div><div class="line">    	System.out.println(&quot;鸭子是绿色的&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>实现4点评<br>即实现了解耦又实现了代码的复用；</p>
+<h6 id="策略模式定义"><a href="#策略模式定义" class="headerlink" title="策略模式定义"></a>策略模式定义</h6><p>定义了算法族，分别封装起来，让它们之间可以相互替换，此模式让算法的变化独立于使用算法的客户。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/05/10/Java设计模式之策略模式/" data-id="citzwuib10031hp938wengub0" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/10/Java设计模式之观察者模式/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          Java设计模式之观察者模式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/09/Redis之集合并集、交集、差集/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">Redis之集合并集、交集、差集</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-Java设计模式之策略模式" data-title="Java设计模式之策略模式" data-url="http://jianwl.com/2016/05/10/Java设计模式之策略模式/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'jianwl'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Catégories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/">Hystrix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Intellij-IDEA/">Intellij IDEA</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JOOQ/">JOOQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScirpt/">JavaScirpt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MYSQL/">MYSQL</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Play/">Play</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit/">Retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit2/">Retrofit2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprng-MVC/">Sprng MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thymeleaf/">Thymeleaf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思绪/">思绪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/HTTP/" style="font-size: 17px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 12px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 10px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 11px;">Intellij IDEA</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/JOOQ/" style="font-size: 11px;">JOOQ</a> <a href="/tags/JavaScirpt/" style="font-size: 10px;">JavaScirpt</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/MYSQL/" style="font-size: 19px;">MYSQL</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/PHP/" style="font-size: 18px;">PHP</a> <a href="/tags/Play/" style="font-size: 11px;">Play</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Redis/" style="font-size: 14px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/Retrofit2/" style="font-size: 10px;">Retrofit2</a> <a href="/tags/SQL/" style="font-size: 18px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spring/" style="font-size: 12px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 16px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/Sprng-MVC/" style="font-size: 10px;">Sprng MVC</a> <a href="/tags/Thymeleaf/" style="font-size: 10px;">Thymeleaf</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/思绪/" style="font-size: 12px;">思绪</a> <a href="/tags/算法/" style="font-size: 11px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">25</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/09/29/规划好技术路线，如何将想法落地？/">规划好技术路线，如何将想法落地?</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/29/天天写「业务代码」，如何成为「技术大牛」/">天天写「业务代码」，如何成为「技术大牛」</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/25/多线程设计模式之保护性暂挂-Guarged-Suspension/">多线程设计模式之保护性暂挂(Guarged Suspension)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/25/Java之不可变对象/">Java之不可变对象</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/24/Java序列化/">Java序列化</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_pv">
+<h3 class="widget-title">访问量</h3>
+<div class="widget"> 本站总访问量<span id="busuanzi_value_site_pv"></span>次 </div>
+</span>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 流云<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

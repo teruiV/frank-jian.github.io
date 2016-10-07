@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>记录点滴成长</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="每天进步一点">
+<meta property="og:type" content="website">
+<meta property="og:title" content="记录点滴成长">
+<meta property="og:url" content="http://jianwl.com/page/11/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="每天进步一点">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记录点滴成长">
+<meta name="twitter:description" content="每天进步一点">
+  
+    <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">记录点滴成长</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://jianwl.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-PHP浅拷贝和深拷贝分析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/05/03/PHP浅拷贝和深拷贝分析/" class="article-date">
+  <time datetime="2016-05-03T04:03:16.000Z" itemprop="datePublished">2016-05-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/PHP/">PHP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/03/PHP浅拷贝和深拷贝分析/">PHP浅拷贝和深拷贝分析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在PHP中，对象的赋值实际上是引用操作，比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class person&#123;</div><div class="line"> public $name;</div><div class="line">&#125;</div><div class="line">$person1 = new person();</div><div class="line">$person1-&gt;name = &quot;zhangsan&quot;;</div><div class="line">$person2 = $person1;</div><div class="line">$person2-&gt;name = &quot;lisi&quot;;</div><div class="line"></div><div class="line">echo &quot;person1-&gt;name = &quot;.$person1-&gt;name.&quot; person2-&gt;name = &quot;.$person2-&gt;name;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>因为person1和person2都只是指向同一个内存区的引用,所以修改任何一个对象都会同时修改另外一个对象.</p>
+<p>在有些时候，我们其实并不希望这种引用的赋值方式，我们希望能完全复制一个对象，这时候就需要用到php中的clone（对象的复制);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class person&#123;</div><div class="line"> public $name;</div><div class="line">&#125;</div><div class="line">$person1 = new person();</div><div class="line">$person1-&gt;name = &quot;zhangsan&quot;;</div><div class="line">$person2 = clone $person1;</div><div class="line">$person2-&gt;name = &quot;lisi&quot;;</div><div class="line"></div><div class="line">echo &quot;person1-&gt;name = &quot;.$person1-&gt;name.&quot; person2-&gt;name = &quot;.$person2-&gt;name;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>因为clone的方式实际上是对整个对象的内存区域，进行了一次复制并用新的对象变量指向新的内存，因此赋值后的对象和源对象之间基本上说是独立的。</p>
+<p>这是什么意思？因为PHP中的对象拷贝采用的是浅拷贝的方法，如果对象里的属性成员本身就是引用类型的，clone以后这些成员并没有真正被复制，仍然是引用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class address&#123;</div><div class="line"> public $palace;</div><div class="line"> public $no;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class person&#123;</div><div class="line">public $name;</div><div class="line">public $address;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$address = new address();</div><div class="line">$address-&gt;palace = &quot;shanghai&quot;;</div><div class="line">$address-&gt;no = 21;</div><div class="line"></div><div class="line">$person1 = new person();</div><div class="line">$person1-&gt;name = &quot;zhangsan&quot;;</div><div class="line">$person1-&gt;address = $address;</div><div class="line"></div><div class="line">$person2 = clone $person1;</div><div class="line"></div><div class="line">echo &quot;before modify person1 name = &quot;.$person1-&gt;name.&quot; palace = &quot;.$person1-&gt;address-&gt;palace.&quot; &lt;br/&gt;person2 name = &quot;.$person2-&gt;name.&quot; person2 palace = &quot;.$person2-&gt;address-&gt;palace. &quot;&lt;br/&gt;&quot;;</div><div class="line"></div><div class="line">echo &quot;=====================================&lt;br/&gt;&quot;;</div><div class="line"></div><div class="line">$person2-&gt;address-&gt;no = 33;</div><div class="line">$person2-&gt;address-&gt;palace = &quot;beijing&quot;;</div><div class="line">$person2-&gt;name = &quot;lisi&quot;;</div><div class="line"></div><div class="line">echo &quot;aflter modify person1 name = &quot;.$person1-&gt;name.&quot; palace = &quot;.$person1-&gt;address-&gt;palace.&quot; &lt;br/&gt;person2 name = &quot;.$person2-&gt;name.&quot; person2 palace = &quot;.$person2-&gt;address-&gt;palace. &quot;&lt;br/&gt;&quot;; //结果为 person1-&gt;address-&gt;palace = &quot;beijing&quot;, person2-&gt;address-&gt;palace = &quot;beijing&quot;;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>一般来讲，你用clone来复制对象，希望把两个对象彻底分开，不希望他们之间有任何关联，但由于clone的浅拷贝的特性，有时候会出现非期望的结果，就像上面的例子那样。<br>$person1 -&gt;address = $address;这句话是引用类型的赋值，person1-&gt;address和person2-&gt;address 实际上是指向同一个内存区对象的数据引用，因此修改其中任何一个都会影响其他两个。</p>
+<p>如何解决这个问题呢？以下采用两种方法来解决：</p>
+<ul>
+<li>在上面的代码中，添加address的对象拷贝即可，但治标不治本;</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$person2-&gt;address = clone $person1-&gt;address;</div></pre></td></tr></table></figure>
+<ul>
+<li>采用PHP中的__clone方法把浅拷贝转换为深拷贝</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class address&#123;</div><div class="line"> public $palace;</div><div class="line"> public $no;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class person&#123;</div><div class="line">public $name;</div><div class="line">public $address;</div><div class="line"></div><div class="line">public function __clone()&#123;</div><div class="line"> $this-&gt;address = clone $this-&gt;address; //深拷贝的引用;</div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">$address = new address();</div><div class="line">$address-&gt;palace = &quot;shanghai&quot;;</div><div class="line">$address-&gt;no = 21;</div><div class="line"></div><div class="line">$person1 = new person();</div><div class="line">$person1-&gt;name = &quot;zhangsan&quot;;</div><div class="line">$person1-&gt;address = $address;</div><div class="line"></div><div class="line">$person2 = clone $person1;</div><div class="line">echo &quot;before modify person1 name = &quot;.$person1-&gt;name.&quot; palace = &quot;.$person1-&gt;address-&gt;palace.&quot; &lt;br/&gt;person2 name = &quot;.$person2-&gt;name.&quot; person2 palace = &quot;.$person2-&gt;address-&gt;palace. &quot;&lt;br/&gt;&quot;;</div><div class="line"></div><div class="line">echo &quot;=====================================&lt;br/&gt;&quot;;</div><div class="line">$person2-&gt;address-&gt;no = 33;</div><div class="line">$person2-&gt;address-&gt;palace = &quot;beijing&quot;;</div><div class="line">$person2-&gt;name = &quot;lisi&quot;;</div><div class="line"></div><div class="line">echo &quot;aflter modify person1 name = &quot;.$person1-&gt;name.&quot; palace = &quot;.$person1-&gt;address-&gt;palace.&quot; &lt;br/&gt;person2 name = &quot;.$person2-&gt;name.&quot; person2 palace = &quot;.$person2-&gt;address-&gt;palace. &quot;&lt;br/&gt;&quot;;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/05/03/PHP浅拷贝和深拷贝分析/" data-id="citzwuicj005ihp93el0urh5o" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-PHP面向对象基础知识" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/05/03/PHP面向对象基础知识/" class="article-date">
+  <time datetime="2016-05-03T01:33:00.000Z" itemprop="datePublished">2016-05-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/PHP/">PHP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/03/PHP面向对象基础知识/">PHP面向对象基础知识</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="类"><a href="#类" class="headerlink" title="类"></a>类</h5><p>对象直接彼此互不相同，但具有一些共同点的对象集合</p>
+<h5 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h5><p>举个例子，我的自行车可以被认为自行车类的一个对象，他拥有所有自行车的共同特征；</p>
+<h5 id="多态性"><a href="#多态性" class="headerlink" title="多态性"></a>多态性</h5><p>不同的类对同一个操作可以有不同的行为；</p>
+<h5 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h5><p>在已有类的基础上创建新类，新类包含已有类的所有的方法和属性且可以添加新的方法；PHP中只支持单重继承类，不支持多重继承类；要实现多次继承可以通过接口；</p>
+<h5 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h5><p>初始化对象和属性,其名称必须是 __constructor().<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">class classname</div><div class="line">	function __construct($param)&#123;</div><div class="line">       echo &quot;Constructor called with parameter&quot;.$param.&quot;&lt;/br&gt;&quot;;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h5 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h5><p>在销毁一个类之前执行的操作，在类的引用被重置或者超出作用域时<strong>自动发生</strong>。</p>
+<h5 id="访问权限"><a href="#访问权限" class="headerlink" title="访问权限"></a>访问权限</h5><ul>
+<li>public ,设置为public的属性和方法，可以在类的内部和外部使用；</li>
+<li>private,设置为private的属性和方法，只能在类的内部进行访问,方法和属性将不会被继承；</li>
+<li>protected,设置为protected的属性和方法，在类的子类和类的内部中可以进行访问；<br>注：未指明方法默认为public权限，属性一定要声明访问权限否则会报错;</li>
+</ul>
+<h5 id="final关键字"><a href="#final关键字" class="headerlink" title="final关键字"></a>final关键字</h5><ul>
+<li>在函数前加final，这个函数将不能被在子类中被重载；</li>
+<li>在类前加final，这个类将不能被继承;</li>
+</ul>
+<h5 id="Per-class常量"><a href="#Per-class常量" class="headerlink" title="Per-class常量"></a>Per-class常量</h5><p>使用操作符::指定常量所属的类来访问Per-class变量;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">  class Math&#123;</div><div class="line">  	const pi = 3.14;</div><div class="line">  &#125;</div><div class="line">  echo &quot;Math :: pi = &quot;.Math::pi.&quot;\n&quot;;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<h5 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h5><p>在方法前添加static关键字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class Math&#123;</div><div class="line">   static function squared($input)&#123;</div><div class="line">   	return $input *$input;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">echo Math::squared(8);</div></pre></td></tr></table></figure></p>
+<h5 id="检查类的类型和类型提示"><a href="#检查类的类型和类型提示" class="headerlink" title="检查类的类型和类型提示"></a>检查类的类型和类型提示</h5><p>instanceof可以检查一个对象是否是特定类的实例;是否实现了某个接口；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class A&#123;</div><div class="line"> public function method1()&#123;</div><div class="line">   echo &quot;method1&quot;;</div><div class="line"> &#125;</div><div class="line">&#125;</div><div class="line">interface C &#123;</div><div class="line">  public function method3();</div><div class="line">&#125;</div><div class="line"></div><div class="line">class B extends A implements C&#123;</div><div class="line"> function method2()&#123;</div><div class="line">    echo &quot;method2&quot;;</div><div class="line"> &#125;</div><div class="line"> function method3()&#123;</div><div class="line">     echo &quot;method3&quot;;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$b = new B();</div><div class="line">$a = new A();</div><div class="line"></div><div class="line">if($b instanceof A)&#123;</div><div class="line">   echo &quot;\$a is an object of B &lt;br/&gt;&quot;;</div><div class="line"></div><div class="line">&#125;else&#123;</div><div class="line">   echo &quot;\$a is not an object of B&lt;br/&gt;&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">if($b instanceof C)&#123;</div><div class="line">   echo &quot;\$b implements interface c&quot;;</div><div class="line">&#125;else &#123;</div><div class="line">   echo &quot;\$b don&apos;t implements interface c&quot;;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<h5 id="类提示的思想"><a href="#类提示的思想" class="headerlink" title="类提示的思想"></a>类提示的思想</h5><p>指定参数传入的类型，如果不是传入该类型参数将报错；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">function check_hint(B $someclass)&#123;&#125;; //如果传入的参数类型不是B的实例，将报错;</div></pre></td></tr></table></figure></p>
+<h5 id="延迟静态绑定"><a href="#延迟静态绑定" class="headerlink" title="延迟静态绑定"></a>延迟静态绑定</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//输出的结果为 who method of class B;</div><div class="line">&lt;?php</div><div class="line">class A&#123;</div><div class="line">   public static function who()&#123;</div><div class="line">     echo &quot;who method of class A&quot;;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   public static function test()&#123;</div><div class="line">     echo static::who(); //here comes later static binding;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class B extends A&#123;</div><div class="line">   public static function who()&#123;</div><div class="line">     echo &quot;who method of class B&quot;;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">B::test();</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h5 id="call方法"><a href="#call方法" class="headerlink" title="call方法"></a>call方法</h5><p> call方法用来监控一个对象中的其他方法，如果试着调用一个对象中不存在或被权限控制中的方法，__call方法将被自动调用;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class A&#123;</div><div class="line">  public function __call($name,$arguments)&#123;</div><div class="line">     echo &quot;call of method is =&gt;&quot;.$name.&quot; &lt;br/&gt;&quot;;</div><div class="line">     echo &quot;arguments is&quot;.implode(&quot;,&quot;,$arguments).&quot;&lt;br/&gt;&quot;;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">$a = new A();</div><div class="line">$a-&gt;callMe(&quot;bac&quot;,&quot;123&quot;,&quot;www&quot;);</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<h5 id="类转换为字符串"><a href="#类转换为字符串" class="headerlink" title="类转换为字符串"></a>类转换为字符串</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">class A&#123;</div><div class="line">public $name;</div><div class="line">function __toString()&#123;</div><div class="line"> return (var_export($this,TRUE));</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">$a = new A();</div><div class="line">$a-&gt;name = &quot;zhangsan&quot;;</div><div class="line">$a-&gt;__toString();</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/05/03/PHP面向对象基础知识/" data-id="citzwuics005uhp93c5t2fmj4" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SQL数据类型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/04/29/SQL数据类型/" class="article-date">
+  <time datetime="2016-04-29T11:37:57.000Z" itemprop="datePublished">2016-04-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/29/SQL数据类型/">SQL数据类型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">CHAR		1~255个字符的定长字符串，它的长度必须在创建时规定</div><div class="line">NCHAR		CHAR的特殊形式，用来支持多字节或Unicode字符</div><div class="line">NVARCHAR	TEXT的特殊形式，用来支持多字节或Unicode字符</div><div class="line">TEXT(也称 VARCHAR) 边长文本</div></pre></td></tr></table></figure>
+<h5 id="变长字符串和定长字符串的区别？"><a href="#变长字符串和定长字符串的区别？" class="headerlink" title="变长字符串和定长字符串的区别？"></a>变长字符串和定长字符串的区别？</h5><p>边长字符串存储任意长度的文本，其最大长度随不同的数据类型和DBSM而变化<br>定长字符串接收长度固定的字符串，其长度是在创建表时指定的</p>
+<h5 id="为何不全用变长字符串？"><a href="#为何不全用变长字符串？" class="headerlink" title="为何不全用变长字符串？"></a>为何不全用变长字符串？</h5><p>DBSM处理定长字符串的速度比处理变长的快，所以许多DBSM不允许对变长列进行索引。</p>
+<h5 id="数值数据类型"><a href="#数值数据类型" class="headerlink" title="数值数据类型"></a>数值数据类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">BIT		 单个二进制位值，或者为0或者为1</div><div class="line">DECIMAL	 定点或精读可变的浮点值</div><div class="line">FLOAT    浮点值</div><div class="line">INT	     4字节整数值	支持-2147483648~2147483647的值</div><div class="line">REAL     4字节浮点值</div><div class="line">SMALLINT 2字节整数值，支持-32768~32767的值</div><div class="line">TINYINT  1字节整数值，支持0~255的值</div></pre></td></tr></table></figure>
+<h5 id="日期和时间数据类型"><a href="#日期和时间数据类型" class="headerlink" title="日期和时间数据类型"></a>日期和时间数据类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">DATE	      日期值</div><div class="line">DATETIME      日期时间值</div><div class="line">SMALLDATETIME 日期时间，精确到分</div><div class="line">TIME	      时间值</div></pre></td></tr></table></figure>
+<h5 id="二进制数据类型"><a href="#二进制数据类型" class="headerlink" title="二进制数据类型"></a>二进制数据类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">BINARY 		定长二进制数据，最大长度255B到8000B</div><div class="line">LONG RAW	变长二进制数据,最长2GB</div><div class="line">RAW			定长二进制数据，最多255B</div><div class="line">VARBINARY   变长二进制数据，最大长度255B到8000B</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/04/29/SQL数据类型/" data-id="citzwuidp007ohp93hkwkqclv" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SQL事务处理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/04/29/SQL事务处理/" class="article-date">
+  <time datetime="2016-04-29T11:37:42.000Z" itemprop="datePublished">2016-04-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/29/SQL事务处理/">SQL事务处理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="什么是事务？"><a href="#什么是事务？" class="headerlink" title="什么是事务？"></a>什么是事务？</h5><p>事务，可以保证一组操作中，不会中途停止，它们要么全部执行，要么就不执行。</p>
+<h1 id="事务处理的术语"><a href="#事务处理的术语" class="headerlink" title="事务处理的术语"></a>事务处理的术语</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">事务(transaction) 指一组SQL语句</div><div class="line">回退(rollback) 指撤销指定SQL语句的过程</div><div class="line">提交(commit) 指将未存储的SQL语句结果写入到数据库表</div><div class="line">保存点(savepoint) 指事务处理中设置的临时占位符，可以对它发布回退。</div></pre></td></tr></table></figure>
+<h5 id="可以回退哪些语句？"><a href="#可以回退哪些语句？" class="headerlink" title="可以回退哪些语句？"></a>可以回退哪些语句？</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">事务处理用来管理INSERT、UPDATE、DELETE语句，不能回退SELECT、CREATE、DROP操作。</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/04/29/SQL事务处理/" data-id="citzwuidf0077hp93ktg23dtx" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SQL存储过程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/04/29/SQL存储过程/" class="article-date">
+  <time datetime="2016-04-29T07:16:39.000Z" itemprop="datePublished">2016-04-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/29/SQL存储过程/">SQL存储过程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h4><p>用户定义的一系列SQL语句的集合，设计特定表和其他对象的任务，用户可以调用存储过程。</p>
+<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><p>通常是数据库已定义的方法，它接收参数并返回魔种类型的值并不涉及特定用户表.</p>
+<h4 id="存储过程和函数的区别"><a href="#存储过程和函数的区别" class="headerlink" title="存储过程和函数的区别"></a>存储过程和函数的区别</h4><ol>
+<li>函数只能通过RETURN语句返回单个值或对象，而存储过程不允许执行RETURN，它通过OUT参数返回多个值</li>
+<li>函数可以嵌入SQL中使用，可以在SELECT中调用，而存储过程不行</li>
+<li>存储过程实现的功能复杂一些，而函数的实现功能针对性更强一些</li>
+<li>函数限制比较多，比如不能用临时表，只能用表变量，而存储过程的限制相对少一些。</li>
+</ol>
+<h4 id="存储过程的优点"><a href="#存储过程的优点" class="headerlink" title="存储过程的优点"></a>存储过程的优点</h4><ul>
+<li>通过把处理封装在容易使用的单元中，简化复杂的操作</li>
+<li>多个开发人员使用同一存储过程，保证了数据的一致性；</li>
+<li>简化对变动的管理，如果业务逻辑有变化，只需要改动存储过程的代码，使用它的人员甚至都不需要知道这些变化。</li>
+<li>因为存储过程通常以编译过的形式存储，而且性能更高；</li>
+</ul>
+<h4 id="存储过程的缺点"><a href="#存储过程的缺点" class="headerlink" title="存储过程的缺点"></a>存储过程的缺点</h4><ul>
+<li>不同DBMS的存储过程语法不同，移植性较差；</li>
+<li>编写存储过程比编写简单SQL语句复杂，要求比较高；</li>
+</ul>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"># 创建存储过程</div><div class="line">CREATE PROCEDURE productpricing()</div><div class="line">BEGIN</div><div class="line">	SELECT AVG(prod_price) AS priceaverage</div><div class="line">    FROM products;</div><div class="line">END;</div><div class="line"></div><div class="line"># 调用存储过程</div><div class="line">CALL productpricing();</div><div class="line"></div><div class="line"># 删除存储过程</div><div class="line"></div><div class="line">DROP PROCEDURE productpricing();</div><div class="line"></div><div class="line"># 使用参数</div><div class="line">CREATE PROCEDURE productpricing(</div><div class="line">	OUT pl DECIMAL(8,2),</div><div class="line">    OUT ph DECIMAL(8,2),</div><div class="line">    OUT pa DECIMAL(8,2)</div><div class="line">)</div><div class="line">BEGIN</div><div class="line">	SELECT Min(prod_price)</div><div class="line">    INTO pl</div><div class="line">    FROM products;</div><div class="line">    SELECT Max(prod_price)</div><div class="line">    INTO ph</div><div class="line">    FROM products;</div><div class="line">	SELECT AVG(prod_price)</div><div class="line">    INTO pa</div><div class="line">    FROM products;</div><div class="line">END;</div><div class="line"></div><div class="line">提示：DECIMAL(8,2)表示输出的数总共有8位，小数点有2位；</div><div class="line"></div><div class="line"># 调用，所有MYSQL变量名都必须以@开始</div><div class="line">CALL productpricing(@pricelow,@pricehigh,@priceaverage);</div><div class="line"></div><div class="line"># 显示</div><div class="line">SELECT @pricelow,@pricehigh,@priceaverage;</div><div class="line"></div><div class="line"># IN、OUT 参数</div><div class="line">CREATE PROCEDURE ordertotal(</div><div class="line">	IN onumber INT,</div><div class="line">    OUT ototal DECIMAL(8,2)</div><div class="line">)</div><div class="line">BEGIN</div><div class="line">	SELECT SUM(item_price * quantity)</div><div class="line">    FROM orderitems</div><div class="line">    WHERE order_num = onumber;</div><div class="line">    INTO ototal;</div><div class="line">END;</div><div class="line"></div><div class="line"># 调用</div><div class="line">CALL ordertotal(20005,@ototal);</div><div class="line"></div><div class="line"># 显示</div><div class="line">SELECT @ototal;</div><div class="line"></div><div class="line">提示：</div><div class="line">IN、OUT参数相当于高级语言中的函数的传值和传引用</div><div class="line">DECLARE定义局部变量</div><div class="line">SHOW PROCEDURE STATUS 可以查看存储过程列表</div></pre></td></tr></table></figure>
+<p>参考资料：<br><a href="http://fqk.io/mysql-proceduce-function-diff/" target="_blank" rel="external">MySQL 存储过程和函数区别</a><br><a href="http://fqk.io/note-mysql-5/" target="_blank" rel="external">MySQL 笔记 5</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/04/29/SQL存储过程/" data-id="citzwuidk007ghp93mowqr8tl" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SQL视图" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/04/29/SQL视图/" class="article-date">
+  <time datetime="2016-04-29T06:47:16.000Z" itemprop="datePublished">2016-04-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/29/SQL视图/">SQL视图</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="什么是视图？"><a href="#什么是视图？" class="headerlink" title="什么是视图？"></a>什么是视图？</h4><p>视图是虚拟的表，只包含使用时动态检索的查询，同时视图本身是不包含数据的，返回的数据是从其他表检索出来的。</p>
+<h4 id="使用视图的好处？"><a href="#使用视图的好处？" class="headerlink" title="使用视图的好处？"></a>使用视图的好处？</h4><ul>
+<li>保护数据，只让开发者看到表中的部分数据；</li>
+<li>更改数据格式和表示，视图可返回与底层数据表的表示和格式不同的数据；</li>
+<li>重用SQL；</li>
+<li>简化复杂的SQL,在编写查询后，可以方便的重写它而不必知道其他查询细节</li>
+<li>可以嵌套查询，支持子查询；</li>
+</ul>
+<h4 id="视图的规则"><a href="#视图的规则" class="headerlink" title="视图的规则"></a>视图的规则</h4><ol>
+<li>视图需唯一命名</li>
+<li>创建视图，必须具有足够的权限</li>
+<li>视图不能索引，也不能关联触发器或默认值</li>
+<li>视图可以和表一起使用</li>
+<li>创建视图的数目没有限制</li>
+<li>ORDER BY 可以用在视图中，若SELECT语句中也有ORDER BY，则会覆盖视图中的ORDER BY</li>
+<li>视图可以嵌套</li>
+<li>视图只做只读查询，不能将数据写回底层表；</li>
+</ol>
+<h4 id="视图的缺点"><a href="#视图的缺点" class="headerlink" title="视图的缺点"></a>视图的缺点</h4><p>因为视图不包含数据，所以每次使用视图是，都必须处理查询执行时的所有检索。如果使用多个联结和过滤创建了复杂的视图或者嵌套视图，性能可能下降的很厉害。</p>
+<h4 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h4><p>视图一般只用于检索，而不用于更新</p>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># 创建视图</div><div class="line">CREATE VIEW ProductCustomers AS</div><div class="line">SELECT cust_name,cust_contact,prod_id</div><div class="line">FROM Customers,Orders,OrderItems</div><div class="line">WHERE Customers.cust_id = Orders.cust_id</div><div class="line">AND OrderItems.order_num = Orders.order_num ;</div><div class="line"></div><div class="line"># 查询视图数据</div><div class="line">SELECT * FROM ProductCustomers;</div><div class="line"></div><div class="line"># 移除视图</div><div class="line">DROP VIEW ProductCustomers;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/04/29/SQL视图/" data-id="citzwuidv0084hp93wyg7fkyn" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SQL创建表" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/04/29/SQL创建表/" class="article-date">
+  <time datetime="2016-04-29T06:40:38.000Z" itemprop="datePublished">2016-04-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/29/SQL创建表/">SQL创建表</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"># 创建表</div><div class="line">CREATE TABLE Products(</div><div class="line"> prod_id	CHAR(10)	NOT NULL,</div><div class="line"> vend_id	CHAR(10) 	NOT NULL,</div><div class="line"> prod_name	CHAR(254)	DEFAULT &apos;xxx&apos;,</div><div class="line"> PRIMARY KEY  (prod_id)</div><div class="line">)ENGINE=InnoDB;</div><div class="line"></div><div class="line"># 创建索引</div><div class="line">CREATE INDEX indexname ON Products(prod_name);</div><div class="line"></div><div class="line"># 索引的作用</div><div class="line">1、索引用于数据过滤和数据排序</div><div class="line">2、索引改善检索操作性能，但降低了数据插入、修改、删除的性能；</div><div class="line">3、索引要占大量的存储空间</div><div class="line"></div><div class="line"></div><div class="line"># 添加列</div><div class="line">ALTER TABLE Products ADD prod_price INT;</div><div class="line"></div><div class="line"># 删除列</div><div class="line">ALTER TABLE Products DROP COLUMN prod_price;</div><div class="line"></div><div class="line">特别注意：更新/删除表之前最好做一个完整的备份，数据库的更改不能撤销;</div><div class="line"></div><div class="line">#定义外键</div><div class="line">ALTER TABLE Products</div><div class="line">ADD CONSTRAINT vend_id</div><div class="line">FOREIGN KEY(vend_id) REFERENCES Vendor(vend_id);</div><div class="line"></div><div class="line">#定义外键的好处</div><div class="line">两张表关联,保证数据的一致性</div><div class="line"></div><div class="line">#创建外键的条件</div><div class="line">外键是表中的一列，其值必须列在另一表的主键中；</div><div class="line"></div><div class="line">#重命名表</div><div class="line">RENAME TABLE Customers TO customers;</div></pre></td></tr></table></figure>
+<h5 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h5><p>唯一标识表示表中的每一行的列；</p>
+<h5 id="NOT-NULL"><a href="#NOT-NULL" class="headerlink" title="NOT NULL"></a>NOT NULL</h5><p>指定列名不为空；</p>
+<h5 id="DEFAULT"><a href="#DEFAULT" class="headerlink" title="DEFAULT"></a>DEFAULT</h5><p>插入时，如果不给出值，自动采用默认值,MYSQL中默认值只支持常量，不允许使用函数</p>
+<h5 id="引擎类型"><a href="#引擎类型" class="headerlink" title="引擎类型"></a>引擎类型</h5><ul>
+<li>InnoDB是一个可靠的事务处理引擎，它不支持全文搜索</li>
+<li>MEMORY在功能等同于MYISAM，但由于数据存储在内存中，速度很快(适合创建临时表)</li>
+<li>MyISAM是一个性能极高的引擎，它支持全文搜索，但不支持事务处理</li>
+<li>引擎可以混用，但外键不能跨引擎</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/04/29/SQL创建表/" data-id="citzwuidh007bhp93hkilo97z" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SQL更新删除数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/04/29/SQL更新删除数据/" class="article-date">
+  <time datetime="2016-04-29T05:43:53.000Z" itemprop="datePublished">2016-04-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/29/SQL更新删除数据/">SQL更新删除数据</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>UPDATE<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 更新一条数据</div><div class="line">UPDATE Customers SET cust_email = &quot;kim@163.com&quot; WHERE cust_id = &quot;10005&quot;;</div><div class="line"></div><div class="line">特别注意：别忘了WHERE条件，否则将影响整张表;</div></pre></td></tr></table></figure></p>
+<p>DELETE<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># 删除一条记录</div><div class="line">DELETE FROM Customers WHERE cust_id = &quot;10006&quot;;</div><div class="line"></div><div class="line">特别注意：别忘了WHERE条件，否则将删除整张表,推荐先用SELECT查询需要删除的记录，再执行删除操作;</div><div class="line"></div><div class="line">#删除整个表</div><div class="line">DROP TABLE Customers;</div><div class="line"></div><div class="line"># 外键的好处</div><div class="line">使用外键确保完整性的好处是，可以防止删除某个关系需要用到的行。</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/04/29/SQL更新删除数据/" data-id="citzwuidr007thp931n0de40n" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SQL插入数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/04/29/SQL插入数据/" class="article-date">
+  <time datetime="2016-04-29T04:49:09.000Z" itemprop="datePublished">2016-04-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/29/SQL插入数据/">SQL插入数据</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>INSERT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">INSERT INTO Customers VALUES(NULL, &apos;张三&apos;);</div><div class="line"></div><div class="line"># 推荐更安全、扩展性更好的方式</div><div class="line">INSERT INTO Customers(cust_id, cust_name) VALUES(NULL, &apos;张三&apos;);</div><div class="line"></div><div class="line"># 进一步，无需插入 AUTO_INCREMENT属性的列</div><div class="line">INSERT INTO Customers(cust_name) VALUES(&apos;张三&apos;);</div><div class="line"></div><div class="line"># 插入多条数据，单条语句插入比多次语句性能更高</div><div class="line">INSERT INTO Customers(cust_name) VALUES(&apos;张三&apos;),(&apos;李四&apos;);</div><div class="line"></div><div class="line"># 插入检索出来的数据</div><div class="line">INSERT INTO Customers(cust_id,cust_name) SELECT cust_id,cust_name FROM Old_Customers;</div><div class="line"></div><div class="line"># 从一个表复制到另外一个表</div><div class="line">CREATE TABLE CustCopy AS SELECT * FROM Customers;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/04/29/SQL插入数据/" data-id="citzwuidj007dhp934gouywek" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-MYSQL数据库无法插入中文" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/04/29/MYSQL数据库无法插入中文/" class="article-date">
+  <time datetime="2016-04-29T04:31:48.000Z" itemprop="datePublished">2016-04-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/29/MYSQL数据库无法插入中文/">MYSQL数据库无法插入中文</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="MYSQL无法插入中文，报Incorrect-string-value-‘-xD5-xC5-xC8-xFD’错误"><a href="#MYSQL无法插入中文，报Incorrect-string-value-‘-xD5-xC5-xC8-xFD’错误" class="headerlink" title="MYSQL无法插入中文，报Incorrect string value: ‘\xD5\xC5\xC8\xFD’错误"></a>MYSQL无法插入中文，报Incorrect string value: ‘\xD5\xC5\xC8\xFD’错误</h5><p><code>mysql&gt; status;</code><br><img src="/images/mysql中文无法插入.png" alt=""></p>
+<h5 id="使用的库的字符集是latin1，该字符集不支持中文字符"><a href="#使用的库的字符集是latin1，该字符集不支持中文字符" class="headerlink" title="使用的库的字符集是latin1，该字符集不支持中文字符"></a>使用的库的字符集是latin1，该字符集不支持中文字符</h5><p><code>mysql&gt; show CREATE TABLE person1;</code><br><img src="/images/mysql中文无法插入2.png" alt=""></p>
+<h5 id="修改表字符集"><a href="#修改表字符集" class="headerlink" title="修改表字符集"></a>修改表字符集</h5><p><code>mysql&gt; ALTER TABLE person1 character set utf8;</code></p>
+<p><code>mysql&gt; show CREATE TABLE person1;</code><br><img src="/images/mysql中文无法插入3.png" alt=""></p>
+<h5 id="修改字段字符集"><a href="#修改字段字符集" class="headerlink" title="修改字段字符集"></a>修改字段字符集</h5><p><code>mysql&gt; ALTER TABLE person1 modify name varchar(20) character set utf8;</code><br><img src="/images/mysql中文无法插入4.png" alt=""></p>
+<h5 id="这时在windows下的CMD控制台的MYSQL中执行"><a href="#这时在windows下的CMD控制台的MYSQL中执行" class="headerlink" title="这时在windows下的CMD控制台的MYSQL中执行"></a>这时在windows下的CMD控制台的MYSQL中执行</h5><p><code>mysql&gt;INSERT INTO person1(id,name,age) VALUES (7,&#39;张三&#39;,21);</code><br><img src="/images/mysql中文无法插入5.png" alt=""></p>
+<h5 id="发现仍然报错，什么原因呢？"><a href="#发现仍然报错，什么原因呢？" class="headerlink" title="发现仍然报错，什么原因呢？"></a>发现仍然报错，什么原因呢？</h5><p><img src="/images/mysql中文无法插入6.png" alt=""><br>因为CMD控制台的编码是GBK的，但MYSQL的编码是UTF8所以出错;最后，用第三方软件navicate，在person1表中，执行刚刚的插入操作是可以成功.</p>
+<h5 id="最后设置数据库的编码："><a href="#最后设置数据库的编码：" class="headerlink" title="最后设置数据库的编码："></a>最后设置数据库的编码：</h5><p><code>mysql&gt;show variables like &#39;character_set_%&#39;;</code><br><img src="/images/mysql中文无法插入7.png" alt=""><br><code>mysql&gt;set character_set_database=utf8;</code><br><img src="/images/mysql中文无法插入8.png" alt=""></p>
+<h5 id="关于MYSQL数据库的配置"><a href="#关于MYSQL数据库的配置" class="headerlink" title="关于MYSQL数据库的配置"></a>关于MYSQL数据库的配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">1、修改mysql/my.ini 配置文件</div><div class="line">[client]</div><div class="line">default-character-set=utf8</div><div class="line"></div><div class="line">[mysqld]</div><div class="line">default-storage-engine=INNODB</div><div class="line">character-set-server=utf8</div><div class="line"></div><div class="line">2、重启MYSQL</div><div class="line">#windows下，停止MYSQL服务</div><div class="line">net stop mysql</div><div class="line"></div><div class="line">#启动服务</div><div class="line">net start mysql</div><div class="line"></div><div class="line">3、修改成功，进入MYSQL查看字符集</div><div class="line">show variables like &apos;character_set_%&apos;;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/04/29/MYSQL数据库无法插入中文/" data-id="citzwuibo0040hp93q2s1djm4" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/10/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/12/">__('next') &raquo;</a>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Catégories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/">Hystrix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Intellij-IDEA/">Intellij IDEA</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JOOQ/">JOOQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScirpt/">JavaScirpt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MYSQL/">MYSQL</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Play/">Play</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit/">Retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit2/">Retrofit2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprng-MVC/">Sprng MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thymeleaf/">Thymeleaf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思绪/">思绪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/HTTP/" style="font-size: 17px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 12px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 10px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 11px;">Intellij IDEA</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/JOOQ/" style="font-size: 11px;">JOOQ</a> <a href="/tags/JavaScirpt/" style="font-size: 10px;">JavaScirpt</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/MYSQL/" style="font-size: 19px;">MYSQL</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/PHP/" style="font-size: 18px;">PHP</a> <a href="/tags/Play/" style="font-size: 11px;">Play</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Redis/" style="font-size: 14px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/Retrofit2/" style="font-size: 10px;">Retrofit2</a> <a href="/tags/SQL/" style="font-size: 18px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spring/" style="font-size: 12px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 16px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/Sprng-MVC/" style="font-size: 10px;">Sprng MVC</a> <a href="/tags/Thymeleaf/" style="font-size: 10px;">Thymeleaf</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/思绪/" style="font-size: 12px;">思绪</a> <a href="/tags/算法/" style="font-size: 11px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">25</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/09/29/规划好技术路线，如何将想法落地？/">规划好技术路线，如何将想法落地?</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/29/天天写「业务代码」，如何成为「技术大牛」/">天天写「业务代码」，如何成为「技术大牛」</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/25/多线程设计模式之保护性暂挂-Guarged-Suspension/">多线程设计模式之保护性暂挂(Guarged Suspension)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/25/Java之不可变对象/">Java之不可变对象</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/24/Java序列化/">Java序列化</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_pv">
+<h3 class="widget-title">访问量</h3>
+<div class="widget"> 本站总访问量<span id="busuanzi_value_site_pv"></span>次 </div>
+</span>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 流云<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
