@@ -291,6 +291,337 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/17/SpringBoot使用AOP统一处理Web请求日志/" itemprop="url">
+                  SpringBoot使用AOP统一处理Web请求日志
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-17T16:50:46+08:00" content="2016-09-17">
+              2016-09-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/SpringBoot/" itemprop="url" rel="index">
+                    <span itemprop="name">SpringBoot</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/17/SpringBoot使用AOP统一处理Web请求日志/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/17/SpringBoot使用AOP统一处理Web请求日志/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>Spring</code>有两个重要的特性一个是<code>IOC</code>,另一个<code>AOP</code>。<code>IOC</code>在Spring项目中被广泛使用，<code>AOP</code>却是一个盲点。今日初探<code>AOP</code>,深深感觉到它的强大。本文主要讲解在SpringBoot中引入Aop功能 &amp; 使用AOP做切面去统一处理Web请求日志。</p>
+<h3 id="AOP是什么？"><a href="#AOP是什么？" class="headerlink" title="AOP是什么？"></a><code>AOP</code>是什么？</h3><p><code>AOP</code>为<code>Aspect Oriented Programming</code>的缩写，意为面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。<code>AOP</code>通过对既有程序定义一个切入点，然后在其前后切入不同的执行内容，比如常见的有：打开数据库连接 &amp; 关闭数据库连接 &amp; 打开事务 &amp; 关闭事务 &amp; 记录日志等。基于AOP不会破坏原来程序逻辑，因此它可以很好地对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。</p>
+<h3 id="实战-项目Git链接"><a href="#实战-项目Git链接" class="headerlink" title="实战 项目Git链接"></a>实战 <a href="http://git.oschina.net/shuangziliuyun/SpringBoot-Learning/tree/master/SpringAopDemo?dir=1&amp;filepath=SpringAopDemo&amp;oid=006ff95faa36663be27ce9d0ae93f8058ec82901&amp;sha=4940a0702b65b0ce4022441ad12f4be49824374e" target="_blank" rel="external">项目Git链接</a></h3><p><strong>1.搭建本地SpringBoot项目</strong></p>
+<p><code>pom.xml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">	&lt;groupId&gt;com.dada&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;springaopdemo&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line">	&lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">	&lt;name&gt;SpringAopDemo&lt;/name&gt;</div><div class="line">	&lt;description&gt;SpringAopDemo&lt;/description&gt;</div><div class="line"></div><div class="line">	&lt;parent&gt;</div><div class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</div><div class="line">		&lt;version&gt;1.4.0.RELEASE&lt;/version&gt;</div><div class="line">		&lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</div><div class="line">	&lt;/parent&gt;</div><div class="line"></div><div class="line">	&lt;properties&gt;</div><div class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">		&lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;</div><div class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">	&lt;/properties&gt;</div><div class="line"></div><div class="line">	&lt;dependencies&gt;</div><div class="line">		&lt;!--lombok--&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;lombok&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;1.16.10&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;!--fast json--&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;com.alibaba&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;fastjson&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;1.2.17&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;!--springBoot--&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;!--AOP--&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;!--Log4j--&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-log4j&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">			&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">	&lt;/dependencies&gt;</div><div class="line"></div><div class="line">	&lt;build&gt;</div><div class="line">		&lt;plugins&gt;</div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line">		&lt;/plugins&gt;</div><div class="line">	&lt;/build&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
+<p><code>Controller层：AdminController.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@RestController</div><div class="line">@RequestMapping(value = &quot;/admin&quot;)</div><div class="line">public class AdminController &#123;</div><div class="line">    @RequestMapping(value = &quot;/info&quot;,method = RequestMethod.GET)</div><div class="line">    public String info(@RequestParam String username, @RequestParam String password)&#123;</div><div class="line">        return JSON.toJSONString(new Admin(username,password));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>数据模型:Admin.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Data</div><div class="line">public class Admin &#123;</div><div class="line">    private final String username;</div><div class="line">    private final String password;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>至此，我们实现了一个简单请求处理，通入<code>username</code> &amp; <code>password</code>，返回<code>Admin</code>的JSON字符串。下面我们可以对上面的<code>/admin/info</code>请求，进行切面日志记录。</p>
+<p><strong>Web层的日志切面</strong></p>
+<p>SpringBoot中默认是开启AOP的，所以不需要增加<code>@EnableAspectJAutoProxy</code>注解。而当我们需要使用<code>CGLIB</code>来实现AOP的时候，需要配置<code>spring.aop.proxy-target-class=true</code>，不然默认使用的是标准<code>Java</code>的实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># AOP</div><div class="line">spring.aop.auto=true # Add @EnableAspectJAutoProxy.</div><div class="line">spring.aop.proxy-target-class=false # Whether subclass-based (CGLIB) proxies are to be created (true) as</div><div class="line"> opposed to standard Java interface-based proxies (false).</div></pre></td></tr></table></figure>
+<p><code>AOP切面的几个要素</code></p>
+<ul>
+<li><code>@Aspect</code>注解将Java类定义为切面类</li>
+<li><code>@Pointcut</code>注解定义一个切入点，切入点的表达式筛选规则<code>execution(&lt;方法修饰符&gt; ? &lt;方法返回值类型&gt; &lt;包名&gt;.&lt;类名&gt;.&lt;方法名&gt;(&lt;参数类型&gt;) [throws &lt;异常类型&gt;]?)</code>;<br><code>*</code>代表0个或多个任意字符 &amp; 包名中<code>..</code>代表当前包及其子包 &amp; 参数列表中<code>..</code>代表任意个参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@Pointcut(&quot;execution(public * com.dada.controller..*.*(..))&quot;)</div><div class="line">  public void webLog()&#123;&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>@Before</code>在切入点开始处切入内容</li>
+<li><code>@After</code>在切入点结尾处切入内容</li>
+<li><code>@AfterReturning</code>在切入点return内容之后，切入内容。可以对处理返回值做些加工处理</li>
+<li><code>@Around</code>在切入点前后切入内容，并自己控制何时执行切入点自身的内容。</li>
+<li><code>@AfterThrowing</code>用来处理当切入内容部分抛出异常之后的处理逻辑</li>
+</ul>
+<p><code>声明切面类：WebLogAspect.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">@Aspect</div><div class="line">@Component</div><div class="line">public class WebLogAspect &#123;</div><div class="line">    private Logger logger = Logger.getLogger(getClass());</div><div class="line"></div><div class="line">    @Pointcut(&quot;execution(public * com.dada.controller..*.*(..))&quot;)</div><div class="line">    public void webLog()&#123;&#125;</div><div class="line"></div><div class="line">    @Before(&quot;webLog()&quot;)</div><div class="line">    public void doBefore(JoinPoint joinPoint) throws Throwable &#123;</div><div class="line">        // 接收到请求，记录请求内容</div><div class="line">        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</div><div class="line">        HttpServletRequest request = attributes.getRequest();</div><div class="line">        // 记录下请求内容</div><div class="line">        logger.info(&quot;URL : &quot; + request.getRequestURL().toString());</div><div class="line">        logger.info(&quot;HTTP_METHOD : &quot; + request.getMethod());</div><div class="line">        logger.info(&quot;IP : &quot; + request.getRemoteAddr());</div><div class="line">        logger.info(&quot;CLASS_METHOD : &quot; + joinPoint.getSignature().getDeclaringTypeName() + &quot;.&quot; + joinPoint.getSignature().getName());</div><div class="line">        logger.info(&quot;ARGS : &quot; + Arrays.toString(joinPoint.getArgs()));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @AfterReturning(returning = &quot;ret&quot;, pointcut = &quot;webLog()&quot;)</div><div class="line">    public void doAfterReturning(Object ret) throws Throwable &#123;</div><div class="line">        // 处理完请求，返回内容</div><div class="line">        logger.info(&quot;RESPONSE : &quot; + ret);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>请求”/admin/info”接口，得到以下日志信息：<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-17/22783585.jpg" alt=""></p>
+<h3 id="AOP切面中的同步问题"><a href="#AOP切面中的同步问题" class="headerlink" title="AOP切面中的同步问题"></a>AOP切面中的同步问题</h3><p>在WebLogAspect切面中，分别通过<code>doBefore</code> &amp; <code>doAfterReturning</code>两个独立函数实现了切点头部和切点返回后执行的内容，若我们想统计请求的处理时间，就需要在doBefore出记录时间，并在doAfterReturning处通过当前时间与开始处的时间计算得到请求处理的消耗时间。</p>
+<p>那么我们是否可以在WebLogAspect切面中定义一个成员变量来给doBefore和doAfterReturning一起访问呢？是否会有同步问题呢？</p>
+<p>直接在这里定义基本类型肯定会有同步问题，所以我们引入ThreadLocal对象，以这种方式记录，就可以解决同步的问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">@Aspect</div><div class="line">@Component</div><div class="line">public class WebLogAspect &#123;</div><div class="line">    private Logger logger = Logger.getLogger(getClass());</div><div class="line">    </div><div class="line">    ThreadLocal&lt;Long&gt; start = new ThreadLocal&lt;&gt;();</div><div class="line"></div><div class="line">    @Pointcut(&quot;execution(public * com.dada.controller..*.*(..))&quot;)</div><div class="line">    public void webLog()&#123;&#125;</div><div class="line"></div><div class="line">    @Before(&quot;webLog()&quot;)</div><div class="line">    public void doBefore(JoinPoint joinPoint) throws Throwable &#123;</div><div class="line">        start.set(System.currentTimeMillis());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @AfterReturning(returning = &quot;ret&quot;, pointcut = &quot;webLog()&quot;)</div><div class="line">    public void doAfterReturning(Object ret) throws Throwable &#123;</div><div class="line">        // 处理完请求，返回内容</div><div class="line">        logger.info(&quot;RESPONSE : &quot; + ret);</div><div class="line">        logger.info(&quot;SPEND TIME:&quot; + System.currentTimeMillis() - start.get());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="AOP切面的优先级"><a href="#AOP切面的优先级" class="headerlink" title="AOP切面的优先级"></a>AOP切面的优先级</h3><p>由于通过AOP实现，程序得到了很好地解耦，但也会带来一些问题，比如我们可能会对Web层做多个切面，校验用户，校验头信息等等，这个时候会碰到切面的处理顺序问题。</p>
+<p>所以，我们需要定义每个切面的优先级，我们需要<code>@Order(i)</code>注解来标识切面的优先级，i的值越小，优先级越高。假设我们还有一个切面是<code>CheckNameAspect</code>用来校验name必须是liuyun，我们为其设置<code>@Order(10)</code>,而上文中WebLogAspect设置为<code>@Order(5)</code>所以WebLogAspect有更高的优先级，这个时候的执行顺序是这样的；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@Before中`@Order(5)`的内容 -&gt; @Before中`@Order(10)`的内容 -&gt; `@After`和`@AfterReturning`中`@Order(10)`的内容 -&gt; `@After`和`@AfterReturning`中`@Order(5)`的内容</div></pre></td></tr></table></figure>
+<p>故得到这样的结论:</p>
+<ul>
+<li>切入点前的操作，按Order的值由小到大执行；</li>
+<li>切入点后的操作，按Order的值由大到小执行；</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/09/17/Retrofit入门/" itemprop="url">
+                  Retrofit入门
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-17T10:43:48+08:00" content="2016-09-17">
+              2016-09-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Retrofit/" itemprop="url" rel="index">
+                    <span itemprop="name">Retrofit</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/17/Retrofit入门/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/17/Retrofit入门/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Retrofit简介"><a href="#Retrofit简介" class="headerlink" title="Retrofit简介"></a><code>Retrofit</code>简介</h3><p><code>Retrofit</code>是<code>Square</code>公司开发的一个类型安全的<code>Java</code> &amp; <code>Android</code>的<code>REST</code>客户端库，这个库为网路认证、API请求以及用<code>OkHttp</code>发送网络请求提供了强大的框架。<code>Retrofit</code>库使得从<code>Web API</code>下载<code>JSON</code> 或者 <code>XML</code>数据变得非常简单直接，一旦数据下载完成即将其解析成普通的<code>Java</code>类(<code>POJO</code>).</p>
+<p><code>Retrofit</code>使用的最核心的两个技术是：动态代理和<code>Java</code>反射。<code>Retrofit</code>非常巧妙的用注解来描述<code>HTTP</code>请求，将一个<code>HTTP</code>请求抽象成一个<code>Java</code>接口，然后用<code>Java</code>动态代理的方式，动态的将这个接口的注解“解释”成一个<code>HTTP</code>请求，最后在执行这个HTTP请求。</p>
+<p><code>Retrofit</code>无非是让用户创建接口，并在接口中指定网络访问路径、规则，把接口传入<code>Retrofit</code>；<code>Retrofit</code>进行解析，然后调用<code>OkHttp</code>完成实际的网络请求并将请求结果处理后返回给用户。</p>
+<p>另：<code>Retrofit</code>支持<code>Java 7</code>或<code>Android2.3</code>以上版本</p>
+<h3 id="Retrofit优势"><a href="#Retrofit优势" class="headerlink" title="Retrofit优势"></a><code>Retrofit</code>优势</h3><ol>
+<li>底层使用<code>OkHttp</code>进行网络传输，性能好、速度快</li>
+<li>拥有出色的<code>API</code>文档和社区支持</li>
+<li>自动将<code>REST API</code>返回的数据转化为<code>Java</code>对象，且支持多种数据格式转换(<code>JSON</code>、<code>XML</code>…) </li>
+<li>使用<code>Java</code>注解声明<code>HTTP</code>请求</li>
+<li>支持<code>Multipart</code>请求和文件上传</li>
+</ol>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1.搭建本地测试服务,以<code>SpringBoot</code>框架为例</strong></p>
+<p><code>Controller层：AdminController.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@RestController</div><div class="line">@RequestMapping(value = &quot;/admin&quot;)</div><div class="line">public class AdminController &#123;</div><div class="line">    @RequestMapping(value = &quot;/get&quot;,method = RequestMethod.GET)</div><div class="line">    public JsonResult&lt;Admin&gt; get(@RequestParam String name, @RequestParam String password)&#123;</div><div class="line">        return JsonResult.ok(new Admin(name,password));</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><code>对象模型: Admin.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 注： @Data为lombok插件注解，表示Getter &amp; Setter 方法，声明为final类型的属性为构造方法属性，详情可以参考[lombok官网](https://projectlombok.org/) </div><div class="line"></div><div class="line">@Data</div><div class="line">public class Admin &#123;</div><div class="line">    private final String name;</div><div class="line">    private final String password;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>工具类:JsonResult.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">@Data</div><div class="line">public class JsonResult&lt;T&gt; &#123;</div><div class="line"></div><div class="line">    private boolean success;</div><div class="line"></div><div class="line">    @JsonInclude(JsonInclude.Include.NON_NULL)</div><div class="line">    private T data;</div><div class="line"></div><div class="line">    @JsonInclude(JsonInclude.Include.NON_NULL)</div><div class="line">    private Integer errorCode;</div><div class="line"></div><div class="line">    @JsonInclude(JsonInclude.Include.NON_NULL)</div><div class="line">    private String errorMessage;</div><div class="line"></div><div class="line">    public static &lt;T&gt; JsonResult&lt;T&gt; ok() &#123;</div><div class="line">        JsonResult&lt;T&gt; result = new JsonResult&lt;&gt;();</div><div class="line">        result.setSuccess(true);</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static &lt;T&gt; JsonResult&lt;T&gt; ok(T data) &#123;</div><div class="line">        JsonResult&lt;T&gt; result = new JsonResult&lt;&gt;();</div><div class="line">        result.setSuccess(true);</div><div class="line">        result.setData(data);</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static &lt;T&gt; JsonResult&lt;T&gt; error(Code code) &#123;</div><div class="line">        JsonResult&lt;T&gt; result = new JsonResult&lt;&gt;();</div><div class="line">        result.setErrorCode(code.getCode());</div><div class="line">        result.setErrorMessage(code.getMessage());</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static &lt;T&gt; JsonResult&lt;T&gt; error(String message) &#123;</div><div class="line">        JsonResult&lt;T&gt; result = new JsonResult&lt;&gt;();</div><div class="line">        result.setErrorCode(SERVER_ERROR.getCode());</div><div class="line">        result.setErrorMessage(message);</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static &lt;T&gt; JsonResult&lt;T&gt; error() &#123;</div><div class="line">        JsonResult&lt;T&gt; result = new JsonResult&lt;&gt;();</div><div class="line">        result.setErrorCode(SERVER_ERROR.getCode());</div><div class="line">        result.setErrorMessage(SERVER_ERROR.getMessage());</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static &lt;T&gt; JsonResult&lt;T&gt; error(Integer code ,String message) &#123;</div><div class="line">        JsonResult&lt;T&gt; result = new JsonResult&lt;&gt;();</div><div class="line">        result.setErrorCode(code);</div><div class="line">        result.setErrorMessage(message);</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>错误常量枚举：Code.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">// 注: @Getter 为lombok插件注解 功能与Getter方法等价</div><div class="line">@Getter</div><div class="line">public enum Code &#123;</div><div class="line">    // 基础响应码</div><div class="line">    SERVER_ERROR(1, &quot;服务异常&quot;),</div><div class="line">    BASE_NOT_FOUND(2, &quot;资源不存在&quot;),</div><div class="line">    BASE_UNAUTHORIZED(3, &quot;未授权&quot;),</div><div class="line">    BASE_FORBIDDEN(4, &quot;拒绝访问&quot;),</div><div class="line">    BASE_BAD_PARAMS(5, &quot;请求参数错误&quot;);</div><div class="line"></div><div class="line">    private int code;</div><div class="line">    private String message;</div><div class="line"></div><div class="line">    Code(int code, String message) &#123;</div><div class="line">        this.message = message;</div><div class="line">        this.code = code;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>2. Retrofit运用实例</strong></p>
+<p><code>将网络请求API转换为一个Java接口: UserApi.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface AdminApi &#123;</div><div class="line">    @GET(&quot;/admin/get&quot;)</div><div class="line">    Call&lt;JsonResult&lt;Admin&gt;&gt; get(@Query(&quot;name&quot;) String name, @Query(&quot;password&quot;) String password);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Retrofit生成UserApi接口实现 &amp; 创建同步远程请求:RetrofitBootStrap.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public class RetrofitBootStrap &#123;</div><div class="line">    private static final String LOCAL_HOST = &quot;http://127.0.0.1:8080&quot;;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Retrofit retrofit = new Retrofit.Builder().baseUrl(LOCAL_HOST)</div><div class="line">                .addConverterFactory(GsonConverterFactory.create())</div><div class="line">                .build();</div><div class="line"></div><div class="line">        // retrofit生成UserApi接口实现</div><div class="line">        UserApi service = retrofit.create(AdminApi.class);</div><div class="line"></div><div class="line">        Call&lt;JsonResult&lt;Admin&gt;&gt; postMsg = service.get(&quot;zhangsan&quot;, &quot;123456&quot;);</div><div class="line">        try &#123;</div><div class="line">            // 创建同步远程请求</div><div class="line">            System.out.println(JSON.toJSONString(postMsg.execute().body()));</div><div class="line">        &#125; catch (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>3.执行步骤</strong></p>
+<ol>
+<li>启动<code>SpringBoot</code>，将本地测试服务开启来；</li>
+<li>执行<code>RetrofitBootStrap.class</code>的<code>main</code>方法，请求本地测试服务的<code>/admin/get的请求路径接口</code>，得到相应结果为：<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-17/72733150.jpg" alt=""></li>
+</ol>
+<h3 id="Retrofit知识点"><a href="#Retrofit知识点" class="headerlink" title="Retrofit知识点"></a>Retrofit知识点</h3><p><strong>注解</strong></p>
+<p><code>案例1：GET请求路径带路径参数</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@GET(&quot;group/&#123;id&#125;/users&quot;)</div><div class="line">Call&lt;List&lt;User&gt;&gt; groupList(@Path(&quot;id&quot;) Integer groupId);</div></pre></td></tr></table></figure>
+<p><code>案例2：GET请求，带查询参数；类似于Spring中的@RequestParam注解</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@GET(&quot;group/user&quot;)</div><div class="line">Call&lt;List&lt;User&gt;&gt; getUser(@Query(&quot;name&quot;) String name);</div></pre></td></tr></table></figure>
+<p><code>案例3: POST请求，参数是一个对象，类似于Spring中的@RequestBody注解</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@POST(&quot;/users/new&quot;)</div><div class="line">Call&lt;User&gt; createUser(@Body User user);</div></pre></td></tr></table></figure>
+<p><code>案例4: 请求内容类型为</code>form-encoded<code>格式</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//每一个key-value键值对用@Field表示 </div><div class="line">@FormUrlEncoded</div><div class="line">@POST(&quot;user/edit&quot;)</div><div class="line">Call&lt;User&gt; updateUser(@Field(&quot;firstName&quot;) String first,@Field(&quot;lastName&quot;) String last);</div></pre></td></tr></table></figure>
+<p><code>案例5：声明请求头参数</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">// 单个请求头参数</div><div class="line">@Headers(&quot;Cache-Control: max-age=640000&quot;)</div><div class="line">@GET(&quot;widget/list&quot;)</div><div class="line">Call&lt;List&lt;Widget&gt;&gt; widgetList();</div><div class="line"></div><div class="line">// 多个请求头参数</div><div class="line">@Headers(&#123;</div><div class="line">    &quot;Accept: application/vnd.github.v3.full+json&quot;,</div><div class="line">    &quot;User-Agent: Retrofit-Sample-App&quot;</div><div class="line">&#125;)</div><div class="line">@GET(&quot;users&quot;)</div><div class="line">Call&lt;User&gt; getUser();</div><div class="line"></div><div class="line">// 参数中带请求头</div><div class="line">@GET(&quot;user&quot;)</div><div class="line">Call&lt;User&gt; getUser(@Header(&quot;Authorization&quot;) String authorization)</div></pre></td></tr></table></figure>
+<p><strong>转化器</strong></p>
+<p>默认情况下，<code>Retrofit</code>只能反序列化<code>HTTP</code>的<code>Body</code>到<code>okhttp</code>的<code>ResponseBody</code>，并且<code>@Body</code>注解只能接收<code>RequestBody</code>的类型数据。</p>
+<p>转换器可以被添加来支持其它类型。下面是6个流行的序列化库来方便操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Gson: com.squareup.retrofit2:converter-gson</div><div class="line">Jackson: com.squareup.retrofit2:converter-jackson</div><div class="line">Moshi: com.squareup.retrofit2:converter-moshi</div><div class="line">Protobuf: com.squareup.retrofit2:converter-protobuf</div><div class="line">Wire: com.squareup.retrofit2:converter-wire</div><div class="line">Simple XML: com.squareup.retrofit2:converter-simplexml</div></pre></td></tr></table></figure>
+<p><code>案例：新增Gson转换器</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Retrofit retrofit = new Retrofit.Builder().baseUrl(LOCAL_HOST)</div><div class="line">                .addConverterFactory(GsonConverterFactory.create())</div><div class="line">                .build();</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://square.github.io/retrofit/" target="_blank" rel="external">retrofit官网</a></li>
+<li><a href="https://realm.io/cn/news/droidcon-jake-wharton-simple-http-retrofit-2/" target="_blank" rel="external">用Retrofit2简化HTTP请求</a></li>
+<li><a href="https://my.oschina.net/purplesense/blog/650123" target="_blank" rel="external">Retrofit介绍</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/16/JAVA技能树/" itemprop="url">
                   JAVA技能树
                 </a>
@@ -1761,312 +2092,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/07/ES6之数组的扩展/" itemprop="url">
-                  ES6之数组的扩展
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-07T00:17:28+08:00" content="2016-09-07">
-              2016-09-07
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/07/ES6之数组的扩展/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/07/ES6之数组的扩展/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上篇文章介绍了<a href="http://jianwl.com/2016/09/06/ES6%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%89%A9%E5%B1%95/">ES6之字符串的扩展</a>，本文将学习ES6中数组的扩展，数组在实际项目中比较常用，所以非常有必要了解一下。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>将数组对象转化为真正的数组：<code>Array.from</code></strong></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/44455334.jpg" alt=""></p>
-<p><strong>将一组值转化为数组：Array.of</strong></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/42839910.jpg" alt=""></p>
-<p><strong>将当前数组内部指定位置的成员复制到其他的位置：copyWithin</strong></p>
-<p>具体语法为<code>Array.prototype.copyWithin(target,start = 0, end = this.length)</code>,接受三个参数，target(必选)，从当前位置开始替换数据，start(可选)，从该位置开始读取数据，负数表示倒数，end(可选)，默认为数组长度；</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/3645079.jpg" alt=""></p>
-<p><strong>寻找数组中符合条件的元素：find和findIndex</strong></p>
-<p><code>find</code>方法，数组中每个元素都会执行回调函数，若找到返回这个元素，没找到则返回<code>undefine</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/91334943.jpg" alt=""></p>
-<p><code>findIndex</code>，数组中每个元素都会执行回调函数，找到返回具体的索引位置，找不到返回 -1</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/86472470.jpg" alt=""></p>
-<p><strong>定值填充数组</strong></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/35563292.jpg" alt=""></p>
-<p><strong>数组实例的entries、keys、values</strong></p>
-<p><code>keys</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/20213197.jpg" alt=""></p>
-<p><code>values:报错，暂时不清楚什么原因？后续解决🤔</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/67413393.jpg" alt=""></p>
-<p><code>entries</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/89340245.jpg" alt=""></p>
-<p><strong>数组实例includes</strong></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/36818030.jpg" alt=""></p>
-<p><strong>数组空位</strong><br><code>比如Array构造函数返回的数组都是空位 Array[3] // [,,,]</code>；空位没有任何值，一个位置的值等于undefined仍是有值得。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/68402315.jpg" alt=""></p>
-<p><strong>数组推导</strong></p>
-<p>数组推导允许直接通过现有数组生成新数组。</p>
-<p><code>案例1：暂时不清楚其为何报错，后续解决🤔</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/18821221.jpg" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>ES6标准入门 – 阮一峰</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/06/ES6之字符串的扩展/" itemprop="url">
-                  ES6之字符串的扩展
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-06T23:19:06+08:00" content="2016-09-06">
-              2016-09-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/06/ES6之字符串的扩展/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/06/ES6之字符串的扩展/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上一篇文章学习了<a href="http://jianwl.com/2016/09/03/ES6%E4%B9%8B%E8%A7%A3%E6%9E%84/#more">ES6之解构</a>，本文将学习ES6中字符串的扩展。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>字符串遍历:由for…of循环遍历</strong></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-6/54541215.jpg" alt=""></p>
-<p>除了遍历以外，这个遍历器最好的优点是可以识别大于<code>0xFFFF</code>的码点，传统的for循环无法识别这样的码点。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-6/2647027.jpg" alt=""></p>
-<p><strong>新增includes()、startWith()、endsWith()方法</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">方法</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">includes()</td>
-<td style="text-align:center">是否找到参数字符串</td>
-</tr>
-<tr>
-<td style="text-align:left">startsWith</td>
-<td style="text-align:center">是否以参数字符串开头</td>
-</tr>
-<tr>
-<td style="text-align:left">endsWith</td>
-<td style="text-align:center">是否以参数字符串结尾</td>
-</tr>
-</tbody>
-</table>
-<p><code>案例1</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-6/27503911.jpg" alt=""></p>
-<p><strong>模板字符串</strong></p>
-<p>传统的JavaScript输出模板通常是这样写的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var world = &quot;liuMing&quot;;</div><div class="line">$(&quot;#result&quot;).append(&quot;Hello: &quot; + world + &quot;!&quot;);</div></pre></td></tr></table></figure></p>
-<p>ES6引入了模板字符串来解决这个问题，用反引号 ` 标识，它可以当做普通字符串、也可以定义多行字符串，也可以在字符串中嵌入变量。<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-6/47264420.jpg" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>ES6标准入门 – 阮一峰</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2112,7 +2137,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-count">129</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2120,7 +2145,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2129,7 +2154,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

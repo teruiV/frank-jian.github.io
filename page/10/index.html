@@ -291,6 +291,272 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/04/Ubuntu安装Apache-PHP-MySQL/" itemprop="url">
+                  Ubuntu安装Apache+PHP+MySQL
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-04T10:00:54+08:00" content="2016-05-04">
+              2016-05-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/04/Ubuntu安装Apache-PHP-MySQL/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/04/Ubuntu安装Apache-PHP-MySQL/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>我在ubuntu下配置了一个Apache服务器，通过Apache我们可以学习php网络编程，可以用它来部署自己的hexo博客。以下是安装步骤和其中踩得一些坑。</p>
+<h5 id="步骤一，安装apache2"><a href="#步骤一，安装apache2" class="headerlink" title="步骤一，安装apache2"></a>步骤一，安装apache2</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install apache2</div></pre></td></tr></table></figure>
+<p>安装完成。<br>运行如下命令重启<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo /etc/init.d/apache2 restart</div></pre></td></tr></table></figure></p>
+<p>出现这个问题<br><img src="/images/apache-01.png" alt=""><br>ServerName没有配置好IP,编辑/var/apache2/apache2.conf如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /var/apache2/apache2.conf</div></pre></td></tr></table></figure></p>
+<p>在apaache2.conf增加一个属性 ServerName为本机IP<br><img src="/images/apache-02.png" alt=""><br>重启apache2 不会出现刚刚的问题了。</p>
+<h5 id="步骤二，安装PHP"><a href="#步骤二，安装PHP" class="headerlink" title="步骤二，安装PHP"></a>步骤二，安装PHP</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install libapache2-mod-php5 php5</div><div class="line">sudo apt-get install php5-gd php5-MySQL</div></pre></td></tr></table></figure>
+<p>安装完后，重新启动Apache，让它加载PHP模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo /etc/init.d/apache2 restart</div></pre></td></tr></table></figure></p>
+<p>接下来测试Web目录下面新建一个test.php文件来测试PHP是否正常运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /var/www/html/test.php</div></pre></td></tr></table></figure></p>
+<p>然后输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;?php echo &apos;&lt;p&gt;Order processed.&lt;/p&gt;&apos;; ?&gt;</div></pre></td></tr></table></figure></p>
+<p>接着保存文件，在浏览器里输入<a href="http://139.196.243.225/test.php,如果在网页中显示Order" target="_blank" rel="external">http://139.196.243.225/test.php,如果在网页中显示Order</a> processed，就表示正常运行了。如果出现错误，请查看日志信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tail -f /var/log/apache2/error.log</div></pre></td></tr></table></figure></p>
+<h5 id="步骤三，安装Mysql数据库"><a href="#步骤三，安装Mysql数据库" class="headerlink" title="步骤三，安装Mysql数据库"></a>步骤三，安装Mysql数据库</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install mysql-server mysql-client</div></pre></td></tr></table></figure>
+<p>安装不成功，出现以下报错信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql-server depends on mysql-server-5.5; however: Package mysql-server-5.5 is not configured yet. dpkg: error processing mysql-server (--configure)</div></pre></td></tr></table></figure></p>
+<p>在stackoverflow查到解决方案<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">sudo apt-get --yes autoremove --purge mysql-server-5.5</div><div class="line">sudo apt-get --yes autoremove --purge mysql-client-5.5</div><div class="line">sudo apt-get --yes autoremove --purge mysql-common</div><div class="line">sudo rm -rf /var/lib/mysql /etc/mysql ~/.mysql</div><div class="line"></div><div class="line">sudo deluser mysql</div><div class="line">sudo apt-get autoclean</div><div class="line">sudo apt-get update &amp;&amp; sudo apt-get upgrade</div><div class="line">sudo apt-get install mysql-server-5.5 mysql-client-5.5</div></pre></td></tr></table></figure></p>
+<p>安装过程中，会要求输入root的密码，注意这里的root密码可不是ubuntu的root密码，是mysql设定的root密码，成功安装mysql。</p>
+<h5 id="步骤四，安装phpmyadmin-mysql数据库管理"><a href="#步骤四，安装phpmyadmin-mysql数据库管理" class="headerlink" title="步骤四，安装phpmyadmin-mysql数据库管理"></a>步骤四，安装phpmyadmin-mysql数据库管理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo-get install phpmyadmin</div></pre></td></tr></table></figure>
+<p>在安装过程中会要求选择Web server：apache2或lighttpd，使用空格键选定apache2，按tab键然后确定。然后会要求输入设置的Mysql数据库密码连接密码Password of the database’s administrative user。<br>然后将phpmyadmin与apache2建立连接，以我的为例：html目录在/var/www/html，phpmyadmin在/usr/share /phpmyadmin目录，所以就用命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo ln -s /usr/share/phpmyadmin /var/www/html</div></pre></td></tr></table></figure></p>
+<p>创建软连接。<br>phpmyadmin测试：在浏览器地址栏中打开<a href="http://139.196.243.225/phpmyadmin" target="_blank" rel="external">http://139.196.243.225/phpmyadmin</a>.<br>以上ALMP的基本组件就安装完毕了；</p>
+<h5 id="步骤五，设置ubuntu文件执行读写权限"><a href="#步骤五，设置ubuntu文件执行读写权限" class="headerlink" title="步骤五，设置ubuntu文件执行读写权限"></a>步骤五，设置ubuntu文件执行读写权限</h5><p>PHP网络服务器跟目录默认设置在：/var/www/html修改/var/www/html目录的读写权限。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chmod 777 /var/www/html</div></pre></td></tr></table></figure></p>
+<p>然后就可以写入php文件了。<br>参考资料：<br><a href="http://www.cnblogs.com/ada-zheng/p/3974963.html" target="_blank" rel="external">ubuntu下安装Apache+PHP+Mysql</a><br><a href="http://stackoverflow.com/questions/13276088/cant-start-mysql5-5-on-ubuntu-12-04-dpkg-dependency-problems" target="_blank" rel="external">Can’t start MySQL5.5 on Ubuntu 12.04 - “dpkg: dependency problems”</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/04/PHP字符串/" itemprop="url">
+                  PHP字符串
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-04T10:00:24+08:00" content="2016-05-04">
+              2016-05-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/04/PHP字符串/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/04/PHP字符串/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h6 id="字符串常见的函数"><a href="#字符串常见的函数" class="headerlink" title="字符串常见的函数"></a>字符串常见的函数</h6><p>chop(); 移除右端字符<br>trim()；移除左右两端字符<br>ltirm(); 移除左端字符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$msg = &quot;hello world \r\n&quot;;</div><div class="line">$name = trim($msg);</div></pre></td></tr></table></figure></p>
+<p>printf();格式化字符串<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$total = &quot;222&quot;;</div><div class="line">printf(&quot;total amount of order is %s.&quot;,$total);</div></pre></td></tr></table></figure></p>
+<p>strtoupper();将字符串转换为大写；<br>strtolower;将字符串转为小写；<br>ucfirst(); 将字符串的第一个字符转换成大写；<br>unwords()；将字符串的每个单词的第一个字符转换为大写；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$total = 111;</div><div class="line">$msg = &quot;hello wORld&quot;;</div><div class="line">echo strtoupper($msg).&quot;&lt;/br&gt;&quot;;</div><div class="line">echo strtolower($msg).&quot;&lt;/br&gt;&quot;;</div><div class="line">echo ucfirst($msg).&quot;&lt;/br&gt;&quot;;</div><div class="line">echo ucwords($msg).&quot;&lt;/br&gt;&quot;;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>explode() 分割字符串；<br>strok(); 分割字符串，但一次只返回一个片段；<br>implode() 指定连接符连接数组中的每个元素组成字符串；<br>join() 指定连接符连接数组中的每个元素组成字符串;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$msg = &quot;hello world!&quot;;</div><div class="line">$array = explode(&quot; &quot;,$msg);</div><div class="line">$msg3 = join(&quot;===&quot;,$array);</div><div class="line">echo $msg3;</div><div class="line"></div><div class="line">$msg = &quot;hello world!&quot;;</div><div class="line"></div><div class="line">#测试strtok();</div><div class="line">$array = strtok($msg,&quot;o&quot;);</div><div class="line">echo $array;</div><div class="line">while($array != &quot;&quot;)&#123;</div><div class="line">  $array = strtok(&quot;o&quot;);</div><div class="line">  echo &quot;====&quot;.$array;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>substr(); 返回部分字符串;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$msg = &quot;hello world!&quot;;</div><div class="line">echo &quot;count = &quot;.strlen($msg);</div><div class="line">echo substr($msg,0,-1).&quot;&lt;/br&gt;&quot;; //得到 hello world</div><div class="line">echo substr($msg,-5).&quot;&lt;/br&gt;&quot;; //得到 orld!</div><div class="line">echo substr($msg,0,strlen($msg)); //得到hello world!</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>字符串比较<br>strcmp();//按字典排序，2大于12<br>strcasecmp();//忽略大小写，按字典排序<br>strnatcmp(); //按自然排序字符串，2小于12；</p>
+<p>strlen(); //获取字符串长度<br>strstr();//查找字符串,返回从匹配关键字起的内容；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$msg = &quot;hello world!&quot;;</div><div class="line">echo strstr($msg,&quot;llo&quot;); //结果为llo world！</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>str_replace(string new_str,string replacement,string info); //字符串替换<br>substr_replace(string string, string replace,int start);//用字符串替换指定位置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$msg = &quot;hello world!&quot;;</div><div class="line">echo substr_replace($msg,&quot;==&quot;,-1);//结果为hello world==</div><div class="line"></div><div class="line">$msg = &quot;hello world!&quot;;</div><div class="line">echo str_replace(&quot;o&quot;,&quot;===&quot;,$msg); //结果为hell===w===rld!</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<h5 id="转义和反转义函数"><a href="#转义和反转义函数" class="headerlink" title="转义和反转义函数"></a>转义和反转义函数</h5><p>addslashes($str); //将单引号和双引号等需要转义的字符，用反斜杠转义<br>strislashes($str);//将字符串中的转义反斜杠去掉</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/04/PHP语法基础/" itemprop="url">
                   PHP语法基础
                 </a>
@@ -1337,243 +1603,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/03/PHP错误和异常处理/" itemprop="url">
-                  PHP错误和异常处理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-03T16:21:19+08:00" content="2016-05-03">
-              2016-05-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/03/PHP错误和异常处理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/03/PHP错误和异常处理/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h6 id="异常处理的思想"><a href="#异常处理的思想" class="headerlink" title="异常处理的思想"></a>异常处理的思想</h6><p>当try代码中出现异常后，catch块代码对异常进行处理;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">try&#123;</div><div class="line">  throw new Exception(&quot;A terrible error has occured&quot;,42);</div><div class="line">&#125;catch(Exception $e)&#123;</div><div class="line">   echo &quot; exception &quot;.$e-&gt;getCode().&quot; ：&quot;.$e-&gt;getMessage().&quot; &lt;/br&gt;&quot;.&quot; in &quot;.$e-&gt;getFile().&quot; on line &quot;.$e-&gt;getLine().&quot;&lt;br/&gt;&quot;;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<h6 id="Exception类内置方法"><a href="#Exception类内置方法" class="headerlink" title="Exception类内置方法"></a>Exception类内置方法</h6><ul>
-<li>getCode() 返回传递给构造器的代码号,不可重构</li>
-<li>getMessage() 返回传递给构造器的消息，不可重构</li>
-<li>getFile() 返回产生异常的代码文件的完整路径，不可重构</li>
-<li>getLine() 返回代码文件中产生异常的代码行号，不可重构</li>
-<li>getTrace() 返回一个包含产生异常的代码回退路径的数组，不可重构</li>
-<li>__toString() 允许简单地显示一个Exception对象，并给出以上所有方法可以提供的信息，可以重构</li>
-</ul>
-<p>####### 自定义异常<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class myexception extends Exception&#123;</div><div class="line">  function __toString()&#123;</div><div class="line">     return &quot;&lt;table border=\&quot;1\&quot;&gt;&lt;tr&gt;&lt;td&gt;&lt;strong&gt;Exception &quot;.$this-&gt;getCode().&quot;&lt;/strong&gt;: &quot;.$this-&gt;getMessage().&quot;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/br&gt;&quot;;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">try &#123;</div><div class="line">  throw new myexception(&quot;happen error,parse error&quot;,405);</div><div class="line">&#125;catch(myexception $e)&#123;</div><div class="line">  echo $e;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/03/Redis介绍/" itemprop="url">
-                  Redis介绍
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-03T13:46:25+08:00" content="2016-05-03">
-              2016-05-03
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/03/Redis介绍/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/03/Redis介绍/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h5 id="Redis是什么？"><a href="#Redis是什么？" class="headerlink" title="Redis是什么？"></a>Redis是什么？</h5><ul>
-<li><p>Redis是REmote DIctionary Server(远程字典服务器)的缩写，它以字典结构存储数据，并允许其他应用通过TCP协议读写字典中的内容。</p>
-</li>
-<li><p>Redis是一个开源的、高性能的基于键值对的缓存与存储系统，通过提供多种键值数据类型来适应不同的场景与存储需求；同时Redis的诸多高层级功能使其可以胜任消息队列、任务队列等不同的角色。</p>
-</li>
-</ul>
-<h5 id="Redis究竟有什么魅力吸引了如此多的用户，它有什么优势？"><a href="#Redis究竟有什么魅力吸引了如此多的用户，它有什么优势？" class="headerlink" title="Redis究竟有什么魅力吸引了如此多的用户，它有什么优势？"></a>Redis究竟有什么魅力吸引了如此多的用户，它有什么优势？</h5><h6 id="内存存储与持久化"><a href="#内存存储与持久化" class="headerlink" title="内存存储与持久化"></a>内存存储与持久化</h6><p>Redis数据库中所有的数据都存在于内存中，内存的读写速度远快于硬盘，因此Redis在性能上对比其他基于硬盘存储的数据库有非常明显的优势。将数据存储在内存也有一定的问题，比如程序退出后，内存中的数据会丢失，不过Redis提供了对持久化的支持，即可以将内存中的数据异步写入硬盘中，同时不影响继续提供服务。</p>
-<h6 id="功能丰富"><a href="#功能丰富" class="headerlink" title="功能丰富"></a>功能丰富</h6><p>Redis可以为每个键设置生存时间(Time To Live,TTL),生存时间到期后会自动被删除，同时Redis支持丰富的数据类型和持久化的功能，让Redis可以作为缓存系统来使用；作为缓存系统，Redis还可以限制数据占用的最大内存，在数据达到空间限制后，可以按一定的规则，淘汰不需要的键。</p>
-<h6 id="简单稳定"><a href="#简单稳定" class="headerlink" title="简单稳定"></a>简单稳定</h6>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1619,7 +1648,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-count">129</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1627,7 +1656,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1636,7 +1665,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

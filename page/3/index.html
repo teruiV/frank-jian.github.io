@@ -291,6 +291,312 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/07/ES6之数组的扩展/" itemprop="url">
+                  ES6之数组的扩展
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-07T00:17:28+08:00" content="2016-09-07">
+              2016-09-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/07/ES6之数组的扩展/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/07/ES6之数组的扩展/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上篇文章介绍了<a href="http://jianwl.com/2016/09/06/ES6%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%89%A9%E5%B1%95/">ES6之字符串的扩展</a>，本文将学习ES6中数组的扩展，数组在实际项目中比较常用，所以非常有必要了解一下。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>将数组对象转化为真正的数组：<code>Array.from</code></strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/44455334.jpg" alt=""></p>
+<p><strong>将一组值转化为数组：Array.of</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/42839910.jpg" alt=""></p>
+<p><strong>将当前数组内部指定位置的成员复制到其他的位置：copyWithin</strong></p>
+<p>具体语法为<code>Array.prototype.copyWithin(target,start = 0, end = this.length)</code>,接受三个参数，target(必选)，从当前位置开始替换数据，start(可选)，从该位置开始读取数据，负数表示倒数，end(可选)，默认为数组长度；</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/3645079.jpg" alt=""></p>
+<p><strong>寻找数组中符合条件的元素：find和findIndex</strong></p>
+<p><code>find</code>方法，数组中每个元素都会执行回调函数，若找到返回这个元素，没找到则返回<code>undefine</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/91334943.jpg" alt=""></p>
+<p><code>findIndex</code>，数组中每个元素都会执行回调函数，找到返回具体的索引位置，找不到返回 -1</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/86472470.jpg" alt=""></p>
+<p><strong>定值填充数组</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/35563292.jpg" alt=""></p>
+<p><strong>数组实例的entries、keys、values</strong></p>
+<p><code>keys</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/20213197.jpg" alt=""></p>
+<p><code>values:报错，暂时不清楚什么原因？后续解决🤔</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/67413393.jpg" alt=""></p>
+<p><code>entries</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/89340245.jpg" alt=""></p>
+<p><strong>数组实例includes</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/36818030.jpg" alt=""></p>
+<p><strong>数组空位</strong><br><code>比如Array构造函数返回的数组都是空位 Array[3] // [,,,]</code>；空位没有任何值，一个位置的值等于undefined仍是有值得。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/68402315.jpg" alt=""></p>
+<p><strong>数组推导</strong></p>
+<p>数组推导允许直接通过现有数组生成新数组。</p>
+<p><code>案例1：暂时不清楚其为何报错，后续解决🤔</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/18821221.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>ES6标准入门 – 阮一峰</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/09/06/ES6之字符串的扩展/" itemprop="url">
+                  ES6之字符串的扩展
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-06T23:19:06+08:00" content="2016-09-06">
+              2016-09-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/06/ES6之字符串的扩展/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/06/ES6之字符串的扩展/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上一篇文章学习了<a href="http://jianwl.com/2016/09/03/ES6%E4%B9%8B%E8%A7%A3%E6%9E%84/#more">ES6之解构</a>，本文将学习ES6中字符串的扩展。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>字符串遍历:由for…of循环遍历</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-6/54541215.jpg" alt=""></p>
+<p>除了遍历以外，这个遍历器最好的优点是可以识别大于<code>0xFFFF</code>的码点，传统的for循环无法识别这样的码点。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-6/2647027.jpg" alt=""></p>
+<p><strong>新增includes()、startWith()、endsWith()方法</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方法</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">includes()</td>
+<td style="text-align:center">是否找到参数字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">startsWith</td>
+<td style="text-align:center">是否以参数字符串开头</td>
+</tr>
+<tr>
+<td style="text-align:left">endsWith</td>
+<td style="text-align:center">是否以参数字符串结尾</td>
+</tr>
+</tbody>
+</table>
+<p><code>案例1</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-6/27503911.jpg" alt=""></p>
+<p><strong>模板字符串</strong></p>
+<p>传统的JavaScript输出模板通常是这样写的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var world = &quot;liuMing&quot;;</div><div class="line">$(&quot;#result&quot;).append(&quot;Hello: &quot; + world + &quot;!&quot;);</div></pre></td></tr></table></figure></p>
+<p>ES6引入了模板字符串来解决这个问题，用反引号 ` 标识，它可以当做普通字符串、也可以定义多行字符串，也可以在字符串中嵌入变量。<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-6/47264420.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>ES6标准入门 – 阮一峰</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/05/SpringBoot配置多个数据源/" itemprop="url">
                   SpringBoot配置多个数据源
                 </a>
@@ -1494,294 +1800,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/28/MYSQL之索引/" itemprop="url">
-                  MYSQL之索引
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-28T22:31:48+08:00" content="2016-08-28">
-              2016-08-28
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MYSQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/28/MYSQL之索引/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/28/MYSQL之索引/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>索引是存储引擎用于快速找到记录的一种数据结构</p>
-<h3 id="索引的优点"><a href="#索引的优点" class="headerlink" title="索引的优点"></a>索引的优点</h3><ul>
-<li>让服务器快速定位到表的指定位置</li>
-<li>大大减少了服务器需要扫描的数据量</li>
-<li>帮助服务器避免排序和临时表</li>
-<li>将随机IO变为顺序IO</li>
-</ul>
-<h3 id="高性能索引策略"><a href="#高性能索引策略" class="headerlink" title="高性能索引策略"></a>高性能索引策略</h3><p>1、<code>查询中索引列不能是表达式的一部分，否则MYSQL不会使用索引</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql&gt; SELECT admin_id FROM test.admin where nickname = &apos;张三&apos;</div></pre></td></tr></table></figure>
-<p>2、<code>有时候需要索引很长的字符列，这会让索引变得大而慢，通过索引开始的部分字符，可以大大节约索引空间，从而提高索引效率。但这样会降低索引的选择性，索引的选择性指，不重复的索引值和数据表的记录总数的比值，选择性越高，查询效率越高。唯一索引的选择性是1，这是最好的索引选择性，性能也是最好的。</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 查询各个城市出现的次数</div><div class="line">mysql&gt; SELECT COUNT(*) AS cnt,city FROM test.city_demo</div><div class="line"></div><div class="line"># 查询各个城市前几个字母出现的次数</div><div class="line">mysql&gt; SELECT COUNT(*) AS cnt,LEFT(city,3) FROM test.city_demo</div><div class="line"></div><div class="line"># 增加city的查询长度，直至这个前缀的选择性接近于完整的选择性。</div><div class="line">mysql&gt; SELECT COUNT(*) AS cnt,LEFT(city,7) FROM test.city_demo</div></pre></td></tr></table></figure>
-<p><strong>创建前缀索引</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql&gt; ALTER TABLE test.city_demo ADD KEY(city(7))</div></pre></td></tr></table></figure>
-<p>前缀索引是一种能使索引更小，更快的有效方法，但另外一方面前缀索引无法做<code>ORDER BY、GROUP BY 操作</code></p>
-<p>3、<code>选择合适的索引列顺序，将选择性最高的列放到索引最前列。</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mysql&gt; SELECT * FROM payment WHERE staff_id = 2 AND customer_id = 584</div><div class="line"></div><div class="line"># 跑一些查询确定这个表中值得分布 sum(staff_id = 2)=7992</div><div class="line">mysql&gt; SELECT SUM(staff_id = 2) FROM payment</div><div class="line"></div><div class="line"># sum(customer_id = 584)=30</div><div class="line">mysql&gt; SELECT SUM(customer_id = 584) FROM payment </div><div class="line"></div><div class="line"># 通过以上结果 我们可以优化查询</div><div class="line">mysql&gt; SELECT * FROM payment WHERE customer_id = 584 AND  staff_id = 2</div></pre></td></tr></table></figure>
-<p>4、<code>移除重复索引，MYSQL允许在相同列上创建多个索引，重复索引会影响性能，发现后应该立即移除</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE `admin` (</div><div class="line">  `id` int(11) NOT NULL PRIMARY KEY,</div><div class="line">  `username` varchar(20) DEFAULT &apos;&apos;,</div><div class="line">  `password` varchar(20) DEFAULT &apos;&apos;,</div><div class="line">  UNIQUE(id),</div><div class="line">  INDEX(id)</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;</div></pre></td></tr></table></figure>
-<p>一些经验不足的用户可能想创建一个主键，先加上一个唯一限制，然后在加上索引供查询使用，事实上，MYSQL的唯一键和主键限制都是通过索引来实现的。因此上面的写法实际上在相同列上创建了三个重复的索引。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>高性能MYSQL(第三版)</li>
-</ul>
-<p>未完待续…</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/28/Mybatis入门/" itemprop="url">
-                  Mybatis入门
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-28T00:50:09+08:00" content="2016-08-28">
-              2016-08-28
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MYSQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/28/Mybatis入门/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/28/Mybatis入门/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>MyBatis</code>是一个<code>Java</code>持久化框架，它通过XML描述符或注解把对象与存储过程或SQL语句关联起来。与<code>JDBC</code>相比，<code>Mybatis</code>简化了相关代码：<code>SQL</code>语句在一行代码就能执行，<code>MyBatis</code>提供了一个映射引擎，声明式的把<code>SQL</code>语句执行结果与对象数映射起来。</p>
-<h3 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h3><p><code>pom.xml</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;dependencies&gt;</div><div class="line">     &lt;!--mybatis--&gt;</div><div class="line">     &lt;dependency&gt;</div><div class="line">         &lt;groupId&gt;org.mybatis&lt;/groupId&gt;</div><div class="line">         &lt;artifactId&gt;mybatis&lt;/artifactId&gt;</div><div class="line">         &lt;version&gt;3.4.1&lt;/version&gt;</div><div class="line">     &lt;/dependency&gt;</div><div class="line">     &lt;dependency&gt;</div><div class="line">         &lt;groupId&gt;mysql&lt;/groupId&gt;</div><div class="line">         &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</div><div class="line">         &lt;version&gt;6.0.3&lt;/version&gt;</div><div class="line">     &lt;/dependency&gt;</div><div class="line">     &lt;dependency&gt;</div><div class="line">         &lt;groupId&gt;junit&lt;/groupId&gt;</div><div class="line">         &lt;artifactId&gt;junit&lt;/artifactId&gt;</div><div class="line">         &lt;version&gt;4.12&lt;/version&gt;</div><div class="line">     &lt;/dependency&gt;</div><div class="line">     &lt;!--Gson--&gt;</div><div class="line">     &lt;dependency&gt;</div><div class="line">         &lt;groupId&gt;com.google.code.gson&lt;/groupId&gt;</div><div class="line">         &lt;artifactId&gt;gson&lt;/artifactId&gt;</div><div class="line">         &lt;version&gt;2.7&lt;/version&gt;</div><div class="line">     &lt;/dependency&gt;</div><div class="line"> &lt;/dependencies&gt;</div></pre></td></tr></table></figure>
-<p><code>数据模型：Admin.class</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Admin &#123;            </div><div class="line">    private Integer id;         </div><div class="line">    private String username;    </div><div class="line">    private String password;    </div><div class="line">    private Date createdTime;   </div><div class="line">    private Date updatedTime; </div><div class="line">    </div><div class="line">    // 此处省略Getter &amp; Setter方法</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>接口：AdminDao.class</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface AdminDao &#123;</div><div class="line">    Admin getAdminById(SqlSession sqlSession,Integer id);</div><div class="line">    Integer saveAdmin(SqlSession sqlSession,Admin admin);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>映射类：AdminMapper.class</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface AdminMapper &#123;</div><div class="line">    Admin getAdminById(Integer id);</div><div class="line">    Integer saveAdmin(Admin admin);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>接口实现类:AdminDaoImpl.class</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class AdminDaoImpl implements AdminDao &#123;</div><div class="line">    @Override</div><div class="line">    public Admin getAdminById(SqlSession sqlSession, Integer id) &#123;</div><div class="line">        AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);</div><div class="line">        return mapper.getAdminById(id);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Integer saveAdmin(SqlSession sqlSession, Admin admin) &#123;</div><div class="line">        AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);</div><div class="line">        return mapper.saveAdmin(admin);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>生成sqlSessionFactory工具类:MybatisUtil.class</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public class MybatisUtil &#123;</div><div class="line">    private static SqlSessionFactory sqlSessionFactory = null;</div><div class="line">    private final static String LOCAL_JDBC = &quot;jdbc/mybatis-conf.xml&quot;;</div><div class="line">    static &#123;</div><div class="line">        System.out.println(&quot;====INIT Mybatis BEGIN ====&quot;);</div><div class="line">        Reader rdr;</div><div class="line">        try &#123;</div><div class="line">            rdr = Resources.getResourceAsReader(LOCAL_JDBC);</div><div class="line">            sqlSessionFactory = new SqlSessionFactoryBuilder().build(rdr);</div><div class="line">            rdr.close();</div><div class="line">        &#125; catch (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        System.out.println(&quot;====INIT Mybatis END ====&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static SqlSessionFactory getSqlSessionFactory()&#123;</div><div class="line">        return sqlSessionFactory;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>MyBatis核心配置：jdbc/mybatis-conf.xml</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</div><div class="line">&lt;!DOCTYPE configuration</div><div class="line">        PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;</div><div class="line">        &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;</div><div class="line"></div><div class="line">&lt;configuration&gt;</div><div class="line">    &lt;properties resource=&quot;mysql/config.properties&quot;&gt;&lt;/properties&gt;</div><div class="line"></div><div class="line">    &lt;!--别名--&gt;</div><div class="line">    &lt;typeAliases&gt;</div><div class="line">        &lt;typeAlias type=&quot;domain.Admin&quot; alias=&quot;Admin&quot;/&gt;</div><div class="line">    &lt;/typeAliases&gt;</div><div class="line"></div><div class="line">    &lt;!--3套配置环境,具体使用那一套可由参数设置--&gt;</div><div class="line">    &lt;environments default=&quot;$&#123;environment&#125;&quot;&gt;</div><div class="line">        &lt;environment id=&quot;local&quot;&gt;</div><div class="line">            &lt;transactionManager type=&quot;$&#123;transactionManager_type&#125;&quot;/&gt;</div><div class="line">            &lt;dataSource type=&quot;$&#123;datasource_type&#125;&quot;&gt;</div><div class="line">                &lt;property name=&quot;driver&quot; value=&quot;$&#123;driver&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;url&quot; value=&quot;$&#123;hermes-url&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;username&quot; value=&quot;$&#123;hermes-username&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;password&quot; value=&quot;$&#123;hermes-password&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolMaximumIdleConnections&quot; value=&quot;$&#123;jdbc.minPoolSize&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolMaximumActiveConnections&quot; value=&quot;$&#123;jdbc.maxPoolSize&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolTimeToWait&quot; value=&quot;$&#123;jdbc.maxIdleTime&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolPingQuery&quot; value=&quot;SELECT NOW()&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolPingEnabled&quot; value=&quot;true&quot; /&gt;</div><div class="line">            &lt;/dataSource&gt;</div><div class="line">        &lt;/environment&gt;</div><div class="line">        &lt;environment id=&quot;development&quot;&gt;</div><div class="line">            &lt;transactionManager type=&quot;$&#123;transactionManager_type&#125;&quot;/&gt;</div><div class="line">            &lt;dataSource type=&quot;$&#123;datasource_type&#125;&quot;&gt;</div><div class="line">                &lt;property name=&quot;driver&quot; value=&quot;$&#123;driver&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;url&quot; value=&quot;$&#123;interact-url&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;username&quot; value=&quot;$&#123;hermes-username&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;password&quot; value=&quot;$&#123;hermes-password&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolMaximumIdleConnections&quot; value=&quot;$&#123;jdbc.minPoolSize&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolMaximumActiveConnections&quot; value=&quot;$&#123;jdbc.maxPoolSize&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolTimeToWait&quot; value=&quot;$&#123;jdbc.maxIdleTime&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolPingQuery&quot; value=&quot;SELECT NOW()&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolPingEnabled&quot; value=&quot;true&quot; /&gt;</div><div class="line">            &lt;/dataSource&gt;</div><div class="line">        &lt;/environment&gt;</div><div class="line">        &lt;environment id=&quot;production&quot;&gt;</div><div class="line">            &lt;transactionManager type=&quot;$&#123;transactionManager_type&#125;&quot;/&gt;</div><div class="line">            &lt;dataSource type=&quot;$&#123;datasource_type&#125;&quot;&gt;</div><div class="line">                &lt;property name=&quot;driver&quot; value=&quot;$&#123;driver&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;url&quot; value=&quot;$&#123;hermes-url&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;username&quot; value=&quot;$&#123;hermes-username&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;password&quot; value=&quot;$&#123;hermes-password&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolMaximumIdleConnections&quot; value=&quot;$&#123;jdbc.minPoolSize&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolMaximumActiveConnections&quot; value=&quot;$&#123;jdbc.maxPoolSize&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolTimeToWait&quot; value=&quot;$&#123;jdbc.maxIdleTime&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolPingQuery&quot; value=&quot;SELECT NOW()&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolPingEnabled&quot; value=&quot;true&quot; /&gt;</div><div class="line">            &lt;/dataSource&gt;</div><div class="line">        &lt;/environment&gt;</div><div class="line">    &lt;/environments&gt;</div><div class="line"></div><div class="line">    &lt;!--映射表--&gt;</div><div class="line">    &lt;mappers&gt;</div><div class="line">        &lt;mapper resource=&quot;mapper/AdminMapper.xml&quot;/&gt;</div><div class="line">    &lt;/mappers&gt;</div><div class="line"></div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<p><code>数据库参数值：mysql/config.properties</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">environment=local</div><div class="line">transactionManager_type=JDBC</div><div class="line">datasource_type=POOLED</div><div class="line">driver=com.mysql.jdbc.Driver</div><div class="line"></div><div class="line">jdbc.initialPoolSize=1</div><div class="line">jdbc.minPoolSize=1</div><div class="line">jdbc.maxPoolSize=5</div><div class="line">jdbc.acquireIncrement=1</div><div class="line">jdbc.maxIdleTime=200</div><div class="line">jdbc.checkoutTimeout=3000</div><div class="line"></div><div class="line">hermes-url=jdbc:mysql://localhost/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull</div><div class="line">hermes-username=root</div><div class="line">hermes-password=</div></pre></td></tr></table></figure>
-<p><code>XML映射文件:mapper/AdminMapper.xml</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</div><div class="line">        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</div><div class="line">&lt;mapper namespace=&quot;mapper.AdminMapper&quot;&gt;</div><div class="line">    &lt;resultMap type=&quot;Admin&quot; id=&quot;admin&quot;&gt;</div><div class="line">        &lt;id property=&quot;id&quot; column=&quot;id&quot; /&gt;</div><div class="line">        &lt;result property=&quot;username&quot; column=&quot;username&quot;/&gt;</div><div class="line">        &lt;result property=&quot;password&quot; column=&quot;password&quot;/&gt;</div><div class="line">        &lt;result property=&quot;createdTime&quot; column=&quot;created_time&quot;/&gt;</div><div class="line">        &lt;result property=&quot;updatedTime&quot; column=&quot;updated_time&quot;/&gt;</div><div class="line">    &lt;/resultMap&gt;</div><div class="line"></div><div class="line">    &lt;select id=&quot;getAdminById&quot; parameterType=&quot;integer&quot; resultMap=&quot;admin&quot;&gt;</div><div class="line">        SELECT *</div><div class="line">        FROM admin</div><div class="line">        WHERE id = #&#123;id&#125;</div><div class="line">    &lt;/select&gt;</div><div class="line"></div><div class="line">    &lt;insert id=&quot;saveAdmin&quot; parameterType=&quot;domain.Admin&quot;&gt;</div><div class="line">        INSERT INTO ADMIN(username)</div><div class="line">        VALUES (#&#123;username&#125;)</div><div class="line">    &lt;/insert&gt;</div><div class="line">&lt;/mapper&gt;</div></pre></td></tr></table></figure>
-<p><code>数据库创建表</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE `admin` (</div><div class="line">  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,</div><div class="line">  `username` varchar(20) DEFAULT &apos;&apos;,</div><div class="line">  `password` varchar(20) DEFAULT &apos;&apos;,</div><div class="line">  `created_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,</div><div class="line">  `updated_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (`id`)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8;</div></pre></td></tr></table></figure>
-<p><code>Test测试样例</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">public class AdminTest &#123;</div><div class="line">   private static final SqlSessionFactory sqlSessionFactory = MybatisUtil.getSqlSessionFactory();</div><div class="line">   AdminDao adminDao = new AdminDaoImpl();</div><div class="line"></div><div class="line">   @Test</div><div class="line">   public void saveAdmin()&#123;</div><div class="line">      Admin admin = new Admin();</div><div class="line">      admin.setUsername(&quot;吴芳&quot;);</div><div class="line">      admin.setPassword(&quot;123456&quot;);</div><div class="line">      SqlSession sqlSession = sqlSessionFactory.openSession();</div><div class="line">      adminDao.saveAdmin(sqlSession,admin);</div><div class="line">      sqlSession.commit();</div><div class="line">      sqlSession.close();</div><div class="line">      System.out.println(&quot;INSERT ADMIN&quot;);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   @Test</div><div class="line">   public void getAdminById()&#123;</div><div class="line">      Integer id = 1;</div><div class="line">      SqlSession sqlSession = sqlSessionFactory.openSession();</div><div class="line">      Admin admin = adminDao.getAdminById(sqlSession,id);</div><div class="line">      System.out.println(new Gson().toJson(admin));</div><div class="line">      sqlSession.close();</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>按照以上步骤，我们已经把Mybatis的运行环境搭建起来了，后续将研究MyBatis的特性。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="https://zh.wikipedia.org/wiki/MyBatis" target="_blank" rel="external">Mybatis维基百科</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1827,7 +1845,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-count">129</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1835,7 +1853,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1844,7 +1862,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

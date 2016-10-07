@@ -291,6 +291,243 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/03/PHP错误和异常处理/" itemprop="url">
+                  PHP错误和异常处理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-03T16:21:19+08:00" content="2016-05-03">
+              2016-05-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/03/PHP错误和异常处理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/03/PHP错误和异常处理/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h6 id="异常处理的思想"><a href="#异常处理的思想" class="headerlink" title="异常处理的思想"></a>异常处理的思想</h6><p>当try代码中出现异常后，catch块代码对异常进行处理;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">try&#123;</div><div class="line">  throw new Exception(&quot;A terrible error has occured&quot;,42);</div><div class="line">&#125;catch(Exception $e)&#123;</div><div class="line">   echo &quot; exception &quot;.$e-&gt;getCode().&quot; ：&quot;.$e-&gt;getMessage().&quot; &lt;/br&gt;&quot;.&quot; in &quot;.$e-&gt;getFile().&quot; on line &quot;.$e-&gt;getLine().&quot;&lt;br/&gt;&quot;;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<h6 id="Exception类内置方法"><a href="#Exception类内置方法" class="headerlink" title="Exception类内置方法"></a>Exception类内置方法</h6><ul>
+<li>getCode() 返回传递给构造器的代码号,不可重构</li>
+<li>getMessage() 返回传递给构造器的消息，不可重构</li>
+<li>getFile() 返回产生异常的代码文件的完整路径，不可重构</li>
+<li>getLine() 返回代码文件中产生异常的代码行号，不可重构</li>
+<li>getTrace() 返回一个包含产生异常的代码回退路径的数组，不可重构</li>
+<li>__toString() 允许简单地显示一个Exception对象，并给出以上所有方法可以提供的信息，可以重构</li>
+</ul>
+<p>####### 自定义异常<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class myexception extends Exception&#123;</div><div class="line">  function __toString()&#123;</div><div class="line">     return &quot;&lt;table border=\&quot;1\&quot;&gt;&lt;tr&gt;&lt;td&gt;&lt;strong&gt;Exception &quot;.$this-&gt;getCode().&quot;&lt;/strong&gt;: &quot;.$this-&gt;getMessage().&quot;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/br&gt;&quot;;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">try &#123;</div><div class="line">  throw new myexception(&quot;happen error,parse error&quot;,405);</div><div class="line">&#125;catch(myexception $e)&#123;</div><div class="line">  echo $e;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/03/Redis介绍/" itemprop="url">
+                  Redis介绍
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-03T13:46:25+08:00" content="2016-05-03">
+              2016-05-03
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/03/Redis介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/03/Redis介绍/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="Redis是什么？"><a href="#Redis是什么？" class="headerlink" title="Redis是什么？"></a>Redis是什么？</h5><ul>
+<li><p>Redis是REmote DIctionary Server(远程字典服务器)的缩写，它以字典结构存储数据，并允许其他应用通过TCP协议读写字典中的内容。</p>
+</li>
+<li><p>Redis是一个开源的、高性能的基于键值对的缓存与存储系统，通过提供多种键值数据类型来适应不同的场景与存储需求；同时Redis的诸多高层级功能使其可以胜任消息队列、任务队列等不同的角色。</p>
+</li>
+</ul>
+<h5 id="Redis究竟有什么魅力吸引了如此多的用户，它有什么优势？"><a href="#Redis究竟有什么魅力吸引了如此多的用户，它有什么优势？" class="headerlink" title="Redis究竟有什么魅力吸引了如此多的用户，它有什么优势？"></a>Redis究竟有什么魅力吸引了如此多的用户，它有什么优势？</h5><h6 id="内存存储与持久化"><a href="#内存存储与持久化" class="headerlink" title="内存存储与持久化"></a>内存存储与持久化</h6><p>Redis数据库中所有的数据都存在于内存中，内存的读写速度远快于硬盘，因此Redis在性能上对比其他基于硬盘存储的数据库有非常明显的优势。将数据存储在内存也有一定的问题，比如程序退出后，内存中的数据会丢失，不过Redis提供了对持久化的支持，即可以将内存中的数据异步写入硬盘中，同时不影响继续提供服务。</p>
+<h6 id="功能丰富"><a href="#功能丰富" class="headerlink" title="功能丰富"></a>功能丰富</h6><p>Redis可以为每个键设置生存时间(Time To Live,TTL),生存时间到期后会自动被删除，同时Redis支持丰富的数据类型和持久化的功能，让Redis可以作为缓存系统来使用；作为缓存系统，Redis还可以限制数据占用的最大内存，在数据达到空间限制后，可以按一定的规则，淘汰不需要的键。</p>
+<h6 id="简单稳定"><a href="#简单稳定" class="headerlink" title="简单稳定"></a>简单稳定</h6>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/03/PHP浅拷贝和深拷贝分析/" itemprop="url">
                   PHP浅拷贝和深拷贝分析
                 </a>
@@ -1320,254 +1557,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/29/SQL插入数据/" itemprop="url">
-                  SQL插入数据
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-29T12:49:09+08:00" content="2016-04-29">
-              2016-04-29
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/SQL/" itemprop="url" rel="index">
-                    <span itemprop="name">SQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/29/SQL插入数据/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/29/SQL插入数据/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>INSERT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">INSERT INTO Customers VALUES(NULL, &apos;张三&apos;);</div><div class="line"></div><div class="line"># 推荐更安全、扩展性更好的方式</div><div class="line">INSERT INTO Customers(cust_id, cust_name) VALUES(NULL, &apos;张三&apos;);</div><div class="line"></div><div class="line"># 进一步，无需插入 AUTO_INCREMENT属性的列</div><div class="line">INSERT INTO Customers(cust_name) VALUES(&apos;张三&apos;);</div><div class="line"></div><div class="line"># 插入多条数据，单条语句插入比多次语句性能更高</div><div class="line">INSERT INTO Customers(cust_name) VALUES(&apos;张三&apos;),(&apos;李四&apos;);</div><div class="line"></div><div class="line"># 插入检索出来的数据</div><div class="line">INSERT INTO Customers(cust_id,cust_name) SELECT cust_id,cust_name FROM Old_Customers;</div><div class="line"></div><div class="line"># 从一个表复制到另外一个表</div><div class="line">CREATE TABLE CustCopy AS SELECT * FROM Customers;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/29/MYSQL数据库无法插入中文/" itemprop="url">
-                  MYSQL数据库无法插入中文
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-29T12:31:48+08:00" content="2016-04-29">
-              2016-04-29
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/SQL/" itemprop="url" rel="index">
-                    <span itemprop="name">SQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/29/MYSQL数据库无法插入中文/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/29/MYSQL数据库无法插入中文/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h5 id="MYSQL无法插入中文，报Incorrect-string-value-‘-xD5-xC5-xC8-xFD’错误"><a href="#MYSQL无法插入中文，报Incorrect-string-value-‘-xD5-xC5-xC8-xFD’错误" class="headerlink" title="MYSQL无法插入中文，报Incorrect string value: ‘\xD5\xC5\xC8\xFD’错误"></a>MYSQL无法插入中文，报Incorrect string value: ‘\xD5\xC5\xC8\xFD’错误</h5><p><code>mysql&gt; status;</code><br><img src="/images/mysql中文无法插入.png" alt=""></p>
-<h5 id="使用的库的字符集是latin1，该字符集不支持中文字符"><a href="#使用的库的字符集是latin1，该字符集不支持中文字符" class="headerlink" title="使用的库的字符集是latin1，该字符集不支持中文字符"></a>使用的库的字符集是latin1，该字符集不支持中文字符</h5><p><code>mysql&gt; show CREATE TABLE person1;</code><br><img src="/images/mysql中文无法插入2.png" alt=""></p>
-<h5 id="修改表字符集"><a href="#修改表字符集" class="headerlink" title="修改表字符集"></a>修改表字符集</h5><p><code>mysql&gt; ALTER TABLE person1 character set utf8;</code></p>
-<p><code>mysql&gt; show CREATE TABLE person1;</code><br><img src="/images/mysql中文无法插入3.png" alt=""></p>
-<h5 id="修改字段字符集"><a href="#修改字段字符集" class="headerlink" title="修改字段字符集"></a>修改字段字符集</h5><p><code>mysql&gt; ALTER TABLE person1 modify name varchar(20) character set utf8;</code><br><img src="/images/mysql中文无法插入4.png" alt=""></p>
-<h5 id="这时在windows下的CMD控制台的MYSQL中执行"><a href="#这时在windows下的CMD控制台的MYSQL中执行" class="headerlink" title="这时在windows下的CMD控制台的MYSQL中执行"></a>这时在windows下的CMD控制台的MYSQL中执行</h5><p><code>mysql&gt;INSERT INTO person1(id,name,age) VALUES (7,&#39;张三&#39;,21);</code><br><img src="/images/mysql中文无法插入5.png" alt=""></p>
-<h5 id="发现仍然报错，什么原因呢？"><a href="#发现仍然报错，什么原因呢？" class="headerlink" title="发现仍然报错，什么原因呢？"></a>发现仍然报错，什么原因呢？</h5><p><img src="/images/mysql中文无法插入6.png" alt=""><br>因为CMD控制台的编码是GBK的，但MYSQL的编码是UTF8所以出错;最后，用第三方软件navicate，在person1表中，执行刚刚的插入操作是可以成功.</p>
-<h5 id="最后设置数据库的编码："><a href="#最后设置数据库的编码：" class="headerlink" title="最后设置数据库的编码："></a>最后设置数据库的编码：</h5><p><code>mysql&gt;show variables like &#39;character_set_%&#39;;</code><br><img src="/images/mysql中文无法插入7.png" alt=""><br><code>mysql&gt;set character_set_database=utf8;</code><br><img src="/images/mysql中文无法插入8.png" alt=""></p>
-<h5 id="关于MYSQL数据库的配置"><a href="#关于MYSQL数据库的配置" class="headerlink" title="关于MYSQL数据库的配置"></a>关于MYSQL数据库的配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">1、修改mysql/my.ini 配置文件</div><div class="line">[client]</div><div class="line">default-character-set=utf8</div><div class="line"></div><div class="line">[mysqld]</div><div class="line">default-storage-engine=INNODB</div><div class="line">character-set-server=utf8</div><div class="line"></div><div class="line">2、重启MYSQL</div><div class="line">#windows下，停止MYSQL服务</div><div class="line">net stop mysql</div><div class="line"></div><div class="line">#启动服务</div><div class="line">net start mysql</div><div class="line"></div><div class="line">3、修改成功，进入MYSQL查看字符集</div><div class="line">show variables like &apos;character_set_%&apos;;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1613,7 +1602,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-count">129</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1621,7 +1610,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1630,7 +1619,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

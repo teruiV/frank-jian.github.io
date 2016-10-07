@@ -291,6 +291,382 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/20/Python之保存数据到文件/" itemprop="url">
+                  Python之保存数据到文件
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-20T10:46:42+08:00" content="2016-08-20">
+              2016-08-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/20/Python之保存数据到文件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/20/Python之保存数据到文件/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这篇文章是<a href="http://jianwl.com/2016/08/19/Python%E4%B9%8B%E6%96%87%E4%BB%B6%E4%B8%8E%E5%BC%82%E5%B8%B8/">Python之文件与异常</a>场景的延续，若是之前没有接触过Python文件读取操作,可以先看一下上一篇文章。</p>
+<h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><ol>
+<li>读取数据文件<code>data.txt</code>  ，将<code>Man</code>和<code>Other Man</code>这两个人的对话,分别存入<code>man</code>列表和<code>other</code>列表</li>
+<li>将<code>man</code>、<code>other</code>列表以一定的格式分别存入<code>man_data.txt</code>和<code>other_data.txt</code>文件</li>
+</ol>
+<p><strong>数据文件<code>data.txt</code></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Man :Is this the right room for an argument?</div><div class="line">Other Man :I&apos;ve told you once.</div><div class="line">Man :No you haven&apos;t</div><div class="line">Other Man :Yea I have.</div><div class="line">Man : You most certainly did not!</div><div class="line">Other Man : Now let&apos;s get one thing quite clear: I most definityly toly you!</div><div class="line">pause</div><div class="line">pause</div></pre></td></tr></table></figure>
+<p><strong>读取文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">from __future__ import print_function</div><div class="line">try:</div><div class="line">    data = open(&quot;../resource/data.txt&quot;)</div><div class="line">    man = []</div><div class="line">    other = []</div><div class="line">    for each_line in data:</div><div class="line">        try:</div><div class="line">            (role, line_spoken) = each_line.split(&apos;:&apos;, 1)</div><div class="line">            line_spoken = line_spoken.strip()</div><div class="line">            role = role.strip()</div><div class="line">            if role == &apos;Man&apos;:</div><div class="line">                man.append(line_spoken)</div><div class="line">            elif role == &apos;Other Man&apos;:</div><div class="line">                other.append(line_spoken)</div><div class="line">        except ValueError:</div><div class="line">            pass</div><div class="line">    print(man)</div><div class="line">    print(other)</div><div class="line">except IOError as err:</div><div class="line">    print(&quot;the data file is missing!&quot; + str(err))</div><div class="line">finally:</div><div class="line">	# locals() 返回当前作用域中定义名的集合</div><div class="line">    if &apos;data&apos; in locals():</div><div class="line">        data.close()</div></pre></td></tr></table></figure>
+<p><strong>存储文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">try:</div><div class="line">    with open(&quot;../resource/man_data.txt&quot;, &quot;w&quot;) as man_data:</div><div class="line">        print(man, file=man_data)</div><div class="line">    with open(&quot;../resource/other_data.txt&quot;, &quot;w&quot;) as other_data:</div><div class="line">        print(other, file=other_data)</div><div class="line">except IOError as err:</div><div class="line">	# err与字符串类型不兼容，故需强转为字符串str(err)</div><div class="line">    print(&quot;File Error:&quot; + str(err))</div></pre></td></tr></table></figure>
+<p>使用<code>w</code>模式，如果文件已存在，会清空文件的数据。要追加一个文件，要使用<code>a</code>模式。使用<code>with</code>不需要担心关闭打开的文件，等同于读取文件中<code>finally部分</code>。运行代码，可得<code>man_data.txt</code>和<code>other_data.txt</code>的数据分别为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># man_data.txt</div><div class="line">[&apos;Is this the right room for an argument?&apos;, &quot;No you haven&apos;t&quot;, &apos;You most certainly did not!&apos;]</div><div class="line"></div><div class="line"># other_data.txt</div><div class="line">[&quot;I&apos;ve told you once.&quot;, &apos;Yea I have.&apos;, &quot;Now let&apos;s get one thing quite clear: I most definityly toly you!&quot;]</div></pre></td></tr></table></figure>
+<p>如果我想让列表中的数据一行一行的显示，该如何做呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">def print_lol(the_list,indent=False,level=0,fn=sys.stdout):</div><div class="line">    for each_item in the_list:</div><div class="line">        if isinstance(each_item, list):</div><div class="line">            print_lol(each_item,indent,level+1,fn)</div><div class="line">        else:</div><div class="line">            if indent:</div><div class="line">                for tab_stop in range(level):</div><div class="line">                    print (&quot;\t&quot;,end=&apos;&apos;,file=fn)</div><div class="line">            print (each_item,file=fn)</div></pre></td></tr></table></figure>
+<p>定义函数<code>print_lol</code>,该函数能够将列表的数据一行一行打印出来，且可以控制数据的缩进。修改之后的代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">try:</div><div class="line">    with open(&quot;../resource/man_data.txt&quot;,&quot;w&quot;) as man_data:</div><div class="line">        print_lol(man,True,2,man_data)</div><div class="line">    with open(&quot;../resource/other_data.txt&quot;,&quot;w&quot;) as other_data:</div><div class="line">        print_lol(other,False,0,other_data)</div><div class="line">except IOError as err:</div><div class="line">    print (&quot;File Error &quot; + str(err))</div></pre></td></tr></table></figure>
+<p><code>man_data.txt</code>和<code>other_data.txt</code>文件存入的数据一个是有缩进的，一个是没有缩进的。运行实例可看到效果。</p>
+<p>最后，介绍一下，Python中一个可供保存和加载数据对象的通用库<code>pickle</code>.其思想是，将Python内存中的数据存入到pickle引擎，输出腌制后的数据。若要读取数据文件，则将持久存储的腌制数据解除腌制，在Python内存中，用原来的数据形式重新创建数据。具体代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">import pickle</div><div class="line"># &quot;b&quot;,Python以二进制模式打开文件</div><div class="line">with open(&apos;mydata.pickle&apos;,&apos;wb&apos;) as mysavedata:</div><div class="line">	# dump 保存数据</div><div class="line">    pickle.dump([1,2,&apos;three&apos;],mysavedata)</div><div class="line">with open(&apos;mydata.pickle&apos;,&apos;rb&apos;) as myrestoredata:</div><div class="line">	# load 从文件恢复数据</div><div class="line">    a_list = pickle.load(myrestoredata)</div><div class="line">print (a_list)</div></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><table>
+<thead>
+<tr>
+<th>方法/关键字</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>strip()</td>
+<td><code>从字符串中去除左右两边的空白符</code></td>
+</tr>
+<tr>
+<td>print()</td>
+<td><code>BIF的file参数控制将文件保存到哪里，如print([1,2,&quot;three&quot;,file=data.txt])</code></td>
+</tr>
+<tr>
+<td>finally</td>
+<td><code>不论try/except语法是否出现异常，总会执行finally组</code></td>
+</tr>
+<tr>
+<td>as</td>
+<td><code>向except组传入异常对象，使用as赋至另一个标识符，如except IOError as err</code></td>
+</tr>
+<tr>
+<td>str()</td>
+<td><code>任何数据对象字符串的转换</code></td>
+</tr>
+<tr>
+<td>locals()</td>
+<td><code>返回当前作用域中的变量集合</code></td>
+</tr>
+<tr>
+<td>with</td>
+<td><code>会自动处理所有已打开文件的关闭工作</code></td>
+</tr>
+<tr>
+<td>pickle.dump()</td>
+<td><code>数据保存到磁盘</code></td>
+</tr>
+<tr>
+<td>pickle.load()</td>
+<td><code>从磁盘恢复数据</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>Head First Python</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/19/Python之文件与异常/" itemprop="url">
+                  Python之文件与异常
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-19T21:24:38+08:00" content="2016-08-19">
+              2016-08-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/19/Python之文件与异常/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/19/Python之文件与异常/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这一节，主要用代码来增强对Python文件读取和异常处理的理解。</p>
+<h3 id="Python文件输入"><a href="#Python文件输入" class="headerlink" title="Python文件输入"></a>Python文件输入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># This allows you to use the Python 3.0 style print function </div><div class="line">from __future__ import print_function</div><div class="line"></div><div class="line">data = open(&apos;../resource/data.txt&apos;)</div><div class="line">print(data.readline(), end=&apos;&apos;)</div><div class="line">print(data.readline(), end=&apos;&apos;)</div><div class="line">print(data.readline(), end=&apos;&apos;)</div><div class="line">print (&quot;&lt;/br&gt;&quot;)</div><div class="line"></div><div class="line"># 返回文件的起始位置</div><div class="line">data.seek(0)</div><div class="line">for each_line in data:</div><div class="line">    print(each_line,end=&apos;&apos;)</div><div class="line"></div><div class="line"># 关闭文件</div><div class="line">data.close()</div></pre></td></tr></table></figure>
+<h3 id="数据文件内容data-txt"><a href="#数据文件内容data-txt" class="headerlink" title="数据文件内容data.txt"></a>数据文件内容<code>data.txt</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Man :Is this the right room for an argument?</div><div class="line">Other Man :I&apos;ve told you once.</div><div class="line">Man :No you haven&apos;t</div><div class="line">Other Man :Yea I have.</div><div class="line">Man : You most certainly did not!</div><div class="line">Other Man : Now let&apos;s get one thing quite clear: I most definityly toly you!</div><div class="line">pause</div><div class="line">pause</div></pre></td></tr></table></figure>
+<h3 id="抽取数据行中的各部分"><a href="#抽取数据行中的各部分" class="headerlink" title="抽取数据行中的各部分"></a>抽取数据行中的各部分</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># This allows you to use the Python 3.0 style print function</div><div class="line">from __future__ import print_function</div><div class="line"></div><div class="line">data = open(&apos;../resource/data.txt&apos;)</div><div class="line">for each_line in data:</div><div class="line">    (role, line_spoken) = each_line.split(&apos;:&apos;)</div><div class="line">    print(role, end=&apos;&apos;)</div><div class="line">    print(&apos;said: &apos;, end=&apos;&apos;)</div><div class="line">    print(line_spoken, end=&apos;&apos;)</div><div class="line">data.close()</div></pre></td></tr></table></figure>
+<p>运行程序，发现一个运行时错误,为何？原因在于<code>Other Man : Now let&#39;s get one thing quite clear: I most definityly toly you!</code>这行数据有两个冒号，split()方法将这一行为3部分。代码没有告诉split()如何处理第3部分，所以Python解释器会产生ValueError，抱怨值过多，然后终止。如何处理呢？<code>split(&#39;:&#39;,1)</code>这个方法只会处理第一个为冒号的分割字符。修改之后的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># This allows you to use the Python 3.0 style print function</div><div class="line">from __future__ import print_function</div><div class="line"></div><div class="line">data = open(&apos;../resource/data.txt&apos;)</div><div class="line">for each_line in data:</div><div class="line">    (role, line_spoken) = each_line.split(&apos;:&apos;,1)</div><div class="line">    print(role, end=&apos;&apos;)</div><div class="line">    print(&apos;said: &apos;, end=&apos;&apos;)</div><div class="line">    print(line_spoken, end=&apos;&apos;)</div><div class="line">data.close()</div></pre></td></tr></table></figure>
+<p>运行之后，仍然有错，为何？原因在于<code>pause</code>这一行数据中没有冒号，故Python解释器在抱怨没有足够的数据来处理。如何处理呢？两种方案</p>
+<ol>
+<li>增加额外的逻辑来处理意外的情况</li>
+<li>允许这些错误发生，然后只需在各个错误发生时，相应处理即可。</li>
+</ol>
+<p><strong>方案1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">from __future__ import print_function</div><div class="line">data = open(&apos;../resource/data.txt&apos;)</div><div class="line">for each_line in data:</div><div class="line">    if not each_line.find(&quot;:&quot;) == -1:</div><div class="line">        (role, line_spoken) = each_line.split(&apos;:&apos;)</div><div class="line">        print(role, end=&apos;&apos;)</div><div class="line">        print(&apos;said: &apos;, end=&apos;&apos;)</div><div class="line">        print(line_spoken, end=&apos;&apos;)</div><div class="line">data.close()</div></pre></td></tr></table></figure>
+<p><strong>方案2</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">from __future__ import print_function</div><div class="line">data = open(&apos;../resource/data.txt&apos;)</div><div class="line">for each_line in data:</div><div class="line">    try:</div><div class="line">        (role, line_spoken) = each_line.split(&apos;:&apos;, 1)</div><div class="line">        print(role, end=&apos;&apos;)</div><div class="line">        print(&apos;said: &apos;, end=&apos;&apos;)</div><div class="line">        print(line_spoken, end=&apos;&apos;)</div><div class="line">    except ValueError:</div><div class="line">        pass</div><div class="line">data.close()</div></pre></td></tr></table></figure>
+<p><strong>方案1和方案2哪种方案好呢？</strong></p>
+<p>使用方案1，随着考虑的情况越来越多，增加额外的逻辑代码也会越来越多，方案的复杂性随之增加，之后最后可能掩盖程序本来的作用。</p>
+<p>使用方案2，你可以关注代码真正需要什么，而不必操心哪里出现问题。</p>
+<p><strong>附上完整代码</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">from __future__ import print_function</div><div class="line">try:</div><div class="line">    data = open(&apos;../resource/data.txt&apos;)</div><div class="line">    for each_line in data:</div><div class="line">        try:</div><div class="line">            (role, line_spoken) = each_line.split(&apos;:&apos;, 1)</div><div class="line">            print(role, end=&apos;&apos;)</div><div class="line">            print(&apos;said: &apos;, end=&apos;&apos;)</div><div class="line">            print(line_spoken, end=&apos;&apos;)</div><div class="line">        except ValueError:</div><div class="line">            print(&quot;inner error&quot;)</div><div class="line">            pass</div><div class="line">    data.close()</div><div class="line">except IOError:</div><div class="line">    print(&apos;the data file is missing!&apos;)</div></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">方法/关键字</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">open()</td>
+<td style="text-align:left"><code>打开一个磁盘文件</code></td>
+</tr>
+<tr>
+<td style="text-align:left">readline()</td>
+<td style="text-align:left"><code>从一个打开文件中读取一行数据</code></td>
+</tr>
+<tr>
+<td style="text-align:left">seek()</td>
+<td style="text-align:left"><code>将文件退回到起始位置</code></td>
+</tr>
+<tr>
+<td style="text-align:left">close()</td>
+<td style="text-align:left"><code>关闭之前打开的文件</code></td>
+</tr>
+<tr>
+<td style="text-align:left">split()</td>
+<td style="text-align:left"><code>将一个字符串分解为子串列表</code></td>
+</tr>
+<tr>
+<td style="text-align:left">find()</td>
+<td style="text-align:left"><code>方法会在一个字符串中查找特定子串</code></td>
+</tr>
+<tr>
+<td style="text-align:left">not</td>
+<td style="text-align:left"><code>将条件取反</code></td>
+</tr>
+<tr>
+<td style="text-align:left">try/except</td>
+<td style="text-align:left"><code>提供异常处理机制</code></td>
+</tr>
+<tr>
+<td style="text-align:left">pass</td>
+<td style="text-align:left"><code>Python的空语句或null语句，它什么也不做</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>Head First Python</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/19/JAVA之正则表达式/" itemprop="url">
                   JAVA之正则表达式
                 </a>
@@ -1641,318 +2017,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/13/MYSQL之事务隔离级别/" itemprop="url">
-                  MYSQL之事务隔离级别
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-13T12:12:51+08:00" content="2016-08-13">
-              2016-08-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MYSQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/13/MYSQL之事务隔离级别/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/13/MYSQL之事务隔离级别/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="事务隔离级别的作用"><a href="#事务隔离级别的作用" class="headerlink" title="事务隔离级别的作用"></a>事务隔离级别的作用</h3><p>在SQL标准中定义了4种隔离级别，每一种级别都规定了一个事务所做的修改，哪些在事务内和事务间是可见的，哪些是不可见的。较低级别的隔离，通常可以执行更高的并发，系统的开销也更低。</p>
-<h3 id="四种隔离级别"><a href="#四种隔离级别" class="headerlink" title="四种隔离级别"></a>四种隔离级别</h3><p><strong>READ UNCOMMITTED(未提交读)</strong><br>一个事务的修改，即使没有提交，对其他事务也都是可见的。事务可以读取未提交的数据，也被称为脏读(Dirty Read)</p>
-<p><strong>READ COMMITTED(提交读)</strong><br>一个事务从开始直到提交之前，所做的任何修改对其他事务都是不可见的，这个级别有时候也被称为不可重复读(nonrepeatable read),因为两次执行同样的查询，可能会得到不一样的结果。</p>
-<p><strong>REPEATABLE READ(可重复读) – MySQL的默认事务隔离级别</strong><br>这个级别解决了脏读的问题，保证了在同一个事务中多次读取同样记录的结果是一致的。但是…..无法解决幻读(Phantom Read)的问题，所谓幻读是指当某个事务在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录，当之前的事务再次读取该范围的记录时，会产生幻行(Phantom Row)。</p>
-<p><strong>SERIALIZABLE(可串行化)</strong><br>这个级别是最高的隔离级别，它通过强制事务串行执行，避免了前面说的幻读问题，简单来说，SERIALIZABLE会在读取的每一行数据上都加锁，所以可能导致大量的超时和锁争用的问题。实际中很少用到，只有在非常需要保证数据的一致性而且可以接受没有并发情况下，才会采用。</p>
-<h3 id="设置事务隔离级别"><a href="#设置事务隔离级别" class="headerlink" title="设置事务隔离级别"></a>设置事务隔离级别</h3><p><strong>查看隔离级别</strong></p>
-<p><img src="../images/transaction-1.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 查看全局的事务级别</div><div class="line">SELECT @@global.tx_isolation;</div><div class="line"></div><div class="line"># 查看当前连接上的事务级别</div><div class="line">SELECT @@session.tx_isolation;</div><div class="line"></div><div class="line"># 查看下一个（未开始）事务的隔离级别</div><div class="line">SELECT @@tx_isolation;</div></pre></td></tr></table></figure></p>
-<p><strong>设置隔离级别</strong></p>
-<p><img src="../images/transaction-2.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">set global|session transaction isolation level read uncommitted | read committed | repeatable read | serializable</div></pre></td></tr></table></figure></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">隔离级别</th>
-<th style="text-align:center">脏读可能性</th>
-<th style="text-align:center">不可重复读可能性</th>
-<th style="text-align:right">幻读可能性</th>
-<th style="text-align:center">加锁读</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">READ UNCOMMITTED</td>
-<td style="text-align:center">YES</td>
-<td style="text-align:center">YES</td>
-<td style="text-align:right">YES</td>
-<td style="text-align:center">NO</td>
-</tr>
-<tr>
-<td style="text-align:left">READ COMMITTED</td>
-<td style="text-align:center">NO</td>
-<td style="text-align:center">YES</td>
-<td style="text-align:right">YES</td>
-<td style="text-align:center">NO</td>
-</tr>
-<tr>
-<td style="text-align:left">REPEATABLE READ</td>
-<td style="text-align:center">NO</td>
-<td style="text-align:center">NO</td>
-<td style="text-align:right">YES</td>
-<td style="text-align:center">NO</td>
-</tr>
-<tr>
-<td style="text-align:left">SERIALIZABLE</td>
-<td style="text-align:center">NO</td>
-<td style="text-align:center">NO</td>
-<td style="text-align:right">NO</td>
-<td style="text-align:center">YES</td>
-</tr>
-</tbody>
-</table>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="http://blog.itpub.net/195110/viewspace-1080777" target="_blank" rel="external">mysql修改事务隔离级别 </a></li>
-<li>高性能MySQL第三版</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/13/MYSQL之事务/" itemprop="url">
-                  MYSQL之事务
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-13T11:07:35+08:00" content="2016-08-13">
-              2016-08-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MYSQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/13/MYSQL之事务/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/13/MYSQL之事务/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h3><p>一组原子性的SQL查询，事务内的语句要么全部执行成功，要么全部执行失败。</p>
-<h3 id="场景示例"><a href="#场景示例" class="headerlink" title="场景示例"></a>场景示例</h3><p>假设一个银行的数据库有两张表:支票(checking)表和储蓄(savings)表，现在用户Jane的支票账户转移200美元到她的储蓄账户，那么需要至少三个步骤：</p>
-<ol>
-<li>检查支票账户的余额高于200美元</li>
-<li>从支票账户余额中减去200美元</li>
-<li>在储蓄账户余额中增加200美元</li>
-</ol>
-<p>上述三个步骤必须打包在一个事务中，任何一个步骤失败，则必须回滚所有的步骤。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">START TRANSACTION;</div><div class="line">SELECT balance FROM checking where customer_id =  10233276;</div><div class="line">UPDATE checking SET balance = balance - 200.00 WHERE customer_id = 10233276;</div><div class="line">UPDATE savings SET balance = balance + 200.00  WHERE customer_id = 10233276;</div><div class="line">COMMIT</div></pre></td></tr></table></figure></p>
-<p>但是….. 单纯的事务概念并不是故事的全部，可能会出现以下场景….</p>
-<blockquote>
-<ol>
-<li>执行第4条语句时，服务器崩溃了 – 可能用户会损失200美金</li>
-<li>在执行第3条语句和第4条语句之间，另外一个进程要删除支票账户的所有余额 – 银行在不知道这个逻辑的情况下， 可能白白给了Jane200美金。</li>
-</ol>
-</blockquote>
-<h3 id="如何保障事务"><a href="#如何保障事务" class="headerlink" title="如何保障事务"></a>如何保障事务</h3><p>除非系统通过严格的ACID测试，否则空谈事务的概念是远远不够的。ACID分别表示原子性、一致性、隔离性、持久性。</p>
-<p><strong>原子性(atomicity)</strong><br>一个事务必须被视为一个不可分割的最小工作单元，整个事务要么全部提交成功，要么全部失败回滚。</p>
-<p><strong>一致性(consistency)</strong><br>数据库总是从一个一致性的状态转换到另外一个一致性的状态。例如：在前面的例子中，即使在执行第3、4条语句之间系统崩溃了，支票账户也不会损失200美元，因为事务最终没有被提交，事务中所做的修改也不会保存到数据库中。</p>
-<p><strong>隔离性(isolation)</strong><br>一个事务所做的修改在最终提交以前，对其他事务是不可见的。例如：在前面的例子中，当执行完第3条语句，第4条语句还没有开始时，此时另外一个账号汇总程序开始运行，则其看到的支票账户的余额并没有被减去200美元。</p>
-<p><strong>持久性(durability)</strong><br>一旦事务提交，则其所作的修改就会永久保存到数据库中，此时即使系统崩溃，修改的数据也不会丢失。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1998,7 +2062,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-count">129</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2006,7 +2070,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2015,7 +2079,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
