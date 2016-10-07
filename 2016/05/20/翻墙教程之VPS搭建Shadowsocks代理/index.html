@@ -1,0 +1,835 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="VPS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="做为一个开发人员，具备翻墙的能力，是最基本的；最近打算在VPS上搭建一个shadowsocks代理来实现翻墙，将操作步骤记录下来，备忘。
+购买VPS到vultr的官网注册账户，目前注册的新用户给你$50,用2个月，超给力的。需要注意的是，你得有支持外币支付的信用卡，并且这个优惠活动不支持paypal，反正我用民生银行的VISA信用卡是没有注册成功，最后采用了paypal的方式支付的。
+vps部署选">
+<meta property="og:type" content="article">
+<meta property="og:title" content="翻墙教程之VPS搭建Shadowsocks代理">
+<meta property="og:url" content="http://jianwl.com/2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="做为一个开发人员，具备翻墙的能力，是最基本的；最近打算在VPS上搭建一个shadowsocks代理来实现翻墙，将操作步骤记录下来，备忘。
+购买VPS到vultr的官网注册账户，目前注册的新用户给你$50,用2个月，超给力的。需要注意的是，你得有支持外币支付的信用卡，并且这个优惠活动不支持paypal，反正我用民生银行的VISA信用卡是没有注册成功，最后采用了paypal的方式支付的。
+vps部署选">
+<meta property="og:image" content="http://jianwl.com/images/vultr服务器.png">
+<meta property="og:image" content="http://jianwl.com/images/vultr服务器详情.png">
+<meta property="og:image" content="http://jianwl.com/images/xshell连接vps.png">
+<meta property="og:image" content="http://jianwl.com/images/vultr输入用户名.png">
+<meta property="og:image" content="http://jianwl.com/images/vultr输入密码.png">
+<meta property="og:image" content="http://jianwl.com/images/xshell成功登陆vps.png">
+<meta property="og:image" content="http://jianwl.com/images/ss01.png">
+<meta property="og:image" content="http://jianwl.com/images/ss输入端口.png">
+<meta property="og:image" content="http://jianwl.com/images/ss成功.png">
+<meta property="og:image" content="http://jianwl.com/images/ss安装成功.png">
+<meta property="og:image" content="http://jianwl.com/images/ss客户端配置.png">
+<meta property="og:image" content="http://jianwl.com/images/安装SwitchyOmega.png">
+<meta property="og:image" content="http://jianwl.com/images/配置SwitchyOmega01.png">
+<meta property="og:image" content="http://jianwl.com/images/配置SwitchyOmega02.png">
+<meta property="og:image" content="http://jianwl.com/images/配置SwitchyOmega03.png">
+<meta property="og:image" content="http://jianwl.com/images/配置SwitchyOmega04.png">
+<meta property="og:image" content="http://jianwl.com/images/配置SwitchyOmega05.png">
+<meta property="og:image" content="http://jianwl.com/images/shadowsocks原理.jpg">
+<meta property="og:updated_time" content="2016-10-01T13:10:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="翻墙教程之VPS搭建Shadowsocks代理">
+<meta name="twitter:description" content="做为一个开发人员，具备翻墙的能力，是最基本的；最近打算在VPS上搭建一个shadowsocks代理来实现翻墙，将操作步骤记录下来，备忘。
+购买VPS到vultr的官网注册账户，目前注册的新用户给你$50,用2个月，超给力的。需要注意的是，你得有支持外币支付的信用卡，并且这个优惠活动不支持paypal，反正我用民生银行的VISA信用卡是没有注册成功，最后采用了paypal的方式支付的。
+vps部署选">
+<meta name="twitter:image" content="http://jianwl.com/images/vultr服务器.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://jianwl.com/2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/"/>
+
+  <title> 翻墙教程之VPS搭建Shadowsocks代理 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">记录点滴成长</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                翻墙教程之VPS搭建Shadowsocks代理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-20T12:45:02+08:00" content="2016-05-20">
+              2016-05-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/VPS/" itemprop="url" rel="index">
+                    <span itemprop="name">VPS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>做为一个开发人员，具备翻墙的能力，是最基本的；最近打算在VPS上搭建一个shadowsocks代理来实现翻墙，将操作步骤记录下来，备忘。</p>
+<h6 id="购买VPS"><a href="#购买VPS" class="headerlink" title="购买VPS"></a>购买VPS</h6><p>到vultr的<a href="https://www.vultr.com/freetrial/" target="_blank" rel="external">官网</a>注册账户，目前注册的新用户给你$50,用2个月，超给力的。需要注意的是，你得有支持外币支付的信用卡，并且这个优惠活动不支持paypal，反正我用民生银行的VISA信用卡是没有注册成功，最后采用了paypal的方式支付的。</p>
+<h6 id="vps部署"><a href="#vps部署" class="headerlink" title="vps部署"></a>vps部署</h6><p>选择日本或者美国西海岸的服务器，速度相对比较快，我选的是日本的。操作系统是CentOS 6 x64,选择的硬件是$5/month的；以下截图是购买成功之后的VPS服务器实例;<br><img src="/images/vultr服务器.png" alt=""></p>
+<h6 id="下载并安装Xshell5"><a href="#下载并安装Xshell5" class="headerlink" title="下载并安装Xshell5"></a>下载并安装Xshell5</h6><p><a href="http://pan.baidu.com/s/1eRRETaU" target="_blank" rel="external">Xshell5百度云下载链接</a></p>
+<h6 id="Xshell5连接vps"><a href="#Xshell5连接vps" class="headerlink" title="Xshell5连接vps"></a>Xshell5连接vps</h6><p><img src="/images/vultr服务器详情.png" alt="vps的详情"><br>打开Xshell5,新建会话，输入IP地址,点击确定<br><img src="/images/xshell连接vps.png" alt=""><br>输入用户名<br><img src="/images/vultr输入用户名.png" alt=""><br>输入密码<br><img src="/images/vultr输入密码.png" alt=""><br>xshell5成功登陆vps服务器<br><img src="/images/xshell成功登陆vps.png" alt=""></p>
+<h6 id="部署shadowsocks"><a href="#部署shadowsocks" class="headerlink" title="部署shadowsocks"></a>部署shadowsocks</h6><p>1、用Shadowsocks Python版一键安装脚本,<a href="https://teddysun.com/342.html" target="_blank" rel="external">原文链接</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</div><div class="line">chmod +x shadowsocks.sh</div><div class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</div></pre></td></tr></table></figure></p>
+<p>执行后需要输入密码(shadowsocks的密码)<br><img src="/images/ss01.png" alt=""><br>2、输入shadowsocks的端口,我喜欢用8388<br><img src="/images/ss输入端口.png" alt=""><br>3、看到这句时，按任意键(比如回车)<br><img src="/images/ss成功.png" alt=""><br>4、等待安装结束，出现下图就表示安装成功了.<br><img src="/images/ss安装成功.png" alt=""></p>
+<h6 id="开启TFO-TCP-Fast-Open"><a href="#开启TFO-TCP-Fast-Open" class="headerlink" title="开启TFO(TCP Fast Open)"></a>开启TFO(TCP Fast Open)</h6><p>编辑rc.local<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/rc.local</div></pre></td></tr></table></figure></p>
+<p>在rc.local最后一行添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo 3 &gt; /proc/sys/net/ipv4/tcp_fastopen</div></pre></td></tr></table></figure></p>
+<p>编辑sysctl.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/sysctl.conf</div></pre></td></tr></table></figure></p>
+<p>在sysctl.conf中输入并保存<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net.ipv4.tcp_fastopen = 3</div></pre></td></tr></table></figure></p>
+<p>打开ss配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/shadowsocks.json</div></pre></td></tr></table></figure></p>
+<p>修改fast_open的值为true并保存。<br>重启shadowsocks<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/shadowsocks restart</div></pre></td></tr></table></figure></p>
+<h6 id="windows端运行shadowsocks客户端"><a href="#windows端运行shadowsocks客户端" class="headerlink" title="windows端运行shadowsocks客户端"></a>windows端运行shadowsocks客户端</h6><p><a href="http://pan.baidu.com/s/1hrFz8uo" target="_blank" rel="external">shadowsocks客户端百度云下载链接</a><br>解压后运行shadowsocks.exe,并配置shadowsocks<br><img src="/images/ss客户端配置.png" alt=""></p>
+<h6 id="科学上网"><a href="#科学上网" class="headerlink" title="科学上网"></a>科学上网</h6><p>使用代理，虽然可以访问国外的网站，但网速会比较慢。理想的情况下，我们想要在访问国外网站的时候使用代理，访问国内的网站的时候不使用代理,保证效率最大化。</p>
+<p>我们使用SwitchyOmega来消除shadowsocks全局代理的副作用，<a href="http://pan.baidu.com/s/1mhX8r7i" target="_blank" rel="external">SwitchyOmega</a>是Chrome下非常好用的代理管理插件(.crx是插件,.bak是备份文件);</p>
+<h6 id="安装SwitchyOmega"><a href="#安装SwitchyOmega" class="headerlink" title="安装SwitchyOmega"></a>安装SwitchyOmega</h6><p>将SwitchyOmega.crx插件直接拖到扩展程序中，即可实现安装<br><img src="/images/安装SwitchyOmega.png" alt=""></p>
+<h6 id="配置SwitchyOmega"><a href="#配置SwitchyOmega" class="headerlink" title="配置SwitchyOmega"></a>配置SwitchyOmega</h6><p><img src="/images/配置SwitchyOmega01.png" alt=""><br><img src="/images/配置SwitchyOmega02.png" alt=""><br><img src="/images/配置SwitchyOmega03.png" alt=""><br><img src="/images/配置SwitchyOmega04.png" alt=""><br><img src="/images/配置SwitchyOmega05.png" alt=""><br>至此，把Shadowsocks客户端的模式改为了自动模式，<strong>通过Chrome访问的网址都会经过代理服务器;通过其他浏览器如：FireFox访问的网址则不经过代理服务器</strong>;说明了局部代理成功。</p>
+<h6 id="Shadowsocks原理"><a href="#Shadowsocks原理" class="headerlink" title="Shadowsocks原理"></a>Shadowsocks原理</h6><p>简单理解的话，Shadowsocks是将以前通过SSH创建的Socks5协议拆分成Server端和Client端，下面这个原理图能简单介绍其翻墙原理，基本上和利用SSH tunnel大致类似：<br><img src="/images/shadowsocks原理.jpg" alt=""><br>PC客户端发出请求基于Socks5协议跟SS-Local端进行通讯，由于这个SS-Local一般是本机或路由器等局域网的其他机器，不经过GFW,所以解决GFW通过特征分析进行干扰的问题。</p>
+<p>SS-Local和SS-Server两端通过多种可选的加密方法进行通讯，经过GFW的时候因为是常规的TCP包，没有明显特征码GFW也无法对通讯进行解密，因此通讯放行。</p>
+<p>SS-Server将收到的加密数据进行解密，还原初始请求，在发送用户需要访问的服务网站，响应原路返回SS-04,返回途中依然使用了加密，使得流量是普通的TCP包，并成功穿过GFW防火墙。</p>
+<p>因此，Shadowsocks的优点在于它解决了GFW通过分析流量特征从而干扰的问题，这是它优于SSH和VPN的地方。</p>
+<p>参考资料：<br>1、<a href="http://mpc2008cn.github.io/2015/10/22/vps/" target="_blank" rel="external">Vultr的vps搭建shadowsocks翻墙</a><br>2、<a href="https://teddysun.com/342.html" target="_blank" rel="external">Shadowsocks Python版一键安装脚本</a><br>3、<a href="http://www.shadowsocks.co.uk/shadowsocks-tcp-fast-open/" target="_blank" rel="external">Shadowsocks设置:ShadowSocks 服务器开启TCP Fast Open</a><br>4、<a href="http://shadowsocks.blogspot.tw/" target="_blank" rel="external">shadowsocks搭建教程</a><br>5、<a href="http://www.jianshu.com/p/37ef0b9ecc08" target="_blank" rel="external">shadowsocks配合SwitchyOmega科学上网</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/VPS/" rel="tag">#VPS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/17/HTTP报文详解/" rel="next" title="HTTP报文详解">
+                <i class="fa fa-chevron-left"></i> HTTP报文详解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/31/PlayFramework调试/" rel="prev" title="PlayFramework调试">
+                PlayFramework调试 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/"
+     data-title="翻墙教程之VPS搭建Shadowsocks代理"
+     data-content=""
+     data-url="http://jianwl.com/2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/"
+           data-title="翻墙教程之VPS搭建Shadowsocks代理" data-url="http://jianwl.com/2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+          <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#购买VPS"><span class="nav-number">1.</span> <span class="nav-text">购买VPS</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#vps部署"><span class="nav-number">2.</span> <span class="nav-text">vps部署</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#下载并安装Xshell5"><span class="nav-number">3.</span> <span class="nav-text">下载并安装Xshell5</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Xshell5连接vps"><span class="nav-number">4.</span> <span class="nav-text">Xshell5连接vps</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#部署shadowsocks"><span class="nav-number">5.</span> <span class="nav-text">部署shadowsocks</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#开启TFO-TCP-Fast-Open"><span class="nav-number">6.</span> <span class="nav-text">开启TFO(TCP Fast Open)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#windows端运行shadowsocks客户端"><span class="nav-number">7.</span> <span class="nav-text">windows端运行shadowsocks客户端</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#科学上网"><span class="nav-number">8.</span> <span class="nav-text">科学上网</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#安装SwitchyOmega"><span class="nav-number">9.</span> <span class="nav-text">安装SwitchyOmega</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#配置SwitchyOmega"><span class="nav-number">10.</span> <span class="nav-text">配置SwitchyOmega</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Shadowsocks原理"><span class="nav-number">11.</span> <span class="nav-text">Shadowsocks原理</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jianwl"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
