@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Simplest SpringMVC教程 | 记录点滴成长</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="背景Spring MVC框架已经近1年没有接触了，以前的基础也忘的差不多了。既然如此，那就忘去过去所学Spring MVC的知识，一切重新学起。创建第一个Spring MVC项目，网上有很多教程，但感觉都过于复杂，也不够简单明了。
+工具IntelliJ IDEA – (IDE)Maven – (项目Jar包管理构建工具 3.2.x版本)Tomcat – (Web容器 7.x版本)
+操作流程1、创建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Simplest SpringMVC教程">
+<meta property="og:url" content="http://jianwl.com/2016/06/05/Simplest-SpringMVC教程/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="背景Spring MVC框架已经近1年没有接触了，以前的基础也忘的差不多了。既然如此，那就忘去过去所学Spring MVC的知识，一切重新学起。创建第一个Spring MVC项目，网上有很多教程，但感觉都过于复杂，也不够简单明了。
+工具IntelliJ IDEA – (IDE)Maven – (项目Jar包管理构建工具 3.2.x版本)Tomcat – (Web容器 7.x版本)
+操作流程1、创建">
+<meta property="og:image" content="http://jianwl.com/images/创建maven项目.png">
+<meta property="og:image" content="http://jianwl.com/images/创建maven项目02.png">
+<meta property="og:image" content="http://jianwl.com/images/创建maven项目03.png">
+<meta property="og:image" content="http://jianwl.com/images/maven配置.png">
+<meta property="og:image" content="http://jianwl.com/images/创建maven项目04.png">
+<meta property="og:image" content="http://jianwl.com/images/创建java文件夹.png">
+<meta property="og:image" content="http://jianwl.com/images/java设为源文件夹.png">
+<meta property="og:image" content="http://jianwl.com/images/创建文件夹.png">
+<meta property="og:image" content="http://jianwl.com/images/maven打包.png">
+<meta property="og:image" content="http://jianwl.com/images/配置tomcat01.png">
+<meta property="og:image" content="http://jianwl.com/images/配置tomcat02.png">
+<meta property="og:image" content="http://jianwl.com/images/配置tomcat03.png">
+<meta property="og:image" content="http://jianwl.com/images/配置tomcat04.png">
+<meta property="og:image" content="http://jianwl.com/images/启动tomcat.png">
+<meta property="og:image" content="http://jianwl.com/images/springmvc成功访问.png">
+<meta property="og:updated_time" content="2016-10-01T13:10:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Simplest SpringMVC教程">
+<meta name="twitter:description" content="背景Spring MVC框架已经近1年没有接触了，以前的基础也忘的差不多了。既然如此，那就忘去过去所学Spring MVC的知识，一切重新学起。创建第一个Spring MVC项目，网上有很多教程，但感觉都过于复杂，也不够简单明了。
+工具IntelliJ IDEA – (IDE)Maven – (项目Jar包管理构建工具 3.2.x版本)Tomcat – (Web容器 7.x版本)
+操作流程1、创建">
+<meta name="twitter:image" content="http://jianwl.com/images/创建maven项目.png">
+  
+    <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">记录点滴成长</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://jianwl.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Simplest-SpringMVC教程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/06/05/Simplest-SpringMVC教程/" class="article-date">
+  <time datetime="2016-06-05T07:34:30.000Z" itemprop="datePublished">2016-06-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Spring-MVC/">Spring MVC</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Simplest SpringMVC教程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h6><p>Spring MVC框架已经近1年没有接触了，以前的基础也忘的差不多了。既然如此，那就忘去过去所学Spring MVC的知识，一切重新学起。创建第一个Spring MVC项目，网上有很多教程，但感觉都过于复杂，也不够简单明了。</p>
+<h6 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h6><p>IntelliJ IDEA – (IDE)<br>Maven – (项目Jar包管理构建工具 3.2.x版本)<br>Tomcat – (Web容器 7.x版本)</p>
+<h6 id="操作流程"><a href="#操作流程" class="headerlink" title="操作流程"></a>操作流程</h6><p>1、创建Maven项目<br><img src="/images/创建maven项目.png" alt=""><br><img src="/images/创建maven项目02.png" alt=""><br><img src="/images/创建maven项目03.png" alt=""><br><img src="/images/maven配置.png" alt=""><br><img src="/images/创建maven项目04.png" alt=""><br>2、配置pom.xml文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;</div><div class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line">  &lt;groupId&gt;com.youzu&lt;/groupId&gt;</div><div class="line">  &lt;artifactId&gt;springmvc&lt;/artifactId&gt;</div><div class="line">  &lt;packaging&gt;war&lt;/packaging&gt;</div><div class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</div><div class="line">  &lt;name&gt;mvc-demo Maven Webapp&lt;/name&gt;</div><div class="line">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</div><div class="line"></div><div class="line">  &lt;dependencies&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;4.2.5.RELEASE&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;spring-aop&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;4.2.5.RELEASE&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;4.2.5.RELEASE&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;spring-web&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;4.2.5.RELEASE&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;jstl&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;1.2&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;commons-logging&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;commons-logging&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;1.1.3&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">  &lt;/dependencies&gt;</div><div class="line"></div><div class="line">  &lt;build&gt;</div><div class="line">      &lt;plugins&gt;</div><div class="line">        &lt;plugin&gt;</div><div class="line">          &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">          &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</div><div class="line">          &lt;configuration&gt;</div><div class="line">            &lt;source&gt;1.7&lt;/source&gt;</div><div class="line">            &lt;target&gt;1.7&lt;/target&gt;</div><div class="line">          &lt;/configuration&gt;</div><div class="line">        &lt;/plugin&gt;</div><div class="line">      &lt;/plugins&gt;</div><div class="line">  &lt;/build&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure></p>
+<p>3、新建Spring配置文件<code>/webapp/WEB-INF/springmvc-servlet.xml</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">	xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot; xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</div><div class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xsi:schemaLocation=&quot;</div><div class="line">        http://www.springframework.org/schema/beans     </div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">        http://www.springframework.org/schema/mvc </div><div class="line">        http://www.springframework.org/schema/mvc/spring-mvc.xsd</div><div class="line">        http://www.springframework.org/schema/context </div><div class="line">        http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;</div><div class="line"> </div><div class="line">	&lt;context:component-scan base-package=&quot;com.youzu.controller&quot; /&gt;</div><div class="line"> </div><div class="line">	&lt;bean id=&quot;viewResolver&quot;</div><div class="line">		class=&quot;org.springframework.web.servlet.view.UrlBasedViewResolver&quot;&gt;</div><div class="line">		&lt;property name=&quot;viewClass&quot;</div><div class="line">			value=&quot;org.springframework.web.servlet.view.JstlView&quot; /&gt;</div><div class="line">		&lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot; /&gt;</div><div class="line">		&lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot; /&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure></p>
+<p>在springmvc-servlet.xml配置文件中，我们定义了<code>&lt;context:component-scan&gt;</code>,这个配置允许spring扫描<code>com.youzu.controller</code>这个目录和其子目录下的所有注解,将注解类注册为Bean。同时定义了视图解析类viewResolver，这个类将会解析视图名(增加前缀<code>/WEB-INF/jsp/</code>和后缀<code>.jsp</code>)。<br>4、配置web.xml文件：webapp/WEB-INF/web.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot; version=&quot;3.0&quot;&gt;</div><div class="line">    &lt;display-name&gt;spring mvc&lt;/display-name&gt;</div><div class="line">    &lt;welcome-file-list&gt;</div><div class="line">        &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</div><div class="line">    &lt;/welcome-file-list&gt;</div><div class="line"></div><div class="line">    &lt;servlet&gt;</div><div class="line">        &lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;</div><div class="line">        &lt;servlet-class&gt;</div><div class="line">            org.springframework.web.servlet.DispatcherServlet</div><div class="line">        &lt;/servlet-class&gt;</div><div class="line">        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</div><div class="line">    &lt;/servlet&gt;</div><div class="line">    &lt;servlet-mapping&gt;</div><div class="line">        &lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;</div><div class="line">        &lt;url-pattern&gt;/&lt;/url-pattern&gt;</div><div class="line">    &lt;/servlet-mapping&gt;</div><div class="line">&lt;/web-app&gt;</div></pre></td></tr></table></figure></p>
+<p>特别注意在web.xml中定义了servlet-name,当DispatcherServlet初始化时，它将自动加载WEB-INF文件夹下文件名为[servlet-name]-servlet.xml的文件。即：本例中步骤3定义的springmvc-servlet.xml文件<br>5、创建StudentAction.class文件<code>com.youzu.controller.StudentAction.class</code></p>
+<ul>
+<li>在main文件夹下，新建一个名为“java”的文件夹<br><img src="/images/创建java文件夹.png" alt=""></li>
+<li>将java文件夹设为源文件目录<br><img src="/images/java设为源文件夹.png" alt=""></li>
+<li>在java文件夹下创建com.youzu.controller文件夹<br><img src="/images/创建文件夹.png" alt=""></li>
+<li>创建类StudentAction.class</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">package com.youzu.controller;</div><div class="line"></div><div class="line">import org.springframework.stereotype.Controller;</div><div class="line">import org.springframework.web.bind.annotation.RequestMapping;</div><div class="line">import org.springframework.web.servlet.ModelAndView;</div><div class="line"></div><div class="line">/**</div><div class="line"> * User: jianwl</div><div class="line"> * Date: 2016/6/5</div><div class="line"> * Time: 16:29</div><div class="line"> */</div><div class="line">@Controller</div><div class="line">public class StudentAction &#123;</div><div class="line">    @RequestMapping(&quot;/info&quot;)</div><div class="line">    public ModelAndView info()&#123;</div><div class="line">        String stuInfo = &quot;my name is zhangsan,i am 13 years old,i am come from china&quot;;</div><div class="line">        return new ModelAndView(&quot;info&quot;,&quot;stuInfo&quot;,stuInfo);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>@Controller的作用是，当spring扫描文件夹时，会将StudentAction视为Controller Bean类。<br>@RequestMapping的作用是，告知spring，当请求访问的URL地址以/info开头时，该控制器将会执行该请求。<br>6、创建info.jsp文件<code>/webapp/WEB-INF/jsp/info.jsp</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;title&gt;Spring MVC 教程&lt;/title&gt;</div><div class="line">    &lt;style type=&quot;text/css&quot;&gt;</div><div class="line">        body &#123;</div><div class="line">            background-image: url(&apos;http://crunchify.com/bg.png&apos;);</div><div class="line">        &#125;</div><div class="line">    &lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">$&#123;stuInfo&#125;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>7、maven打包<br><img src="/images/maven打包.png" alt=""><br>8、配置Tomcat</p>
+<ul>
+<li>编辑配置<br><img src="/images/配置tomcat01.png" alt=""></li>
+<li>新增本地Tomcat配置<br><img src="/images/配置tomcat02.png" alt=""></li>
+<li>Tomcat配置详情<br><img src="/images/配置tomcat03.png" alt=""></li>
+<li>在Tomcat中添加需要发布的war包<br><img src="/images/配置tomcat04.png" alt=""></li>
+<li>运行Tomcat<br><img src="/images/启动tomcat.png" alt=""></li>
+</ul>
+<p>9、浏览器成功访问/info地址：<code>localhost:8080/info</code><br><img src="/images/springmvc成功访问.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/06/05/Simplest-SpringMVC教程/" data-id="citzx7sfx0083t893vc329v0m" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sprng-MVC/">Sprng MVC</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/05/HTTP之重定向和请求转发/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          HTTP之重定向和请求转发
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/04/Hexo博客的云端备份和迁移/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hexo博客的云端备份和迁移</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-Simplest-SpringMVC教程" data-title="Simplest SpringMVC教程" data-url="http://jianwl.com/2016/06/05/Simplest-SpringMVC教程/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'jianwl'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/">Hystrix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Intellij-IDEA/">Intellij IDEA</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JOOQ/">JOOQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScirpt/">JavaScirpt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MYSQL/">MYSQL</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Play/">Play</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit/">Retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit2/">Retrofit2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprng-MVC/">Sprng MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thymeleaf/">Thymeleaf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思绪/">思绪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/HTTP/" style="font-size: 17px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 12px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 10px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 11px;">Intellij IDEA</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/JOOQ/" style="font-size: 11px;">JOOQ</a> <a href="/tags/JavaScirpt/" style="font-size: 10px;">JavaScirpt</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/MYSQL/" style="font-size: 19px;">MYSQL</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/PHP/" style="font-size: 18px;">PHP</a> <a href="/tags/Play/" style="font-size: 11px;">Play</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Redis/" style="font-size: 14px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/Retrofit2/" style="font-size: 10px;">Retrofit2</a> <a href="/tags/SQL/" style="font-size: 18px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spring/" style="font-size: 12px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 16px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/Sprng-MVC/" style="font-size: 10px;">Sprng MVC</a> <a href="/tags/Thymeleaf/" style="font-size: 10px;">Thymeleaf</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/思绪/" style="font-size: 12px;">思绪</a> <a href="/tags/算法/" style="font-size: 11px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">25</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/09/29/规划好技术路线，如何将想法落地？/">规划好技术路线，如何将想法落地?</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/29/天天写「业务代码」，如何成为「技术大牛」/">天天写「业务代码」，如何成为「技术大牛」</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/25/多线程设计模式之保护性暂挂-Guarged-Suspension/">多线程设计模式之保护性暂挂(Guarged Suspension)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/25/Java之不可变对象/">Java之不可变对象</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/24/Java序列化/">Java序列化</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_pv">
+<h3 class="widget-title">访问量</h3>
+<div class="widget"> 本站总访问量<span id="busuanzi_value_site_pv"></span>次 </div>
+</span>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 流云<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
