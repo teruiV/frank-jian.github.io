@@ -4,6 +4,48 @@
   
     
     <entry>
+      <title><![CDATA[SpringCloud之服务注册与发现]]></title>
+      <url>http://jianwl.com/2016/10/08/SpringCloud%E4%B9%8B%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/</url>
+      <content type="html"><![CDATA[<h3 id="为什么要使用服务发现"><a href="#为什么要使用服务发现" class="headerlink" title="为什么要使用服务发现"></a>为什么要使用服务发现</h3><p>设想一下，我们的代码用<code>REST API</code>和<code>Thrift API</code>来调用服务，为了完成一次请求，代码需要知道服务实例的网络位置(IP地址和端口)，传统应用都运行在物理硬件上，服务实例的网络位置都是相对固定的，例如，代码可以从一个经常变更的配置文件中读取网络位置。</p>
+<p>而对于一个现代的，基于微服务的应用来说，这却是一个麻烦的问题，架构如图所示。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-9/1336276.jpg" alt=""></p>
+<p>服务实例的网络位置都是动态分配的，而且因为扩展、失效和升级需求，服务实例会经常动态改变，因为，客户端代码需要使用一种更加复杂的服务发现机制。</p>
+<p>目前有两大类服务发现模式：<a href="http://microservices.io/patterns/client-side-discovery.html?utm_source=service-discovery-in-a-microservices-architecture&amp;utm_medium=blog" target="_blank" rel="external">客户端发现</a>和<a href="http://microservices.io/patterns/server-side-discovery.html?utm_source=service-discovery-in-a-microservices-architecture&amp;utm_medium=blog" target="_blank" rel="external">服务端发现</a></p>
+<h3 id="客户端发现模式"><a href="#客户端发现模式" class="headerlink" title="客户端发现模式"></a>客户端发现模式</h3><p>当使用客户端发现模式时，客户端负责决定相应的服务实例的网络位置，并且对请求实现负责均衡。客户端从一个注册服务中查询，其中是所有可用服务实例的库,客户端使用负载均衡算法从多个服务实例中选择出一个，然后发出请求。架构如图所示：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-9/13733713.jpg" alt=""></p>
+<p>服务实例的网络位置是在启动时注册到服务注册表中，并且服务终止时从注册表中删除，服务实例注册信息一般使用心跳机制来定期刷新。</p>
+<p><a href="https://netflix.github.io/" target="_blank" rel="external">Netflix OSS</a>提供了一种非常棒的客户端发现模式，<a href="https://github.com/Netflix/eureka" target="_blank" rel="external">Netflix Eureka</a>是一个注册服务表，为服务实例注册管理和查询可用实例，提供了REST API接口。<a href="https://github.com/Netflix/ribbon" target="_blank" rel="external">Netflix Ribbon</a>是一种IPC客户端，与Eureka合同工作实现对请求的负载均衡。</p>
+<p><code>优点</code></p>
+<p>除了服务注册表，没有其他改变的因素，客户端知道可用服务注册表信息，因此客户端可以使用哈希一直性变得更加聪明，更加有效的负载均衡。</p>
+<p><code>缺点</code></p>
+<p>需要针对不同的编程语言注册不同的服务，在客户端需要为每种语言开发不同的服务。</p>
+<h3 id="服务端发现模式"><a href="#服务端发现模式" class="headerlink" title="服务端发现模式"></a>服务端发现模式</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-9/19412124.jpg" alt=""></p>
+<p>客户端通过负载均衡器向各某个服务器提出请求，负载均衡器向服务注册表发出请求，将每个请求转发往可用的服务实例，跟客户端发现一样，服务实例在服务注册表中注册或注销。</p>
+<p>AWS Elastic Load Balancer(ELB)是一种服务端发现路由的例子，ELB一般用于均衡从网络来的访问流量，也可以使用ELB来均衡VPC内部的流量，客户端使用DNS，通过ELB发出请求(HTTP或者TCP)，ELB负载均衡器负载在注册的EC2实例或者ECS容器之间均衡负载，并不存在一个分离的注册表，而EC2实例和ECS实例也想ELB注册。</p>
+<p>HTTP服务和类似NGNIX和<a href="https://www.nginx.com/products/" target="_blank" rel="external">NGINX Plus</a>的负载均衡器都可以作为服务端发现均衡器，例如，<a href="https://www.airpair.com/scalable-architecture-with-docker-consul-and-nginx" target="_blank" rel="external">这篇博文</a>就描述如何使用<a href="https://github.com/hashicorp/consul-template" target="_blank" rel="external">Consul Template</a>来动态配置NGNIX反向代理。Consul Template是周期性从存放在Consul Template注册表中配合数据重建配置文件的工具。当文件发生变化时，会运行一个命令，在如何博客中，Consul Template产生了一个nginx.conf文件，用于配置反向代理，然后运行一个命令，告诉NGINX重新调入配置文件，更复杂的例子可以用HTTP API或者DNS动态重新配置NGINX Plus.</p>
+<p>某些部署环境，例如<a href="https://github.com/kubernetes/kubernetes/blob/master/docs/design/architecture.md" target="_blank" rel="external">Kubernetes</a>和<a href="https://mesosphere.github.io/marathon/docs/service-discovery-load-balancing.html" target="_blank" rel="external">Marathon</a>在集群每个节点上运行一个代理，此代理作为服务端发现负载均衡器，为了向服务发出请求，客户端使用主机IP和分配的端口通过代理请求路由发出去，代理将次请求透明的转发到集群中可用的服务实例。</p>
+<p><code>优点</code></p>
+<p>客户端无需关注发现的细节，客户端只需简单的向负载均衡器发送请求，实际上减少了编程语言框架需要完成的发现逻辑。</p>
+<p><code>缺点</code></p>
+<p>除非部署环境提供负载均衡器，否则负载均衡器是另一个需要配置管理的高可用系统功能。</p>
+<h3 id="服务注册表"><a href="#服务注册表" class="headerlink" title="服务注册表"></a>服务注册表</h3><p><a href="http://microservices.io/patterns/service-registry.html" target="_blank" rel="external">服务注册表</a>是服务发现很重要的部分，它是包含服务实例网络地址的数据库，服务注册表需要高可用而且随时更新，客户端可以缓存从服务注册表获得的网络地址，然而，这些信息最终会变得过时，客户端也无法服务实例。因此，服务注册表由若干使用复制协议保持同步的服务器构成。</p>
+<p>如前所述，<a href="https://github.com/Netflix/eureka" target="_blank" rel="external">Netflix Eureka</a>是一个服务注册表很好地例子，提供了REST API注册和请求服务实例，服务实例使用POST请求注册网络地址，每30秒必须使用PUT方法更新注册表，使用HTTP DELETE请求或者实例超时来注销。客户端可以使用HTTP GET请求接受注册服务实例信息。</p>
+<p>Netflix通过在每个AWS EC2域运行一个或者多个Eureka服务实现高可用性，每个Eureka服务器都运行在拥有弹性IP地址的EC2实例上，DNS TEXT记录用于存储Eureka集群配置，其中存放从可用域到一系列Eureka服务器网络地址的列表。当Eureka服务启动时，向DNS请求接受Eureka集群配置，确认同伴位置，给自己分配一个未被使用的弹性IP地址。</p>
+<p>Eureka客户端 —&gt; 服务和服务客户端 —&gt; 向DNS请求发现Eureka服务的网络地址，客户端首选使用同一域内的服务。然而，如果没有可用服务，客户端会使用另外一个可用域的Eureka服务。</p>
+<p>另外一些服务注册表例子包括：</p>
+<ul>
+<li><a href="https://github.com/coreos/etcd" target="_blank" rel="external">etcd</a> – 是一个高可用，分布式的，一致性的，键值表，用于共享配置和服务发现。两个著名案例包括Kubernetes和Cloud Foundry。</li>
+<li><a href="https://www.consul.io/" target="_blank" rel="external">consul</a> – 是一个用于发现和配置的服务。提供了一个API允许客户端注册和发现服务。Consul可以用于健康检查来判断服务可用性。</li>
+<li><a href="http://zookeeper.apache.org/" target="_blank" rel="external">Apache ZooKeeper</a> – 是一个广泛使用，为分布式应用提供高性能整合的服务。Apache ZooKeeper最初是Hadoop的子项目，现在已经变成顶级项目。</li>
+</ul>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>未完待续….</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/?utm_source=deploying-microservices&amp;utm_medium=blog" target="_blank" rel="external">Service Discovery in a Microservices Architecture </a></li>
+</ul>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[规划好技术路线，如何将想法落地?]]></title>
       <url>http://jianwl.com/2016/09/29/%E8%A7%84%E5%88%92%E5%A5%BD%E6%8A%80%E6%9C%AF%E8%B7%AF%E7%BA%BF%EF%BC%8C%E5%A6%82%E4%BD%95%E5%B0%86%E6%83%B3%E6%B3%95%E8%90%BD%E5%9C%B0%EF%BC%9F/</url>
       <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>作为一个工程师，多多少少都有自己的技术路线的规划，怎么这些规划落地，真正地去磨练技术，这是个值得思考的问题？本文介绍一个方法<code>三段分解法</code>，即：<code>将一个宏大或者长远的目标经过三次分解，得到一个个短期内能够达到的小目标。</code></p>
@@ -3998,23 +4040,6 @@ tee – the output of write (:w) command is redirected using tee
     </entry>
     
     <entry>
-      <title><![CDATA[MYSQL存储引擎]]></title>
-      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
-      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
-]]></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[MYSQL存储引擎优化]]></title>
       <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</url>
       <content type="html"><![CDATA[<h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
@@ -4039,6 +4064,23 @@ tee – the output of write (:w) command is redirected using tee
 <h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
 <h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
 <h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[MYSQL存储引擎]]></title>
+      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
+      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 ]]></content>
     </entry>
     
