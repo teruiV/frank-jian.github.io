@@ -291,6 +291,126 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/29/SQL插入数据/" itemprop="url">
+                  SQL插入数据
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-29T12:49:09+08:00" content="2016-04-29">
+              2016-04-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/SQL/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/29/SQL插入数据/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/29/SQL插入数据/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>INSERT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">INSERT INTO Customers VALUES(NULL, &apos;张三&apos;);</div><div class="line"></div><div class="line"># 推荐更安全、扩展性更好的方式</div><div class="line">INSERT INTO Customers(cust_id, cust_name) VALUES(NULL, &apos;张三&apos;);</div><div class="line"></div><div class="line"># 进一步，无需插入 AUTO_INCREMENT属性的列</div><div class="line">INSERT INTO Customers(cust_name) VALUES(&apos;张三&apos;);</div><div class="line"></div><div class="line"># 插入多条数据，单条语句插入比多次语句性能更高</div><div class="line">INSERT INTO Customers(cust_name) VALUES(&apos;张三&apos;),(&apos;李四&apos;);</div><div class="line"></div><div class="line"># 插入检索出来的数据</div><div class="line">INSERT INTO Customers(cust_id,cust_name) SELECT cust_id,cust_name FROM Old_Customers;</div><div class="line"></div><div class="line"># 从一个表复制到另外一个表</div><div class="line">CREATE TABLE CustCopy AS SELECT * FROM Customers;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/29/MYSQL数据库无法插入中文/" itemprop="url">
                   MYSQL数据库无法插入中文
                 </a>
@@ -1453,143 +1573,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/27/HTTP常见面试题/" itemprop="url">
-                  HTTP常见面试题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-27T12:38:37+08:00" content="2016-04-27">
-              2016-04-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/HTTP/" itemprop="url" rel="index">
-                    <span itemprop="name">HTTP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/27/HTTP常见面试题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/27/HTTP常见面试题/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h5 id="HTTP-的方法中GET和POST方法的区别？"><a href="#HTTP-的方法中GET和POST方法的区别？" class="headerlink" title="HTTP 的方法中GET和POST方法的区别？"></a>HTTP 的方法中GET和POST方法的区别？</h5><ul>
-<li>GET 用于从服务器获得资源，POST用于向服务器发送数据的，</li>
-<li>GET 提交请求时，将参数放到URL中，用户可以从URL中看到传输的参数，POST是将参数填到一个表单中，然后发送给服务器，参数在URL中不可见。</li>
-<li>GET 提交的数据上限是1024字节，POST方式没有数据长度的限制。</li>
-</ul>
-<h5 id="HTTP-的方法中PUT和POST方法的区别？"><a href="#HTTP-的方法中PUT和POST方法的区别？" class="headerlink" title="HTTP 的方法中PUT和POST方法的区别？"></a>HTTP 的方法中PUT和POST方法的区别？</h5><ul>
-<li>POST用于提交请求，可以更新或者创建资源，是非幂等的,举个例子，一个接口的功能是将当前余额减一个值，每次提交指定该值为100，调用一次余额减100，二次减200，这个时候就用POST</li>
-<li>PUT用于向指定的URI传送更新资源，是幂等的，举个例子，更新某个blog文章，因为该文章具有单一的具体URI，所以每次更新提交相同的内容，结果都一致，这个时候就用PUT</li>
-</ul>
-<p>幂等性：幂等是数学的一个用语，对于单个输入的运算方法，如果传入值相同，结果也相同，则称其为幂等的。</p>
-<h5 id="HTTP-的方法中GET、POST、PUT、HEAD、DELETE、OPTIONS、TRACE、CONNECT方法各是什么含义？"><a href="#HTTP-的方法中GET、POST、PUT、HEAD、DELETE、OPTIONS、TRACE、CONNECT方法各是什么含义？" class="headerlink" title="HTTP 的方法中GET、POST、PUT、HEAD、DELETE、OPTIONS、TRACE、CONNECT方法各是什么含义？"></a>HTTP 的方法中GET、POST、PUT、HEAD、DELETE、OPTIONS、TRACE、CONNECT方法各是什么含义？</h5><p>GET: 向服务器获取某个资源，发送GET请求一般会附带一些参数，这些参数会附在请求链接的后面。</p>
-<p>POST: 向服务器发送数据，数据不会被附加在请求链接之后的，常用于表单提交。</p>
-<p>PUT: 向服务器传输文件，要求在请求报文的主体中包含文件内容，然后保存到请求URI指定的位置，但由于HTTP/1.1自身不带验证机制，任何人都可以上传文件，存在安全问题。</p>
-<p>TRACE: 让Web服务器将之前的请求通信环回给客户端，容易引发XST（Cross-Site Tracing）跨站追踪攻击，通常不会用到。</p>
-<p>HEAD: 与GET类似，但服务器在响应中只返回首部，不返回实体的主体部分。</p>
-<p>OPTIONS: 请求Web服务器告知其支持的各种功能。</p>
-<p>DELETE: 请求服务器删除请求URL指定的资源。</p>
-<p>CONNECT:在代理服务器通信时，建立隧道，实现将隧道协议进行TCP通信，主要使用SSL(Secure Socket Layer 安全套接层)和TLS（Transport Layer Security 传输层安全）协议把通信内容加密后经网络隧道传输。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1635,7 +1618,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">128</span>
+              <span class="site-state-item-count">129</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1643,7 +1626,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1652,7 +1635,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

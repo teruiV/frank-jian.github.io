@@ -291,6 +291,179 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/13/MYSQL之事务隔离级别/" itemprop="url">
+                  MYSQL之事务隔离级别
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-13T12:12:51+08:00" content="2016-08-13">
+              2016-08-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MYSQL</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/13/MYSQL之事务隔离级别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/13/MYSQL之事务隔离级别/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="事务隔离级别的作用"><a href="#事务隔离级别的作用" class="headerlink" title="事务隔离级别的作用"></a>事务隔离级别的作用</h3><p>在SQL标准中定义了4种隔离级别，每一种级别都规定了一个事务所做的修改，哪些在事务内和事务间是可见的，哪些是不可见的。较低级别的隔离，通常可以执行更高的并发，系统的开销也更低。</p>
+<h3 id="四种隔离级别"><a href="#四种隔离级别" class="headerlink" title="四种隔离级别"></a>四种隔离级别</h3><p><strong>READ UNCOMMITTED(未提交读)</strong><br>一个事务的修改，即使没有提交，对其他事务也都是可见的。事务可以读取未提交的数据，也被称为脏读(Dirty Read)</p>
+<p><strong>READ COMMITTED(提交读)</strong><br>一个事务从开始直到提交之前，所做的任何修改对其他事务都是不可见的，这个级别有时候也被称为不可重复读(nonrepeatable read),因为两次执行同样的查询，可能会得到不一样的结果。</p>
+<p><strong>REPEATABLE READ(可重复读) – MySQL的默认事务隔离级别</strong><br>这个级别解决了脏读的问题，保证了在同一个事务中多次读取同样记录的结果是一致的。但是…..无法解决幻读(Phantom Read)的问题，所谓幻读是指当某个事务在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录，当之前的事务再次读取该范围的记录时，会产生幻行(Phantom Row)。</p>
+<p><strong>SERIALIZABLE(可串行化)</strong><br>这个级别是最高的隔离级别，它通过强制事务串行执行，避免了前面说的幻读问题，简单来说，SERIALIZABLE会在读取的每一行数据上都加锁，所以可能导致大量的超时和锁争用的问题。实际中很少用到，只有在非常需要保证数据的一致性而且可以接受没有并发情况下，才会采用。</p>
+<h3 id="设置事务隔离级别"><a href="#设置事务隔离级别" class="headerlink" title="设置事务隔离级别"></a>设置事务隔离级别</h3><p><strong>查看隔离级别</strong></p>
+<p><img src="../images/transaction-1.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 查看全局的事务级别</div><div class="line">SELECT @@global.tx_isolation;</div><div class="line"></div><div class="line"># 查看当前连接上的事务级别</div><div class="line">SELECT @@session.tx_isolation;</div><div class="line"></div><div class="line"># 查看下一个（未开始）事务的隔离级别</div><div class="line">SELECT @@tx_isolation;</div></pre></td></tr></table></figure></p>
+<p><strong>设置隔离级别</strong></p>
+<p><img src="../images/transaction-2.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">set global|session transaction isolation level read uncommitted | read committed | repeatable read | serializable</div></pre></td></tr></table></figure></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">隔离级别</th>
+<th style="text-align:center">脏读可能性</th>
+<th style="text-align:center">不可重复读可能性</th>
+<th style="text-align:right">幻读可能性</th>
+<th style="text-align:center">加锁读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">READ UNCOMMITTED</td>
+<td style="text-align:center">YES</td>
+<td style="text-align:center">YES</td>
+<td style="text-align:right">YES</td>
+<td style="text-align:center">NO</td>
+</tr>
+<tr>
+<td style="text-align:left">READ COMMITTED</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:center">YES</td>
+<td style="text-align:right">YES</td>
+<td style="text-align:center">NO</td>
+</tr>
+<tr>
+<td style="text-align:left">REPEATABLE READ</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:right">YES</td>
+<td style="text-align:center">NO</td>
+</tr>
+<tr>
+<td style="text-align:left">SERIALIZABLE</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:right">NO</td>
+<td style="text-align:center">YES</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://blog.itpub.net/195110/viewspace-1080777" target="_blank" rel="external">mysql修改事务隔离级别 </a></li>
+<li>高性能MySQL第三版</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/13/MYSQL之事务/" itemprop="url">
                   MYSQL之事务
                 </a>
@@ -2064,187 +2237,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/07/Spring-Test单元测试/" itemprop="url">
-                  Spring Test单元测试
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-07T22:08:31+08:00" content="2016-08-07">
-              2016-08-07
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/07/Spring-Test单元测试/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/07/Spring-Test单元测试/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="单元测试的好处？"><a href="#单元测试的好处？" class="headerlink" title="单元测试的好处？"></a>单元测试的好处？</h3><ul>
-<li>缩短发现问题到解决问题的速度</li>
-<li>验证程序修改后是否正确</li>
-<li>如果是开源软件，通过单元测试可以了解软件是怎么使用的</li>
-</ul>
-<h3 id="Spring-Boot-Test常用注解"><a href="#Spring-Boot-Test常用注解" class="headerlink" title="Spring Boot Test常用注解"></a>Spring Boot Test常用注解</h3><p>当前使用SpringBoot的版本为1.4.0 Release</p>
-<ul>
-<li>@RunWith(SpringRunner.class) <code>运行Junit并支持Spring-test特性</code></li>
-<li><p>@SpringBootTest  <code>为springApplication创建上下文并支持SpringBoot特性</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@SpringBootTest的webEnvironment属性有以下4种</div><div class="line">1、Mock —— 加载WebApplicationContext并提供Mock Servlet环境</div><div class="line">2、RANDOOM_PORT —— 加载EmbeddedWebApplicationContext并提供servlet环境，内嵌服务的监听端口是随机的</div><div class="line">3、DEFINED_PORT —— 加载EmbeddedWebApplicationContext并提供servlet环境，内容服务的监听端口是定义好的。默认端口是8080</div><div class="line">4、NONE —— 加载ApplicationContext，启动SpringApplication时，不支持Servlet环境</div></pre></td></tr></table></figure>
-</li>
-<li><p>@MockBean <code>声明需要模拟的服务</code></p>
-</li>
-<li><p>@SpyBean <code>定制化需要模拟服务的某个方法，即部分方法可以mock，部分方法可以调用真实方法</code></p>
-</li>
-<li><p>@WebMvcTest <code>自动加载Spring MVC配置、MockMvc配置、并扫描注解类</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">在没有@WebMvcTest注解时，使用@AutoConfiureMockMvc可以自动配置MockMvc;</div></pre></td></tr></table></figure>
-</li>
-<li><p>@Transaction <code>开启事务，回滚测试方法对数据库的改变</code></p>
-</li>
-</ul>
-<h3 id="SpringBoot-Test-实战"><a href="#SpringBoot-Test-实战" class="headerlink" title="SpringBoot Test 实战"></a>SpringBoot Test 实战</h3><ul>
-<li><p>使用Mock，对Controller层接口进行测试</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">@RunWith(SpringRunner.class)</div><div class="line">@WebMvcTest(UserController.class)</div><div class="line">public class UserControllerTest &#123;</div><div class="line">    @Autowired</div><div class="line">    private MockMvc mockMvc;</div><div class="line"></div><div class="line">    @MockBean</div><div class="line">    private UserService userService;</div><div class="line"></div><div class="line">    @Before</div><div class="line">    public void mockUserService()&#123;</div><div class="line">        User user = new User(1,&quot;liuyun&quot;,&quot;123456&quot;);</div><div class="line">        given(userService.add(user)).willReturn(true);</div><div class="line">        given(userService.selectById(1)).willReturn(user);</div><div class="line">     given(userService.selectAll()).willReturn(Arrays.asList(user));</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    /**</div><div class="line">     * 用户列表</div><div class="line">     */</div><div class="line">    @Test</div><div class="line">    public void listTest() throws Exception &#123;</div><div class="line">        mockMvc.perform(get(&quot;/list&quot;)</div><div class="line">                .accept(MediaType.APPLICATION_JSON))</div><div class="line">                .andDo(print())</div><div class="line">                .andExpect(status().isOk());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>使用mock，模拟对数据库的操作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;!-- @Slf4j 是lombok注解--&gt;</div><div class="line">@Slf4j</div><div class="line">@RunWith(SpringRunner.class)</div><div class="line">@SpringBootTest</div><div class="line">public class UserServiceTest &#123;</div><div class="line"></div><div class="line">    @MockBean</div><div class="line">    private UserDao userDao;</div><div class="line"></div><div class="line">    @Autowired</div><div class="line">    private UserService userService;</div><div class="line"></div><div class="line">    @Before</div><div class="line">    public void initUserDao()&#123;</div><div class="line">        given(this.userDao.selectAll()).willReturn(Arrays.asList(new User(12231,&quot;zhangsan&quot;,&quot;234&quot;)));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void listTest()&#123;</div><div class="line">        List&lt;User&gt; users = userService.selectAll();</div><div class="line">        log.info(new Gson().toJson(users));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>回滚测试方法对数据库状态的影响</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;!-- @Slf4j 是lombok注解--&gt;</div><div class="line">@Slf4j</div><div class="line">@RunWith(SpringRunner.class)</div><div class="line">@SpringBootTest</div><div class="line">public class TransactionTest &#123;</div><div class="line">    @Autowired</div><div class="line">    private UserService userSerivce;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    @Transactional</div><div class="line">    public void add() throws Exception &#123;</div><div class="line">        //初始化用户表</div><div class="line">        userSerivce.deleteAll();</div><div class="line"></div><div class="line">        // 新增2个用户</div><div class="line">        userSerivce.add(new User(1,&quot;liuyun&quot;,&quot;123456&quot;));</div><div class="line">        userSerivce.add(new User(2,&quot;xiaofeng&quot;,&quot;123456&quot;));</div><div class="line">        Assert.assertEquals(2, userSerivce.selectAll().size());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这个测试方法的功能是，往数据库中添加两条记录，加上@Transaction注解后，执行完测试方法，数据库状态将自动回滚到执行这个方法前的状态。</p>
-</li>
-</ul>
-<h3 id="JUnit常用注解"><a href="#JUnit常用注解" class="headerlink" title="JUnit常用注解"></a>JUnit常用注解</h3><ul>
-<li>@Before 、@After <code>测试方法前/后运行</code></li>
-<li>@BeforeClass 、@AfterClass <code>测试类前/后运行，为静态方法</code></li>
-<li>@Test @ignore(“reason”) <code>忽略此测试方法</code></li>
-<li>@Test(timeout=1) <code>测试方法运行时间超过1毫秒，则自动失败</code></li>
-</ul>
-<h3 id="JUnit常用注解实战"><a href="#JUnit常用注解实战" class="headerlink" title="JUnit常用注解实战"></a>JUnit常用注解实战</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">&lt;!-- @Slf4j 是lombok注解--&gt;</div><div class="line">@Slf4j</div><div class="line">@RunWith(SpringRunner.class)</div><div class="line">@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)</div><div class="line">public class CommonAnnatationTest &#123;</div><div class="line">    @Before</div><div class="line">    public void before() &#123;</div><div class="line">        log.info(&quot;before&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @After</div><div class="line">    public void after() &#123;</div><div class="line">        log.info(&quot;after&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @BeforeClass</div><div class="line">    public static void beforeClass() &#123;</div><div class="line">        log.info(&quot;beforeClass&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @AfterClass</div><div class="line">    public static void afterClass() &#123;</div><div class="line">        log.info(&quot;afterClass&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void test_a() &#123;</div><div class="line">        log.info(&quot;test_a&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Ignore(&quot;废弃方法&quot;)</div><div class="line">    @Test</div><div class="line">    public void test_ignore() &#123;</div><div class="line">        log.info(&quot;ignore&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Test(timeout = 1)</div><div class="line">    public void test_timeout() &#123;</div><div class="line">        Integer count = 0;</div><div class="line">        do &#123;</div><div class="line">            count++;</div><div class="line">        &#125; while (count &gt; 0);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="JUnit常用测试类型"><a href="#JUnit常用测试类型" class="headerlink" title="JUnit常用测试类型"></a>JUnit常用测试类型</h3><ul>
-<li><p>集合测试 </p>
-<p>SuiteA.class</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;!-- @Slf4j 是lombok注解--&gt;</div><div class="line">@Slf4j</div><div class="line">@RunWith(SpringJUnit4ClassRunner.class)</div><div class="line">@SpringBootTest</div><div class="line">public class SuiteA &#123;</div><div class="line">    @Test</div><div class="line">    public void test_a()&#123;</div><div class="line">        log.info(&quot;A&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void test_b()&#123;</div><div class="line">        log.info(&quot;B&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>SuiteB.class</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;!-- @Slf4j 是lombok注解--&gt;</div><div class="line">@Slf4j</div><div class="line">@RunWith(SpringJUnit4ClassRunner.class)</div><div class="line">@SpringBootTest</div><div class="line">public class SuiteB &#123;</div><div class="line">    @Test</div><div class="line">    public void test_c()&#123;</div><div class="line">        log.info(&quot;C&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void test_d()&#123;</div><div class="line">        log.info(&quot;D&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>SuiteTest.class</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@RunWith(Suite.class)</div><div class="line">@Suite.SuiteClasses(&#123;SuiteA.class,SuiteB.class&#125;)</div><div class="line">@SpringBootTest</div><div class="line">public class SuiteTest &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行SuiteTest,将测试SuiteA、SuiteB的所有测试方法</p>
-</li>
-<li><p>单元目录测试</p>
-<p>目录1：Fruit.class</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public interface Drinking &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>目录2：Drinking.class</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public interface Drinking &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>CategoryTest.class</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;!-- @Slf4j 是lombok注解--&gt;</div><div class="line">@Slf4j</div><div class="line">@RunWith(SpringRunner.class)</div><div class="line">@SpringBootTest</div><div class="line">public class CategoryTest &#123;</div><div class="line">    @Test</div><div class="line">    @Category(Fruit.class)</div><div class="line">    public void getFruitName() &#123;</div><div class="line">        log.info(&quot;I am Banana!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    @Category(Drinking.class)</div><div class="line">    public void getDrinkingName() &#123;</div><div class="line">        log.info(&quot;I am water!&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>SuiteCategoriesTest.class</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@RunWith(Categories.class)</div><div class="line">@Suite.SuiteClasses(&#123;CategoryTest.class&#125;)</div><div class="line">@Categories.IncludeCategory(Fruit.class)</div><div class="line">@SpringBootTest</div><div class="line">public class SuiteCategoriesTest &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行SuiteCategoriesTest,将会运行CategoryTest测试类下，getFruitName()方法。</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2290,7 +2282,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">128</span>
+              <span class="site-state-item-count">129</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2298,7 +2290,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2307,7 +2299,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
