@@ -371,7 +371,7 @@
 <p>没有被引用的对象将被GC回收。</p>
 <p><strong>如何回收</strong></p>
 <p><code>引用计数算法</code>：给对象添加一个引用计数器，每当一个地方引用它，计数器值就加1，当引用失效时，计数器值就减1，任何时刻计数器为0的对象就不可能再被使用了。</p>
-<p>很多人都认为GC是这种回收策略，但实际上主流的Java虚拟机都没有需用<code>引用计数算法</code>，因为它难以解决循环引用的问题。</p>
+<p>很多人都认为GC是这种回收策略，但实际上主流的Java虚拟机都没有使用<code>引用计数算法</code>，因为它难以解决循环引用的问题。</p>
 <p>举个例子：对象A和对象B都有instance字段，<code>A.instance = B，B.instance = A</code>,这两个对象互相引用对方，导致他们的引用计数都不为0，如果GC使用引用计数算法，那么他们不会被回收。但实际呢？让我们来实践一下。</p>
 <p><code>ReferenceCountingGC.java</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">// VM args: -XX:+PrintGCDetails 用于输出GC的详细日志 </div><div class="line">public class ReferenceCountingGC &#123;</div><div class="line"></div><div class="line">    public Object instance = null;</div><div class="line">    private static final int _1MB = 1024 * 1024 ;</div><div class="line"></div><div class="line">    // 这个成员的唯一意义就是占点内存,以便能在GC日志中看清楚是否被回收过</div><div class="line">    private byte[] bigSize = new byte[2 * _1MB];</div><div class="line"></div><div class="line">    public static void testGC()&#123;</div><div class="line">        ReferenceCountingGC objA = new ReferenceCountingGC();</div><div class="line">        ReferenceCountingGC objB = new ReferenceCountingGC();</div><div class="line">        objA.instance = objB;</div><div class="line">        objB.instance = objA;</div><div class="line"></div><div class="line">        objA = null;</div><div class="line">        objB = null;</div><div class="line"></div><div class="line">        System.gc();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        testGC();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -382,7 +382,7 @@
 <p><code>可达性分析算法</code></p>
 <p>主流的Java虚拟机是用可达性分析来判断对象是否可回收的。基本思想是通过一系列<code>GC Roots</code>的对象作为起始点，从这些节点向下搜索，搜索所走过的路径称为引用链。当一个对象到<code>GC Roots</code>没有任何引用链条相连，代表此对象可回收。</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-10/72297953.jpg" alt=""></p>
-<p>可作为<code>GC Roots对象</code>的对象为：</p>
+<p>可作为<code>GC Roots对象</code>有：</p>
 <ol>
 <li>虚拟栈中引用对象</li>
 <li>方法区中类静态属性引用的对象</li>
