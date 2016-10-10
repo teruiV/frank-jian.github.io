@@ -292,6 +292,138 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/05/PHP面向对象特性/" itemprop="url">
+                  PHP面向对象特性
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-05T20:04:49+08:00" content="2016-05-05">
+              2016-05-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/05/PHP面向对象特性/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/05/PHP面向对象特性/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>常量声明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">//特别注意 PI没有$,同时不用声明访问权限，声明为public时，会报错；</div><div class="line">class Fruit&#123;</div><div class="line">  const PI =3.14;</div><div class="line">&#125;</div><div class="line">echo Fruit::PI;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>define和const的区别？</p>
+<ol>
+<li>编译器处理方式不同，define宏是预处理阶段展开，const常量是编译运行阶段使用;</li>
+<li>类型和安全检查不同；define宏没有类型，不做任何类型检查，仅仅是展开；const常量有具体的类型，编译阶段会执行类型检查；</li>
+<li>存储方式不同，define宏仅仅是展开，有多少地方使用，就展开多少次，不分配内存，宏定义不分配内存，定义变量分配内存；const常量会在内存中分配；</li>
+<li>const可以节省空间，避免不必要的内存分配；</li>
+</ol>
+<p>静态类成员和方法的调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class Fruit&#123;</div><div class="line">public static $count = 0;</div><div class="line"></div><div class="line">public static function add()&#123;</div><div class="line">   self::$count++;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public static function get()&#123;</div><div class="line">  return self::$count;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">//注意调用静态方法不需要用$符号；</div><div class="line">Fruit::add();</div><div class="line">echo Fruit::get();</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>getter和setter方法;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class Fruit &#123;</div><div class="line">  private $name;</div><div class="line">  private $price;</div><div class="line"> </div><div class="line">  //为private访问权限也能访问，因为拦截于类内</div><div class="line">  public function __set($_key,$_value)&#123;</div><div class="line">        $this-&gt;$_key = $_value;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public function __get($_key)&#123;</div><div class="line">    return $this-&gt;$_key;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">$fruit = new Fruit();</div><div class="line">$fruit-&gt;name = &quot;apple&quot;;</div><div class="line">$fruit-&gt;price = 2.0;</div><div class="line">echo $fruit-&gt;name. &quot; -&gt; &quot;. $fruit-&gt;price;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>多态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">interface Computer&#123;</div><div class="line">   public function name();</div><div class="line">   public function version();</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Tcomputer implements Computer&#123;</div><div class="line">  public function name()&#123;</div><div class="line">   echo &quot;apple&quot;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public function version()&#123;</div><div class="line">     echo &quot;windowxp&quot;;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Person&#123;</div><div class="line"> public function run($type)&#123;</div><div class="line">     $type-&gt;name();</div><div class="line"></div><div class="line">     $type-&gt;version();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$person = new Person();</div><div class="line">$computer = new Tcomputer();</div><div class="line"></div><div class="line">$person-&gt;run($computer);</div><div class="line"></div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>自动引入多个类文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">        //引入类文件即可</div><div class="line">        //require &apos;computer.class.php&apos;;</div><div class="line">        //1.如果要包含多个类文件，是不是要一一引入。</div><div class="line">        //2.引入多个类文件，如果有用不到的，就会产生浪费</div><div class="line">        //3.引入了类文件，可能会遗漏，比如说，创建了一个对象，而这个对象的类文件没有引入。就会产生错误</div><div class="line"></div><div class="line">        //$_className = 类名</div><div class="line">        //只要实例化了，那么 $_className = &apos;Computer&apos;;</div><div class="line"></div><div class="line">        function __autoload($_className) &#123;</div><div class="line">                require strtolower($_className).&apos;.class.php&apos;;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        $computer = new Computer();</div><div class="line">        $person = new Person();</div><div class="line">        echo $computer-&gt;_name;</div><div class="line">        $computer-&gt;_run();</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>__toString<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">// 设置__toString()的访问权限为private,仍然能够访问__toString()访问；类内拦截访问该方法；</div><div class="line">        class Computer &#123;</div><div class="line">                public function _run() &#123;</div><div class="line">                        echo &apos;run&apos;;</div><div class="line">                &#125;</div><div class="line">                private function __toString() &#123;</div><div class="line">                        return &apos;i am string&apos;;</div><div class="line">                &#125;</div><div class="line">        &#125;</div><div class="line">        echo new Computer();</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/04/Ubuntu安装Apache-PHP-MySQL/" itemprop="url">
                   Ubuntu安装Apache+PHP+MySQL
                 </a>
@@ -1470,140 +1602,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/03/MYSQL数据库设计准则/" itemprop="url">
-                  MYSQL数据库设计准则
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-03T17:23:11+08:00" content="2016-05-03">
-              2016-05-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/SQL/" itemprop="url" rel="index">
-                    <span itemprop="name">SQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/03/MYSQL数据库设计准则/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/03/MYSQL数据库设计准则/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>设计数据库基本准则</p>
-<ol>
-<li>将同一类型的数据放于同一张表中;</li>
-<li>避免保存冗余数据</li>
-<li>避免修改、插入、删除不规则;</li>
-<li>使用原子列表即对每一行的每一个属性只存一个数据;</li>
-<li>避免多个空属性的设计</li>
-<li>尽量避免使用可变长度列(varchar、text)，如果字段长度固定(char),速度更快一点，但要多占点空间。</li>
-<li>通过简化权限，来提高查询速度</li>
-<li>表的优化，随着更新和删除操作的发生，数据将变得支离破碎，通过OPTIMIZE TABLE tablename命令来修复表</li>
-<li>不要创建不必要的索引；</li>
-<li>在尽可能多的地方使用列的默认值，这样可以减少执行INSERT语句所花的时间。</li>
-</ol>
-<p>举例说明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">设计4张表</div><div class="line">CUSTOMERS: customerid、name、address、city</div><div class="line">ORDERS：orderid、customerid、amount、date</div><div class="line">BOOKS:isbn、author、title、price</div><div class="line">ORDER_ITEMS：orderid、isbn、quatity</div><div class="line"></div><div class="line">#为何不将address放于orders表中？</div><div class="line">1、假设一个用户下了多个订单，那么每个订单中都会出现用户的地址，重复存储，浪费空间;(冗余数据)</div><div class="line">2、假设用户换了地址，需要将每个订单中用户的地址进行更改；（修改不规则）</div><div class="line">3、每次在处理订单时，都需要插入julia的信息，当用户搬家出现两个地址时，不知道以哪个为准；（插入不规则）</div><div class="line">4、当用户收到货时，将订单从数据库中删除，那么意味着我们没有用户的地址记录不能再为它提供服务了;(删除不规则)</div><div class="line"></div><div class="line"># 假设我们需要记录每本书的书评;</div><div class="line">有两种方式:假设这家书店，只有一个书评员</div><div class="line">1、BOOKS表中添加一个字段，Review;</div><div class="line">2、创建一个新表BOOKS_REVIEWS:isbn、review</div><div class="line"></div><div class="line">假设书库太大，评书员只评论了一部分书籍，使用第一种方式，会出现大量书评为空的记录；而使用第二种方式，只存储有书评的书籍;</div></pre></td></tr></table></figure></p>
-<p>Web数据库架构<br><img src="/images/Web服务器架构.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1649,7 +1647,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">129</span>
+              <span class="site-state-item-count">130</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

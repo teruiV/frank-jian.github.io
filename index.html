@@ -292,6 +292,156 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/10/Java之垃圾回收器/" itemprop="url">
+                  Java之垃圾回收器
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-10T22:54:36+08:00" content="2016-10-10">
+              2016-10-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/10/Java之垃圾回收器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/10/Java之垃圾回收器/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>内存的动态分配与内存回收技术已相当成熟，那为什么我们还要去了解GC和内存分配呢？答案很简单，当需要排查各种内存溢出、内存泄露问题时，当垃圾收集成为系统达到更高并发量的瓶颈时，我们需要对这些“自动化”的技术实施必要的监控和调节。</p>
+<h3 id="垃圾回收器理论知识"><a href="#垃圾回收器理论知识" class="headerlink" title="垃圾回收器理论知识"></a>垃圾回收器理论知识</h3><p>要完成GC需要考虑以下三件事情：1.哪些内存需要回收？2.什么时候回收？3.如何回收？接下来会一一解答这些问题。</p>
+<p><strong>哪些内存需要回收</strong></p>
+<p>Java内存运行时，程序计数器、虚拟栈、本地方法栈这3个区域随线程生，随线程灭，每一个栈帧中分配多少内存基本上是在类结构确定下来时就已知了，因此这几个区域的内存分配和回收都具备确定性，不需要过多考虑回收的问题，因为方法或线程结束了，内存自然就回收了。</p>
+<p>而Java堆和方法区则不一样，一个方法中的多个分支需要的内存可能不一样，只有在运行期间时才知道会创建哪些对象，这部分内存的分配和回收都是动态的，是垃圾回收器关注的对象。</p>
+<p><strong>什么时候回收</strong></p>
+<p>没有被引用的对象将被GC回收。</p>
+<p><strong>如何回收</strong></p>
+<p><code>引用计数算法</code>：给对象添加一个引用计数器，每当一个地方引用它，计数器值就加1，当引用失效时，计数器值就减1，任何时刻计数器为0的对象就不可能再被使用了。</p>
+<p>很多人都认为GC是这种回收策略，但实际上主流的Java虚拟机都没有需用<code>引用计数算法</code>，因为它难以解决循环引用的问题。</p>
+<p>举个例子：对象A和对象B都有instance字段，<code>A.instance = B，B.instance = A</code>,这两个对象互相引用对方，导致他们的引用计数都不为0，如果GC使用引用计数算法，那么他们不会被回收。但实际呢？让我们来实践一下。</p>
+<p><code>ReferenceCountingGC.java</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">// VM args: -XX:+PrintGCDetails 用于输出GC的详细日志 </div><div class="line">public class ReferenceCountingGC &#123;</div><div class="line"></div><div class="line">    public Object instance = null;</div><div class="line">    private static final int _1MB = 1024 * 1024 ;</div><div class="line"></div><div class="line">    // 这个成员的唯一意义就是占点内存,以便能在GC日志中看清楚是否被回收过</div><div class="line">    private byte[] bigSize = new byte[2 * _1MB];</div><div class="line"></div><div class="line">    public static void testGC()&#123;</div><div class="line">        ReferenceCountingGC objA = new ReferenceCountingGC();</div><div class="line">        ReferenceCountingGC objB = new ReferenceCountingGC();</div><div class="line">        objA.instance = objB;</div><div class="line">        objB.instance = objA;</div><div class="line"></div><div class="line">        objA = null;</div><div class="line">        objB = null;</div><div class="line"></div><div class="line">        System.gc();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        testGC();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-10/83029188.jpg" alt=""></p>
+<p><code>分析：</code></p>
+<p>GC日志中包含<code>6758K -&gt; 496K</code>意味着虚拟机并没有因为对象互相引用就不回收他们，侧面说明虚拟机并不是通过引用算法来判断的。那虚拟机是中什么算法来回收的呢？</p>
+<p><code>可达性分析算法</code></p>
+<p>主流的Java虚拟机是用可达性分析来判断对象是否可回收的。基本思想是通过一系列<code>GC Roots</code>的对象作为起始点，从这些节点向下搜索，搜索所走过的路径称为引用链。当一个对象到<code>GC Roots</code>没有任何引用链条相连，代表此对象可回收。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-10/72297953.jpg" alt=""></p>
+<p>可作为<code>GC Roots对象</code>的对象为：</p>
+<ol>
+<li>虚拟栈中引用对象</li>
+<li>方法区中类静态属性引用的对象</li>
+<li>方法区中常量引用的对象</li>
+<li>Native方法引用对象</li>
+</ol>
+<p>未完待续….</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>深入理解Java虚拟机</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/09/Java之内存区域/" itemprop="url">
                   Java之内存区域
                 </a>
@@ -1648,143 +1798,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/17/SpringBoot中使用-Async实现异步调用/" itemprop="url">
-                  SpringBoot中使用@Async实现异步调用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-17T22:14:27+08:00" content="2016-09-17">
-              2016-09-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/SpringBoot/" itemprop="url" rel="index">
-                    <span itemprop="name">SpringBoot</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/17/SpringBoot中使用-Async实现异步调用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/17/SpringBoot中使用-Async实现异步调用/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="什么是异步调用"><a href="#什么是异步调用" class="headerlink" title="什么是异步调用"></a>什么是异步调用</h3><p><code>异步调用</code>对应的是<code>同步调用</code>，<code>同步调用</code>指程序按照定义顺序依次执行，每一行程序都必须等待上一行程序执行完成之后才能执行；<code>异步调用</code>指程序在顺序执行时，不等待异步调用返回的结果，就执行后面的程序了。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>案例1：同步调用</strong></p>
-<p>创建三个处理函数分别模拟三个执行任务的操作，操作耗时随机取(10s内)。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">@Component</div><div class="line">public class Task &#123;</div><div class="line">    public static Random random =new Random();</div><div class="line"></div><div class="line">    public void doTaskOne() throws Exception &#123;</div><div class="line">        System.out.println(&quot;开始做任务一&quot;);</div><div class="line">        long start = System.currentTimeMillis();</div><div class="line">        Thread.sleep(random.nextInt(10000));</div><div class="line">        long end = System.currentTimeMillis();</div><div class="line">        System.out.println(&quot;完成任务一，耗时：&quot; + (end - start) + &quot;毫秒&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void doTaskTwo() throws Exception &#123;</div><div class="line">        System.out.println(&quot;开始做任务二&quot;);</div><div class="line">        long start = System.currentTimeMillis();</div><div class="line">        Thread.sleep(random.nextInt(10000));</div><div class="line">        long end = System.currentTimeMillis();</div><div class="line">        System.out.println(&quot;完成任务二，耗时：&quot; + (end - start) + &quot;毫秒&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void doTaskThree() throws Exception &#123;</div><div class="line">        System.out.println(&quot;开始做任务三&quot;);</div><div class="line">        long start = System.currentTimeMillis();</div><div class="line">        Thread.sleep(random.nextInt(10000));</div><div class="line">        long end = System.currentTimeMillis();</div><div class="line">        System.out.println(&quot;完成任务三，耗时：&quot; + (end - start) + &quot;毫秒&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>测试方法：</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">@RunWith(SpringJUnit4ClassRunner.class)</div><div class="line">@SpringBootTest</div><div class="line">public class TaskTest &#123;</div><div class="line"></div><div class="line">    @Autowired</div><div class="line">    private Task task;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void taskExec() throws Exception &#123;</div><div class="line">        task.doTaskOne();</div><div class="line">        task.doTaskTwo();</div><div class="line">        task.doTaskThree();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>执行结果:</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-17/44690361.jpg" alt=""></p>
-<p><strong>案例2：异步调用</strong></p>
-<p><code>在Spring Boot的主程序增加@EnableAsyn，为了让@Async注解生效</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@EnableAsync</div><div class="line">@SpringBootApplication</div><div class="line">public class SpringDemoApplication &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		SpringApplication.run(SpringDemoApplication.class, args);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>三个异步调用函数：AsyncTask.class</code></p>
-<p>特别注意：@Async所修饰的函数不要定义为static类型，这样异步调用不会生效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">@Component</div><div class="line">public class AsyncTask &#123;</div><div class="line">    public static Random random =new Random();</div><div class="line"></div><div class="line">    @Async</div><div class="line">    public Future&lt;String&gt; doTaskOne() throws Exception &#123;</div><div class="line">        System.out.println(&quot;开始做任务一&quot;);</div><div class="line">        long start = System.currentTimeMillis();</div><div class="line">        Thread.sleep(random.nextInt(10000));</div><div class="line">        long end = System.currentTimeMillis();</div><div class="line">        System.out.println(&quot;完成任务一，耗时：&quot; + (end - start) + &quot;毫秒&quot;);</div><div class="line"></div><div class="line">        return new AsyncResult&lt;&gt;(&quot;任务一已完成!!!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Async</div><div class="line">    public Future&lt;String&gt; doTaskTwo() throws Exception &#123;</div><div class="line">        System.out.println(&quot;开始做任务二&quot;);</div><div class="line">        long start = System.currentTimeMillis();</div><div class="line">        Thread.sleep(random.nextInt(10000));</div><div class="line">        long end = System.currentTimeMillis();</div><div class="line">        System.out.println(&quot;完成任务二，耗时：&quot; + (end - start) + &quot;毫秒&quot;);</div><div class="line">        return new AsyncResult&lt;&gt;(&quot;任务二已完成!!!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Async</div><div class="line">    public Future&lt;String&gt; doTaskThree() throws Exception &#123;</div><div class="line">        System.out.println(&quot;开始做任务三&quot;);</div><div class="line">        long start = System.currentTimeMillis();</div><div class="line">        Thread.sleep(random.nextInt(10000));</div><div class="line">        long end = System.currentTimeMillis();</div><div class="line">        System.out.println(&quot;完成任务三，耗时：&quot; + (end - start) + &quot;毫秒&quot;);</div><div class="line">        return new AsyncResult&lt;&gt;(&quot;任务三已完成!!!&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>执行的结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-17/20718204.jpg" alt=""></p>
-<p><code>分析</code></p>
-<p>对比<code>同步调用</code>和<code>异步调用</code>案例，很明显，异步调用让任务1、2、3并发执行，有效的减少了程序的总运行时间。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1830,7 +1843,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">129</span>
+              <span class="site-state-item-count">130</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
