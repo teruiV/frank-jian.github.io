@@ -23,7 +23,7 @@
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/49340433.jpg" alt=""></p>
 <p><code>方式3：增加月数 -&gt; SELECT date_add(now(),interval 1 month)</code></p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/82457234.jpg" alt=""></p>
-<p><code>减法运算与加法运算相似,减少月数 -&gt; date_sub(NOW(),interval 1 month)</code></p>
+<p><code>减法运算与加法运算相似,减少月数 -&gt; SELECT  date_sub(NOW(),interval 1 month)</code></p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/91908338.jpg" alt=""></p>
 <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
 <li><a href="http://ylive.blog.51cto.com/881983/537257" target="_blank" rel="external">Mysql日期函数</a></li>
