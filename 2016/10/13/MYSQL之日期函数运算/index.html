@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="HTTP," />
+  <meta name="keywords" content="MYSQL," />
 
 
 
@@ -85,26 +85,49 @@
 
 
 
-<meta name="description" content="为了了解HTTP，有必要事先了解一下TCP/IP协议簇，TCP/IP协议族最重要的一点就是分层，按层次可分为应用层、传输层、网络层和数据链路层。
+<meta name="description" content="前言在日常项目中，常常需要查询某个时间的数据，那么熟练运用MYSQL的日期函数就显得很有用了。
+实战场景1:获取当前时间
+方式1：获取年月日时分秒 -&amp;gt; SELECT NOW()
 
-分层优点：把TCP/IP分层是有好处的，比如，如果互联网只由一个协议统筹，某个地方需要改变设计时，就必须把所有部分整体换掉，而分层之后，只需要把变动的层换掉即可；分层之后，设计也变得简单了，处于应用层上的应用只考虑分派给自己的任务就可以了，不用弄清楚对">
+方式2：获取年月日时分秒 -&amp;gt; SELECT CURRENT_TIMESTAMP()
+
+方式3: 获取年月日 -&amp;gt; SELECT current_date()
+
+方式4: 获取时分秒 -&amp;gt; SE">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TCP协议介绍">
-<meta property="og:url" content="http://jianwl.com/2016/04/27/TCP协议介绍/index.html">
+<meta property="og:title" content="MYSQL之日期函数运算">
+<meta property="og:url" content="http://jianwl.com/2016/10/13/MYSQL之日期函数运算/index.html">
 <meta property="og:site_name" content="记录点滴成长">
-<meta property="og:description" content="为了了解HTTP，有必要事先了解一下TCP/IP协议簇，TCP/IP协议族最重要的一点就是分层，按层次可分为应用层、传输层、网络层和数据链路层。
+<meta property="og:description" content="前言在日常项目中，常常需要查询某个时间的数据，那么熟练运用MYSQL的日期函数就显得很有用了。
+实战场景1:获取当前时间
+方式1：获取年月日时分秒 -&amp;gt; SELECT NOW()
 
-分层优点：把TCP/IP分层是有好处的，比如，如果互联网只由一个协议统筹，某个地方需要改变设计时，就必须把所有部分整体换掉，而分层之后，只需要把变动的层换掉即可；分层之后，设计也变得简单了，处于应用层上的应用只考虑分派给自己的任务就可以了，不用弄清楚对">
-<meta property="og:image" content="http://jianwl.com/images/TCP通信传输流.jpg">
-<meta property="og:image" content="http://jianwl.com/images/TCP三次握手.jpg">
-<meta property="og:image" content="http://jianwl.com/images/完整HTTP请求.jpg">
-<meta property="og:updated_time" content="2016-10-01T13:10:01.000Z">
+方式2：获取年月日时分秒 -&amp;gt; SELECT CURRENT_TIMESTAMP()
+
+方式3: 获取年月日 -&amp;gt; SELECT current_date()
+
+方式4: 获取时分秒 -&amp;gt; SE">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/1444048.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/92157935.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/2987579.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/43833424.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/54720309.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/49340433.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/82457234.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/91908338.jpg">
+<meta property="og:updated_time" content="2016-10-13T03:28:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TCP协议介绍">
-<meta name="twitter:description" content="为了了解HTTP，有必要事先了解一下TCP/IP协议簇，TCP/IP协议族最重要的一点就是分层，按层次可分为应用层、传输层、网络层和数据链路层。
+<meta name="twitter:title" content="MYSQL之日期函数运算">
+<meta name="twitter:description" content="前言在日常项目中，常常需要查询某个时间的数据，那么熟练运用MYSQL的日期函数就显得很有用了。
+实战场景1:获取当前时间
+方式1：获取年月日时分秒 -&amp;gt; SELECT NOW()
 
-分层优点：把TCP/IP分层是有好处的，比如，如果互联网只由一个协议统筹，某个地方需要改变设计时，就必须把所有部分整体换掉，而分层之后，只需要把变动的层换掉即可；分层之后，设计也变得简单了，处于应用层上的应用只考虑分派给自己的任务就可以了，不用弄清楚对">
-<meta name="twitter:image" content="http://jianwl.com/images/TCP通信传输流.jpg">
+方式2：获取年月日时分秒 -&amp;gt; SELECT CURRENT_TIMESTAMP()
+
+方式3: 获取年月日 -&amp;gt; SELECT current_date()
+
+方式4: 获取时分秒 -&amp;gt; SE">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/1444048.jpg">
 
 
 
@@ -125,9 +148,9 @@
 
 
 
-  <link rel="canonical" href="http://jianwl.com/2016/04/27/TCP协议介绍/"/>
+  <link rel="canonical" href="http://jianwl.com/2016/10/13/MYSQL之日期函数运算/"/>
 
-  <title> TCP协议介绍 | 记录点滴成长 </title>
+  <title> MYSQL之日期函数运算 | 记录点滴成长 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -300,7 +323,7 @@
             
             
               
-                TCP协议介绍
+                MYSQL之日期函数运算
               
             
           </h1>
@@ -312,8 +335,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-27T09:34:23+08:00" content="2016-04-27">
-              2016-04-27
+            <time itemprop="dateCreated" datetime="2016-10-13T10:53:29+08:00" content="2016-10-13">
+              2016-10-13
             </time>
           </span>
 
@@ -326,8 +349,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/HTTP/" itemprop="url" rel="index">
-                    <span itemprop="name">HTTP</span>
+                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MYSQL</span>
                   </a>
                 </span>
 
@@ -342,8 +365,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/27/TCP协议介绍/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/27/TCP协议介绍/" itemprop="commentsCount"></span>
+                <a href="/2016/10/13/MYSQL之日期函数运算/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/13/MYSQL之日期函数运算/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -366,25 +389,28 @@
       
 
       
-        <p>为了了解HTTP，有必要事先了解一下TCP/IP协议簇，TCP/IP协议族最重要的一点就是分层，按层次可分为应用层、传输层、网络层和数据链路层。</p>
-<blockquote>
-<p>分层优点：<br>把TCP/IP分层是有好处的，比如，如果互联网只由一个协议统筹，某个地方需要改变设计时，就必须把所有部分整体换掉，而分层之后，只需要把变动的层换掉即可；分层之后，设计也变得简单了，处于应用层上的应用只考虑分派给自己的任务就可以了，不用弄清楚对方在地球上哪个地方，对方的传输线路是怎么样的传输送达的问题。</p>
-</blockquote>
-<h5 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h5><p>应用层决定了向用户提供应用服务时通信的活动。TCP/IP协议族内预存了各类通用的应用服务，比如FTP(File Transfer Protocol,文本传输协议)、DNS(Domain Name System 域名系统)服务、HTTP(HyperText Transfer Protocol,超文本传输协议)</p>
-<h5 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h5><p>传输层对上层应用层，提供处于网络连接中的两台计算机之间的数据传输。在传输层有两个性质不同的协议：TCP(Transmission Control Protocol 传输控制协议)和UDP（User Data Protocol,用户数据报协议）。</p>
-<h5 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h5><p>网络层用来处理在网络上流动的数据包。数据包是网络传输的最小数据单位。该层规定了通过怎样的路径到达对方计算机，并把数据包传给对方。与对方的计算机，通过多台计算机或网络设备进行传输时，网络层所起的作用就是在众多的选项中，选择一条传输路线。</p>
-<h5 id="链路层"><a href="#链路层" class="headerlink" title="链路层"></a>链路层</h5><p>用来处理连接网络的硬件部分。包括控制操作系统、硬件的设备驱动、NIC(Network Interface Card,网络适配器，即网卡),及光纤等物理可见部分</p>
-<h3 id="TCP-IP通信传输流"><a href="#TCP-IP通信传输流" class="headerlink" title="TCP/IP通信传输流"></a>TCP/IP通信传输流</h3><p><img src="/images/TCP通信传输流.jpg" alt=""><br>利用TCP/IP协议簇进行通信时，会通过分层顺序与对方进行通信，发送端从应用层往下走，接收端则从应用层网上走。</p>
-<blockquote>
-<p>举例说明<br>作为发送端的客户端在应用层发出一个想看某个Web页面的HTTP请求，为了方便传输，在传输层把从应用层处收到的数据进行分割，并在报文上打上标记和序号及端口后转发给网络层。在网络层(IP协议)，增加作为通信目的地的MAC地址后转发给链路层，接收端的服务器在链路层接收到数据，按序往上层发送，一直到应用层，当传输到应用层，才能算真正接收到客户端发送过来的HTTP请求。</p>
-</blockquote>
-<h3 id="TCP协议的可靠性"><a href="#TCP协议的可靠性" class="headerlink" title="TCP协议的可靠性"></a>TCP协议的可靠性</h3><p>TCP协议采用三次握手策略，来保证可靠性。发送端首先先发送一个带SYN标志的数据传给对方，接收端收到后，回传一个带用SYN/ACK标志的数据包以示传达确认消息，最后，发送端在回传一个带ACK标志的数据包，代表“握手”结束。若在握手过程中，某个阶段莫名中断，TCP协议会再次以相同的顺序发送数据包。<br><img src="/images/TCP三次握手.jpg" alt="TCP三次握手"></p>
-<h3 id="IP协议"><a href="#IP协议" class="headerlink" title="IP协议"></a>IP协议</h3><p>IP协议位于网络层，它的作用是把各种数据包传递给对方，要保证确实传送到对方那里，需要两个重要的条件IP地址和MAC地址。IP地址指明了节点被分配到的地址，MAC地址是指网卡所属的固定地址。IP地址可以和MAC地址进行配对，IP地址可变换，但MAC地址基本不会变。</p>
-<blockquote>
-<p>//IP通信是如何依赖MAC地址的？<br>通信双方经过多台计算机和网络设备中转才能连接到对方，在中转时，会利用下一站中转设备的MAC地址来搜索下一个中转目标，利用ARP协议(Address Resolution Protocol 解析地址协议)，根据通信方的IP地址，可以得到对应的MAC地址，所以当中转设备的MAC地址为该通信方的MAC地址时，表示双方已经连接上了。</p>
-</blockquote>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>通过一张图来解释，IP协议，TCP协议，DNS服务在使用HTTP协议通信过程中各自发挥了什么作用？</p>
-<p><img src="/images/完整HTTP请求.jpg" alt=""></p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在日常项目中，常常需要查询某个时间的数据，那么熟练运用<code>MYSQL</code>的日期函数就显得很有用了。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>场景1:获取当前时间</strong></p>
+<p><code>方式1：获取年月日时分秒 -&gt; SELECT NOW()</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/1444048.jpg" alt=""></p>
+<p><code>方式2：获取年月日时分秒 -&gt; SELECT CURRENT_TIMESTAMP()</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/92157935.jpg" alt=""></p>
+<p><code>方式3: 获取年月日 -&gt; SELECT current_date()</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/2987579.jpg" alt=""></p>
+<p><code>方式4: 获取时分秒 -&gt; SELECT current_time()</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/43833424.jpg" alt=""></p>
+<p><strong>场景2:时间加法&amp;减法运算</strong></p>
+<p><code>方式1: 增加天数 -&gt;  SELECT date_add(NOW(),interval &#39;1 01:01:01&#39; day_second)</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/54720309.jpg" alt=""></p>
+<p><code>方式2：增加小时 -&gt; SELECT date_add(NOW(),interval &#39;01:01:01&#39; hour_second)</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/49340433.jpg" alt=""></p>
+<p><code>方式3：增加月数 -&gt; SELECT date_add(now(),interval 1 month)</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/82457234.jpg" alt=""></p>
+<p><code>减法运算与加法运算相似,减少月数 -&gt; date_sub(NOW(),interval 1 month)</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/91908338.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://ylive.blog.51cto.com/881983/537257" target="_blank" rel="external">Mysql日期函数</a></li>
+</ol>
 
       
     </div>
@@ -407,7 +433,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/HTTP/" rel="tag">#HTTP</a>
+            <a href="/tags/MYSQL/" rel="tag">#MYSQL</a>
           
         </div>
       
@@ -416,17 +442,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/20/浮躁的环境，浮躁的我/" rel="next" title="浮躁的环境，浮躁的我">
-                <i class="fa fa-chevron-left"></i> 浮躁的环境，浮躁的我
+              <a href="/2016/10/13/Hexo报错Module-version-mismatch-Expected-47-got-46/" rel="next" title="Hexo报错Module version mismatch. Expected 47, got 46.">
+                <i class="fa fa-chevron-left"></i> Hexo报错Module version mismatch. Expected 47, got 46.
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/27/HTTP常见面试题/" rel="prev" title="HTTP常见面试题">
-                HTTP常见面试题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -441,10 +463,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/04/27/TCP协议介绍/"
-     data-title="TCP协议介绍"
+        <div class="ds-share flat" data-thread-key="2016/10/13/MYSQL之日期函数运算/"
+     data-title="MYSQL之日期函数运算"
      data-content=""
-     data-url="http://jianwl.com/2016/04/27/TCP协议介绍/">
+     data-url="http://jianwl.com/2016/10/13/MYSQL之日期函数运算/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -471,8 +493,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/27/TCP协议介绍/"
-           data-title="TCP协议介绍" data-url="http://jianwl.com/2016/04/27/TCP协议介绍/">
+      <div class="ds-thread" data-thread-key="2016/10/13/MYSQL之日期函数运算/"
+           data-title="MYSQL之日期函数运算" data-url="http://jianwl.com/2016/10/13/MYSQL之日期函数运算/">
       </div>
     
   </div>
@@ -563,7 +585,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#应用层"><span class="nav-number">1.</span> <span class="nav-text">应用层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#传输层"><span class="nav-number">2.</span> <span class="nav-text">传输层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#网络层"><span class="nav-number">3.</span> <span class="nav-text">网络层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#链路层"><span class="nav-number">4.</span> <span class="nav-text">链路层</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-IP通信传输流"><span class="nav-number"></span> <span class="nav-text">TCP/IP通信传输流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP协议的可靠性"><span class="nav-number"></span> <span class="nav-text">TCP协议的可靠性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP协议"><span class="nav-number"></span> <span class="nav-text">IP协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-number">2.</span> <span class="nav-text">实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
         </section>
