@@ -4,9 +4,17 @@
   
     
     <entry>
-      <title><![CDATA[test]]></title>
-      <url>http://jianwl.com/2016/10/13/test/</url>
-      <content type="html"></content>
+      <title><![CDATA[Hexo报错Module version mismatch. Expected 47, got 46.]]></title>
+      <url>http://jianwl.com/2016/10/13/Hexo%E6%8A%A5%E9%94%99Module-version-mismatch-Expected-47-got-46/</url>
+      <content type="html"><![CDATA[<p>升级了Node.js后，发现在项目目录中执行hexo相关命令会报出错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[Error: Module version mismatch. Expected 47, got 46.]</div><div class="line">&#123; [Error: Cannot find module &apos;./build/default/DTraceProviderBindings&apos;] code: &apos;MODULE_NOT_FOUND&apos; &#125;</div><div class="line">&#123; [Error: Cannot find module &apos;./build/Debug/DTraceProviderBindings&apos;] code: &apos;MODULE_NOT_FOUND&apos; &#125;</div></pre></td></tr></table></figure>
+<p><code>解决方案：</code></p>
+<ol>
+<li>执行<code>npm uninstall hexo</code>卸载<code>hexo</code>；</li>
+<li>重新安装hexo，<code>npm install -g hexo</code>；</li>
+<li>到博客目录执行<code>npm install</code>，<code>hexo clean</code>，<code>hexo generate</code></li>
+</ol>
+]]></content>
     </entry>
     
     <entry>

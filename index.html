@@ -292,8 +292,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/10/13/test/" itemprop="url">
-                  test
+                <a class="post-title-link" href="/2016/10/13/Hexo报错Module-version-mismatch-Expected-47-got-46/" itemprop="url">
+                  Hexo报错Module version mismatch. Expected 47, got 46.
                 </a>
               
             
@@ -306,19 +306,38 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-13T10:46:03+08:00" content="2016-10-13">
+            <time itemprop="dateCreated" datetime="2016-10-13T10:47:44+08:00" content="2016-10-13">
               2016-10-13
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">Hexo</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/10/13/test/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/13/test/" itemprop="commentsCount"></span>
+                <a href="/2016/10/13/Hexo报错Module-version-mismatch-Expected-47-got-46/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/13/Hexo报错Module-version-mismatch-Expected-47-got-46/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -343,7 +362,15 @@
       
         
           
-            
+            <p>升级了Node.js后，发现在项目目录中执行hexo相关命令会报出错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[Error: Module version mismatch. Expected 47, got 46.]</div><div class="line">&#123; [Error: Cannot find module &apos;./build/default/DTraceProviderBindings&apos;] code: &apos;MODULE_NOT_FOUND&apos; &#125;</div><div class="line">&#123; [Error: Cannot find module &apos;./build/Debug/DTraceProviderBindings&apos;] code: &apos;MODULE_NOT_FOUND&apos; &#125;</div></pre></td></tr></table></figure>
+<p><code>解决方案：</code></p>
+<ol>
+<li>执行<code>npm uninstall hexo</code>卸载<code>hexo</code>；</li>
+<li>重新安装hexo，<code>npm install -g hexo</code>；</li>
+<li>到博客目录执行<code>npm install</code>，<code>hexo clean</code>，<code>hexo generate</code></li>
+</ol>
+
           
         
       
