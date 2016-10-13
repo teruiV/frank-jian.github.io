@@ -292,6 +292,300 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/02/React入门实战/" itemprop="url">
+                  React入门实战
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-02T00:00:06+08:00" content="2016-09-02">
+              2016-09-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/02/React入门实战/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/02/React入门实战/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="React介绍"><a href="#React介绍" class="headerlink" title="React介绍"></a>React介绍</h3><p><code>React</code> 是一个<code>Facebook</code> 和<code>Instagram</code> 用来创建用户界面的<code>JavaScript</code> 库，其<code>Github</code>地址是<code>http://github.com/facebook/react</code>,截至目前已经获取48369个star，说明了<code>React</code>受到了很大的重视。</p>
+<p><strong>React主要特点</strong></p>
+<ol>
+<li><code>作为UI</code>：<code>React</code>可以只作为视图<code>View</code>在MVC中使用，并且在已有项目中，很容易使用<code>React</code>开发新功能</li>
+<li><code>虚拟DOM</code>:这是React的一个亮点，可以很好地优化视图的渲染和刷新。以前我们更新视图时，需要先清空<code>DOM</code>容器中的内容，然后将最新的<code>DOM</code>和数据追加到容器中，现在<code>React</code>将这一操作放进内存中，<code>React</code>认为内存的操作远比视图全部更新来的高效。</li>
+<li><code>数据流</code>：<code>React</code>实现了单向的数据流，并相对于传统的数据绑定而言，<code>React</code>更加灵活，便捷。</li>
+</ol>
+<h3 id="React-实战"><a href="#React-实战" class="headerlink" title="React 实战"></a>React 实战</h3><p><strong>HTML模板</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">  &lt;head&gt;</div><div class="line">    &lt;script src=&quot;../build/react.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/react-dom.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/browser.min.js&quot;&gt;&lt;/script&gt;</div><div class="line">  &lt;/head&gt;</div><div class="line">  &lt;body&gt;</div><div class="line">    &lt;div id=&quot;example&quot;&gt;&lt;/div&gt;</div><div class="line">    &lt;script type=&quot;text/babel&quot;&gt;</div><div class="line">  	// ** our code goes here !**</div><div class="line">    &lt;/script&gt;</div><div class="line">  &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><code>scipt标签</code>的<code>type</code>属性为<code>type/babel</code>，这是因为React独有的JSX语法与<code>JavaScript</code>不兼容。上述代码一共用了三个库：<code>react.js</code>、<code>react-dom.js</code>、<code>Browser.js</code>，他们必须首先加载，<code>react.js</code>是<code>React</code>的核心库，<code>react-dom.js</code>是提供与<code>DOM</code>相关的功能，<code>Browser.js</code>是将JSX语法转化为<code>JavaScript</code>语法,这一步很耗时，实际上线应该放到服务器完成。</p>
+<p><strong>Render &amp; JSX</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">  &lt;head&gt;</div><div class="line">    &lt;script src=&quot;../build/react.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/react-dom.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/browser.min.js&quot;&gt;&lt;/script&gt;</div><div class="line">  &lt;/head&gt;</div><div class="line">  &lt;body&gt;</div><div class="line">    &lt;div id=&quot;example&quot;&gt;&lt;/div&gt;</div><div class="line">    &lt;script type=&quot;text/babel&quot;&gt;</div><div class="line">      ReactDOM.render(</div><div class="line">        &lt;h1&gt;Hello, world!&lt;/h1&gt;,</div><div class="line">        document.getElementById(&apos;example&apos;)</div><div class="line">      );</div><div class="line">    &lt;/script&gt;</div><div class="line">  &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><code>JSX</code>是React模板语法，它允许在<code>JavaScript</code>中插入<code>HTML语言</code>，<code>ReactDOM.reader()</code>用于将模板转化为<code>HTML</code>语言，并插入到指定的<code>DOM</code>节点。</p>
+<p>运行结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-2/93411408.jpg" alt=""></p>
+<p><strong>在JSX中使用JavaScript</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">  &lt;head&gt;</div><div class="line">    &lt;script src=&quot;../build/react.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/react-dom.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/browser.min.js&quot;&gt;&lt;/script&gt;</div><div class="line">  &lt;/head&gt;</div><div class="line">  &lt;body&gt;</div><div class="line">    &lt;div id=&quot;example&quot;&gt;&lt;/div&gt;</div><div class="line">    &lt;script type=&quot;text/babel&quot;&gt;</div><div class="line">      var names = [&apos;Alice&apos;, &apos;Emily&apos;, &apos;Kate&apos;];</div><div class="line">      ReactDOM.render(</div><div class="line">        &lt;div&gt;</div><div class="line">        &#123;</div><div class="line">          names.map(function (name) &#123;</div><div class="line">            return &lt;div&gt;Hello, &#123;name&#125;!&lt;/div&gt;</div><div class="line">          &#125;)</div><div class="line">        &#125;</div><div class="line">        &lt;/div&gt;,</div><div class="line">        document.getElementById(&apos;example&apos;)</div><div class="line">      );</div><div class="line">    &lt;/script&gt;</div><div class="line">  &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><code>JSX</code>的基本语法规则：遇到HTML标签（以 <code>&lt;</code>开头），就用<code>HTML</code>规则解析，遇到代码块(以<code>{</code>开头)，就用<code>JavaScript</code>解析。</p>
+<p>运行结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-2/82806925.jpg" alt=""></p>
+<hr>
+<p><strong>组件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">  &lt;head&gt;</div><div class="line">    &lt;script src=&quot;../build/react.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/react-dom.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/browser.min.js&quot;&gt;&lt;/script&gt;</div><div class="line">  &lt;/head&gt;</div><div class="line">  &lt;body&gt;</div><div class="line">    &lt;div id=&quot;example&quot;&gt;&lt;/div&gt;</div><div class="line">    &lt;script type=&quot;text/babel&quot;&gt;</div><div class="line">      var HelloMessage = React.createClass(&#123;</div><div class="line">        render: function() &#123;</div><div class="line">          return &lt;h1&gt;Hello &#123;this.props.name&#125;&lt;/h1&gt;;</div><div class="line">        &#125;</div><div class="line">      &#125;);</div><div class="line"></div><div class="line">      ReactDOM.render(</div><div class="line">        &lt;HelloMessage name=&quot;John&quot; /&gt;,</div><div class="line">        document.getElementById(&apos;example&apos;)</div><div class="line">      );</div><div class="line">    &lt;/script&gt;</div><div class="line">  &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><code>React</code>运行将代码封装成组件，然后像插入普通<code>HTML</code>标签一样，在网页中插入这个组件，<code>React.createClass</code>用于生成一个组件类。注意，组件类的第一个字母必须大写，否则会报错，比如<code>HelloMessage</code>不能写成<code>helloMessage</code>,另外，组件类只能包含一个顶层标签，否则也会报错。</p>
+<p>运行结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-2/87496917.jpg" alt=""></p>
+<p>未完待续….</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><code>React Native</code> 入门与实战</li>
+</ul>
+<ul>
+<li><a href="http://www.ruanyifeng.com/blog/2015/03/react.html" target="_blank" rel="external"><code>React</code>入门实例教程</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/09/01/iTerm2工具介绍/" itemprop="url">
+                  iTerm2工具介绍
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-01T22:01:00+08:00" content="2016-09-01">
+              2016-09-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Mac/" itemprop="url" rel="index">
+                    <span itemprop="name">Mac</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/01/iTerm2工具介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/01/iTerm2工具介绍/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="iTerm2简介"><a href="#iTerm2简介" class="headerlink" title="iTerm2简介"></a>iTerm2简介</h3><p><code>iTerm2</code>是Mac下最好的终端工具，为了在工作中，更高效的利用它，让我们来熟悉这个工具。以下将介绍其常用的功能。</p>
+<p><strong>查询</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-1/36067323.jpg" alt=""></p>
+<p>场景：<code>用于搜索关键字，按Tab键可以自动补全单词，且补全的单词可以直接粘贴到他处</code></p>
+<p>快捷键：<code>command + f</code></p>
+<p><strong>切屏</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-1/33677033.jpg" alt=""></p>
+<p>场景描述：<code>水平分割，不想新建窗口，将一个窗口分割为上下两部分</code></p>
+<p>快捷键：<code>command + shift + d</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-1/28476179.jpg" alt=""></p>
+<p>场景描述：<code>垂直分割</code></p>
+<p>快捷键：<code>command + d</code></p>
+<p><strong>快速呼出<code>iTerm2</code></strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-1/40272002.jpg" alt=""></p>
+<p>场景：<code>在浏览网页时，将控制台悬浮于网页之上，且呈现透明状</code></p>
+<p><code>快捷键设置</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-1/57025295.jpg" alt=""></p>
+<p>快捷键：<code>command + \</code>快速呼出<code>iTerm2</code></p>
+<p><strong>全屏切换</strong></p>
+<p>快捷键：<code>command + enter</code></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="https://www.iterm2.com/features.html" target="_blank" rel="external">iTerm2官方文档</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/01/Mac技巧/" itemprop="url">
                   Mac技巧
                 </a>
@@ -1551,332 +1845,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/21/Java之泛型/" itemprop="url">
-                  Java之泛型
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-21T11:04:31+08:00" content="2016-08-21">
-              2016-08-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/21/Java之泛型/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/21/Java之泛型/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>泛型是<code>JDK1.5</code>之后增加的特性，其作用是<code>告诉编译器可接受哪些对象</code>；泛型这一块知识点，之前了解的比较浅，故重新学习，并记录于此文。</p>
-<h3 id="为什么需要泛型？"><a href="#为什么需要泛型？" class="headerlink" title="为什么需要泛型？"></a>为什么需要泛型？</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class GenericDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        List list = new ArrayList();</div><div class="line">        list.add(&quot;Lucy&quot;);</div><div class="line">        list.add(&quot;Tracy&quot;);</div><div class="line">        list.add(22);</div><div class="line"></div><div class="line">        for (int i = 0; i &lt; list.size(); i++) &#123;</div><div class="line">            String name = (String) list.get(i);</div><div class="line">            System.out.println(&quot; name: &quot; + name); </div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这段代码，在编译阶段正常，在运行时会出现<code>java.lang.ClassCastException</code>的异常，为何？观察代码，发现存在两个问题。</p>
-<ol>
-<li>将对象放入集合中，集合不会检验对象类型，换句话说，任何对象都可以放到这个集合中。</li>
-<li>从集合取出元素时，强制类型转换为<code>目标类型String</code>,故出现<code>java.lang.ClassCastException</code>异常</li>
-</ol>
-<p>有什么办法可以让集合记住元素类型，即集合存储的对象均为同一类型对象，答案是使用泛型。</p>
-<h3 id="什么是泛型"><a href="#什么是泛型" class="headerlink" title="什么是泛型"></a>什么是泛型</h3><p>泛型程序设计是程序设计语言的一种风格或范式。泛型允许程序员在强类型程序设计语言中编写代码时使用一些以后才指定的类型，在实例化时作为参数指明这些类型。</p>
-<p>看起来好像有点复杂，通过例子来演示。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class GenericDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        List&lt;String&gt; list = new ArrayList();</div><div class="line">        list.add(&quot;Lucy&quot;);</div><div class="line">        list.add(&quot;Tracy&quot;);</div><div class="line">        //list.add(22); //1 提示编译错误</div><div class="line"></div><div class="line">        for (int i = 0; i &lt; list.size(); i++) &#123;</div><div class="line">            String name = (String) list.get(i);</div><div class="line">            System.out.println(&quot;name: &quot; + name);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>采用泛型写法后，在<code>//1</code>处想加入一个Integer类型的对象会出现编译错误。<code>List&lt;String&gt;中</code>，<code>String</code>是<code>类型实参</code>，也就是<code>List</code>接口中肯定包含<code>类型形参</code>，看下<code>List</code>接口的部分源码如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public interface List&lt;E&gt; extends Collection&lt;E&gt; &#123;</div><div class="line">    &lt;T&gt; T[] toArray(T[] a);</div><div class="line"></div><div class="line">    boolean addAll(Collection&lt;? extends E&gt; c);</div><div class="line"></div><div class="line">    boolean removeAll(Collection&lt;?&gt; c);</div><div class="line"></div><div class="line">    void add(int index, E element);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>观察源码，我们发现源码中有一些特殊参数如<code>T 、E 、？</code>，泛型命名有其规范，具体如下</p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>E</td>
-<td><code>Element，元素 如：List&lt;E&gt;,Iterator&lt;E&gt;,Set&lt;E&gt;</code></td>
-</tr>
-<tr>
-<td>K、V</td>
-<td><code>Key，Value，代表Map的键值对</code></td>
-</tr>
-<tr>
-<td>N</td>
-<td><code>Number，数字</code></td>
-</tr>
-<tr>
-<td>T</td>
-<td><code>Type，类型，如String，Integer等等</code></td>
-</tr>
-<tr>
-<td>？</td>
-<td><code>类型通配符，用于替代具体的类型实参</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="自定义泛型接口、类、方法"><a href="#自定义泛型接口、类、方法" class="headerlink" title="自定义泛型接口、类、方法"></a>自定义泛型接口、类、方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">public class GenericDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        User&lt;String&gt; username = new User&lt;String&gt;(&quot;tracy&quot;);</div><div class="line">        User&lt;Integer&gt; age = new User&lt;Integer&gt;(24);</div><div class="line">        User&lt;String&gt; country = new User&lt;String&gt;(&quot;China&quot;);</div><div class="line">        System.out.println(&quot;info = &quot; + username.getInfo());</div><div class="line">        System.out.println(&quot;info = &quot; + age.getClass());</div><div class="line">        System.out.println(&quot;info = &quot; + country.getClass());</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class User&lt;T&gt; &#123;</div><div class="line">    private T info;</div><div class="line"></div><div class="line">    public User() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public User(T info) &#123;</div><div class="line">        this.info = info;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public T getInfo() &#123;</div><div class="line">        return info;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>使用泛型类时，虽然传入了不同的泛型参数，但实际生产的是相同的类型。究其原因，在于Java的泛型概念提出的目的，只是作用于代码编译阶段，在编译过程中，对于正确检验泛型结果后，会将泛型相关信息擦除。换句话说，成功编译过后的class文件中是不包含任何泛型信息的，泛型信息不回进入到运行时阶段。总结为一句话就是，<code>泛型类型在逻辑上可以看成是多个不同的类型，实际上都是相同的基本类型。</code></p>
-<p><strong>类型通配符</strong></p>
-<p>场景：<code>User&lt;Integer&gt;和User&lt;Number&gt;实际上都是User类型，那么是否可以实现把它们看成具有父子关系的泛型呢？</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public class GenericDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        User&lt;String&gt; username = new User&lt;String&gt;(&quot;tracy&quot;);</div><div class="line">        User&lt;Integer&gt; age = new User&lt;Integer&gt;(24);</div><div class="line">        User&lt;Number&gt; ageN = new User&lt;Number&gt;(24);</div><div class="line"></div><div class="line">        getInfo(ageN);</div><div class="line">        getInfo(age); //编译错误</div><div class="line">    &#125;</div><div class="line">    public static void getInfo(User&lt;Number&gt; user)&#123;</div><div class="line">        System.out.println(user.getInfo());</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class User&lt;T&gt; &#123;</div><div class="line">    private T info;</div><div class="line"></div><div class="line">    public User() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public User(T info) &#123;</div><div class="line">        this.info = info;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public T getInfo() &#123;</div><div class="line">        return info;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上述代码会出现编译错误，通过提示信息，了解到<code>User&lt;Number&gt;</code>不能视为<code>User&lt;Integer&gt;</code>的父类。通过<code>？类型通配符，可以解决这个问题</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public class GenericDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        User&lt;String&gt; username = new User&lt;String&gt;(&quot;tracy&quot;);</div><div class="line">        User&lt;Integer&gt; age = new User&lt;Integer&gt;(24);</div><div class="line">        User&lt;Number&gt; ageN = new User&lt;Number&gt;(24);</div><div class="line"></div><div class="line">        getInfo(ageN);</div><div class="line">        getInfo(age); </div><div class="line">    &#125;</div><div class="line">    public static void getInfo(User&lt;? extends Number&gt; user)&#123;</div><div class="line">        System.out.println(user.getInfo());</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class User&lt;T&gt; &#123;</div><div class="line">    private T info;</div><div class="line"></div><div class="line">    public User() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public User(T info) &#123;</div><div class="line">        this.info = info;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public T getInfo() &#123;</div><div class="line">        return info;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="https://zh.wikipedia.org/wiki/%E6%B3%9B%E5%9E%8B" target="_blank" rel="external">泛型 - 维基百科</a></li>
-<li><a href="http://www.cnblogs.com/lwbqqyumidi/p/3837629.html" target="_blank" rel="external">Java泛型</a></li>
-<li>Effective Java(第2版)</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/20/Python之类与继承/" itemprop="url">
-                  Python之类与继承
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-20T23:44:25+08:00" content="2016-08-20">
-              2016-08-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/20/Python之类与继承/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/20/Python之类与继承/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文延续上文<a href="http://jianwl.com/2016/08/20/Python%E4%B9%8B%E5%88%97%E8%A1%A8%E5%92%8C%E9%9B%86%E5%90%88/">Python之列表和集合</a>的场景，为了让数据结构与数据相匹配，先后采用了变量、字典、类、继承这几种方式来实现对数据结构和数据的关联。通过对比，可以加深对它们的理解。</p>
-<h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><ol>
-<li>虽然教练可以获取到运动员的成绩，但不知道该成绩属于谁，故向各个数据文件添加了姓名和出生年月属性。读取文件数据，并获取运动员前三名的成绩。</li>
-</ol>
-<p><strong>数据文件<code>sarah2.txt</code></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Sarah Sweeney,2002-6-17,2:58,2.58,2:39,2-25,2-55,2:54,2.18,2:55,2:55,2:22,2-21,2.22</div></pre></td></tr></table></figure>
-<p><strong>获取运动员前三名成绩</strong></p>
-<p><code>变量</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"># 读取文件数据，并返回列表数据</div><div class="line">def get_coach_data(filename):</div><div class="line">    try:</div><div class="line">        with open(filename) as file:</div><div class="line">            data = file.readline()</div><div class="line">        return data.strip().split(&quot;,&quot;)</div><div class="line">    except IOError as err:</div><div class="line">        print(&quot;file error&quot; + str(err))</div><div class="line">        return(None)</div><div class="line"></div><div class="line"># 处理脏数据，将&quot;:&quot;和&quot;-&quot;替换成&quot;.&quot;</div><div class="line">def sanitize(time_string):</div><div class="line">    if &quot;-&quot; in time_string:</div><div class="line">        spliter = &quot;-&quot;</div><div class="line">    elif &quot;:&quot; in time_string:</div><div class="line">        spliter = &quot;:&quot;</div><div class="line">    else:</div><div class="line">        return time_string</div><div class="line">    (min, second) = time_string.split(spliter)</div><div class="line">    return min + &quot;.&quot; + second</div><div class="line"></div><div class="line">sarah = get_coach_data(&quot;sarah2.txt&quot;)</div><div class="line">(sarah_name, sarah_bob) = sarah.pop(0), sarah.pop(0)</div><div class="line">print(sarah_name + &quot;&apos;s fastest time are&quot; + str(sorted([sanitize(t) for t in sarah])[0:3]))</div></pre></td></tr></table></figure>
-<p>观察以上代码，发现需要为每个运动员定义三个变量，那如果需要处理100，1000个运动员，就会到处充斥着变量，显然不可取，要进行优化。观察数据，发现数据由三部分组成姓名、出生年月、成绩。可以通过字典，将数据结构和数据进行关联。<code>字典是将数据值和键关联的数据结构</code>，优化代码如下：</p>
-<p><code>字典</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># 读取文件数据，并返回列表数据</div><div class="line">def get_coach_data(filename):</div><div class="line">    try:</div><div class="line">        with open(filename) as file:</div><div class="line">            data = file.readline().strip().split(&quot;,&quot;)</div><div class="line">        return &#123;&quot;name&quot;: data.pop(0), &quot;dob&quot;: data.pop(0), &quot;scores&quot;: sorted(set([sanitize(t) for t in data]))[0:3]&#125;</div><div class="line">    except IOError as err:</div><div class="line">        print(&quot;file error&quot; + str(err))</div><div class="line">        return (None)</div><div class="line">        </div><div class="line"># 处理脏数据，将&quot;:&quot;和&quot;-&quot;替换成&quot;.&quot;</div><div class="line">def sanitize(time_string):</div><div class="line">    if &quot;-&quot; in time_string:</div><div class="line">        spliter = &quot;-&quot;</div><div class="line">    elif &quot;:&quot; in time_string:</div><div class="line">        spliter = &quot;:&quot;</div><div class="line">    else:</div><div class="line">        return time_string</div><div class="line">    (min, second) = time_string.split(spliter)</div><div class="line">    return min + &quot;.&quot; + second</div><div class="line"></div><div class="line">sarah = get_coach_data(&quot;sarah2.txt&quot;)</div><div class="line">print (sarah[&quot;name&quot;] + &quot;&apos;s fastest  time are&quot; + str(sarah[&quot;scores&quot;]))</div></pre></td></tr></table></figure>
-<p>除了用字典，有么有一种更加简便的方法，可以将数据结构和数据关联在一起呢？与其他语言一样，Python允许创建并定义面向对象。</p>
-<p><code>类</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">class Athlete:</div><div class="line">    def __init__(self,name,dob=None,times=[]):</div><div class="line">        self.name = name</div><div class="line">        self.dob = dob</div><div class="line">        self.times = times</div><div class="line"></div><div class="line">    def __top3__(self):</div><div class="line">        return sorted([sanitize(t) for t in self.times])[0:3]</div><div class="line"></div><div class="line">    def add_time(self,addtimes):</div><div class="line">        if isinstance(addtimes,list):</div><div class="line">            self.times.extend(addtimes)</div><div class="line">        else:</div><div class="line">            self.times.append(addtimes)</div><div class="line"></div><div class="line"># 处理脏数据，将&quot;:&quot;和&quot;-&quot;替换成&quot;.&quot;</div><div class="line">def sanitize(time_string):</div><div class="line">    if &quot;-&quot; in time_string:</div><div class="line">        spliter = &quot;-&quot;</div><div class="line">    elif &quot;:&quot; in time_string:</div><div class="line">        spliter = &quot;:&quot;</div><div class="line">    else:</div><div class="line">        return time_string</div><div class="line">    (min, second) = time_string.split(spliter)</div><div class="line">    return min + &quot;.&quot; + second</div><div class="line"></div><div class="line"># 读取文件数据，并返回列表数据</div><div class="line">def get_coach_data(filename):</div><div class="line">    try:</div><div class="line">        with open(filename) as file:</div><div class="line">            data = file.readline().strip().split(&quot;,&quot;)</div><div class="line">            return Athlete(data.pop(0),data.pop(0),data)</div><div class="line">    except IOError as err:</div><div class="line">        print(&quot;file error&quot; + str(err))</div><div class="line">        return (None)</div><div class="line"></div><div class="line">sarah = get_coach_data(&quot;sarah2.txt&quot;)</div><div class="line">print (sarah.name + &quot;&apos;s fastest time are&quot; + str(sarah.__top3__()))</div></pre></td></tr></table></figure>
-<p><code>Athlete</code>有点像列表，它提供了一些列表的功能，比如add_time(),可以通过继承list，来获取他的方法。具体实现如下：</p>
-<p><code>继承</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"># 继承list类</div><div class="line">class AthleteList(list):</div><div class="line">    def __init__(self,name,dob=None,times=[]):</div><div class="line">        list.__init__([])</div><div class="line">        self.name = name</div><div class="line">        self.dob = dob</div><div class="line">        self.extend(times)</div><div class="line"></div><div class="line">    def __top3__(self):</div><div class="line">        return sorted([sanitize(t) for t in self])[0:3]</div><div class="line"></div><div class="line"># 处理脏数据，将&quot;:&quot;和&quot;-&quot;替换成&quot;.&quot;</div><div class="line">def sanitize(time_string):</div><div class="line">    if &quot;-&quot; in time_string:</div><div class="line">        spliter = &quot;-&quot;</div><div class="line">    elif &quot;:&quot; in time_string:</div><div class="line">        spliter = &quot;:&quot;</div><div class="line">    else:</div><div class="line">        return time_string</div><div class="line">    (min, second) = time_string.split(spliter)</div><div class="line">    return min + &quot;.&quot; + second</div><div class="line"></div><div class="line"># 读取文件数据，并返回列表数据</div><div class="line">def get_coach_data(filename):</div><div class="line">    try:</div><div class="line">        with open(filename) as file:</div><div class="line">            data = file.readline().strip().split(&quot;,&quot;)</div><div class="line">            return AthleteList(data.pop(0),data.pop(0),data)</div><div class="line">    except IOError as err:</div><div class="line">        print(&quot;file error&quot; + str(err))</div><div class="line">        return (None)</div><div class="line">        </div><div class="line">sarah = get_coach_data(&quot;sarah2.txt&quot;)</div><div class="line"></div><div class="line"># 继承了list,使用其extend方法 </div><div class="line">sarah.extend([&quot;2.1333333&quot;,&quot;2.111111&quot;])</div><div class="line">print (str(sarah))</div><div class="line">print (sarah.name + &quot;&apos;s fastest  time are&quot; + str(sarah.__top3__()))</div></pre></td></tr></table></figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
-<li>使用dict()或{}创建空字典</li>
-<li>类似于列表和集合，Python的字典会随着新数据增加到这个数据结构而动态扩大</li>
-<li>类定义<code>__init__()</code> 来初始化对象实例</li>
-<li>类定义的每个方法都必须提供<code>self</code>作为第一参数</li>
-</ul>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>Head First Python</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1917,7 +1890,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">130</span>
+              <span class="site-state-item-count">132</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

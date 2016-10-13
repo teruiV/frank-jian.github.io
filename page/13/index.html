@@ -292,6 +292,278 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/28/HTTP使用的认证方式/" itemprop="url">
+                  HTTP使用的认证方式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-28T14:25:08+08:00" content="2016-04-28">
+              2016-04-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/28/HTTP使用的认证方式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/28/HTTP使用的认证方式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Http使用的认证方式如下所示：</p>
+<ol>
+<li>BASIC认证</li>
+<li>DIGEST认证</li>
+<li>SSL客户端认证</li>
+<li>基于表单的认证</li>
+</ol>
+<h3 id="BASIC认证"><a href="#BASIC认证" class="headerlink" title="BASIC认证"></a>BASIC认证</h3><p>1、当请求资源需要BASIC认证时，服务器会随状态码401，返回带WWW-Authenticate首部字段响应<br>2、接收到状态码401，需要将用户ID和密码发送给服务器。发送密码由用户ID和密码组成，中间用”:”连接，后经过BASE64编码处理。<br>3、接收到首部字段你Authticate请求的服务器，会认证信息的正确性进行验证，通过验证，则返回Request-URI的响应。</p>
+<p>缺点：<br>BASIC认证虽然采用BASE64编码，但这并不是加密，不需要附加任何信息就能将其解码。在认证过程中被窃听，泄露账号密码的可能性较高</p>
+<h3 id="DIGEST认证"><a href="#DIGEST认证" class="headerlink" title="DIGEST认证"></a>DIGEST认证</h3><p>1、客户端发送请求给服务端<br>2、服务端发送临时的咨询码(随机数，nonce)以及告知需要认证的状态码401<br>3、客户端接收到状态码401，发送摘要以及由咨询码算出来的响应码<br>4、认证成功返回200，失败再次发送状态码401</p>
+<p>缺点：<br>虽然可以提供防止密码被盗的保护机制，但无法防止伪装用户。</p>
+<h3 id="SSL客户端认证"><a href="#SSL客户端认证" class="headerlink" title="SSL客户端认证"></a>SSL客户端认证</h3><p>1、接收到认证资源的请求，服务端会发送Certificate Request报文，要求客户端提供客户端证书。<br>2、客户端会把客户端证书信息以Client Certificate报文方式发送给服务器。<br>3、服务器验证客户端证书，验证通过后方可领取证书内客户端的公开密钥。</p>
+<p>缺点：<br>导入和维护的费用昂贵</p>
+<h3 id="基于表单认证"><a href="#基于表单认证" class="headerlink" title="基于表单认证"></a>基于表单认证</h3><p>1、客户端向服务器端发送用户信息（ID和密码）；<br>2、服务端想用户发放SessionID，将包含SessionId的cookie放到响应首部字段Set-Cookie中<br>3、客户端得到Cookie，之后再次请求该资源时，会将Cookie信息带入到请求中<br>4、服务器得到Cookie信息，通过SessionId来判断对方是否为真实用户。</p>
+<h3 id="安全的做法"><a href="#安全的做法" class="headerlink" title="安全的做法"></a>安全的做法</h3><p>1、给密码加盐（salt）的方式增加额外的信息，在使用散列（hash）函数计算出散列值后保存。</p>
+<p>盐(salt):由服务器随机生成的一个字符串，把和密码拼接后生成散列值。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/04/28/HTTPS通信机制/" itemprop="url">
+                  HTTPS通信机制
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-28T11:32:07+08:00" content="2016-04-28">
+              2016-04-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/28/HTTPS通信机制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/28/HTTPS通信机制/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>为了更好的理解HTTPS，总结一下HTTPS的通信步骤。</p>
+<p><img src="/images/HTTPS通信机制.jpg" alt=""><br>1、客户端通过发送Client Hello报文开始SSL通信，报文中包含客户端支持的SSL的指定版本，加密组件（Cipher Suite）列表</p>
+<p>2、服务端进行SSL通信时，会以Server Hello报文作为应答，和客户端一样，在报文中包含SSL版本，加密组件。服务器的加密组件内容是从接收到的客户端机密组件内筛选出来的。</p>
+<p>3、服务器发送Certificate报文，报文中包含公开密钥证书。</p>
+<p>4、服务器发送ServerHelloDone报文通知客户端，最初阶段的SSL握手协商部分结束了</p>
+<p>5、SSL第一次握手结束之后，客户端以Client Key Exchange报文作为回应，报文中包含通信加密中使用的一种被称为Pre-master secret的随机密码串。该报文已用步骤3中的公钥进行加密</p>
+<p>6、客户端继续发送Change Ciper Spec报文，该报文会提示服务器，在此报文之后的通信会采用Pre-master-secret密钥加密</p>
+<p>7、客户端发送Finished报文，该报文包含连接至今全部报文的整体校验值，这次握手协议能否成功，要以服务器是否能够正确解密该报文作为判定标准。</p>
+<p>8、服务器同样发送Change Cipher Spec报文。</p>
+<p>9、服务器同样发送Finished报文</p>
+<p>10、服务器和客户端的Finished报文交换完毕之后，SSL连接就算建立完成，当然，通信会受到SSL的保护，从此处开始进行应用层协议的通信，即发送HTTP请求。</p>
+<p>11、应用层协议通信，即发送HTTP响应</p>
+<p>12、最后由客户端断开连接，断开连接时，发送close_notify报文。</p>
+<h3 id="使用服务端的公开密码证书建立HTTPS通信的整个过程"><a href="#使用服务端的公开密码证书建立HTTPS通信的整个过程" class="headerlink" title="使用服务端的公开密码证书建立HTTPS通信的整个过程"></a>使用服务端的公开密码证书建立HTTPS通信的整个过程</h3><p>1、服务端将公开密钥证书下发给客户端 （公开密钥证书包含服务器的公钥和认证机构的证书）</p>
+<p>2、客户端取出证书确认其有效性，取出公开密钥，用公开密钥对随机密码串pre-master-secret进行加密,并发送给服务端</p>
+<p>3、服务端用私钥解密客户端发送过来的加密信息，得到随机密码串pre-master-secret。</p>
+<p>4、这样在客户端和服务端都拥有了共享密钥pre-master-secret，之后的通信就可以用这个共享密钥进行加密通信。</p>
+<h3 id="HTTPS的缺点"><a href="#HTTPS的缺点" class="headerlink" title="HTTPS的缺点"></a>HTTPS的缺点</h3><p>使用HTTPS存在一些问题，它的处理速度会变慢，SSL的慢分两种，一种是服务器和客户端都需要做加密和解密操作大量消耗CPU及内存等资源，另一种是通信慢，因为SSL通信部分消耗网络资源。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/27/HTTP基础/" itemprop="url">
                   HTTP基础
                 </a>
@@ -1416,277 +1688,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/14/利用Github-Pages和Hexo搭建个人博客/" itemprop="url">
-                  利用Github Pages和Hexo搭建个人博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-14T12:53:08+08:00" content="2016-04-14">
-              2016-04-14
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/14/利用Github-Pages和Hexo搭建个人博客/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/14/利用Github-Pages和Hexo搭建个人博客/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>喜欢写Blog的人，会经历三个阶段<br>第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费的空间来写。<br>第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。<br>第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。</p>
-</blockquote>
-<p>的确，大多数Blog作者，都停留在第一阶段和第二阶段，因为第三阶段太不容易到达，你很难找到俯首听命，愿意为你管理服务器的人。但是，现在情况发生了变化，我们可以在github搭建个人博客。主要是以下步骤：</p>
-<ol>
-<li>在Github 上注册账号；</li>
-<li>在Godaddy上买域名；</li>
-<li>在DNSPOD上设置域名解析；</li>
-<li>在Github创建username.github.io项目；</li>
-<li>Hexo生成静态博客框架并部署到github上；</li>
-</ol>
-<p>具体操作步骤，参考以下资料<br>参考资料：<br><a href="http://sunwhut.com/2015/10/30/buildBlog/" target="_blank" rel="external">如何利用GitHub Pages和Hexo快速搭建个人博客</a><br><a href="http://cnfeat.com/blog/2014/05/10/how-to-build-a-blog/" target="_blank" rel="external">如何搭建一个独立博客——简明 Github Pages与 jekyll 教程</a><br><a href="http://http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html" target="_blank" rel="external">搭建一个免费的，无限流量的Blog—-github Pages和Jekyll入门</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/14/Hexo免输入密码部署到Github/" itemprop="url">
-                  Hexo免输入密码部署到Github
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-14T12:37:31+08:00" content="2016-04-14">
-              2016-04-14
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/14/Hexo免输入密码部署到Github/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/14/Hexo免输入密码部署到Github/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在使用hexo deploy命令部署hexo到github时，每次都要输入用户名和密码，这种重复机械的流程，让人感觉很烦躁。以下是介绍如何解决这个问题：<br>方案一：在本机新建文本，明文存储github的账号和密码<br>1、在系统环境变量中新增一个环境变量<br><img src="/images/env.png" alt=""><br>2、接着在你的用户目录(C:\Users\username)下新建一个叫_netrc的文件，在文件中添加以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">machine github.com</div><div class="line">login username //username为github账户名 （ps：请将注释内容去掉）</div><div class="line">password password //password为github账户的密码</div></pre></td></tr></table></figure></p>
-<p>3、设置好这些之后，当你再次部署时，就不用再输入用户名和密码了。</p>
-<p>方案二：本机生成SSH密钥，配置到github中<br>1、设置Git的user name和email<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name &quot;shuangziliuyun&quot;</div><div class="line">git config --global user.email &quot;1515970958@qq.com&quot;</div></pre></td></tr></table></figure></p>
-<p>2、生成SSH密钥</p>
-<ul>
-<li>查看是否已经有了ssh密钥<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd ~/.ssh</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>如果没有密钥则不会有此文件夹，有则备份删除</p>
-<ul>
-<li>生成密码<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -f rsa -C &quot;1515970958@qq.com&quot;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>按3个回车，密码为空，得到两个文件id_rsa和id_rsa.pub</p>
-<p>3、在github上添加ssh密钥，这里添加的是id_rsa.pub里面的公钥<br><img src="/images/ssh配置.png" alt=""></p>
-<p>4、修改_config.yml中deploy的参数，部署仓库以SSH的方式发布不需输入密码，反之如果以HTTPS的方式发布则需要密码。<br><img src="/images/hexo的deploy参数.png" alt=""><br>参考资料：<br><a href="http://www.foreverpx.cn/2014/09/25/Hexo%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E9%83%A8%E7%BD%B2%E5%88%B0github/" target="_blank" rel="external">Hexo免输入密码部署到Github</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span>
+    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1727,7 +1733,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">130</span>
+              <span class="site-state-item-count">132</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
