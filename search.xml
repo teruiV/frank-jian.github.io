@@ -16,7 +16,7 @@
 <p><strong>2、ls命令</strong></p>
 <p>查看文件与目录的命令</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-l : 列出长数据串，包含文件的属性与权限数据等</div><div class="line">-a : 列出全部的文件，连同隐藏文件（开头为.的文件）一起列出来（常用） </div><div class="line">-d ：仅列出目录本身，而不是列出目录的文件数据</div><div class="line">-h ：将文件容量以较易读的方式（GB，kB等）列出来  </div><div class="line">-R ：连同子目录的内容一起列出（递归列出），等于该目录下的所有文件都会显示出来</div></pre></td></tr></table></figure>
-<p><code>实战1：查看当前文件下的异常文件，并显示文件属性和权限数据</code></p>
+<p><code>实战1：查看当前文件下的所有文件，并显示文件属性和权限数据</code></p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/32656794.jpg" alt=""></p>
 <p><strong>3、grep命令</strong></p>
 <p>用于一些命令的输出进行筛选</p>
