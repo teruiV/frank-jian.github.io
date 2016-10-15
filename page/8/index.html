@@ -292,6 +292,176 @@
             
               
                 
+                <a class="post-title-link" href="/2016/06/18/SpringBoot入门篇/" itemprop="url">
+                  SpringBoot入门篇
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-18T00:45:48+08:00" content="2016-06-18">
+              2016-06-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/SpringBoot/" itemprop="url" rel="index">
+                    <span itemprop="name">SpringBoot</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/18/SpringBoot入门篇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/18/SpringBoot入门篇/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="SpringBoot是什么？"><a href="#SpringBoot是什么？" class="headerlink" title="SpringBoot是什么？"></a>SpringBoot是什么？</h3><p>SpringBoot是为了解决Java开发，繁琐的配置、低下的开发效率，复杂的部署流程；它使用“习惯优于配置”的理念让你的项目快速运行起来，使用SpringBoot很容易创建一个独立（运行jar、内嵌Servlet容器）准生产级别的基于Spring的项目，使用SpringBoot可以不用或者只需很少的Spring配置。</p>
+<h3 id="SpringBoot的优点"><a href="#SpringBoot的优点" class="headerlink" title="SpringBoot的优点"></a>SpringBoot的优点</h3><ul>
+<li>快速构建项目</li>
+<li>对主流开发框架的无配置集成</li>
+<li>项目可独立运行，无须外部依赖Servlet容器</li>
+<li>提供运行时的应用监控</li>
+<li>极大地提高了开发、部署效率</li>
+<li>与云计算的天然集成</li>
+</ul>
+<h3 id="SpringBoot的缺点"><a href="#SpringBoot的缺点" class="headerlink" title="SpringBoot的缺点"></a>SpringBoot的缺点</h3><ul>
+<li>书籍文档较少且不够深入</li>
+</ul>
+<h3 id="SpringBoot运行"><a href="#SpringBoot运行" class="headerlink" title="SpringBoot运行"></a>SpringBoot运行</h3><p>Spring Boot通常有一个名为Application的入口类，入口类里有一个main方法，这个main方法其实就是一个标准的Java应用入口。在main方法中使用SpringApplication.run( Application.class,args)来启动SpringBoot项目。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">package org.jooq.example.spring;</div><div class="line"></div><div class="line">import org.springframework.boot.SpringApplication;</div><div class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line"></div><div class="line">/**</div><div class="line"> * @author jianwl</div><div class="line"> */</div><div class="line">@SpringBootApplication</div><div class="line">public class Application &#123;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        SpringApplication.run(Application.class, args);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="SpringBoot-常用注解"><a href="#SpringBoot-常用注解" class="headerlink" title="SpringBoot 常用注解"></a>SpringBoot 常用注解</h3><ul>
+<li><p>@Value <code>注入application.properties中定义的属性值</code></p>
+</li>
+<li><p>@ResponseBody <code>将结果直接填充到HTTP的响应提中，一般用于构建Restful的API</code></p>
+</li>
+<li><p>@Controller <code>用于定义控制类，spring项目中由控制器负责将用户发来的URL请求转发到对应的服务接口</code></p>
+</li>
+<li><p>@RestController<code>@ResponseBody和@Controller的合集</code></p>
+</li>
+<li><p>@RequestMapping <code>提供路由信息，负责URL到Controller中的具体函数映射</code></p>
+</li>
+<li><p>@EnableAutoConfiguration <code>Spring Boot自动配置,尝试根据你添加的jar依赖自动配置你的Spring应用</code></p>
+</li>
+<li><p>@ComponentScan <code>将该类自动扫描并注册为Bean，可以自动收集所有的Spring组件，包括@Configuration类</code></p>
+</li>
+<li><p>@Configuration <code>相对于传统的xml配置文件，如果有些第三方库需要用到xml文件，建议仍然通过@Configuration类作为项目的配置主类，可以通过@ImportResource加载xml配置文件</code></p>
+</li>
+<li><p>@SpringBootApplication <code>@EnableAutoConfiguration @ComponentScan @Configuration的合集</code></p>
+</li>
+<li><p>@Import <code>导入其他配置类</code></p>
+</li>
+<li><p>@ImportResource<code>用来加载xml配置文件</code></p>
+</li>
+<li><p>@Autowired <code>自动导入依赖的bean</code></p>
+</li>
+<li><p>@Service <code>用于修饰service层的组件</code></p>
+</li>
+<li><p>@Reponsitory <code>用于修饰DAO层的组件</code></p>
+</li>
+<li><p>@Component <code>当组件不好归类时，使用这个注解进行标注</code></p>
+</li>
+<li><p>@Profile <code>为不同环境下，使用不同的配置提供了支持</code></p>
+</li>
+<li><p>@ConfigurationProperties <code>注入属性</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">@ConfigurationProperties(locations = &quot;classpath:mail.properties&quot;, </div><div class="line">                         ignoreUnknownFields = false, </div><div class="line">                         prefix = &quot;mail&quot;)</div><div class="line">public class MailProperties &#123; </div><div class="line">  public static class Smtp &#123;  </div><div class="line">    private boolean auth;  </div><div class="line">    private boolean starttlsEnable;  </div><div class="line">    // ... getters and setters </div><div class="line">  &#125;</div><div class="line">  @NotBlank private String host;</div><div class="line">  private int port;  </div><div class="line">  private String from; </div><div class="line">  private String username;</div><div class="line">  private String password; </div><div class="line">  @NotNull private Smtp smtp; </div><div class="line">  // ... getters and setters</div><div class="line">&#125;</div><div class="line"></div><div class="line">// mail.properties</div><div class="line">mail.host=localhost</div><div class="line">mail.port=25</div><div class="line">mail.smtp.auth=false</div><div class="line">mail.smtp.starttlsEnable=false</div><div class="line">mail.from=me@localhost</div><div class="line">mail.username=</div><div class="line">mail.password=</div></pre></td></tr></table></figure>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/06/15/Thymeleaf入门篇/" itemprop="url">
                   Thymeleaf入门篇
                 </a>
@@ -1619,148 +1789,6 @@ tee – the output of write (:w) command is redirected using tee
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/" itemprop="url">
-                  翻墙教程之VPS搭建Shadowsocks代理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-20T12:45:02+08:00" content="2016-05-20">
-              2016-05-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/VPS/" itemprop="url" rel="index">
-                    <span itemprop="name">VPS</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>做为一个开发人员，具备翻墙的能力，是最基本的；最近打算在VPS上搭建一个shadowsocks代理来实现翻墙，将操作步骤记录下来，备忘。</p>
-<h6 id="购买VPS"><a href="#购买VPS" class="headerlink" title="购买VPS"></a>购买VPS</h6><p>到vultr的<a href="https://www.vultr.com/freetrial/" target="_blank" rel="external">官网</a>注册账户，目前注册的新用户给你$50,用2个月，超给力的。需要注意的是，你得有支持外币支付的信用卡，并且这个优惠活动不支持paypal，反正我用民生银行的VISA信用卡是没有注册成功，最后采用了paypal的方式支付的。</p>
-<h6 id="vps部署"><a href="#vps部署" class="headerlink" title="vps部署"></a>vps部署</h6><p>选择日本或者美国西海岸的服务器，速度相对比较快，我选的是日本的。操作系统是CentOS 6 x64,选择的硬件是$5/month的；以下截图是购买成功之后的VPS服务器实例;<br><img src="/images/vultr服务器.png" alt=""></p>
-<h6 id="下载并安装Xshell5"><a href="#下载并安装Xshell5" class="headerlink" title="下载并安装Xshell5"></a>下载并安装Xshell5</h6><p><a href="http://pan.baidu.com/s/1eRRETaU" target="_blank" rel="external">Xshell5百度云下载链接</a></p>
-<h6 id="Xshell5连接vps"><a href="#Xshell5连接vps" class="headerlink" title="Xshell5连接vps"></a>Xshell5连接vps</h6><p><img src="/images/vultr服务器详情.png" alt="vps的详情"><br>打开Xshell5,新建会话，输入IP地址,点击确定<br><img src="/images/xshell连接vps.png" alt=""><br>输入用户名<br><img src="/images/vultr输入用户名.png" alt=""><br>输入密码<br><img src="/images/vultr输入密码.png" alt=""><br>xshell5成功登陆vps服务器<br><img src="/images/xshell成功登陆vps.png" alt=""></p>
-<h6 id="部署shadowsocks"><a href="#部署shadowsocks" class="headerlink" title="部署shadowsocks"></a>部署shadowsocks</h6><p>1、用Shadowsocks Python版一键安装脚本,<a href="https://teddysun.com/342.html" target="_blank" rel="external">原文链接</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</div><div class="line">chmod +x shadowsocks.sh</div><div class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</div></pre></td></tr></table></figure></p>
-<p>执行后需要输入密码(shadowsocks的密码)<br><img src="/images/ss01.png" alt=""><br>2、输入shadowsocks的端口,我喜欢用8388<br><img src="/images/ss输入端口.png" alt=""><br>3、看到这句时，按任意键(比如回车)<br><img src="/images/ss成功.png" alt=""><br>4、等待安装结束，出现下图就表示安装成功了.<br><img src="/images/ss安装成功.png" alt=""></p>
-<h6 id="开启TFO-TCP-Fast-Open"><a href="#开启TFO-TCP-Fast-Open" class="headerlink" title="开启TFO(TCP Fast Open)"></a>开启TFO(TCP Fast Open)</h6><p>编辑rc.local<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/rc.local</div></pre></td></tr></table></figure></p>
-<p>在rc.local最后一行添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo 3 &gt; /proc/sys/net/ipv4/tcp_fastopen</div></pre></td></tr></table></figure></p>
-<p>编辑sysctl.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/sysctl.conf</div></pre></td></tr></table></figure></p>
-<p>在sysctl.conf中输入并保存<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net.ipv4.tcp_fastopen = 3</div></pre></td></tr></table></figure></p>
-<p>打开ss配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/shadowsocks.json</div></pre></td></tr></table></figure></p>
-<p>修改fast_open的值为true并保存。<br>重启shadowsocks<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/shadowsocks restart</div></pre></td></tr></table></figure></p>
-<h6 id="windows端运行shadowsocks客户端"><a href="#windows端运行shadowsocks客户端" class="headerlink" title="windows端运行shadowsocks客户端"></a>windows端运行shadowsocks客户端</h6><p><a href="http://pan.baidu.com/s/1hrFz8uo" target="_blank" rel="external">shadowsocks客户端百度云下载链接</a><br>解压后运行shadowsocks.exe,并配置shadowsocks<br><img src="/images/ss客户端配置.png" alt=""></p>
-<h6 id="科学上网"><a href="#科学上网" class="headerlink" title="科学上网"></a>科学上网</h6><p>使用代理，虽然可以访问国外的网站，但网速会比较慢。理想的情况下，我们想要在访问国外网站的时候使用代理，访问国内的网站的时候不使用代理,保证效率最大化。</p>
-<p>我们使用SwitchyOmega来消除shadowsocks全局代理的副作用，<a href="http://pan.baidu.com/s/1mhX8r7i" target="_blank" rel="external">SwitchyOmega</a>是Chrome下非常好用的代理管理插件(.crx是插件,.bak是备份文件);</p>
-<h6 id="安装SwitchyOmega"><a href="#安装SwitchyOmega" class="headerlink" title="安装SwitchyOmega"></a>安装SwitchyOmega</h6><p>将SwitchyOmega.crx插件直接拖到扩展程序中，即可实现安装<br><img src="/images/安装SwitchyOmega.png" alt=""></p>
-<h6 id="配置SwitchyOmega"><a href="#配置SwitchyOmega" class="headerlink" title="配置SwitchyOmega"></a>配置SwitchyOmega</h6><p><img src="/images/配置SwitchyOmega01.png" alt=""><br><img src="/images/配置SwitchyOmega02.png" alt=""><br><img src="/images/配置SwitchyOmega03.png" alt=""><br><img src="/images/配置SwitchyOmega04.png" alt=""><br><img src="/images/配置SwitchyOmega05.png" alt=""><br>至此，把Shadowsocks客户端的模式改为了自动模式，<strong>通过Chrome访问的网址都会经过代理服务器;通过其他浏览器如：FireFox访问的网址则不经过代理服务器</strong>;说明了局部代理成功。</p>
-<h6 id="Shadowsocks原理"><a href="#Shadowsocks原理" class="headerlink" title="Shadowsocks原理"></a>Shadowsocks原理</h6><p>简单理解的话，Shadowsocks是将以前通过SSH创建的Socks5协议拆分成Server端和Client端，下面这个原理图能简单介绍其翻墙原理，基本上和利用SSH tunnel大致类似：<br><img src="/images/shadowsocks原理.jpg" alt=""><br>PC客户端发出请求基于Socks5协议跟SS-Local端进行通讯，由于这个SS-Local一般是本机或路由器等局域网的其他机器，不经过GFW,所以解决GFW通过特征分析进行干扰的问题。</p>
-<p>SS-Local和SS-Server两端通过多种可选的加密方法进行通讯，经过GFW的时候因为是常规的TCP包，没有明显特征码GFW也无法对通讯进行解密，因此通讯放行。</p>
-<p>SS-Server将收到的加密数据进行解密，还原初始请求，在发送用户需要访问的服务网站，响应原路返回SS-04,返回途中依然使用了加密，使得流量是普通的TCP包，并成功穿过GFW防火墙。</p>
-<p>因此，Shadowsocks的优点在于它解决了GFW通过分析流量特征从而干扰的问题，这是它优于SSH和VPN的地方。</p>
-<p>参考资料：<br>1、<a href="http://mpc2008cn.github.io/2015/10/22/vps/" target="_blank" rel="external">Vultr的vps搭建shadowsocks翻墙</a><br>2、<a href="https://teddysun.com/342.html" target="_blank" rel="external">Shadowsocks Python版一键安装脚本</a><br>3、<a href="http://www.shadowsocks.co.uk/shadowsocks-tcp-fast-open/" target="_blank" rel="external">Shadowsocks设置:ShadowSocks 服务器开启TCP Fast Open</a><br>4、<a href="http://shadowsocks.blogspot.tw/" target="_blank" rel="external">shadowsocks搭建教程</a><br>5、<a href="http://www.jianshu.com/p/37ef0b9ecc08" target="_blank" rel="external">shadowsocks配合SwitchyOmega科学上网</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1806,7 +1834,7 @@ tee – the output of write (:w) command is redirected using tee
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">132</span>
+              <span class="site-state-item-count">133</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1814,7 +1842,7 @@ tee – the output of write (:w) command is redirected using tee
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1823,7 +1851,7 @@ tee – the output of write (:w) command is redirected using tee
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
