@@ -292,6 +292,149 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/16/Shell编程入门/" itemprop="url">
+                  Shell编程入门
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-16T13:04:06+08:00" content="2016-10-16">
+              2016-10-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/16/Shell编程入门/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/16/Shell编程入门/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>Shell</code>是基于命令行的解释器，它连接用户和操作系统，允许通过编写脚本来执行系统命令。</p>
+<h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><p><strong>1、环境变量</strong></p>
+<p><code>实战1：查看环境变量env</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/33734703.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">HOME : 代表用户主文件夹</div><div class="line">SHELL : 目前这个魂晶使用的SHELL是哪个程序</div><div class="line">PATH : 执行文件查找路径，目录与目录中间以冒号`:`分隔</div><div class="line">LANG : 语系数据，很多信息都会用到它。</div></pre></td></tr></table></figure>
+<p><strong>2、文件系统及程序的限制关系：ulimit</strong></p>
+<p><code>场景：</code>Linux主机里同时登陆10个人，每个人同时打开100个文件，每个文件10MB，那么Linux主机内存需要<code>10 * 100 * 10 = 10000MB = 10G</code>,这样系统不挂掉才怪，为了预防这种情况<code>bash</code>可以限制用户的某些系统资源，具体配置用<code>ulimit</code>命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">-H : 严格设置，必定不能超过这个设置的数值</div><div class="line">-S : 警告设置，可以超过这个数值，但若超过则有警告信息</div><div class="line">-a : 后面不接任何参数，可列出所有限制额度</div><div class="line">-c : 当某些进程发成错误时，系统可能会将进程在内存中的信息写成文件，这种文件成为内核文件。</div><div class="line">-f : 此SHELL可以创建的最大文件容量(一般设为2GB)单位KB</div><div class="line">-d : 进程可使用的最大断裂内存容量</div><div class="line">-l : 可用于锁定内存量</div><div class="line">-t : 可使用最大CPU时间</div><div class="line">-u : 单一用户可以使用的最大进程数量</div><div class="line">```  </div><div class="line"></div><div class="line">`实战1：查看当前用户的所有限制数据值`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/71746717.jpg)</div><div class="line"></div><div class="line">`实战2：限制用户仅仅能创建10MB容量以下的文件`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/80080741.jpg)</div><div class="line"></div><div class="line">**3、一次执行多个命令 &amp;&amp; 、||**</div><div class="line"></div><div class="line">`场景：`很多命令我想要一次输入去执行，而不想分次执行。有两个办法，一个是编写`shell script`脚本去执行，另一个是一次性输入多重命令。</div><div class="line"></div><div class="line">`基本语法如下`</div></pre></td></tr></table></figure>
+<p>cmd1 &amp;&amp; cmd2 –&gt; 若cmd1成功，$?(命令回传码)=0，则执行cmd2，反之cmd1失败，$?≠0，则cmd2不执行</p>
+<p>cmd1 || cmd2 –&gt; 若cmd1成功，$?(命令回传码)=0，则不执行cmd2，反之cmd1失败，$?≠0，则cmd2执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">`实战1：&amp;&amp;命令`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/3250026.jpg)</div><div class="line"></div><div class="line">`实战2：||命令,cmd1执行不成功，执行cmd2`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/27649803.jpg)</div><div class="line"></div><div class="line">`实战3：||命令，cmd2执行成功，不执行cmd2`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/78874389.jpg)</div><div class="line"></div><div class="line">**4、选取命令cut、grep**</div><div class="line"></div><div class="line">`cut`命令，可以将一段信息的某一段切出来，处理的信息是以行为单位，基本语法`cut -d &apos;分隔字符&apos; -f &apos;第几段&apos;`</div></pre></td></tr></table></figure></p>
+<p>-d : 后面接分隔字符，与-f一起使用<br>-f : 依据-d的分隔符将一段信息切割成为数段，用-f取出第几段的意思；<br>-c : 以字符的单位取出固定字符区间<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">`实战1：将PATH变量取出，找出第5个路径`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/34433783.jpg)</div><div class="line"></div><div class="line">`实战2，将PATH变量取出，找出第3个和第5个路径`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/77994451.jpg)</div><div class="line"></div><div class="line">`grep命令`是分析一行信息，若当中有需要的信息，将该行拿出来，基本语法`grep [-acinv] [--color=auto] &apos;查找字符串&apos; filename`.</div></pre></td></tr></table></figure></p>
+<p>-a : 将binary文件以text文件的方式查找数据<br>-c : 计算找到’查找字符串’的次数<br>-i : 忽略大小写的不同<br>-v : 反向选择<br>–color=auto : 可以将找到的关键字部分加上颜色；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">`实战1：将last当中出现jianweilin的那一行取出来`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/64550336.jpg)</div><div class="line"></div><div class="line">`实战2：取出jianweilin那一行的第一列`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/56948030.jpg)</div><div class="line"></div><div class="line">`实战3：取出文件中包含console的行，并标红关键字`</div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/65838802.jpg)</div><div class="line"></div><div class="line">**5、排序命令sort、wc、uniq**</div><div class="line"></div><div class="line">`sort`命令可以依据不同的数据类型来排序</div></pre></td></tr></table></figure></p>
+<p>-f : 忽略大小写的差异<br>-b : 忽略最前面的空格符部分<br>-M : 以月份的名字来排序<br>-n : 使用纯数字来进行排序<br>-r : 反向排序<br>-u : uniq，相同的数据中，仅出现一行代表<br>-t : 分隔符<br>-k : 以那个区间来进行排序<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">`实战1：利用last输出的数据，并加以排序`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/47905704.jpg)</div><div class="line"></div><div class="line">`实战2：1.log的内容，每行的数据以:分隔，按第三列来排序`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/77485521.jpg)</div><div class="line"></div><div class="line">`uniq`命令，将重复的数据仅列出一个显示`uniq [-ic]`</div></pre></td></tr></table></figure></p>
+<p>-i : 忽略大小写字符<br>-c : 进行计数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">`实战1：统计每个用户登录的总次数`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/83045345.jpg)</div><div class="line"></div><div class="line">`wc`命令，用于统计文件里有多少字，多少行，多少字符,基本语法`wc [-lwm]`</div></pre></td></tr></table></figure></p>
+<p>-l : 仅列出行<br>-w : 仅列出多少字<br>-m : 多少字符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">`实战1：统计行数、单词数、字符数`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/17425650.jpg)</div><div class="line"></div><div class="line">`6、字符转换命令tr`</div><div class="line"></div><div class="line">`tr`命令可以删除一段信息中的文字，并用其他文字信息进行替换。语法为`tr [-ds] set1  set`</div></pre></td></tr></table></figure></p>
+<p>-d ：删除信息中‘set1’字符串<br>-s : 用‘set’字符串替换‘set1’<br>```</p>
+<p><code>实战1：将小写字符换成大写字符</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/38444009.jpg" alt=""></p>
+<p><code>实战2：PATH路径，删除&#39;:&#39;</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/24188455.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>Linux鸟哥的私房菜</li>
+<li>Linux命令行与shell脚本编程大全</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/15/Linux之常用命令/" itemprop="url">
                   Linux之常用命令
                 </a>
@@ -1720,157 +1863,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/25/Java之不可变对象/" itemprop="url">
-                  Java之不可变对象
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-25T14:45:03+08:00" content="2016-09-25">
-              2016-09-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/25/Java之不可变对象/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/25/Java之不可变对象/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>多线程共享变量的情况下，为了保证数据一致性，往往需要对这些变量的访问进行加锁。而锁本身又会带来一些问题和开销。<code>Immutable Object</code>使得我们可以在不使用锁的情况下，既保证共享变量访问的线程安全，又能避免锁引入带来的问题和开销。</p>
-<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><ol>
-<li><strong>被建模对象的状态变化不频繁</strong></li>
-<li><strong>同时对一组相关的数据进行写操作，需要保证原子性</strong></li>
-<li><strong>使用某个对象作为安全的HashMap的Key</strong>，一个对象作为<code>HashMap</code>的Key被放入<code>HashMap</code>之后，若该对象状态变化导致了其<code>Hash Code</code>的变化，则会导致后面再同样的对象作为<code>Key</code>去<code>get</code>的时候无法获取关联的值，但由于不可变对象的状态不变，因此其<code>Hash Code</code>也不变。</li>
-</ol>
-<h3 id="需要注意的问题"><a href="#需要注意的问题" class="headerlink" title="需要注意的问题"></a>需要注意的问题</h3><ol>
-<li>被建模对象的状态变更频繁，此时不见得不能使用不可变对象，只是状态变更需要频繁创建不可变对象，增加JVM垃圾回收。</li>
-<li>防御性赋值，如果不可变对象本身包含一些状态需要对外暴露，而相应的字段本身又是可变的。那么返回这些字段的方法，还是需要做防御性复制，以避免外部代码修改了其内部的状态。</li>
-</ol>
-<h3 id="如何让类不可变"><a href="#如何让类不可变" class="headerlink" title="如何让类不可变"></a>如何让类不可变</h3><blockquote>
-<p><a href="http://docs.oracle.com/javase/tutorial/essential/concurrency/imstrat.html" target="_blank" rel="external">JAVA文档，有关如何定义不可变类指南</a></p>
-</blockquote>
-<ol>
-<li>不提供<code>setter</code>方法，setter方法用于修改属性和对象引用。这个原则阐述了在类定义的所有可变属性中，不提供setter方法，setter方法意味着你能够改变这个属性的状态，必须阻止提供setter方法。</li>
-<li>所有的属性修饰添加<code>private</code>和<code>final</code>。这是另一种增加不可变的方式，属性声明为<code>private</code>为了在类之外不能够被访问到，final修饰符为了让你不能随便的改变他们。</li>
-<li>不允许子类重写方法。最简单的方式声明类为final，final类不允许重写。</li>
-<li>当属性中存在可变对象变量时，要特别留意。对象分为不可变和可变，当对象可变时，对可变对象的内容进行复制，并创建一个新对象赋值给它，这样保证可变对象的不可变。</li>
-<li>定义一个private的构造方法，通过工厂方法构造对象。</li>
-</ol>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>创建不可变类：ImmutableClass.class</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line">package immutable;</div><div class="line"></div><div class="line">import java.util.Date;</div><div class="line"></div><div class="line">/**</div><div class="line">* Always remember that your instance variables will be either mutable or immutable.</div><div class="line">* Identify them and return new objects with copied content for all mutable objects.</div><div class="line">* Immutable variables can be returned safely without extra effort.</div><div class="line">* */</div><div class="line">public final class ImmutableClass</div><div class="line">&#123;</div><div class="line"></div><div class="line">    /**</div><div class="line">    * Integer class is immutable as it does not provide any setter to change its content</div><div class="line">    * */</div><div class="line">    private final Integer immutableField1;</div><div class="line">    /**</div><div class="line">    * String class is immutable as it also does not provide setter to change its content</div><div class="line">    * */</div><div class="line">    private final String immutableField2;</div><div class="line">    /**</div><div class="line">    * Date class is mutable as it provide setters to change various date/time parts</div><div class="line">    * */</div><div class="line">    private final Date mutableField;</div><div class="line"></div><div class="line">    //Default private constructor will ensure no unplanned construction of class</div><div class="line">    private ImmutableClass(Integer fld1, String fld2, Date date)</div><div class="line">    &#123;</div><div class="line">        this.immutableField1 = fld1;</div><div class="line">        this.immutableField2 = fld2;</div><div class="line">        this.mutableField = new Date(date.getTime());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //Factory method to store object creation logic in single place</div><div class="line">    public static ImmutableClass createNewInstance(Integer fld1, String fld2, Date date)</div><div class="line">    &#123;</div><div class="line">        return new ImmutableClass(fld1, fld2, date);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //Provide no setter methods</div><div class="line"></div><div class="line">    /**</div><div class="line">    * Integer class is immutable so we can return the instance variable as it is</div><div class="line">    * */</div><div class="line">    public Integer getImmutableField1() &#123;</div><div class="line">        return immutableField1;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">    * String class is also immutable so we can return the instance variable as it is</div><div class="line">    * */</div><div class="line">    public String getImmutableField2() &#123;</div><div class="line">        return immutableField2;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">    * Date class is mutable so we need a little care here.</div><div class="line">    * We should not return the reference of original instance variable.</div><div class="line">    * Instead a new Date object, with content copied to it, should be returned.</div><div class="line">    * */</div><div class="line">    public Date getMutableField() &#123;</div><div class="line">        return new Date(mutableField.getTime());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return immutableField1 +&quot; - &quot;+ immutableField2 +&quot; - &quot;+ mutableField;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>验证以上为不可变类：MainTest.class</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">import java.util.Date;</div><div class="line"></div><div class="line">public class MainTest &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ImmutableClass im = ImmutableClass.createNewInstance(100, &quot;test&quot;, new Date());</div><div class="line">        System.out.println(im);</div><div class="line">        tryModification(im.getImmutableField1(), im.getImmutableField2(), im.getMutableField());</div><div class="line">        System.out.println(im);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static void tryModification(Integer immutableField1, String immutableField2, Date mutableField) &#123;</div><div class="line">        immutableField1 = 10000;</div><div class="line">        immutableField2 = &quot;test changed&quot;;</div><div class="line">        mutableField.setDate(10);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>执行结果</strong></p>
-<p>不可变对象包含(Integer、String、Date，其中Date为一个可变对象)，创建不可变对象后，更改入参的Date，并不会对不可变对象产生影响。故验证其为不可变对象类。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-09-25%20%E4%B8%8B%E5%8D%883.14.00.png" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="http://howtodoinjava.com/core-java/related-concepts/how-to-make-a-java-class-immutable/" target="_blank" rel="external">how-to-make-a-java-class-immutable</a></li>
-<li><a href="http://docs.oracle.com/javase/tutorial/essential/concurrency/imstrat.html" target="_blank" rel="external">Java官方文档-不可变类</a> </li>
-<li>Java多线程编程实战指南(设计模式篇) - 黄文海 </li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1916,7 +1908,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">133</span>
+              <span class="site-state-item-count">134</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

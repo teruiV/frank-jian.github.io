@@ -292,6 +292,145 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/18/Redis过期键删除策略/" itemprop="url">
+                  Redis过期键删除策略
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-18T09:34:16+08:00" content="2016-04-18">
+              2016-04-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/18/Redis过期键删除策略/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/18/Redis过期键删除策略/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Redis过期键删除有三种策略：</p>
+<ol>
+<li>定时删除：在设置键的过期时间的同时，创建一个定时器，让定时器在键的过期时间来临时，立即执行对键的删除操作。（主动删除）</li>
+<li>惰性删除：放任键过期不管，但是每次从键空间中获取键时，都检查取得的键是否过期，如果过期的话，就删除该键；如果没有，就返回该键。（被动删除）</li>
+<li>定期删除：每隔一段时间，程序就对数据库进行一次检查，删除里面的过期键。至于要删除多少过期键，以及要检查多少个数据库，则有算法决定。（主动删除）</li>
+</ol>
+<h2 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a>定时删除</h2><p>定时删除策略对内存是最友好的，通过定时器，定时删除策略可以保证过期键会尽可能地被删除，并释放过期键所占用的内存。另外一方面，定时删除策略的缺点是，它对CPU时间是最不友好的，在过期键比较多的情况下，删除过期键这一行为可能会占用相当一部分CPU时间，在内存不紧张但是CPU时间非常紧张的情况下，将CPU时间用在删除和当前任务无关的过期键上，对服务器的响应时间和吞吐量造成影响。</p>
+<h2 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a>惰性删除</h2><p>惰性删除策略对CPU是最友好的：程序只会在取出键时才对键进行过期检查，这可以保证删除过期键的操作只会在非做不可的情况下进行，并且删除的目标仅限于当前处理的键，这个策略并不会在删除其他无关的过期键上花费任何CPU时间。<br>惰性删除策略的缺点是，它对内存是最不友好的，过期键保留在数据库中，那么只要它没有被访问到的话，那么他们永远不会被删除（除非用户手动执行FLUSHDB），我们可以将这种情况看做是内存泄漏 —-无用的垃圾数据占用了大量的内存，而服务器却不释放它们</p>
+<h2 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a>定期删除</h2><p>定期删除策略每个一段时间执行一次删除过期操作，并通过限制删除操作执行的时长和频率来减少删除操作对CPU时间的影响;期删除过期键，还能减少过期键带来的内存浪费</p>
+<p>定期删除的难点：</p>
+<ol>
+<li>如果删除太频繁，或者执行时间过程，定期删除就会退化到定时删除；</li>
+<li>如果删除操作执行太少，或者执行时间太短，定期删除就会和惰性删除策略一样，出现浪费内存的情况。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>定时删除，耗CPU但对内存友好，高并发时，影响服务器的响应时间和吞吐量。</li>
+<li>惰性删除，耗内存，对CPU友好；</li>
+<li>定期删除，是定时删除和惰性删除的折中。</li>
+</ul>
+<p>参考资料：<br>Redis设计与实现  –黄健宏</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/15/Redis对象类型介绍/" itemprop="url">
                   Redis对象类型介绍
                 </a>
@@ -727,7 +866,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">133</span>
+              <span class="site-state-item-count">134</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
