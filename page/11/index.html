@@ -292,6 +292,145 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/04/PHP读写文件/" itemprop="url">
+                  PHP读写文件
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-04T09:59:20+08:00" content="2016-05-04">
+              2016-05-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/04/PHP读写文件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/04/PHP读写文件/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="写文件步骤"><a href="#写文件步骤" class="headerlink" title="写文件步骤"></a>写文件步骤</h5><ol>
+<li>打开文件，如果文件不存在，需要先创建它；</li>
+<li>将数据写入这个文件；</li>
+<li>关闭这个文件；</li>
+</ol>
+<h5 id="读文件步骤"><a href="#读文件步骤" class="headerlink" title="读文件步骤"></a>读文件步骤</h5><ol>
+<li>打开这个文件，如果文件不能打开，说明文件不存在就正确地退出;</li>
+<li>从文件中读出数据</li>
+<li>关闭文件;</li>
+</ol>
+<h5 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># $_SERVER[&apos;DOCUMENT_ROOT&apos;] 表示当前文件的路径；</div><div class="line">$fp = fopen( &quot;$_SERVER[&apos;DOCUMENT_ROOT&apos;]/../orders/orders.txt &quot;, &apos;w&apos; ); </div><div class="line"></div><div class="line">//如果文件不能正确地打开则退出；</div><div class="line">if($fp) &#123;</div><div class="line">	echo &quot;&lt;p&gt;Your Order could not be processed at this time.Please try again later.&lt;/p&gt; &quot;;</div><div class="line">    exit;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$fp = fopen( &quot;$_SERVER[&apos;DOCUMENT_ROOT&apos;]/../orders/orders.txt &quot;, &apos;w&apos; ); </div><div class="line">$outputstring = &quot;msg&quot;;</div><div class="line"></div><div class="line"># 使用二进制模式执行写操作，第三个参数可以避免一些跨平台的兼容问题；</div><div class="line">fwrite($fp,$outputstring,strlen($outputstring)); //写到字符串末尾或已经输入length字节就停止写入。</div></pre></td></tr></table></figure>
+<h5 id="关闭文件"><a href="#关闭文件" class="headerlink" title="关闭文件"></a>关闭文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$fp = fopen( &quot;$_SERVER[&apos;DOCUMENT_ROOT&apos;]/../orders/orders.txt &quot;, &apos;w&apos; );</div><div class="line">fclose($fp);  //正确关闭文件返回true，否则返回false;</div></pre></td></tr></table></figure>
+<h5 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$fp = fopen( &quot;$_SERVER[&apos;DOCUMENT_ROOT&apos;]/../orders/orders.txt &quot;, &apos;rb&apos; );</div><div class="line">#判断文件何时读完</div><div class="line">while(!feof($fp))&#123;</div><div class="line">	$order = fgets($fp,999); //从文件中每次读取一行的内容；</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="单行读取方式"><a href="#单行读取方式" class="headerlink" title="单行读取方式"></a>单行读取方式</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$fp = fopen( &quot;$_SERVER[&apos;DOCUMENT_ROOT&apos;]/../orders/orders.txt &quot;, &apos;rb&apos; );</div><div class="line"></div><div class="line">1、fgets($fp,999); //从文件中每次读取一行内容；</div><div class="line"></div><div class="line">2、fgetss($fp,999,tags); //每次读取一行内容，并且过滤字符串中包含的PHP或HTML特殊标记; tags为字符串数组表示，需要过滤的一些标记,如，html、body</div><div class="line"></div><div class="line">3、$order = fgetcsv($fp,100,&quot;\t&quot;)；//从文件从读取一行，并且在有制表符（\t）的地方将文件内容分行。</div><div class="line"></div><div class="line">4、fread($fp,length),从文件中读取length字节内容；</div></pre></td></tr></table></figure>
+<h5 id="读取整个文件-（经过测试，发现读取整个文件的方法均不能实现，为何？）"><a href="#读取整个文件-（经过测试，发现读取整个文件的方法均不能实现，为何？）" class="headerlink" title="读取整个文件 （经过测试，发现读取整个文件的方法均不能实现，为何？）"></a>读取整个文件 （经过测试，发现读取整个文件的方法均不能实现，为何？）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$filename =$_SERVER[&apos;DOCUMENT_ROOT&apos;]/orders/order.txt;</div><div class="line">1、readfile（$filename）; //读取整个文件：</div><div class="line">2、file($filename);//读取整个文件，将结果发送到一个数组，每一行为一个元素；</div></pre></td></tr></table></figure>
+<h5 id="文件的定位"><a href="#文件的定位" class="headerlink" title="文件的定位"></a>文件的定位</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$fp = fopen( &quot;$_SERVER[&apos;DOCUMENT_ROOT&apos;]/../orders/orders.txt &quot;, &apos;rb&apos; );</div><div class="line">1、rewind($fp); //将文件制定复位到文件的开始；</div><div class="line">2、ftell($fp); //报告文件指针在当前文件中的位置；</div><div class="line">3、fseek($fp,offset,current),//文件指针从current位置，移动offset个字节；</div></pre></td></tr></table></figure>
+<h5 id="文件锁"><a href="#文件锁" class="headerlink" title="文件锁"></a>文件锁</h5><p><strong>使用文件锁的目的？</strong><br>假设两个用户试图同时订购同一件商品，那么生成的订单是第一个用户的还是第二个用户的；为了避免这样的情况，可以使用文件锁；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$fp = fopen( &quot;$_SERVER[&apos;DOCUMENT_ROOT&apos;]/../orders/orders.txt &quot;, &apos;ab&apos; );</div><div class="line">flock($fp,LOCK_EX)；//锁定文件的写操作；</div><div class="line">$outputstring = &quot;msg&quot;;</div><div class="line">fwrite($fp,$outputstring);</div><div class="line">flock($fp,LOCK_UN);//释放锁；</div><div class="line">fclose($fp);</div></pre></td></tr></table></figure></p>
+<h5 id="flock操作值"><a href="#flock操作值" class="headerlink" title="flock操作值"></a>flock操作值</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">LOCK_SH 读操作锁定，文件可以共享，其他人可以读该文件；</div><div class="line">LOCK_EX 写操作，互斥，文件不能被共享</div><div class="line">LOCK_UN 释放已有的锁定</div><div class="line">LOCK_NB 防止在请求加锁时发生阻塞</div></pre></td></tr></table></figure>
+<h5 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$DOCUMENT_ROOT=$_SERVER[&apos;DOCUMENT_ROOT&apos;];</div><div class="line">$fp = fopen(&quot;$DOCUMENT_ROOT/../orders/orders.txt&quot;,&apos;ab&apos;);</div><div class="line">flock($fp,LOCK_EX);</div><div class="line">fwrite($fp,&quot;write the file twice&quot;);</div><div class="line">flock($fp,LOCK_UN);</div><div class="line">$fp = fopen(&quot;$DOCUMENT_ROOT/../orders/orders.txt&quot;,&apos;rb&apos;);</div><div class="line">while(!feof($fp))&#123;</div><div class="line">   $content = fgets($fp,999);</div><div class="line">   echo &quot;content = &quot;.$content;</div><div class="line">&#125;</div><div class="line">fclose($fp);</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/04/PHP编码准则/" itemprop="url">
                   PHP编码准则
                 </a>
@@ -1442,131 +1581,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/29/SQL数据类型/" itemprop="url">
-                  SQL数据类型
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-29T19:37:57+08:00" content="2016-04-29">
-              2016-04-29
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/SQL/" itemprop="url" rel="index">
-                    <span itemprop="name">SQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/29/SQL数据类型/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/29/SQL数据类型/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h5 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">CHAR		1~255个字符的定长字符串，它的长度必须在创建时规定</div><div class="line">NCHAR		CHAR的特殊形式，用来支持多字节或Unicode字符</div><div class="line">NVARCHAR	TEXT的特殊形式，用来支持多字节或Unicode字符</div><div class="line">TEXT(也称 VARCHAR) 边长文本</div></pre></td></tr></table></figure>
-<h5 id="变长字符串和定长字符串的区别？"><a href="#变长字符串和定长字符串的区别？" class="headerlink" title="变长字符串和定长字符串的区别？"></a>变长字符串和定长字符串的区别？</h5><p>边长字符串存储任意长度的文本，其最大长度随不同的数据类型和DBSM而变化<br>定长字符串接收长度固定的字符串，其长度是在创建表时指定的</p>
-<h5 id="为何不全用变长字符串？"><a href="#为何不全用变长字符串？" class="headerlink" title="为何不全用变长字符串？"></a>为何不全用变长字符串？</h5><p>DBSM处理定长字符串的速度比处理变长的快，所以许多DBSM不允许对变长列进行索引。</p>
-<h5 id="数值数据类型"><a href="#数值数据类型" class="headerlink" title="数值数据类型"></a>数值数据类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">BIT		 单个二进制位值，或者为0或者为1</div><div class="line">DECIMAL	 定点或精读可变的浮点值</div><div class="line">FLOAT    浮点值</div><div class="line">INT	     4字节整数值	支持-2147483648~2147483647的值</div><div class="line">REAL     4字节浮点值</div><div class="line">SMALLINT 2字节整数值，支持-32768~32767的值</div><div class="line">TINYINT  1字节整数值，支持0~255的值</div></pre></td></tr></table></figure>
-<h5 id="日期和时间数据类型"><a href="#日期和时间数据类型" class="headerlink" title="日期和时间数据类型"></a>日期和时间数据类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">DATE	      日期值</div><div class="line">DATETIME      日期时间值</div><div class="line">SMALLDATETIME 日期时间，精确到分</div><div class="line">TIME	      时间值</div></pre></td></tr></table></figure>
-<h5 id="二进制数据类型"><a href="#二进制数据类型" class="headerlink" title="二进制数据类型"></a>二进制数据类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">BINARY 		定长二进制数据，最大长度255B到8000B</div><div class="line">LONG RAW	变长二进制数据,最长2GB</div><div class="line">RAW			定长二进制数据，最多255B</div><div class="line">VARBINARY   变长二进制数据，最大长度255B到8000B</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1612,7 +1626,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">134</span>
+              <span class="site-state-item-count">135</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

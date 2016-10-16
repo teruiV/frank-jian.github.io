@@ -292,6 +292,261 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/16/JAVA之异常/" itemprop="url">
+                  JAVA之异常
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-16T22:26:26+08:00" content="2016-08-16">
+              2016-08-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/16/JAVA之异常/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/16/JAVA之异常/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="异常机制设计初衷"><a href="#异常机制设计初衷" class="headerlink" title="异常机制设计初衷"></a>异常机制设计初衷</h3><p>顾名思义，异常应该只用于异常的情况，永远不应该用于正常的流程控制。</p>
+<h3 id="异常类层次结构"><a href="#异常类层次结构" class="headerlink" title="异常类层次结构"></a>异常类层次结构</h3><p><img src="../images/JAVA异常.jpg" alt=""><br>  在 Java 中，所有的异常都有一个共同的祖先 <code>Throwable</code>。<code>Throwable</code> 指定代码中可用异常传播机制通过 Java 应用程序传输的任何问题的共性。</p>
+<p><strong>Throwable</strong><br>有两个重要的子类：<code>Exception</code> 和 <code>Error</code>，二者都是 Java 异常处理的重要子类，各自都包含大量子类。</p>
+<p><strong>Error</strong><br><code>Error</code>是程序无法处理的错误，表示运行应用程序中较严重问题。大多数错误与代码编写者执行的操作无关，而表示代码运行时 JVM（Java 虚拟机）出现的问题。例如，Java虚拟机运行错误<code>Virtual MachineError</code>，当 JVM 不再有继续执行操作所需的内存资源时，将出现<code>OutOfMemoryError</code>。这些异常发生时，JVM一般会选择线程终止。这些错误表示故障发生于虚拟机自身、或者发生在虚拟机试图执行应用时，如JVM运行错误<code>Virtual MachineError</code>、类定义错误<code>NoClassDefFoundError</code>等。这些错误是不可查的，因为它们在应用程序的控制和处理能力之 外，而且绝大多数是程序运行时不允许出现的状况。对于设计合理的应用程序来说，即使确实发生了错误，本质上也不应该试图去处理它所引起的异常状况。在 Java中，错误通过Error的子类描述。</p>
+<p><strong>Exception</strong><br><code>Exception</code>是程序本身可以处理的异常，其有一个重要的子类 <code>RuntimeException</code>。<code>RuntimeException</code> 类及其子类表示“JVM 常用操作”引发的错误。例如，若试图使用空值对象引用、除数为零或数组越界，则分别引发运行时异常（<code>NullPointerException</code>、<code>ArithmeticException</code>）和 <code>ArrayIndexOutOfBoundException</code>。</p>
+<p><strong>Exception和Error的区别</strong><br><code>Exception</code>能被程序本身可以处理，<code>Error</code>是无法处理。</p>
+<h3 id="JAVA异常类型"><a href="#JAVA异常类型" class="headerlink" title="JAVA异常类型"></a>JAVA异常类型</h3><p>Java的异常分为可查的异常(编译器要求必须处置的异常)和不可查的异常((编译器不要求强制处置的异常)。</p>
+<p><strong>可查的异常</strong><br> 除了<code>RuntimeException</code>及其子类以外，其他的<code>Exception</code>类及其子类都属于可查异常。正确的程序在运行中，很容易出现的、情理可容的异常状况。可查异常虽然是异常状况，但在一定程度上它的发生是可以预计的，而且一旦发生这种异常状况，就必须采取某种方式进行处理。这种异常的特点是Java编译器会检查它，也就是说，当程序中可能出现这类异常，要么用<code>try-catch</code>语句捕获它，要么用<code>throws</code>子句声明抛出它，否则编译不会通过。</p>
+<p><strong>不可查异常</strong><br><code>RuntimeException</code>与其子类和<code>Error</code>都属于不可查异常。运行时异常，如<code>NullPointerException</code>(空指针异常)、<code>IndexOutOfBoundsException</code>(下标越界异常)等，这些异常是不检查异常，程序中可以选择捕获处理，也可以不处理。这些异常一般是由程序逻辑错误引起的，程序应该从逻辑角度尽可能避免这类异常的发生。运行时异常的特点是Java编译器不会检查它，也就是说，当程序中可能出现这类异常，即使没有用<code>try-catch</code>语句捕获它，也没有用<code>throws</code>子句声明抛出它，也会编译通过</p>
+<h3 id="处理异常机制"><a href="#处理异常机制" class="headerlink" title="处理异常机制"></a>处理异常机制</h3><p>异常处理机制为抛出异常、捕捉异常</p>
+<p><strong>抛出异常</strong><br>当一个方法出现错误引发异常时，方法创建异常对象并交付运行时系统，异常对象中包含了异常类型和异常出现时的程序状态等异常信息。运行时系统负责寻找处置异常的代码并执行</p>
+<p><strong>捕获异常</strong><br>在方法抛出异常之后，运行时系统将转为寻找合适的异常处理器（exception handler）。潜在的异常处理器是异常发生时依次存留在调用栈中的方法的集合。当异常处理器所能处理的异常类型与方法抛出的异常类型相符时，即为合适 的异常处理器。运行时系统从发生异常的方法开始，依次回查调用栈中的方法，直至找到含有合适异常处理器的方法并执行。当运行时系统遍历调用栈而未找到合适 的异常处理器，则运行时系统终止。同时，意味着Java程序的终止。</p>
+<h3 id="JAVA常见异常"><a href="#JAVA常见异常" class="headerlink" title="JAVA常见异常"></a>JAVA常见异常</h3><p><strong> RuntimeException子类</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类名</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>java.lang.ArrayIndexOutOfBoundsException</code></td>
+<td style="text-align:left">数组索引越界异常。当对数组的索引值为负数或大于等于数组大小时抛出</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>java.lang.ArithmeticException</code></td>
+<td style="text-align:left">算术条件异常。譬如：整数除零等</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>java.lang.NullPointerException</code></td>
+<td style="text-align:left">空指针异常。当应用试图在要求使用对象的地方使用了null时，抛出该异常。譬如：调用null对象的实例方法、访问null对象的属性、计算null对象的长度、使用throw语句抛出null等等</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>java.lang.ClassNotFoundException</code></td>
+<td style="text-align:left">找不到类异常。当应用试图根据字符串形式的类名构造类，而在遍历CLASSPAH之后找不到对应名称的class文件时，抛出该异常</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>java.lang.NegativeArraySizeException</code></td>
+<td style="text-align:left">数组长度为负异常</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>java.lang.ArrayStoreException</code></td>
+<td style="text-align:left">数组中包含不兼容的值抛出的异常</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>java.lang.SecurityException</code></td>
+<td style="text-align:left">安全性异常</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>java.lang.IllegalArgumentException</code></td>
+<td style="text-align:left">非法参数异常</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IOException</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类名</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>IOException</code></td>
+<td style="text-align:left">操作输入流和输出流时可能出现的异常</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>EOFException</code></td>
+<td style="text-align:left">文件已结束异常</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>FileNotFoundException</code></td>
+<td style="text-align:left">文件未找到异常</td>
+</tr>
+</tbody>
+</table>
+<p><strong>其他</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类名</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>ClassCastException</code></td>
+<td style="text-align:left">类型转换异常类</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>ArrayStoreException</code></td>
+<td style="text-align:left">数组中包含不兼容的值抛出的异常</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>SQLException</code></td>
+<td style="text-align:left">操作数据库异常类</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>NoSuchFieldException</code></td>
+<td style="text-align:left">字段未找到异常</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>NoSuchMethodException</code></td>
+<td style="text-align:left">方法未找到抛出的异常</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>NumberFormatException</code></td>
+<td style="text-align:left">字符串转换为数字抛出的异常</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>StringIndexOutOfBoundsException</code></td>
+<td style="text-align:left">字符串索引超出范围抛出的异常</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>IllegalAccessException</code></td>
+<td style="text-align:left">不允许访问某类异常</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>InstantiationException</code></td>
+<td style="text-align:left">当应用程序试图使用Class类中的newInstance()方法创建一个类的实例，而指定的类对象无法被实例化时，抛出该异常</td>
+</tr>
+</tbody>
+</table>
+<h3 id="自定义异常类"><a href="#自定义异常类" class="headerlink" title="自定义异常类"></a>自定义异常类</h3><p>用户自定义异常类，只需继承Exception类即可</p>
+<p><strong>使用自定义异常类步骤</strong></p>
+<ol>
+<li>创建自定义异常类。</li>
+<li>在方法中通过<code>throw</code>关键字抛出异常对象。</li>
+<li>如果在当前抛出异常的方法中处理异常，可以使用<code>try-catch</code>语句捕获并处理；否则在方法的声明处通过<code>throws</code>关键字指明要抛出给方法调用者的异常，继续进行下一步操作。</li>
+<li>在出现异常方法的调用者中捕获并处理异常。</li>
+</ol>
+<h3 id="JAVA实战-未完待续…"><a href="#JAVA实战-未完待续…" class="headerlink" title="JAVA实战 未完待续….."></a>JAVA实战 未完待续…..</h3><h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>Effective Java 第2版</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/14/JAVA线程池/" itemprop="url">
                   JAVA线程池
                 </a>
@@ -1665,389 +1920,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/11/锋利的JQuery-DOM操作/" itemprop="url">
-                  锋利的JQuery -- DOM操作
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-11T23:56:08+08:00" content="2016-08-11">
-              2016-08-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/11/锋利的JQuery-DOM操作/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/11/锋利的JQuery-DOM操作/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="查找节点"><a href="#查找节点" class="headerlink" title="查找节点"></a>查找节点</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">var $li = $(“ul  li:eq(1)”)</td>
-<td style="text-align:left">查找元素节点</td>
-</tr>
-<tr>
-<td style="text-align:left">var p_text = $(“p”).attr(“title”)</td>
-<td style="text-align:left">查找属性节点</td>
-</tr>
-</tbody>
-</table>
-<h3 id="插入节点"><a href="#插入节点" class="headerlink" title="插入节点"></a>插入节点</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">B.append(A)</td>
-<td style="text-align:left">向B内部追加A</td>
-</tr>
-<tr>
-<td style="text-align:left">A.append(B)</td>
-<td style="text-align:left">把A追加到B内部</td>
-</tr>
-<tr>
-<td style="text-align:left">B.prepend(A)</td>
-<td style="text-align:left">把B内部最前面添加A</td>
-</tr>
-<tr>
-<td style="text-align:left">B.after(A)</td>
-<td style="text-align:left">在B后面添加A</td>
-</tr>
-<tr>
-<td style="text-align:left">A.insertAfter(B)</td>
-<td style="text-align:left">把A插入B的后面</td>
-</tr>
-<tr>
-<td style="text-align:left">B.before(A)</td>
-<td style="text-align:left">在B的前面插入A</td>
-</tr>
-<tr>
-<td style="text-align:left">A.insertBefore(B)</td>
-<td style="text-align:left">在B的前面添加A</td>
-</tr>
-</tbody>
-</table>
-<h3 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">remove()</td>
-<td style="text-align:left">返回的是删除的元素</td>
-</tr>
-<tr>
-<td style="text-align:left">detach()</td>
-<td style="text-align:left">与remove类似，但元素的事件和数据都保留</td>
-</tr>
-<tr>
-<td style="text-align:left">empty</td>
-<td style="text-align:left">清空节点，清空内部的对象</td>
-</tr>
-</tbody>
-</table>
-<h3 id="复制节点"><a href="#复制节点" class="headerlink" title="复制节点"></a>复制节点</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">clone()</td>
-<td style="text-align:left">复制当前的节点</td>
-</tr>
-<tr>
-<td style="text-align:left">clone(true)</td>
-<td style="text-align:left">复制当前的节点以及绑定的事件</td>
-</tr>
-</tbody>
-</table>
-<h3 id="替换节点"><a href="#替换节点" class="headerlink" title="替换节点"></a>替换节点</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">replaceWith()</td>
-<td style="text-align:left">替换标签</td>
-</tr>
-</tbody>
-</table>
-<h3 id="属性操作"><a href="#属性操作" class="headerlink" title="属性操作"></a>属性操作</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">attr(“title”,”xxxx”)</td>
-<td style="text-align:left">设置参数值</td>
-</tr>
-<tr>
-<td style="text-align:left">attr(“title”)</td>
-<td style="text-align:left">获取属性值</td>
-</tr>
-<tr>
-<td style="text-align:left">removeAttr(“title”)</td>
-<td style="text-align:left">删除属性值</td>
-</tr>
-</tbody>
-</table>
-<h3 id="样式操作"><a href="#样式操作" class="headerlink" title="样式操作"></a>样式操作</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">attr(“class”,”xxx”)</td>
-<td style="text-align:left">设置样式</td>
-</tr>
-<tr>
-<td style="text-align:left">addClass(“xxx”)</td>
-<td style="text-align:left">追加样式</td>
-</tr>
-<tr>
-<td style="text-align:left">removeClass(“xxx”)</td>
-<td style="text-align:left">移除样式</td>
-</tr>
-<tr>
-<td style="text-align:left">removeClass()</td>
-<td style="text-align:left">移除所有样式</td>
-</tr>
-<tr>
-<td style="text-align:left">toggleClass(“xxx”)</td>
-<td style="text-align:left">切换样式</td>
-</tr>
-<tr>
-<td style="text-align:left">hasClass(“xxx”)</td>
-<td style="text-align:left">判断是否有样式</td>
-</tr>
-</tbody>
-</table>
-<h3 id="设置、获取HTML、文本和值"><a href="#设置、获取HTML、文本和值" class="headerlink" title="设置、获取HTML、文本和值"></a>设置、获取HTML、文本和值</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">html()</td>
-<td style="text-align:left">设置或者获取HTML</td>
-</tr>
-<tr>
-<td style="text-align:left">text()</td>
-<td style="text-align:left">设置或者获取文本</td>
-</tr>
-<tr>
-<td style="text-align:left">val()</td>
-<td style="text-align:left">设置获取值</td>
-</tr>
-</tbody>
-</table>
-<h3 id="遍历节点"><a href="#遍历节点" class="headerlink" title="遍历节点"></a>遍历节点</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">children()</td>
-<td style="text-align:left">取得匹配元素的子元素集合</td>
-</tr>
-<tr>
-<td style="text-align:left">next()</td>
-<td style="text-align:left">取得匹配元素的下一个同辈元素</td>
-</tr>
-<tr>
-<td style="text-align:left">prev()</td>
-<td style="text-align:left">取得匹配元素的前一个同辈元素</td>
-</tr>
-<tr>
-<td style="text-align:left">siblings()</td>
-<td style="text-align:left">取得匹配元素的所有同辈元素</td>
-</tr>
-<tr>
-<td style="text-align:left">parent()</td>
-<td style="text-align:left">获得集合中每个元素的祖先元素</td>
-</tr>
-<tr>
-<td style="text-align:left">parents()</td>
-<td style="text-align:left">获得每个元素的祖先元素</td>
-</tr>
-<tr>
-<td style="text-align:left">closest()</td>
-<td style="text-align:left">从本身开始，返回最先匹配的祖先元素</td>
-</tr>
-</tbody>
-</table>
-<h3 id="CSS-DOM操作"><a href="#CSS-DOM操作" class="headerlink" title="CSS-DOM操作"></a>CSS-DOM操作</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">css(“color”)</td>
-<td style="text-align:left">获得指定的样式值</td>
-</tr>
-<tr>
-<td style="text-align:left">css(“color”,”red”)</td>
-<td style="text-align:left">设置指定样式</td>
-</tr>
-<tr>
-<td style="text-align:left">width() height()</td>
-<td style="text-align:left">设置获取宽度和高度</td>
-</tr>
-<tr>
-<td style="text-align:left">offset()</td>
-<td style="text-align:left">视窗的偏移值</td>
-</tr>
-<tr>
-<td style="text-align:left">position()</td>
-<td style="text-align:left">获取定对于最近的position样式元素的位置</td>
-</tr>
-<tr>
-<td style="text-align:left">scrollTop</td>
-<td style="text-align:left">滚动条顶端距离</td>
-</tr>
-<tr>
-<td style="text-align:left">scrollLeft()</td>
-<td style="text-align:left">滚动条左端距离</td>
-</tr>
-</tbody>
-</table>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2093,7 +1965,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">134</span>
+              <span class="site-state-item-count">135</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
