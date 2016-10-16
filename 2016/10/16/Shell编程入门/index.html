@@ -89,7 +89,7 @@
 理论1、环境变量
 实战1：查看环境变量env
 
-1234HOME : 代表用户主文件夹SHELL : 目前这个魂晶使用的SHELL是哪个程序PATH : 执行文件查找路径，目录与目录中间以冒号`:`分隔LANG : 语系数据，很多信息都会用到它。
+1234HOME : 代表用户主文件夹SHELL : 目前这个环境使用的SHELL是哪个程序PATH : 执行文件查找路径，目录与目录中间以冒号`:`分隔LANG : 语系数据，很多信息都会用到它。
 2、文件系统及程序的限制关系：ulimit
 场景：Linux">
 <meta property="og:type" content="article">
@@ -100,20 +100,34 @@
 理论1、环境变量
 实战1：查看环境变量env
 
-1234HOME : 代表用户主文件夹SHELL : 目前这个魂晶使用的SHELL是哪个程序PATH : 执行文件查找路径，目录与目录中间以冒号`:`分隔LANG : 语系数据，很多信息都会用到它。
+1234HOME : 代表用户主文件夹SHELL : 目前这个环境使用的SHELL是哪个程序PATH : 执行文件查找路径，目录与目录中间以冒号`:`分隔LANG : 语系数据，很多信息都会用到它。
 2、文件系统及程序的限制关系：ulimit
 场景：Linux">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/33734703.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/71746717.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/80080741.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/3250026.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/27649803.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/78874389.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/34433783.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/77994451.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/64550336.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/56948030.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/65838802.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/47905704.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/77485521.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/83045345.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/17425650.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/38444009.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/24188455.jpg">
-<meta property="og:updated_time" content="2016-10-16T07:09:51.000Z">
+<meta property="og:updated_time" content="2016-10-16T07:14:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shell编程入门">
 <meta name="twitter:description" content="前言Shell是基于命令行的解释器，它连接用户和操作系统，允许通过编写脚本来执行系统命令。
 理论1、环境变量
 实战1：查看环境变量env
 
-1234HOME : 代表用户主文件夹SHELL : 目前这个魂晶使用的SHELL是哪个程序PATH : 执行文件查找路径，目录与目录中间以冒号`:`分隔LANG : 语系数据，很多信息都会用到它。
+1234HOME : 代表用户主文件夹SHELL : 目前这个环境使用的SHELL是哪个程序PATH : 执行文件查找路径，目录与目录中间以冒号`:`分隔LANG : 语系数据，很多信息都会用到它。
 2、文件系统及程序的限制关系：ulimit
 场景：Linux">
 <meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/33734703.jpg">
@@ -382,18 +396,56 @@
 <h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><p><strong>1、环境变量</strong></p>
 <p><code>实战1：查看环境变量env</code></p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/33734703.jpg" alt=""></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">HOME : 代表用户主文件夹</div><div class="line">SHELL : 目前这个魂晶使用的SHELL是哪个程序</div><div class="line">PATH : 执行文件查找路径，目录与目录中间以冒号`:`分隔</div><div class="line">LANG : 语系数据，很多信息都会用到它。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">HOME : 代表用户主文件夹</div><div class="line">SHELL : 目前这个环境使用的SHELL是哪个程序</div><div class="line">PATH : 执行文件查找路径，目录与目录中间以冒号`:`分隔</div><div class="line">LANG : 语系数据，很多信息都会用到它。</div></pre></td></tr></table></figure>
 <p><strong>2、文件系统及程序的限制关系：ulimit</strong></p>
 <p><code>场景：</code>Linux主机里同时登陆10个人，每个人同时打开100个文件，每个文件10MB，那么Linux主机内存需要<code>10 * 100 * 10 = 10000MB = 10G</code>,这样系统不挂掉才怪，为了预防这种情况<code>bash</code>可以限制用户的某些系统资源，具体配置用<code>ulimit</code>命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">-H : 严格设置，必定不能超过这个设置的数值</div><div class="line">-S : 警告设置，可以超过这个数值，但若超过则有警告信息</div><div class="line">-a : 后面不接任何参数，可列出所有限制额度</div><div class="line">-c : 当某些进程发成错误时，系统可能会将进程在内存中的信息写成文件，这种文件成为内核文件。</div><div class="line">-f : 此SHELL可以创建的最大文件容量(一般设为2GB)单位KB</div><div class="line">-d : 进程可使用的最大断裂内存容量</div><div class="line">-l : 可用于锁定内存量</div><div class="line">-t : 可使用最大CPU时间</div><div class="line">-u : 单一用户可以使用的最大进程数量</div><div class="line">```  </div><div class="line"></div><div class="line">`实战1：查看当前用户的所有限制数据值`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/71746717.jpg)</div><div class="line"></div><div class="line">`实战2：限制用户仅仅能创建10MB容量以下的文件`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/80080741.jpg)</div><div class="line"></div><div class="line">**3、一次执行多个命令 &amp;&amp; 、||**</div><div class="line"></div><div class="line">`场景：`很多命令我想要一次输入去执行，而不想分次执行。有两个办法，一个是编写`shell script`脚本去执行，另一个是一次性输入多重命令。</div><div class="line"></div><div class="line">`基本语法如下`</div></pre></td></tr></table></figure>
-<p>cmd1 &amp;&amp; cmd2 –&gt; 若cmd1成功，$?(命令回传码)=0，则执行cmd2，反之cmd1失败，$?≠0，则cmd2不执行</p>
-<p>cmd1 || cmd2 –&gt; 若cmd1成功，$?(命令回传码)=0，则不执行cmd2，反之cmd1失败，$?≠0，则cmd2执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">`实战1：&amp;&amp;命令`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/3250026.jpg)</div><div class="line"></div><div class="line">`实战2：||命令,cmd1执行不成功，执行cmd2`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/27649803.jpg)</div><div class="line"></div><div class="line">`实战3：||命令，cmd2执行成功，不执行cmd2`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/78874389.jpg)</div><div class="line"></div><div class="line">**4、选取命令cut、grep**</div><div class="line"></div><div class="line">`cut`命令，可以将一段信息的某一段切出来，处理的信息是以行为单位，基本语法`cut -d &apos;分隔字符&apos; -f &apos;第几段&apos;`</div></pre></td></tr></table></figure></p>
-<p>-d : 后面接分隔字符，与-f一起使用<br>-f : 依据-d的分隔符将一段信息切割成为数段，用-f取出第几段的意思；<br>-c : 以字符的单位取出固定字符区间<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">`实战1：将PATH变量取出，找出第5个路径`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/34433783.jpg)</div><div class="line"></div><div class="line">`实战2，将PATH变量取出，找出第3个和第5个路径`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/77994451.jpg)</div><div class="line"></div><div class="line">`grep命令`是分析一行信息，若当中有需要的信息，将该行拿出来，基本语法`grep [-acinv] [--color=auto] &apos;查找字符串&apos; filename`.</div></pre></td></tr></table></figure></p>
-<p>-a : 将binary文件以text文件的方式查找数据<br>-c : 计算找到’查找字符串’的次数<br>-i : 忽略大小写的不同<br>-v : 反向选择<br>–color=auto : 可以将找到的关键字部分加上颜色；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">`实战1：将last当中出现jianweilin的那一行取出来`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/64550336.jpg)</div><div class="line"></div><div class="line">`实战2：取出jianweilin那一行的第一列`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/56948030.jpg)</div><div class="line"></div><div class="line">`实战3：取出文件中包含console的行，并标红关键字`</div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/65838802.jpg)</div><div class="line"></div><div class="line">**5、排序命令sort、wc、uniq**</div><div class="line"></div><div class="line">`sort`命令可以依据不同的数据类型来排序</div></pre></td></tr></table></figure></p>
-<p>-f : 忽略大小写的差异<br>-b : 忽略最前面的空格符部分<br>-M : 以月份的名字来排序<br>-n : 使用纯数字来进行排序<br>-r : 反向排序<br>-u : uniq，相同的数据中，仅出现一行代表<br>-t : 分隔符<br>-k : 以那个区间来进行排序<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">`实战1：利用last输出的数据，并加以排序`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/47905704.jpg)</div><div class="line"></div><div class="line">`实战2：1.log的内容，每行的数据以:分隔，按第三列来排序`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/77485521.jpg)</div><div class="line"></div><div class="line">`uniq`命令，将重复的数据仅列出一个显示`uniq [-ic]`</div></pre></td></tr></table></figure></p>
-<p>-i : 忽略大小写字符<br>-c : 进行计数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">`实战1：统计每个用户登录的总次数`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/83045345.jpg)</div><div class="line"></div><div class="line">`wc`命令，用于统计文件里有多少字，多少行，多少字符,基本语法`wc [-lwm]`</div></pre></td></tr></table></figure></p>
-<p>-l : 仅列出行<br>-w : 仅列出多少字<br>-m : 多少字符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">`实战1：统计行数、单词数、字符数`</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/16-10-16/17425650.jpg)</div><div class="line"></div><div class="line">`6、字符转换命令tr`</div><div class="line"></div><div class="line">`tr`命令可以删除一段信息中的文字，并用其他文字信息进行替换。语法为`tr [-ds] set1  set`</div></pre></td></tr></table></figure></p>
-<p>-d ：删除信息中‘set1’字符串<br>-s : 用‘set’字符串替换‘set1’<br>```</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">-H : 严格设置，必定不能超过这个设置的数值</div><div class="line">-S : 警告设置，可以超过这个数值，但若超过则有警告信息</div><div class="line">-a : 后面不接任何参数，可列出所有限制额度</div><div class="line">-c : 当某些进程发成错误时，系统可能会将进程在内存中的信息写成文件，这种文件成为内核文件。</div><div class="line">-f : 此SHELL可以创建的最大文件容量(一般设为2GB)单位KB</div><div class="line">-d : 进程可使用的最大断裂内存容量</div><div class="line">-l : 可用于锁定内存量</div><div class="line">-t : 可使用最大CPU时间</div><div class="line">-u : 单一用户可以使用的最大进程数量</div></pre></td></tr></table></figure>
+<p><code>实战1：查看当前用户的所有限制数据值</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/71746717.jpg" alt=""></p>
+<p><code>实战2：限制用户仅仅能创建10MB容量以下的文件</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/80080741.jpg" alt=""></p>
+<p><strong>3、一次执行多个命令 &amp;&amp; 、||</strong></p>
+<p><code>场景：</code>很多命令我想要一次输入去执行，而不想分次执行。有两个办法，一个是编写<code>shell script</code>脚本去执行，另一个是一次性输入多重命令。</p>
+<p><code>基本语法如下</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cmd1 &amp;&amp; cmd2 --&gt; 若cmd1成功，$?(命令回传码)=0，则执行cmd2，反之cmd1失败，$?≠0，则cmd2不执行</div><div class="line"></div><div class="line">cmd1 || cmd2 --&gt; 若cmd1成功，$?(命令回传码)=0，则不执行cmd2，反之cmd1失败，$?≠0，则cmd2执行</div></pre></td></tr></table></figure>
+<p><code>实战1：&amp;&amp;命令</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/3250026.jpg" alt=""></p>
+<p><code>实战2：||命令,cmd1执行不成功，执行cmd2</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/27649803.jpg" alt=""></p>
+<p><code>实战3：||命令，cmd2执行成功，不执行cmd2</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/78874389.jpg" alt=""></p>
+<p><strong>4、选取命令cut、grep</strong></p>
+<p><code>cut</code>命令，可以将一段信息的某一段切出来，处理的信息是以行为单位，基本语法<code>cut -d &#39;分隔字符&#39; -f &#39;第几段&#39;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-d : 后面接分隔字符，与-f一起使用</div><div class="line">-f : 依据-d的分隔符将一段信息切割成为数段，用-f取出第几段的意思；</div><div class="line">-c : 以字符的单位取出固定字符区间</div></pre></td></tr></table></figure>
+<p><code>实战1：将PATH变量取出，找出第5个路径</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/34433783.jpg" alt=""></p>
+<p><code>实战2，将PATH变量取出，找出第3个和第5个路径</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/77994451.jpg" alt=""></p>
+<p><code>grep命令</code>是分析一行信息，若当中有需要的信息，将该行拿出来，基本语法<code>grep [-acinv] [--color=auto] &#39;查找字符串&#39; filename</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-a : 将binary文件以text文件的方式查找数据</div><div class="line">-c : 计算找到&apos;查找字符串&apos;的次数</div><div class="line">-i : 忽略大小写的不同</div><div class="line">-v : 反向选择</div><div class="line">--color=auto : 可以将找到的关键字部分加上颜色；</div></pre></td></tr></table></figure>
+<p><code>实战1：将last当中出现jianweilin的那一行取出来</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/64550336.jpg" alt=""></p>
+<p><code>实战2：取出jianweilin那一行的第一列</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/56948030.jpg" alt=""></p>
+<p><code>实战3：取出文件中包含console的行，并标红关键字</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/65838802.jpg" alt=""></p>
+<p><strong>5、排序命令sort、wc、uniq</strong></p>
+<p><code>sort</code>命令可以依据不同的数据类型来排序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-f : 忽略大小写的差异</div><div class="line">-b : 忽略最前面的空格符部分</div><div class="line">-M : 以月份的名字来排序</div><div class="line">-n : 使用纯数字来进行排序</div><div class="line">-r : 反向排序</div><div class="line">-u : uniq，相同的数据中，仅出现一行代表</div><div class="line">-t : 分隔符</div><div class="line">-k : 以那个区间来进行排序</div></pre></td></tr></table></figure>
+<p><code>实战1：利用last输出的数据，并加以排序</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/47905704.jpg" alt=""></p>
+<p><code>实战2：1.log的内容，每行的数据以:分隔，按第三列来排序</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/77485521.jpg" alt=""></p>
+<p><code>uniq</code>命令，将重复的数据仅列出一个显示<code>uniq [-ic]</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-i : 忽略大小写字符</div><div class="line">-c : 进行计数</div></pre></td></tr></table></figure>
+<p><code>实战1：统计每个用户登录的总次数</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/83045345.jpg" alt=""></p>
+<p><code>wc</code>命令，用于统计文件里有多少字，多少行，多少字符,基本语法<code>wc [-lwm]</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-l : 仅列出行</div><div class="line">-w : 仅列出多少字</div><div class="line">-m : 多少字符</div></pre></td></tr></table></figure>
+<p><code>实战1：统计行数、单词数、字符数</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/17425650.jpg" alt=""></p>
+<p><code>6、字符转换命令tr</code></p>
+<p><code>tr</code>命令可以删除一段信息中的文字，并用其他文字信息进行替换。语法为<code>tr [-ds] set1  set</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-d ：删除信息中‘set1’字符串</div><div class="line">-s : 用‘set’字符串替换‘set1’</div></pre></td></tr></table></figure>
 <p><code>实战1：将小写字符换成大写字符</code></p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/38444009.jpg" alt=""></p>
 <p><code>实战2：PATH路径，删除&#39;:&#39;</code></p>
