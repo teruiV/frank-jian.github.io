@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="PHP," />
+  <meta name="keywords" content="JAVA," />
 
 
 
@@ -85,16 +85,32 @@
 
 
 
-<meta name="description" content="在PHP中，对象的赋值实际上是引用操作，比如1234567891011&amp;lt;?phpclass person&amp;#123; public $name;&amp;#125;$person1 = new person();$person1-&amp;gt;name = &amp;quot;zhangsan&amp;quot;;$person2 = $person1;$person2-&amp;gt;name = &amp;quot;lisi&amp;quo">
+<meta name="description" content="概述简介
+Hash table也是基于Map接口实现的，功能与HashMap基本相似，不同的是HashMap允许key和value插入空值，且HashMap是一个线程不安全类。
+性能
+HashMap影响其性能的有两个参数：初始化容量(initial capacity)和负载因子(load factor)。初始化容量是哈希表创建时的容量。负载因子决定了哈希表充分哈希的比例多大时，自动扩容。当哈希表中">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP浅拷贝和深拷贝分析">
-<meta property="og:url" content="http://jianwl.com/2016/05/03/PHP浅拷贝和深拷贝分析/index.html">
+<meta property="og:title" content="Java8之HashMap新特性">
+<meta property="og:url" content="http://jianwl.com/2016/10/17/Java8之HashMap新特性/index.html">
 <meta property="og:site_name" content="记录点滴成长">
-<meta property="og:description" content="在PHP中，对象的赋值实际上是引用操作，比如1234567891011&amp;lt;?phpclass person&amp;#123; public $name;&amp;#125;$person1 = new person();$person1-&amp;gt;name = &amp;quot;zhangsan&amp;quot;;$person2 = $person1;$person2-&amp;gt;name = &amp;quot;lisi&amp;quo">
-<meta property="og:updated_time" content="2016-10-01T13:10:01.000Z">
+<meta property="og:description" content="概述简介
+Hash table也是基于Map接口实现的，功能与HashMap基本相似，不同的是HashMap允许key和value插入空值，且HashMap是一个线程不安全类。
+性能
+HashMap影响其性能的有两个参数：初始化容量(initial capacity)和负载因子(load factor)。初始化容量是哈希表创建时的容量。负载因子决定了哈希表充分哈希的比例多大时，自动扩容。当哈希表中">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%8812.32.06.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%8812.55.36.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.22.00.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.24.14.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.22.00.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.36.30.png">
+<meta property="og:updated_time" content="2016-10-17T05:37:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP浅拷贝和深拷贝分析">
-<meta name="twitter:description" content="在PHP中，对象的赋值实际上是引用操作，比如1234567891011&amp;lt;?phpclass person&amp;#123; public $name;&amp;#125;$person1 = new person();$person1-&amp;gt;name = &amp;quot;zhangsan&amp;quot;;$person2 = $person1;$person2-&amp;gt;name = &amp;quot;lisi&amp;quo">
+<meta name="twitter:title" content="Java8之HashMap新特性">
+<meta name="twitter:description" content="概述简介
+Hash table也是基于Map接口实现的，功能与HashMap基本相似，不同的是HashMap允许key和value插入空值，且HashMap是一个线程不安全类。
+性能
+HashMap影响其性能的有两个参数：初始化容量(initial capacity)和负载因子(load factor)。初始化容量是哈希表创建时的容量。负载因子决定了哈希表充分哈希的比例多大时，自动扩容。当哈希表中">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%8812.32.06.png">
 
 
 
@@ -115,9 +131,9 @@
 
 
 
-  <link rel="canonical" href="http://jianwl.com/2016/05/03/PHP浅拷贝和深拷贝分析/"/>
+  <link rel="canonical" href="http://jianwl.com/2016/10/17/Java8之HashMap新特性/"/>
 
-  <title> PHP浅拷贝和深拷贝分析 | 记录点滴成长 </title>
+  <title> Java8之HashMap新特性 | 记录点滴成长 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -290,7 +306,7 @@
             
             
               
-                PHP浅拷贝和深拷贝分析
+                Java8之HashMap新特性
               
             
           </h1>
@@ -302,8 +318,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-03T12:03:16+08:00" content="2016-05-03">
-              2016-05-03
+            <time itemprop="dateCreated" datetime="2016-10-17T11:11:48+08:00" content="2016-10-17">
+              2016-10-17
             </time>
           </span>
 
@@ -316,8 +332,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
                   </a>
                 </span>
 
@@ -332,8 +348,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/03/PHP浅拷贝和深拷贝分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/03/PHP浅拷贝和深拷贝分析/" itemprop="commentsCount"></span>
+                <a href="/2016/10/17/Java8之HashMap新特性/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/17/Java8之HashMap新特性/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -356,21 +372,46 @@
       
 
       
-        <p>在PHP中，对象的赋值实际上是引用操作，比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class person&#123;</div><div class="line"> public $name;</div><div class="line">&#125;</div><div class="line">$person1 = new person();</div><div class="line">$person1-&gt;name = &quot;zhangsan&quot;;</div><div class="line">$person2 = $person1;</div><div class="line">$person2-&gt;name = &quot;lisi&quot;;</div><div class="line"></div><div class="line">echo &quot;person1-&gt;name = &quot;.$person1-&gt;name.&quot; person2-&gt;name = &quot;.$person2-&gt;name;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<p>因为person1和person2都只是指向同一个内存区的引用,所以修改任何一个对象都会同时修改另外一个对象.</p>
-<p>在有些时候，我们其实并不希望这种引用的赋值方式，我们希望能完全复制一个对象，这时候就需要用到php中的clone（对象的复制);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class person&#123;</div><div class="line"> public $name;</div><div class="line">&#125;</div><div class="line">$person1 = new person();</div><div class="line">$person1-&gt;name = &quot;zhangsan&quot;;</div><div class="line">$person2 = clone $person1;</div><div class="line">$person2-&gt;name = &quot;lisi&quot;;</div><div class="line"></div><div class="line">echo &quot;person1-&gt;name = &quot;.$person1-&gt;name.&quot; person2-&gt;name = &quot;.$person2-&gt;name;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<p>因为clone的方式实际上是对整个对象的内存区域，进行了一次复制并用新的对象变量指向新的内存，因此赋值后的对象和源对象之间基本上说是独立的。</p>
-<p>这是什么意思？因为PHP中的对象拷贝采用的是浅拷贝的方法，如果对象里的属性成员本身就是引用类型的，clone以后这些成员并没有真正被复制，仍然是引用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class address&#123;</div><div class="line"> public $palace;</div><div class="line"> public $no;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class person&#123;</div><div class="line">public $name;</div><div class="line">public $address;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$address = new address();</div><div class="line">$address-&gt;palace = &quot;shanghai&quot;;</div><div class="line">$address-&gt;no = 21;</div><div class="line"></div><div class="line">$person1 = new person();</div><div class="line">$person1-&gt;name = &quot;zhangsan&quot;;</div><div class="line">$person1-&gt;address = $address;</div><div class="line"></div><div class="line">$person2 = clone $person1;</div><div class="line"></div><div class="line">echo &quot;before modify person1 name = &quot;.$person1-&gt;name.&quot; palace = &quot;.$person1-&gt;address-&gt;palace.&quot; &lt;br/&gt;person2 name = &quot;.$person2-&gt;name.&quot; person2 palace = &quot;.$person2-&gt;address-&gt;palace. &quot;&lt;br/&gt;&quot;;</div><div class="line"></div><div class="line">echo &quot;=====================================&lt;br/&gt;&quot;;</div><div class="line"></div><div class="line">$person2-&gt;address-&gt;no = 33;</div><div class="line">$person2-&gt;address-&gt;palace = &quot;beijing&quot;;</div><div class="line">$person2-&gt;name = &quot;lisi&quot;;</div><div class="line"></div><div class="line">echo &quot;aflter modify person1 name = &quot;.$person1-&gt;name.&quot; palace = &quot;.$person1-&gt;address-&gt;palace.&quot; &lt;br/&gt;person2 name = &quot;.$person2-&gt;name.&quot; person2 palace = &quot;.$person2-&gt;address-&gt;palace. &quot;&lt;br/&gt;&quot;; //结果为 person1-&gt;address-&gt;palace = &quot;beijing&quot;, person2-&gt;address-&gt;palace = &quot;beijing&quot;;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<p>一般来讲，你用clone来复制对象，希望把两个对象彻底分开，不希望他们之间有任何关联，但由于clone的浅拷贝的特性，有时候会出现非期望的结果，就像上面的例子那样。<br>$person1 -&gt;address = $address;这句话是引用类型的赋值，person1-&gt;address和person2-&gt;address 实际上是指向同一个内存区对象的数据引用，因此修改其中任何一个都会影响其他两个。</p>
-<p>如何解决这个问题呢？以下采用两种方法来解决：</p>
-<ul>
-<li>在上面的代码中，添加address的对象拷贝即可，但治标不治本;</li>
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><code>简介</code></p>
+<p><code>Hash table</code>也是基于<code>Map接口</code>实现的，功能与<code>HashMap</code>基本相似，不同的是<code>HashMap</code>允许key和value插入空值，且<code>HashMap</code>是一个线程不安全类。</p>
+<p><code>性能</code></p>
+<p><code>HashMap</code>影响其性能的有两个参数：初始化容量(<code>initial capacity</code>)和负载因子(<code>load factor</code>)。初始化容量是哈希表创建时的容量。负载因子决定了哈希表充分哈希的比例多大时，自动扩容。当哈希表中的数量大于负载因子乘以哈希表的容量时，哈希表将扩容并重新哈希已存入的数据。</p>
+<p>默认负载因子是<code>0.75</code>提供了良好的时间和空间成本的平衡。那负载因子为何是<code>0.75</code>？增大负载因子有什么影响？ 增大负载因子会降低空间开销，但提高查找成本（体现HashMap类的操作，包括get和put)。后文会举例说明。</p>
+<p><code>如何提供性能</code></p>
+<p>预估往<code>HashMap</code>塞的数量来设置初始容量，尽可能减少重新哈希(<code>rehash</code>)的操作，如果初始化容量大于最大条目数<code>除以</code>负载因子，重新哈希操作(<code>rehash</code>)将不会发生。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1、无设置初始化容量 VS 设置初始化容量</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_001() &#123;</div><div class="line">    long start = System.currentTimeMillis();</div><div class="line">    Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();</div><div class="line">    for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">        map.put(String.valueOf(i), i);</div><div class="line">    &#125;</div><div class="line">    System.out.println(&quot;not init capacity =&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Test</div><div class="line">public void test_002() &#123;</div><div class="line">    long start = System.currentTimeMillis();</div><div class="line">    Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;(20560000);</div><div class="line">    for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">        map.put(String.valueOf(i), i);</div><div class="line">    &#125;</div><div class="line">    System.out.println(&quot;init capacity=&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%8812.32.06.png" alt=""></p>
+<p>很明显，设置初始化容量之后的效率会更高。</p>
+<p><strong>2、默认负载因子(0.75f)  VS 设置更高的负载因子</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line"> public void test_002() &#123;</div><div class="line">     long start = System.currentTimeMillis();</div><div class="line">     Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;(20560000, 075f);</div><div class="line">     for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">         map.put(String.valueOf(i), i);</div><div class="line">     &#125;</div><div class="line">     System.out.println(&quot;default load capacity=&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> @Test</div><div class="line"> public void test_0021() &#123;</div><div class="line">     long start = System.currentTimeMillis();</div><div class="line">     Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;(20560000, 0.9f);</div><div class="line">     for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">         map.put(String.valueOf(i), i);</div><div class="line">     &#125;</div><div class="line">     System.out.println(&quot;0.9 load capacity =&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%8812.55.36.png" alt=""></p>
+<p>很明显，增大负载因子后，效率变低。</p>
+<p><strong>3、compute方法</strong></p>
+<p><code>作用：</code>新增数据时，若<code>Map</code>中已存在该Key,可以对Value进行操作。</p>
+<p><code>场景：</code>统计一个数字出现的次数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_011() &#123;</div><div class="line">    List&lt;Integer&gt; list = Arrays.asList(1, 1, 1, 2, 3, 4, 4, 5, 5, 8);</div><div class="line">    Map&lt;Integer, Integer&gt; numCounts = new HashMap&lt;&gt;();</div><div class="line"></div><div class="line">    list.stream().forEach(num -&gt; &#123;</div><div class="line">        if (numCounts.containsKey(num)) &#123;</div><div class="line">            numCounts.compute(num, (k, v) -&gt; (v != null) ? v = v + 1 : v);</div><div class="line">        &#125; else &#123;</div><div class="line">            numCounts.put(num, 1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    </div><div class="line">    numCounts.forEach((k, v) -&gt; System.out.println(&quot;key -&gt; &quot; + k + &quot; value -&gt; &quot; + v));</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.22.00.png" alt=""></p>
+<p><strong>4、遍历forEach</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_006() &#123;</div><div class="line">    Map&lt;String, String&gt; map = new HashMap&lt;&gt;(16, 0.75f);</div><div class="line">    map.put(&quot;1&quot;, &quot;1&quot;);</div><div class="line">    map.put(&quot;2&quot;, &quot;2&quot;);</div><div class="line">    map.put(&quot;3&quot;, &quot;3&quot;);</div><div class="line">    map.forEach((k, v) -&gt; System.out.println(&quot; key -&gt; &quot; + k + &quot; value -&gt; &quot; + v));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.24.14.png" alt=""></p>
+<p><strong>5、合并merge</strong></p>
+<p><code>作用：</code>新增数据，当存在该key，则对该value做处理，反之则新增数据。</p>
+<p><code>场景：</code>统计一个数字出现的次数；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> @Test</div><div class="line">public void test_012() &#123;</div><div class="line">    List&lt;Integer&gt; list = Arrays.asList(1, 1, 1, 2, 3, 4, 4, 5, 5, 8);</div><div class="line">    Map&lt;Integer, Integer&gt; numCounts = new HashMap&lt;&gt;();</div><div class="line"></div><div class="line">    list.stream().forEach(num -&gt; &#123;</div><div class="line">        numCounts.merge(num,1,Integer::sum);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    numCounts.forEach((k, v) -&gt; System.out.println(&quot;key -&gt; &quot; + k + &quot; value -&gt; &quot; + v));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.22.00.png" alt=""></p>
+<p><strong>6、获取所有键值values()</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_008() &#123;</div><div class="line">    Map&lt;String, String&gt; map = new HashMap&lt;&gt;(16, 0.75f);</div><div class="line">    map.put(&quot;1&quot;, &quot;1&quot;);</div><div class="line">    map.put(&quot;2&quot;, &quot;2&quot;);</div><div class="line">    map.put(&quot;3&quot;, &quot;Oh!&quot;);</div><div class="line">    System.out.println(JSON.toJSON(map.values()));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.36.30.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>JAVA8官方文档之HashMap</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$person2-&gt;address = clone $person1-&gt;address;</div></pre></td></tr></table></figure>
-<ul>
-<li>采用PHP中的__clone方法把浅拷贝转换为深拷贝</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class address&#123;</div><div class="line"> public $palace;</div><div class="line"> public $no;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class person&#123;</div><div class="line">public $name;</div><div class="line">public $address;</div><div class="line"></div><div class="line">public function __clone()&#123;</div><div class="line"> $this-&gt;address = clone $this-&gt;address; //深拷贝的引用;</div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">$address = new address();</div><div class="line">$address-&gt;palace = &quot;shanghai&quot;;</div><div class="line">$address-&gt;no = 21;</div><div class="line"></div><div class="line">$person1 = new person();</div><div class="line">$person1-&gt;name = &quot;zhangsan&quot;;</div><div class="line">$person1-&gt;address = $address;</div><div class="line"></div><div class="line">$person2 = clone $person1;</div><div class="line">echo &quot;before modify person1 name = &quot;.$person1-&gt;name.&quot; palace = &quot;.$person1-&gt;address-&gt;palace.&quot; &lt;br/&gt;person2 name = &quot;.$person2-&gt;name.&quot; person2 palace = &quot;.$person2-&gt;address-&gt;palace. &quot;&lt;br/&gt;&quot;;</div><div class="line"></div><div class="line">echo &quot;=====================================&lt;br/&gt;&quot;;</div><div class="line">$person2-&gt;address-&gt;no = 33;</div><div class="line">$person2-&gt;address-&gt;palace = &quot;beijing&quot;;</div><div class="line">$person2-&gt;name = &quot;lisi&quot;;</div><div class="line"></div><div class="line">echo &quot;aflter modify person1 name = &quot;.$person1-&gt;name.&quot; palace = &quot;.$person1-&gt;address-&gt;palace.&quot; &lt;br/&gt;person2 name = &quot;.$person2-&gt;name.&quot; person2 palace = &quot;.$person2-&gt;address-&gt;palace. &quot;&lt;br/&gt;&quot;;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -393,7 +434,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/PHP/" rel="tag">#PHP</a>
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
           
         </div>
       
@@ -402,17 +443,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/03/PHP面向对象基础知识/" rel="next" title="PHP面向对象基础知识">
-                <i class="fa fa-chevron-left"></i> PHP面向对象基础知识
+              <a href="/2016/10/17/分享「代码家」的学习过程和学习方法/" rel="next" title="分享「代码家」的学习过程和学习方法">
+                <i class="fa fa-chevron-left"></i> 分享「代码家」的学习过程和学习方法
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/03/Redis介绍/" rel="prev" title="Redis介绍">
-                Redis介绍 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -427,10 +464,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/05/03/PHP浅拷贝和深拷贝分析/"
-     data-title="PHP浅拷贝和深拷贝分析"
+        <div class="ds-share flat" data-thread-key="2016/10/17/Java8之HashMap新特性/"
+     data-title="Java8之HashMap新特性"
      data-content=""
-     data-url="http://jianwl.com/2016/05/03/PHP浅拷贝和深拷贝分析/">
+     data-url="http://jianwl.com/2016/10/17/Java8之HashMap新特性/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -457,8 +494,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/05/03/PHP浅拷贝和深拷贝分析/"
-           data-title="PHP浅拷贝和深拷贝分析" data-url="http://jianwl.com/2016/05/03/PHP浅拷贝和深拷贝分析/">
+      <div class="ds-thread" data-thread-key="2016/10/17/Java8之HashMap新特性/"
+           data-title="Java8之HashMap新特性" data-url="http://jianwl.com/2016/10/17/Java8之HashMap新特性/">
       </div>
     
   </div>
@@ -549,7 +586,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-number">2.</span> <span class="nav-text">实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
         </section>
