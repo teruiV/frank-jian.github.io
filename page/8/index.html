@@ -292,6 +292,148 @@
             
               
                 
+                <a class="post-title-link" href="/2016/06/24/retrofit2入门篇/" itemprop="url">
+                  retrofit2入门篇
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-24T09:28:35+08:00" content="2016-06-24">
+              2016-06-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/24/retrofit2入门篇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/24/retrofit2入门篇/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="Retrofit是什么？"><a href="#Retrofit是什么？" class="headerlink" title="Retrofit是什么？"></a>Retrofit是什么？</h4><blockquote>
+<p>A type-safe HTTP client for Android and Java</p>
+</blockquote>
+<p>你将会用注解去描述HTTP请求，同时Retrofit默认集成URL参数替换和参数查询，并支持Multipart请求和文件上传。</p>
+<h4 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">  &lt;groupId&gt;com.squareup.retrofit2&lt;/groupId&gt;</div><div class="line">  &lt;artifactId&gt;retrofit&lt;/artifactId&gt;</div><div class="line">  &lt;version&gt;2.1.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><ul>
+<li><p>创建Retrofit实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">package com.example.xingren;</div><div class="line"></div><div class="line">import retrofit2.Call;</div><div class="line">import retrofit2.Retrofit;</div><div class="line">import retrofit2.converter.gson.GsonConverterFactory;</div><div class="line">import java.io.IOException;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by weilin on 29/6/2016.</div><div class="line"> */</div><div class="line">public class RetrofitDemo &#123;</div><div class="line">    private static final String BASE_URL = &quot;https://api.github.com&quot;;</div><div class="line">    public static void main(String[] args) throws IOException &#123;</div><div class="line">        Retrofit retrofit = new Retrofit.Builder()</div><div class="line">                .baseUrl(BASE_URL)</div><div class="line">                .addConverterFactory(GsonConverterFactory.create())</div><div class="line">                .build();</div><div class="line"></div><div class="line">        // create instance for githubApi</div><div class="line">        GithubAPI github = retrofit.create(GithubAPI.class);</div><div class="line">        Call&lt;List&lt;ContributorsQO&gt;&gt; call = github.contributors(&quot;shuangziliuyun&quot;,&quot;spring-boot-thymeleaf&quot;);</div><div class="line">        List&lt;ContributorsQO&gt; all = call.execute().body();</div><div class="line">        all.forEach(contributor -&gt; &#123;</div><div class="line">            System.out.println(&quot;name = &quot; + contributor.getLogin() + &quot; starts = &quot; + contributor.getContributions());</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>定义接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">package com.example.xingren;</div><div class="line"></div><div class="line">import retrofit2.Call;</div><div class="line">import retrofit2.http.GET;</div><div class="line">import retrofit2.http.Path;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by weilin on 29/6/2016.</div><div class="line"> */</div><div class="line">public interface GithubAPI &#123;</div><div class="line">    @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</div><div class="line">    Call&lt;List&lt;ContributorsQO&gt;&gt; contributors(</div><div class="line">            @Path(&quot;owner&quot;) String owner,</div><div class="line">            @Path(&quot;repo&quot;) String repo);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>模型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">package com.example.xingren;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by weilin on 29/6/2016.</div><div class="line"> */</div><div class="line">public class ContributorsQO &#123;</div><div class="line">    private String login;</div><div class="line">    private Integer contributions;</div><div class="line"></div><div class="line">    public Integer getContributions() &#123;</div><div class="line">        return contributions;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setContributions(Integer contributions) &#123;</div><div class="line">        this.contributions = contributions;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getLogin() &#123;</div><div class="line">        return login;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setLogin(String login) &#123;</div><div class="line">        this.login = login;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ol>
+<li><p><a href="http://yaohepeng.com/2016/03/31/Retrofit%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" target="_blank" rel="external">Retrofit入门使用教程</a></p>
+</li>
+<li><p><a href="https://github.com/square/retrofit" target="_blank" rel="external">Retrofit官网</a></p>
+<p>​</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/06/24/Hystrix入门篇/" itemprop="url">
                   Hystrix入门篇
                 </a>
@@ -1709,137 +1851,6 @@ tee – the output of write (:w) command is redirected using tee
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/05/HTTP之重定向和请求转发/" itemprop="url">
-                  HTTP之重定向和请求转发
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-05T18:00:47+08:00" content="2016-06-05">
-              2016-06-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/HTTP/" itemprop="url" rel="index">
-                    <span itemprop="name">HTTP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/05/HTTP之重定向和请求转发/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/05/HTTP之重定向和请求转发/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h6 id="重定向、请求转发是什么？举例说明"><a href="#重定向、请求转发是什么？举例说明" class="headerlink" title="重定向、请求转发是什么？举例说明"></a>重定向、请求转发是什么？举例说明</h6><p>假设你去办执照。</p>
-<p><strong>重定向：</strong>你先去了A局，A局的人说：”这事不归我们管，去B局”，然后你就从A退了回来，自己乘车去了B局。</p>
-<p><strong>请求转发：</strong>你先去了A局，A局看了以后，知道这个事情其实应该B局来管，但是他没有把你退回来，而是让你坐一会儿，自己到后面办公室联系了B局的人，让他们办好后，送过来。</p>
-<p>重定向是客户端行为，其实是两次Request请求，第一次，客户端Request A，服务器响应，并Response回来，告诉浏览器，你应该去找B。这个时候可以看到浏览器地址变了。重定向可以访问自己Web应用以外的资源。在重定向的过程中，传输的信息会被丢失。</p>
-<p>请求转发是服务器行为，服务器内部把一个Request的处理权，转发给同一个Web容器下的其他URL。(注意，不能转发到其他的Web容器的资源)对于客户端而言，它只知道自己最早请求的那个A，而不知道中间的B、C、D，传输的信息不会丢失。</p>
-<h6 id="Servlet中调用请求转发和重定向"><a href="#Servlet中调用请求转发和重定向" class="headerlink" title="Servlet中调用请求转发和重定向"></a>Servlet中调用请求转发和重定向</h6><ul>
-<li>请求转发到welcome.jsp页面</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">request.getRequestDispatcher(&quot;welcome.jsp&quot;).forward(request,response);</div></pre></td></tr></table></figure>
-<ul>
-<li>重定向到success.jsp页面</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">response.sendRedirect(&quot;success.jsp&quot;);</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1885,7 +1896,7 @@ tee – the output of write (:w) command is redirected using tee
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-count">137</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

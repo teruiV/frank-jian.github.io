@@ -85,32 +85,45 @@
 
 
 
-<meta name="description" content="概述简介
-Hash table也是基于Map接口实现的，功能与HashMap基本相似，不同的是HashMap允许key和value插入空值，且HashMap是一个线程不安全类。
-性能
-HashMap影响其性能的有两个参数：初始化容量(initial capacity)和负载因子(load factor)。初始化容量是哈希表创建时的容量。负载因子决定了哈希表充分哈希的比例多大时，自动扩容。当哈希表中">
+<meta name="description" content="前言模板方法之前写过一篇Java设计模式之模板方法模式,但当过回过头来再看这篇文章时，发现原来的文章过于累赘，不适合别人理解。故重新梳理。
+理论什么是模板方法？
+提取了类库中的公共行为，将公共行为放在父类中，通过其子类来实现不同的行为。
+优点
+
+将不变的行为搬到超类，去除了子类中的重复代码
+子类实现算法的细节，有助于算法的扩展。
+父类调用子类实现的操作，通过子类扩展新的行为，符合开闭原则。
+
+缺点">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java8之HashMap新特性">
-<meta property="og:url" content="http://jianwl.com/2016/10/17/Java8之HashMap新特性/index.html">
+<meta property="og:title" content="Java之模板方法">
+<meta property="og:url" content="http://jianwl.com/2016/10/17/Java之模板方法/index.html">
 <meta property="og:site_name" content="记录点滴成长">
-<meta property="og:description" content="概述简介
-Hash table也是基于Map接口实现的，功能与HashMap基本相似，不同的是HashMap允许key和value插入空值，且HashMap是一个线程不安全类。
-性能
-HashMap影响其性能的有两个参数：初始化容量(initial capacity)和负载因子(load factor)。初始化容量是哈希表创建时的容量。负载因子决定了哈希表充分哈希的比例多大时，自动扩容。当哈希表中">
-<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%8812.32.06.png">
-<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%8812.55.36.png">
-<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.22.00.png">
-<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.24.14.png">
-<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.22.00.png">
-<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.36.30.png">
-<meta property="og:updated_time" content="2016-10-17T06:29:42.000Z">
+<meta property="og:description" content="前言模板方法之前写过一篇Java设计模式之模板方法模式,但当过回过头来再看这篇文章时，发现原来的文章过于累赘，不适合别人理解。故重新梳理。
+理论什么是模板方法？
+提取了类库中的公共行为，将公共行为放在父类中，通过其子类来实现不同的行为。
+优点
+
+将不变的行为搬到超类，去除了子类中的重复代码
+子类实现算法的细节，有助于算法的扩展。
+父类调用子类实现的操作，通过子类扩展新的行为，符合开闭原则。
+
+缺点">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-17/79477811.jpg">
+<meta property="og:updated_time" content="2016-10-17T15:36:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java8之HashMap新特性">
-<meta name="twitter:description" content="概述简介
-Hash table也是基于Map接口实现的，功能与HashMap基本相似，不同的是HashMap允许key和value插入空值，且HashMap是一个线程不安全类。
-性能
-HashMap影响其性能的有两个参数：初始化容量(initial capacity)和负载因子(load factor)。初始化容量是哈希表创建时的容量。负载因子决定了哈希表充分哈希的比例多大时，自动扩容。当哈希表中">
-<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%8812.32.06.png">
+<meta name="twitter:title" content="Java之模板方法">
+<meta name="twitter:description" content="前言模板方法之前写过一篇Java设计模式之模板方法模式,但当过回过头来再看这篇文章时，发现原来的文章过于累赘，不适合别人理解。故重新梳理。
+理论什么是模板方法？
+提取了类库中的公共行为，将公共行为放在父类中，通过其子类来实现不同的行为。
+优点
+
+将不变的行为搬到超类，去除了子类中的重复代码
+子类实现算法的细节，有助于算法的扩展。
+父类调用子类实现的操作，通过子类扩展新的行为，符合开闭原则。
+
+缺点">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-17/79477811.jpg">
 
 
 
@@ -131,9 +144,9 @@ HashMap影响其性能的有两个参数：初始化容量(initial capacity)和�
 
 
 
-  <link rel="canonical" href="http://jianwl.com/2016/10/17/Java8之HashMap新特性/"/>
+  <link rel="canonical" href="http://jianwl.com/2016/10/17/Java之模板方法/"/>
 
-  <title> Java8之HashMap新特性 | 记录点滴成长 </title>
+  <title> Java之模板方法 | 记录点滴成长 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -306,7 +319,7 @@ HashMap影响其性能的有两个参数：初始化容量(initial capacity)和�
             
             
               
-                Java8之HashMap新特性
+                Java之模板方法
               
             
           </h1>
@@ -318,7 +331,7 @@ HashMap影响其性能的有两个参数：初始化容量(initial capacity)和�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-17T11:11:48+08:00" content="2016-10-17">
+            <time itemprop="dateCreated" datetime="2016-10-17T23:16:56+08:00" content="2016-10-17">
               2016-10-17
             </time>
           </span>
@@ -348,8 +361,8 @@ HashMap影响其性能的有两个参数：初始化容量(initial capacity)和�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/10/17/Java8之HashMap新特性/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/17/Java8之HashMap新特性/" itemprop="commentsCount"></span>
+                <a href="/2016/10/17/Java之模板方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/17/Java之模板方法/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -372,46 +385,31 @@ HashMap影响其性能的有两个参数：初始化容量(initial capacity)和�
       
 
       
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><code>简介</code></p>
-<p><code>Hash table</code>也是基于<code>Map接口</code>实现的，功能与<code>HashMap</code>基本相似，不同的是<code>HashMap</code>允许key和value插入空值，且<code>HashMap</code>是一个线程不安全类。</p>
-<p><code>性能</code></p>
-<p><code>HashMap</code>影响其性能的有两个参数：初始化容量(<code>initial capacity</code>)和负载因子(<code>load factor</code>)。初始化容量是哈希表创建时的容量。负载因子决定了哈希表充分哈希的比例多大时，自动扩容。当哈希表中的数量大于负载因子乘以哈希表的容量时，哈希表将扩容并重新哈希已存入的数据。</p>
-<p>默认负载因子是<code>0.75</code>是时间和空间成本的权衡比较好的一个平衡点。那负载因子为何是<code>0.75</code>？增大负载因子有什么影响？ 增大负载因子会降低空间开销，但提高查找成本（体现HashMap类的操作，包括get和put)。后文会举例说明。</p>
-<p><code>如何提高性能</code></p>
-<p>预估向<code>HashMap</code>塞的数量来设置初始容量，尽可能减少重新哈希(<code>rehash</code>)的操作，如果初始化容量大于最大条目数<code>除以</code>负载因子，重新哈希操作(<code>rehash</code>)将不会发生。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1、无设置初始化容量 VS 设置初始化容量</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_001() &#123;</div><div class="line">    long start = System.currentTimeMillis();</div><div class="line">    Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();</div><div class="line">    for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">        map.put(String.valueOf(i), i);</div><div class="line">    &#125;</div><div class="line">    System.out.println(&quot;not init capacity =&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Test</div><div class="line">public void test_002() &#123;</div><div class="line">    long start = System.currentTimeMillis();</div><div class="line">    Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;(20560000);</div><div class="line">    for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">        map.put(String.valueOf(i), i);</div><div class="line">    &#125;</div><div class="line">    System.out.println(&quot;init capacity=&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>模板方法之前写过一篇<a href="http://jianwl.com/2016/08/11/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/">Java设计模式之模板方法模式</a>,但当过回过头来再看这篇文章时，发现原来的文章过于累赘，不适合别人理解。故重新梳理。</p>
+<h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><p><strong>什么是模板方法？</strong></p>
+<p>提取了类库中的公共行为，将公共行为放在父类中，通过其子类来实现不同的行为。</p>
+<p><strong>优点</strong></p>
+<ol>
+<li>将不变的行为搬到超类，去除了子类中的重复代码</li>
+<li>子类实现算法的细节，有助于算法的扩展。</li>
+<li>父类调用子类实现的操作，通过子类扩展新的行为，符合开闭原则。</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ol>
+<li>每个不同的实现都需要定义一个子类，这会导致类的个数的增加，设计更加抽象。</li>
+</ol>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1. 定义算法骨架</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public abstract class StealingMethod &#123;</div><div class="line"></div><div class="line">  protected abstract String pickTarget();</div><div class="line"></div><div class="line">  protected abstract void confuseTarget(String target);</div><div class="line"></div><div class="line">  protected abstract void stealTheItem(String target);</div><div class="line"></div><div class="line">  public void steal() &#123;</div><div class="line">    String target = pickTarget();</div><div class="line">    System.out.println(&quot;The target has been chosen as &quot; + target + &quot;.&quot;);</div><div class="line">    confuseTarget(target);</div><div class="line">    stealTheItem(target);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>2. 主对象使用骨架算法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class HalflingThief &#123;</div><div class="line"></div><div class="line">  private StealingMethod method;</div><div class="line"></div><div class="line">  public HalflingThief(StealingMethod method) &#123;</div><div class="line">    this.method = method;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public void steal() &#123;</div><div class="line">    method.steal();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public void changeMethod(StealingMethod method) &#123;</div><div class="line">    this.method = method;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>3. 子类A实现骨架算法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class HitAndRunMethod extends StealingMethod &#123;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected String pickTarget() &#123;</div><div class="line">    return &quot;old goblin woman&quot;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected void confuseTarget(String target) &#123;</div><div class="line">    System.out.println(&quot;Approach the &quot; + target + &quot; from behind.&quot;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected void stealTheItem(String target) &#123;</div><div class="line">    System.out.println(&quot;Grab the handbag and run away fast!&quot;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>4. 子类B实现骨架算法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class SubtleMethod extends StealingMethod &#123;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected String pickTarget() &#123;</div><div class="line">    return &quot;shop keeper&quot;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected void confuseTarget(String target) &#123;</div><div class="line">    System.out.println(&quot;Approach the &quot; + target + &quot; with tears running and hug him!&quot;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected void stealTheItem(String target) &#123;</div><div class="line">    System.out.println(&quot;While in close contact grab the &quot; + target + &quot;&apos;s wallet.&quot;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>5. Main方法运行</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class App &#123;</div><div class="line">  public static void main(String[] args) &#123;</div><div class="line">    HalflingThief thief = new HalflingThief(new HitAndRunMethod());</div><div class="line">    thief.steal();</div><div class="line">    thief.changeMethod(new SubtleMethod());</div><div class="line">    thief.steal();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><code>结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%8812.32.06.png" alt=""></p>
-<p>很明显，设置初始化容量之后的效率会更高。</p>
-<p><strong>2、默认负载因子(0.75f)  VS 设置更高的负载因子</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line"> public void test_002() &#123;</div><div class="line">     long start = System.currentTimeMillis();</div><div class="line">     Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;(20560000, 075f);</div><div class="line">     for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">         map.put(String.valueOf(i), i);</div><div class="line">     &#125;</div><div class="line">     System.out.println(&quot;default load capacity=&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> @Test</div><div class="line"> public void test_0021() &#123;</div><div class="line">     long start = System.currentTimeMillis();</div><div class="line">     Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;(20560000, 0.9f);</div><div class="line">     for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">         map.put(String.valueOf(i), i);</div><div class="line">     &#125;</div><div class="line">     System.out.println(&quot;0.9 load capacity =&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-<p><code>结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%8812.55.36.png" alt=""></p>
-<p>很明显，增大负载因子后，效率变低。</p>
-<p><strong>3、compute方法</strong></p>
-<p><code>作用：</code>新增数据时，若<code>Map</code>中已存在该Key,可以对Value进行操作。</p>
-<p><code>场景：</code>统计一个数字出现的次数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_011() &#123;</div><div class="line">    List&lt;Integer&gt; list = Arrays.asList(1, 1, 1, 2, 3, 4, 4, 5, 5, 8);</div><div class="line">    Map&lt;Integer, Integer&gt; numCounts = new HashMap&lt;&gt;();</div><div class="line"></div><div class="line">    list.stream().forEach(num -&gt; &#123;</div><div class="line">        if (numCounts.containsKey(num)) &#123;</div><div class="line">            numCounts.compute(num, (k, v) -&gt; (v != null) ? v = v + 1 : v);</div><div class="line">        &#125; else &#123;</div><div class="line">            numCounts.put(num, 1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    </div><div class="line">    numCounts.forEach((k, v) -&gt; System.out.println(&quot;key -&gt; &quot; + k + &quot; value -&gt; &quot; + v));</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.22.00.png" alt=""></p>
-<p><strong>4、遍历forEach</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_006() &#123;</div><div class="line">    Map&lt;String, String&gt; map = new HashMap&lt;&gt;(16, 0.75f);</div><div class="line">    map.put(&quot;1&quot;, &quot;1&quot;);</div><div class="line">    map.put(&quot;2&quot;, &quot;2&quot;);</div><div class="line">    map.put(&quot;3&quot;, &quot;3&quot;);</div><div class="line">    map.forEach((k, v) -&gt; System.out.println(&quot; key -&gt; &quot; + k + &quot; value -&gt; &quot; + v));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.24.14.png" alt=""></p>
-<p><strong>5、合并merge</strong></p>
-<p><code>作用：</code>新增数据，当存在该key，则对该value做处理，反之则新增数据。</p>
-<p><code>场景：</code>统计一个数字出现的次数；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> @Test</div><div class="line">public void test_012() &#123;</div><div class="line">    List&lt;Integer&gt; list = Arrays.asList(1, 1, 1, 2, 3, 4, 4, 5, 5, 8);</div><div class="line">    Map&lt;Integer, Integer&gt; numCounts = new HashMap&lt;&gt;();</div><div class="line"></div><div class="line">    list.stream().forEach(num -&gt; &#123;</div><div class="line">        numCounts.merge(num,1,Integer::sum);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    numCounts.forEach((k, v) -&gt; System.out.println(&quot;key -&gt; &quot; + k + &quot; value -&gt; &quot; + v));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.22.00.png" alt=""></p>
-<p><strong>6、获取所有键值values()</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_008() &#123;</div><div class="line">    Map&lt;String, String&gt; map = new HashMap&lt;&gt;(16, 0.75f);</div><div class="line">    map.put(&quot;1&quot;, &quot;1&quot;);</div><div class="line">    map.put(&quot;2&quot;, &quot;2&quot;);</div><div class="line">    map.put(&quot;3&quot;, &quot;Oh!&quot;);</div><div class="line">    System.out.println(JSON.toJSON(map.values()));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.36.30.png" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>JAVA8官方文档之HashMap</li>
-</ul>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-17/79477811.jpg" alt=""></p>
 
       
     </div>
@@ -443,17 +441,13 @@ HashMap影响其性能的有两个参数：初始化容量(initial capacity)和�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/17/分享「代码家」的学习过程和学习方法/" rel="next" title="分享「代码家」的学习过程和学习方法">
-                <i class="fa fa-chevron-left"></i> 分享「代码家」的学习过程和学习方法
+              <a href="/2016/10/17/Java8之HashMap新特性/" rel="next" title="Java8之HashMap新特性">
+                <i class="fa fa-chevron-left"></i> Java8之HashMap新特性
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/10/17/Java之模板方法/" rel="prev" title="Java之模板方法">
-                Java之模板方法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -468,10 +462,10 @@ HashMap影响其性能的有两个参数：初始化容量(initial capacity)和�
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/10/17/Java8之HashMap新特性/"
-     data-title="Java8之HashMap新特性"
+        <div class="ds-share flat" data-thread-key="2016/10/17/Java之模板方法/"
+     data-title="Java之模板方法"
      data-content=""
-     data-url="http://jianwl.com/2016/10/17/Java8之HashMap新特性/">
+     data-url="http://jianwl.com/2016/10/17/Java之模板方法/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -498,8 +492,8 @@ HashMap影响其性能的有两个参数：初始化容量(initial capacity)和�
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/10/17/Java8之HashMap新特性/"
-           data-title="Java8之HashMap新特性" data-url="http://jianwl.com/2016/10/17/Java8之HashMap新特性/">
+      <div class="ds-thread" data-thread-key="2016/10/17/Java之模板方法/"
+           data-title="Java之模板方法" data-url="http://jianwl.com/2016/10/17/Java之模板方法/">
       </div>
     
   </div>
@@ -590,7 +584,7 @@ HashMap影响其性能的有两个参数：初始化容量(initial capacity)和�
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-number">2.</span> <span class="nav-text">实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理论"><span class="nav-number">2.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-number">3.</span> <span class="nav-text">实战</span></a></li></ol></div>
             
           </div>
         </section>
