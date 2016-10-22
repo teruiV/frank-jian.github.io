@@ -292,6 +292,145 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/13/MYSQL之事务/" itemprop="url">
+                  MYSQL之事务
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-13T11:07:35+08:00" content="2016-08-13">
+              2016-08-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MYSQL</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/13/MYSQL之事务/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/13/MYSQL之事务/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h3><p>一组原子性的SQL查询，事务内的语句要么全部执行成功，要么全部执行失败。</p>
+<h3 id="场景示例"><a href="#场景示例" class="headerlink" title="场景示例"></a>场景示例</h3><p>假设一个银行的数据库有两张表:支票(checking)表和储蓄(savings)表，现在用户Jane的支票账户转移200美元到她的储蓄账户，那么需要至少三个步骤：</p>
+<ol>
+<li>检查支票账户的余额高于200美元</li>
+<li>从支票账户余额中减去200美元</li>
+<li>在储蓄账户余额中增加200美元</li>
+</ol>
+<p>上述三个步骤必须打包在一个事务中，任何一个步骤失败，则必须回滚所有的步骤。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">START TRANSACTION;</div><div class="line">SELECT balance FROM checking where customer_id =  10233276;</div><div class="line">UPDATE checking SET balance = balance - 200.00 WHERE customer_id = 10233276;</div><div class="line">UPDATE savings SET balance = balance + 200.00  WHERE customer_id = 10233276;</div><div class="line">COMMIT</div></pre></td></tr></table></figure></p>
+<p>但是….. 单纯的事务概念并不是故事的全部，可能会出现以下场景….</p>
+<blockquote>
+<ol>
+<li>执行第4条语句时，服务器崩溃了 – 可能用户会损失200美金</li>
+<li>在执行第3条语句和第4条语句之间，另外一个进程要删除支票账户的所有余额 – 银行在不知道这个逻辑的情况下， 可能白白给了Jane200美金。</li>
+</ol>
+</blockquote>
+<h3 id="如何保障事务"><a href="#如何保障事务" class="headerlink" title="如何保障事务"></a>如何保障事务</h3><p>除非系统通过严格的ACID测试，否则空谈事务的概念是远远不够的。ACID分别表示原子性、一致性、隔离性、持久性。</p>
+<p><strong>原子性(atomicity)</strong><br>一个事务必须被视为一个不可分割的最小工作单元，整个事务要么全部提交成功，要么全部失败回滚。</p>
+<p><strong>一致性(consistency)</strong><br>数据库总是从一个一致性的状态转换到另外一个一致性的状态。例如：在前面的例子中，即使在执行第3、4条语句之间系统崩溃了，支票账户也不会损失200美元，因为事务最终没有被提交，事务中所做的修改也不会保存到数据库中。</p>
+<p><strong>隔离性(isolation)</strong><br>一个事务所做的修改在最终提交以前，对其他事务是不可见的。例如：在前面的例子中，当执行完第3条语句，第4条语句还没有开始时，此时另外一个账号汇总程序开始运行，则其看到的支票账户的余额并没有被减去200美元。</p>
+<p><strong>持久性(durability)</strong><br>一旦事务提交，则其所作的修改就会永久保存到数据库中，此时即使系统崩溃，修改的数据也不会丢失。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/12/Java设计模式之单例模式/" itemprop="url">
                   Java设计模式之单例模式
                 </a>
@@ -2107,131 +2246,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/07/Intellij-IDEA常用技巧/" itemprop="url">
-                  Intellij IDEA常用技巧
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-07T21:22:41+08:00" content="2016-08-07">
-              2016-08-07
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Intellij-IDEA/" itemprop="url" rel="index">
-                    <span itemprop="name">Intellij IDEA</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/07/Intellij-IDEA常用技巧/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/07/Intellij-IDEA常用技巧/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-自动import包"><a href="#1-自动import包" class="headerlink" title="1. 自动import包"></a>1. 自动import包</h3><p>在工程维护中，代码改动常常会产生一些无用的import或者需要import新的包，Intellij中提供自动import或移除无用包的功能；</p>
-<ul>
-<li>Optimize import on the fly 主动移除无用的import</li>
-<li>Add unambiguous imports on the fly  主动导入所需的包</li>
-</ul>
-<p><img src="../images/IDEA技巧.png" alt=""></p>
-<h3 id="未完待续…"><a href="#未完待续…" class="headerlink" title="未完待续…"></a>未完待续…</h3>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2277,7 +2291,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">137</span>
+              <span class="site-state-item-count">138</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
