@@ -292,6 +292,194 @@
             
               
                 
+                <a class="post-title-link" href="/2016/06/10/Git命令之使用场景/" itemprop="url">
+                  Git命令之使用场景
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-10T16:39:34+08:00" content="2016-06-10">
+              2016-06-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/10/Git命令之使用场景/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/10/Git命令之使用场景/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这篇文章主要是给自己做一个备忘，本文主要结合使用场景介绍常用的Git指令。</p>
+<h3 id="如何安装Git"><a href="#如何安装Git" class="headerlink" title="如何安装Git"></a>如何安装Git</h3><ol>
+<li>Mac:安装<a href="http://brew.sh" target="_blank" rel="external">Homebrew</a>: <code>brew install git</code></li>
+<li>Linux(Debian): <code>apt-get install git-core</code></li>
+<li>Linux(Fedora): <code>yum install git-core</code></li>
+</ol>
+<h3 id="如何设定Git"><a href="#如何设定Git" class="headerlink" title="如何设定Git"></a>如何设定Git</h3><ol>
+<li>Mac: <a href="https://help.github.com/articles/set-up-git/#platform-mac" target="_blank" rel="external">Set Up Git on Mac</a></li>
+<li>Linux:<a href="https://help.github.com/articles/set-up-git/#platform-linux" target="_blank" rel="external">Set Up Git on Linux</a></li>
+</ol>
+<h3 id="如何创建一个Git-Repository"><a href="#如何创建一个Git-Repository" class="headerlink" title="如何创建一个Git Repository"></a>如何创建一个Git Repository</h3><ol>
+<li>在本机任意路径下使用<code>git init</code> 初始化一个新的Git repo</li>
+<li>使用<code>git clone</code> 拷贝远程机器上的项目到本机</li>
+</ol>
+<h3 id="如何将文件加入暂存区-Stage"><a href="#如何将文件加入暂存区-Stage" class="headerlink" title="如何将文件加入暂存区(Stage)"></a>如何将文件加入暂存区(Stage)</h3><ol>
+<li>使用<code>git add</code>将新建文件加入Stage.</li>
+<li><code>git add .</code>会将所有修改过的文件加入Stage</li>
+</ol>
+<h3 id="如何将文件从暂存区中移除（取消add）"><a href="#如何将文件从暂存区中移除（取消add）" class="headerlink" title="如何将文件从暂存区中移除（取消add）"></a>如何将文件从暂存区中移除（取消add）</h3><ol>
+<li><code>git reset HEAD &quot;文件名&quot;</code></li>
+</ol>
+<h3 id="如何将暂存区文件提交到本地工作区"><a href="#如何将暂存区文件提交到本地工作区" class="headerlink" title="如何将暂存区文件提交到本地工作区"></a>如何将暂存区文件提交到本地工作区</h3><ol>
+<li>使用<code>git commit</code> 会将暂存区中的文件添加到本地工作区</li>
+<li><code>git commit -m &quot;commit信息&quot;</code> 使用commit的前提是，文件已经放到暂存区了。</li>
+<li><code>git commit -am &quot;commit信息&quot;</code> 等同于先<code>git add .</code>后<code>git commit -m &quot;commit信息&quot;</code></li>
+</ol>
+<h3 id="如何修改-取消上一次的commit"><a href="#如何修改-取消上一次的commit" class="headerlink" title="如何修改/取消上一次的commit"></a>如何修改/取消上一次的commit</h3><ol>
+<li><code>git commit --amend</code>修改上一次的commit信息</li>
+<li><code>git reset HEAD^ --soft</code>取消刚刚的commit，但保留修改过的文件(<code>-- soft</code>保留暂存区和工作区不变)</li>
+<li><code>git reset HEAD^ --hard</code>取消刚刚的commit，回到上一次commit的干净状态。(<code>--hard</code>重置暂存区和工作区) </li>
+</ol>
+<h3 id="分支基本操作-branch"><a href="#分支基本操作-branch" class="headerlink" title="分支基本操作(branch)"></a>分支基本操作(branch)</h3><ol>
+<li><code>git branch</code>列出所有本地分支</li>
+<li><code>git branch -r</code>列出所有远端分支</li>
+<li><code>git branch -a</code>列出所有本地及远端分支</li>
+<li><code>git branch &quot;新分支名称&quot;</code>创建新的本地分支</li>
+<li><code>git checkout -b &quot;新分支名称&quot;</code>创建新分支并切换到该分支(仅仅创建一个分支，不会改变stage文件，也不会改变当前工作目录)</li>
+<li><code>git checkout -b develop origin/develop</code>下载远程develop分支到本地develop分支，并切换到本地develop分支</li>
+<li><code>git branch -d &quot;已存在的分支名称&quot;</code>删除本地分支</li>
+<li><code>git push origin :远端分支</code>删除远端分支</li>
+<li><code>git checkout “分支名称”</code>切换到另一个branch</li>
+</ol>
+<h3 id="远端操作-remote"><a href="#远端操作-remote" class="headerlink" title="远端操作(remote)"></a>远端操作(remote)</h3><ol>
+<li><code>git push origin :远端分支</code> 删除远端分支</li>
+<li><code>git pull origin 远端分支</code> 下载远端分支并合并到当前目录所在分支</li>
+<li><code>git push origin 远端分支</code> 将本地的分支上传到远端</li>
+</ol>
+<h3 id="合并操作-merge"><a href="#合并操作-merge" class="headerlink" title="合并操作(merge)"></a>合并操作(merge)</h3><ol>
+<li><code>git merge &quot;本地分支&quot;</code>合并指定分支到目前的分支</li>
+</ol>
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><ol>
+<li>代码改动了，我想全部重来，如何快速回到干净的目录。<code>git reset --hard</code>这个指令会清除所有最近一次commit不同的修改。</li>
+<li>merge过程中发生冲突，我想放弃merge，要如何取消merge？<code>git reset --hard</code>可以取消这次merge</li>
+<li>如何取消这次merge会到merge前的状态？<code>git reset --hard ORIG_HEAD</code>这个指令会取消最近一次成功的merge以及所有你在这次merge后所做的修改。</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>最后，梳理一下整个流程。</p>
+<pre><code>1.git init //初始化本地仓库
+2.git clone git@git.oschina.net:shuangziliuyun/Hexo.git //拷贝远程项目到本地，这里只是举个栗子，把项目地址改成自己的即可。
+3.touch README.md //新建文件
+4.git add . //提交新建文件到暂存区(Stage)
+5.git commit -m &quot;新增README.md文件&quot;//将暂存区的文件提交到工作区
+6.git pull origin master //下载远端主分支，并合并到本地主分支。
+7.git push origin master //提交本地分支到远端
+</code></pre><h3 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h3><p>1.在push前必须pull并合并代码，以便在最新的代码上进行开发。<br>ß</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://docs.google.com/presentation/d/1JbKIKOO7szXR5TnEVyn5JFGAimgq4OXTyteX5aRstYU/edit?pref=2&amp;pli=1#slide=id.g1e072dff_3_57" target="_blank" rel="external">Git版本控制</a></li>
+<li><a href="http://gogojimmy.net/2012/02/29/git-scenario/" target="_blank" rel="external">Git情景剧</a></li>
+<li><a href="https://git-scm.com/book/zh/v1/Git-分支-远程分支" target="_blank" rel="external">Git 分支 - 远程分支</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/06/09/Mysql-for-Mac-安装和基本操作/" itemprop="url">
                   Mysql for Mac 安装和基本操作
                 </a>
@@ -1360,147 +1548,6 @@ tee – the output of write (:w) command is redirected using tee
             
               
                 
-                <a class="post-title-link" href="/2016/05/17/MYSQL存储引擎优化/" itemprop="url">
-                  MYSQL存储引擎优化
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-17T10:43:13+08:00" content="2016-05-17">
-              2016-05-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MYSQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/17/MYSQL存储引擎优化/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/17/MYSQL存储引擎优化/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
-<li>MyISAM</li>
-<li>InnoDB</li>
-</ul>
-<h6 id="MyISAM特性"><a href="#MyISAM特性" class="headerlink" title="MyISAM特性"></a>MyISAM特性</h6><p>MyISAM存储引擎不支持事务，支持全文检索,其锁定机制是表级索引，虽然可以让锁定的实现成本变得很小，但同时也大大降低了其并发性能。</p>
-<p>不仅会在写入的时候阻塞读取，MyISAM还会在读取的时候阻塞写入，但读本身并不会阻塞另外的读。MyISAM可以通过key_buffer缓存以大大提高访问性能减少磁盘IO，但是这个缓存区只会缓存索引，而不会缓存数据。</p>
-<h6 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h6><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
-<h6 id="InnoDB特性"><a href="#InnoDB特性" class="headerlink" title="InnoDB特性"></a>InnoDB特性</h6><p>InnoDB完全支持4个事务隔离级别，但不支持全文检索,通过索引实现了行级锁定，但全表扫描仍然会表锁，使用的时候注意间隙锁的影响。并且读写阻塞与事务隔离级别相关，具有非常高效的缓存特性，能够缓存索引，也能缓存数据。整个表和主键以CLUSTER方式存储；</p>
-<h6 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h6><p>InnoDB具有较好的事务特性，也就是事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h5 id="4个事务隔离级别"><a href="#4个事务隔离级别" class="headerlink" title="4个事务隔离级别"></a>4个事务隔离级别</h5><ol>
-<li>未授权读取（Read Uncommitted）: 读未提交数据，这是事务最低的隔离级别，在并发的事务中，它允许一个事务可以读到另一个事务未提交的更新数据。（会出现脏读，不可重复读和幻读）</li>
-<li>授权读取(Read Committed)：读已提交数据，保证并发的事务中，一个事务修改的数据提交后才能被另外一个事务读取到。（会出现不可重复读和幻读）</li>
-<li>可重复读取(Repeatable Read):可重复读，这种事务隔离级别可以防止脏读，不可重复读，但是可能出现幻读。一般是使用“快照”的方式来实现。</li>
-<li>序列化(Serializable):事务被处理为顺序执行，这是花费最高的，但也是最可靠的事务隔离级别，能够有效避免脏读、不可重复读、幻读。</li>
-</ol>
-<h5 id="脏读、不可重复读、幻读的概念"><a href="#脏读、不可重复读、幻读的概念" class="headerlink" title="脏读、不可重复读、幻读的概念"></a>脏读、不可重复读、幻读的概念</h5><h6 id="脏读"><a href="#脏读" class="headerlink" title="脏读"></a>脏读</h6><p>一个事务读取到另一事务未提交的更新新据。当一个事务正在访问数据，并且对数据进行了修改，而这种修改还没有<br>提交到数据库中，这时，另外一个事务也访问这个数据，然后使用了这个数据。因为这个数据是还没有提交的数据， 那么另<br>外一个事务读到的这个数据是脏数据，依据脏数据所做的操作也可能是不正确的</p>
-<h6 id="不可重复读"><a href="#不可重复读" class="headerlink" title="不可重复读"></a>不可重复读</h6><p>在同一事务中，多次读取同一数据返回的结果有所不同。换句话说就是，后续读取可以读到另一事务已提交的<br>更新数据。相反，“可重复读”在同一事务中多次读取数据时，能够保证所读数据一样，也就是，后续读取不能读到另一事务<br>已提交的更新数据。</p>
-<h6 id="幻读"><a href="#幻读" class="headerlink" title="幻读"></a>幻读</h6><p>事务T1执行一次查询，然后事务T2新插入一行记录，这行记录恰好可以满足T1所使用的查询的条件。然后T1又使用相同<br>的查询再次对表进行检索，但是此时却看到了事务T2刚才插入的新行。这个新行就称为“幻像”，因为对T1来说这一行就像突然<br>出现的一样。</p>
-<h5 id="数据库事务的4个特性"><a href="#数据库事务的4个特性" class="headerlink" title="数据库事务的4个特性"></a>数据库事务的4个特性</h5><h6 id="原子性-Atomic"><a href="#原子性-Atomic" class="headerlink" title="原子性(Atomic)"></a>原子性(Atomic)</h6><p>组成一个事务的多个数据库操作是一个不可分割的原子单元；只有所有操作执行成功，整个事务才提交，其中一个操作失败，都必须回滚到初始状态。</p>
-<h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
-<h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
-<h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2016/05/17/MYSQL存储引擎/" itemprop="url">
                   MYSQL存储引擎
                 </a>
@@ -1655,7 +1702,7 @@ tee – the output of write (:w) command is redirected using tee
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">138</span>
+              <span class="site-state-item-count">139</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
