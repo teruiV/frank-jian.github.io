@@ -6,12 +6,12 @@
     <entry>
       <title><![CDATA[KeyNote技巧之参考线与对齐]]></title>
       <url>http://jianwl.com/2016/10/22/KeyNote%E6%8A%80%E5%B7%A7%E4%B9%8B%E5%8F%82%E8%80%83%E7%BA%BF%E4%B8%8E%E5%AF%B9%E9%BD%90/</url>
-      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近遇到一个比较困惑的问题？项目工程做出来了，但是怎么样展示项目，让别人了解它。用PPT是一种比较好的展现方式，所以学习PPT使用技巧是非常有必要的。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1.文字居中</strong></p>
-<p><code>操作：拖动文字当文字呈现出一个十字标识时，处于居中位置</code></p>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近遇到一个比较困惑的问题？项目工程做出来了，但是怎么样展示项目，让别人了解它。用<code>KeyNote</code>是一种比较好的展现方式，所以学习<code>KeyNote</code>使用技巧是非常有必要的。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1.文字水平&amp;竖直居中</strong></p>
+<p><code>操作：拖动文字当文字呈现出一个十字标识时，处于水平、竖直居中位置</code></p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/6424996.jpg" alt=""></p>
 <p><strong>2.文字间距相同</strong></p>
-<p><code>操作：移动「平凡之路」与「参考线与对齐」出现双箭头时，说明「平凡之路」、「参考线与对齐」、「走在平坦的路上」间距相同，当出现竖线时，说明它们居中对齐</code></p>
+<p><code>操作：移动「平凡之路」与「参考线与对齐」出现双箭头时，说明「平凡之路」、「参考线与对齐」、「走在平坦的路上」间距相同，当出现竖线时，说明它们竖直居中对齐</code></p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/32772264.jpg" alt=""></p>
 <p><strong>3.文字左对齐</strong></p>
 <p><code>方式1：手动左对齐</code></p>
@@ -20,13 +20,13 @@
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/9811713.jpg" alt=""></p>
 <p>3、 调节直到文字在一条直线上，且间距相同。</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/45974538.jpg" alt=""> </p>
-<p><code>方式2：快速的</code></p>
+<p><code>方式2：自动左对齐</code></p>
 <p><code>操作</code></p>
 <p>1、 选中所有文字, 在其中一个文字旁右键选择对齐方式</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/30119857.jpg" alt=""></p>
-<p>2、得到左对齐后的图片，之后在一个文字旁右键选择<code>分布对象</code></p>
+<p>2、得到左对齐文字后，在一个文字旁右键选择<code>分布对象</code></p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/18045225.jpg" alt=""></p>
-<p>3、得到左对齐，且间距相同的文字</p>
+<p>3、得到左对齐且竖直间距相同的文字</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/34020849.jpg" alt=""></p>
 <p><strong>4.调整图片为相同大小</strong></p>
 <p><code>操作</code></p>
