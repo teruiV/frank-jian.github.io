@@ -292,6 +292,129 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/13/MySQL逻辑架构/" itemprop="url">
+                  MySQL逻辑架构
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-13T14:55:08+08:00" content="2016-08-13">
+              2016-08-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MYSQL</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/13/MySQL逻辑架构/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/13/MySQL逻辑架构/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="MySQL逻辑架构图"><a href="#MySQL逻辑架构图" class="headerlink" title="MySQL逻辑架构图"></a>MySQL逻辑架构图</h3><p><img src="../images/mysql架构.png" alt=""></p>
+<p><strong>最上层</strong><br>最上层服务并不是MySQL独有的，是基于网络的客户端/服务端的工具</p>
+<p><strong>第二层架构</strong><br>大多数MySQL的核心服务功能都在这一层，包括查询解析、分析、优化、缓存以及所有的内置函数（例如，日期、时间、数学和加密函数），所有跨存储引擎的功能都在这一层实现：存储过程、触发器、视图等。</p>
+<p><strong>第三层架构</strong><br>第三层包含了存储引擎，存储引擎负责MySQL中数据的存储和提取。服务器通过API与存储引擎进行通信，这些接口屏蔽了不同存储引擎之间的差异，使得这些差异对上层的查询过程透明。存储引擎API包含几十个底层函数，用于执行诸如“开始一个事务”或者“根据主键提取一行记录”等操作，但存储引擎不会去解析SQL，不同存储引擎之间也不会互相通信，而只是简单地响应上层服务器的请求。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/13/MYSQL之事务隔离级别/" itemprop="url">
                   MYSQL之事务隔离级别
                 </a>
@@ -2104,140 +2227,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/10/Java-IO概述/" itemprop="url">
-                  Java IO概述
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-10T16:11:52+08:00" content="2016-08-10">
-              2016-08-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/10/Java-IO概述/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/10/Java-IO概述/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="JAVA-IO-是什么？"><a href="#JAVA-IO-是什么？" class="headerlink" title="JAVA IO 是什么？"></a>JAVA IO 是什么？</h3><p>Java IO是一套Java用来读写数据的API，大部分程序都需要处理一些输入并由输入产生一些输出，为此Java提供了java.io包。</p>
-<h3 id="Java-io包的范围"><a href="#Java-io包的范围" class="headerlink" title="Java.io包的范围"></a>Java.io包的范围</h3><p>java.io包并没有涵盖所有输入输出类型，例如不包含GUI或网页上的读写。其主要涉及文件、网络数据流、内存缓冲等的读写。</p>
-<h3 id="Java-IO的用途和特征"><a href="#Java-IO的用途和特征" class="headerlink" title="Java IO的用途和特征"></a>Java IO的用途和特征</h3><p>Java IO中包含许多InputStream、OutputStream、Reader、Writer的子类，这样设计的原因是让每一个类都负责不同的功能，各类用途汇总如下：</p>
-<ul>
-<li>文件访问</li>
-<li>网络访问</li>
-<li>内存缓冲访问</li>
-<li>线程内部通信（管道）</li>
-<li>缓冲</li>
-<li>解析</li>
-<li>读写文本（Readers/Writers）</li>
-<li>读写基本类型数据</li>
-<li>读写对象</li>
-</ul>
-<h3 id="Java-IO类概述表"><a href="#Java-IO类概述表" class="headerlink" title="Java IO类概述表"></a>Java IO类概述表</h3><p><img src="../images/java-io.png" alt=""></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2283,7 +2272,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">139</span>
+              <span class="site-state-item-count">140</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

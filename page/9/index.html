@@ -292,6 +292,149 @@
             
               
                 
+                <a class="post-title-link" href="/2016/06/13/Java8之特性/" itemprop="url">
+                  Java8之特性
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-13T18:58:26+08:00" content="2016-06-13">
+              2016-06-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/13/Java8之特性/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/13/Java8之特性/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Java8为Java语言、编译器、类库、开发工具与JVM带来了大量新的特性，在本教程中，我们将一一探索这些变化，并用真实的例子说明其适用场景。</p>
+<h3 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h3><p>lambda表达式是整个Java8发行版中最受期待的Java语言层面上的改变，最简单的lambda表达式可以由逗号分隔的参数列表、-&gt;符号和函数体三部分组成。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//参数e的类型是由编译器推测出来的,等价于 (String e) -&gt; System.out.println(e);</div><div class="line"></div><div class="line">Arrays.asList(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;).forEach( e -&gt; System.out.println( e ));</div></pre></td></tr></table></figure>
+<p>如果lambda的函数体比较复杂，可以将函数体放到花括号中；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Arrays.asList(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;).forEach( e -&gt; &#123;</div><div class="line">    System.out.println( e );</div><div class="line">    System.out.println( e );</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>lambda引用类的成员或局部变量，如果变量不是final，会隐式转换为final，这样效率更高。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// String separator 会被隐式转换为 final String separator</div><div class="line">String separator = &quot;,&quot;;</div><div class="line">Arrays.asList(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;).forEach ( e -&gt; System.out.println( e + separator ));</div></pre></td></tr></table></figure>
+<p>lambda可能会返回一个值，返回值的类型是由编译器推测出来的，lambda的函数体只有一行的话，那么没有必要显式使用return语句。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Arrays.asList(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;).sort((e1, e2) -&gt; e1.compareTo(e2) );</div><div class="line"></div><div class="line">//等价于</div><div class="line">Arrays.asList(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;).sort((e1, e2) -&gt; &#123;</div><div class="line"> 	int result = e1.compareTo(e2) ;</div><div class="line">	return result;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>方法引用提供了非常有用的语法，可以直接引用已有Java类和对象的方法或构造器，与lambda联合使用。</p>
+<ol>
+<li>无参构造器引用，<code>Class::new</code></li>
+<li>静态方法引用，<code>Class::static_method</code></li>
+<li>特定类的方法引用 <code>Class::method</code></li>
+<li>特定对象的方法引用<code>instance::method</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">package com.xingren.java8;</div><div class="line"></div><div class="line">import java.util.Arrays;</div><div class="line">import java.util.List;</div><div class="line">import java.util.function.Supplier;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by xingren on 14/6/16.</div><div class="line"> */</div><div class="line">public class CarDemo &#123;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        final Car car = Car.create(Car::new); // 1</div><div class="line">        final List&lt;Car&gt; cars = Arrays.asList(car);</div><div class="line">        </div><div class="line">        cars.forEach(Car::collide); // 2</div><div class="line">        cars.forEach(Car::repair); // 3</div><div class="line">        cars.forEach(car::follow); // 4</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    static class Car &#123;</div><div class="line">        public static Car create( final Supplier&lt;Car&gt; supplier ) &#123;</div><div class="line">            return supplier.get();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public static void collide( final Car car ) &#123;</div><div class="line">            System.out.println( &quot;Collided &quot; + car.toString() );</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void follow( final Car another ) &#123;</div><div class="line">            System.out.println( &quot;Following the &quot; + another.toString() );</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void repair() &#123;</div><div class="line">            System.out.println( &quot;Repaired &quot; + this.toString() );</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h3><p>Optional的引入是为了解决空指针异常，Optional实际上是个容器，它可以保存类型T的值，或保存Null，Optional提供了很多方法，这样我们不用显式进行空指针检测。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">package com.xingren.java8;</div><div class="line"></div><div class="line">import java.util.Optional;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by xingren on 14/6/16.</div><div class="line"> */</div><div class="line">public class OptionalTest &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Optional&lt; String &gt; fullName = Optional.ofNullable( null );</div><div class="line">        System.out.println( &quot;Full Name is set? &quot; + fullName.isPresent() ); </div><div class="line">        System.out.println( &quot;Full Name: &quot; + fullName.orElseGet( () -&gt; &quot;[none]&quot; ) );</div><div class="line">        System.out.println( fullName.map( s -&gt; &quot;Hey &quot; + s + &quot;!&quot; ).orElse( &quot;Hey Stranger!&quot; ) );</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h3><p>Stream API把真正的函数式编程风格引入到Java中，极大简化了集合框架的处理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">package com.xingren.java8;</div><div class="line"></div><div class="line">import java.util.Arrays;</div><div class="line">import java.util.Collection;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by xingren on 14/6/16.</div><div class="line"> */</div><div class="line">public class StreamsDemo &#123;</div><div class="line">    private enum Status &#123;</div><div class="line">        OPEN, CLOSED</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    private static final class Task &#123;</div><div class="line">        private final Status status;</div><div class="line">        private final Integer points;</div><div class="line"></div><div class="line">        Task( final Status status, final Integer points ) &#123;</div><div class="line">            this.status = status;</div><div class="line">            this.points = points;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public Integer getPoints() &#123;</div><div class="line">            return points;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public Status getStatus() &#123;</div><div class="line">            return status;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public String toString() &#123;</div><div class="line">            return String.format( &quot;[%s, %d]&quot;, status, points );</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        final Collection&lt; Task &gt; tasks = Arrays.asList(</div><div class="line">                new Task(Status.OPEN, 5),</div><div class="line">                new Task(Status.OPEN, 13),</div><div class="line">                new Task(Status.CLOSED, 8)</div><div class="line">        );</div><div class="line"></div><div class="line">        // Calculate total points of all active tasks using sum()</div><div class="line">        final long totalPointsOfOpenTasks = tasks</div><div class="line">                .stream()</div><div class="line">                .filter( task -&gt; task.getStatus() == Status.OPEN )</div><div class="line">                .mapToInt( Task::getPoints )</div><div class="line">                .sum();</div><div class="line"></div><div class="line">        System.out.println( &quot;Total points: &quot; + totalPointsOfOpenTasks );</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>主函数做了哪些事？tasks集合被转化为其相应的stream表示，然后过滤掉状态为CLOSED的task；mapToInt操作通过Task::getPoints这种方式调用每个task实例的getPoints方法把Task的stream转化为Integer的stream；最后用sum函数把所有分数加起来。</p>
+<p>Stream另一个亮点是，能够原生支持并行处理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">final double totalPoints = tasks</div><div class="line">   .stream()</div><div class="line">   .parallel()</div><div class="line">   .map( task -&gt; task.getPoints() ) // or map( Task::getPoints ) </div><div class="line">   .reduce( 0, Integer::sum );</div><div class="line">     </div><div class="line">System.out.println( &quot;Total points (all tasks): &quot; + totalPoints );</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/06/10/Git命令之使用场景/" itemprop="url">
                   Git命令之使用场景
                 </a>
@@ -1527,136 +1670,6 @@ tee – the output of write (:w) command is redirected using tee
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/17/MYSQL存储引擎/" itemprop="url">
-                  MYSQL存储引擎
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-17T10:43:13+08:00" content="2016-05-17">
-              2016-05-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MYSQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/17/MYSQL存储引擎/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/17/MYSQL存储引擎/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1702,7 +1715,7 @@ tee – the output of write (:w) command is redirected using tee
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">139</span>
+              <span class="site-state-item-count">140</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

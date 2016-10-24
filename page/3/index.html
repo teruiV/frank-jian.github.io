@@ -292,6 +292,143 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/17/SpringBoot中使用-Async实现异步调用/" itemprop="url">
+                  SpringBoot中使用@Async实现异步调用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-17T22:14:27+08:00" content="2016-09-17">
+              2016-09-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/SpringBoot/" itemprop="url" rel="index">
+                    <span itemprop="name">SpringBoot</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/17/SpringBoot中使用-Async实现异步调用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/17/SpringBoot中使用-Async实现异步调用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="什么是异步调用"><a href="#什么是异步调用" class="headerlink" title="什么是异步调用"></a>什么是异步调用</h3><p><code>异步调用</code>对应的是<code>同步调用</code>，<code>同步调用</code>指程序按照定义顺序依次执行，每一行程序都必须等待上一行程序执行完成之后才能执行；<code>异步调用</code>指程序在顺序执行时，不等待异步调用返回的结果，就执行后面的程序了。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>案例1：同步调用</strong></p>
+<p>创建三个处理函数分别模拟三个执行任务的操作，操作耗时随机取(10s内)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">@Component</div><div class="line">public class Task &#123;</div><div class="line">    public static Random random =new Random();</div><div class="line"></div><div class="line">    public void doTaskOne() throws Exception &#123;</div><div class="line">        System.out.println(&quot;开始做任务一&quot;);</div><div class="line">        long start = System.currentTimeMillis();</div><div class="line">        Thread.sleep(random.nextInt(10000));</div><div class="line">        long end = System.currentTimeMillis();</div><div class="line">        System.out.println(&quot;完成任务一，耗时：&quot; + (end - start) + &quot;毫秒&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void doTaskTwo() throws Exception &#123;</div><div class="line">        System.out.println(&quot;开始做任务二&quot;);</div><div class="line">        long start = System.currentTimeMillis();</div><div class="line">        Thread.sleep(random.nextInt(10000));</div><div class="line">        long end = System.currentTimeMillis();</div><div class="line">        System.out.println(&quot;完成任务二，耗时：&quot; + (end - start) + &quot;毫秒&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void doTaskThree() throws Exception &#123;</div><div class="line">        System.out.println(&quot;开始做任务三&quot;);</div><div class="line">        long start = System.currentTimeMillis();</div><div class="line">        Thread.sleep(random.nextInt(10000));</div><div class="line">        long end = System.currentTimeMillis();</div><div class="line">        System.out.println(&quot;完成任务三，耗时：&quot; + (end - start) + &quot;毫秒&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>测试方法：</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">@RunWith(SpringJUnit4ClassRunner.class)</div><div class="line">@SpringBootTest</div><div class="line">public class TaskTest &#123;</div><div class="line"></div><div class="line">    @Autowired</div><div class="line">    private Task task;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void taskExec() throws Exception &#123;</div><div class="line">        task.doTaskOne();</div><div class="line">        task.doTaskTwo();</div><div class="line">        task.doTaskThree();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>执行结果:</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-17/44690361.jpg" alt=""></p>
+<p><strong>案例2：异步调用</strong></p>
+<p><code>在Spring Boot的主程序增加@EnableAsyn，为了让@Async注解生效</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@EnableAsync</div><div class="line">@SpringBootApplication</div><div class="line">public class SpringDemoApplication &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		SpringApplication.run(SpringDemoApplication.class, args);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>三个异步调用函数：AsyncTask.class</code></p>
+<p>特别注意：@Async所修饰的函数不要定义为static类型，这样异步调用不会生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">@Component</div><div class="line">public class AsyncTask &#123;</div><div class="line">    public static Random random =new Random();</div><div class="line"></div><div class="line">    @Async</div><div class="line">    public Future&lt;String&gt; doTaskOne() throws Exception &#123;</div><div class="line">        System.out.println(&quot;开始做任务一&quot;);</div><div class="line">        long start = System.currentTimeMillis();</div><div class="line">        Thread.sleep(random.nextInt(10000));</div><div class="line">        long end = System.currentTimeMillis();</div><div class="line">        System.out.println(&quot;完成任务一，耗时：&quot; + (end - start) + &quot;毫秒&quot;);</div><div class="line"></div><div class="line">        return new AsyncResult&lt;&gt;(&quot;任务一已完成!!!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Async</div><div class="line">    public Future&lt;String&gt; doTaskTwo() throws Exception &#123;</div><div class="line">        System.out.println(&quot;开始做任务二&quot;);</div><div class="line">        long start = System.currentTimeMillis();</div><div class="line">        Thread.sleep(random.nextInt(10000));</div><div class="line">        long end = System.currentTimeMillis();</div><div class="line">        System.out.println(&quot;完成任务二，耗时：&quot; + (end - start) + &quot;毫秒&quot;);</div><div class="line">        return new AsyncResult&lt;&gt;(&quot;任务二已完成!!!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Async</div><div class="line">    public Future&lt;String&gt; doTaskThree() throws Exception &#123;</div><div class="line">        System.out.println(&quot;开始做任务三&quot;);</div><div class="line">        long start = System.currentTimeMillis();</div><div class="line">        Thread.sleep(random.nextInt(10000));</div><div class="line">        long end = System.currentTimeMillis();</div><div class="line">        System.out.println(&quot;完成任务三，耗时：&quot; + (end - start) + &quot;毫秒&quot;);</div><div class="line">        return new AsyncResult&lt;&gt;(&quot;任务三已完成!!!&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>执行的结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-17/20718204.jpg" alt=""></p>
+<p><code>分析</code></p>
+<p>对比<code>同步调用</code>和<code>异步调用</code>案例，很明显，异步调用让任务1、2、3并发执行，有效的减少了程序的总运行时间。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/17/SpringBoot使用AOP统一处理Web请求日志/" itemprop="url">
                   SpringBoot使用AOP统一处理Web请求日志
                 </a>
@@ -1985,114 +2122,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/08/Mysql服务启动错误-The-server-quit-without-updating-PID-file/" itemprop="url">
-                  Mysql服务启动错误 The server quit without updating PID file
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-08T11:39:19+08:00" content="2016-09-08">
-              2016-09-08
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/08/Mysql服务启动错误-The-server-quit-without-updating-PID-file/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/08/Mysql服务启动错误-The-server-quit-without-updating-PID-file/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>本地MySQL一直都能够正常启动的，昨晚关机了Mac，今早启动MySQL,出错了。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-8/77573533.jpg" alt=""></p>
-<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>删除下面这个错误文件就可以了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo rm -rf /usr/local/var/mysql/jianweilindeMacBook-Pro.local.err</div></pre></td></tr></table></figure></p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-8/23129111.jpg" alt=""></p>
-<p>由于<code>jianweilindeMacBook-Pro.local.err</code>的用户权限是<code>_mysql</code>,而不是我自己的用户权限，故启动的时候会报错。删除这个文件或修改用户权限均可。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="http://pein0119.github.io/2015/03/25/MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E9%94%99%E8%AF%AF-The-server-quit-without-updating-PID-file/" target="_blank" rel="external">MySQL服务器启动错误<code>The server quit without updating PID file</code></a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2138,7 +2167,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">139</span>
+              <span class="site-state-item-count">140</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

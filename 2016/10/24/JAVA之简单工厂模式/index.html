@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="MYSQL," />
+  <meta name="keywords" content="JAVA," />
 
 
 
@@ -85,37 +85,60 @@
 
 
 
-<meta name="description" content="什么是事务一组原子性的SQL查询，事务内的语句要么全部执行成功，要么全部执行失败。
-场景示例假设一个银行的数据库有两张表:支票(checking)表和储蓄(savings)表，现在用户Jane的支票账户转移200美元到她的储蓄账户，那么需要至少三个步骤：
+<meta name="description" content="前言上一节我们学习了模板方法，这一节让我们来学习简单工厂模式。
+定义
+工厂模式就是按照要求返回一个类型的对象。
+目的
+使对象的实例化与主程序代码解耦。
+设计原则
 
-检查支票账户的余额高于200美元
-从支票账户余额中减去200美元
-在储蓄账户余额中增加200美元
+变量不要持有具体类的引用
+不要让类继承具体类，要继承抽象类或接口
+不要覆盖基类中已实现的方法
 
-上述三个步骤必须打包在一个事务中，任何一个">
+优点
+
+简单工厂模式实现了对责任的分割，提供了专门的工厂类创建对象
+引入配置文件，在不需要修改客户端代码的情况下更换和增加新的产品类，一定程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MYSQL之事务">
-<meta property="og:url" content="http://jianwl.com/2016/08/13/MYSQL之事务/index.html">
+<meta property="og:title" content="JAVA之简单工厂模式">
+<meta property="og:url" content="http://jianwl.com/2016/10/24/JAVA之简单工厂模式/index.html">
 <meta property="og:site_name" content="记录点滴成长">
-<meta property="og:description" content="什么是事务一组原子性的SQL查询，事务内的语句要么全部执行成功，要么全部执行失败。
-场景示例假设一个银行的数据库有两张表:支票(checking)表和储蓄(savings)表，现在用户Jane的支票账户转移200美元到她的储蓄账户，那么需要至少三个步骤：
+<meta property="og:description" content="前言上一节我们学习了模板方法，这一节让我们来学习简单工厂模式。
+定义
+工厂模式就是按照要求返回一个类型的对象。
+目的
+使对象的实例化与主程序代码解耦。
+设计原则
 
-检查支票账户的余额高于200美元
-从支票账户余额中减去200美元
-在储蓄账户余额中增加200美元
+变量不要持有具体类的引用
+不要让类继承具体类，要继承抽象类或接口
+不要覆盖基类中已实现的方法
 
-上述三个步骤必须打包在一个事务中，任何一个">
-<meta property="og:updated_time" content="2016-10-01T13:10:01.000Z">
+优点
+
+简单工厂模式实现了对责任的分割，提供了专门的工厂类创建对象
+引入配置文件，在不需要修改客户端代码的情况下更换和增加新的产品类，一定程">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-25/57629976.jpg">
+<meta property="og:updated_time" content="2016-10-24T16:59:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MYSQL之事务">
-<meta name="twitter:description" content="什么是事务一组原子性的SQL查询，事务内的语句要么全部执行成功，要么全部执行失败。
-场景示例假设一个银行的数据库有两张表:支票(checking)表和储蓄(savings)表，现在用户Jane的支票账户转移200美元到她的储蓄账户，那么需要至少三个步骤：
+<meta name="twitter:title" content="JAVA之简单工厂模式">
+<meta name="twitter:description" content="前言上一节我们学习了模板方法，这一节让我们来学习简单工厂模式。
+定义
+工厂模式就是按照要求返回一个类型的对象。
+目的
+使对象的实例化与主程序代码解耦。
+设计原则
 
-检查支票账户的余额高于200美元
-从支票账户余额中减去200美元
-在储蓄账户余额中增加200美元
+变量不要持有具体类的引用
+不要让类继承具体类，要继承抽象类或接口
+不要覆盖基类中已实现的方法
 
-上述三个步骤必须打包在一个事务中，任何一个">
+优点
+
+简单工厂模式实现了对责任的分割，提供了专门的工厂类创建对象
+引入配置文件，在不需要修改客户端代码的情况下更换和增加新的产品类，一定程">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-25/57629976.jpg">
 
 
 
@@ -136,9 +159,9 @@
 
 
 
-  <link rel="canonical" href="http://jianwl.com/2016/08/13/MYSQL之事务/"/>
+  <link rel="canonical" href="http://jianwl.com/2016/10/24/JAVA之简单工厂模式/"/>
 
-  <title> MYSQL之事务 | 记录点滴成长 </title>
+  <title> JAVA之简单工厂模式 | 记录点滴成长 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -311,7 +334,7 @@
             
             
               
-                MYSQL之事务
+                JAVA之简单工厂模式
               
             
           </h1>
@@ -323,8 +346,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-13T11:07:35+08:00" content="2016-08-13">
-              2016-08-13
+            <time itemprop="dateCreated" datetime="2016-10-24T23:56:11+08:00" content="2016-10-24">
+              2016-10-24
             </time>
           </span>
 
@@ -337,8 +360,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MYSQL</span>
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
                   </a>
                 </span>
 
@@ -353,8 +376,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/08/13/MYSQL之事务/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/13/MYSQL之事务/" itemprop="commentsCount"></span>
+                <a href="/2016/10/24/JAVA之简单工厂模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/24/JAVA之简单工厂模式/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -377,26 +400,55 @@
       
 
       
-        <h3 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h3><p>一组原子性的SQL查询，事务内的语句要么全部执行成功，要么全部执行失败。</p>
-<h3 id="场景示例"><a href="#场景示例" class="headerlink" title="场景示例"></a>场景示例</h3><p>假设一个银行的数据库有两张表:支票(checking)表和储蓄(savings)表，现在用户Jane的支票账户转移200美元到她的储蓄账户，那么需要至少三个步骤：</p>
-<ol>
-<li>检查支票账户的余额高于200美元</li>
-<li>从支票账户余额中减去200美元</li>
-<li>在储蓄账户余额中增加200美元</li>
-</ol>
-<p>上述三个步骤必须打包在一个事务中，任何一个步骤失败，则必须回滚所有的步骤。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">START TRANSACTION;</div><div class="line">SELECT balance FROM checking where customer_id =  10233276;</div><div class="line">UPDATE checking SET balance = balance - 200.00 WHERE customer_id = 10233276;</div><div class="line">UPDATE savings SET balance = balance + 200.00  WHERE customer_id = 10233276;</div><div class="line">COMMIT</div></pre></td></tr></table></figure></p>
-<p>但是….. 单纯的事务概念并不是故事的全部，可能会出现以下场景….</p>
-<blockquote>
-<ol>
-<li>执行第4条语句时，服务器崩溃了 – 可能用户会损失200美金</li>
-<li>在执行第3条语句和第4条语句之间，另外一个进程要删除支票账户的所有余额 – 银行在不知道这个逻辑的情况下， 可能白白给了Jane200美金。</li>
-</ol>
-</blockquote>
-<h3 id="如何保障事务"><a href="#如何保障事务" class="headerlink" title="如何保障事务"></a>如何保障事务</h3><p>除非系统通过严格的ACID测试，否则空谈事务的概念是远远不够的。ACID分别表示原子性、一致性、隔离性、持久性。</p>
-<p><strong>原子性(atomicity)</strong><br>一个事务必须被视为一个不可分割的最小工作单元，整个事务要么全部提交成功，要么全部失败回滚。</p>
-<p><strong>一致性(consistency)</strong><br>数据库总是从一个一致性的状态转换到另外一个一致性的状态。例如：在前面的例子中，即使在执行第3、4条语句之间系统崩溃了，支票账户也不会损失200美元，因为事务最终没有被提交，事务中所做的修改也不会保存到数据库中。</p>
-<p><strong>隔离性(isolation)</strong><br>一个事务所做的修改在最终提交以前，对其他事务是不可见的。例如：在前面的例子中，当执行完第3条语句，第4条语句还没有开始时，此时另外一个账号汇总程序开始运行，则其看到的支票账户的余额并没有被减去200美元。</p>
-<p><strong>持久性(durability)</strong><br>一旦事务提交，则其所作的修改就会永久保存到数据库中，此时即使系统崩溃，修改的数据也不会丢失。</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上一节我们学习了<a href="http://jianwl.com/2016/10/17/Java%E4%B9%8B%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95/">模板方法</a>，这一节让我们来学习简单工厂模式。</p>
+<p><code>定义</code></p>
+<p>工厂模式就是按照要求返回一个类型的对象。</p>
+<p><code>目的</code></p>
+<p>使对象的实例化与主程序代码解耦。</p>
+<p><code>设计原则</code></p>
+<ul>
+<li>变量不要持有具体类的引用</li>
+<li>不要让类继承具体类，要继承抽象类或接口</li>
+<li>不要覆盖基类中已实现的方法</li>
+</ul>
+<p><code>优点</code></p>
+<ul>
+<li>简单工厂模式实现了对责任的分割，提供了专门的工厂类创建对象</li>
+<li>引入配置文件，在不需要修改客户端代码的情况下更换和增加新的产品类，一定程度提高系统的灵活性。</li>
+</ul>
+<p><code>缺点</code></p>
+<ul>
+<li>扩展困难，一旦添加新产品需要修改工厂逻辑</li>
+<li>产品类型较多时，可能造成工厂逻辑过于复杂，不利于系统扩展和维护</li>
+<li>工厂类集中了所有产品创建逻辑，一旦不能工作，整个系统将受影响。</li>
+<li>简单工厂模式会增加系统中类的个数，一定程度上增加了系统的复杂性和理解难度</li>
+<li>使用静态工厂方法，造成工厂角色无法形成基于继承的等级结构</li>
+</ul>
+<p><code>应用场景A</code></p>
+<p>我们与银行有业务来往，需要与银行方进行报文通信，不同的业务的报文不同，为此我们需要有一个工厂来简单创建不同的报文。</p>
+<p><code>应用场景B</code></p>
+<p>写一个Servlet处理客户端请求的时候，往往会给一个Servlet处理多个业务逻辑，为此我们需要有一个工厂类简单创建不同的Servlet。</p>
+<h3 id="实战-应用场景A："><a href="#实战-应用场景A：" class="headerlink" title="实战 - 应用场景A："></a>实战 - 应用场景A：</h3><p><strong>1. 定义产品接口</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface IProduct &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>2. 定义一个抽象类，他是所有产品的父类</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public abstract class AnswerHead &#123;</div><div class="line">    protected String requestType;</div><div class="line">    protected String agentCode;</div><div class="line">    protected String trnCode;</div><div class="line">    protected String frontTraceno;</div><div class="line">    public abstract String toXML();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>3. 产品类A，只应答报文头</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class AnswerHeadOnly extends AnswerHead &#123;</div><div class="line">    @Override</div><div class="line">    public String toXML() &#123;</div><div class="line">        System.out.println(&quot;AnswerHeadOnly to xml&quot;);</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>4. 产品类B，只应答报文体</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class AnswerBodyMobile extends AnswerHead &#123;</div><div class="line">    @Override</div><div class="line">    public String toXML() &#123;</div><div class="line">        System.out.println(&quot;AnswerBodyMobile to xml&quot;);</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>5. 简单工厂类，根据参数不同生成不同的实例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class ProductFactory &#123;</div><div class="line">    public static AnswerHead createProduct(String type)&#123;</div><div class="line">       switch (type)&#123;</div><div class="line">           case &quot;answerHeadOnly&quot;:</div><div class="line">               return new AnswerHeadOnly();</div><div class="line">           case &quot;answerHeadMobile&quot;:</div><div class="line">               return new AnswerBodyMobile();</div><div class="line">           default:</div><div class="line">               return null;</div><div class="line">       &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ProductFactory.createProduct(&quot;answerHeadOnly&quot;).toXML();</div><div class="line">        ProductFactory.createProduct(&quot;answerHeadMobile&quot;).toXML();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>6、结果</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-25/57629976.jpg" alt=""></p>
+<h3 id="实战-应用场景B"><a href="#实战-应用场景B" class="headerlink" title="实战 - 应用场景B"></a>实战 - 应用场景B</h3><p>我们在写一个Servlet处理客户端请求的时候，往往会一个Servlet处理多个业务逻辑，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">protected void doPost(HttpServletRequest request, HttpServletResponse response) &#123;</div><div class="line">    String flag = request.getParameter(&quot;flag&quot;);</div><div class="line">    if(flag.equals(&quot;service1&quot;)) &#123;</div><div class="line">        service1();</div><div class="line">    &#125;else if(flag.equals(&quot;service2&quot;)) &#123;</div><div class="line">        service2();</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上是我们的Servlet处理多业务逻辑的常规方法，写一坨<code>if else</code>语句，一种比较好的办法就是，将请求的分发与Servlet分离，让Servlet之处理业务逻辑。我们把各种请求的Servlet看做产品类，<code>javax.servlet.HttpServlet</code>是产品父类，<code>javax.servlet.Servlet</code>是产品接口，这样我们定义一个<code>ServletFactory</code>,在过滤器里解析url请求并交给<code>ServletFactory</code>来处理就可以了。这是一个典型的简单工厂应用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">@WebFilter(&quot;/TransRequest&quot;)</div><div class="line">public class TransRequest implements Filter&#123;</div><div class="line">    private String servletName;</div><div class="line">    @Override</div><div class="line">    public void doFilter(ServletRequest request, ServletResponse response,</div><div class="line">            FilterChain chain) throws IOException, ServletException &#123;</div><div class="line">        HttpServletRequest myRequest = (HttpServletRequest)request;</div><div class="line">        //拿到请求的servlet名字， 这里我们约定请求都是/servletName形式</div><div class="line">        String names[] = myRequest.getRequestURI().trim().split(&quot;/&quot;);</div><div class="line">        servletName = names[2];</div><div class="line">        if( servletName != null) &#123;</div><div class="line">        //以下是最典型的两句简单工厂的例子</div><div class="line">            Servlet servlet = ServletFactory.createServlet(servletName);</div><div class="line">            servlet.service(request, response);</div><div class="line">        &#125;else</div><div class="line">            chain.doFilter(request, response);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>每次类一个请求我们用工厂生产一个Servlet，这样可以免去xml配置大量的servlet路径信息比较方便，逻辑也更加清晰。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> public class ServletFactory &#123;</div><div class="line">    public static Servlet createServlet(String servletName) throws ServletException &#123;</div><div class="line">        if(servletName.equals(&quot;servletName1&quot;)) &#123;</div><div class="line">            return new Service1();</div><div class="line">        &#125;else if(servletName.equals(&quot;servletName2&quot;))&#123;</div><div class="line">            return new Service2();</div><div class="line">        &#125;else&#123;</div><div class="line">            throw new ServletException(&quot;No such servlet&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://blog.csdn.net/zuoxiaolong8810/article/details/9044033" target="_blank" rel="external">简单工厂模式详解</a></li>
+</ul>
 
       
     </div>
@@ -419,7 +471,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/MYSQL/" rel="tag">#MYSQL</a>
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
           
         </div>
       
@@ -428,17 +480,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/12/Java设计模式之单例模式/" rel="next" title="Java设计模式之单例模式">
-                <i class="fa fa-chevron-left"></i> Java设计模式之单例模式
+              <a href="/2016/10/22/KeyNote技巧之次序/" rel="next" title="KeyNote技巧之次序">
+                <i class="fa fa-chevron-left"></i> KeyNote技巧之次序
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/13/MYSQL之事务隔离级别/" rel="prev" title="MYSQL之事务隔离级别">
-                MYSQL之事务隔离级别 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -453,10 +501,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/08/13/MYSQL之事务/"
-     data-title="MYSQL之事务"
+        <div class="ds-share flat" data-thread-key="2016/10/24/JAVA之简单工厂模式/"
+     data-title="JAVA之简单工厂模式"
      data-content=""
-     data-url="http://jianwl.com/2016/08/13/MYSQL之事务/">
+     data-url="http://jianwl.com/2016/10/24/JAVA之简单工厂模式/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -483,8 +531,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/08/13/MYSQL之事务/"
-           data-title="MYSQL之事务" data-url="http://jianwl.com/2016/08/13/MYSQL之事务/">
+      <div class="ds-thread" data-thread-key="2016/10/24/JAVA之简单工厂模式/"
+           data-title="JAVA之简单工厂模式" data-url="http://jianwl.com/2016/10/24/JAVA之简单工厂模式/">
       </div>
     
   </div>
@@ -575,7 +623,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是事务"><span class="nav-number">1.</span> <span class="nav-text">什么是事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#场景示例"><span class="nav-number">2.</span> <span class="nav-text">场景示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何保障事务"><span class="nav-number">3.</span> <span class="nav-text">如何保障事务</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战-应用场景A："><span class="nav-number">2.</span> <span class="nav-text">实战 - 应用场景A：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战-应用场景B"><span class="nav-number">3.</span> <span class="nav-text">实战 - 应用场景B</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
         </section>
