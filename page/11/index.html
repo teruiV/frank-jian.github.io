@@ -292,6 +292,125 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/06/PHP常用类和接口的判断方法/" itemprop="url">
+                  PHP常用类和接口的判断方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-06T10:11:18+08:00" content="2016-05-06">
+              2016-05-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/06/PHP常用类和接口的判断方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/06/PHP常用类和接口的判断方法/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">        class Computer &#123;</div><div class="line">                public function _run() &#123;&#125;</div><div class="line">                private function _go() &#123;&#125;</div><div class="line">                public $_name = &apos;dell&apos;;</div><div class="line">                private $_model = &apos;i7&apos;;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        class NoteComputer extends Computer &#123;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        interface Person &#123;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        $computer = new Computer();</div><div class="line">        $notecomputer = new NoteComputer();</div><div class="line"></div><div class="line">        //1.检查类是否存在</div><div class="line">        echo class_exists(&apos;Computer&apos;);</div><div class="line">        //2.获取对象的类名</div><div class="line">        echo get_class($computer);</div><div class="line">        //3.获取类中公共的方法</div><div class="line">        print_r(get_class_methods($computer));</div><div class="line">        //4.获取类中的字段</div><div class="line">        print_r(get_class_vars(&apos;Computer&apos;));</div><div class="line">        //5.获取子类的父类</div><div class="line">        echo get_parent_class($notecomputer);</div><div class="line">        //6.判断接口是否存在</div><div class="line">        echo interface_exists(&apos;Person&apos;);</div><div class="line">        //7.判断对象是否是这个类，$notecomputer的类的父类是Computer</div><div class="line">        echo is_a($notecomputer,&apos;Computer&apos;);</div><div class="line">        //8.判断对象是否是类的子类。</div><div class="line">        echo is_subclass_of($notecomputer,&apos;Computer&apos;);</div><div class="line">        //9.判断对象是否有这个方法</div><div class="line">        echo method_exists($computer,&apos;_run&apos;);</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/05/PHP面向对象特性/" itemprop="url">
                   PHP面向对象特性
                 </a>
@@ -1473,140 +1592,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/04/MySQL配置文件设置my-ini/" itemprop="url">
-                  MySQL配置文件设置my.ini
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-04T09:22:12+08:00" content="2016-05-04">
-              2016-05-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MYSQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/04/MySQL配置文件设置my-ini/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/04/MySQL配置文件设置my-ini/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>//客户端设置<br>[client]</p>
-<p>//设置mysql客户端连接服务器时默认使用端口<br>port = 3306</p>
-<p>[mysql]</p>
-<p>//设置mysql客户端默认字符集<br>default-character-set=utf8</p>
-<p>//服务器端设置<br>[mysqld]</p>
-<p>//mysql服务器默认监听(listen on)的TCP/IP端口<br>port=3306</p>
-<p>//基准路径<br>basedir=”D:/software/MYSQL5.6”</p>
-<p>//mysql数据库文件所在目录<br>datadir=”D:/software/MYSQL5.6/Data”</p>
-<p>//服务端使用的字符集默认为latin1字符集，设置为utf8<br>character-set-server=utf8</p>
-<p>//默认存储引擎为INNODB<br>default-storage-engine=INNODB</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1647,7 +1637,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">140</span>
+              <span class="site-state-item-count">141</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -292,6 +292,132 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/17/HTTP请求报文详解/" itemprop="url">
+                  HTTP请求报文详解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-17T11:52:51+08:00" content="2016-05-17">
+              2016-05-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/17/HTTP请求报文详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/17/HTTP请求报文详解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h6 id="Http协议通用首部字段："><a href="#Http协议通用首部字段：" class="headerlink" title="Http协议通用首部字段："></a>Http协议通用首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Cache-Control  控制缓存行为</div><div class="line">Connection 控制不再转发给代理的首部字段、管理持久连接</div><div class="line">Date 创建报文的日期时间</div><div class="line">Pragma 报文指令</div><div class="line">Trailer 报文末端的首部一览</div><div class="line">Transfer-Encoding 指定报文主体的传输编码方式</div><div class="line">Upgrade 升级为其他协议</div><div class="line">Via 代理服务器相关信息</div><div class="line">Warning 错误通知</div></pre></td></tr></table></figure>
+<h6 id="Http请求首部字段："><a href="#Http请求首部字段：" class="headerlink" title="Http请求首部字段："></a>Http请求首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Accept 用户代理可处理的媒体类型</div><div class="line">Accept-Charset 优先的字符集</div><div class="line">Accept-Encoding 优先的内容编码</div><div class="line">Accept-Language 优先的语言</div><div class="line">Authrization Web认证信息</div><div class="line">Expect 期待服务器的特定行为</div><div class="line">From 用户的电子邮箱地址</div><div class="line">Host 请求资源所在服务器</div><div class="line">If-Match 比较实体标记(Etag)</div><div class="line">If-Modified-Since 比较资源的更新时间</div><div class="line">if-None-Match 比较实体标记(与If-Match相反)</div><div class="line">If-Range 资源未更新时发送实体Byte的范围请求</div><div class="line">If-Unmodified-Since 比较资源的更新时间</div><div class="line">Max-forwards 最大传输逐跳数</div><div class="line">Proxy-Authorization 代理服务器要求客户端的认证信息</div><div class="line">Range 实体的字节范围请求</div><div class="line">Referer 对请求中的URI的原始获取方</div><div class="line">TE 传输编码的优先级</div><div class="line">User-Agent HTTP客户端程序的信息</div><div class="line">Cookie 服务器接收到的Cookie信息</div></pre></td></tr></table></figure>
+<h6 id="Http响应首部字段："><a href="#Http响应首部字段：" class="headerlink" title="Http响应首部字段："></a>Http响应首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Accept-Ranges 是否接受字节范围</div><div class="line">Age 推算资源创建经过时间</div><div class="line">Etag 资源匹配信息</div><div class="line">Location 令客户端重定向至指定URI</div><div class="line">Proxy-Authenticate 代理服务器对客户端的认证信息</div><div class="line">Retry-After 对再次发起请求的时机要求</div><div class="line">Server HTTP服务器的安装信息</div><div class="line">Vary 代理服务器缓存的管理信息</div><div class="line">WWW-Authenticate 服务器对客户端的认证信息</div><div class="line">Set-Cookie 开始状态管理所使用的Cookie信息</div></pre></td></tr></table></figure>
+<h6 id="实体首部字段："><a href="#实体首部字段：" class="headerlink" title="实体首部字段："></a>实体首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Allow 资源可支持的HTTP方法</div><div class="line">Content-Encoding 实体主体适用的编码方式</div><div class="line">Content-Length 实体主体的自然语言</div><div class="line">Content-Location 替代对应资源的URI</div><div class="line">Content-MD5 实体主体的报文摘要</div><div class="line">Content-Range 实体主体的位置范围</div><div class="line">Content-Type 实体主体的媒体类型</div><div class="line">Expires 实体主体的过期时间</div><div class="line">Last-Modified 资源的最后修改时间</div></pre></td></tr></table></figure>
+<h6 id="为Cookie服务的首部字段"><a href="#为Cookie服务的首部字段" class="headerlink" title="为Cookie服务的首部字段"></a>为Cookie服务的首部字段</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Set-Cookie</div><div class="line">Cookie</div></pre></td></tr></table></figure>
+<h6 id="请求和响应报文的组成"><a href="#请求和响应报文的组成" class="headerlink" title="请求和响应报文的组成"></a>请求和响应报文的组成</h6><p>请求报文<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">请求报文由报文首部+空行（CR+LF）+报文主体构成；</div><div class="line">报文首部由：请求行+ 请求首部字段+通用首部字段+实体首部字段+其他</div></pre></td></tr></table></figure></p>
+<p>响应报文<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">响应报文由报文首部+空行（CR+LF）+报文主体构成；</div><div class="line">报文首部由：状态行+ 响应首部字段+通用首部字段+实体首部字段+其他</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/17/MYSQL存储引擎优化/" itemprop="url">
                   MYSQL存储引擎优化
                 </a>
@@ -1480,130 +1606,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/06/PHP常用类和接口的判断方法/" itemprop="url">
-                  PHP常用类和接口的判断方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-06T10:11:18+08:00" content="2016-05-06">
-              2016-05-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/06/PHP常用类和接口的判断方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/06/PHP常用类和接口的判断方法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">        class Computer &#123;</div><div class="line">                public function _run() &#123;&#125;</div><div class="line">                private function _go() &#123;&#125;</div><div class="line">                public $_name = &apos;dell&apos;;</div><div class="line">                private $_model = &apos;i7&apos;;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        class NoteComputer extends Computer &#123;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        interface Person &#123;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        $computer = new Computer();</div><div class="line">        $notecomputer = new NoteComputer();</div><div class="line"></div><div class="line">        //1.检查类是否存在</div><div class="line">        echo class_exists(&apos;Computer&apos;);</div><div class="line">        //2.获取对象的类名</div><div class="line">        echo get_class($computer);</div><div class="line">        //3.获取类中公共的方法</div><div class="line">        print_r(get_class_methods($computer));</div><div class="line">        //4.获取类中的字段</div><div class="line">        print_r(get_class_vars(&apos;Computer&apos;));</div><div class="line">        //5.获取子类的父类</div><div class="line">        echo get_parent_class($notecomputer);</div><div class="line">        //6.判断接口是否存在</div><div class="line">        echo interface_exists(&apos;Person&apos;);</div><div class="line">        //7.判断对象是否是这个类，$notecomputer的类的父类是Computer</div><div class="line">        echo is_a($notecomputer,&apos;Computer&apos;);</div><div class="line">        //8.判断对象是否是类的子类。</div><div class="line">        echo is_subclass_of($notecomputer,&apos;Computer&apos;);</div><div class="line">        //9.判断对象是否有这个方法</div><div class="line">        echo method_exists($computer,&apos;_run&apos;);</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1644,7 +1651,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">140</span>
+              <span class="site-state-item-count">141</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

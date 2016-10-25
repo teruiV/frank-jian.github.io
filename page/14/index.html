@@ -292,6 +292,143 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/28/HTTPS通信机制/" itemprop="url">
+                  HTTPS通信机制
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-28T11:32:07+08:00" content="2016-04-28">
+              2016-04-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/28/HTTPS通信机制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/28/HTTPS通信机制/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>为了更好的理解HTTPS，总结一下HTTPS的通信步骤。</p>
+<p><img src="/images/HTTPS通信机制.jpg" alt=""><br>1、客户端通过发送Client Hello报文开始SSL通信，报文中包含客户端支持的SSL的指定版本，加密组件（Cipher Suite）列表</p>
+<p>2、服务端进行SSL通信时，会以Server Hello报文作为应答，和客户端一样，在报文中包含SSL版本，加密组件。服务器的加密组件内容是从接收到的客户端机密组件内筛选出来的。</p>
+<p>3、服务器发送Certificate报文，报文中包含公开密钥证书。</p>
+<p>4、服务器发送ServerHelloDone报文通知客户端，最初阶段的SSL握手协商部分结束了</p>
+<p>5、SSL第一次握手结束之后，客户端以Client Key Exchange报文作为回应，报文中包含通信加密中使用的一种被称为Pre-master secret的随机密码串。该报文已用步骤3中的公钥进行加密</p>
+<p>6、客户端继续发送Change Ciper Spec报文，该报文会提示服务器，在此报文之后的通信会采用Pre-master-secret密钥加密</p>
+<p>7、客户端发送Finished报文，该报文包含连接至今全部报文的整体校验值，这次握手协议能否成功，要以服务器是否能够正确解密该报文作为判定标准。</p>
+<p>8、服务器同样发送Change Cipher Spec报文。</p>
+<p>9、服务器同样发送Finished报文</p>
+<p>10、服务器和客户端的Finished报文交换完毕之后，SSL连接就算建立完成，当然，通信会受到SSL的保护，从此处开始进行应用层协议的通信，即发送HTTP请求。</p>
+<p>11、应用层协议通信，即发送HTTP响应</p>
+<p>12、最后由客户端断开连接，断开连接时，发送close_notify报文。</p>
+<h3 id="使用服务端的公开密码证书建立HTTPS通信的整个过程"><a href="#使用服务端的公开密码证书建立HTTPS通信的整个过程" class="headerlink" title="使用服务端的公开密码证书建立HTTPS通信的整个过程"></a>使用服务端的公开密码证书建立HTTPS通信的整个过程</h3><p>1、服务端将公开密钥证书下发给客户端 （公开密钥证书包含服务器的公钥和认证机构的证书）</p>
+<p>2、客户端取出证书确认其有效性，取出公开密钥，用公开密钥对随机密码串pre-master-secret进行加密,并发送给服务端</p>
+<p>3、服务端用私钥解密客户端发送过来的加密信息，得到随机密码串pre-master-secret。</p>
+<p>4、这样在客户端和服务端都拥有了共享密钥pre-master-secret，之后的通信就可以用这个共享密钥进行加密通信。</p>
+<h3 id="HTTPS的缺点"><a href="#HTTPS的缺点" class="headerlink" title="HTTPS的缺点"></a>HTTPS的缺点</h3><p>使用HTTPS存在一些问题，它的处理速度会变慢，SSL的慢分两种，一种是服务器和客户端都需要做加密和解密操作大量消耗CPU及内存等资源，另一种是通信慢，因为SSL通信部分消耗网络资源。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/27/HTTP基础/" itemprop="url">
                   HTTP基础
                 </a>
@@ -1547,146 +1684,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/14/Hexo免输入密码部署到Github/" itemprop="url">
-                  Hexo免输入密码部署到Github
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-14T12:37:31+08:00" content="2016-04-14">
-              2016-04-14
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/14/Hexo免输入密码部署到Github/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/14/Hexo免输入密码部署到Github/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在使用hexo deploy命令部署hexo到github时，每次都要输入用户名和密码，这种重复机械的流程，让人感觉很烦躁。以下是介绍如何解决这个问题：<br>方案一：在本机新建文本，明文存储github的账号和密码<br>1、在系统环境变量中新增一个环境变量<br><img src="/images/env.png" alt=""><br>2、接着在你的用户目录(C:\Users\username)下新建一个叫_netrc的文件，在文件中添加以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">machine github.com</div><div class="line">login username //username为github账户名 （ps：请将注释内容去掉）</div><div class="line">password password //password为github账户的密码</div></pre></td></tr></table></figure></p>
-<p>3、设置好这些之后，当你再次部署时，就不用再输入用户名和密码了。</p>
-<p>方案二：本机生成SSH密钥，配置到github中<br>1、设置Git的user name和email<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name &quot;shuangziliuyun&quot;</div><div class="line">git config --global user.email &quot;1515970958@qq.com&quot;</div></pre></td></tr></table></figure></p>
-<p>2、生成SSH密钥</p>
-<ul>
-<li>查看是否已经有了ssh密钥<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd ~/.ssh</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>如果没有密钥则不会有此文件夹，有则备份删除</p>
-<ul>
-<li>生成密码<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -f rsa -C &quot;1515970958@qq.com&quot;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>按3个回车，密码为空，得到两个文件id_rsa和id_rsa.pub</p>
-<p>3、在github上添加ssh密钥，这里添加的是id_rsa.pub里面的公钥<br><img src="/images/ssh配置.png" alt=""></p>
-<p>4、修改_config.yml中deploy的参数，部署仓库以SSH的方式发布不需输入密码，反之如果以HTTPS的方式发布则需要密码。<br><img src="/images/hexo的deploy参数.png" alt=""><br>参考资料：<br><a href="http://www.foreverpx.cn/2014/09/25/Hexo%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E9%83%A8%E7%BD%B2%E5%88%B0github/" target="_blank" rel="external">Hexo免输入密码部署到Github</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1727,7 +1729,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">140</span>
+              <span class="site-state-item-count">141</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
