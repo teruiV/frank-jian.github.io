@@ -89,7 +89,7 @@
 架构图
 实战为何ArrayList能够动态扩容？
 1. 定义变量
-12345678// 数组元素,其长度代表总的容量,实际元素个数，小于总容量transient Object[] elementData;">
+1234567891011// 默认容量private static final int DEFAULT_CAPACITY = 10;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA之ArrayList源码学习">
 <meta property="og:url" content="http://jianwl.com/2016/10/26/JAVA之ArrayList源码学习/index.html">
@@ -98,16 +98,16 @@
 架构图
 实战为何ArrayList能够动态扩容？
 1. 定义变量
-12345678// 数组元素,其长度代表总的容量,实际元素个数，小于总容量transient Object[] elementData;">
+1234567891011// 默认容量private static final int DEFAULT_CAPACITY = 10;">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-26/94016678.jpg">
-<meta property="og:updated_time" content="2016-10-25T17:12:17.000Z">
+<meta property="og:updated_time" content="2016-10-28T03:29:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA之ArrayList源码学习">
 <meta name="twitter:description" content="前言接触JAVA2年多了，写代码总是随心所遇，怎么快，怎么来。写代码时，没有去思考怎么避免重复代码，降低多个模块间的耦合，都是事后填坑。看优秀的源码是一个很好地学习方式,同时有助于加深理解。
 架构图
 实战为何ArrayList能够动态扩容？
 1. 定义变量
-12345678// 数组元素,其长度代表总的容量,实际元素个数，小于总容量transient Object[] elementData;">
+1234567891011// 默认容量private static final int DEFAULT_CAPACITY = 10;">
 <meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-26/94016678.jpg">
 
 
@@ -374,7 +374,7 @@
 <h3 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-26/94016678.jpg" alt=""></p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>为何ArrayList能够动态扩容？</strong></p>
 <p><code>1. 定义变量</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 数组元素,其长度代表总的容量,实际元素个数，小于总容量</div><div class="line">transient Object[] elementData; </div><div class="line">  </div><div class="line">// 实际元素个数</div><div class="line">private int size;</div><div class="line">    </div><div class="line">// 默认空实例</div><div class="line">private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// 默认容量</div><div class="line">private static final int DEFAULT_CAPACITY = 10;</div><div class="line">    </div><div class="line">// 数组元素,其长度代表总的容量,实际元素个数，小于总容量</div><div class="line">transient Object[] elementData; </div><div class="line">  </div><div class="line">// 实际元素个数</div><div class="line">private int size;</div><div class="line">    </div><div class="line">// 默认空实例</div><div class="line">private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</div></pre></td></tr></table></figure>
 <p><code>2. 初始化，实际元素个数为0</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public ArrayList() &#123;</div><div class="line">    this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><code>3.增加元素</code></p>
