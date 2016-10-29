@@ -292,6 +292,139 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/13/解决拦截器读取Request中的流-Controller读取不到的问题/" itemprop="url">
+                  解决拦截器读取Request中的流,Controller读取不到的问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-13T23:25:26+08:00" content="2016-09-13">
+              2016-09-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/13/解决拦截器读取Request中的流-Controller读取不到的问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/13/解决拦截器读取Request中的流-Controller读取不到的问题/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>今天和同事对接项目，对方请求我的服务，请求参数是一个<code>JSON</code>；在进入服务之前，需要做一个签名验证，所以在拦截器部分，读取了请求参数。但拦截器读取完请求参数之后，Controller层便不能读取了。因为<code>Spring MVC</code>中<code>@RequestBody</code>是流的读取方式，而流只能读取一次，在拦截器中读取了，在Controller中再次读取便为空数据。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p><strong>SpringMVC解决方案</strong></p>
+<p>流只能读一次，读了就没有了，为了后面的代码还能够取得的流，应该将其写出去。封装请求流，将请求流写出去。</p>
+<p><code>CustomServletRequestWrapper.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 包装HttpServletRequest</div><div class="line"> */</div><div class="line">public class CustomServletRequestWrapper extends HttpServletRequestWrapper &#123;</div><div class="line"></div><div class="line">    private final byte[] body;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * Construct a wrapper for the specified request.</div><div class="line">     *</div><div class="line">     * @param request The request to be wrapped</div><div class="line">     */</div><div class="line">    public CustomServletRequestWrapper(HttpServletRequest request) throws IOException &#123;</div><div class="line">        super(request);</div><div class="line">        body = toByteArray(super.getInputStream());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public BufferedReader getReader() throws IOException &#123;</div><div class="line">        return new BufferedReader(new InputStreamReader(getInputStream()));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public ServletInputStream getInputStream() throws IOException &#123;</div><div class="line">        return new RequestBodyCachingInputStream(body);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private class RequestBodyCachingInputStream extends ServletInputStream &#123;</div><div class="line">        private byte[] body;</div><div class="line">        private int lastIndexRetrieved = -1;</div><div class="line">        private ReadListener listener;</div><div class="line"></div><div class="line">        public RequestBodyCachingInputStream(byte[] body) &#123;</div><div class="line">            this.body = body;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public int read() throws IOException &#123;</div><div class="line">            if (isFinished()) &#123;</div><div class="line">                return -1;</div><div class="line">            &#125;</div><div class="line">            int i = body[lastIndexRetrieved + 1];</div><div class="line">            lastIndexRetrieved++;</div><div class="line">            if (isFinished() &amp;&amp; listener != null) &#123;</div><div class="line">                try &#123;</div><div class="line">                    listener.onAllDataRead();</div><div class="line">                &#125; catch (IOException e) &#123;</div><div class="line">                    listener.onError(e);</div><div class="line">                    throw e;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            return i;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public boolean isFinished() &#123;</div><div class="line">            return lastIndexRetrieved == body.length - 1;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public boolean isReady() &#123;</div><div class="line">            // This implementation will never block</div><div class="line">            // We also never need to call the readListener from this method, as this method will never return false</div><div class="line">            return isFinished();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void setReadListener(ReadListener listener) &#123;</div><div class="line">            if (listener == null) &#123;</div><div class="line">                throw new IllegalArgumentException(&quot;listener cann not be null&quot;);</div><div class="line">            &#125;</div><div class="line">            if (this.listener != null) &#123;</div><div class="line">                throw new IllegalArgumentException(&quot;listener has been set&quot;);</div><div class="line">            &#125;</div><div class="line">            this.listener = listener;</div><div class="line">            if (!isFinished()) &#123;</div><div class="line">                try &#123;</div><div class="line">                    listener.onAllDataRead();</div><div class="line">                &#125; catch (IOException e) &#123;</div><div class="line">                    listener.onError(e);</div><div class="line">                &#125;</div><div class="line">            &#125; else &#123;</div><div class="line">                try &#123;</div><div class="line">                    listener.onAllDataRead();</div><div class="line">                &#125; catch (IOException e) &#123;</div><div class="line">                    listener.onError(e);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public int available() throws IOException &#123;</div><div class="line">            return body.length - lastIndexRetrieved - 1;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void close() throws IOException &#123;</div><div class="line">            lastIndexRetrieved = body.length - 1;</div><div class="line">            body = null;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>设置过滤器，封装请求流: RequestReplaceFilter.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 替换Request对象</div><div class="line"> */</div><div class="line">public class RequestReplaceFilter extends OncePerRequestFilter &#123;</div><div class="line">    @Override</div><div class="line">    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException &#123;</div><div class="line">        if (!(request instanceof CustomServletRequestWrapper)) &#123;</div><div class="line">            request = new CustomServletRequestWrapper(request);</div><div class="line">        &#125;</div><div class="line">        filterChain.doFilter(request, response);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>在web.xml中添加过滤器</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;filter&gt;</div><div class="line">	&lt;filter-name&gt;requestReplaceFilter&lt;/filter-name&gt;</div><div class="line">	&lt;filter-class&gt;com.dada.bd.filter.RequestReplaceFilter&lt;/filter-class&gt;</div><div class="line">&lt;/filter&gt;</div><div class="line"></div><div class="line">&lt;filter-mapping&gt;</div><div class="line">	&lt;filter-name&gt;requestReplaceFilter&lt;/filter-name&gt;</div><div class="line">	&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">&lt;/filter-mapping&gt;</div></pre></td></tr></table></figure>
+<p><strong>SpringBoot解决方案</strong></p>
+<p><code>CustomServletRequestWrapper.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 包装HttpServletRequest</div><div class="line"> */</div><div class="line">public class CustomServletRequestWrapper extends HttpServletRequestWrapper &#123;</div><div class="line"></div><div class="line">    private final byte[] body;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * Construct a wrapper for the specified request.</div><div class="line">     *</div><div class="line">     * @param request The request to be wrapped</div><div class="line">     */</div><div class="line">    public CustomServletRequestWrapper(HttpServletRequest request) throws IOException &#123;</div><div class="line">        super(request);</div><div class="line">        body = toByteArray(super.getInputStream());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public BufferedReader getReader() throws IOException &#123;</div><div class="line">        return new BufferedReader(new InputStreamReader(getInputStream()));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public ServletInputStream getInputStream() throws IOException &#123;</div><div class="line">        return new RequestBodyCachingInputStream(body);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private class RequestBodyCachingInputStream extends ServletInputStream &#123;</div><div class="line">        private byte[] body;</div><div class="line">        private int lastIndexRetrieved = -1;</div><div class="line">        private ReadListener listener;</div><div class="line"></div><div class="line">        public RequestBodyCachingInputStream(byte[] body) &#123;</div><div class="line">            this.body = body;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public int read() throws IOException &#123;</div><div class="line">            if (isFinished()) &#123;</div><div class="line">                return -1;</div><div class="line">            &#125;</div><div class="line">            int i = body[lastIndexRetrieved + 1];</div><div class="line">            lastIndexRetrieved++;</div><div class="line">            if (isFinished() &amp;&amp; listener != null) &#123;</div><div class="line">                try &#123;</div><div class="line">                    listener.onAllDataRead();</div><div class="line">                &#125; catch (IOException e) &#123;</div><div class="line">                    listener.onError(e);</div><div class="line">                    throw e;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            return i;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public boolean isFinished() &#123;</div><div class="line">            return lastIndexRetrieved == body.length - 1;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public boolean isReady() &#123;</div><div class="line">            // This implementation will never block</div><div class="line">            // We also never need to call the readListener from this method, as this method will never return false</div><div class="line">            return isFinished();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void setReadListener(ReadListener listener) &#123;</div><div class="line">            if (listener == null) &#123;</div><div class="line">                throw new IllegalArgumentException(&quot;listener cann not be null&quot;);</div><div class="line">            &#125;</div><div class="line">            if (this.listener != null) &#123;</div><div class="line">                throw new IllegalArgumentException(&quot;listener has been set&quot;);</div><div class="line">            &#125;</div><div class="line">            this.listener = listener;</div><div class="line">            if (!isFinished()) &#123;</div><div class="line">                try &#123;</div><div class="line">                    listener.onAllDataRead();</div><div class="line">                &#125; catch (IOException e) &#123;</div><div class="line">                    listener.onError(e);</div><div class="line">                &#125;</div><div class="line">            &#125; else &#123;</div><div class="line">                try &#123;</div><div class="line">                    listener.onAllDataRead();</div><div class="line">                &#125; catch (IOException e) &#123;</div><div class="line">                    listener.onError(e);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public int available() throws IOException &#123;</div><div class="line">            return body.length - lastIndexRetrieved - 1;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void close() throws IOException &#123;</div><div class="line">            lastIndexRetrieved = body.length - 1;</div><div class="line">            body = null;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>添加@Component注解，注册过滤器</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 替换Request对象</div><div class="line"> */</div><div class="line">@Component</div><div class="line">public class RequestReplaceFilter extends OncePerRequestFilter &#123;</div><div class="line">    private static final Logger logger = LoggerFactory.getLogger(RequestReplaceFilter.class);</div><div class="line">    @Override</div><div class="line">    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException &#123;</div><div class="line">        if (!(request instanceof CustomServletRequestWrapper)) &#123;</div><div class="line">            request = new CustomServletRequestWrapper(request);</div><div class="line">        &#125;</div><div class="line">        filterChain.doFilter(request, response);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/13/SpringCloud入门/" itemprop="url">
                   SpringCloud入门
                 </a>
@@ -1565,178 +1698,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/03/ES6之let和const命令/" itemprop="url">
-                  ES6之let和const命令
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-03T09:44:51+08:00" content="2016-09-03">
-              2016-09-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/03/ES6之let和const命令/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/03/ES6之let和const命令/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>有很多会问<code>ECMAScript和JavaScript</code>有什么关系？要讲清楚这个问题，需要回顾历史，<code>JavaScript</code>的创造者<code>Netscapt公司</code>将JavaScript交给国际标准化组织<code>ECMA</code>，希望这种语言能成为国际标准，而JavaScript本身已被注册为商标，为了保证这门语言的开发性和中立性，故<code>ECMA</code>将其取名为<code>ECMAScript</code>。因此，<code>ECMAScript</code>是<code>JavaScript</code>的规格，而<code>JavaScript</code>是<code>ECMAScript</code>的一种实现。</p>
-<p>​    为了更好的熟悉ES6，将会了解其各个命令的用法。本文主要介绍<code>let</code>和<code>const</code>命令。</p>
-<h3 id="let命令"><a href="#let命令" class="headerlink" title="let命令"></a>let命令</h3><p>1、let命令声明的变量只在所在的代码块内有效</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/4545513.jpg" alt=""></p>
-<p><strong>应用场景</strong></p>
-<p><code>var声明变量全局有效</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/7696539.jpg" alt=""></p>
-<p><code>let声明变量，块级作用域有效</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/35110355.jpg" alt=""></p>
-<hr>
-<p>2、let声明变量不存在变量提升</p>
-<p><code>let声明变量不存在提升</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/85962982.jpg" alt=""></p>
-<p><code>var声明变量会提升，但没有赋值</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/67602230.jpg" alt=""></p>
-<hr>
-<p>3、只要块级作用域内存在let命令，它所声明的变量就绑定这个区域，不再受外部影响。</p>
-<p><code>暂时性死区</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/30615566.jpg" alt=""></p>
-<p>代码中存在全局变量temp，但在块级作用域内用let又声明了一个局部变量temp，导致后者绑定到这个块级作用域，故let在声明变量前赋值会报错。<br><code>对比1:用var声明变量🤔</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/76273734.jpg" alt=""></p>
-<p><code>对比2:用var变量声明🤔</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/50001912.jpg" alt=""></p>
-<p>此处有疑问？对比1和对比2输出的结果为何不一致？</p>
-<hr>
-<p>4、let不允许在相同作用域内重复声明同一个变量</p>
-<p><code>范例1❌</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/50645938.jpg" alt=""></p>
-<p><code>范例2❌</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/25937104.jpg" alt=""></p>
-<p><code>范例3✔️：非同一作用域，故正确</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/35044719.jpg" alt=""></p>
-<hr>
-<p>5、块级作用域</p>
-<blockquote>
-<p>为什么需要块级作用域? ES5只有全局作用域和函数作用域，没有块级作用域，可能造成以下不合理的场景？</p>
-</blockquote>
-<p><code>场景1：内存变量覆盖外层变量</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/65058203.jpg" alt=""></p>
-<p><code>var</code>声明的变量提升，导致内层的<code>tep</code>变量覆盖了外层的<code>tep</code>变量。</p>
-<p><code>场景2：计数的循环变量泄露为全局变量</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/74483314.jpg" alt=""></p>
-<p><code>ES6使用块级作用域</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/2688486.jpg" alt=""></p>
-<h3 id="const命令"><a href="#const命令" class="headerlink" title="const命令"></a>const命令</h3><p>1、<code>const</code>是声明常量，声明之后，不能改变它的值。<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/3573997.jpg" alt=""></p>
-<p>2、<code>const</code>声明变量，必须初始化；<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/51809303.jpg" alt=""></p>
-<p>3、<code>const</code>的有效区为声明的块级作用域；<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/13875615.jpg" alt=""></p>
-<p>4、<code>const</code>变量不能主动提升<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/9835388.jpg" alt=""></p>
-<p>5、<code>const</code>变量不能重复声明<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/20566241.jpg" alt=""></p>
-<p>6、<code>const</code>声明数组，地址不变，地址的内容可变<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/33621124.jpg" alt=""></p>
-<h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><p>1、<code>window.global 等价于 global</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/18776994.jpg" alt=""></p>
-<p>2、<code>let声明的变量不属于全局属性</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/69124545.jpg" alt=""></p>
-<p>未完待续…</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>ES6标准入门 - 阮一峰</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1782,7 +1743,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">142</span>
+              <span class="site-state-item-count">143</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

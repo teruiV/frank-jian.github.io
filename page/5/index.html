@@ -292,6 +292,178 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/03/ES6之let和const命令/" itemprop="url">
+                  ES6之let和const命令
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-03T09:44:51+08:00" content="2016-09-03">
+              2016-09-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/03/ES6之let和const命令/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/03/ES6之let和const命令/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>有很多会问<code>ECMAScript和JavaScript</code>有什么关系？要讲清楚这个问题，需要回顾历史，<code>JavaScript</code>的创造者<code>Netscapt公司</code>将JavaScript交给国际标准化组织<code>ECMA</code>，希望这种语言能成为国际标准，而JavaScript本身已被注册为商标，为了保证这门语言的开发性和中立性，故<code>ECMA</code>将其取名为<code>ECMAScript</code>。因此，<code>ECMAScript</code>是<code>JavaScript</code>的规格，而<code>JavaScript</code>是<code>ECMAScript</code>的一种实现。</p>
+<p>​    为了更好的熟悉ES6，将会了解其各个命令的用法。本文主要介绍<code>let</code>和<code>const</code>命令。</p>
+<h3 id="let命令"><a href="#let命令" class="headerlink" title="let命令"></a>let命令</h3><p>1、let命令声明的变量只在所在的代码块内有效</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/4545513.jpg" alt=""></p>
+<p><strong>应用场景</strong></p>
+<p><code>var声明变量全局有效</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/7696539.jpg" alt=""></p>
+<p><code>let声明变量，块级作用域有效</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/35110355.jpg" alt=""></p>
+<hr>
+<p>2、let声明变量不存在变量提升</p>
+<p><code>let声明变量不存在提升</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/85962982.jpg" alt=""></p>
+<p><code>var声明变量会提升，但没有赋值</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/67602230.jpg" alt=""></p>
+<hr>
+<p>3、只要块级作用域内存在let命令，它所声明的变量就绑定这个区域，不再受外部影响。</p>
+<p><code>暂时性死区</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/30615566.jpg" alt=""></p>
+<p>代码中存在全局变量temp，但在块级作用域内用let又声明了一个局部变量temp，导致后者绑定到这个块级作用域，故let在声明变量前赋值会报错。<br><code>对比1:用var声明变量🤔</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/76273734.jpg" alt=""></p>
+<p><code>对比2:用var变量声明🤔</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/50001912.jpg" alt=""></p>
+<p>此处有疑问？对比1和对比2输出的结果为何不一致？</p>
+<hr>
+<p>4、let不允许在相同作用域内重复声明同一个变量</p>
+<p><code>范例1❌</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/50645938.jpg" alt=""></p>
+<p><code>范例2❌</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/25937104.jpg" alt=""></p>
+<p><code>范例3✔️：非同一作用域，故正确</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/35044719.jpg" alt=""></p>
+<hr>
+<p>5、块级作用域</p>
+<blockquote>
+<p>为什么需要块级作用域? ES5只有全局作用域和函数作用域，没有块级作用域，可能造成以下不合理的场景？</p>
+</blockquote>
+<p><code>场景1：内存变量覆盖外层变量</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/65058203.jpg" alt=""></p>
+<p><code>var</code>声明的变量提升，导致内层的<code>tep</code>变量覆盖了外层的<code>tep</code>变量。</p>
+<p><code>场景2：计数的循环变量泄露为全局变量</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/74483314.jpg" alt=""></p>
+<p><code>ES6使用块级作用域</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/2688486.jpg" alt=""></p>
+<h3 id="const命令"><a href="#const命令" class="headerlink" title="const命令"></a>const命令</h3><p>1、<code>const</code>是声明常量，声明之后，不能改变它的值。<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/3573997.jpg" alt=""></p>
+<p>2、<code>const</code>声明变量，必须初始化；<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/51809303.jpg" alt=""></p>
+<p>3、<code>const</code>的有效区为声明的块级作用域；<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/13875615.jpg" alt=""></p>
+<p>4、<code>const</code>变量不能主动提升<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/9835388.jpg" alt=""></p>
+<p>5、<code>const</code>变量不能重复声明<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/20566241.jpg" alt=""></p>
+<p>6、<code>const</code>声明数组，地址不变，地址的内容可变<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/33621124.jpg" alt=""></p>
+<h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><p>1、<code>window.global 等价于 global</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/18776994.jpg" alt=""></p>
+<p>2、<code>let声明的变量不属于全局属性</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/69124545.jpg" alt=""></p>
+<p>未完待续…</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>ES6标准入门 - 阮一峰</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/02/React入门实战/" itemprop="url">
                   React入门实战
                 </a>
@@ -1707,144 +1879,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/21/Mac技巧之指令篇/" itemprop="url">
-                  Mac技巧之指令篇
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-21T17:11:40+08:00" content="2016-08-21">
-              2016-08-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Mac/" itemprop="url" rel="index">
-                    <span itemprop="name">Mac</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/21/Mac技巧之指令篇/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/21/Mac技巧之指令篇/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1、查看每个目录的所占空间</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-8-21/16550157.jpg" alt=""></p>
-<hr>
-<p>2、定位某个命令所在文件路径</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-8-21/70271327.jpg" alt=""></p>
-<hr>
-<p>3、尝试根据文件内容输出文件类型</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-8-21/90832702.jpg" alt=""></p>
-<hr>
-<p>4、清除内存和硬盘的缓存，与重启Mac的效果差不多</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-8-21/34745593.jpg" alt=""></p>
-<hr>
-<p>5、查看服务列表</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-8-21/85445991.jpg" alt=""></p>
-<hr>
-<p>6、语音功能</p>
-<p>场景：<code>say命令可以让Mac说英文单词</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-8-21/97540405.jpg" alt=""></p>
-<hr>
-<h3 id="未完待续…"><a href="#未完待续…" class="headerlink" title="未完待续…"></a>未完待续…</h3>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1890,7 +1924,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">142</span>
+              <span class="site-state-item-count">143</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

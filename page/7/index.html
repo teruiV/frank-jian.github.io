@@ -292,6 +292,143 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/14/生产者-消费者模式/" itemprop="url">
+                  生产者-消费者模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-14T21:19:41+08:00" content="2016-08-14">
+              2016-08-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/14/生产者-消费者模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/14/生产者-消费者模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>在实际的开发过程中，经常会碰到如下场景，某个某块负责生成数据，这些数据由另一个模块来负责处理，产生数据的模块，就形象地称为生产者，而处理数据的模块就称为消费者。</p>
+<p>单单抽象出生产者和消费者，还谈不上生产者/消费者模式，该模式还需要有一个缓冲区处于生产者和消费之间，作为一个中介。生产者把数据放入缓冲区，而消费者从缓冲区取出数据。大概的结构如下图：<br><img src="../images/producer_consumer.jpg" alt=""></p>
+<p><strong>场景示例</strong><br>为了不至于太抽象，我们举一个寄信的例子，假设你要寄一封平信，大致过程如下：</p>
+<ol>
+<li>你把信写好 – 相当于生成者生产数据</li>
+<li>你把信放入邮筒 – 相当于生产者把数据放到缓冲区</li>
+<li>邮递员把信从邮筒取出 – 相当于消费者把数据取出缓冲区</li>
+<li>邮递员把信拿去邮局做响应的处理 – 相当于消费者处理数据</li>
+</ol>
+<h3 id="缓存区有何作用？"><a href="#缓存区有何作用？" class="headerlink" title="缓存区有何作用？"></a>缓存区有何作用？</h3><p><strong>解耦</strong><br>如果让生产者直接调用消费者的消费方法，那么生产者对于消费者就会产生依赖(即耦合)，将来如果消费者代码变化了，可能会影响到生产者，如果两者都依赖于缓冲区，两者之间不直接依赖，耦合也就相应降低了。</p>
+<p><strong>支持并发</strong><br>如果生产者直接调用消费者的消费方法，由于函数调用时同步的，在消费者的方法没有返回之前，生产者只好一直等待，万一消费者处理数据很慢，生产者就白白浪费大好时光了。</p>
+<p>使用了生产者/消费者模式之后，生产者生产出来的数据往缓存区一丢，就可以再去生产下一个数据了，基本上不依赖消费者的处理速度。</p>
+<p><strong>支持忙闲不均</strong><br>如果生产数据的速度时快时慢，缓冲区的好处就体现出来了，当数据生产快的时候，消费者来不及处理，未处理的数据可以暂时存在缓冲区，等生产者生产速度慢下来，消费者再慢慢处理。</p>
+<h3 id="JAVA实现"><a href="#JAVA实现" class="headerlink" title="JAVA实现"></a>JAVA实现</h3><p><strong>方法1：阻塞队列方式</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">public class ProducerConsumer &#123;</div><div class="line">    // 建立一个阻塞队列</div><div class="line">    private LinkedBlockingQueue&lt;Object&gt; queue = new LinkedBlockingQueue&lt;Object&gt;(10);</div><div class="line"></div><div class="line">    public ProducerConsumer() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void start() &#123;</div><div class="line">        new Producer().start();</div><div class="line">        new Consumer().start();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public static void main(String[] args) throws Exception &#123;</div><div class="line">        ProducerConsumer bootstrap = new ProducerConsumer();</div><div class="line">        bootstrap.start();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    //生产者</div><div class="line">    class Producer extends Thread &#123;</div><div class="line">        public void run() &#123;</div><div class="line">            while (true) &#123;</div><div class="line">                try &#123;</div><div class="line">                    Object o = new Object();</div><div class="line">                    // 存入一个对象</div><div class="line">                    queue.put(o);</div><div class="line">                    System.out.println(&quot;Producer: &quot; + o);</div><div class="line">                &#125; catch (InterruptedException e) &#123;</div><div class="line">                    System.out.println(&quot;producer is interrupted!&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    //消费者</div><div class="line">    class Consumer extends Thread &#123;</div><div class="line">        public void run() &#123;</div><div class="line">            while (true) &#123;</div><div class="line">                try &#123;</div><div class="line">                    // 取出一个对象</div><div class="line">                    Object o = queue.take();</div><div class="line">                    System.out.println(&quot;Consumer: &quot; + o);</div><div class="line">                &#125; catch (InterruptedException e) &#123;</div><div class="line">                    System.out.println(&quot;producer is interrupted!&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>方法2：线程锁方式</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">public class ProducerConsumer &#123;</div><div class="line">    private LinkedList&lt;Object&gt; myList = new LinkedList&lt;Object&gt;();</div><div class="line">    private int MAX = 10;</div><div class="line">    private final Lock lock = new ReentrantLock();</div><div class="line">    private final Condition full = lock.newCondition();</div><div class="line">    private final Condition empty = lock.newCondition();</div><div class="line"></div><div class="line">    public ProducerConsumer() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void start() &#123;</div><div class="line">        new Producer().start();</div><div class="line">        new Consumer().start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws Exception &#123;</div><div class="line">        ProducerConsumer s2 = new ProducerConsumer();</div><div class="line">        s2.start();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    //生产者</div><div class="line">    class Producer extends Thread &#123;</div><div class="line">        public void run() &#123;</div><div class="line">            while (true) &#123;</div><div class="line">                lock.lock();</div><div class="line">                try &#123;</div><div class="line">                    while (myList.size() == MAX) &#123;</div><div class="line">                        System.out.println(&quot;warning: it&apos;s full!&quot;);</div><div class="line">                        full.await();</div><div class="line">                    &#125;</div><div class="line">                    Object o = new Object();</div><div class="line">                    if (myList.add(o)) &#123;</div><div class="line">                        System.out.println(&quot;Producer: &quot; + o);</div><div class="line">                        empty.signal();</div><div class="line">                    &#125;</div><div class="line">                &#125; catch (InterruptedException ie) &#123;</div><div class="line">                    System.out.println(&quot;producer is interrupted!&quot;);</div><div class="line">                &#125; finally &#123;</div><div class="line">                    lock.unlock();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    // 消费者</div><div class="line">    class Consumer extends Thread &#123;</div><div class="line">        public void run() &#123;</div><div class="line">            while (true) &#123;</div><div class="line">                lock.lock();</div><div class="line">                try &#123;</div><div class="line">                    while (myList.size() == 0) &#123;</div><div class="line">                        System.out.println(&quot;warning: it&apos;s empty!&quot;);</div><div class="line">                        empty.await();</div><div class="line">                    &#125;</div><div class="line">                    Object o = myList.removeLast();</div><div class="line">                    System.out.println(&quot;Consumer: &quot; + o);</div><div class="line">                    full.signal();</div><div class="line">                &#125; catch (InterruptedException ie) &#123;</div><div class="line">                    System.out.println(&quot;consumer is interrupted!&quot;);</div><div class="line">                &#125; finally &#123;</div><div class="line">                    lock.unlock();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://blog.csdn.net/kaiwii/article/details/6758942" target="_blank" rel="external">生产者/消费者模式</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/13/排序算法/" itemprop="url">
                   排序算法
                 </a>
@@ -1907,410 +2044,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/11/锋利的Query-选择器/" itemprop="url">
-                  锋利的Query -- 选择器
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-11T19:13:30+08:00" content="2016-08-11">
-              2016-08-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/11/锋利的Query-选择器/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/11/锋利的Query-选择器/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="CSS选择器"><a href="#CSS选择器" class="headerlink" title="CSS选择器"></a>CSS选择器</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">E{CSS}</td>
-<td style="text-align:left">标签选择器</td>
-</tr>
-<tr>
-<td style="text-align:left">#ID{CSS}</td>
-<td style="text-align:left">id选择器</td>
-</tr>
-<tr>
-<td style="text-align:left">E.className{CSS}</td>
-<td style="text-align:left">类选择器</td>
-</tr>
-<tr>
-<td style="text-align:left">E1，E2，E3{CSS}</td>
-<td style="text-align:left">群组选择器</td>
-</tr>
-<tr>
-<td style="text-align:left">E F{CSS}</td>
-<td style="text-align:left">后代选择器</td>
-</tr>
-<tr>
-<td style="text-align:left">*{CSS}</td>
-<td style="text-align:left">统配选择器</td>
-</tr>
-</tbody>
-</table>
-<h3 id="基本选择器"><a href="#基本选择器" class="headerlink" title="基本选择器"></a>基本选择器</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">$(“#one”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变id为one的元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“.one”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变class为one的元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变元素名为div的元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“*”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变所有元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“span. #one”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变所有span和id为one的元素的背景色</td>
-</tr>
-</tbody>
-</table>
-<h3 id="层次选择器"><a href="#层次选择器" class="headerlink" title="层次选择器"></a>层次选择器</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">$(“body div”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变<body>内所有div的背景色</body></td>
-</tr>
-<tr>
-<td style="text-align:left">$(“body &gt;div”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变<body>内子div的背景色</body></td>
-</tr>
-<tr>
-<td style="text-align:left">$(“.one + div”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变class为one的下一个div元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“#two ~ div”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变id为two的后面的所有同辈div元素的背景色</td>
-</tr>
-</tbody>
-</table>
-<h3 id="内容过滤选择器"><a href="#内容过滤选择器" class="headerlink" title="内容过滤选择器"></a>内容过滤选择器</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">$(“div:contains(di)”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变 含有文本di的div元素背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div:empty”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变不包含子元素的div的空元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div:has(“.mini”)”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变class为mini元素的div元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div:parent”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变含有子元素的div元素的背景色</td>
-</tr>
-</tbody>
-</table>
-<h3 id="可见性过滤选择器"><a href="#可见性过滤选择器" class="headerlink" title="可见性过滤选择器"></a>可见性过滤选择器</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">$(“div:visible”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变所有可见的div元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div:hidden”).show(3000)</td>
-<td style="text-align:left">显示所有隐藏的div元素的背景色</td>
-</tr>
-</tbody>
-</table>
-<h3 id="属性过滤选择器"><a href="#属性过滤选择器" class="headerlink" title="属性过滤选择器"></a>属性过滤选择器</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">$(“div[title]”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变含有属性title的div元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div[title!=test]”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变含有属性title不等于test的div元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div[title^=te]”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变含有属性title以te开头的div元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div[title$=est]”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变含有属性title以est结尾的div元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div[title*=es]”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变含有属性title含有es的div元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div[id][title*=es]”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变含有属性id,并且title含有es的div元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div[title=’en’]”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变含有属性title等于en或者以en为前缀(en-xxx)的的div元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div[title~=’uk’]”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变含有属性title用空格分隔的值中包含字符uk的div元素的背景色</td>
-</tr>
-</tbody>
-</table>
-<h3 id="子元素过滤选择器"><a href="#子元素过滤选择器" class="headerlink" title="子元素过滤选择器"></a>子元素过滤选择器</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">$(“div.one:nth-child(2)”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变每个class为one的div父元素下的第二个子元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div.one:first-child)”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变每个class为one的div父元素中的第一个子元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div.one:last-child)”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变每个class为one的div父元素中的最后一个子元素的背景色</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“div.one:only-child)”).css(“background”,”#bbffaa”)</td>
-<td style="text-align:left">改变每个class为one的div父元素下只有一个子元素，则改变该子元素的背景色</td>
-</tr>
-</tbody>
-</table>
-<h3 id="表单对象属性过滤选择器"><a href="#表单对象属性过滤选择器" class="headerlink" title="表单对象属性过滤选择器"></a>表单对象属性过滤选择器</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">$(“form1 input:enabled”).val(“这里变化了!”)</td>
-<td style="text-align:left">改变表单内可用input元素的值</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“form1 input:disabled”).val(“这里变化了!”)</td>
-<td style="text-align:left">改变表单内不可用input元素的值</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“input:checked”).length</td>
-<td style="text-align:left">改变多选框中的个数</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“select:selected”).text()</td>
-<td style="text-align:left">获取下拉框选中的内容</td>
-</tr>
-</tbody>
-</table>
-<h3 id="表单选择器"><a href="#表单选择器" class="headerlink" title="表单选择器"></a>表单选择器</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">操作</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">$(“#form1 :input”)</td>
-<td style="text-align:left">获得表单中所有的input、textarea、select、button元素</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“#form1 :text”)</td>
-<td style="text-align:left">获得所有的单行文本框</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“#form1 :password”)</td>
-<td style="text-align:left">获得所有的密码框</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“#form1 :radio”)</td>
-<td style="text-align:left">获得所有的单选框</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“#form1 :checkbox”)</td>
-<td style="text-align:left">获得所有的多选框</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“#form1 :submit”)</td>
-<td style="text-align:left">获得所有的提交按钮</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“#form1 :image”)</td>
-<td style="text-align:left">获得所有的图片按钮</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“#form1 :reset”)</td>
-<td style="text-align:left">获得所有的重置按钮</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“#form1 :button”)</td>
-<td style="text-align:left">获得所有的按钮</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“#form1 :file”)</td>
-<td style="text-align:left">获得所有的上传域</td>
-</tr>
-<tr>
-<td style="text-align:left">$(“#form1 :hidden”)</td>
-<td style="text-align:left">获得所有的不可见元素</td>
-</tr>
-</tbody>
-</table>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li>锋利的JQuery（第2版）</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2356,7 +2089,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">142</span>
+              <span class="site-state-item-count">143</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

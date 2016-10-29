@@ -292,6 +292,148 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/" itemprop="url">
+                  翻墙教程之VPS搭建Shadowsocks代理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-20T12:45:02+08:00" content="2016-05-20">
+              2016-05-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/VPS/" itemprop="url" rel="index">
+                    <span itemprop="name">VPS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/20/翻墙教程之VPS搭建Shadowsocks代理/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>做为一个开发人员，具备翻墙的能力，是最基本的；最近打算在VPS上搭建一个shadowsocks代理来实现翻墙，将操作步骤记录下来，备忘。</p>
+<h6 id="购买VPS"><a href="#购买VPS" class="headerlink" title="购买VPS"></a>购买VPS</h6><p>到vultr的<a href="https://www.vultr.com/freetrial/" target="_blank" rel="external">官网</a>注册账户，目前注册的新用户给你$50,用2个月，超给力的。需要注意的是，你得有支持外币支付的信用卡，并且这个优惠活动不支持paypal，反正我用民生银行的VISA信用卡是没有注册成功，最后采用了paypal的方式支付的。</p>
+<h6 id="vps部署"><a href="#vps部署" class="headerlink" title="vps部署"></a>vps部署</h6><p>选择日本或者美国西海岸的服务器，速度相对比较快，我选的是日本的。操作系统是CentOS 6 x64,选择的硬件是$5/month的；以下截图是购买成功之后的VPS服务器实例;<br><img src="/images/vultr服务器.png" alt=""></p>
+<h6 id="下载并安装Xshell5"><a href="#下载并安装Xshell5" class="headerlink" title="下载并安装Xshell5"></a>下载并安装Xshell5</h6><p><a href="http://pan.baidu.com/s/1eRRETaU" target="_blank" rel="external">Xshell5百度云下载链接</a></p>
+<h6 id="Xshell5连接vps"><a href="#Xshell5连接vps" class="headerlink" title="Xshell5连接vps"></a>Xshell5连接vps</h6><p><img src="/images/vultr服务器详情.png" alt="vps的详情"><br>打开Xshell5,新建会话，输入IP地址,点击确定<br><img src="/images/xshell连接vps.png" alt=""><br>输入用户名<br><img src="/images/vultr输入用户名.png" alt=""><br>输入密码<br><img src="/images/vultr输入密码.png" alt=""><br>xshell5成功登陆vps服务器<br><img src="/images/xshell成功登陆vps.png" alt=""></p>
+<h6 id="部署shadowsocks"><a href="#部署shadowsocks" class="headerlink" title="部署shadowsocks"></a>部署shadowsocks</h6><p>1、用Shadowsocks Python版一键安装脚本,<a href="https://teddysun.com/342.html" target="_blank" rel="external">原文链接</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</div><div class="line">chmod +x shadowsocks.sh</div><div class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</div></pre></td></tr></table></figure></p>
+<p>执行后需要输入密码(shadowsocks的密码)<br><img src="/images/ss01.png" alt=""><br>2、输入shadowsocks的端口,我喜欢用8388<br><img src="/images/ss输入端口.png" alt=""><br>3、看到这句时，按任意键(比如回车)<br><img src="/images/ss成功.png" alt=""><br>4、等待安装结束，出现下图就表示安装成功了.<br><img src="/images/ss安装成功.png" alt=""></p>
+<h6 id="开启TFO-TCP-Fast-Open"><a href="#开启TFO-TCP-Fast-Open" class="headerlink" title="开启TFO(TCP Fast Open)"></a>开启TFO(TCP Fast Open)</h6><p>编辑rc.local<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/rc.local</div></pre></td></tr></table></figure></p>
+<p>在rc.local最后一行添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo 3 &gt; /proc/sys/net/ipv4/tcp_fastopen</div></pre></td></tr></table></figure></p>
+<p>编辑sysctl.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/sysctl.conf</div></pre></td></tr></table></figure></p>
+<p>在sysctl.conf中输入并保存<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net.ipv4.tcp_fastopen = 3</div></pre></td></tr></table></figure></p>
+<p>打开ss配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/shadowsocks.json</div></pre></td></tr></table></figure></p>
+<p>修改fast_open的值为true并保存。<br>重启shadowsocks<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/shadowsocks restart</div></pre></td></tr></table></figure></p>
+<h6 id="windows端运行shadowsocks客户端"><a href="#windows端运行shadowsocks客户端" class="headerlink" title="windows端运行shadowsocks客户端"></a>windows端运行shadowsocks客户端</h6><p><a href="http://pan.baidu.com/s/1hrFz8uo" target="_blank" rel="external">shadowsocks客户端百度云下载链接</a><br>解压后运行shadowsocks.exe,并配置shadowsocks<br><img src="/images/ss客户端配置.png" alt=""></p>
+<h6 id="科学上网"><a href="#科学上网" class="headerlink" title="科学上网"></a>科学上网</h6><p>使用代理，虽然可以访问国外的网站，但网速会比较慢。理想的情况下，我们想要在访问国外网站的时候使用代理，访问国内的网站的时候不使用代理,保证效率最大化。</p>
+<p>我们使用SwitchyOmega来消除shadowsocks全局代理的副作用，<a href="http://pan.baidu.com/s/1mhX8r7i" target="_blank" rel="external">SwitchyOmega</a>是Chrome下非常好用的代理管理插件(.crx是插件,.bak是备份文件);</p>
+<h6 id="安装SwitchyOmega"><a href="#安装SwitchyOmega" class="headerlink" title="安装SwitchyOmega"></a>安装SwitchyOmega</h6><p>将SwitchyOmega.crx插件直接拖到扩展程序中，即可实现安装<br><img src="/images/安装SwitchyOmega.png" alt=""></p>
+<h6 id="配置SwitchyOmega"><a href="#配置SwitchyOmega" class="headerlink" title="配置SwitchyOmega"></a>配置SwitchyOmega</h6><p><img src="/images/配置SwitchyOmega01.png" alt=""><br><img src="/images/配置SwitchyOmega02.png" alt=""><br><img src="/images/配置SwitchyOmega03.png" alt=""><br><img src="/images/配置SwitchyOmega04.png" alt=""><br><img src="/images/配置SwitchyOmega05.png" alt=""><br>至此，把Shadowsocks客户端的模式改为了自动模式，<strong>通过Chrome访问的网址都会经过代理服务器;通过其他浏览器如：FireFox访问的网址则不经过代理服务器</strong>;说明了局部代理成功。</p>
+<h6 id="Shadowsocks原理"><a href="#Shadowsocks原理" class="headerlink" title="Shadowsocks原理"></a>Shadowsocks原理</h6><p>简单理解的话，Shadowsocks是将以前通过SSH创建的Socks5协议拆分成Server端和Client端，下面这个原理图能简单介绍其翻墙原理，基本上和利用SSH tunnel大致类似：<br><img src="/images/shadowsocks原理.jpg" alt=""><br>PC客户端发出请求基于Socks5协议跟SS-Local端进行通讯，由于这个SS-Local一般是本机或路由器等局域网的其他机器，不经过GFW,所以解决GFW通过特征分析进行干扰的问题。</p>
+<p>SS-Local和SS-Server两端通过多种可选的加密方法进行通讯，经过GFW的时候因为是常规的TCP包，没有明显特征码GFW也无法对通讯进行解密，因此通讯放行。</p>
+<p>SS-Server将收到的加密数据进行解密，还原初始请求，在发送用户需要访问的服务网站，响应原路返回SS-04,返回途中依然使用了加密，使得流量是普通的TCP包，并成功穿过GFW防火墙。</p>
+<p>因此，Shadowsocks的优点在于它解决了GFW通过分析流量特征从而干扰的问题，这是它优于SSH和VPN的地方。</p>
+<p>参考资料：<br>1、<a href="http://mpc2008cn.github.io/2015/10/22/vps/" target="_blank" rel="external">Vultr的vps搭建shadowsocks翻墙</a><br>2、<a href="https://teddysun.com/342.html" target="_blank" rel="external">Shadowsocks Python版一键安装脚本</a><br>3、<a href="http://www.shadowsocks.co.uk/shadowsocks-tcp-fast-open/" target="_blank" rel="external">Shadowsocks设置:ShadowSocks 服务器开启TCP Fast Open</a><br>4、<a href="http://shadowsocks.blogspot.tw/" target="_blank" rel="external">shadowsocks搭建教程</a><br>5、<a href="http://www.jianshu.com/p/37ef0b9ecc08" target="_blank" rel="external">shadowsocks配合SwitchyOmega科学上网</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/17/HTTP报文详解/" itemprop="url">
                   HTTP报文详解
                 </a>
@@ -1449,168 +1591,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/09/Redis持久化RDB和AOF/" itemprop="url">
-                  Redis持久化RDB和AOF
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-09T14:48:19+08:00" content="2016-05-09">
-              2016-05-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/09/Redis持久化RDB和AOF/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/09/Redis持久化RDB和AOF/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Redis提供了两种不同级别的持久化方式</p>
-<ul>
-<li>RDB</li>
-<li>AOF</li>
-</ul>
-<h6 id="RDB、AOF概念"><a href="#RDB、AOF概念" class="headerlink" title="RDB、AOF概念"></a>RDB、AOF概念</h6><p>RDB持久化可以在指定的时间间隔内生成数据集的时间点快照。</p>
-<p>AOF持久化记录服务器执行的所有写操作命令，在服务器启动时，通过执行这些命令来还原数据集。</p>
-<h6 id="RDB的优点"><a href="#RDB的优点" class="headerlink" title="RDB的优点"></a>RDB的优点</h6><ol>
-<li>紧凑易于备份，就一个文件</li>
-<li>RDB可以最大化Redis性能，父进程无需做任何操作，只需fork一个子进程；</li>
-<li>恢复比AOF快</li>
-</ol>
-<h6 id="RDB的缺点"><a href="#RDB的缺点" class="headerlink" title="RDB的缺点"></a>RDB的缺点</h6><ol>
-<li>数据完整性，如果非常注重数据的完整性，RDB就不行了，虽然是时间点的快照方式，但在快照过程中，Redis重启了，那么快照中的这些数据将会丢失。</li>
-<li>数据非常庞大后，非常耗CPU和时间，REDIS服务可能DOWN掉1秒甚至更长；</li>
-</ol>
-<h6 id="AOF的优点"><a href="#AOF的优点" class="headerlink" title="AOF的优点"></a>AOF的优点</h6><ol>
-<li>AOF持久化让Redis变得更加耐久，AOF默认每一秒追加一次，也可以修改它的方式每执行一次追加一次，所以你最多丢失1秒钟的数据；</li>
-<li>AOF文件是一个只进行追加操作的日志文件;</li>
-<li>Redis可以在AOF文件体积变得过大时，自动地在后台对AOF重写</li>
-</ol>
-<h6 id="AOF缺点"><a href="#AOF缺点" class="headerlink" title="AOF缺点"></a>AOF缺点</h6><ol>
-<li>对于相同的数据集来说，AOF文件的体积大于RDB文件的体积；</li>
-<li>根据所使用的fsync策略，AOF的速度可能会慢于RDB；</li>
-</ol>
-<h6 id="RDB持久化原理"><a href="#RDB持久化原理" class="headerlink" title="RDB持久化原理"></a>RDB持久化原理</h6><p>当Redis需要保存dump.rdb文件时，服务器执行以下操作：</p>
-<ol>
-<li>Redis调用fork(),同时拥有父进程和子进程；</li>
-<li>子进程将数据集写入到一个临时RDB文件中；</li>
-<li>当子进程完成对RDB文件的写入时，Redis用新RDB文件替换原来的RDB文件，并删除旧的RDB文件；</li>
-<li>这种方式使得Redis可以从写时复制机制中获益</li>
-</ol>
-<h5 id="AOF持久化原理"><a href="#AOF持久化原理" class="headerlink" title="AOF持久化原理"></a>AOF持久化原理</h5><ol>
-<li>Redis执行fork()，现在同时拥有父进程和子进程；</li>
-<li>子进程开始将AOF文件的内容写入到临时文件。</li>
-<li>对于所有新执行的写入命令，父进程一边将他们累积到一个内存缓存中，一边将这些改动追加到现有AOF文件的末尾，这样即使在重写的中途发生宕机，现有AOF文件也是安全的</li>
-<li>当子进程完成重写工作时，它给父进程发送一个信号，父进程在接收到信号之后，将内存缓存中的所有数据追加到新的AOF文件的末尾。</li>
-<li>现在Redis原子地用新文件替换旧文件，之后所有命令都会追加到新的AOF文件</li>
-</ol>
-<h5 id="AOF重写"><a href="#AOF重写" class="headerlink" title="AOF重写"></a>AOF重写</h5><ul>
-<li>AOF的运作方式是不断将命令追加到文件的末尾，所以随着写入命令的不断增加，AOF文件的体积也变得越来越大。举个例子，如果你对计数器调用100次INCR，那么仅仅是为了保存这个计数器的当前值，AOF文件就需要使用100条记录，然而实际上只需一条SET命令就可以保存当前值；为了处理这种情况Redis会对AOF文件进行重写，执行beginWriteAof命令，Redis将生成一个新的AOF文件，这个文件将重建当前数据集所需的最少命令；</li>
-</ul>
-<p>参考资料：<br><a href="http://www.cnblogs.com/luotianshuai/p/4969379.html" target="_blank" rel="external">Redis-cluster集群【第二篇】：redis持久化</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1656,7 +1636,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">142</span>
+              <span class="site-state-item-count">143</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

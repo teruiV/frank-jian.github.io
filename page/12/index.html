@@ -292,6 +292,132 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/04/MySQL权限系统介绍/" itemprop="url">
+                  MySQL权限系统介绍
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-04T09:57:29+08:00" content="2016-05-04">
+              2016-05-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MYSQL</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/04/MySQL权限系统介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/04/MySQL权限系统介绍/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//创建用户流云</div><div class="line">CREATE USER  &quot;liuyun&quot;@&apos;localhost&apos; IDENTIFIED BY &apos;123456&apos;;</div></pre></td></tr></table></figure>
+<h5 id="授权"><a href="#授权" class="headerlink" title="授权"></a>授权</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">注：privileges -用户操作权限如SELECT、INSERT、UPDATE、DELETE，如果要授予所有权限则使用ALL</div><div class="line">GRANT privileges ON databasename.tablename TO &apos;username&apos;@&apos;host&apos;；</div><div class="line"></div><div class="line"># 对 test数据库的所有表具有增删改查的权限；</div><div class="line">GRANT SELECT,INSERT,UPDATE,DELETE  ON test.* TO &apos;liuyun&apos; @ &apos;localhost&apos;;</div><div class="line">FLUSH PRIVILEGES;</div></pre></td></tr></table></figure>
+<h4 id="切换用户"><a href="#切换用户" class="headerlink" title="切换用户"></a>切换用户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">exit;</div><div class="line">mysql -u liuyun -p liuyun</div></pre></td></tr></table></figure>
+<h4 id="更改用户密码"><a href="#更改用户密码" class="headerlink" title="更改用户密码"></a>更改用户密码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#更改其他用户</div><div class="line">SET PASSWORD FOR &apos;username&apos;@&apos;host&apos; = PASSWORD(&apos;newpassword&apos;);</div><div class="line"></div><div class="line">#当前用户修改密码</div><div class="line">SET PASSWORD = PASSWORD(&apos;newpassword&apos;);</div></pre></td></tr></table></figure>
+<h4 id="撤销用户权限"><a href="#撤销用户权限" class="headerlink" title="撤销用户权限"></a>撤销用户权限</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">REVOKE SELECT,INSERT,UPDATE,DELETE ON test.*  FROM  &apos;liuyun&apos;@&apos;localhost&apos;;</div></pre></td></tr></table></figure>
+<h5 id="查看某个用户有哪些权限"><a href="#查看某个用户有哪些权限" class="headerlink" title="查看某个用户有哪些权限"></a>查看某个用户有哪些权限</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SHOW GRANTS FOR &apos;liuyun&apos;@&apos;localhost&apos;;</div></pre></td></tr></table></figure>
+<h5 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DROP USER &quot;liuyun&quot; @ &quot;localhost&quot;;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/04/MYSQL练习/" itemprop="url">
                   MYSQL练习
                 </a>
@@ -1438,145 +1564,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/29/SQL存储过程/" itemprop="url">
-                  SQL存储过程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-29T15:16:39+08:00" content="2016-04-29">
-              2016-04-29
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/SQL/" itemprop="url" rel="index">
-                    <span itemprop="name">SQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/29/SQL存储过程/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/29/SQL存储过程/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h4><p>用户定义的一系列SQL语句的集合，设计特定表和其他对象的任务，用户可以调用存储过程。</p>
-<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><p>通常是数据库已定义的方法，它接收参数并返回魔种类型的值并不涉及特定用户表.</p>
-<h4 id="存储过程和函数的区别"><a href="#存储过程和函数的区别" class="headerlink" title="存储过程和函数的区别"></a>存储过程和函数的区别</h4><ol>
-<li>函数只能通过RETURN语句返回单个值或对象，而存储过程不允许执行RETURN，它通过OUT参数返回多个值</li>
-<li>函数可以嵌入SQL中使用，可以在SELECT中调用，而存储过程不行</li>
-<li>存储过程实现的功能复杂一些，而函数的实现功能针对性更强一些</li>
-<li>函数限制比较多，比如不能用临时表，只能用表变量，而存储过程的限制相对少一些。</li>
-</ol>
-<h4 id="存储过程的优点"><a href="#存储过程的优点" class="headerlink" title="存储过程的优点"></a>存储过程的优点</h4><ul>
-<li>通过把处理封装在容易使用的单元中，简化复杂的操作</li>
-<li>多个开发人员使用同一存储过程，保证了数据的一致性；</li>
-<li>简化对变动的管理，如果业务逻辑有变化，只需要改动存储过程的代码，使用它的人员甚至都不需要知道这些变化。</li>
-<li>因为存储过程通常以编译过的形式存储，而且性能更高；</li>
-</ul>
-<h4 id="存储过程的缺点"><a href="#存储过程的缺点" class="headerlink" title="存储过程的缺点"></a>存储过程的缺点</h4><ul>
-<li>不同DBMS的存储过程语法不同，移植性较差；</li>
-<li>编写存储过程比编写简单SQL语句复杂，要求比较高；</li>
-</ul>
-<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"># 创建存储过程</div><div class="line">CREATE PROCEDURE productpricing()</div><div class="line">BEGIN</div><div class="line">	SELECT AVG(prod_price) AS priceaverage</div><div class="line">    FROM products;</div><div class="line">END;</div><div class="line"></div><div class="line"># 调用存储过程</div><div class="line">CALL productpricing();</div><div class="line"></div><div class="line"># 删除存储过程</div><div class="line"></div><div class="line">DROP PROCEDURE productpricing();</div><div class="line"></div><div class="line"># 使用参数</div><div class="line">CREATE PROCEDURE productpricing(</div><div class="line">	OUT pl DECIMAL(8,2),</div><div class="line">    OUT ph DECIMAL(8,2),</div><div class="line">    OUT pa DECIMAL(8,2)</div><div class="line">)</div><div class="line">BEGIN</div><div class="line">	SELECT Min(prod_price)</div><div class="line">    INTO pl</div><div class="line">    FROM products;</div><div class="line">    SELECT Max(prod_price)</div><div class="line">    INTO ph</div><div class="line">    FROM products;</div><div class="line">	SELECT AVG(prod_price)</div><div class="line">    INTO pa</div><div class="line">    FROM products;</div><div class="line">END;</div><div class="line"></div><div class="line">提示：DECIMAL(8,2)表示输出的数总共有8位，小数点有2位；</div><div class="line"></div><div class="line"># 调用，所有MYSQL变量名都必须以@开始</div><div class="line">CALL productpricing(@pricelow,@pricehigh,@priceaverage);</div><div class="line"></div><div class="line"># 显示</div><div class="line">SELECT @pricelow,@pricehigh,@priceaverage;</div><div class="line"></div><div class="line"># IN、OUT 参数</div><div class="line">CREATE PROCEDURE ordertotal(</div><div class="line">	IN onumber INT,</div><div class="line">    OUT ototal DECIMAL(8,2)</div><div class="line">)</div><div class="line">BEGIN</div><div class="line">	SELECT SUM(item_price * quantity)</div><div class="line">    FROM orderitems</div><div class="line">    WHERE order_num = onumber;</div><div class="line">    INTO ototal;</div><div class="line">END;</div><div class="line"></div><div class="line"># 调用</div><div class="line">CALL ordertotal(20005,@ototal);</div><div class="line"></div><div class="line"># 显示</div><div class="line">SELECT @ototal;</div><div class="line"></div><div class="line">提示：</div><div class="line">IN、OUT参数相当于高级语言中的函数的传值和传引用</div><div class="line">DECLARE定义局部变量</div><div class="line">SHOW PROCEDURE STATUS 可以查看存储过程列表</div></pre></td></tr></table></figure>
-<p>参考资料：<br><a href="http://fqk.io/mysql-proceduce-function-diff/" target="_blank" rel="external">MySQL 存储过程和函数区别</a><br><a href="http://fqk.io/note-mysql-5/" target="_blank" rel="external">MySQL 笔记 5</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1622,7 +1609,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">142</span>
+              <span class="site-state-item-count">143</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
