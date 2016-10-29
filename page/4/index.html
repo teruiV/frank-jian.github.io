@@ -292,6 +292,138 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/14/MySQL之查询性能优化/" itemprop="url">
+                  MySQL之查询性能优化
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-14T00:16:30+08:00" content="2016-09-14">
+              2016-09-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MYSQL</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/14/MySQL之查询性能优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/14/MySQL之查询性能优化/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>现有的项目，对于数据库查询的性能要求挺高的，对于查询性能的优化也是迫在眉睫，接下来，让我们一同来学习MySQL查询性能优化。</p>
+<p>查询性能低下，最基本的原因是访问的数据太多。大部分性能低下的查询都可以通过减少访问的数据量的方式进行优化。</p>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><p><strong>查询不需要的记录</strong></p>
+<p>场景：有些开发者习惯先使用<code>SELECT</code>语句查询大量的结果，然后获取前面N行后关闭结果集，他们认为MYSQL会执行查询，并只返回他们需要的10条数据，然后停止查询。但实际是MYSQL回查询出所有的结果集。客户端接受所有结果集，然后抛弃大部分数据。最有效的方式是在查询后加上LIMIT。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SELECT username from USER LIMIT 10</div></pre></td></tr></table></figure>
+<p><strong>多表关联时返回全部的列</strong></p>
+<p>场景：我想获取电影My Love中出现的演员</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SELECT * FROM actor </div><div class="line">INNER JOIN film_actor USIGN(actor_id)</div><div class="line">INNER JOIN film USIGN(film_id)</div><div class="line">WHERE film.title = &quot;My Love&quot;</div></pre></td></tr></table></figure>
+<p>这将返回三个表的全部数据列，正确的做法应该是<code>SELECT actor.* FROM actor ....</code></p>
+<p>未完待续…</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>高性能MySQL第三版</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/13/解决拦截器读取Request中的流-Controller读取不到的问题/" itemprop="url">
                   解决拦截器读取Request中的流,Controller读取不到的问题
                 </a>
@@ -1543,161 +1675,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/03/ES6之解构/" itemprop="url">
-                  ES6之解构
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-03T22:12:10+08:00" content="2016-09-03">
-              2016-09-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/03/ES6之解构/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/03/ES6之解构/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="什么是解构"><a href="#什么是解构" class="headerlink" title="什么是解构"></a>什么是解构</h3><p>ES6允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构。</p>
-<h3 id="解构实战"><a href="#解构实战" class="headerlink" title="解构实战"></a>解构实战</h3><p><strong>模式匹配</strong></p>
-<p><code>案例1：从数组中提取值对变量赋值</code></p>
-<p>以前为变量赋值,只能直接指定值。<code>var a = 1; var b = 2; var c = 3;</code>,而ES6允许写成下面这样：<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/62199557.jpg" alt=""></p>
-<p>可以从数组中提取值，按照位置的对应关系对变量赋值。</p>
-<p><code>案例2：输出指定参数</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/21789363.jpg" alt=""></p>
-<p><code>案例3:获取除第一个元素外的数组元素</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/80722503.jpg" alt=""></p>
-<p><code>案例4：部分解构成功</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/3511189.jpg" alt=""></p>
-<p>变量解构不成功为<code>undefined</code>,数组解构不成功为<code>[]</code></p>
-<p><code>案例5：指定默认值</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-3/22448401.jpg" alt=""></p>
-<p><strong>对象解构</strong></p>
-<p><code>案例1：常规对象解构</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-4/33755818.jpg" alt=""></p>
-<p>对象的解构与数组有一个重要的不同，数组的元素是按次序排列的，变量的取值由它的位置决定，而对象的属性没有次序，变量必须与属性同名，才能取到正确的值。类似于<code>Java</code>的<code>Map</code></p>
-<p><code>案例2：变量名与属性名不一致</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-4/50682927.jpg" alt=""></p>
-<p>对象的解构赋值的内部机制是先找到同名属性，然后在赋给对应的变量，真正被赋值的是后者即<code>first和second变量</code></p>
-<p><code>案例3：声明默认值</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-4/88888167.jpg" alt=""></p>
-<p>默认值生效的条件的条件是，对象的属性值严格等于undefined;如下这种情况默认值是不会生效的。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-4/53746649.jpg" alt=""></p>
-<p><strong>字符串解构</strong></p>
-<p><code>案例1：字符串被转换成类似数组的对象</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-4/27671791.jpg" alt=""></p>
-<p><code>案例2：字符串属性解构赋值</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-4/67194660.jpg" alt=""></p>
-<p><strong>函数解构</strong></p>
-<p><code>案例1：常规函数解构</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-4/49058450.jpg" alt=""><br>函数add的参数实际上不是一个数组，而是通过解构得到的变量x和y；</p>
-<p><code>案例2：函数默认值</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-4/16643905.jpg" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>ES6标准入门 - 阮一峰</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1743,7 +1720,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">143</span>
+              <span class="site-state-item-count">144</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

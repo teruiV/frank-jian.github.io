@@ -292,6 +292,164 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/29/JAVA之观察者模式/" itemprop="url">
+                  JAVA之观察者模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-29T16:15:50+08:00" content="2016-10-29">
+              2016-10-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/29/JAVA之观察者模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/29/JAVA之观察者模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>半年前写过一篇<a href="http://jianwl.com/2016/05/10/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">观察者模式</a>,当我再次翻阅这篇文章时，我已看不懂，我当初写这篇文章的主线是什么？仅仅是将「Head First设计模式」书中的代码搬过来。这样没有经过思考的学习笔记，对知识的理解是很浅的，且忘记后再看原文不容易重新拾起。本文将重新梳理「JAVA观察者模式」。</p>
+<h3 id="观察者模式介绍"><a href="#观察者模式介绍" class="headerlink" title="观察者模式介绍"></a>观察者模式介绍</h3><p>一个目标对象管理所有依赖于它的观察者对象，并且在它本身的状态改变时，主动发出通知。</p>
+<p><code>优点</code></p>
+<p>观察者和被观察者是抽象耦合的</p>
+<p><code>缺点</code></p>
+<ol>
+<li>如果一个目标对象有很多的观察者，通知所有观察者会花费很多时间</li>
+<li>目标对象和观察者之间有循环依赖的话，会触发循环调用，导致系统崩溃。</li>
+<li>观察者模式没有相应的机制让观察者知道目标对象是怎么发生变化的，仅仅只是知道观察目标发生了变化。</li>
+</ol>
+<p><code>组成</code></p>
+<ol>
+<li><code>抽象主题角色「Subject」:</code>把所有观察者对象的引用保存在一个聚集里，每个主题都可以有任何数量的观察者。抽象主题提供一个接口，可以增加和删除观察者对象。</li>
+<li><code>具体主题角色 「ConcreteSubject」：</code>存入具体观察者对象，在具体主题的内部状态改变时，给所有登记过的观察者发出通知。</li>
+<li><code>抽象观察者角色「Observer」：</code>为所有的具体观察者定义一个接口，在得到主题的通知时，更新自己。</li>
+<li><code>具体观察角色「ConsreteObserver」：</code>具体观察者实现抽象观察者所要求的所有接口。</li>
+</ol>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1、定义抽象观察者角色</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Observer</div><div class="line"> * @param &lt;S&gt; Subject</div><div class="line"> * @param &lt;O&gt; Observer</div><div class="line"> * @param &lt;A&gt; Argument type</div><div class="line"> */</div><div class="line">public interface Observer&lt;S extends Observable&lt;S, O, A&gt;, O extends Observer&lt;S, O, A&gt;, A&gt; &#123;</div><div class="line"></div><div class="line">  void update(S subject, A argument);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Race.java</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public interface Race extends Observer&lt;GWeather, Race, WeatherType&gt; &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>2、定义具体观察者角色</strong></p>
+<p><code>具体观察者角色：GOrcs.java</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class GOrcs implements Race &#123;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public void update(GWeather weather, WeatherType weatherType) &#123;</div><div class="line">    switch (weatherType) &#123;</div><div class="line">      case COLD:</div><div class="line">        System.out.println(&quot;The orcs are freezing cold.&quot;);</div><div class="line">        break;</div><div class="line">      case RAINY:</div><div class="line">        System.out.println(&quot;The orcs are dripping wet.&quot;);</div><div class="line">        break;</div><div class="line">      case SUNNY:</div><div class="line">        System.out.println(&quot;The sun hurts the orcs&apos; eyes.&quot;);</div><div class="line">        break;</div><div class="line">      case WINDY:</div><div class="line">        System.out.println(&quot;The orc smell almost vanishes in the wind.&quot;);</div><div class="line">        break;</div><div class="line">      default:</div><div class="line">        break;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>具体观察者角色：GHobbits.java</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class GHobbits implements Race &#123;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public void update(GWeather weather, WeatherType weatherType) &#123;</div><div class="line">    switch (weatherType) &#123;</div><div class="line">      case COLD:</div><div class="line">        System.out.println(&quot;The hobbits are shivering in the cold weather.&quot;);</div><div class="line">        break;</div><div class="line">      case RAINY:</div><div class="line">        System.out.println(&quot;The hobbits look for cover from the rain.&quot;);</div><div class="line">        break;</div><div class="line">      case SUNNY:</div><div class="line">        System.out.println(&quot;The happy hobbits bade in the warm sun.&quot;);</div><div class="line">        break;</div><div class="line">      case WINDY:</div><div class="line">        System.out.println(&quot;The hobbits hold their hats tightly in the windy weather.&quot;);</div><div class="line">        break;</div><div class="line">      default:</div><div class="line">        break;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>3、定义抽象主题角色</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Subject</div><div class="line"> * @param &lt;S&gt; Subject</div><div class="line"> * @param &lt;O&gt; Observer</div><div class="line"> * @param &lt;A&gt; Argument type</div><div class="line"> */</div><div class="line">public abstract class Observable&lt;S extends Observable&lt;S, O, A&gt;, O extends Observer&lt;S, O, A&gt;, A&gt; &#123;</div><div class="line"></div><div class="line">  protected List&lt;O&gt; observers;</div><div class="line"></div><div class="line">  public Observable() &#123;</div><div class="line">    this.observers = new CopyOnWriteArrayList&lt;&gt;();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public void addObserver(O observer) &#123;</div><div class="line">    this.observers.add(observer);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public void removeObserver(O observer) &#123;</div><div class="line">    this.observers.remove(observer);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * Notify observers</div><div class="line">   */</div><div class="line">  @SuppressWarnings(&quot;unchecked&quot;)</div><div class="line">  public void notifyObservers(A argument) &#123;</div><div class="line">    for (O observer : observers) &#123;</div><div class="line">      observer.update((S) this, argument);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>4、定义具体的主题</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class GWeather extends Observable&lt;GWeather, Race, WeatherType&gt; &#123;</div><div class="line"></div><div class="line">  private WeatherType currentWeather;</div><div class="line"></div><div class="line">  public GWeather() &#123;</div><div class="line">    currentWeather = WeatherType.SUNNY;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * Makes time pass for weather</div><div class="line">   */</div><div class="line">  public void timePasses() &#123;</div><div class="line">    WeatherType[] enumValues = WeatherType.values();</div><div class="line">    currentWeather = enumValues[(currentWeather.ordinal() + 1) % enumValues.length];</div><div class="line">    System.out.println(&quot;The weather changed to &quot; + currentWeather + &quot;.&quot;);</div><div class="line">    notifyObservers(currentWeather);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>WeatherType.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public enum WeatherType &#123;</div><div class="line"></div><div class="line">  SUNNY, RAINY, WINDY, COLD;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public String toString() &#123;</div><div class="line">    return this.name().toLowerCase();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>5、运行观察者模式</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class App &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        GWeather gWeather = new GWeather();</div><div class="line">        gWeather.addObserver(new GOrcs());</div><div class="line">        gWeather.addObserver(new GHobbits());</div><div class="line"></div><div class="line">        gWeather.timePasses();</div><div class="line">        gWeather.timePasses();</div><div class="line">        gWeather.timePasses();</div><div class="line">        gWeather.timePasses();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/13.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="https://zh.wikipedia.org/wiki/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F" target="_blank" rel="external">观察者模式-维基百科</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/29/算法基础之插入排序/" itemprop="url">
                   算法基础之插入排序
                 </a>
@@ -1656,187 +1814,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/16/Shell编程入门/" itemprop="url">
-                  Shell编程入门
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-16T13:04:06+08:00" content="2016-10-16">
-              2016-10-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/16/Shell编程入门/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/16/Shell编程入门/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>Shell</code>是基于命令行的解释器，它连接用户和操作系统，允许通过编写脚本来执行系统命令。</p>
-<h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><p><strong>1、环境变量</strong></p>
-<p><code>实战1：查看环境变量env</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/33734703.jpg" alt=""></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">HOME : 代表用户主文件夹</div><div class="line">SHELL : 目前这个环境使用的SHELL是哪个程序</div><div class="line">PATH : 执行文件查找路径，目录与目录中间以冒号`:`分隔</div><div class="line">LANG : 语系数据，很多信息都会用到它。</div></pre></td></tr></table></figure>
-<p><strong>2、文件系统及程序的限制关系：ulimit</strong></p>
-<p><code>场景：</code>Linux主机里同时登陆10个人，每个人同时打开100个文件，每个文件10MB，那么Linux主机内存需要<code>10 * 100 * 10 = 10000MB = 10G</code>,这样系统不挂掉才怪，为了预防这种情况<code>bash</code>可以限制用户的某些系统资源，具体配置用<code>ulimit</code>命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">-H : 严格设置，必定不能超过这个设置的数值</div><div class="line">-S : 警告设置，可以超过这个数值，但若超过则有警告信息</div><div class="line">-a : 后面不接任何参数，可列出所有限制额度</div><div class="line">-c : 当某些进程发成错误时，系统可能会将进程在内存中的信息写成文件，这种文件成为内核文件。</div><div class="line">-f : 此SHELL可以创建的最大文件容量(一般设为2GB)单位KB</div><div class="line">-d : 进程可使用的最大断裂内存容量</div><div class="line">-l : 可用于锁定内存量</div><div class="line">-t : 可使用最大CPU时间</div><div class="line">-u : 单一用户可以使用的最大进程数量</div></pre></td></tr></table></figure>
-<p><code>实战1：查看当前用户的所有限制数据值</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/71746717.jpg" alt=""></p>
-<p><code>实战2：限制用户仅仅能创建10MB容量以下的文件</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/80080741.jpg" alt=""></p>
-<p><strong>3、一次执行多个命令 &amp;&amp; 、||</strong></p>
-<p><code>场景：</code>很多命令我想要一次输入去执行，而不想分次执行。有两个办法，一个是编写<code>shell script</code>脚本去执行，另一个是一次性输入多重命令。</p>
-<p><code>基本语法如下</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cmd1 &amp;&amp; cmd2 --&gt; 若cmd1成功，$?(命令回传码)=0，则执行cmd2，反之cmd1失败，$?≠0，则cmd2不执行</div><div class="line"></div><div class="line">cmd1 || cmd2 --&gt; 若cmd1成功，$?(命令回传码)=0，则不执行cmd2，反之cmd1失败，$?≠0，则cmd2执行</div></pre></td></tr></table></figure>
-<p><code>实战1：&amp;&amp;命令</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/3250026.jpg" alt=""></p>
-<p><code>实战2：||命令,cmd1执行不成功，执行cmd2</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/27649803.jpg" alt=""></p>
-<p><code>实战3：||命令，cmd2执行成功，不执行cmd2</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/78874389.jpg" alt=""></p>
-<p><strong>4、选取命令cut、grep</strong></p>
-<p><code>cut</code>命令，可以将一段信息的某一段切出来，处理的信息是以行为单位，基本语法<code>cut -d &#39;分隔字符&#39; -f &#39;第几段&#39;</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-d : 后面接分隔字符，与-f一起使用</div><div class="line">-f : 依据-d的分隔符将一段信息切割成为数段，用-f取出第几段的意思；</div><div class="line">-c : 以字符的单位取出固定字符区间</div></pre></td></tr></table></figure>
-<p><code>实战1：将PATH变量取出，找出第5个路径</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/34433783.jpg" alt=""></p>
-<p><code>实战2，将PATH变量取出，找出第3个和第5个路径</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/77994451.jpg" alt=""></p>
-<p><code>grep命令</code>是分析一行信息，若当中有需要的信息，将该行拿出来，基本语法<code>grep [-acinv] [--color=auto] &#39;查找字符串&#39; filename</code>.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-a : 将binary文件以text文件的方式查找数据</div><div class="line">-c : 计算找到&apos;查找字符串&apos;的次数</div><div class="line">-i : 忽略大小写的不同</div><div class="line">-v : 反向选择</div><div class="line">--color=auto : 可以将找到的关键字部分加上颜色；</div></pre></td></tr></table></figure>
-<p><code>实战1：将last当中出现jianweilin的那一行取出来</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/64550336.jpg" alt=""></p>
-<p><code>实战2：取出jianweilin那一行的第一列</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/56948030.jpg" alt=""></p>
-<p><code>实战3：取出文件中包含console的行，并标红关键字</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/65838802.jpg" alt=""></p>
-<p><strong>5、排序命令sort、wc、uniq</strong></p>
-<p><code>sort</code>命令可以依据不同的数据类型来排序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-f : 忽略大小写的差异</div><div class="line">-b : 忽略最前面的空格符部分</div><div class="line">-M : 以月份的名字来排序</div><div class="line">-n : 使用纯数字来进行排序</div><div class="line">-r : 反向排序</div><div class="line">-u : uniq，相同的数据中，仅出现一行代表</div><div class="line">-t : 分隔符</div><div class="line">-k : 以那个区间来进行排序</div></pre></td></tr></table></figure>
-<p><code>实战1：利用last输出的数据，并加以排序</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/47905704.jpg" alt=""></p>
-<p><code>实战2：1.log的内容，每行的数据以:分隔，按第2列来排序</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/77485521.jpg" alt=""></p>
-<p><code>uniq</code>命令，将重复的数据仅列出一个显示<code>uniq [-ic]</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-i : 忽略大小写字符</div><div class="line">-c : 进行计数</div></pre></td></tr></table></figure>
-<p><code>实战1：统计每个用户登录的总次数</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/83045345.jpg" alt=""></p>
-<p><code>wc</code>命令，用于统计文件里有多少字，多少行，多少字符,基本语法<code>wc [-lwm]</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-l : 仅列出行</div><div class="line">-w : 仅列出多少字</div><div class="line">-m : 多少字符</div></pre></td></tr></table></figure>
-<p><code>实战1：统计行数、单词数、字符数</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/17425650.jpg" alt=""></p>
-<p><code>6、字符转换命令tr</code></p>
-<p><code>tr</code>命令可以删除一段信息中的文字，并用其他文字信息进行替换。语法为<code>tr [-ds] set1  set</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-d ：删除信息中‘set1’字符串</div><div class="line">-s : 用‘set’字符串替换‘set1’</div></pre></td></tr></table></figure>
-<p><code>实战1：将小写字符换成大写字符</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/38444009.jpg" alt=""></p>
-<p><code>实战2：PATH路径，删除&#39;:&#39;</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/24188455.jpg" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>Linux鸟哥的私房菜</li>
-<li>Linux命令行与shell脚本编程大全</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1882,7 +1859,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">143</span>
+              <span class="site-state-item-count">144</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

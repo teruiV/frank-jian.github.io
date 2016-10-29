@@ -292,6 +292,208 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/21/Java之枚举/" itemprop="url">
+                  Java之枚举
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-21T19:20:16+08:00" content="2016-08-21">
+              2016-08-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/21/Java之枚举/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/21/Java之枚举/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="引入枚举的背景"><a href="#引入枚举的背景" class="headerlink" title="引入枚举的背景"></a>引入枚举的背景</h3><p><strong>场景</strong></p>
+<p>为彩虹描绘出其中颜色，通常可以通过定义常量的方式来实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class RainbowColor &#123;</div><div class="line">    public static final int RED = 0;</div><div class="line">    public static final int ORANGE = 1;</div><div class="line">    public static final int YELLOW = 2;</div><div class="line">    public static final int GREEN = 3;</div><div class="line">    public static final int CYAN = 4;</div><div class="line">    public static final int BLUE = 5;</div><div class="line">    public static final int PURPLE = 6;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但这种方式会存在以下这几个问题：</p>
+<p><strong>类型不安全</strong></p>
+<p>由于颜色常量的对应值是整数型，所以程序执行过程中很有可能给颜色变量传入一个任意的整数值，导致出现错误。</p>
+<p><strong>类型无指意性</strong></p>
+<p>由于颜色变量值仅仅是一些无包含任何含义的整数值，如果在运行期调试时候，你就会发现日志中有很多魔术数字，但除了程序员本身，其他人很难明白其中奥秘。</p>
+<h3 id="枚举类型"><a href="#枚举类型" class="headerlink" title="枚举类型"></a>枚举类型</h3><p>为了改进Java语言在这方面的不足，<code>JDK1.5</code>之后，增加了枚举类型。<code>枚举是限定有限种可能值的一种手段，使用枚举可以降低程序出错的几率，并可以提高代码的可读性和可维护性</code></p>
+<p><strong>枚举定义</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public enum  RainbowEnum &#123;</div><div class="line">    RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PURPLE;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>常规用法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public class EnumDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        RainbowEnum color = RainbowEnum.GREEN;</div><div class="line">        switch (color)&#123;</div><div class="line">            case GREEN:</div><div class="line">                System.out.println(&quot;this is GREEN&quot;);</div><div class="line">                break;</div><div class="line">            case CYAN:</div><div class="line">                System.out.println(&quot;this is CYAN&quot;);</div><div class="line">                break;</div><div class="line">            default:</div><div class="line">                System.out.println(&quot;other color&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>枚举提供了几个方法供开发者在需要时调用。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vlaues()</td>
+<td><code>返回当前枚举中所有枚举项的集合</code></td>
+</tr>
+<tr>
+<td>oridinal()</td>
+<td><code>返回枚举项在枚举对象中的序号</code></td>
+</tr>
+<tr>
+<td>name()</td>
+<td><code>返回枚举项的名称，与toString()效果相同</code></td>
+</tr>
+<tr>
+<td>getDeclaringClass()</td>
+<td><code>取得当前枚举值所在类的完整名称</code></td>
+</tr>
+<tr>
+<td>valueOf(“xx”)</td>
+<td><code>返回名称为xx的枚举项</code></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public class EnumDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line"></div><div class="line">        for (RainbowEnum colorEnum : RainbowEnum.values()) &#123;</div><div class="line">            System.out.println(colorEnum);</div><div class="line">            System.out.println(colorEnum.ordinal());</div><div class="line">            System.out.println(colorEnum.name());</div><div class="line">            System.out.println(colorEnum.getDeclaringClass() + &quot;\n&quot;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        System.out.println(&quot;&lt;h5&gt;BLUE&lt;/h5&gt;&quot;);</div><div class="line">        RainbowEnum red = RainbowEnum.valueOf(&quot;BLUE&quot;);</div><div class="line">        System.out.println(red.ordinal());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>为枚举添加构造器和成员方法</strong></p>
+<p><code>RainBowEnum.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">public enum RainbowEnum &#123;</div><div class="line">    RED(1, &quot;red&quot;),</div><div class="line">    ORANGE(2, &quot;orange&quot;),</div><div class="line">    YELLOW(3, &quot;yellow&quot;),</div><div class="line">    GREEN(4, &quot;green&quot;),</div><div class="line">    CYAN(5, &quot;cyan&quot;),</div><div class="line">    BLUE(6, &quot;blue&quot;),</div><div class="line">    PURPLE(7, &quot;purple&quot;);</div><div class="line"></div><div class="line">    private Integer code;</div><div class="line">    private String desc;</div><div class="line"></div><div class="line">    RainbowEnum(Integer code, String desc) &#123;</div><div class="line">        this.code = code;</div><div class="line">        this.desc = desc;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Integer getCode() &#123;</div><div class="line">        return code;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setCode(Integer code) &#123;</div><div class="line">        this.code = code;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getDesc() &#123;</div><div class="line">        return desc;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setDesc(String desc) &#123;</div><div class="line">        this.desc = desc;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>EnumDemo.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class EnumDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line"></div><div class="line">        for (RainbowEnum colorEnum : RainbowEnum.values()) &#123;</div><div class="line">            System.out.println(&quot;code = &quot; + colorEnum.getCode());</div><div class="line">            System.out.println(&quot;desc = &quot; + colorEnum.getDesc());</div><div class="line">        &#125;</div><div class="line">        RainbowEnum color = RainbowEnum.valueOf(&quot;RED&quot;); //非red,故valueOf(&quot;枚举名称&quot;)</div><div class="line">        System.out.println(&quot;code = &quot; + color.getCode());</div><div class="line">        System.out.println(&quot;desc = &quot; + color.getDesc());</div><div class="line">        System.out.println(&quot;name = &quot; + color.name());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="枚举集合"><a href="#枚举集合" class="headerlink" title="枚举集合"></a>枚举集合</h3><table>
+<thead>
+<tr>
+<th>集合对象</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EnumSet</code></td>
+<td><code>EnumSet用于保存枚举项的集合，在枚举项本身并不互斥的情况下特别有用。例如，一个应用系统通常会有多种角色，而某些人在系统中可能承担不止一种角色。如果这些角色是通过枚举定义的，则此时EnumSet将可以将多种角色保存在一起，标识特定用户承担的全部角色</code></td>
+</tr>
+<tr>
+<td><code>EnumMap</code></td>
+<td><code>EnumMap是必须使用枚举项作为其KEY的Map，其法与普通Map类似</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>EnumSet</strong></p>
+<p><code>RoleEnum.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public enum RoleEnum &#123;</div><div class="line">    SYSADMIN,ROLEA,ROLEB;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>EnumSetDemo.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class EnumSetDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        EnumSet&lt;RoleEnum&gt; es = EnumSet.of(RoleEnum.ROLEA,RoleEnum.ROLEB);</div><div class="line">        es.add(RoleEnum.SYSADMIN);</div><div class="line">        es.add(RoleEnum.ROLEA); // 重复元素自动去重</div><div class="line">        for(RoleEnum role: es)&#123;</div><div class="line">            System.out.println(role);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<p><strong>EnumMap</strong></p>
+<p><code>RoleEnum.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public enum RoleEnum &#123;</div><div class="line">    SYSADMIN,ROLEA,ROLEB;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>EnumMapDemo.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class EnumMapDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        EnumMap&lt;RoleEnum,String&gt; em = new EnumMap&lt;RoleEnum, String&gt;(RoleEnum.class);</div><div class="line">        em.put(RoleEnum.SYSADMIN,&quot;系统管理员&quot;);</div><div class="line">        em.put(RoleEnum.ROLEA,&quot;角色A&quot;);</div><div class="line">        System.out.println(&quot; size = &quot;+em.size());</div><div class="line">        System.out.println(em.get(RoleEnum.SYSADMIN));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://blog.csdn.net/ishallwin/article/details/9440251" target="_blank" rel="external">Java枚举</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-enum/" target="_blank" rel="external">Java 语言中 Enum 类型的使用介绍</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/21/Mac技巧之指令篇/" itemprop="url">
                   Mac技巧之指令篇
                 </a>
@@ -1853,190 +2055,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/14/JAVA线程池/" itemprop="url">
-                  JAVA线程池
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-14T23:30:39+08:00" content="2016-08-14">
-              2016-08-14
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/14/JAVA线程池/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/14/JAVA线程池/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>线程池是一种多线程处理形式，处理过程中将任务添加到队列，然后在创建线程后自动启动这些任务。</p>
-<h3 id="线程池的作用"><a href="#线程池的作用" class="headerlink" title="线程池的作用"></a>线程池的作用</h3><p>限制系统中执行线程的数量，根据系统环境情况，自动/手动设置线程数量，达到最佳效果。</p>
-<h3 id="使用线程池的好处"><a href="#使用线程池的好处" class="headerlink" title="使用线程池的好处"></a>使用线程池的好处</h3><ol>
-<li>减少创建和销毁线程的次数，每个工作线程都可以被重复利用，可执行多个任务。</li>
-<li>可以根据系统的承受能力，调整线程池中工作线程的数量，防止因为消耗过多内存，而把服务器拖垮。</li>
-</ol>
-<h3 id="线程池介绍"><a href="#线程池介绍" class="headerlink" title="线程池介绍"></a>线程池介绍</h3><p><strong>线程池中比较重要的类</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">类</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>ExecutorService</code></td>
-<td style="text-align:left">真正的线程池接口</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>ScheduledExecutorService</code></td>
-<td style="text-align:left">定时任务</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>ThreadPoolExecutor</code></td>
-<td style="text-align:left"><code>ExecutorService默认实现</code></td>
-</tr>
-<tr>
-<td style="text-align:left"><code>ScheduledThreadPoolExecutor</code></td>
-<td style="text-align:left">继承<code>ThreadPoolExecutor</code>的<code>ScheduledExecutorService</code>接口实现周期性任务调度</td>
-</tr>
-</tbody>
-</table>
-<p><strong>常用的线程池</strong><br>利用Executors中的静态方法来创建线程池</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">方法</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>newFixedThreadPool</code></td>
-<td style="text-align:left">创建一个固定长度的线程池</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>newCacheThreadPool</code></td>
-<td style="text-align:left">创建一个可缓存的线程池，如果线程池当前规模超过处理需求，将回收空闲线程</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>newSingleThreadExecutor</code></td>
-<td style="text-align:left">创建一个单线程的<code>Executor</code> ,</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>newScheduledThreadPool</code></td>
-<td style="text-align:left">创建一个固定长度的线程池，以延迟/定时的方式来执行任务</td>
-</tr>
-</tbody>
-</table>
-<h3 id="JAVA-实战"><a href="#JAVA-实战" class="headerlink" title="JAVA 实战"></a>JAVA 实战</h3><p><strong>创建定时任务线程池</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class ScheduledDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);</div><div class="line">        executor.scheduleAtFixedRate(() -&gt; System.out.println(&quot;============&quot;),1000,5000, TimeUnit.MILLISECONDS);</div><div class="line">        </div><div class="line">        //每隔一段时间打印系统时间，证明两者是互不影响的</div><div class="line">        executor.scheduleAtFixedRate(() -&gt; System.out.println(OffsetDateTime.now()),1000,2000,TimeUnit.MILLISECONDS);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>创建固定长度的线程池</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class FixedThreadDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ExecutorService pool = Executors.newFixedThreadPool(2);</div><div class="line">        pool.execute(() -&gt; System.out.println(Thread.currentThread().getName() + &quot;正在执行...&quot;));</div><div class="line">        pool.execute(() -&gt; System.out.println(Thread.currentThread().getName() + &quot;正在执行...&quot;));</div><div class="line">        pool.execute(() -&gt; System.out.println(Thread.currentThread().getName() + &quot;正在执行...&quot;));</div><div class="line">        pool.execute(() -&gt; System.out.println(Thread.currentThread().getName() + &quot;正在执行...&quot;));</div><div class="line">        pool.execute(() -&gt; System.out.println(Thread.currentThread().getName() + &quot;正在执行...&quot;));</div><div class="line">        // 关闭线程池</div><div class="line">        pool.shutdown();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="http://baike.baidu.com/item/%E7%BA%BF%E7%A8%8B%E6%B1%A0" target="_blank" rel="external">线程池定义</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2082,7 +2100,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">143</span>
+              <span class="site-state-item-count">144</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
