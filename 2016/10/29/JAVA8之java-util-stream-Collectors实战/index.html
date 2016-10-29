@@ -95,18 +95,18 @@
 <meta property="og:description" content="前言Java8新增了一个集合工具类java.util.stream.Collectors，超级好用，在平时处理业务逻辑时，会经常用到。熟练掌握其用法，对于提高工作效率有很大的帮助。当然，这仅仅是最初级的，之后会抽空写一篇关于其源码解读的文章。
 实战对象模型
 12345678910111213141516171819202122232425262728public class User &amp;#123;">
-<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/3.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/8.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/4.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/2.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/6.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/5.jpg">
-<meta property="og:updated_time" content="2016-10-29T04:45:54.000Z">
+<meta property="og:updated_time" content="2016-10-29T04:56:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA8之java.util.stream.Collectors实战">
 <meta name="twitter:description" content="前言Java8新增了一个集合工具类java.util.stream.Collectors，超级好用，在平时处理业务逻辑时，会经常用到。熟练掌握其用法，对于提高工作效率有很大的帮助。当然，这仅仅是最初级的，之后会抽空写一篇关于其源码解读的文章。
 实战对象模型
 12345678910111213141516171819202122232425262728public class User &amp;#123;">
-<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/3.jpg">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/8.jpg">
 
 
 
@@ -355,7 +355,7 @@
 <p><strong>1、聚合对象某一属性<code>Collectors.toList()</code></strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">    public void test_001() &#123;</div><div class="line">        // 初始化用户对象</div><div class="line">        List&lt;User&gt; users = Collections.unmodifiableList(Arrays.asList(new User(&quot;对象C&quot;, 21), new User(&quot;对象B&quot;, 27), new User(&quot;对象A&quot;, 22), new User(&quot;对象D&quot;, 22)));</div><div class="line">        // 此处JSON类引用「阿里巴巴的fastjson包」</div><div class="line">        System.out.println(&quot;users ==&gt; &quot; + JSON.toJSON(users));</div><div class="line"></div><div class="line">        // 获取用户年龄的集合,包含重复年龄</div><div class="line">        List&lt;Integer&gt; ages = users.stream().map(User::getAge).collect(Collectors.toList());</div><div class="line">        System.out.println(&quot;ages ==&gt; &quot; + JSON.toJSON(ages));</div><div class="line"></div><div class="line">        // 获取年龄的集合,并去重</div><div class="line">        List&lt;Integer&gt; distinctAges = users.stream().map(User::getAge).distinct().collect(Collectors.toList());</div><div class="line">        System.out.println(&quot;distinctAges ==&gt; &quot; + JSON.toJSON(distinctAges));</div><div class="line"></div><div class="line">        // 按年龄排序 小 -&gt; 大</div><div class="line">        List&lt;User&gt; ageSortedUser = users.stream().sorted((u1,u2) -&gt; u1.getAge() - u2.getAge()).collect(Collectors.toList());</div><div class="line">        System.out.println(&quot;ageSortedUser ==&gt; &quot; + JSON.toJSON(ageSortedUser));</div><div class="line"></div><div class="line">        // 按名字排序按字母从 A - &gt; Z || a - &gt; z</div><div class="line">        List&lt;User&gt; nameSortedUser = users.stream().sorted((u1,u2) -&gt; u1.getName().compareTo(u2.getName())).collect(Collectors.toList());</div><div class="line">        System.out.println(&quot;nameSortedUser ==&gt; &quot; + JSON.toJSON(nameSortedUser));</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p><code>提一点</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/3.jpg" alt=""></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/8.jpg" alt=""></p>
 <p><code>结果：</code></p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/4.jpg" alt=""></p>
 <p><strong>2、将每个年龄的用户分组<code>Collectors.groupingBy()</code></strong></p>
