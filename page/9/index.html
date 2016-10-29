@@ -292,6 +292,194 @@
             
               
                 
+                <a class="post-title-link" href="/2016/06/15/Thymeleaf入门篇/" itemprop="url">
+                  Thymeleaf入门篇
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-15T16:53:42+08:00" content="2016-06-15">
+              2016-06-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Thymeleaf/" itemprop="url" rel="index">
+                    <span itemprop="name">Thymeleaf</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/15/Thymeleaf入门篇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/15/Thymeleaf入门篇/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Thymeleaf是什么？"><a href="#Thymeleaf是什么？" class="headerlink" title="Thymeleaf是什么？"></a>Thymeleaf是什么？</h3><p>Thymeleaf是一个跟Volecity、FreeMarker类似的模板引擎，它可以完全替代JSP，跟其他模板引擎，有如下三个吸引人的特点。</p>
+<ol>
+<li>Thymeleaf 在有网络和无网络的环境下皆可运行，它可以让美工在浏览器查看页面的静态效果，也可以让程序员在服务器查看带数据的动态页面效果。这是由于它支持html原型，然后在html里增加额外的属性来叨叨模板、数据的展现方式。浏览器解释html时会忽略未定义的标签属性，所以thymeleaf的模板可以静态地运行，当有数据返回到页面时，Thymeleaf标签会动态替换掉静态内容，使页面动态显示。</li>
+<li>Thymeleaf开箱即用的特性，它提供标准和spring标准两套方言，可以直接套用模板实现JSTL、OGNL表达式效果，避免每天套用模板，该标签的困扰。同时开发人员也可以扩展和创建自定义的方言。</li>
+<li>Thymeleaf提供spring标准方言和一个与SpringMVC完美基础的可选模块。可以快速的实现表单绑定、属性编辑器、国际化等功能。</li>
+</ol>
+<h3 id="Thymeleaf常用语法"><a href="#Thymeleaf常用语法" class="headerlink" title="Thymeleaf常用语法"></a>Thymeleaf常用语法</h3><p>1、访问数据的四种模式</p>
+<ul>
+<li><code>${}</code>变量表示式，用于访问容器上下文的变量</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//HomeController.class</div><div class="line"></div><div class="line">import org.springframework.stereotype.Controller;</div><div class="line">import org.springframework.ui.Model;</div><div class="line">import org.springframework.web.bind.annotation.RequestMapping;</div><div class="line"></div><div class="line">@Controller</div><div class="line">class HomeController &#123;</div><div class="line">    @RequestMapping(&quot;/home&quot;)</div><div class="line">    String home(Model model) &#123;</div><div class="line">        model.addAttribute(&quot;msg&quot;, &quot;welcome to thymeleaf&quot;);</div><div class="line">        return &quot;home&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//home.html (主要代码)</div><div class="line"> &lt;p th:text=&quot;$msg&quot;&gt;&lt;/p&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>*{}</code>选择表达式，选择表达式获取的是选定对象的变量。通过<code>th:object</code>绑定对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;div th:object=&quot;$session.user&quot;&gt; </div><div class="line">&lt;p&gt; name: &lt;span th:text=&quot; *&#123;name&#125; &quot;&gt; &lt;/span&gt; &lt;/p&gt;</div><div class="line">&lt;p&gt; age: &lt;span th:text=&quot; *&#123;age&#125; &quot;&gt; &lt;/span&gt; &lt;/p&gt;</div><div class="line">&lt;p&gt; address: &lt;span th:text=&quot; *&#123;address&#125; &quot;&gt; &lt;/span&gt; &lt;/p&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>#{}</code> 消息表达式，通常与<code>th:text</code>属性一起使用，指明了<code>#{}</code>中key所对应的value。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// WEB-INF/templates/home.html</div><div class="line"> &lt;p th: text=&quot; #&#123;home. welcome&#125;&quot; &gt;This text will not be show! &lt;/p&gt;</div><div class="line"></div><div class="line">// WEB-INF/templates/home.properties</div><div class="line">home.welcome=this messages is from home.properties!</div></pre></td></tr></table></figure>
+<ul>
+<li><code>@{}</code>超链接URL表达式</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">script th:src=&quot;@&#123;/resource/js/jquery/juqery.json-2.4.min.js&#125;&quot;</div></pre></td></tr></table></figure>
+<p>2、文本处理</p>
+<ul>
+<li>数字相加</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//输入结果：In two years, it will be 2018</div><div class="line"> &lt;p&gt;In two years, it will be &lt;span th:text=&quot;2016 + 2&quot;&gt;1494&lt;/span&gt;.&lt;/p&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>遍历列表内容 <code>th:each</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// persons为后端传过来的模型数据,List&lt;Person&gt;; Person包含&#123;name,age,address&#125;三个属性</div><div class="line"> &lt;table&gt;</div><div class="line"> &lt;tr th:each=&quot;person : $&#123;persons&#125;&quot;&gt;</div><div class="line"> 	&lt;td th:text=&quot;$&#123;person.name&#125;&quot;&gt;&lt;/td&gt;</div><div class="line"> 	&lt;td th:text=&quot;$&#123;person.age&#125;&quot;&gt;&lt;/td&gt;</div><div class="line"> 	&lt;td th:text=&quot;$&#123;person.address&#125;&quot;&gt;&lt;/td&gt;</div><div class="line"> &lt;/tr&gt;</div><div class="line">&lt;/table&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>条件判断</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">th:if</div><div class="line">th:unless</div><div class="line">th:switch</div><div class="line">th:case</div></pre></td></tr></table></figure>
+<ul>
+<li>本地变量声明</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">th:object</div><div class="line">th:with</div></pre></td></tr></table></figure>
+<ul>
+<li>内联文本 <code>[[ ]]</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;p&gt;Hello,[[ $&#123;session.user.name&#125; ]] &lt;/p&gt;</div><div class="line"></div><div class="line">等价于</div><div class="line"></div><div class="line">&lt;p&gt;Hello,&lt;span th:text=&quot;$&#123;session.user.name&#125;&quot;&gt;&lt;/span&gt;&lt;/p&gt;</div></pre></td></tr></table></figure>
+<p>3、 设置Attribute</p>
+<ul>
+<li>th:src=”@{/images/xxx.png}”  设置图片URL 等价于 th:attribute=”src=@{/images/xxx.png}”</li>
+<li>th:value 设置属性值</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;input type=&quot;submit&quot; value=&quot;Subscribe me!&quot; th:value=&quot;#&#123;subscribe.submit&#125;&quot;/&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>th:action 等价于 form 的action属性</li>
+<li>th:href 设置超链接地址</li>
+<li>追加属性</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">th:attrprepend</div><div class="line">th:attrappend</div></pre></td></tr></table></figure>
+<p>4、模板</p>
+<ul>
+<li>引用模板,引用footer.html的copy模块<code>th:include=&quot;footer :: copy&quot;</code>或<code>th:replace=&quot;footer :: copy&quot;</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">// footer.html</div><div class="line">&lt;!DOCTYPE html SYSTEM &quot;http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd&quot;&gt;</div><div class="line"></div><div class="line">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;</div><div class="line">      xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</div><div class="line"></div><div class="line"> &lt;body&gt;</div><div class="line">   &lt;div th:fragment=&quot;copy&quot;&gt;</div><div class="line">     &amp;copy; 2011 The Good Thymes Virtual Grocery</div><div class="line">   &lt;/div&gt;</div><div class="line"> &lt;/body&gt;</div><div class="line"> </div><div class="line"> &lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>5、常用的工具类</p>
+<ul>
+<li><a href="http://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#arrays" target="_blank" rel="external">Dates、String、Arrays、Lists、Sets、Maps工具类</a></li>
+</ul>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://www.cnblogs.com/vinphy/p/4674247.html" target="_blank" rel="external">thymeleaf 学习笔记-基础篇(中文教程)</a></li>
+<li><a href="http://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html" target="_blank" rel="external">Tutorial: Using Thymeleaf</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/06/14/JOOQ入门篇/" itemprop="url">
                   JOOQ入门篇
                 </a>
@@ -1573,132 +1761,6 @@ tee – the output of write (:w) command is redirected using tee
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/17/HTTP报文详解/" itemprop="url">
-                  HTTP报文详解
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-17T12:15:05+08:00" content="2016-05-17">
-              2016-05-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/HTTP/" itemprop="url" rel="index">
-                    <span itemprop="name">HTTP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/17/HTTP报文详解/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/17/HTTP报文详解/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h6 id="Http协议通用首部字段："><a href="#Http协议通用首部字段：" class="headerlink" title="Http协议通用首部字段："></a>Http协议通用首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Cache-Control  控制缓存行为</div><div class="line">Connection 控制不再转发给代理的首部字段、管理持久连接</div><div class="line">Date 创建报文的日期时间</div><div class="line">Pragma 报文指令</div><div class="line">Trailer 报文末端的首部一览</div><div class="line">Transfer-Encoding 指定报文主体的传输编码方式</div><div class="line">Upgrade 升级为其他协议</div><div class="line">Via 代理服务器相关信息</div><div class="line">Warning 错误通知</div></pre></td></tr></table></figure>
-<h6 id="Http请求首部字段："><a href="#Http请求首部字段：" class="headerlink" title="Http请求首部字段："></a>Http请求首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Accept 用户代理可处理的媒体类型</div><div class="line">Accept-Charset 优先的字符集</div><div class="line">Accept-Encoding 优先的内容编码</div><div class="line">Accept-Language 优先的语言</div><div class="line">Authrization Web认证信息</div><div class="line">Expect 期待服务器的特定行为</div><div class="line">From 用户的电子邮箱地址</div><div class="line">Host 请求资源所在服务器</div><div class="line">If-Match 比较实体标记(Etag)</div><div class="line">If-Modified-Since 比较资源的更新时间</div><div class="line">if-None-Match 比较实体标记(与If-Match相反)</div><div class="line">If-Range 资源未更新时发送实体Byte的范围请求</div><div class="line">If-Unmodified-Since 比较资源的更新时间</div><div class="line">Max-forwards 最大传输逐跳数</div><div class="line">Proxy-Authorization 代理服务器要求客户端的认证信息</div><div class="line">Range 实体的字节范围请求</div><div class="line">Referer 对请求中的URI的原始获取方</div><div class="line">TE 传输编码的优先级</div><div class="line">User-Agent HTTP客户端程序的信息</div><div class="line">Cookie 服务器接收到的Cookie信息</div></pre></td></tr></table></figure>
-<h6 id="Http响应首部字段："><a href="#Http响应首部字段：" class="headerlink" title="Http响应首部字段："></a>Http响应首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Accept-Ranges 是否接受字节范围</div><div class="line">Age 推算资源创建经过时间</div><div class="line">Etag 资源匹配信息</div><div class="line">Location 令客户端重定向至指定URI</div><div class="line">Proxy-Authenticate 代理服务器对客户端的认证信息</div><div class="line">Retry-After 对再次发起请求的时机要求</div><div class="line">Server HTTP服务器的安装信息</div><div class="line">Vary 代理服务器缓存的管理信息</div><div class="line">WWW-Authenticate 服务器对客户端的认证信息</div><div class="line">Set-Cookie 开始状态管理所使用的Cookie信息</div></pre></td></tr></table></figure>
-<h6 id="实体首部字段："><a href="#实体首部字段：" class="headerlink" title="实体首部字段："></a>实体首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Allow 资源可支持的HTTP方法</div><div class="line">Content-Encoding 实体主体适用的编码方式</div><div class="line">Content-Length 实体主体的自然语言</div><div class="line">Content-Location 替代对应资源的URI</div><div class="line">Content-MD5 实体主体的报文摘要</div><div class="line">Content-Range 实体主体的位置范围</div><div class="line">Content-Type 实体主体的媒体类型</div><div class="line">Expires 实体主体的过期时间</div><div class="line">Last-Modified 资源的最后修改时间</div></pre></td></tr></table></figure>
-<h6 id="为Cookie服务的首部字段"><a href="#为Cookie服务的首部字段" class="headerlink" title="为Cookie服务的首部字段"></a>为Cookie服务的首部字段</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Set-Cookie</div><div class="line">Cookie</div></pre></td></tr></table></figure>
-<h6 id="请求和响应报文的组成"><a href="#请求和响应报文的组成" class="headerlink" title="请求和响应报文的组成"></a>请求和响应报文的组成</h6><p>请求报文<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">请求报文由报文首部+空行（CR+LF）+报文主体构成；</div><div class="line">报文首部由：请求行+ 请求首部字段+通用首部字段+实体首部字段+其他</div></pre></td></tr></table></figure></p>
-<p>响应报文<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">响应报文由报文首部+空行（CR+LF）+报文主体构成；</div><div class="line">报文首部由：状态行+ 响应首部字段+通用首部字段+实体首部字段+其他</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1744,7 +1806,7 @@ tee – the output of write (:w) command is redirected using tee
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">141</span>
+              <span class="site-state-item-count">142</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

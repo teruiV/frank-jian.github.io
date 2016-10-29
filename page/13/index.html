@@ -292,6 +292,146 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/29/SQL视图/" itemprop="url">
+                  SQL视图
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-29T14:47:16+08:00" content="2016-04-29">
+              2016-04-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/SQL/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/29/SQL视图/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/29/SQL视图/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="什么是视图？"><a href="#什么是视图？" class="headerlink" title="什么是视图？"></a>什么是视图？</h4><p>视图是虚拟的表，只包含使用时动态检索的查询，同时视图本身是不包含数据的，返回的数据是从其他表检索出来的。</p>
+<h4 id="使用视图的好处？"><a href="#使用视图的好处？" class="headerlink" title="使用视图的好处？"></a>使用视图的好处？</h4><ul>
+<li>保护数据，只让开发者看到表中的部分数据；</li>
+<li>更改数据格式和表示，视图可返回与底层数据表的表示和格式不同的数据；</li>
+<li>重用SQL；</li>
+<li>简化复杂的SQL,在编写查询后，可以方便的重写它而不必知道其他查询细节</li>
+<li>可以嵌套查询，支持子查询；</li>
+</ul>
+<h4 id="视图的规则"><a href="#视图的规则" class="headerlink" title="视图的规则"></a>视图的规则</h4><ol>
+<li>视图需唯一命名</li>
+<li>创建视图，必须具有足够的权限</li>
+<li>视图不能索引，也不能关联触发器或默认值</li>
+<li>视图可以和表一起使用</li>
+<li>创建视图的数目没有限制</li>
+<li>ORDER BY 可以用在视图中，若SELECT语句中也有ORDER BY，则会覆盖视图中的ORDER BY</li>
+<li>视图可以嵌套</li>
+<li>视图只做只读查询，不能将数据写回底层表；</li>
+</ol>
+<h4 id="视图的缺点"><a href="#视图的缺点" class="headerlink" title="视图的缺点"></a>视图的缺点</h4><p>因为视图不包含数据，所以每次使用视图是，都必须处理查询执行时的所有检索。如果使用多个联结和过滤创建了复杂的视图或者嵌套视图，性能可能下降的很厉害。</p>
+<h4 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h4><p>视图一般只用于检索，而不用于更新</p>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># 创建视图</div><div class="line">CREATE VIEW ProductCustomers AS</div><div class="line">SELECT cust_name,cust_contact,prod_id</div><div class="line">FROM Customers,Orders,OrderItems</div><div class="line">WHERE Customers.cust_id = Orders.cust_id</div><div class="line">AND OrderItems.order_num = Orders.order_num ;</div><div class="line"></div><div class="line"># 查询视图数据</div><div class="line">SELECT * FROM ProductCustomers;</div><div class="line"></div><div class="line"># 移除视图</div><div class="line">DROP VIEW ProductCustomers;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/29/SQL创建表/" itemprop="url">
                   SQL创建表
                 </a>
@@ -1388,141 +1528,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/28/HTTP使用的认证方式/" itemprop="url">
-                  HTTP使用的认证方式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-28T14:25:08+08:00" content="2016-04-28">
-              2016-04-28
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/HTTP/" itemprop="url" rel="index">
-                    <span itemprop="name">HTTP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/28/HTTP使用的认证方式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/28/HTTP使用的认证方式/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Http使用的认证方式如下所示：</p>
-<ol>
-<li>BASIC认证</li>
-<li>DIGEST认证</li>
-<li>SSL客户端认证</li>
-<li>基于表单的认证</li>
-</ol>
-<h3 id="BASIC认证"><a href="#BASIC认证" class="headerlink" title="BASIC认证"></a>BASIC认证</h3><p>1、当请求资源需要BASIC认证时，服务器会随状态码401，返回带WWW-Authenticate首部字段响应<br>2、接收到状态码401，需要将用户ID和密码发送给服务器。发送密码由用户ID和密码组成，中间用”:”连接，后经过BASE64编码处理。<br>3、接收到首部字段你Authticate请求的服务器，会认证信息的正确性进行验证，通过验证，则返回Request-URI的响应。</p>
-<p>缺点：<br>BASIC认证虽然采用BASE64编码，但这并不是加密，不需要附加任何信息就能将其解码。在认证过程中被窃听，泄露账号密码的可能性较高</p>
-<h3 id="DIGEST认证"><a href="#DIGEST认证" class="headerlink" title="DIGEST认证"></a>DIGEST认证</h3><p>1、客户端发送请求给服务端<br>2、服务端发送临时的咨询码(随机数，nonce)以及告知需要认证的状态码401<br>3、客户端接收到状态码401，发送摘要以及由咨询码算出来的响应码<br>4、认证成功返回200，失败再次发送状态码401</p>
-<p>缺点：<br>虽然可以提供防止密码被盗的保护机制，但无法防止伪装用户。</p>
-<h3 id="SSL客户端认证"><a href="#SSL客户端认证" class="headerlink" title="SSL客户端认证"></a>SSL客户端认证</h3><p>1、接收到认证资源的请求，服务端会发送Certificate Request报文，要求客户端提供客户端证书。<br>2、客户端会把客户端证书信息以Client Certificate报文方式发送给服务器。<br>3、服务器验证客户端证书，验证通过后方可领取证书内客户端的公开密钥。</p>
-<p>缺点：<br>导入和维护的费用昂贵</p>
-<h3 id="基于表单认证"><a href="#基于表单认证" class="headerlink" title="基于表单认证"></a>基于表单认证</h3><p>1、客户端向服务器端发送用户信息（ID和密码）；<br>2、服务端想用户发放SessionID，将包含SessionId的cookie放到响应首部字段Set-Cookie中<br>3、客户端得到Cookie，之后再次请求该资源时，会将Cookie信息带入到请求中<br>4、服务器得到Cookie信息，通过SessionId来判断对方是否为真实用户。</p>
-<h3 id="安全的做法"><a href="#安全的做法" class="headerlink" title="安全的做法"></a>安全的做法</h3><p>1、给密码加盐（salt）的方式增加额外的信息，在使用散列（hash）函数计算出散列值后保存。</p>
-<p>盐(salt):由服务器随机生成的一个字符串，把和密码拼接后生成散列值。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1568,7 +1573,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">141</span>
+              <span class="site-state-item-count">142</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

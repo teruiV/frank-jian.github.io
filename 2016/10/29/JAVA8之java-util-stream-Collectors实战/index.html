@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="MYSQL," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -85,37 +85,28 @@
 
 
 
-<meta name="description" content="mysql安装mysql for mac 百度云下载链接
-mysql启动
-mysql关闭
-修改初始密码／usr/local/mysql/bin/mysqladmin -u root password &amp;quot;新密码&amp;quot;
-卸载mysqlsudo rm /usr/local/mysql
-sudo rm -rf /usr/local/mysql*
-sudo rm -rf /Library/S">
+<meta name="description" content="前言Java8新增了一个集合工具类java.util.stream.Collectors，超级好用，在平时处理业务逻辑时，会经常用到。熟练掌握其用法，对于提高工作效率有很大的帮助。当然，这仅仅是最初级的，之后会抽空写一篇关于其源码解读的文章。
+实战对象模型
+12345678910111213141516171819202122232425262728public class User &amp;#123;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mysql for Mac 安装和基本操作">
-<meta property="og:url" content="http://jianwl.com/2016/06/09/Mysql-for-Mac-安装和基本操作/index.html">
+<meta property="og:title" content="JAVA8之java.util.stream.Collectors实战">
+<meta property="og:url" content="http://jianwl.com/2016/10/29/JAVA8之java-util-stream-Collectors实战/index.html">
 <meta property="og:site_name" content="记录点滴成长">
-<meta property="og:description" content="mysql安装mysql for mac 百度云下载链接
-mysql启动
-mysql关闭
-修改初始密码／usr/local/mysql/bin/mysqladmin -u root password &amp;quot;新密码&amp;quot;
-卸载mysqlsudo rm /usr/local/mysql
-sudo rm -rf /usr/local/mysql*
-sudo rm -rf /Library/S">
-<meta property="og:image" content="http://jianwl.com/images/mysql启动.png">
-<meta property="og:image" content="http://jianwl.com/images/mysql关闭.png">
-<meta property="og:updated_time" content="2016-10-01T13:10:01.000Z">
+<meta property="og:description" content="前言Java8新增了一个集合工具类java.util.stream.Collectors，超级好用，在平时处理业务逻辑时，会经常用到。熟练掌握其用法，对于提高工作效率有很大的帮助。当然，这仅仅是最初级的，之后会抽空写一篇关于其源码解读的文章。
+实战对象模型
+12345678910111213141516171819202122232425262728public class User &amp;#123;">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/3.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/4.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/2.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/6.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/5.jpg">
+<meta property="og:updated_time" content="2016-10-29T04:45:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mysql for Mac 安装和基本操作">
-<meta name="twitter:description" content="mysql安装mysql for mac 百度云下载链接
-mysql启动
-mysql关闭
-修改初始密码／usr/local/mysql/bin/mysqladmin -u root password &amp;quot;新密码&amp;quot;
-卸载mysqlsudo rm /usr/local/mysql
-sudo rm -rf /usr/local/mysql*
-sudo rm -rf /Library/S">
-<meta name="twitter:image" content="http://jianwl.com/images/mysql启动.png">
+<meta name="twitter:title" content="JAVA8之java.util.stream.Collectors实战">
+<meta name="twitter:description" content="前言Java8新增了一个集合工具类java.util.stream.Collectors，超级好用，在平时处理业务逻辑时，会经常用到。熟练掌握其用法，对于提高工作效率有很大的帮助。当然，这仅仅是最初级的，之后会抽空写一篇关于其源码解读的文章。
+实战对象模型
+12345678910111213141516171819202122232425262728public class User &amp;#123;">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/3.jpg">
 
 
 
@@ -136,9 +127,9 @@ sudo rm -rf /Library/S">
 
 
 
-  <link rel="canonical" href="http://jianwl.com/2016/06/09/Mysql-for-Mac-安装和基本操作/"/>
+  <link rel="canonical" href="http://jianwl.com/2016/10/29/JAVA8之java-util-stream-Collectors实战/"/>
 
-  <title> Mysql for Mac 安装和基本操作 | 记录点滴成长 </title>
+  <title> JAVA8之java.util.stream.Collectors实战 | 记录点滴成长 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -311,7 +302,7 @@ sudo rm -rf /Library/S">
             
             
               
-                Mysql for Mac 安装和基本操作
+                JAVA8之java.util.stream.Collectors实战
               
             
           </h1>
@@ -323,38 +314,19 @@ sudo rm -rf /Library/S">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-09T17:28:23+08:00" content="2016-06-09">
-              2016-06-09
+            <time itemprop="dateCreated" datetime="2016-10-29T11:00:30+08:00" content="2016-10-29">
+              2016-10-29
             </time>
           </span>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MYSQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/06/09/Mysql-for-Mac-安装和基本操作/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/09/Mysql-for-Mac-安装和基本操作/" itemprop="commentsCount"></span>
+                <a href="/2016/10/29/JAVA8之java-util-stream-Collectors实战/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/29/JAVA8之java-util-stream-Collectors实战/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -377,33 +349,29 @@ sudo rm -rf /Library/S">
       
 
       
-        <h3 id="mysql安装"><a href="#mysql安装" class="headerlink" title="mysql安装"></a>mysql安装</h3><p><a href="http://pan.baidu.com/s/1kVNb7bp" target="_blank" rel="external">mysql for mac 百度云下载链接</a></p>
-<h3 id="mysql启动"><a href="#mysql启动" class="headerlink" title="mysql启动"></a>mysql启动</h3><p><img src="/images/mysql启动.png" alt="image"></p>
-<h3 id="mysql关闭"><a href="#mysql关闭" class="headerlink" title="mysql关闭"></a>mysql关闭</h3><p><img src="/images/mysql关闭.png" alt="image"></p>
-<h3 id="修改初始密码"><a href="#修改初始密码" class="headerlink" title="修改初始密码"></a>修改初始密码</h3><pre><code>／usr/local/mysql/bin/mysqladmin -u root password &quot;新密码&quot;
-</code></pre><h3 id="卸载mysql"><a href="#卸载mysql" class="headerlink" title="卸载mysql"></a>卸载mysql</h3><pre><code>sudo rm /usr/local/mysql
-sudo rm -rf /usr/local/mysql*
-sudo rm -rf /Library/StartupItems/MySQLCOM
-sudo rm -rf /Library/PreferencePanes/My*
-vim /etc/hostconfig  (and removed the line MYSQLCOM=-YES-)
-rm -rf ~/Library/PreferencePanes/My*
-sudo rm -rf /Library/Receipts/mysql*
-sudo rm -rf /Library/Receipts/MySQL*
-sudo rm -rf /var/db/receipts/com.mysql.*
-</code></pre><h3 id="将mysql-server的路径添加到PATH路径下"><a href="#将mysql-server的路径添加到PATH路径下" class="headerlink" title="将mysql.server的路径添加到PATH路径下"></a>将mysql.server的路径添加到PATH路径下</h3><pre><code>vi /etc/bashrc
-# 在bashrc文件下增加以下内容
-export PATH=/usr/local/mysql/support-files:$PATH
-</code></pre><h3 id="保存只读文件bashrc"><a href="#保存只读文件bashrc" class="headerlink" title="保存只读文件bashrc"></a>保存只读文件bashrc</h3><p>向只读文件中添加内容，用wq保存出现以下错误</p>
-<pre><code>E45: &apos;readonly&apos; option is set (add ! to override)
-</code></pre><p>解决的方法：</p>
-<pre><code>:w !sudo tee %
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>Java8</code>新增了一个集合工具类<code>java.util.stream.Collectors</code>，超级好用，在平时处理业务逻辑时，会经常用到。熟练掌握其用法，对于提高工作效率有很大的帮助。当然，这仅仅是最初级的，之后会抽空写一篇关于其源码解读的文章。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><code>对象模型</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public class User &#123;</div><div class="line">    private String name;</div><div class="line">    private Integer age;</div><div class="line"></div><div class="line">    public User() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public User(String name, Integer age) &#123;</div><div class="line">        this.name = name;</div><div class="line">        this.age = age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Integer getAge() &#123;</div><div class="line">        return age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setAge(Integer age) &#123;</div><div class="line">        this.age = age;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>1、聚合对象某一属性<code>Collectors.toList()</code></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">    public void test_001() &#123;</div><div class="line">        // 初始化用户对象</div><div class="line">        List&lt;User&gt; users = Collections.unmodifiableList(Arrays.asList(new User(&quot;对象C&quot;, 21), new User(&quot;对象B&quot;, 27), new User(&quot;对象A&quot;, 22), new User(&quot;对象D&quot;, 22)));</div><div class="line">        // 此处JSON类引用「阿里巴巴的fastjson包」</div><div class="line">        System.out.println(&quot;users ==&gt; &quot; + JSON.toJSON(users));</div><div class="line"></div><div class="line">        // 获取用户年龄的集合,包含重复年龄</div><div class="line">        List&lt;Integer&gt; ages = users.stream().map(User::getAge).collect(Collectors.toList());</div><div class="line">        System.out.println(&quot;ages ==&gt; &quot; + JSON.toJSON(ages));</div><div class="line"></div><div class="line">        // 获取年龄的集合,并去重</div><div class="line">        List&lt;Integer&gt; distinctAges = users.stream().map(User::getAge).distinct().collect(Collectors.toList());</div><div class="line">        System.out.println(&quot;distinctAges ==&gt; &quot; + JSON.toJSON(distinctAges));</div><div class="line"></div><div class="line">        // 按年龄排序 小 -&gt; 大</div><div class="line">        List&lt;User&gt; ageSortedUser = users.stream().sorted((u1,u2) -&gt; u1.getAge() - u2.getAge()).collect(Collectors.toList());</div><div class="line">        System.out.println(&quot;ageSortedUser ==&gt; &quot; + JSON.toJSON(ageSortedUser));</div><div class="line"></div><div class="line">        // 按名字排序按字母从 A - &gt; Z || a - &gt; z</div><div class="line">        List&lt;User&gt; nameSortedUser = users.stream().sorted((u1,u2) -&gt; u1.getName().compareTo(u2.getName())).collect(Collectors.toList());</div><div class="line">        System.out.println(&quot;nameSortedUser ==&gt; &quot; + JSON.toJSON(nameSortedUser));</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><code>提一点</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/3.jpg" alt=""></p>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/4.jpg" alt=""></p>
+<p><strong>2、将每个年龄的用户分组<code>Collectors.groupingBy()</code></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">    public void test_002() &#123;</div><div class="line">        // 初始化用户对象</div><div class="line">        List&lt;User&gt; users = Collections.unmodifiableList(Arrays.asList(new User(&quot;对象A&quot;, 21), new User(&quot;对象B&quot;, 22), new User(&quot;对象C&quot;, 22)));</div><div class="line"></div><div class="line">        // 每个年龄的用户分组</div><div class="line">        Map&lt;Integer, List&lt;User&gt;&gt; usersGroup = users.stream().collect(Collectors.groupingBy(User::getAge));</div><div class="line">        System.out.println(&quot;usersGroup ==&gt; &quot; + JSON.toJSON(usersGroup));</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/2.jpg" alt=""></p>
+<p><strong>3、其他</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">    public void test_003() &#123;</div><div class="line">        // 初始化用户对象</div><div class="line">        List&lt;User&gt; users = Collections.unmodifiableList(Arrays.asList(new User(&quot;对象C&quot;, 21), new User(&quot;对象B&quot;, 27), new User(&quot;对象A&quot;, 22), new User(&quot;对象D&quot;, 22)));</div><div class="line"></div><div class="line">        // 用户平均年龄</div><div class="line">        Double averageAge = users.stream().collect(Collectors.averagingInt(User::getAge));</div><div class="line">        System.out.println(&quot;averageAge ==&gt; &quot; + averageAge);</div><div class="line"></div><div class="line">        // 计算年龄大于22岁的人数</div><div class="line">        Long objectCount = users.stream().filter(user -&gt; user.getAge() &gt; 22).collect(Collectors.counting());</div><div class="line">        System.out.println(&quot;objectCount ==&gt; &quot; + objectCount);</div><div class="line"></div><div class="line">        // 将所有对象用「,」拼接</div><div class="line">        String userNames = users.stream().map(User::getName).collect(Collectors.joining(&quot;,&quot;));</div><div class="line">        System.out.println(&quot;userNames ==&gt; &quot; + userNames);</div><div class="line"></div><div class="line">        // ============================================================== 聚合为映射 ===========================================================================</div><div class="line"></div><div class="line">        // 将用户分为「大于22岁」和「小于等于22岁」两组</div><div class="line">        Map&lt;Boolean, List&lt;User&gt;&gt; partitionUsers = users.stream().collect(Collectors.partitioningBy(user -&gt; user.getAge() &gt; 22));</div><div class="line">        System.out.println(&quot;partitionUsers ==&gt;  &quot; + JSON.toJSON(partitionUsers));</div><div class="line"></div><div class="line">        // 将用户列表转化为「对象名 -&gt; 对象」的映射关系</div><div class="line">        Map&lt;String, User&gt; userMap = users.stream().collect(Collectors.toMap(User::getName, user -&gt; user));</div><div class="line">        System.out.println(&quot;userMap ==&gt; &quot; + JSON.toJSON(userMap));</div><div class="line"></div><div class="line">        // ============================================================== 映射排序 ===========================================================================</div><div class="line"></div><div class="line">        // 对用户映射表userMap排序 从大 -&gt; 小</div><div class="line">        Map&lt;String, User&gt; descUserMap = new LinkedHashMap&lt;&gt;();</div><div class="line">        userMap.entrySet().stream().sorted(Map.Entry.&lt;String, User&gt;comparingByKey().reversed()).forEachOrdered(entry -&gt; descUserMap.put(entry.getKey(), entry.getValue()));</div><div class="line">        System.out.println(&quot;descUserMap ==&gt;&quot; + descUserMap);</div><div class="line">        // 「特别需要注意JSON.toJSON()会对内容顺序重排」 --&gt; 对比上一条输出</div><div class="line">        System.out.println(&quot;descUserMap ==&gt;&quot; + JSON.toJSON(descUserMap));</div><div class="line"></div><div class="line">        // 对用户映射表userMap排序 从小 -&gt; 到</div><div class="line">        Map&lt;String, User&gt; ascUserMap = new LinkedHashMap&lt;&gt;();</div><div class="line">        userMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEachOrdered(entry -&gt; ascUserMap.put(entry.getKey(), entry.getValue()));</div><div class="line">        System.out.println(&quot;ascUserMap ==&gt;&quot; + ascUserMap);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><code>提一点</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/6.jpg" alt=""></p>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/5.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>Java8官方文档之<code>java.util.stream.Collectors</code></li>
+</ul>
 
-＃解释
-:w – write
-!sudo – call shell sudo command
-tee – the output of write (:w) command is redirected using tee
-% – current file name
-</code></pre>
       
     </div>
 
@@ -423,28 +391,18 @@ tee – the output of write (:w) command is redirected using tee
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/MYSQL/" rel="tag">#MYSQL</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/05/HTTP之重定向和请求转发/" rel="next" title="HTTP之重定向和请求转发">
-                <i class="fa fa-chevron-left"></i> HTTP之重定向和请求转发
+              <a href="/2016/10/26/JAVA之ArrayList源码学习/" rel="next" title="JAVA之ArrayList源码学习">
+                <i class="fa fa-chevron-left"></i> JAVA之ArrayList源码学习
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/06/10/Git命令之使用场景/" rel="prev" title="Git命令之使用场景">
-                Git命令之使用场景 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -459,10 +417,10 @@ tee – the output of write (:w) command is redirected using tee
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/06/09/Mysql-for-Mac-安装和基本操作/"
-     data-title="Mysql for Mac 安装和基本操作"
+        <div class="ds-share flat" data-thread-key="2016/10/29/JAVA8之java-util-stream-Collectors实战/"
+     data-title="JAVA8之java.util.stream.Collectors实战"
      data-content=""
-     data-url="http://jianwl.com/2016/06/09/Mysql-for-Mac-安装和基本操作/">
+     data-url="http://jianwl.com/2016/10/29/JAVA8之java-util-stream-Collectors实战/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -489,8 +447,8 @@ tee – the output of write (:w) command is redirected using tee
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/06/09/Mysql-for-Mac-安装和基本操作/"
-           data-title="Mysql for Mac 安装和基本操作" data-url="http://jianwl.com/2016/06/09/Mysql-for-Mac-安装和基本操作/">
+      <div class="ds-thread" data-thread-key="2016/10/29/JAVA8之java-util-stream-Collectors实战/"
+           data-title="JAVA8之java.util.stream.Collectors实战" data-url="http://jianwl.com/2016/10/29/JAVA8之java-util-stream-Collectors实战/">
       </div>
     
   </div>
@@ -581,7 +539,7 @@ tee – the output of write (:w) command is redirected using tee
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql安装"><span class="nav-number">1.</span> <span class="nav-text">mysql安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql启动"><span class="nav-number">2.</span> <span class="nav-text">mysql启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql关闭"><span class="nav-number">3.</span> <span class="nav-text">mysql关闭</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改初始密码"><span class="nav-number">4.</span> <span class="nav-text">修改初始密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卸载mysql"><span class="nav-number">5.</span> <span class="nav-text">卸载mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将mysql-server的路径添加到PATH路径下"><span class="nav-number">6.</span> <span class="nav-text">将mysql.server的路径添加到PATH路径下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保存只读文件bashrc"><span class="nav-number">7.</span> <span class="nav-text">保存只读文件bashrc</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-number">2.</span> <span class="nav-text">实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
         </section>

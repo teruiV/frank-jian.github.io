@@ -292,6 +292,132 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/17/HTTP报文详解/" itemprop="url">
+                  HTTP报文详解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-17T12:15:05+08:00" content="2016-05-17">
+              2016-05-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/17/HTTP报文详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/17/HTTP报文详解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h6 id="Http协议通用首部字段："><a href="#Http协议通用首部字段：" class="headerlink" title="Http协议通用首部字段："></a>Http协议通用首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Cache-Control  控制缓存行为</div><div class="line">Connection 控制不再转发给代理的首部字段、管理持久连接</div><div class="line">Date 创建报文的日期时间</div><div class="line">Pragma 报文指令</div><div class="line">Trailer 报文末端的首部一览</div><div class="line">Transfer-Encoding 指定报文主体的传输编码方式</div><div class="line">Upgrade 升级为其他协议</div><div class="line">Via 代理服务器相关信息</div><div class="line">Warning 错误通知</div></pre></td></tr></table></figure>
+<h6 id="Http请求首部字段："><a href="#Http请求首部字段：" class="headerlink" title="Http请求首部字段："></a>Http请求首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Accept 用户代理可处理的媒体类型</div><div class="line">Accept-Charset 优先的字符集</div><div class="line">Accept-Encoding 优先的内容编码</div><div class="line">Accept-Language 优先的语言</div><div class="line">Authrization Web认证信息</div><div class="line">Expect 期待服务器的特定行为</div><div class="line">From 用户的电子邮箱地址</div><div class="line">Host 请求资源所在服务器</div><div class="line">If-Match 比较实体标记(Etag)</div><div class="line">If-Modified-Since 比较资源的更新时间</div><div class="line">if-None-Match 比较实体标记(与If-Match相反)</div><div class="line">If-Range 资源未更新时发送实体Byte的范围请求</div><div class="line">If-Unmodified-Since 比较资源的更新时间</div><div class="line">Max-forwards 最大传输逐跳数</div><div class="line">Proxy-Authorization 代理服务器要求客户端的认证信息</div><div class="line">Range 实体的字节范围请求</div><div class="line">Referer 对请求中的URI的原始获取方</div><div class="line">TE 传输编码的优先级</div><div class="line">User-Agent HTTP客户端程序的信息</div><div class="line">Cookie 服务器接收到的Cookie信息</div></pre></td></tr></table></figure>
+<h6 id="Http响应首部字段："><a href="#Http响应首部字段：" class="headerlink" title="Http响应首部字段："></a>Http响应首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Accept-Ranges 是否接受字节范围</div><div class="line">Age 推算资源创建经过时间</div><div class="line">Etag 资源匹配信息</div><div class="line">Location 令客户端重定向至指定URI</div><div class="line">Proxy-Authenticate 代理服务器对客户端的认证信息</div><div class="line">Retry-After 对再次发起请求的时机要求</div><div class="line">Server HTTP服务器的安装信息</div><div class="line">Vary 代理服务器缓存的管理信息</div><div class="line">WWW-Authenticate 服务器对客户端的认证信息</div><div class="line">Set-Cookie 开始状态管理所使用的Cookie信息</div></pre></td></tr></table></figure>
+<h6 id="实体首部字段："><a href="#实体首部字段：" class="headerlink" title="实体首部字段："></a>实体首部字段：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Allow 资源可支持的HTTP方法</div><div class="line">Content-Encoding 实体主体适用的编码方式</div><div class="line">Content-Length 实体主体的自然语言</div><div class="line">Content-Location 替代对应资源的URI</div><div class="line">Content-MD5 实体主体的报文摘要</div><div class="line">Content-Range 实体主体的位置范围</div><div class="line">Content-Type 实体主体的媒体类型</div><div class="line">Expires 实体主体的过期时间</div><div class="line">Last-Modified 资源的最后修改时间</div></pre></td></tr></table></figure>
+<h6 id="为Cookie服务的首部字段"><a href="#为Cookie服务的首部字段" class="headerlink" title="为Cookie服务的首部字段"></a>为Cookie服务的首部字段</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Set-Cookie</div><div class="line">Cookie</div></pre></td></tr></table></figure>
+<h6 id="请求和响应报文的组成"><a href="#请求和响应报文的组成" class="headerlink" title="请求和响应报文的组成"></a>请求和响应报文的组成</h6><p>请求报文<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">请求报文由报文首部+空行（CR+LF）+报文主体构成；</div><div class="line">报文首部由：请求行+ 请求首部字段+通用首部字段+实体首部字段+其他</div></pre></td></tr></table></figure></p>
+<p>响应报文<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">响应报文由报文首部+空行（CR+LF）+报文主体构成；</div><div class="line">报文首部由：状态行+ 响应首部字段+通用首部字段+实体首部字段+其他</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/17/HTTP请求报文详解/" itemprop="url">
                   HTTP请求报文详解
                 </a>
@@ -369,6 +495,136 @@
 <h6 id="为Cookie服务的首部字段"><a href="#为Cookie服务的首部字段" class="headerlink" title="为Cookie服务的首部字段"></a>为Cookie服务的首部字段</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Set-Cookie</div><div class="line">Cookie</div></pre></td></tr></table></figure>
 <h6 id="请求和响应报文的组成"><a href="#请求和响应报文的组成" class="headerlink" title="请求和响应报文的组成"></a>请求和响应报文的组成</h6><p>请求报文<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">请求报文由报文首部+空行（CR+LF）+报文主体构成；</div><div class="line">报文首部由：请求行+ 请求首部字段+通用首部字段+实体首部字段+其他</div></pre></td></tr></table></figure></p>
 <p>响应报文<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">响应报文由报文首部+空行（CR+LF）+报文主体构成；</div><div class="line">报文首部由：状态行+ 响应首部字段+通用首部字段+实体首部字段+其他</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/17/MYSQL存储引擎/" itemprop="url">
+                  MYSQL存储引擎
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-17T10:43:13+08:00" content="2016-05-17">
+              2016-05-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MYSQL</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/17/MYSQL存储引擎/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/17/MYSQL存储引擎/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 
           
         
@@ -510,136 +766,6 @@
 <h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
 <h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
 <h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/17/MYSQL存储引擎/" itemprop="url">
-                  MYSQL存储引擎
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-17T10:43:13+08:00" content="2016-05-17">
-              2016-05-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MYSQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/17/MYSQL存储引擎/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/17/MYSQL存储引擎/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 
           
         
@@ -1485,127 +1611,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/06/PHP对数据库的增删改查/" itemprop="url">
-                  PHP对数据库的增删改查
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-06T17:53:07+08:00" content="2016-05-06">
-              2016-05-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/06/PHP对数据库的增删改查/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/06/PHP对数据库的增删改查/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>对于PHP和前端HTML的CURD交互操作的详情请参考链接资料，写的非常详细，这里主要总结一下，PHP的CURD的操作;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">//数据库配置</div><div class="line">$ip = &apos;localhost&apos;;</div><div class="line">$user = &apos;root&apos;;</div><div class="line">$password = &apos;root&apos;;</div><div class="line">$database = &apos;test&apos;;</div><div class="line"></div><div class="line">//增</div><div class="line">$isbn = &quot;A001&quot;;</div><div class="line">$author = &quot;jianwl&quot;;</div><div class="line">$title = &quot;PHP&quot;;</div><div class="line">$price = 222;</div><div class="line"></div><div class="line">@$db = new mysqli($ip,$user,$password,$database);</div><div class="line">if(mysqli_connect_errno())&#123;</div><div class="line">	echo &quot;mysql connected error&quot;;</div><div class="line">    exit();</div><div class="line">&#125;</div><div class="line"></div><div class="line">$sql_insert = &quot;INSERT INTO books(isbn,author,title,price) VALUES(&apos;$isbn&apos;,&apos;$author&apos;,&apos;$title&apos;,&apos;$price&apos;)&quot;;</div><div class="line">mysql_query($sql_insert);</div><div class="line">echo &quot;insert into db 1 data.....&quot;;</div><div class="line"></div><div class="line">//查</div><div class="line"></div><div class="line">$sql_select = &quot;SELECT * FROM books&quot;;</div><div class="line">$result_set = mysql_query($sql_select);</div><div class="line">while($row=mysql_fetch_row($result_set))&#123;</div><div class="line">echo &quot;isbn = &quot;.$row[&apos;isbn&apos;].&quot; author = &quot;.$row[&apos;author&apos;].&quot; title = &quot;.$row[&apos;title&apos;].&quot; price = &quot;.$row[&apos;price&apos;].&quot;&lt;br/&gt;&quot; ;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//改</div><div class="line">$sql_update = &quot;update books SET title=&quot;MYSQL PHP CONNECT WHERE isbn=&apos;$isbn&apos;&quot;;</div><div class="line">mysql_query($sql_update);</div><div class="line">echo &quot;data has updated&quot;;</div><div class="line"></div><div class="line">//删</div><div class="line">$sql_delete = &quot;delete books where isbn=dd&quot;;</div><div class="line">mysql_query($sql_delete);</div><div class="line">echo &quot;data has deleted&quot;;</div></pre></td></tr></table></figure></p>
-<p>参考资料：<br><a href="http://www.codingcage.com/2014/12/simple-php-crud-operations-with-mysql.html" target="_blank" rel="external">Simple PHP CRUD Operations with MySQL</a> </p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1651,7 +1656,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">141</span>
+              <span class="site-state-item-count">142</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
