@@ -362,144 +362,16 @@
       
         
           
-            <h3 id="异常机制设计初衷"><a href="#异常机制设计初衷" class="headerlink" title="异常机制设计初衷"></a>异常机制设计初衷</h3><p>顾名思义，异常应该只用于异常的情况，永远不应该用于正常的流程控制。</p>
-<h3 id="异常类层次结构"><a href="#异常类层次结构" class="headerlink" title="异常类层次结构"></a>异常类层次结构</h3><p><img src="../images/JAVA异常.jpg" alt=""><br>  在 Java 中，所有的异常都有一个共同的祖先 <code>Throwable</code>。<code>Throwable</code> 指定代码中可用异常传播机制通过 Java 应用程序传输的任何问题的共性。</p>
-<p><strong>Throwable</strong><br>有两个重要的子类：<code>Exception</code> 和 <code>Error</code>，二者都是 Java 异常处理的重要子类，各自都包含大量子类。</p>
-<p><strong>Error</strong><br><code>Error</code>是程序无法处理的错误，表示运行应用程序中较严重问题。大多数错误与代码编写者执行的操作无关，而表示代码运行时 JVM（Java 虚拟机）出现的问题。例如，Java虚拟机运行错误<code>Virtual MachineError</code>，当 JVM 不再有继续执行操作所需的内存资源时，将出现<code>OutOfMemoryError</code>。这些异常发生时，JVM一般会选择线程终止。这些错误表示故障发生于虚拟机自身、或者发生在虚拟机试图执行应用时，如JVM运行错误<code>Virtual MachineError</code>、类定义错误<code>NoClassDefFoundError</code>等。这些错误是不可查的，因为它们在应用程序的控制和处理能力之 外，而且绝大多数是程序运行时不允许出现的状况。对于设计合理的应用程序来说，即使确实发生了错误，本质上也不应该试图去处理它所引起的异常状况。在 Java中，错误通过Error的子类描述。</p>
-<p><strong>Exception</strong><br><code>Exception</code>是程序本身可以处理的异常，其有一个重要的子类 <code>RuntimeException</code>。<code>RuntimeException</code> 类及其子类表示“JVM 常用操作”引发的错误。例如，若试图使用空值对象引用、除数为零或数组越界，则分别引发运行时异常（<code>NullPointerException</code>、<code>ArithmeticException</code>）和 <code>ArrayIndexOutOfBoundException</code>。</p>
-<p><strong>Exception和Error的区别</strong><br><code>Exception</code>能被程序本身可以处理，<code>Error</code>是无法处理。</p>
-<h3 id="JAVA异常类型"><a href="#JAVA异常类型" class="headerlink" title="JAVA异常类型"></a>JAVA异常类型</h3><p>Java的异常分为可查的异常(编译器要求必须处置的异常)和不可查的异常((编译器不要求强制处置的异常)。</p>
-<p><strong>可查的异常</strong><br> 除了<code>RuntimeException</code>及其子类以外，其他的<code>Exception</code>类及其子类都属于可查异常。正确的程序在运行中，很容易出现的、情理可容的异常状况。可查异常虽然是异常状况，但在一定程度上它的发生是可以预计的，而且一旦发生这种异常状况，就必须采取某种方式进行处理。这种异常的特点是Java编译器会检查它，也就是说，当程序中可能出现这类异常，要么用<code>try-catch</code>语句捕获它，要么用<code>throws</code>子句声明抛出它，否则编译不会通过。</p>
-<p><strong>不可查异常</strong><br><code>RuntimeException</code>与其子类和<code>Error</code>都属于不可查异常。运行时异常，如<code>NullPointerException</code>(空指针异常)、<code>IndexOutOfBoundsException</code>(下标越界异常)等，这些异常是不检查异常，程序中可以选择捕获处理，也可以不处理。这些异常一般是由程序逻辑错误引起的，程序应该从逻辑角度尽可能避免这类异常的发生。运行时异常的特点是Java编译器不会检查它，也就是说，当程序中可能出现这类异常，即使没有用<code>try-catch</code>语句捕获它，也没有用<code>throws</code>子句声明抛出它，也会编译通过</p>
-<h3 id="处理异常机制"><a href="#处理异常机制" class="headerlink" title="处理异常机制"></a>处理异常机制</h3><p>异常处理机制为抛出异常、捕捉异常</p>
-<p><strong>抛出异常</strong><br>当一个方法出现错误引发异常时，方法创建异常对象并交付运行时系统，异常对象中包含了异常类型和异常出现时的程序状态等异常信息。运行时系统负责寻找处置异常的代码并执行</p>
-<p><strong>捕获异常</strong><br>在方法抛出异常之后，运行时系统将转为寻找合适的异常处理器（exception handler）。潜在的异常处理器是异常发生时依次存留在调用栈中的方法的集合。当异常处理器所能处理的异常类型与方法抛出的异常类型相符时，即为合适 的异常处理器。运行时系统从发生异常的方法开始，依次回查调用栈中的方法，直至找到含有合适异常处理器的方法并执行。当运行时系统遍历调用栈而未找到合适 的异常处理器，则运行时系统终止。同时，意味着Java程序的终止。</p>
-<h3 id="JAVA常见异常"><a href="#JAVA常见异常" class="headerlink" title="JAVA常见异常"></a>JAVA常见异常</h3><p><strong> RuntimeException子类</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">类名</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>java.lang.ArrayIndexOutOfBoundsException</code></td>
-<td style="text-align:left">数组索引越界异常。当对数组的索引值为负数或大于等于数组大小时抛出</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>java.lang.ArithmeticException</code></td>
-<td style="text-align:left">算术条件异常。譬如：整数除零等</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>java.lang.NullPointerException</code></td>
-<td style="text-align:left">空指针异常。当应用试图在要求使用对象的地方使用了null时，抛出该异常。譬如：调用null对象的实例方法、访问null对象的属性、计算null对象的长度、使用throw语句抛出null等等</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>java.lang.ClassNotFoundException</code></td>
-<td style="text-align:left">找不到类异常。当应用试图根据字符串形式的类名构造类，而在遍历CLASSPAH之后找不到对应名称的class文件时，抛出该异常</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>java.lang.NegativeArraySizeException</code></td>
-<td style="text-align:left">数组长度为负异常</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>java.lang.ArrayStoreException</code></td>
-<td style="text-align:left">数组中包含不兼容的值抛出的异常</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>java.lang.SecurityException</code></td>
-<td style="text-align:left">安全性异常</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>java.lang.IllegalArgumentException</code></td>
-<td style="text-align:left">非法参数异常</td>
-</tr>
-</tbody>
-</table>
-<p><strong>IOException</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">类名</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>IOException</code></td>
-<td style="text-align:left">操作输入流和输出流时可能出现的异常</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>EOFException</code></td>
-<td style="text-align:left">文件已结束异常</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>FileNotFoundException</code></td>
-<td style="text-align:left">文件未找到异常</td>
-</tr>
-</tbody>
-</table>
-<p><strong>其他</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">类名</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>ClassCastException</code></td>
-<td style="text-align:left">类型转换异常类</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>ArrayStoreException</code></td>
-<td style="text-align:left">数组中包含不兼容的值抛出的异常</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>SQLException</code></td>
-<td style="text-align:left">操作数据库异常类</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>NoSuchFieldException</code></td>
-<td style="text-align:left">字段未找到异常</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>NoSuchMethodException</code></td>
-<td style="text-align:left">方法未找到抛出的异常</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>NumberFormatException</code></td>
-<td style="text-align:left">字符串转换为数字抛出的异常</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>StringIndexOutOfBoundsException</code></td>
-<td style="text-align:left">字符串索引超出范围抛出的异常</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>IllegalAccessException</code></td>
-<td style="text-align:left">不允许访问某类异常</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>InstantiationException</code></td>
-<td style="text-align:left">当应用程序试图使用Class类中的newInstance()方法创建一个类的实例，而指定的类对象无法被实例化时，抛出该异常</td>
-</tr>
-</tbody>
-</table>
-<h3 id="自定义异常类"><a href="#自定义异常类" class="headerlink" title="自定义异常类"></a>自定义异常类</h3><p>用户自定义异常类，只需继承Exception类即可</p>
-<p><strong>使用自定义异常类步骤</strong></p>
-<ol>
-<li>创建自定义异常类。</li>
-<li>在方法中通过<code>throw</code>关键字抛出异常对象。</li>
-<li>如果在当前抛出异常的方法中处理异常，可以使用<code>try-catch</code>语句捕获并处理；否则在方法的声明处通过<code>throws</code>关键字指明要抛出给方法调用者的异常，继续进行下一步操作。</li>
-<li>在出现异常方法的调用者中捕获并处理异常。</li>
-</ol>
-<h3 id="JAVA实战-未完待续…"><a href="#JAVA实战-未完待续…" class="headerlink" title="JAVA实战 未完待续….."></a>JAVA实战 未完待续…..</h3><h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>Effective Java 第2版</li>
-</ul>
+          异常机制设计初衷顾名思义，异常应该只用于异常的情况，永远不应该用于正常的流程控制。
+异常类层次结构  在 Java 中，所有的异常都有一个共同的祖先 Throwable。Throwable 指定代码中可用异常传播机制通过 Java 应用程序传输的任何问题的共性。
+Throwable有两个重要的子类：
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/16/JAVA之异常/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -617,73 +489,18 @@
       
         
           
-            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>线程池是一种多线程处理形式，处理过程中将任务添加到队列，然后在创建线程后自动启动这些任务。</p>
-<h3 id="线程池的作用"><a href="#线程池的作用" class="headerlink" title="线程池的作用"></a>线程池的作用</h3><p>限制系统中执行线程的数量，根据系统环境情况，自动/手动设置线程数量，达到最佳效果。</p>
-<h3 id="使用线程池的好处"><a href="#使用线程池的好处" class="headerlink" title="使用线程池的好处"></a>使用线程池的好处</h3><ol>
-<li>减少创建和销毁线程的次数，每个工作线程都可以被重复利用，可执行多个任务。</li>
-<li>可以根据系统的承受能力，调整线程池中工作线程的数量，防止因为消耗过多内存，而把服务器拖垮。</li>
-</ol>
-<h3 id="线程池介绍"><a href="#线程池介绍" class="headerlink" title="线程池介绍"></a>线程池介绍</h3><p><strong>线程池中比较重要的类</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">类</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>ExecutorService</code></td>
-<td style="text-align:left">真正的线程池接口</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>ScheduledExecutorService</code></td>
-<td style="text-align:left">定时任务</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>ThreadPoolExecutor</code></td>
-<td style="text-align:left"><code>ExecutorService默认实现</code></td>
-</tr>
-<tr>
-<td style="text-align:left"><code>ScheduledThreadPoolExecutor</code></td>
-<td style="text-align:left">继承<code>ThreadPoolExecutor</code>的<code>ScheduledExecutorService</code>接口实现周期性任务调度</td>
-</tr>
-</tbody>
-</table>
-<p><strong>常用的线程池</strong><br>利用Executors中的静态方法来创建线程池</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">方法</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>newFixedThreadPool</code></td>
-<td style="text-align:left">创建一个固定长度的线程池</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>newCacheThreadPool</code></td>
-<td style="text-align:left">创建一个可缓存的线程池，如果线程池当前规模超过处理需求，将回收空闲线程</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>newSingleThreadExecutor</code></td>
-<td style="text-align:left">创建一个单线程的<code>Executor</code> ,</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>newScheduledThreadPool</code></td>
-<td style="text-align:left">创建一个固定长度的线程池，以延迟/定时的方式来执行任务</td>
-</tr>
-</tbody>
-</table>
-<h3 id="JAVA-实战"><a href="#JAVA-实战" class="headerlink" title="JAVA 实战"></a>JAVA 实战</h3><p><strong>创建定时任务线程池</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class ScheduledDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);</div><div class="line">        executor.scheduleAtFixedRate(() -&gt; System.out.println(&quot;============&quot;),1000,5000, TimeUnit.MILLISECONDS);</div><div class="line">        </div><div class="line">        //每隔一段时间打印系统时间，证明两者是互不影响的</div><div class="line">        executor.scheduleAtFixedRate(() -&gt; System.out.println(OffsetDateTime.now()),1000,2000,TimeUnit.MILLISECONDS);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>创建固定长度的线程池</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class FixedThreadDemo &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ExecutorService pool = Executors.newFixedThreadPool(2);</div><div class="line">        pool.execute(() -&gt; System.out.println(Thread.currentThread().getName() + &quot;正在执行...&quot;));</div><div class="line">        pool.execute(() -&gt; System.out.println(Thread.currentThread().getName() + &quot;正在执行...&quot;));</div><div class="line">        pool.execute(() -&gt; System.out.println(Thread.currentThread().getName() + &quot;正在执行...&quot;));</div><div class="line">        pool.execute(() -&gt; System.out.println(Thread.currentThread().getName() + &quot;正在执行...&quot;));</div><div class="line">        pool.execute(() -&gt; System.out.println(Thread.currentThread().getName() + &quot;正在执行...&quot;));</div><div class="line">        // 关闭线程池</div><div class="line">        pool.shutdown();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="http://baike.baidu.com/item/%E7%BA%BF%E7%A8%8B%E6%B1%A0" target="_blank" rel="external">线程池定义</a></li>
-</ul>
+          定义线程池是一种多线程处理形式，处理过程中将任务添加到队列，然后在创建线程后自动启动这些任务。
+线程池的作用限制系统中执行线程的数量，根据系统环境情况，自动/手动设置线程数量，达到最佳效果。
+使用线程池的好处
+减少创建和销毁线程的次数，每个工作线程都可以被重复利用，可执行多个任务。
+可以根据系统的承
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/14/JAVA线程池/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -801,26 +618,15 @@
       
         
           
-            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>在实际的开发过程中，经常会碰到如下场景，某个某块负责生成数据，这些数据由另一个模块来负责处理，产生数据的模块，就形象地称为生产者，而处理数据的模块就称为消费者。</p>
-<p>单单抽象出生产者和消费者，还谈不上生产者/消费者模式，该模式还需要有一个缓冲区处于生产者和消费之间，作为一个中介。生产者把数据放入缓冲区，而消费者从缓冲区取出数据。大概的结构如下图：<br><img src="../images/producer_consumer.jpg" alt=""></p>
-<p><strong>场景示例</strong><br>为了不至于太抽象，我们举一个寄信的例子，假设你要寄一封平信，大致过程如下：</p>
-<ol>
-<li>你把信写好 – 相当于生成者生产数据</li>
-<li>你把信放入邮筒 – 相当于生产者把数据放到缓冲区</li>
-<li>邮递员把信从邮筒取出 – 相当于消费者把数据取出缓冲区</li>
-<li>邮递员把信拿去邮局做响应的处理 – 相当于消费者处理数据</li>
-</ol>
-<h3 id="缓存区有何作用？"><a href="#缓存区有何作用？" class="headerlink" title="缓存区有何作用？"></a>缓存区有何作用？</h3><p><strong>解耦</strong><br>如果让生产者直接调用消费者的消费方法，那么生产者对于消费者就会产生依赖(即耦合)，将来如果消费者代码变化了，可能会影响到生产者，如果两者都依赖于缓冲区，两者之间不直接依赖，耦合也就相应降低了。</p>
-<p><strong>支持并发</strong><br>如果生产者直接调用消费者的消费方法，由于函数调用时同步的，在消费者的方法没有返回之前，生产者只好一直等待，万一消费者处理数据很慢，生产者就白白浪费大好时光了。</p>
-<p>使用了生产者/消费者模式之后，生产者生产出来的数据往缓存区一丢，就可以再去生产下一个数据了，基本上不依赖消费者的处理速度。</p>
-<p><strong>支持忙闲不均</strong><br>如果生产数据的速度时快时慢，缓冲区的好处就体现出来了，当数据生产快的时候，消费者来不及处理，未处理的数据可以暂时存在缓冲区，等生产者生产速度慢下来，消费者再慢慢处理。</p>
-<h3 id="JAVA实现"><a href="#JAVA实现" class="headerlink" title="JAVA实现"></a>JAVA实现</h3><p><strong>方法1：阻塞队列方式</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">public class ProducerConsumer &#123;</div><div class="line">    // 建立一个阻塞队列</div><div class="line">    private LinkedBlockingQueue&lt;Object&gt; queue = new LinkedBlockingQueue&lt;Object&gt;(10);</div><div class="line"></div><div class="line">    public ProducerConsumer() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void start() &#123;</div><div class="line">        new Producer().start();</div><div class="line">        new Consumer().start();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public static void main(String[] args) throws Exception &#123;</div><div class="line">        ProducerConsumer bootstrap = new ProducerConsumer();</div><div class="line">        bootstrap.start();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    //生产者</div><div class="line">    class Producer extends Thread &#123;</div><div class="line">        public void run() &#123;</div><div class="line">            while (true) &#123;</div><div class="line">                try &#123;</div><div class="line">                    Object o = new Object();</div><div class="line">                    // 存入一个对象</div><div class="line">                    queue.put(o);</div><div class="line">                    System.out.println(&quot;Producer: &quot; + o);</div><div class="line">                &#125; catch (InterruptedException e) &#123;</div><div class="line">                    System.out.println(&quot;producer is interrupted!&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    //消费者</div><div class="line">    class Consumer extends Thread &#123;</div><div class="line">        public void run() &#123;</div><div class="line">            while (true) &#123;</div><div class="line">                try &#123;</div><div class="line">                    // 取出一个对象</div><div class="line">                    Object o = queue.take();</div><div class="line">                    System.out.println(&quot;Consumer: &quot; + o);</div><div class="line">                &#125; catch (InterruptedException e) &#123;</div><div class="line">                    System.out.println(&quot;producer is interrupted!&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>方法2：线程锁方式</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">public class ProducerConsumer &#123;</div><div class="line">    private LinkedList&lt;Object&gt; myList = new LinkedList&lt;Object&gt;();</div><div class="line">    private int MAX = 10;</div><div class="line">    private final Lock lock = new ReentrantLock();</div><div class="line">    private final Condition full = lock.newCondition();</div><div class="line">    private final Condition empty = lock.newCondition();</div><div class="line"></div><div class="line">    public ProducerConsumer() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void start() &#123;</div><div class="line">        new Producer().start();</div><div class="line">        new Consumer().start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws Exception &#123;</div><div class="line">        ProducerConsumer s2 = new ProducerConsumer();</div><div class="line">        s2.start();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    //生产者</div><div class="line">    class Producer extends Thread &#123;</div><div class="line">        public void run() &#123;</div><div class="line">            while (true) &#123;</div><div class="line">                lock.lock();</div><div class="line">                try &#123;</div><div class="line">                    while (myList.size() == MAX) &#123;</div><div class="line">                        System.out.println(&quot;warning: it&apos;s full!&quot;);</div><div class="line">                        full.await();</div><div class="line">                    &#125;</div><div class="line">                    Object o = new Object();</div><div class="line">                    if (myList.add(o)) &#123;</div><div class="line">                        System.out.println(&quot;Producer: &quot; + o);</div><div class="line">                        empty.signal();</div><div class="line">                    &#125;</div><div class="line">                &#125; catch (InterruptedException ie) &#123;</div><div class="line">                    System.out.println(&quot;producer is interrupted!&quot;);</div><div class="line">                &#125; finally &#123;</div><div class="line">                    lock.unlock();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    // 消费者</div><div class="line">    class Consumer extends Thread &#123;</div><div class="line">        public void run() &#123;</div><div class="line">            while (true) &#123;</div><div class="line">                lock.lock();</div><div class="line">                try &#123;</div><div class="line">                    while (myList.size() == 0) &#123;</div><div class="line">                        System.out.println(&quot;warning: it&apos;s empty!&quot;);</div><div class="line">                        empty.await();</div><div class="line">                    &#125;</div><div class="line">                    Object o = myList.removeLast();</div><div class="line">                    System.out.println(&quot;Consumer: &quot; + o);</div><div class="line">                    full.signal();</div><div class="line">                &#125; catch (InterruptedException ie) &#123;</div><div class="line">                    System.out.println(&quot;consumer is interrupted!&quot;);</div><div class="line">                &#125; finally &#123;</div><div class="line">                    lock.unlock();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="http://blog.csdn.net/kaiwii/article/details/6758942" target="_blank" rel="external">生产者/消费者模式</a></li>
-</ul>
+          定义在实际的开发过程中，经常会碰到如下场景，某个某块负责生成数据，这些数据由另一个模块来负责处理，产生数据的模块，就形象地称为生产者，而处理数据的模块就称为消费者。
+单单抽象出生产者和消费者，还谈不上生产者/消费者模式，该模式还需要有一个缓冲区处于生产者和消费之间，作为一个中介。生产者把数据放入缓冲
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/14/生产者-消费者模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -938,117 +744,18 @@
       
         
           
-            <h3 id="专业术语"><a href="#专业术语" class="headerlink" title="专业术语"></a>专业术语</h3><p><strong>时间复杂度</strong><br>算法的时间复杂度是一个函数，它定量描述了该算法的运行时间。</p>
-<p><strong>空间复杂度</strong><br>空间复杂度是算法运行过程中所需辅助空间的度量</p>
-<p><strong>等差数列公式</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">S(n) = n(a1 + an)/2</div></pre></td></tr></table></figure></p>
-<p><strong>等比数列公式</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">S(n) = a1(1-q^n)/1-q (q为等比系数不等于1)</div></pre></td></tr></table></figure></p>
-<h3 id="二分查找法"><a href="#二分查找法" class="headerlink" title="二分查找法"></a>二分查找法</h3><p><strong>前置条件</strong><br>待查找的数组有序</p>
-<p><strong>算法思想</strong><br>查找的元素时,首先与数组中间的元素进行比较,如果大于这个元素,则在当前数组的后半部分继续查找,如果小于这个元素,则在当前数组的前半部分继续查找,直到找到相同的元素,或者所查找的数组范围为空为止.</p>
-<p><strong>时间复杂度</strong><br>O(lgn)</p>
-<p><strong>JAVA实现</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public static int binarySearch0(long[] a, int fromIndex, int toIndex,</div><div class="line">                                 long key) &#123;</div><div class="line">    int low = fromIndex;</div><div class="line">    int high = toIndex - 1;</div><div class="line"></div><div class="line">    while (low &lt;= high) &#123;</div><div class="line">        int mid = (low + high) &gt;&gt;&gt; 1;</div><div class="line">        long midVal = a[mid];</div><div class="line"></div><div class="line">        if (midVal &lt; key)</div><div class="line">            low = mid + 1;</div><div class="line">        else if (midVal &gt; key)</div><div class="line">            high = mid - 1;</div><div class="line">        else</div><div class="line">            return mid; // key found</div><div class="line">    &#125;</div><div class="line">    return -(low + 1);  // key not found.</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><p><strong>算法思想</strong><br>在一个长度为N的无序数组中，在第一趟遍历N个数据，找出其中最小的数值与第一个元素交换，第二趟遍历剩下的N-1个数据，找出其中最小的数值与第二个元素交换……第N-1趟遍历剩下的2个数据，找出其中最小的数值与第N-1个元素交换，至此选择排序完成。</p>
-<p><strong>空间复杂度</strong><br>O(1)</p>
-<p><strong>时间复杂度</strong><br>O(n^2)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 比较次数</div><div class="line">n + (n-1) + (n-2) + .... + 1 = n*(n+1)/2</div></pre></td></tr></table></figure></p>
-<p><strong>稳定性</strong><br>不稳定<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 举个栗子</div><div class="line">数组[5, 5, 3]，用选择排序法进行升序排列[3,5,5]，相等数值5的前后顺序颠倒了。故该算法不稳定</div></pre></td></tr></table></figure></p>
-<p><strong>JAVA实现</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public static int[] chooseSort(int[] intArr)&#123;</div><div class="line">    for(int i=0;i&lt;intArr.length;i++)&#123;</div><div class="line">        int lowIndex = i;</div><div class="line">        for(int j=i+1;j&lt;intArr.length;j++)&#123;</div><div class="line">            if(intArr[j]&lt;intArr[lowIndex])&#123;</div><div class="line">                lowIndex = j;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        //将最小元素与第i个元素交换</div><div class="line">        int temp = intArr[i];</div><div class="line">        intArr[i] = intArr[lowIndex];</div><div class="line">        intArr[lowIndex] = temp;</div><div class="line">    &#125;</div><div class="line">    return intArr;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><p><strong>算法思想</strong></p>
-<p><img src="../images/插入排序.jpg" alt=""><br>插入排序，首次默认下标0位元素为已排序列表，后面元素相对于已排序列表由后往前，找到合适位置即插入，然后下标递增继续进行。</p>
-<p><strong>时间复杂度</strong><br>O(n^2)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">n + (n-1) + (n-2) + .... + 1 = n*(n+1) / 2</div></pre></td></tr></table></figure></p>
-<p><strong>空间复杂度</strong><br>O(1)</p>
-<p><strong>JAVA实现</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public static void insertionSort(int[] array) &#123;</div><div class="line">        if (array == null || array.length &lt; 2) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        for (int i = 1; i &lt; array.length; i++) &#123;</div><div class="line">            int currentValue = array[i];</div><div class="line">            int position = i;</div><div class="line">            for (int j = i - 1; j &gt;= 0; j--) &#123;</div><div class="line">                if (array[j] &gt; currentValue) &#123;</div><div class="line">                    array[j + 1] = array[j];</div><div class="line">                    position -= 1;</div><div class="line">                &#125; else &#123;</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            array[position] = currentValue;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p><strong>插入排序和选择排序对比</strong><br>插入排序和选择排序的时间复杂度是一样的，但两种算法还是有区别的。在任何条件下，选择排序只会移动元素O(n)次,而插入排序的元素的移动次数可能达到O(n^2)</p>
-<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><p><strong>算法思想</strong><br><img src="../images/归并算法.jpg" alt=""><br>归并排序采用分治法，算法涉及三个步骤 </p>
-<ol>
-<li>分解: 把待排序的 n 个元素的序列分解成两个子序列, 每个子序列包括 n/2 个元素. </li>
-<li>治理: 对每个子序列分别调用归并排序MergeSort, 进行递归操作 </li>
-<li>合并: 合并两个排好序的子序列,生成排序结果. </li>
-</ol>
-<p><strong>时间复杂度</strong><br>O(nlgn)</p>
-<p><strong>JAVA实现</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">public static void mergeSort(int[] data) &#123;</div><div class="line">        sort(data, 0, data.length - 1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void sort(int[] data, int left, int right) &#123;</div><div class="line">        if (left &gt;= right)</div><div class="line">            return;</div><div class="line">        // 找出中间索引</div><div class="line">        int center = (left + right) / 2;</div><div class="line">        // 对左边数组进行递归</div><div class="line">        sort(data, left, center);</div><div class="line">        // 对右边数组进行递归</div><div class="line">        sort(data, center + 1, right);</div><div class="line">        // 合并</div><div class="line">        merge(data, left, center, right);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 将两个数组进行归并，归并前面2个数组已有序，归并后依然有序</div><div class="line">     *</div><div class="line">     * @param data   数组对象</div><div class="line">     * @param left   左数组的第一个元素的索引</div><div class="line">     * @param center 左数组的最后一个元素的索引，center+1是右数组第一个元素的索引</div><div class="line">     * @param right  右数组最后一个元素的索引</div><div class="line">     */</div><div class="line">    public static void merge(int[] data, int left, int center, int right) &#123;</div><div class="line">        // 临时数组</div><div class="line">        int[] tmpArr = new int[data.length];</div><div class="line">        // 右数组第一个元素索引</div><div class="line">        int mid = center + 1;</div><div class="line">        // third 记录临时数组的索引</div><div class="line">        int third = left;</div><div class="line">        // 缓存左数组第一个元素的索引</div><div class="line">        int tmp = left;</div><div class="line">        while (left &lt;= center &amp;&amp; mid &lt;= right) &#123;</div><div class="line">            // 从两个数组中取出最小的放入临时数组</div><div class="line">            if (data[left] &lt;= data[mid]) &#123;</div><div class="line">                tmpArr[third++] = data[left++];</div><div class="line">            &#125; else &#123;</div><div class="line">                tmpArr[third++] = data[mid++];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        // 剩余部分依次放入临时数组（实际上两个while只会执行其中一个）</div><div class="line">        while (mid &lt;= right) &#123;</div><div class="line">            tmpArr[third++] = data[mid++];</div><div class="line">        &#125;</div><div class="line">        while (left &lt;= center) &#123;</div><div class="line">            tmpArr[third++] = data[left++];</div><div class="line">        &#125;</div><div class="line">        // 将临时数组中的内容拷贝回原数组中</div><div class="line">        // （原left-right范围的内容被复制回原数组）</div><div class="line">        while (tmp &lt;= right) &#123;</div><div class="line">            data[tmp] = tmpArr[tmp++];</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><p><strong>算法思想</strong><br>快速排序采用了一种分治的策略,算法涉及三个步骤 :</p>
-<ol>
-<li>先从数列中取出一个数作为基准数。</li>
-<li>分区过程，将比这个数大的数全放到它的右边，小于或等于它的数全放到它的左边。</li>
-<li>再对左右区间重复第二步，直到各区间只有一个数。</li>
-</ol>
-<p><strong>插图解释</strong><br>对下面这个数组快排，随意选择一个数作为基准数(此处选6),有两个变量哨兵i和哨兵j，分别指向最左边和最右边。<br><img src="../images/快排-1.jpg" alt=""><br>哨兵j先出动，一步一步的向左挪动，找到一个小于6的数停下来，接下来哨兵i再一步一步地向右挪，直到找到大于6的数停下来。交换两个数字的位置。<br><img src="../images/快排-2.jpg" alt=""><br>到此第一次交换结束，接下来哨兵j继续向左挪动，发现了4就停下来了(特别注意，每次必须哨兵j先出发)，哨兵i也jx向右挪动，发现了9就停下来了，交换两数的位置<br><img src="../images/快排-3.jpg" alt=""><br>第二次交换结束。哨兵j继续向左挪动，发现了3，哨兵i继续向右挪动，糟啦，哨兵i和哨兵j相遇了，此时说明探测结束了，我们将基数6和3进行交换。<br><img src="../images/快排-4.jpg" alt=""><br>至此我们完成了以6为分界点拆分成两个数组。接下来安装刚刚的方法，分别处理左右两边的数组即可。最后附上快速排序的流程图。<br><img src="../images/快排-5.jpg" alt=""></p>
-<p><strong>示例中为何要哨兵j先出发</strong><br>因为如果哨兵i先出发，当探测结束时，哨兵i和哨兵j相遇的数据将会是大于6的，无法完成相遇数据与第一个数组的交换。</p>
-<p><strong>时间复杂度</strong><br>O(n^2)</p>
-<p><strong>JAVA实现</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">  public void quick(Integer[] str) &#123;</div><div class="line">    if (str.length &gt; 0) &#123;    //查看数组是否为空</div><div class="line">        _quickSort(str, 0, str.length - 1);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private void _quickSort(Integer[] list, int low, int high) &#123;</div><div class="line">    if (low &lt; high) &#123;</div><div class="line">        int middle = _getMiddle(list, low, high);  //将list数组进行一分为二</div><div class="line">        _quickSort(list, low, middle - 1);        //对低字表进行递归排序</div><div class="line">        _quickSort(list, middle + 1, high);       //对高字表进行递归排序</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private int _getMiddle(Integer[] list, int low, int high) &#123;</div><div class="line">    int tmp = list[low];   //数组的第一个作为中轴</div><div class="line">    while (low &lt; high) &#123;</div><div class="line">        while (low &lt; high &amp;&amp; list[high] &gt; tmp) &#123;</div><div class="line">            high--;</div><div class="line">        &#125;</div><div class="line">        list[low] = list[high];   //比中轴小的记录移到低端</div><div class="line">        while (low &lt; high &amp;&amp; list[low] &lt; tmp) &#123;</div><div class="line">            low++;</div><div class="line">        &#125;</div><div class="line">        list[high] = list[low];   //比中轴大的记录移到高端</div><div class="line">    &#125;</div><div class="line">    list[low] = tmp;              //中轴记录到尾</div><div class="line">    return low;                   //返回中轴的位置</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>查找算法</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">算法</th>
-<th style="text-align:center">最坏情况下运行时间</th>
-<th style="text-align:center">最好情况下运行时间</th>
-<th style="text-align:center">需要保证是有序数组吗?</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">线性查找</td>
-<td style="text-align:center">O(n)</td>
-<td style="text-align:center">O(1)</td>
-<td style="text-align:center">NO</td>
-</tr>
-<tr>
-<td style="text-align:center">二分查找</td>
-<td style="text-align:center">O(lgn)</td>
-<td style="text-align:center">O(1)</td>
-<td style="text-align:center">YES</td>
-</tr>
-</tbody>
-</table>
-<p><strong>排序算法</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">算法</th>
-<th style="text-align:center">最坏情况下运行时间</th>
-<th style="text-align:center">最好情况下运行时间</th>
-<th style="text-align:center">最坏情况下交换次数</th>
-<th style="text-align:center">是否原址？</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">选择排序</td>
-<td style="text-align:center">O(n^2)</td>
-<td style="text-align:center">O(n^2)</td>
-<td style="text-align:center">O(n)</td>
-<td style="text-align:center">NO</td>
-</tr>
-<tr>
-<td style="text-align:center">插入排序</td>
-<td style="text-align:center">O(n^2)</td>
-<td style="text-align:center">O(n)</td>
-<td style="text-align:center">O(n^2)</td>
-<td style="text-align:center">YES</td>
-</tr>
-<tr>
-<td style="text-align:center">归并排序</td>
-<td style="text-align:center">O(nlgn)</td>
-<td style="text-align:center">O(nlgn)</td>
-<td style="text-align:center">O(nlgn)</td>
-<td style="text-align:center">NO</td>
-</tr>
-<tr>
-<td style="text-align:center">快速排序</td>
-<td style="text-align:center">O(n^2)</td>
-<td style="text-align:center">O(nlgn)</td>
-<td style="text-align:center">O(n^2)</td>
-<td style="text-align:center">YES</td>
-</tr>
-</tbody>
-</table>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="https://zh.wikipedia.org/zh-hans/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6" target="_blank" rel="external">时间复杂度 - 维基百科</a></li>
-<li><a href="http://baike.baidu.com/view/540497.htm" target="_blank" rel="external">空间复杂度</a></li>
-<li><a href="http://book.51cto.com/art/201405/441264.htm" target="_blank" rel="external">快速排序的插图示例-理解起来相对容易些</a></li>
-</ul>
+          专业术语时间复杂度算法的时间复杂度是一个函数，它定量描述了该算法的运行时间。
+空间复杂度空间复杂度是算法运行过程中所需辅助空间的度量
+等差数列公式1S(n) = n(a1 + an)/2
+等比数列公式1S(n) = a1(1-q^n)/1-q (q为等比系数不等于1)
+二分查找法前置条件待查找的数组
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/13/排序算法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1166,20 +873,17 @@
       
         
           
-            <h3 id="什么是算法？"><a href="#什么是算法？" class="headerlink" title="什么是算法？"></a>什么是算法？</h3><p>算法是完成一个任务所需的一系列步骤，且这些步骤需要足够精确的描述，使得计算机能够运行它。</p>
-<h3 id="算法有什么作用？"><a href="#算法有什么作用？" class="headerlink" title="算法有什么作用？"></a>算法有什么作用？</h3><p>算法是计算机的核心，那么使用算法，我们能得到什么？下面将使用示例来说明其作用。</p>
-<blockquote>
-<p>假设我们在一个较快的计算机A上执行一个运行时间为n^2的排序算法，而在一个运行速度较慢的计算机B上执行一个运行时间为nlgn的排序算法，并让他们均对一个包含着1千万个数字的数组进行排序。<br>假设计算机A每秒执行的顺序是100亿条指令，而计算机B每秒仅能执行1千万条指令，即计算机A的性能比计算机B的性能快1000倍，为了使得这个差异更明显，假定世界上具有最精湛技术的程序员为计算机A使用机器语言进行编码，并且结果的代码会需要2n^2条指令来实现对n个数字的排序，而计算机B进行编码的仅仅是一个普通程序员，会使用一个带有低效编译器的高级语言，使得最终编码需要50nlgn条指令。</p>
-</blockquote>
-<p>计算机A所需花费的时间为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2*(10^7)^2 条指令 / 10^10 条指令/秒 = 20 000 秒 = 超过5.5个小时</div></pre></td></tr></table></figure></p>
-<p>计算机B所需花费的时间为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">50*10^7lg10^7 条指令 / 10^7 条指令/秒 = 1163秒 = 不足20分钟</div></pre></td></tr></table></figure></p>
-<p>通过以上这个例子，我们可以看到使用一个运行时间增长缓慢的算法，即使是使用一个较次的编译器，计算机B的运行速度也会比计算机A的运行速度快17倍。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>即使我们看到了计算机硬件方面的不断改进和发展，但是整个系统的性能不仅仅依靠选择运行较快的硬件或高效的操作系统，<strong>选择高效的算法</strong>对提升系统的性能也同样重要。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>算法基础 打开算法之门</li>
-</ul>
+          什么是算法？算法是完成一个任务所需的一系列步骤，且这些步骤需要足够精确的描述，使得计算机能够运行它。
+算法有什么作用？算法是计算机的核心，那么使用算法，我们能得到什么？下面将使用示例来说明其作用。
 
-          
+假设我们在一个较快的计算机A上执行一个运行时间为n^2的排序算法，而在一个运行速度较慢的计算机B上执
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/13/算法入门篇/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1297,12 +1001,17 @@
       
         
           
-            <h3 id="MySQL逻辑架构图"><a href="#MySQL逻辑架构图" class="headerlink" title="MySQL逻辑架构图"></a>MySQL逻辑架构图</h3><p><img src="../images/mysql架构.png" alt=""></p>
-<p><strong>最上层</strong><br>最上层服务并不是MySQL独有的，是基于网络的客户端/服务端的工具</p>
-<p><strong>第二层架构</strong><br>大多数MySQL的核心服务功能都在这一层，包括查询解析、分析、优化、缓存以及所有的内置函数（例如，日期、时间、数学和加密函数），所有跨存储引擎的功能都在这一层实现：存储过程、触发器、视图等。</p>
-<p><strong>第三层架构</strong><br>第三层包含了存储引擎，存储引擎负责MySQL中数据的存储和提取。服务器通过API与存储引擎进行通信，这些接口屏蔽了不同存储引擎之间的差异，使得这些差异对上层的查询过程透明。存储引擎API包含几十个底层函数，用于执行诸如“开始一个事务”或者“根据主键提取一行记录”等操作，但存储引擎不会去解析SQL，不同存储引擎之间也不会互相通信，而只是简单地响应上层服务器的请求。</p>
+          MySQL逻辑架构图
+最上层最上层服务并不是MySQL独有的，是基于网络的客户端/服务端的工具
+第二层架构大多数MySQL的核心服务功能都在这一层，包括查询解析、分析、优化、缓存以及所有的内置函数（例如，日期、时间、数学和加密函数），所有跨存储引擎的功能都在这一层实现：存储过程、触发器、视图等。
+第
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/13/MySQL逻辑架构/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1420,62 +1129,15 @@
       
         
           
-            <h3 id="事务隔离级别的作用"><a href="#事务隔离级别的作用" class="headerlink" title="事务隔离级别的作用"></a>事务隔离级别的作用</h3><p>在SQL标准中定义了4种隔离级别，每一种级别都规定了一个事务所做的修改，哪些在事务内和事务间是可见的，哪些是不可见的。较低级别的隔离，通常可以执行更高的并发，系统的开销也更低。</p>
-<h3 id="四种隔离级别"><a href="#四种隔离级别" class="headerlink" title="四种隔离级别"></a>四种隔离级别</h3><p><strong>READ UNCOMMITTED(未提交读)</strong><br>一个事务的修改，即使没有提交，对其他事务也都是可见的。事务可以读取未提交的数据，也被称为脏读(Dirty Read)</p>
-<p><strong>READ COMMITTED(提交读)</strong><br>一个事务从开始直到提交之前，所做的任何修改对其他事务都是不可见的，这个级别有时候也被称为不可重复读(nonrepeatable read),因为两次执行同样的查询，可能会得到不一样的结果。</p>
-<p><strong>REPEATABLE READ(可重复读) – MySQL的默认事务隔离级别</strong><br>这个级别解决了脏读的问题，保证了在同一个事务中多次读取同样记录的结果是一致的。但是…..无法解决幻读(Phantom Read)的问题，所谓幻读是指当某个事务在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录，当之前的事务再次读取该范围的记录时，会产生幻行(Phantom Row)。</p>
-<p><strong>SERIALIZABLE(可串行化)</strong><br>这个级别是最高的隔离级别，它通过强制事务串行执行，避免了前面说的幻读问题，简单来说，SERIALIZABLE会在读取的每一行数据上都加锁，所以可能导致大量的超时和锁争用的问题。实际中很少用到，只有在非常需要保证数据的一致性而且可以接受没有并发情况下，才会采用。</p>
-<h3 id="设置事务隔离级别"><a href="#设置事务隔离级别" class="headerlink" title="设置事务隔离级别"></a>设置事务隔离级别</h3><p><strong>查看隔离级别</strong></p>
-<p><img src="../images/transaction-1.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 查看全局的事务级别</div><div class="line">SELECT @@global.tx_isolation;</div><div class="line"></div><div class="line"># 查看当前连接上的事务级别</div><div class="line">SELECT @@session.tx_isolation;</div><div class="line"></div><div class="line"># 查看下一个（未开始）事务的隔离级别</div><div class="line">SELECT @@tx_isolation;</div></pre></td></tr></table></figure></p>
-<p><strong>设置隔离级别</strong></p>
-<p><img src="../images/transaction-2.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">set global|session transaction isolation level read uncommitted | read committed | repeatable read | serializable</div></pre></td></tr></table></figure></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">隔离级别</th>
-<th style="text-align:center">脏读可能性</th>
-<th style="text-align:center">不可重复读可能性</th>
-<th style="text-align:right">幻读可能性</th>
-<th style="text-align:center">加锁读</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">READ UNCOMMITTED</td>
-<td style="text-align:center">YES</td>
-<td style="text-align:center">YES</td>
-<td style="text-align:right">YES</td>
-<td style="text-align:center">NO</td>
-</tr>
-<tr>
-<td style="text-align:left">READ COMMITTED</td>
-<td style="text-align:center">NO</td>
-<td style="text-align:center">YES</td>
-<td style="text-align:right">YES</td>
-<td style="text-align:center">NO</td>
-</tr>
-<tr>
-<td style="text-align:left">REPEATABLE READ</td>
-<td style="text-align:center">NO</td>
-<td style="text-align:center">NO</td>
-<td style="text-align:right">YES</td>
-<td style="text-align:center">NO</td>
-</tr>
-<tr>
-<td style="text-align:left">SERIALIZABLE</td>
-<td style="text-align:center">NO</td>
-<td style="text-align:center">NO</td>
-<td style="text-align:right">NO</td>
-<td style="text-align:center">YES</td>
-</tr>
-</tbody>
-</table>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="http://blog.itpub.net/195110/viewspace-1080777" target="_blank" rel="external">mysql修改事务隔离级别 </a></li>
-<li>高性能MySQL第三版</li>
-</ul>
+          事务隔离级别的作用在SQL标准中定义了4种隔离级别，每一种级别都规定了一个事务所做的修改，哪些在事务内和事务间是可见的，哪些是不可见的。较低级别的隔离，通常可以执行更高的并发，系统的开销也更低。
+四种隔离级别READ UNCOMMITTED(未提交读)一个事务的修改，即使没有提交，对其他事务也都是可
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/13/MYSQL之事务隔离级别/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1593,28 +1255,18 @@
       
         
           
-            <h3 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h3><p>一组原子性的SQL查询，事务内的语句要么全部执行成功，要么全部执行失败。</p>
-<h3 id="场景示例"><a href="#场景示例" class="headerlink" title="场景示例"></a>场景示例</h3><p>假设一个银行的数据库有两张表:支票(checking)表和储蓄(savings)表，现在用户Jane的支票账户转移200美元到她的储蓄账户，那么需要至少三个步骤：</p>
-<ol>
-<li>检查支票账户的余额高于200美元</li>
-<li>从支票账户余额中减去200美元</li>
-<li>在储蓄账户余额中增加200美元</li>
-</ol>
-<p>上述三个步骤必须打包在一个事务中，任何一个步骤失败，则必须回滚所有的步骤。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">START TRANSACTION;</div><div class="line">SELECT balance FROM checking where customer_id =  10233276;</div><div class="line">UPDATE checking SET balance = balance - 200.00 WHERE customer_id = 10233276;</div><div class="line">UPDATE savings SET balance = balance + 200.00  WHERE customer_id = 10233276;</div><div class="line">COMMIT</div></pre></td></tr></table></figure></p>
-<p>但是….. 单纯的事务概念并不是故事的全部，可能会出现以下场景….</p>
-<blockquote>
-<ol>
-<li>执行第4条语句时，服务器崩溃了 – 可能用户会损失200美金</li>
-<li>在执行第3条语句和第4条语句之间，另外一个进程要删除支票账户的所有余额 – 银行在不知道这个逻辑的情况下， 可能白白给了Jane200美金。</li>
-</ol>
-</blockquote>
-<h3 id="如何保障事务"><a href="#如何保障事务" class="headerlink" title="如何保障事务"></a>如何保障事务</h3><p>除非系统通过严格的ACID测试，否则空谈事务的概念是远远不够的。ACID分别表示原子性、一致性、隔离性、持久性。</p>
-<p><strong>原子性(atomicity)</strong><br>一个事务必须被视为一个不可分割的最小工作单元，整个事务要么全部提交成功，要么全部失败回滚。</p>
-<p><strong>一致性(consistency)</strong><br>数据库总是从一个一致性的状态转换到另外一个一致性的状态。例如：在前面的例子中，即使在执行第3、4条语句之间系统崩溃了，支票账户也不会损失200美元，因为事务最终没有被提交，事务中所做的修改也不会保存到数据库中。</p>
-<p><strong>隔离性(isolation)</strong><br>一个事务所做的修改在最终提交以前，对其他事务是不可见的。例如：在前面的例子中，当执行完第3条语句，第4条语句还没有开始时，此时另外一个账号汇总程序开始运行，则其看到的支票账户的余额并没有被减去200美元。</p>
-<p><strong>持久性(durability)</strong><br>一旦事务提交，则其所作的修改就会永久保存到数据库中，此时即使系统崩溃，修改的数据也不会丢失。</p>
+          什么是事务一组原子性的SQL查询，事务内的语句要么全部执行成功，要么全部执行失败。
+场景示例假设一个银行的数据库有两张表:支票(checking)表和储蓄(savings)表，现在用户Jane的支票账户转移200美元到她的储蓄账户，那么需要至少三个步骤：
 
-          
+检查支票账户的余额高于200美元
+从支票账
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/13/MYSQL之事务/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1732,14 +1384,15 @@
       
         
           
-            <h3 id="什么是单例模式？"><a href="#什么是单例模式？" class="headerlink" title="什么是单例模式？"></a>什么是单例模式？</h3><p>确保一个类只有一个实例，并提供一个全局访问点。</p>
-<h3 id="常见的错误"><a href="#常见的错误" class="headerlink" title="常见的错误"></a>常见的错误</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//在多线程模式下，用这种方法获取单例对象是有问题的。</div><div class="line">public class Singleton &#123;</div><div class="line">    private static Singleton uniqueInstance;</div><div class="line">    private Singleton()&#123;&#125;</div><div class="line">    public static Singleton getInstance()&#123;</div><div class="line">        if(uniqueInstance == null)&#123;</div><div class="line">            uniqueInstance = new Singleton();</div><div class="line">        &#125;</div><div class="line">        return uniqueInstance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="多线程模式下，正确获取单例的方法"><a href="#多线程模式下，正确获取单例的方法" class="headerlink" title="多线程模式下，正确获取单例的方法"></a>多线程模式下，正确获取单例的方法</h3><p><strong>方法1</strong>：获取单例的性能不高，但简单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class Singleton &#123;</div><div class="line">    private static Singleton uniqueInstance;</div><div class="line">    private Singleton()&#123;&#125;</div><div class="line">    public static synchronized Singleton getInstance()&#123;</div><div class="line">        if(uniqueInstance == null)&#123;</div><div class="line">            uniqueInstance = new Singleton();</div><div class="line">        &#125;</div><div class="line">        return uniqueInstance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>方法2</strong>： 使用“急切”创建实例，而不是延迟实例化的做法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class Singleton &#123;</div><div class="line">    private static Singleton uniqueInstance = new Singleton();</div><div class="line">    private Singleton()&#123;&#125;</div><div class="line">    public static  Singleton getInstance()&#123;</div><div class="line">      return uniqueInstance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>方法3</strong>：使用双重加锁，在getInstance中减少使用同步<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class Singleton &#123;</div><div class="line">    // volatile关键词确保，uniqueInstance初始化为singleton实例时，多个线程能够正确处理uniqueInstance变量。</div><div class="line">    private volatile static Singleton uniqueInstance;</div><div class="line">    private Singleton() &#123;</div><div class="line">    &#125;</div><div class="line">    public static Singleton getInstance() &#123;</div><div class="line">        if (uniqueInstance == null) &#123;</div><div class="line">            synchronized (Singleton.class) &#123;</div><div class="line">                if (uniqueInstance == null) &#123;</div><div class="line">                    uniqueInstance = new Singleton();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return uniqueInstance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="多线程模式下，单例测试"><a href="#多线程模式下，单例测试" class="headerlink" title="多线程模式下，单例测试"></a>多线程模式下，单例测试</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//在多线程模式下，创建单例，若hashCode相等则为同一实例。</div><div class="line">public class SingletonTest &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        for(int i=0;i&lt;100;i++) &#123;</div><div class="line">            new Thread(() -&gt; &#123;</div><div class="line">                Singleton instanceOne = Singleton.getInstance();</div><div class="line">                System.out.println(instanceOne.hashCode());</div><div class="line">            &#125;).start();</div><div class="line">            new Thread(() -&gt; &#123;</div><div class="line">                Singleton instanceTwo = Singleton.getInstance();</div><div class="line">                System.out.println(instanceTwo.hashCode());</div><div class="line">            &#125;).start();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          什么是单例模式？确保一个类只有一个实例，并提供一个全局访问点。
+常见的错误1234567891011//在多线程模式下，用这种方法获取单例对象是有问题的。public class Singleton &#123;    private static Singleton uniqueInstance;
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/12/Java设计模式之单例模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1857,43 +1510,15 @@
       
         
           
-            <p>之前工作中用到Kafka项目，近来面试，问到kafka的概念性部分，有些模糊，特写下此文，梳理知识点，备忘。</p>
-<h3 id="什么是Kafka？"><a href="#什么是Kafka？" class="headerlink" title="什么是Kafka？"></a>什么是Kafka？</h3><p>Kafka是一个分布式(distributed)，可划分（partitioned）,冗余备份的持久化的日志服务(replicated committ log service),提供消息系统（messaging system）的功能。</p>
-<p><strong>消息的基本术语</strong></p>
-<ul>
-<li><code>topics</code>  特指Kafka处理的消息源(feeds of messages)的不同分类</li>
-<li><code>producers</code> 向Kafka的一个topic发布消息的过程叫producers</li>
-<li><code>consumers</code>订阅topics并处理其发布的消息的过程叫consumers</li>
-<li><code>broker</code> Kafka集群中的一台或多台服务器统称为broker</li>
-</ul>
-<p>所以，从总体来说，producers通过网络想Kafka的集群发送消息并转由consumers来处理，这个过程如图所示<br><img src="../images/producer_consumer.png" alt=""><br>客户端和服务端的通信，是基于简单、高性能且与编程语言无关的TCP协议</p>
-<h3 id="Topic与日志"><a href="#Topic与日志" class="headerlink" title="Topic与日志"></a>Topic与日志</h3><p>一个Topic是指发布的消息的一个类别或消息源的名字，Kafka集群为每一个Topic划分一个日志(partitioned log)如下图所示<br><img src="../images/partitions.png" alt=""><br>每一个partition是一个排好序的，不可变的消息序列。新的消息不断的追加到序列的尾部。–即持久性日志（commit log）。每一个分区（partition）中的消息，有一个名叫offset 的顺序编号，作为这条消息在partition中的标识。</p>
-<p>Kafka集群将在设定的时间范围内，保存所有被发布的消息，不论该消息是否被处理完成。例如，如果一个日志被设置为保存2天，那么在它发布的两天之内，它都是可以被处理的，而在2天之后，它就会被系统销毁并释放掉。</p>
-<p>实际上，每个consumer中仅有的元数据（metadata）的主要部分是该consumer在日志中的位置信息，叫做offset（偏移量）。这个offset由consumer控制，在一般情况下，consumer按照offset的顺序读取消息，但事实上consumer可以控制位置，可以以任何想要的顺序处理消息。例如一个consumer可以重置并重新处理一个已经处理过的offset。</p>
-<p>这些特点的组合使Kafka的consumers变得特别的廉价–它们能来去自如而不会对集群或者其它的consumers造成多大影响。比如，你可以使用我们的命令行工具来“tail”任意topic中的内容，而不会改变任何被已有consumers处理过的内容。</p>
-<p>日志服务的分区有几个目的。首先，它允许日志扩展到超过单台服务器允许的大小。因为虽然每一个单独的分区必须适应承载它们的服务器，但是一个topic可以包含多个分区，所以能处理任意大小的数据。其次，它们作为并行单元–一会儿我们会了解更多</p>
-<h3 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h3><p>日志的分区partitions分布式地部署在Kafka服务器集群上，每个服务器为一个共享的分区处理数据和请求。每一个分区的数据被冗余的备份在多台服务器上用于容错，可以通过配置来设定用于备份的服务器的数量。</p>
-<p>每个分区有一台服务器扮演“领导”的角色，有0或多台服务器扮演“随从”。领导负责所有对分区的读写请求，同时随从们被作为领导的备份。一旦领导挂掉，随从中的一个会自动变成新的领导。每一台服务器都同时在一些分区里扮演领导而在另外一些分区中充当随从，这让集群拥有良好的负载均衡。</p>
-<h3 id="Producers-（生产者）"><a href="#Producers-（生产者）" class="headerlink" title="Producers （生产者）"></a>Producers （生产者）</h3><p>producers向他们选择的topics发布数据。每个producer负责在topic中选择将哪些消息分配给哪些分区。这可以通过简单的“循环赛”的方式来或是根据一些语义划分的方法（比如根据一些消息中的键）来实现负载均衡。我们会在之后介绍如何使用分区时提供更多的信息。</p>
-<h3 id="Consumers-（消费者）"><a href="#Consumers-（消费者）" class="headerlink" title="Consumers （消费者）"></a>Consumers （消费者）</h3><p>传统的消息系统有两种模式：消息队列和发布/订阅。在消息队列模式中，一池子的consumers可能从一个服务器上读取数据，每个消息被分发给其中一个consumer；而在发布订阅模式中，消息被以广播的方式发给所有的consumers。Kafka通过提供了一个叫做消费者群组（consumer group）的抽象概念涵盖以上两种模式。</p>
-<p>Consumers上标记有他们所属的consumer group的名字，每个被发布到topic上的消息消息会被分发到所有订阅该topic的consumer group内部的一个consumer实例上。Consumer实例可以是一个单独的进程也可以是一个单独的机器。</p>
-<p>如果所有的consumer实例都具有相同的群组，那么就像传统的队列模式一样平衡着各个consumer的负载。</p>
-<p>如果所有的consumer实例均有不同的群组，那么这就如同发布/订阅模式，所有的消息被广播给所有的消费者。</p>
-<p>更常见的情况是，我们发现topics一般只有很少的消费者群组，一个群组一般对应一个“逻辑订阅”单元。而每一个群组由大量的consumer实例构成，用来提供可扩展性和容错性。这其实就是发布/订阅模式的一种特殊情况，只不过订阅者是一个consumers的集群而非一个单独的进程而已。<br><img src="../images/consumer-groups.png" alt=""><br>同时，Kafka具有比传统消息系统更强大的顺序保障。</p>
-<p>传统的队列在服务器上按照一定的顺序存储消息，然后当多个consumers从队列中处理消息时，系统按照消息存储的顺序分发消息。然而，虽然系统是按照顺序送出消息的，但是是按异步的方式送达到consumer手中，所以当消息到达不同consumer手中的时候，已经没有顺序可言了。这意味着消息的顺序在并行处理中不复存在了。消息系统常常有一个权宜之计来应对这种情况，就是使用了一个叫做“独家消费”的概念，就是只允许一个进程处理队列，不过这么做的话，并行处理当然也就不复存在了。</p>
-<p>Kafka在这一点上做的比较好。通过一个叫做“排比(parallelism)”的概念–即并行–在topics中， Kafka能够同时提供顺序保证和一池子消费进程间的负载均衡。</p>
-<p>Kafka只能保证每个分区内部的消息的总体顺序，而保证同一个topic在不同分区中消息的顺序。这种每个分区有序并可以按照数据的键去分区的特性对于大多数应用都已经足够。但是，如果你需要保证所有消息的总体顺序，可以通过使用只有一个分区的topic去完成，不过这样做就意味着只有一个consumer进程了。</p>
-<h3 id="保障"><a href="#保障" class="headerlink" title="保障"></a>保障</h3><p>在高层次上Kafka提供如下保障：</p>
-<ul>
-<li>由producer发送给特点topic分区的消息按照发送的先后顺序排序。也就是说，如果同一个producer发送了消息M1和M2，M1先被发送，那么M1的offset比M2的小，且M1先出现在日志中。</li>
-<li>一个consumer实例按照消息在日志中存储的顺序收到消息。</li>
-<li>对于一个有N个备份的topic，我们允许其中N-1个服务器挂掉，依然能保证不丢失任何持久性日志中的消息。</li>
-</ul>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>Kafka 0.8.1官方文档</li>
-</ul>
+          之前工作中用到Kafka项目，近来面试，问到kafka的概念性部分，有些模糊，特写下此文，梳理知识点，备忘。
+什么是Kafka？Kafka是一个分布式(distributed)，可划分（partitioned）,冗余备份的持久化的日志服务(replicated committ log service
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/12/Kafka介绍/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
