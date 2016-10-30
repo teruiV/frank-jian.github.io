@@ -292,6 +292,389 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/11/锋利的JQuery-DOM操作/" itemprop="url">
+                  锋利的JQuery -- DOM操作
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-11T23:56:08+08:00" content="2016-08-11">
+              2016-08-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/11/锋利的JQuery-DOM操作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/11/锋利的JQuery-DOM操作/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="查找节点"><a href="#查找节点" class="headerlink" title="查找节点"></a>查找节点</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">var $li = $(“ul  li:eq(1)”)</td>
+<td style="text-align:left">查找元素节点</td>
+</tr>
+<tr>
+<td style="text-align:left">var p_text = $(“p”).attr(“title”)</td>
+<td style="text-align:left">查找属性节点</td>
+</tr>
+</tbody>
+</table>
+<h3 id="插入节点"><a href="#插入节点" class="headerlink" title="插入节点"></a>插入节点</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">B.append(A)</td>
+<td style="text-align:left">向B内部追加A</td>
+</tr>
+<tr>
+<td style="text-align:left">A.append(B)</td>
+<td style="text-align:left">把A追加到B内部</td>
+</tr>
+<tr>
+<td style="text-align:left">B.prepend(A)</td>
+<td style="text-align:left">把B内部最前面添加A</td>
+</tr>
+<tr>
+<td style="text-align:left">B.after(A)</td>
+<td style="text-align:left">在B后面添加A</td>
+</tr>
+<tr>
+<td style="text-align:left">A.insertAfter(B)</td>
+<td style="text-align:left">把A插入B的后面</td>
+</tr>
+<tr>
+<td style="text-align:left">B.before(A)</td>
+<td style="text-align:left">在B的前面插入A</td>
+</tr>
+<tr>
+<td style="text-align:left">A.insertBefore(B)</td>
+<td style="text-align:left">在B的前面添加A</td>
+</tr>
+</tbody>
+</table>
+<h3 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">remove()</td>
+<td style="text-align:left">返回的是删除的元素</td>
+</tr>
+<tr>
+<td style="text-align:left">detach()</td>
+<td style="text-align:left">与remove类似，但元素的事件和数据都保留</td>
+</tr>
+<tr>
+<td style="text-align:left">empty</td>
+<td style="text-align:left">清空节点，清空内部的对象</td>
+</tr>
+</tbody>
+</table>
+<h3 id="复制节点"><a href="#复制节点" class="headerlink" title="复制节点"></a>复制节点</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">clone()</td>
+<td style="text-align:left">复制当前的节点</td>
+</tr>
+<tr>
+<td style="text-align:left">clone(true)</td>
+<td style="text-align:left">复制当前的节点以及绑定的事件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="替换节点"><a href="#替换节点" class="headerlink" title="替换节点"></a>替换节点</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">replaceWith()</td>
+<td style="text-align:left">替换标签</td>
+</tr>
+</tbody>
+</table>
+<h3 id="属性操作"><a href="#属性操作" class="headerlink" title="属性操作"></a>属性操作</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">attr(“title”,”xxxx”)</td>
+<td style="text-align:left">设置参数值</td>
+</tr>
+<tr>
+<td style="text-align:left">attr(“title”)</td>
+<td style="text-align:left">获取属性值</td>
+</tr>
+<tr>
+<td style="text-align:left">removeAttr(“title”)</td>
+<td style="text-align:left">删除属性值</td>
+</tr>
+</tbody>
+</table>
+<h3 id="样式操作"><a href="#样式操作" class="headerlink" title="样式操作"></a>样式操作</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">attr(“class”,”xxx”)</td>
+<td style="text-align:left">设置样式</td>
+</tr>
+<tr>
+<td style="text-align:left">addClass(“xxx”)</td>
+<td style="text-align:left">追加样式</td>
+</tr>
+<tr>
+<td style="text-align:left">removeClass(“xxx”)</td>
+<td style="text-align:left">移除样式</td>
+</tr>
+<tr>
+<td style="text-align:left">removeClass()</td>
+<td style="text-align:left">移除所有样式</td>
+</tr>
+<tr>
+<td style="text-align:left">toggleClass(“xxx”)</td>
+<td style="text-align:left">切换样式</td>
+</tr>
+<tr>
+<td style="text-align:left">hasClass(“xxx”)</td>
+<td style="text-align:left">判断是否有样式</td>
+</tr>
+</tbody>
+</table>
+<h3 id="设置、获取HTML、文本和值"><a href="#设置、获取HTML、文本和值" class="headerlink" title="设置、获取HTML、文本和值"></a>设置、获取HTML、文本和值</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">html()</td>
+<td style="text-align:left">设置或者获取HTML</td>
+</tr>
+<tr>
+<td style="text-align:left">text()</td>
+<td style="text-align:left">设置或者获取文本</td>
+</tr>
+<tr>
+<td style="text-align:left">val()</td>
+<td style="text-align:left">设置获取值</td>
+</tr>
+</tbody>
+</table>
+<h3 id="遍历节点"><a href="#遍历节点" class="headerlink" title="遍历节点"></a>遍历节点</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">children()</td>
+<td style="text-align:left">取得匹配元素的子元素集合</td>
+</tr>
+<tr>
+<td style="text-align:left">next()</td>
+<td style="text-align:left">取得匹配元素的下一个同辈元素</td>
+</tr>
+<tr>
+<td style="text-align:left">prev()</td>
+<td style="text-align:left">取得匹配元素的前一个同辈元素</td>
+</tr>
+<tr>
+<td style="text-align:left">siblings()</td>
+<td style="text-align:left">取得匹配元素的所有同辈元素</td>
+</tr>
+<tr>
+<td style="text-align:left">parent()</td>
+<td style="text-align:left">获得集合中每个元素的祖先元素</td>
+</tr>
+<tr>
+<td style="text-align:left">parents()</td>
+<td style="text-align:left">获得每个元素的祖先元素</td>
+</tr>
+<tr>
+<td style="text-align:left">closest()</td>
+<td style="text-align:left">从本身开始，返回最先匹配的祖先元素</td>
+</tr>
+</tbody>
+</table>
+<h3 id="CSS-DOM操作"><a href="#CSS-DOM操作" class="headerlink" title="CSS-DOM操作"></a>CSS-DOM操作</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">css(“color”)</td>
+<td style="text-align:left">获得指定的样式值</td>
+</tr>
+<tr>
+<td style="text-align:left">css(“color”,”red”)</td>
+<td style="text-align:left">设置指定样式</td>
+</tr>
+<tr>
+<td style="text-align:left">width() height()</td>
+<td style="text-align:left">设置获取宽度和高度</td>
+</tr>
+<tr>
+<td style="text-align:left">offset()</td>
+<td style="text-align:left">视窗的偏移值</td>
+</tr>
+<tr>
+<td style="text-align:left">position()</td>
+<td style="text-align:left">获取定对于最近的position样式元素的位置</td>
+</tr>
+<tr>
+<td style="text-align:left">scrollTop</td>
+<td style="text-align:left">滚动条顶端距离</td>
+</tr>
+<tr>
+<td style="text-align:left">scrollLeft()</td>
+<td style="text-align:left">滚动条左端距离</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/11/锋利的JQuery-Ajax/" itemprop="url">
                   锋利的JQuery -- Ajax
                 </a>
@@ -1839,160 +2222,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/22/Java-Lambda表达式入门/" itemprop="url">
-                  Java Lambda表达式入门
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-22T23:37:37+08:00" content="2016-06-22">
-              2016-06-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/22/Java-Lambda表达式入门/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/22/Java-Lambda表达式入门/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="Lambda表达式语法"><a href="#Lambda表达式语法" class="headerlink" title="Lambda表达式语法"></a>Lambda表达式语法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. (parameters) -&gt; expression</div><div class="line"></div><div class="line">2. (parameters) -&gt; &#123;statements;&#125;</div></pre></td></tr></table></figure>
-<h4 id="Lambda作用域"><a href="#Lambda作用域" class="headerlink" title="Lambda作用域"></a>Lambda作用域</h4><p>Lambda表达式可以访问 外部作用域带有final修饰符的变量、实例变量和静态变量</p>
-<ul>
-<li><p>访问本地变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int tempNum = 5; //tempNum将被隐式地转换为final类型；</div><div class="line">List&lt;Integer&gt; nums = Arrays.asList(1,2,3);</div><div class="line">nums.stream.map(num -&gt; num + tempNum);</div></pre></td></tr></table></figure>
-</li>
-<li><p>访问域变量和静态变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class LambdaTest &#123;</div><div class="line">    static int outStaticNum;</div><div class="line">    int outNum;</div><div class="line"></div><div class="line">    void testScope() &#123;</div><div class="line">        List&lt;Integer&gt; nums = Arrays.asList(1, 2, 3, 4);</div><div class="line">        nums.stream().forEach(num -&gt; &#123;</div><div class="line">            outNum = 33;</div><div class="line">            outNum = outNum + num; //outNum值可以改变，非final</div><div class="line">            System.out.println(outNum + num);</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        System.out.println(&quot; =================== &quot;);</div><div class="line">        nums.stream().forEach(num -&gt; &#123;</div><div class="line">            outStaticNum = 73;</div><div class="line">            System.out.println(outStaticNum + num);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>相比本地变量，对于实例变量和静态变量，lambda表达式既有读的权限，也有写的权限；</p>
-</li>
-</ul>
-<h4 id="内置函数式接口"><a href="#内置函数式接口" class="headerlink" title="内置函数式接口"></a>内置函数式接口</h4><ul>
-<li><p>Predicates</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//Predicate接口是返回boolean值的接口；</div><div class="line">Predicate&lt;String&gt; predicate = (s) -&gt; s.length() &gt; 0;</div></pre></td></tr></table></figure>
-</li>
-<li><p>Functions</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//接收一个参数，返回一个结果</div><div class="line">Function&lt;String,Integer&gt; toInteger = Integer::valueOf;</div><div class="line">Function&lt;String,String&gt; backToString = toInteger.andThen(String::valueOf);</div><div class="line"></div><div class="line">backToString.apply(&quot;123&quot;);</div></pre></td></tr></table></figure>
-</li>
-<li><p>Suppliers</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// 根据给定的范型返回一个结果，不需要传入参数</div><div class="line">Supplier&lt;Person&gt; personSupplier = Person::new;</div><div class="line">personSupplier.get(); //new Person</div></pre></td></tr></table></figure>
-</li>
-<li><p>Consumers</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//Consumer接口代表一类只接收一个参数的操作</div><div class="line">Consumer&lt;Person&gt; greeter = (p) -&gt; System.out.println(&quot;Hello&quot; + p.getFirstName());</div><div class="line">greeter.accept(new Person(&quot;Lucy&quot;,&quot;Tom&quot;));</div></pre></td></tr></table></figure>
-</li>
-<li><p>Comparators</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Comparator&lt;Person&gt; comparator = (p1, p2) -&gt; p1.firstName.compareTo(p2.firstName);</div><div class="line"></div><div class="line">Person p1 = new Person(&quot;John&quot;, &quot;Doe&quot;);</div><div class="line">Person p2 = new Person(&quot;Alice&quot;, &quot;Wonderland&quot;);</div><div class="line"></div><div class="line">comparator.compare(p1, p2);             // &gt; 0</div><div class="line">comparator.reversed().compare(p1, p2);  // &lt; 0</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="Lambda表达式简单例子"><a href="#Lambda表达式简单例子" class="headerlink" title="Lambda表达式简单例子"></a>Lambda表达式简单例子</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">1. () -&gt; 5 //不需要参数，返回值为5；</div><div class="line"></div><div class="line">2. x -&gt; 2 * x //接收一个参数(数字类型)，返回其2倍的值</div><div class="line"></div><div class="line">3. (x,y) -&gt; x - y //接收2个参数，并返回他们的差值</div><div class="line"></div><div class="line">4. (String s) -&gt; System.out.println(s) //接收一个string对象，并在控制台打印，不返回任何值</div></pre></td></tr></table></figure>
-<h4 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">String str[] = [&quot;KUFA&quot;,&quot;LINDA&quot;,&quot;DAVID&quot;];</div><div class="line">List&lt;String&gt; strs = Arrays.asList(str);</div><div class="line"></div><div class="line">//以前遍历方式</div><div class="line">for(String s : strs)&#123;</div><div class="line">  System.out.println(s + &quot; , &quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//lambda表达式</div><div class="line">strs.forEach((s) -&gt; System.out.println(s + &quot;,&quot;));</div></pre></td></tr></table></figure>
-<h4 id="使用Lambda排序集合"><a href="#使用Lambda排序集合" class="headerlink" title="使用Lambda排序集合"></a>使用Lambda排序集合</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; names = Arrays.asList(&quot;Tom&quot;,&quot;Luck&quot;,&quot;Jane&quot;,&quot;Wiliam&quot;);</div><div class="line"></div><div class="line">//从小到大排序</div><div class="line">names.stream().sorted((name1,name2) -&gt; name1.compareTo(name2)).forEach(System.out::println);</div></pre></td></tr></table></figure>
-<h4 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; names = Arrays.asList(&quot;Tom&quot;,&quot;Luck&quot;,&quot;Jane&quot;,&quot;Wiliam&quot;);</div><div class="line"></div><div class="line">names.stream().filter(name -&gt;!name.equals(&quot;Tom&quot;)).forEach(System.out::println);</div></pre></td></tr></table></figure>
-<h4 id="使用转换函数，对Stream流中的元素，进行转换操作"><a href="#使用转换函数，对Stream流中的元素，进行转换操作" class="headerlink" title="使用转换函数，对Stream流中的元素，进行转换操作"></a>使用转换函数，对Stream流中的元素，进行转换操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; names = Arrays.asList(&quot;Tom&quot;,&quot;Luck&quot;,&quot;Jane&quot;,&quot;Wiliam&quot;);</div><div class="line"></div><div class="line">names.stream().map( name -&gt; name.concat(&quot; -- &quot;)).forEach(System.out::println);</div></pre></td></tr></table></figure>
-<h4 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; names = Arrays.asList(&quot;Tom&quot;,&quot;Luck&quot;,&quot;Jane&quot;,&quot;Wiliam&quot;);</div><div class="line"></div><div class="line">//Reduce操作 类似于(A,B,C,D) -&gt; A = A + B； A = A + C； A = A + D；最后输出A</div><div class="line">String reduceName = names.stream().reduce((name1,name2) -&gt; name1 = name1.concat(&quot;-&quot;+name2)).orElseThrow(() -&gt; new IllegalArgumentException(&quot;无法输出结果!&quot;));</div><div class="line"></div><div class="line">System.out.println(reduceName);</div></pre></td></tr></table></figure>
-<h4 id="匹配"><a href="#匹配" class="headerlink" title="匹配"></a>匹配</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; names = Arrays.asList(&quot;Tom&quot;,&quot;Luck&quot;,&quot;Jane&quot;,&quot;Wiliam&quot;);</div><div class="line">//任意匹配其中一个</div><div class="line">Boolean isExistAny = names.stream().anyMatch(name -&gt; name.equals(&quot;Tom&quot;));</div><div class="line"></div><div class="line">//所有元素均匹配</div><div class="line">Boolean isExistAll = names.stream().allMatch(name -&gt; name.equals(&quot;Tom&quot;));</div><div class="line"></div><div class="line">//没有一个元素匹配</div><div class="line">Boolean isExistNone = names.stream().noneMatch(name -&gt; name.equals(&quot;Tom&quot;));</div><div class="line">System.out.println(&quot;isExistAny = &quot; + isExistAny + &quot; isExistAll = &quot; + isExistAll + &quot; isExistNone = &quot; +isExistNone);</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2038,7 +2267,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">144</span>
+              <span class="site-state-item-count">145</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
