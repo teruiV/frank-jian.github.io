@@ -292,6 +292,147 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/03/PHP面向对象基础知识/" itemprop="url">
+                  PHP面向对象基础知识
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-03T09:33:00+08:00" content="2016-05-03">
+              2016-05-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/03/PHP面向对象基础知识/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/03/PHP面向对象基础知识/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="类"><a href="#类" class="headerlink" title="类"></a>类</h5><p>对象直接彼此互不相同，但具有一些共同点的对象集合</p>
+<h5 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h5><p>举个例子，我的自行车可以被认为自行车类的一个对象，他拥有所有自行车的共同特征；</p>
+<h5 id="多态性"><a href="#多态性" class="headerlink" title="多态性"></a>多态性</h5><p>不同的类对同一个操作可以有不同的行为；</p>
+<h5 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h5><p>在已有类的基础上创建新类，新类包含已有类的所有的方法和属性且可以添加新的方法；PHP中只支持单重继承类，不支持多重继承类；要实现多次继承可以通过接口；</p>
+<h5 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h5><p>初始化对象和属性,其名称必须是 __constructor().<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">class classname</div><div class="line">	function __construct($param)&#123;</div><div class="line">       echo &quot;Constructor called with parameter&quot;.$param.&quot;&lt;/br&gt;&quot;;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h5 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h5><p>在销毁一个类之前执行的操作，在类的引用被重置或者超出作用域时<strong>自动发生</strong>。</p>
+<h5 id="访问权限"><a href="#访问权限" class="headerlink" title="访问权限"></a>访问权限</h5><ul>
+<li>public ,设置为public的属性和方法，可以在类的内部和外部使用；</li>
+<li>private,设置为private的属性和方法，只能在类的内部进行访问,方法和属性将不会被继承；</li>
+<li>protected,设置为protected的属性和方法，在类的子类和类的内部中可以进行访问；<br>注：未指明方法默认为public权限，属性一定要声明访问权限否则会报错;</li>
+</ul>
+<h5 id="final关键字"><a href="#final关键字" class="headerlink" title="final关键字"></a>final关键字</h5><ul>
+<li>在函数前加final，这个函数将不能被在子类中被重载；</li>
+<li>在类前加final，这个类将不能被继承;</li>
+</ul>
+<h5 id="Per-class常量"><a href="#Per-class常量" class="headerlink" title="Per-class常量"></a>Per-class常量</h5><p>使用操作符::指定常量所属的类来访问Per-class变量;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">  class Math&#123;</div><div class="line">  	const pi = 3.14;</div><div class="line">  &#125;</div><div class="line">  echo &quot;Math :: pi = &quot;.Math::pi.&quot;\n&quot;;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<h5 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h5><p>在方法前添加static关键字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class Math&#123;</div><div class="line">   static function squared($input)&#123;</div><div class="line">   	return $input *$input;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">echo Math::squared(8);</div></pre></td></tr></table></figure></p>
+<h5 id="检查类的类型和类型提示"><a href="#检查类的类型和类型提示" class="headerlink" title="检查类的类型和类型提示"></a>检查类的类型和类型提示</h5><p>instanceof可以检查一个对象是否是特定类的实例;是否实现了某个接口；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class A&#123;</div><div class="line"> public function method1()&#123;</div><div class="line">   echo &quot;method1&quot;;</div><div class="line"> &#125;</div><div class="line">&#125;</div><div class="line">interface C &#123;</div><div class="line">  public function method3();</div><div class="line">&#125;</div><div class="line"></div><div class="line">class B extends A implements C&#123;</div><div class="line"> function method2()&#123;</div><div class="line">    echo &quot;method2&quot;;</div><div class="line"> &#125;</div><div class="line"> function method3()&#123;</div><div class="line">     echo &quot;method3&quot;;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$b = new B();</div><div class="line">$a = new A();</div><div class="line"></div><div class="line">if($b instanceof A)&#123;</div><div class="line">   echo &quot;\$a is an object of B &lt;br/&gt;&quot;;</div><div class="line"></div><div class="line">&#125;else&#123;</div><div class="line">   echo &quot;\$a is not an object of B&lt;br/&gt;&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">if($b instanceof C)&#123;</div><div class="line">   echo &quot;\$b implements interface c&quot;;</div><div class="line">&#125;else &#123;</div><div class="line">   echo &quot;\$b don&apos;t implements interface c&quot;;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<h5 id="类提示的思想"><a href="#类提示的思想" class="headerlink" title="类提示的思想"></a>类提示的思想</h5><p>指定参数传入的类型，如果不是传入该类型参数将报错；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">function check_hint(B $someclass)&#123;&#125;; //如果传入的参数类型不是B的实例，将报错;</div></pre></td></tr></table></figure></p>
+<h5 id="延迟静态绑定"><a href="#延迟静态绑定" class="headerlink" title="延迟静态绑定"></a>延迟静态绑定</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//输出的结果为 who method of class B;</div><div class="line">&lt;?php</div><div class="line">class A&#123;</div><div class="line">   public static function who()&#123;</div><div class="line">     echo &quot;who method of class A&quot;;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   public static function test()&#123;</div><div class="line">     echo static::who(); //here comes later static binding;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class B extends A&#123;</div><div class="line">   public static function who()&#123;</div><div class="line">     echo &quot;who method of class B&quot;;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">B::test();</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h5 id="call方法"><a href="#call方法" class="headerlink" title="call方法"></a>call方法</h5><p> call方法用来监控一个对象中的其他方法，如果试着调用一个对象中不存在或被权限控制中的方法，__call方法将被自动调用;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class A&#123;</div><div class="line">  public function __call($name,$arguments)&#123;</div><div class="line">     echo &quot;call of method is =&gt;&quot;.$name.&quot; &lt;br/&gt;&quot;;</div><div class="line">     echo &quot;arguments is&quot;.implode(&quot;,&quot;,$arguments).&quot;&lt;br/&gt;&quot;;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">$a = new A();</div><div class="line">$a-&gt;callMe(&quot;bac&quot;,&quot;123&quot;,&quot;www&quot;);</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<h5 id="类转换为字符串"><a href="#类转换为字符串" class="headerlink" title="类转换为字符串"></a>类转换为字符串</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">class A&#123;</div><div class="line">public $name;</div><div class="line">function __toString()&#123;</div><div class="line"> return (var_export($this,TRUE));</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">$a = new A();</div><div class="line">$a-&gt;name = &quot;zhangsan&quot;;</div><div class="line">$a-&gt;__toString();</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/29/SQL数据类型/" itemprop="url">
                   SQL数据类型
                 </a>
@@ -1416,127 +1557,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/28/SQL查询/" itemprop="url">
-                  SQL查询
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-28T17:29:35+08:00" content="2016-04-28">
-              2016-04-28
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/SQL/" itemprop="url" rel="index">
-                    <span itemprop="name">SQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/28/SQL查询/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/28/SQL查询/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="SQL注释"><a href="#SQL注释" class="headerlink" title="SQL注释"></a>SQL注释</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  --    行内注释</div><div class="line">/* */   多行注释</div></pre></td></tr></table></figure>
-<h4 id="SELECT"><a href="#SELECT" class="headerlink" title="SELECT"></a>SELECT</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div></pre></td><td class="code"><pre><div class="line"># 返回不同的值</div><div class="line">SELECT DISTINC name FROM person;</div><div class="line"></div><div class="line">特别注意：不能部分使用DISTINC，如, SELECT DISTINC name, age FROM person;查询结果显示name和age都不同的记录</div><div class="line"></div><div class="line"># 分页查询</div><div class="line">SELECT name, age FROM person LIMIT 1,4;</div><div class="line"></div><div class="line"># 排序检索数据</div><div class="line">SELECT name, age FROM person ORDER BY name DESC, age DESC;</div><div class="line"></div><div class="line"># 过滤查询</div><div class="line">SELECT name, age FROM person WHERE age BETWEEN 23 AND 30;</div><div class="line"></div><div class="line">## WHERE子句操作符</div><div class="line">    &lt;&gt;				不等于</div><div class="line">    !=				不等于</div><div class="line">    &lt;=				小于等于</div><div class="line">    &gt;=				大于等于</div><div class="line">    BETWEEN AND	    在指定两值之间</div><div class="line">    IS NULL 	    为NULL的值</div><div class="line">    OR				匹配任一条件的记录</div><div class="line">    IN				指定匹配清单的关键字，功能和OR相当,多个条件用逗号隔开如：IN(condition1,condition2)</div><div class="line">    NOT			    否定其后跟的所有条件</div><div class="line"></div><div class="line">特别注意：ORDER BY 应放于最后一条子语句，否则报错; 默认排序为升序ASC; DESC关键字只应用到直接位于其前面的列名。</div><div class="line"></div><div class="line"># 模糊查询</div><div class="line">SELECT name, age FROM person WHERE name LIKE &apos;张%&apos;;</div><div class="line"></div><div class="line">特别注意：</div><div class="line">%  	任意0个、1个、多个字符,可以匹配任何东西，除了NULL</div><div class="line">_	有且仅匹配一个字符</div><div class="line"></div><div class="line"></div><div class="line"># 字段使用别名</div><div class="line">SELECT name AS new_name,age FROM person;</div><div class="line"></div><div class="line"># 表使用别名</div><div class="line">SELECT cust_name,cust_contact FROM Customers AS C,Orders AS O WHERE C.cust_id = O.cust_id;</div><div class="line"></div><div class="line"># 分组</div><div class="line">SELECT age, name,COUNT(*) AS numbers FROM person GROUP BY age,name;</div><div class="line"></div><div class="line">特别注意：</div><div class="line">1、分组中如果包含具有NULL值的行，则NULL将作为一个分组返回，如果列中包含多个NULL，将它们分为同一组；</div><div class="line">2、除聚集计算外(如：COUNT()、MAX()等)，SELECT语句中的每一列都必须在GROUP BY 子句中给出；</div><div class="line">3、GROUP BY 子句可以包含任意数目的列</div><div class="line"></div><div class="line"># 分组过滤</div><div class="line">SELECT age, name, COUNT(*) AS numbers FROM person GROUP BY age,name HAVING COUNT(*) &gt; 2;</div><div class="line"></div><div class="line">特别注意：</div><div class="line">HAVING等同于WHERE，唯一的区别是，HAVING可用于分组过滤，WHERE不可以。WHERE是分组前的过滤，HAVING是分组后的过滤；</div><div class="line"></div><div class="line"># 子查询练习</div><div class="line">查询所有购买order_item = 1的用户信息；</div><div class="line">SELECT order_num FROM orderitems where order_item=1;</div><div class="line"></div><div class="line">Select cust_id from orders where order_num in (SELECT order_num FROM orderitems where order_item=1);</div><div class="line"></div><div class="line">SELECT cust_name,cust_address,cust_city FROM customer WHERE cust_id in (Select cust_id from orders where order_num in (SELECT order_num FROM orderitems where order_item=1));</div><div class="line"></div><div class="line"># 等值联结查询</div><div class="line">SELECT vend_name, prod_name, prod_price FROM Vendors, Products WHERE Vendors.vend_id = Products.vend_id;</div><div class="line"></div><div class="line">特别注意：联结两表时，实际要做的是将第一个表的每一行和第二个表的每一行进行配对;如果没有联结条件，检索出行的数目将是两个表行数的乘积；</div><div class="line"></div><div class="line"># 内联查询</div><div class="line">SELECT vend_name, prod_name, prod_price FROM Vendors INNER JOIN Products ON Vendors.vend_id = Products.vend_id;</div><div class="line"></div><div class="line">特别注意：内联条件用特定的ON而不是WHERE; 匹配两表都包含的记录，不包含列为NULL记录；</div><div class="line"></div><div class="line"># 自联结查询</div><div class="line">SELECT c1.cust_id,c1.cust_name,c1.cust_contact FROM Custormer AS c1,Custormer AS c2 WHERE c1.cust_name = c2.cust_name AND c2.cust_contact = &quot;JIM jones&quot;;</div><div class="line"></div><div class="line">特别注意：别忘了c1.cust_name = c2.cust_name的条件！两表联结时，检索出行的数目是两表行数的乘积；</div><div class="line"></div><div class="line"># 外联结查询</div><div class="line">左外联：SELECT c.cust_id,o.order_num FROM Custormers AS c LEFT OUTER JOIN Orders AS o ON c.cust_id = o.cust_id;</div><div class="line"></div><div class="line">右外联：SELECT c.cust_id,o.order_num FROM Custormers AS c RIGHT OUTER JOIN Orders AS o ON c.cust_id = o.cust_id;</div><div class="line"></div><div class="line">特别注意：外联包含没有关联的行，RIGHT或LEFT指定了包含其所有行的表,RIGHT指出使用右边表的所有行，LEFT则反之；且，如果包含匹配项为NULL的记录；</div><div class="line"></div><div class="line"># 带聚合函数的联结</div><div class="line">SELECT c.cust_id,COUNT(*) AS num FROM Customers AS c INNER JOIN Orders AS o ON c.cust_id = o.cust_id GROUP BY c.cust_id;</div><div class="line"></div><div class="line"># 组合查询</div><div class="line">SELECT cust_name,cust_city FROM Customers WHERE cust_name = &apos;张三&apos; UNION SELECT cust_name,cust_city FROM Customers WHERE cust_city = &quot;shangHai&quot;;</div><div class="line"></div><div class="line">等价于 SELECT cust_name,cust_city FROM Customers WHERE cust_name = &apos;张三&apos; OR cust_city = &apos;shangHai&apos;;</div><div class="line"></div><div class="line">特别注意：</div><div class="line">1、组合查询各个查询，查询列名应相同，且顺序也要一致；</div><div class="line">2、UNION必须由两条或以上的SELECT语句组成</div><div class="line">3、默认去除重复行，使用UNION ALL可以返回所有行</div></pre></td></tr></table></figure>
-<h1 id="总结回顾"><a href="#总结回顾" class="headerlink" title="总结回顾"></a>总结回顾</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># SELECT子句及其顺序</div><div class="line"></div><div class="line">SELECT		要返回的列或表达式</div><div class="line">FROM        从中检索数据的表</div><div class="line">WHERE	    行级过滤</div><div class="line">GROUP BY	分组说明</div><div class="line">HAVING		分组过滤</div><div class="line">ORDER BY	输出排序顺序</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1582,7 +1602,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-count">146</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

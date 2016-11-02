@@ -292,6 +292,183 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/24/SpringBoot集成Swagger/" itemprop="url">
+                  SpringBoot集成Swagger
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-24T22:50:57+08:00" content="2016-08-24">
+              2016-08-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/SpringBoot/" itemprop="url" rel="index">
+                    <span itemprop="name">SpringBoot</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/24/SpringBoot集成Swagger/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/24/SpringBoot集成Swagger/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Swagger是什么？"><a href="#Swagger是什么？" class="headerlink" title="Swagger是什么？"></a>Swagger是什么？</h3><p><code>swagger</code> 是最早也是最成熟的 API 接口设计工具。它可以使用 <code>json/yaml</code> 来描述 API 的接口，使用 <code>swagger</code> 来设计和描述 API 有很多好处：API 的文档化，API 的接口的可视化，各种语言的客户端类库的自动生成，甚至服务端代码也能够自动生成。包括代码生成工具在内的完整而成熟的工具链是 <code>swagger</code> 的杀手锏，也是众多 API 厂商优先选择 <code>swagger</code> 的一个重要因素。</p>
+<h3 id="实战集成Swagger"><a href="#实战集成Swagger" class="headerlink" title="实战集成Swagger"></a>实战集成Swagger</h3><p><strong>1、修改pom.xml，添加maven依赖</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">&lt;!--springboot--&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;1.4.0.RELEASE&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line"></div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;1.4.0.RELEASE&lt;/version&gt;</div><div class="line">	&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line"></div><div class="line">&lt;!--swagger--&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;io.springfox&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;2.5.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line"></div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;io.springfox&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;2.5.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<p><strong>2、添加Swagger配置类</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">@EnableSwagger2</div><div class="line">public class SwaggerConfig &#123;</div><div class="line">    /**</div><div class="line">     * 可以定义多个组，比如本类中定义把hello1和hello2区分开了</div><div class="line">     * （访问页面就可以看到效果了）</div><div class="line">     */</div><div class="line">    @Bean</div><div class="line">    public Docket helloApi1() &#123;</div><div class="line">        return new Docket(DocumentationType.SWAGGER_2)</div><div class="line">                .groupName(&quot;hello1&quot;)</div><div class="line">                .genericModelSubstitutes(DeferredResult.class)</div><div class="line">                .useDefaultResponseMessages(false)</div><div class="line">                .forCodeGeneration(true)</div><div class="line">                .pathMapping(&quot;/&quot;)// base，最终调用接口后会和paths拼接在一起</div><div class="line">                .select()</div><div class="line">                .paths(or(regex(&quot;/hello1/.*&quot;)))//过滤的接口</div><div class="line">                .build()</div><div class="line">                .apiInfo(getInfo1());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private ApiInfo getInfo1() &#123;</div><div class="line">        return new ApiInfo(&quot;标题 -- 记录点滴成长&quot;,</div><div class="line">                &quot;描述 -- 记录平时所学&quot;,</div><div class="line">                &quot;版本 -- 1.00&quot;,</div><div class="line">                &quot;网址 -- www.jianwl.com&quot;,</div><div class="line">                new Contact(&quot;jianwl --姓名&quot;, &quot;jianwl.com --url&quot;, &quot;soso_jwl@163.com--邮箱&quot;),</div><div class="line">                &quot;证书 -- no license&quot;,</div><div class="line">                &quot;证书链接 -- no&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public Docket helloApi2() &#123;</div><div class="line">        return new Docket(DocumentationType.SWAGGER_2)</div><div class="line">                .groupName(&quot;hello2&quot;)</div><div class="line">                .genericModelSubstitutes(DeferredResult.class)</div><div class="line">                .useDefaultResponseMessages(false)</div><div class="line">                .forCodeGeneration(true)</div><div class="line">                .pathMapping(&quot;/&quot;)// base，最终调用接口后会和paths拼接在一起</div><div class="line">                .select()</div><div class="line">                .paths(or(regex(&quot;/hello2/.*&quot;)))//过滤的接口</div><div class="line">                .build()</div><div class="line">                .apiInfo(getInfo2());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private ApiInfo getInfo2() &#123;</div><div class="line">        return new ApiInfo(&quot;标题 -- 记录点滴成长&quot;,</div><div class="line">                &quot;描述 -- 记录平时所学&quot;,</div><div class="line">                &quot;版本 -- 2.00&quot;,</div><div class="line">                &quot;网址 -- www.jianwl.com&quot;,</div><div class="line">                new Contact(&quot;jianwl --姓名&quot;, &quot;jianwl.com --url&quot;, &quot;soso_jwl@163.com--邮箱&quot;),</div><div class="line">                &quot;证书 -- no license&quot;,</div><div class="line">                &quot;证书链接 -- no&quot;);</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p><strong>创建Controller</strong></p>
+<p><code>HelloController1</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by jianweilin on 16/8/24.</div><div class="line"> */</div><div class="line">@Controller</div><div class="line">@RequestMapping(&quot;/hello1/api&quot;)</div><div class="line">public class HelloController1 &#123;</div><div class="line">    @ResponseBody</div><div class="line">    @RequestMapping(value = &quot;/put&quot;, method = RequestMethod.PUT, consumes = &quot;application/text&quot;, produces = &quot;application/text&quot;)</div><div class="line">    @ApiOperation(value = &quot;推送数据&quot;, notes = &quot;将BI数据推送到服务端&quot;)</div><div class="line">    public String push(@ApiParam(required = true, name = &quot;username&quot;, value = &quot;用户名&quot;) @RequestParam String username) &#123;</div><div class="line">        return &quot;push data to server&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @ResponseBody</div><div class="line">    @RequestMapping(value = &quot;/login&quot;, method = RequestMethod.POST, consumes = &quot;application/json&quot;, produces = &quot;application/text&quot;)</div><div class="line">    @ApiOperation(value = &quot;登录&quot;, notes = &quot;用户登录网站&quot;)</div><div class="line">    public String login(@ApiParam(required = true, name = &quot;user&quot;, value = &quot;用户对象&quot;) @RequestBody User user) &#123;</div><div class="line">        return &quot;login&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @ResponseBody</div><div class="line">    @RequestMapping(value = &quot;/user/list&quot;, method = RequestMethod.GET, produces = &quot;application/text&quot;)</div><div class="line">    @ApiOperation(value = &quot;获取信息&quot;, notes = &quot;获取用户信息&quot;)</div><div class="line">    public String list(@ApiParam(required = true, name = &quot;username&quot;, value = &quot;姓名&quot;) @RequestParam String username,</div><div class="line">                       @ApiParam(required = true, name = &quot;password&quot;, value = &quot;密码&quot;) @RequestParam String password,</div><div class="line">                       @ApiParam(required = true, name = &quot;address&quot;, value = &quot;地址&quot;) @RequestParam String address) &#123;</div><div class="line">        return username + &quot; : &quot; + password + &quot; : &quot; + address;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>HelloController2</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by jianweilin on 16/8/24.</div><div class="line"> */</div><div class="line">@Controller</div><div class="line">@RequestMapping(&quot;/hello2/api&quot;)</div><div class="line">public class HelloController2 &#123;</div><div class="line">    @ResponseBody</div><div class="line">    @RequestMapping(value = &quot;/put&quot;,method = RequestMethod.PUT,consumes = &quot;application/text&quot;)</div><div class="line">    @ApiOperation(value=&quot;推送数据&quot;,notes=&quot;将BI数据推送到服务端&quot;)</div><div class="line">    public String push(@ApiParam(required = true,name = &quot;username&quot;,value = &quot;用户名&quot;)</div><div class="line">                       @RequestParam String username)&#123;</div><div class="line">        return &quot;push data2 to server&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Swagger2</code>默认将所有的<code>Controller</code>中<code>RequestMapping</code>方法都会暴露出来，然而在实际开发中，我们并不一定所有API都体现出来，可以通过<code>@ApiIgnore</code>来解决，如果应用在<code>Controller</code>范围上，则当前<code>Controller</code>的所有方法都会被忽略。</p>
+<p>最后，启动<code>SpringBoot</code>服务，访问<code>http://localhost:8080/swagger-ui.html#/</code>就可以访问到swagger页面了。<img src="http://oc5a5l0a0.bkt.clouddn.com/16-8-25/98283651.jpg" alt=""></p>
+<h3 id="Swagger-常用注解"><a href="#Swagger-常用注解" class="headerlink" title="Swagger 常用注解"></a>Swagger 常用注解</h3><table>
+<thead>
+<tr>
+<th>注解</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@Api</code></td>
+<td><code>修饰整个类，描述Controller的作用</code></td>
+</tr>
+<tr>
+<td><code>@ApiOperation</code></td>
+<td><code>描述一个接口</code></td>
+</tr>
+<tr>
+<td><code>@ApiParam</code></td>
+<td><code>单个参数描述</code></td>
+</tr>
+<tr>
+<td><code>@ApiModel</code></td>
+<td><code>用对象来接受参数</code></td>
+</tr>
+<tr>
+<td><code>@ApiProperty</code></td>
+<td><code>用对象接受参数时，描述对象的一个字段</code></td>
+</tr>
+<tr>
+<td><code>@ApiResponses</code></td>
+<td><code>HTTP响应整体描述</code></td>
+</tr>
+<tr>
+<td><code>@ApiResponse</code></td>
+<td><code>HTTP响应其中一个描述</code></td>
+</tr>
+<tr>
+<td><code>ApiErrors</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>@ApiParamsImplicit</code></td>
+</tr>
+</tbody>
+</table>
+<p>未完待续…</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/22/ES6常见的坑/" itemprop="url">
                   ES6常见的坑
                 </a>
@@ -1814,155 +1991,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/18/Python入门篇/" itemprop="url">
-                  Python入门篇
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-18T12:18:35+08:00" content="2016-08-18">
-              2016-08-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/18/Python入门篇/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/18/Python入门篇/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="什么是Python"><a href="#什么是Python" class="headerlink" title="什么是Python?"></a>什么是Python?</h3><p>Python是一种解释型的、面向对象的、带有动态语义的高级程序设计语言。</p>
-<h3 id="Python相对Java的优劣之处"><a href="#Python相对Java的优劣之处" class="headerlink" title="Python相对Java的优劣之处"></a>Python相对Java的优劣之处</h3><p><strong>优点</strong></p>
-<ul>
-<li>Python作为动态语言更适合初学编程者，Python可以让初学者把精力集中在编程对象和思维方法上，而不用去担心语法、类型等等外在因素。</li>
-<li>Python清晰简洁的语法使得它调试起来比Java简单的多</li>
-<li>Python有一些Java没有的强大的架构，可以表达非常复杂的逻辑；比如<a href="http://www.scipy-lectures.org/advanced/advanced_python/" target="_blank" rel="external">Advanced Python Constructs</a></li>
-<li>Python有非常强大的支持异步的框架，如<a href="http://eventlet.net/" target="_blank" rel="external">Eventlet Networking Library</a>，而Java要实现这些功能要麻烦的多。</li>
-<li>Python作为脚本语言，更适合开发小的应用，而且极其适合在应用发展初期时用来做原型。</li>
-</ul>
-<p><strong>不足</strong></p>
-<ul>
-<li>由于是动态语言，所以比Java慢，可以想象一下，Python编译器对于没有类型的变量，需要一个个去check具体是什么类型所消耗的时间，Java相比起C++等等本来就不快，可想而知更慢的效果。</li>
-<li>Java很适合发展跨平台应用，而Python不适合</li>
-</ul>
-<h3 id="Python入门示例"><a href="#Python入门示例" class="headerlink" title="Python入门示例"></a>Python入门示例</h3><p><strong>创建列表</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">movies = [&quot;movies-1&quot;,1975,&quot;movies-2&quot;,1979,&quot;movies-3&quot;,1983]</div><div class="line">print(movies)</div></pre></td></tr></table></figure></p>
-<p>Python变量标识符没有类型，且列表可以包含混合类型的数据</p>
-<p><strong>遍历列表数据</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">movies = [&quot;movies-1&quot;,1975,&quot;movies-2&quot;,1979,&quot;movies-3&quot;,1983]</div><div class="line">for each_movies in movies :	</div><div class="line">    print(each_movies)</div></pre></td></tr></table></figure></p>
-<p>for循环的结构为<code>for 目标标识符  in  列表 :</code>  in将目标标识符和列表分开，冒号表示列表处理开始</p>
-<p><strong>定义函数</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 函数定义</div><div class="line">def print_arr(arrs) :</div><div class="line">	for arr in arrs :</div><div class="line">		if isinstance(arr,list) :</div><div class="line">			print_arr(arr)</div><div class="line">		else :</div><div class="line">			print(arr)</div><div class="line">            </div><div class="line"># 函数调用</div><div class="line">movies = [&quot;movies-1&quot;,&quot;movies-2&quot;,[&quot;movies-3&quot;,[&quot;movies-4&quot;,&quot;movies-5&quot;]]];</div><div class="line">print_arr(movies);</div></pre></td></tr></table></figure></p>
-<p>函数定义的结构<code>def 函数名 (参数) ：</code>，参数表是可选的，但括号不可少，括号后的冒号，表示函数代码组开始</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
-<li>标识符没有类型，用于表示数据对象的名字，但标识符所指示的数据对象有类型</li>
-<li>列表可以存放任意数据，且数据可以是混合类型</li>
-<li>isinstance() 用于判断一个标识符是否是指定的某个类型的数据对象。</li>
-<li>用def来定义一个函数</li>
-</ul>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="https://www.zhihu.com/question/23111456" target="_blank" rel="external">Python相比Java的优势和劣势</a></li>
-<li>Head First Python</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2008,7 +2036,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-count">146</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -292,6 +292,148 @@
             
               
                 
+                <a class="post-title-link" href="/2016/06/05/Simplest-SpringMVC教程/" itemprop="url">
+                  Simplest SpringMVC教程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-05T15:34:30+08:00" content="2016-06-05">
+              2016-06-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring-MVC/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring MVC</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/05/Simplest-SpringMVC教程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/05/Simplest-SpringMVC教程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h6 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h6><p>Spring MVC框架已经近1年没有接触了，以前的基础也忘的差不多了。既然如此，那就忘去过去所学Spring MVC的知识，一切重新学起。创建第一个Spring MVC项目，网上有很多教程，但感觉都过于复杂，也不够简单明了。</p>
+<h6 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h6><p>IntelliJ IDEA – (IDE)<br>Maven – (项目Jar包管理构建工具 3.2.x版本)<br>Tomcat – (Web容器 7.x版本)</p>
+<h6 id="操作流程"><a href="#操作流程" class="headerlink" title="操作流程"></a>操作流程</h6><p>1、创建Maven项目<br><img src="/images/创建maven项目.png" alt=""><br><img src="/images/创建maven项目02.png" alt=""><br><img src="/images/创建maven项目03.png" alt=""><br><img src="/images/maven配置.png" alt=""><br><img src="/images/创建maven项目04.png" alt=""><br>2、配置pom.xml文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;</div><div class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line">  &lt;groupId&gt;com.youzu&lt;/groupId&gt;</div><div class="line">  &lt;artifactId&gt;springmvc&lt;/artifactId&gt;</div><div class="line">  &lt;packaging&gt;war&lt;/packaging&gt;</div><div class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</div><div class="line">  &lt;name&gt;mvc-demo Maven Webapp&lt;/name&gt;</div><div class="line">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</div><div class="line"></div><div class="line">  &lt;dependencies&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;4.2.5.RELEASE&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;spring-aop&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;4.2.5.RELEASE&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;4.2.5.RELEASE&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;spring-web&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;4.2.5.RELEASE&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;jstl&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;1.2&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">      &lt;groupId&gt;commons-logging&lt;/groupId&gt;</div><div class="line">      &lt;artifactId&gt;commons-logging&lt;/artifactId&gt;</div><div class="line">      &lt;version&gt;1.1.3&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">  &lt;/dependencies&gt;</div><div class="line"></div><div class="line">  &lt;build&gt;</div><div class="line">      &lt;plugins&gt;</div><div class="line">        &lt;plugin&gt;</div><div class="line">          &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">          &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</div><div class="line">          &lt;configuration&gt;</div><div class="line">            &lt;source&gt;1.7&lt;/source&gt;</div><div class="line">            &lt;target&gt;1.7&lt;/target&gt;</div><div class="line">          &lt;/configuration&gt;</div><div class="line">        &lt;/plugin&gt;</div><div class="line">      &lt;/plugins&gt;</div><div class="line">  &lt;/build&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure></p>
+<p>3、新建Spring配置文件<code>/webapp/WEB-INF/springmvc-servlet.xml</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">	xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot; xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</div><div class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xsi:schemaLocation=&quot;</div><div class="line">        http://www.springframework.org/schema/beans     </div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">        http://www.springframework.org/schema/mvc </div><div class="line">        http://www.springframework.org/schema/mvc/spring-mvc.xsd</div><div class="line">        http://www.springframework.org/schema/context </div><div class="line">        http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;</div><div class="line"> </div><div class="line">	&lt;context:component-scan base-package=&quot;com.youzu.controller&quot; /&gt;</div><div class="line"> </div><div class="line">	&lt;bean id=&quot;viewResolver&quot;</div><div class="line">		class=&quot;org.springframework.web.servlet.view.UrlBasedViewResolver&quot;&gt;</div><div class="line">		&lt;property name=&quot;viewClass&quot;</div><div class="line">			value=&quot;org.springframework.web.servlet.view.JstlView&quot; /&gt;</div><div class="line">		&lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot; /&gt;</div><div class="line">		&lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot; /&gt;</div><div class="line">	&lt;/bean&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure></p>
+<p>在springmvc-servlet.xml配置文件中，我们定义了<code>&lt;context:component-scan&gt;</code>,这个配置允许spring扫描<code>com.youzu.controller</code>这个目录和其子目录下的所有注解,将注解类注册为Bean。同时定义了视图解析类viewResolver，这个类将会解析视图名(增加前缀<code>/WEB-INF/jsp/</code>和后缀<code>.jsp</code>)。<br>4、配置web.xml文件：webapp/WEB-INF/web.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot; version=&quot;3.0&quot;&gt;</div><div class="line">    &lt;display-name&gt;spring mvc&lt;/display-name&gt;</div><div class="line">    &lt;welcome-file-list&gt;</div><div class="line">        &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</div><div class="line">    &lt;/welcome-file-list&gt;</div><div class="line"></div><div class="line">    &lt;servlet&gt;</div><div class="line">        &lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;</div><div class="line">        &lt;servlet-class&gt;</div><div class="line">            org.springframework.web.servlet.DispatcherServlet</div><div class="line">        &lt;/servlet-class&gt;</div><div class="line">        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</div><div class="line">    &lt;/servlet&gt;</div><div class="line">    &lt;servlet-mapping&gt;</div><div class="line">        &lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;</div><div class="line">        &lt;url-pattern&gt;/&lt;/url-pattern&gt;</div><div class="line">    &lt;/servlet-mapping&gt;</div><div class="line">&lt;/web-app&gt;</div></pre></td></tr></table></figure></p>
+<p>特别注意在web.xml中定义了servlet-name,当DispatcherServlet初始化时，它将自动加载WEB-INF文件夹下文件名为[servlet-name]-servlet.xml的文件。即：本例中步骤3定义的springmvc-servlet.xml文件<br>5、创建StudentAction.class文件<code>com.youzu.controller.StudentAction.class</code></p>
+<ul>
+<li>在main文件夹下，新建一个名为“java”的文件夹<br><img src="/images/创建java文件夹.png" alt=""></li>
+<li>将java文件夹设为源文件目录<br><img src="/images/java设为源文件夹.png" alt=""></li>
+<li>在java文件夹下创建com.youzu.controller文件夹<br><img src="/images/创建文件夹.png" alt=""></li>
+<li>创建类StudentAction.class</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">package com.youzu.controller;</div><div class="line"></div><div class="line">import org.springframework.stereotype.Controller;</div><div class="line">import org.springframework.web.bind.annotation.RequestMapping;</div><div class="line">import org.springframework.web.servlet.ModelAndView;</div><div class="line"></div><div class="line">/**</div><div class="line"> * User: jianwl</div><div class="line"> * Date: 2016/6/5</div><div class="line"> * Time: 16:29</div><div class="line"> */</div><div class="line">@Controller</div><div class="line">public class StudentAction &#123;</div><div class="line">    @RequestMapping(&quot;/info&quot;)</div><div class="line">    public ModelAndView info()&#123;</div><div class="line">        String stuInfo = &quot;my name is zhangsan,i am 13 years old,i am come from china&quot;;</div><div class="line">        return new ModelAndView(&quot;info&quot;,&quot;stuInfo&quot;,stuInfo);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>@Controller的作用是，当spring扫描文件夹时，会将StudentAction视为Controller Bean类。<br>@RequestMapping的作用是，告知spring，当请求访问的URL地址以/info开头时，该控制器将会执行该请求。<br>6、创建info.jsp文件<code>/webapp/WEB-INF/jsp/info.jsp</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;title&gt;Spring MVC 教程&lt;/title&gt;</div><div class="line">    &lt;style type=&quot;text/css&quot;&gt;</div><div class="line">        body &#123;</div><div class="line">            background-image: url(&apos;http://crunchify.com/bg.png&apos;);</div><div class="line">        &#125;</div><div class="line">    &lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">$&#123;stuInfo&#125;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>7、maven打包<br><img src="/images/maven打包.png" alt=""><br>8、配置Tomcat</p>
+<ul>
+<li>编辑配置<br><img src="/images/配置tomcat01.png" alt=""></li>
+<li>新增本地Tomcat配置<br><img src="/images/配置tomcat02.png" alt=""></li>
+<li>Tomcat配置详情<br><img src="/images/配置tomcat03.png" alt=""></li>
+<li>在Tomcat中添加需要发布的war包<br><img src="/images/配置tomcat04.png" alt=""></li>
+<li>运行Tomcat<br><img src="/images/启动tomcat.png" alt=""></li>
+</ul>
+<p>9、浏览器成功访问/info地址：<code>localhost:8080/info</code><br><img src="/images/springmvc成功访问.png" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/06/04/Hexo博客的云端备份和迁移/" itemprop="url">
                   Hexo博客的云端备份和迁移
                 </a>
@@ -1451,146 +1593,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/10/Java设计模式之观察者模式/" itemprop="url">
-                  Java设计模式之观察者模式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-10T15:56:05+08:00" content="2016-05-10">
-              2016-05-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/10/Java设计模式之观察者模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/10/Java设计模式之观察者模式/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h6 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h6><p>观察者模式(ObservePattern),用于实时监测某些Object的动态，只要Object一改变，那么他的所有观察者Observer都会被通知到，之后观察者会根据Object的改变进行下一步操作。</p>
-<h6 id="问题的引出"><a href="#问题的引出" class="headerlink" title="问题的引出"></a>问题的引出</h6><p>要实现一个天气预报的功能，当天气的数据发生变化的时候，会实时的以三种形式来显示天气，当前天气情况、统计分析情况、天气预报。这里我们不管数据如何来，就假设我们已经能够获取到数据了，在程序中通过调用被观察的对象的notifyObserver()方法来通知所有观察者；</p>
-<h6 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h6><ol>
-<li>通过分析我们得出一个简单的结论，天气数据一旦更新，那么就要实时的改变显示，观察者模式可以很好的解决这种模型问题。</li>
-<li>既然确定观察者模型，就要定位出谁是观察者、谁是被观察者、这里有个简单的原则、观察者和被观察者之间的关系是多对一的关系，也就是说被观察者只有一个就是我们的天气数据信息，观察者则是三种要显示不同的终端;</li>
-<li>每个观察者都要动态的显示信息，所以我们应该</li>
-<li>考虑到可扩展性、低耦合性、灵活性和对扩展开放、对修改关闭的原则和面向接口编程，我们下面具体类的设计</li>
-<li>根据角色我们可以抽象三个接口：<br> a) 所有被观察者的接口 Subject<br> b) 所有观察者的接口 Observer<br> c) 显示信息的接口 DisplayElement</li>
-<li>Subject拥有三个关于Observer的方法、注册、移除和通知Observer的方法(观察者肯定要和被观察者集合起来)</li>
-<li>对于Observer肯定要有一个udpate方法，一旦监测要Subject有变动，就要更新信息，所以还要实现DisplayElement接口。</li>
-</ol>
-<h6 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h6><p>1、设计Subject接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface Subject &#123;</div><div class="line">    public void registerObserver(Observer observer);</div><div class="line">    public void removeObserver(Observer observer);</div><div class="line">    public void notifyObserver();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>2、设计Observer接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface Observer &#123;</div><div class="line">    public void update(float temperature,float humidity,float pressure);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>3、设计DisplayElement接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface DisplayElement&#123;</div><div class="line"> 	public void display();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>4、Subject接口的被观察者  — WeatherDate<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">public class WeatherDate implements Subject &#123;</div><div class="line">    private List&lt;Observer&gt; observers = new ArrayList&lt;&gt;();</div><div class="line">    private float temperate;</div><div class="line">    private float humidity;</div><div class="line">    private float pressure;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void registerObserver(Observer observer) &#123;</div><div class="line">        observers.add(observer);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void removeObserver(Observer observer) &#123;</div><div class="line">        int index = observers.indexOf(observer);</div><div class="line">        if(index &gt; 0)&#123;</div><div class="line">            observers.remove(observer);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void notifyObserver() &#123;</div><div class="line">        for(int i=0; i &lt; observers.size(); i++)&#123;</div><div class="line">            Observer o = (Observer) observers.get(i);</div><div class="line">            o.update(temperate,humidity,pressure);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 模仿数据变动时，自动触发notifyObserver函数</div><div class="line">     */</div><div class="line">    public void measurementsChanged()&#123;</div><div class="line">        notifyObserver();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 模仿数据变动、即当我们调用这个方法时就说明数据有变化，这样所有的观察者都会被通知；</div><div class="line">     */</div><div class="line">    public void setMeasurements(float temperate,float humidity,float pressure)&#123;</div><div class="line">        this.temperate = temperate;</div><div class="line">        this.humidity = humidity;</div><div class="line">        this.pressure = pressure;</div><div class="line">        measurementsChanged();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>5、观察者Observer的具体实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public class CurrentConditionDisplay implements DisplayElement,Observer &#123;</div><div class="line">    private float temperature;</div><div class="line">    private float humidity;</div><div class="line">    private float pressure;</div><div class="line">    private Subject weatherDate;</div><div class="line"></div><div class="line">    public CurrentConditionDisplay(Subject weatherDate)&#123;</div><div class="line">        this.weatherDate = weatherDate;</div><div class="line">        this.weatherDate.registerObserver(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void display() &#123;</div><div class="line">        System.out.println( CurrentConditionDisplay.class.getName() + &quot; temperature = &quot; + temperature + &quot;  humidity =   &quot; + humidity + &quot; pressure = &quot; + pressure);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void update(float temperature, float humidity, float pressure) &#123;</div><div class="line">        this.temperature = temperature;</div><div class="line">        this.humidity = humidity;</div><div class="line">        this.pressure = pressure;</div><div class="line">        display();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>6、ForecastConditionDisplay 与CurrentConditionDisplay实现类似<br>7、Client测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        WeatherDate subject = new WeatherDate();</div><div class="line"></div><div class="line">        ForecastConditionDisplay condition1 = new ForecastConditionDisplay(subject);</div><div class="line">        CurrentConditionDisplay condition2 = new CurrentConditionDisplay(subject);</div><div class="line">        subject.setMeasurements(10,20,30);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h6 id="Java内置观察者模式"><a href="#Java内置观察者模式" class="headerlink" title="Java内置观察者模式"></a>Java内置观察者模式</h6><p>WeatherData类似于自己实现观察者模式中的的Subject的具体实现，继承了java提供的java.util.Observable，Observable封装了之前subject提供的所有方法;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">import java.util.Observable;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Subject</div><div class="line"> * User: jianwl</div><div class="line"> * Date: 2016/5/11</div><div class="line"> * Time: 11:16</div><div class="line"> */</div><div class="line">public class WeatherData extends Observable&#123;</div><div class="line">    private float temperature;</div><div class="line">    private float humidity;</div><div class="line">    private float pressure;</div><div class="line"></div><div class="line">    public  WeatherData()&#123;&#125;</div><div class="line"></div><div class="line">    public void messureChanged()&#123;</div><div class="line">        setChanged();</div><div class="line">        notifyObservers();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public  void setMessurements(float temperature,float humidity,float pressure)&#123;</div><div class="line">        this.temperature = temperature;</div><div class="line">        this.humidity = humidity;</div><div class="line">        this.pressure = pressure;</div><div class="line">        messureChanged();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public float getTemperature() &#123;</div><div class="line">        return temperature;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public float getHumidity() &#123;</div><div class="line">        return humidity;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public float getPressure() &#123;</div><div class="line">        return pressure;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>CurrentConditionsDisplay,类似于自己实现观察者模式中的Observer的具体实现，实现了java提供的java.util.Observer的接口和另一个自己创建的DisplayElement接口;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">public interface DisplayElement &#123;</div><div class="line">    public void display();</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">import java.util.Observable;</div><div class="line">import java.util.Observer;</div><div class="line"></div><div class="line">/**</div><div class="line"> * User: jianwl</div><div class="line"> * Date: 2016/5/11</div><div class="line"> * Time: 11:23</div><div class="line"> */</div><div class="line">public class CurrentConditionsDisplay implements Observer,DisplayElement &#123;</div><div class="line">    Observable observable;</div><div class="line">    private float temperature;</div><div class="line">    private float humidity;</div><div class="line"></div><div class="line">    public CurrentConditionsDisplay(Observable observable) &#123;</div><div class="line">        this.observable = observable;</div><div class="line">        observable.addObserver(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void display() &#123;</div><div class="line">        System.out.println(&quot;CurrentConditionsDisplay  temperature = &quot; + temperature + &quot; humidity = &quot; + humidity );</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void update(Observable o, Object arg) &#123;</div><div class="line">        if(o instanceof WeatherData)&#123;</div><div class="line">            WeatherData weatherData = (WeatherData)o;</div><div class="line">            this.temperature = weatherData.getTemperature();</div><div class="line">            this.humidity = weatherData.getHumidity();</div><div class="line">            display();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>测试Java内置的观察者模式,XFireConditionsDisplay、ForeConditionsDisplay这两个类的实现和CurrentConditionsDisplay类似;<br>同时通过测试结果可知，Java内置的观察者模式，通知的顺序是先入后出的；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line">    //通知的顺序是先入后出的；</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        WeatherData weatherData = new WeatherData();</div><div class="line">        CurrentConditionsDisplay condition1 = new CurrentConditionsDisplay(weatherData);</div><div class="line"></div><div class="line">        XFireConditionsDisplay condition2 = new XFireConditionsDisplay(weatherData);</div><div class="line">        ForeConditionsDisplay condition3 = new ForeConditionsDisplay(weatherData);</div><div class="line"></div><div class="line">        weatherData.setMessurements(22,11,11);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h6 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h6><p>Java内置的观察者模式有什么问题？<br>1、Observable是一个“类”，你必须设计一个类继承它，如果某类想同时具有Observable类和另一个超类的行为，就会陷入两难，毕竟Java不支持多重继承。限制了Observable的复用的能力；<br>2、Observable将关键的方法保护起来了，setChanged()方法被保护起来了（被定义成protected）,意味着除非你继承自Obserable，否则你无法创建Obserable实例并组合到自己的对象中来；</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1636,7 +1638,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-count">146</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

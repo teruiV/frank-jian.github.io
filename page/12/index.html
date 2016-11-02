@@ -292,6 +292,130 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/04/PHP数组/" itemprop="url">
+                  PHP数组
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-04T09:59:30+08:00" content="2016-05-04">
+              2016-05-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/04/PHP数组/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/04/PHP数组/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="创建数组"><a href="#创建数组" class="headerlink" title="创建数组"></a>创建数组</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">//初始化数组</div><div class="line">$products = array(&apos;tires&apos;,&apos;oil&apos;,&apos;spark&apos;);</div><div class="line">//初始化关联数组</div><div class="line">$prices = array(&apos;tires&apos;=&gt;100,&apos;oil&apos;=&gt;10,&apos;spark&apos;=&gt;4);</div><div class="line">foreach($products as $product)&#123;</div><div class="line">  echo &quot;product = &quot; . $product. &quot; - price = &quot; . $prices[$product] . &quot;&lt;/br&gt; &quot;;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h5 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">//初始化数组</div><div class="line">$products = array(&apos;tires&apos;,&apos;oil&apos;,&apos;spark&apos;);</div><div class="line">//初始化关联数组</div><div class="line">$prices = array(&apos;tires&apos;=&gt;100,&apos;oil&apos;=&gt;10,&apos;spark&apos;=&gt;4);</div><div class="line"></div><div class="line">#关系型数组循环方式1</div><div class="line">while(list($product,$price) = each($prices)) &#123;</div><div class="line">  echo &quot;(1) - $product - $price &lt;/br&gt;&quot;;</div><div class="line">&#125;</div><div class="line">#关系型数组循环方式2</div><div class="line">foreach($prices as $key =&gt; $value) &#123;</div><div class="line">  echo &quot; (2) - &quot;. $key.&quot; - &quot;.$value.&quot; &lt;/br&gt;&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#关系型数组循环方式3</div><div class="line">reset($prices);</div><div class="line">while($element = each($prices))&#123;</div><div class="line">   echo &quot; (3)- &quot;. $element[&apos;key&apos;].&apos; - &apos; .$element[&apos;value&apos;].&apos;&lt;/br&gt;&apos;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#特别注意，使用each函数将记录当前元素，如果脚本中两次使用该数组，应该使用reset（）重置元素至开始处</div><div class="line">reset($prices);</div><div class="line">while($element = each($prices))&#123;</div><div class="line">   echo &quot; (4) -&quot;. $element[&apos;key&apos;].&apos; - &apos; . $element[&apos;value&apos;].&apos;&lt;/br&gt;&apos;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"># 数组循环</div><div class="line">foreach($products as $product)&#123;</div><div class="line">  echo &quot;[1] - product = &quot;.$product .&quot;&lt;/br&gt;&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">$products = array(</div><div class="line">	array(&apos;code&apos; =&gt;&apos;CODE&apos;),</div><div class="line">    array(&quot;price&quot;=&gt;10)</div><div class="line">);</div><div class="line"></div><div class="line">for($row = 0; $row &lt; 3; $row ++) &#123;</div><div class="line">   while( list($key,$value) = each($products[$row])) &#123;</div><div class="line">   		echo $key .&quot;  - &quot; .$value .&quot;&lt;/br&gt;&quot;;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>数组排序<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$products = array(&apos;fruit&apos;,&apos;apple&apos;,&apos;banana&apos;);</div><div class="line">$prices = array(100,79,88);</div><div class="line"></div><div class="line">#字符串升序</div><div class="line">sort($products);</div><div class="line">foreach($products as $product)&#123;</div><div class="line"> echo  $product.&quot; &quot;;</div><div class="line">&#125;</div><div class="line">echo &quot;&lt;/br&gt;&quot;;</div><div class="line"></div><div class="line">#数字升序</div><div class="line">sort($prices);</div><div class="line">foreach($prices as $price)&#123;</div><div class="line">  echo $price.&quot; &quot; ;</div><div class="line">&#125;</div><div class="line"># 反向排序 rsort($products);</div><div class="line"></div><div class="line">echo &quot;&lt;/br&gt;&quot;;</div><div class="line"></div><div class="line">#关联数组排序</div><div class="line">$prices = array(&apos;fruit&apos;=&gt; 5,&apos;apple&apos;=&gt;20,&apos;banana&apos;=&gt;3);</div><div class="line"></div><div class="line">#按价格升序排序</div><div class="line">asort($prices);</div><div class="line">while(list($product,$price) = each($prices))&#123;</div><div class="line">  echo $product . &apos; - &apos; .$price . &quot;&lt;/br&gt;&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#按水果名升序排序</div><div class="line">ksort($prices);</div><div class="line">while(list($product,$price) = each($prices))&#123;</div><div class="line">  echo $product . &apos; - &apos; .$price . &quot;&lt;/br&gt;&quot;;</div><div class="line">&#125;</div><div class="line">#降序排 arsort($price)、 krsort($price)</div><div class="line"></div><div class="line">echo &quot;&lt;==&gt;&lt;/br&gt;&quot;;</div><div class="line">#多维数组排序,按价格升序</div><div class="line">$products = array(</div><div class="line">array(&apos;fruit&apos;,&apos;FRUIT&apos;,20),</div><div class="line">array(&apos;apple&apos;,&apos;APPLE&apos;,5),</div><div class="line">array(&apos;banana&apos;,&apos;BANANA&apos;,3)</div><div class="line">);</div><div class="line">function compare($x,$y) &#123;</div><div class="line">  if($x[2] == $y[2])&#123;</div><div class="line">    return 0;</div><div class="line">  &#125; else if($x[2] &lt; $y[2])&#123;</div><div class="line">    return -1;</div><div class="line">  &#125; else &#123;</div><div class="line">    return 1;</div><div class="line"> &#125;</div><div class="line">&#125;</div><div class="line">usort($products,&apos;compare&apos;);</div><div class="line">for($row = 0;$row &lt; 3;$row ++)&#123;</div><div class="line">for($column = 0; $column &lt; 3; $column ++)&#123;</div><div class="line">    echo $products[$row][$column] . &apos; &apos;;</div><div class="line">  &#125;</div><div class="line">echo &quot;&lt;/br&gt;&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#对数组重新排序</div><div class="line">$numbers = array(1,2,3,4,5,6,7,8,9);</div><div class="line">#对数组重新排序,应用场景每次登陆时，看到不一样的三张图片;</div><div class="line">shuffle($numbers);</div><div class="line">foreach($numbers as $number)&#123;</div><div class="line"> echo $number.&quot; &quot;;</div><div class="line">&#125;</div><div class="line">echo &quot;&lt;/br&gt;&quot;;</div><div class="line">#对数组反序</div><div class="line">$numbers = array(1,3,5,7,4);</div><div class="line">$numbers = array_reverse($numbers);</div><div class="line">foreach($numbers as $number)&#123;</div><div class="line"> echo $number.&apos; &apos;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">echo &quot;&lt;/br&gt;&quot;;</div><div class="line">#产生1-10,步长为2，数组;</div><div class="line">$numbers = range(1,10,2);</div><div class="line">foreach($numbers as $number)&#123;</div><div class="line"> echo $number.&apos; &apos;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">echo &quot;&lt;/br&gt;&quot;;</div><div class="line">$products = file(&quot;./fruit.txt&quot;);</div><div class="line">echo &quot;count = &quot;. count($products).&apos;&lt;/br&gt;&apos;;</div><div class="line">foreach($products as $product)&#123;</div><div class="line">   #分割字符串</div><div class="line">   $array = explode(&quot;\t&quot;,$product);</div><div class="line">   echo &apos;price = &apos;.$array[2].&apos;&lt;/br&gt;&apos;;</div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">#对每个元素应用任何函数</div><div class="line">$numbers = array(1,2,3,4);</div><div class="line">function my_print($value)&#123;</div><div class="line">  echo &quot;$value &lt;br/&gt;&quot;;</div><div class="line">&#125;</div><div class="line">array_walk($numbers,&apos;my_print&apos;);</div><div class="line"></div><div class="line">#统计数组元素个数count\sizeof()</div><div class="line">$array = array(1,2,3,2,1,1,1,1,1,1,6,7);</div><div class="line">echo &quot;count = &quot; . count($array).&apos; sizeof = &apos; .sizeof($array).&quot;&lt;/br&gt;&quot;;</div><div class="line"></div><div class="line">#统计数组中，每个元素出现的次数;</div><div class="line">$array = array_count_values($array);</div><div class="line">while(list($key,$value) = each($array))&#123;</div><div class="line">  echo $key . &apos; - &apos;.$value.&quot;&lt;/br&gt;&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#将数组转换成标量变量，输出变量的名称，必须是数组中变量的名称；</div><div class="line">$products = array(&apos;apple&apos;=&gt;5,&apos;banana&apos;=&gt;3);</div><div class="line">extract($products,EXTR_OVERWRITE);</div><div class="line">echo &quot;apple_price = $apple , banana_price = $banana&quot;;</div><div class="line"></div><div class="line">extract($products,EXTR_PREFIX_ALL,&quot;my_prefix&quot;);</div><div class="line">echo &quot;apple_price = $my_prefix_apple,banana_price = $my_prefix_banana&quot;;</div><div class="line"></div><div class="line">#extract_type常用值</div><div class="line">#EXTR_OVERWRITE 当关键字发生冲突时，覆盖已有的关键字；</div><div class="line">#EXTR_PREFIX_ALL 给关键字加前缀;</div><div class="line"></div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<h5 id="踩坑提示"><a href="#踩坑提示" class="headerlink" title="踩坑提示"></a>踩坑提示</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">一行代码结束，别忘了分号（；）</div><div class="line">引用变量，别忘了$</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/04/PHP读写文件/" itemprop="url">
                   PHP读写文件
                 </a>
@@ -1440,147 +1564,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/03/PHP面向对象基础知识/" itemprop="url">
-                  PHP面向对象基础知识
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-03T09:33:00+08:00" content="2016-05-03">
-              2016-05-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/03/PHP面向对象基础知识/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/03/PHP面向对象基础知识/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h5 id="类"><a href="#类" class="headerlink" title="类"></a>类</h5><p>对象直接彼此互不相同，但具有一些共同点的对象集合</p>
-<h5 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h5><p>举个例子，我的自行车可以被认为自行车类的一个对象，他拥有所有自行车的共同特征；</p>
-<h5 id="多态性"><a href="#多态性" class="headerlink" title="多态性"></a>多态性</h5><p>不同的类对同一个操作可以有不同的行为；</p>
-<h5 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h5><p>在已有类的基础上创建新类，新类包含已有类的所有的方法和属性且可以添加新的方法；PHP中只支持单重继承类，不支持多重继承类；要实现多次继承可以通过接口；</p>
-<h5 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h5><p>初始化对象和属性,其名称必须是 __constructor().<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">class classname</div><div class="line">	function __construct($param)&#123;</div><div class="line">       echo &quot;Constructor called with parameter&quot;.$param.&quot;&lt;/br&gt;&quot;;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<h5 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h5><p>在销毁一个类之前执行的操作，在类的引用被重置或者超出作用域时<strong>自动发生</strong>。</p>
-<h5 id="访问权限"><a href="#访问权限" class="headerlink" title="访问权限"></a>访问权限</h5><ul>
-<li>public ,设置为public的属性和方法，可以在类的内部和外部使用；</li>
-<li>private,设置为private的属性和方法，只能在类的内部进行访问,方法和属性将不会被继承；</li>
-<li>protected,设置为protected的属性和方法，在类的子类和类的内部中可以进行访问；<br>注：未指明方法默认为public权限，属性一定要声明访问权限否则会报错;</li>
-</ul>
-<h5 id="final关键字"><a href="#final关键字" class="headerlink" title="final关键字"></a>final关键字</h5><ul>
-<li>在函数前加final，这个函数将不能被在子类中被重载；</li>
-<li>在类前加final，这个类将不能被继承;</li>
-</ul>
-<h5 id="Per-class常量"><a href="#Per-class常量" class="headerlink" title="Per-class常量"></a>Per-class常量</h5><p>使用操作符::指定常量所属的类来访问Per-class变量;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">  class Math&#123;</div><div class="line">  	const pi = 3.14;</div><div class="line">  &#125;</div><div class="line">  echo &quot;Math :: pi = &quot;.Math::pi.&quot;\n&quot;;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<h5 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h5><p>在方法前添加static关键字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class Math&#123;</div><div class="line">   static function squared($input)&#123;</div><div class="line">   	return $input *$input;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">echo Math::squared(8);</div></pre></td></tr></table></figure></p>
-<h5 id="检查类的类型和类型提示"><a href="#检查类的类型和类型提示" class="headerlink" title="检查类的类型和类型提示"></a>检查类的类型和类型提示</h5><p>instanceof可以检查一个对象是否是特定类的实例;是否实现了某个接口；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class A&#123;</div><div class="line"> public function method1()&#123;</div><div class="line">   echo &quot;method1&quot;;</div><div class="line"> &#125;</div><div class="line">&#125;</div><div class="line">interface C &#123;</div><div class="line">  public function method3();</div><div class="line">&#125;</div><div class="line"></div><div class="line">class B extends A implements C&#123;</div><div class="line"> function method2()&#123;</div><div class="line">    echo &quot;method2&quot;;</div><div class="line"> &#125;</div><div class="line"> function method3()&#123;</div><div class="line">     echo &quot;method3&quot;;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$b = new B();</div><div class="line">$a = new A();</div><div class="line"></div><div class="line">if($b instanceof A)&#123;</div><div class="line">   echo &quot;\$a is an object of B &lt;br/&gt;&quot;;</div><div class="line"></div><div class="line">&#125;else&#123;</div><div class="line">   echo &quot;\$a is not an object of B&lt;br/&gt;&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">if($b instanceof C)&#123;</div><div class="line">   echo &quot;\$b implements interface c&quot;;</div><div class="line">&#125;else &#123;</div><div class="line">   echo &quot;\$b don&apos;t implements interface c&quot;;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<h5 id="类提示的思想"><a href="#类提示的思想" class="headerlink" title="类提示的思想"></a>类提示的思想</h5><p>指定参数传入的类型，如果不是传入该类型参数将报错；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">function check_hint(B $someclass)&#123;&#125;; //如果传入的参数类型不是B的实例，将报错;</div></pre></td></tr></table></figure></p>
-<h5 id="延迟静态绑定"><a href="#延迟静态绑定" class="headerlink" title="延迟静态绑定"></a>延迟静态绑定</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//输出的结果为 who method of class B;</div><div class="line">&lt;?php</div><div class="line">class A&#123;</div><div class="line">   public static function who()&#123;</div><div class="line">     echo &quot;who method of class A&quot;;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   public static function test()&#123;</div><div class="line">     echo static::who(); //here comes later static binding;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class B extends A&#123;</div><div class="line">   public static function who()&#123;</div><div class="line">     echo &quot;who method of class B&quot;;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">B::test();</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-<h5 id="call方法"><a href="#call方法" class="headerlink" title="call方法"></a>call方法</h5><p> call方法用来监控一个对象中的其他方法，如果试着调用一个对象中不存在或被权限控制中的方法，__call方法将被自动调用;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class A&#123;</div><div class="line">  public function __call($name,$arguments)&#123;</div><div class="line">     echo &quot;call of method is =&gt;&quot;.$name.&quot; &lt;br/&gt;&quot;;</div><div class="line">     echo &quot;arguments is&quot;.implode(&quot;,&quot;,$arguments).&quot;&lt;br/&gt;&quot;;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">$a = new A();</div><div class="line">$a-&gt;callMe(&quot;bac&quot;,&quot;123&quot;,&quot;www&quot;);</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<h5 id="类转换为字符串"><a href="#类转换为字符串" class="headerlink" title="类转换为字符串"></a>类转换为字符串</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">class A&#123;</div><div class="line">public $name;</div><div class="line">function __toString()&#123;</div><div class="line"> return (var_export($this,TRUE));</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">$a = new A();</div><div class="line">$a-&gt;name = &quot;zhangsan&quot;;</div><div class="line">$a-&gt;__toString();</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1626,7 +1609,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-count">146</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

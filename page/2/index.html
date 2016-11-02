@@ -292,6 +292,174 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/17/Java8之HashMap新特性/" itemprop="url">
+                  Java8之HashMap新特性
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-17T11:11:48+08:00" content="2016-10-17">
+              2016-10-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/17/Java8之HashMap新特性/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/17/Java8之HashMap新特性/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><code>简介</code></p>
+<p><code>Hash table</code>也是基于<code>Map接口</code>实现的，功能与<code>HashMap</code>基本相似，不同的是<code>HashMap</code>允许key和value插入空值，且<code>HashMap</code>是一个线程不安全类。</p>
+<p><code>性能</code></p>
+<p><code>HashMap</code>影响其性能的有两个参数：初始化容量(<code>initial capacity</code>)和负载因子(<code>load factor</code>)。初始化容量是哈希表创建时的容量。负载因子决定了哈希表充分哈希的比例多大时，自动扩容。当哈希表中的数量大于负载因子乘以哈希表的容量时，哈希表将扩容并重新哈希已存入的数据。</p>
+<p>默认负载因子是<code>0.75</code>是时间和空间成本的权衡比较好的一个平衡点。那负载因子为何是<code>0.75</code>？增大负载因子有什么影响？ 增大负载因子会降低空间开销，但提高查找成本（体现HashMap类的操作，包括get和put)。后文会举例说明。</p>
+<p><code>如何提高性能</code></p>
+<p>预估向<code>HashMap</code>塞的数量来设置初始容量，尽可能减少重新哈希(<code>rehash</code>)的操作，如果初始化容量大于最大条目数<code>除以</code>负载因子，重新哈希操作(<code>rehash</code>)将不会发生。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1、无设置初始化容量 VS 设置初始化容量</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_001() &#123;</div><div class="line">    long start = System.currentTimeMillis();</div><div class="line">    Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();</div><div class="line">    for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">        map.put(String.valueOf(i), i);</div><div class="line">    &#125;</div><div class="line">    System.out.println(&quot;not init capacity =&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Test</div><div class="line">public void test_002() &#123;</div><div class="line">    long start = System.currentTimeMillis();</div><div class="line">    Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;(20560000);</div><div class="line">    for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">        map.put(String.valueOf(i), i);</div><div class="line">    &#125;</div><div class="line">    System.out.println(&quot;init capacity=&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%8812.32.06.png" alt=""></p>
+<p>很明显，设置初始化容量之后的效率会更高。</p>
+<p><strong>2、默认负载因子(0.75f)  VS 设置更高的负载因子</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line"> public void test_002() &#123;</div><div class="line">     long start = System.currentTimeMillis();</div><div class="line">     Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;(20560000, 075f);</div><div class="line">     for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">         map.put(String.valueOf(i), i);</div><div class="line">     &#125;</div><div class="line">     System.out.println(&quot;default load capacity=&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> @Test</div><div class="line"> public void test_0021() &#123;</div><div class="line">     long start = System.currentTimeMillis();</div><div class="line">     Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;(20560000, 0.9f);</div><div class="line">     for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">         map.put(String.valueOf(i), i);</div><div class="line">     &#125;</div><div class="line">     System.out.println(&quot;0.9 load capacity =&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%8812.55.36.png" alt=""></p>
+<p>很明显，增大负载因子后，效率变低。</p>
+<p><strong>3、compute方法</strong></p>
+<p><code>作用：</code>新增数据时，若<code>Map</code>中已存在该Key,可以对Value进行操作。</p>
+<p><code>场景：</code>统计一个数字出现的次数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_011() &#123;</div><div class="line">    List&lt;Integer&gt; list = Arrays.asList(1, 1, 1, 2, 3, 4, 4, 5, 5, 8);</div><div class="line">    Map&lt;Integer, Integer&gt; numCounts = new HashMap&lt;&gt;();</div><div class="line"></div><div class="line">    list.stream().forEach(num -&gt; &#123;</div><div class="line">        if (numCounts.containsKey(num)) &#123;</div><div class="line">            numCounts.compute(num, (k, v) -&gt; (v != null) ? v = v + 1 : v);</div><div class="line">        &#125; else &#123;</div><div class="line">            numCounts.put(num, 1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    </div><div class="line">    numCounts.forEach((k, v) -&gt; System.out.println(&quot;key -&gt; &quot; + k + &quot; value -&gt; &quot; + v));</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.22.00.png" alt=""></p>
+<p><strong>4、遍历forEach</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_006() &#123;</div><div class="line">    Map&lt;String, String&gt; map = new HashMap&lt;&gt;(16, 0.75f);</div><div class="line">    map.put(&quot;1&quot;, &quot;1&quot;);</div><div class="line">    map.put(&quot;2&quot;, &quot;2&quot;);</div><div class="line">    map.put(&quot;3&quot;, &quot;3&quot;);</div><div class="line">    map.forEach((k, v) -&gt; System.out.println(&quot; key -&gt; &quot; + k + &quot; value -&gt; &quot; + v));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.24.14.png" alt=""></p>
+<p><strong>5、合并merge</strong></p>
+<p><code>作用：</code>新增数据，当存在该key，则对该value做处理，反之则新增数据。</p>
+<p><code>场景：</code>统计一个数字出现的次数；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> @Test</div><div class="line">public void test_012() &#123;</div><div class="line">    List&lt;Integer&gt; list = Arrays.asList(1, 1, 1, 2, 3, 4, 4, 5, 5, 8);</div><div class="line">    Map&lt;Integer, Integer&gt; numCounts = new HashMap&lt;&gt;();</div><div class="line"></div><div class="line">    list.stream().forEach(num -&gt; &#123;</div><div class="line">        numCounts.merge(num,1,Integer::sum);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    numCounts.forEach((k, v) -&gt; System.out.println(&quot;key -&gt; &quot; + k + &quot; value -&gt; &quot; + v));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.22.00.png" alt=""></p>
+<p><strong>6、获取所有键值values()</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_008() &#123;</div><div class="line">    Map&lt;String, String&gt; map = new HashMap&lt;&gt;(16, 0.75f);</div><div class="line">    map.put(&quot;1&quot;, &quot;1&quot;);</div><div class="line">    map.put(&quot;2&quot;, &quot;2&quot;);</div><div class="line">    map.put(&quot;3&quot;, &quot;Oh!&quot;);</div><div class="line">    System.out.println(JSON.toJSON(map.values()));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.36.30.png" alt=""></p>
+<p><strong>7、按键值排序顺序或逆序</strong></p>
+<p><code>用LinkedHashMap排序</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_013()&#123;</div><div class="line">    Map&lt;String,Double&gt; map = new LinkedHashMap&lt;&gt;();</div><div class="line">    Map&lt;String,Double&gt; sortedMapA = new LinkedHashMap&lt;&gt;();</div><div class="line">    Map&lt;String,Double&gt; sortedMapB = new LinkedHashMap&lt;&gt;();</div><div class="line">    map.put(&quot;1&quot;,1.0);</div><div class="line">    map.put(&quot;4&quot;,4.0);</div><div class="line">    map.put(&quot;3&quot;,3.0);</div><div class="line">    map.put(&quot;2&quot;,2.0);</div><div class="line">    map.put(&quot;5&quot;,5.0);</div><div class="line">    </div><div class="line">    map.entrySet().stream().sorted(Map.Entry.&lt;String,Double&gt;comparingByValue().reversed()).forEachOrdered(entry -&gt; sortedMapA.put(entry.getKey(),entry.getValue()));</div><div class="line">    map.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEachOrdered(entry -&gt; sortedMapB.put(entry.getKey(),entry.getValue()));</div><div class="line"></div><div class="line">    // 逆序</div><div class="line">    System.out.println(sortedMapA);</div><div class="line"></div><div class="line">    // 顺序</div><div class="line">    System.out.println(sortedMapB);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-20/30575157.jpg" alt=""></p>
+<p>但是….如果用<code>HashMap</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-20/60385941.jpg" alt=""></p>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-20/71588571.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>JAVA8官方文档之HashMap</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/17/分享「代码家」的学习过程和学习方法/" itemprop="url">
                   分享「代码家」的学习过程和学习方法
                 </a>
@@ -1773,202 +1941,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/29/天天写「业务代码」，如何成为「技术大牛」/" itemprop="url">
-                  天天写「业务代码」，如何成为「技术大牛」
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-29T09:46:27+08:00" content="2016-09-29">
-              2016-09-29
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/思绪/" itemprop="url" rel="index">
-                    <span itemprop="name">思绪</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/29/天天写「业务代码」，如何成为「技术大牛」/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/29/天天写「业务代码」，如何成为「技术大牛」/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>「一直写业务代码，能够成长为技术大牛？」这也是我一直困惑的地方，今早在地铁上看到<code>阿里李运华</code>的这篇文章，感悟良多，现阶段的我，思维存在一定的误区，内心有些浮躁，梳理文章要点, 规划修炼之路，并将文中所提及的方法付诸实践。</p>
-<p><code>Tips</code>: 以下内容引用于<code>阿里巴巴李运华</code>。</p>
-<h3 id="误区"><a href="#误区" class="headerlink" title="误区"></a>误区</h3><p><strong>拜大牛为师</strong></p>
-<blockquote>
-<p>知乎上有人认为想成为大牛最简单直接、快速有效的方式是拜团队技术大牛为师，让他们平时给你开小灶，给你分配一些有难度的工作。</p>
-</blockquote>
-<p>个人觉得这个方法不现实；</p>
-<ol>
-<li>大牛很忙，不太可能单独给你开小灶，更不可能每天都给你开一个小时的小灶。</li>
-<li>因为第一个原因，所以一般找大牛，都是带着问题去请教或探讨。</li>
-<li>大牛不多，不可能每个团队都有技术大牛，只能说团队里会有比你水平高的人，即使每天给你开小灶，最终你也只能提升到他的水平。</li>
-</ol>
-<p>综上所述的几个原因，对于大部分人来说，要想成为大牛，首先还是要明白“主要靠自己”。</p>
-<p><strong>业务代码一样很牛逼</strong></p>
-<blockquote>
-<p>知乎上有人回答认为写业务代码一样可以很牛逼，理由是业务代码一样可以有各种技巧，日志记录好了问题，问题定位效率可以提升10倍…等等</p>
-</blockquote>
-<p>业务代码有技术含量这是肯定的，业务代码中的技术是每个程序员的基础，但只是掌握这些技巧，并不能成为技术大牛。就想游戏中升级打怪一样，开始打小怪，经验值很高，越到后面经验值越少，打小怪已经不能提升经验值了。这个时候就需要打一些更高级的怪，刷一些有挑战的副本了，没看到哪个游戏，只要一直打小怪就能升到顶级的。</p>
-<p>成为技术大牛的路也类似，要不断提升自己的水平，然后面临更大的挑战，通过应对这些挑战从而使自己的水平更上一级。写业务代码只是打怪升级路上的一个挑战而已，而且是一个比较初级的挑战。</p>
-<p>所以，业务代码都写不好的程序员肯定无法成为技术大牛，但只把业务代码写好的程序员也还不能成为技术大牛。</p>
-<p><strong>上班太忙没时间自学</strong></p>
-<blockquote>
-<p>很多人认为自己没有成为技术大牛并不是自己不聪明，也不是自己不努力，而是中国的这个环境下，技术人员加班太多，导致自己没有额外的时间进行学习。</p>
-</blockquote>
-<p>有几个误区导致了这种想法</p>
-<ol>
-<li>上班做的都是重复工作，要想提升必须自己额外去学习</li>
-<li>学习需要大段的连续时间，实际上做法正好相反，我们应该在工作中学习和提升，因为学以致用，或者有实例参考，学习的效果是最好的，其次工作后学习不需要打算时间，而是要挤出时间，利用时间碎片来学习。</li>
-</ol>
-<h3 id="正确的做法"><a href="#正确的做法" class="headerlink" title="正确的做法"></a>正确的做法</h3><p><strong>DO MORE</strong></p>
-<p>1.<code>熟悉更多业务 &amp; 代码</code></p>
-<p> 熟悉更多业务，不管是不是你负责的;熟悉更多代码，不管是不是你写的；</p>
-<p> 2.<code>熟悉端到端</code></p>
-<p> 比如说你负责后端web后台开发，但实际用户发起一个HTTP请求，要经过很多中间步骤才能到你的服务器(例如浏览器缓存、NDS、Nginx等)，但服务器一般又会经过很多处理才到你写的那部分代码(路由、权限等)这整个流程中的很多系统或者步骤，绝大部分人是不可能参与写代码的，但掌握这些知识对你的综合水平有很大的作用。</p>
-<p>3.<code>自学</code></p>
-<p>以<code>Java</code>为例，大部分业务代码就是<code>if-else</code>加个数据库操作，但我们完全可以自己学写更<code>java</code>的知识，例如垃圾回收、调优、网络编程等，这些可能暂时没用，但真要用的时候，不是Google一下就可以了，这个时候谁已经掌握了相关知识和技能，机会就是谁的。 </p>
-<p>以垃圾回收为例，平时抽时间学习了这些知识，学了1年都没用上，但后来用上了几次，每次都解决了卡死的问题，而有的同学，写了几年的<code>java</code>代码，对于<code>stop-the-world</code>是什么概念都不知道，更不要说去优化了。</p>
-<p>很多开源软件，更加需要自己平时去学，例如<code>Nignx、Redis、Mongodb、ElasticSearch等</code>在合适的时机引入这些技术，能够能够带来很大的价值。</p>
-<p><strong>DO BETTER</strong></p>
-<p>世界上没有完美的东西，你负责的系统和业务，总有不合理和可以改进的地方，这些不合理和可改进的地方，都是更高级别的怪物，打完后能够增加更多的经验值。识别出这些地方，并且给出解决方案。</p>
-<p>例如：</p>
-<ul>
-<li>重复代码太多，是否可以引入设计模式？</li>
-<li>系统系能一般，可否进行优化？</li>
-<li>目前是单机，如果做成双机是否更好？</li>
-<li>版本开发质量不高，是否引入高效的单元测试和集成测试方案？</li>
-<li>目前的系统太庞大，是否可以通过重构和解耦改为3个系统？</li>
-<li>阿里中间件有一些系统感觉我们也可以用，是否可以引入？</li>
-</ul>
-<p>只要你去想，其实总能发现可以改进得地方，如果你觉得系统哪里都没有改进的地方，那就说明你的水平还不够，可以多学习相关技术，多看看业界其他公司怎么做，BAT都怎么做。</p>
-<p><strong>DO EXERCISE</strong></p>
-<p>在执行过程中，发现确实做到了<code>DO MORE 、DO BETTER</code>,但光看不用效果很差，怎么办？</p>
-<p>例如：</p>
-<ul>
-<li>学习了JVM的垃圾回收，但是线上比较少出现FGC导致的卡顿问题，就算出现了，恢复业务也是第一位的，不太可能线上出现问题然后让每个同学都去练一下手，那么怎么去实践这些JVM的只是和技能呢？</li>
-<li>Netty我也看了，也了解了Reactor原理，但是我不可能参与Netty开发，怎么让自己真正掌握Reactor异步模式呢？</li>
-<li>看了«高性能MySQL»，但是线上的数据库都是DBA管理的，测试环境的数据库感觉又是随便配置的，我怎么去验证这些技术呢？</li>
-<li>框架封装了DAL层，数据库的访问我们都不需要操心，我们怎么去了解分库分表实现？</li>
-</ul>
-<p>诸如此类问题，总结下来就是三个词：<code>Learning</code>、<code>Trying</code>、<code>Teaching</code></p>
-<p>1.<code>Learning</code></p>
-<p>这是第一阶段，看书、Google、看视频、看别人的博客都可以，但要注意一点是<code>系统化</code>，特别是一些基础性的东西，例如JVM原理、Java编程、网络编程、HTTP协议等等，这些基础技术不能只通过Google或者博客学习，我的做法一般是先完整看完一本书全面的了解，然后在通过Google、视频、博客有针对性的查找一些有疑问的地方或者一些技巧。</p>
-<p>2.<code>Trying</code></p>
-<p><code>自己动手丰衣足食</code>，也就是自己去尝试搭建一些模拟环境，自己写一些测试程序。例如：</p>
-<ul>
-<li>JVM垃圾回收：可以自己写个简单的测试程序，分配内存不释放，然后调整各种JVM启动参数，在运行的过程使用Jstack、Jstat等命令查看JVM的堆内存分布和垃圾回收情况。</li>
-<li>Reactor原理：自己真正尝试写一个Reactor模式的Demo，不要以为这个很难，简单的Reactor模式代码量不超过200行(可以参考Doug Lee的PPT)，自己写完后，再看看netty怎么做，一对比理解就更加深刻了。</li>
-<li>MySQL:既然有线上的配置可以参考，那可以直接让DBA将线上配置发给我们，直接学习，然后搭建一个MySQL环境，用线上的配置启动；</li>
-<li>框架封装了DAL层，可以自己用JDBC尝试去写一个分库分表的简单实现，然后与框架的实现进行对比，看看差异在哪里？</li>
-<li>用浏览器的工具查看HTTP缓存实现，看看不同种类的网站、不同类型的资源，具体是如何控制缓存的，也可以自己用Python写一个简单的HTTP服务器，模拟返回各种HTTP Headers来观察浏览器的反应。</li>
-</ul>
-<p>真正想去实践，很多场景其实可以自己模拟，当然如果在实际工作中使用，效果会更好，毕竟线上的环境和业务服务度不是我们写个模拟程序就能够模拟的，但这样的机会可遇不可求，大部分情况，我们还真只能靠自己模拟，然后等到真正业务要用的时候，能够信手捏来。 </p>
-<p>3.<code>Teaching</code></p>
-<p>一般来说，经过Learning和Trying，能够掌握70%左右，但要到真正掌握，我觉得一定要做到能够跟别人讲清楚，因为在讲的时候，我们既需要将一个知识点系统化，也需要考虑各种细节，这会促使我们进一步思考和学习。同时，讲出来后看或听的人有不同的理解，或者有新的补充，相当于继续晚上整个知识技能体系。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="http://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&amp;mid=2650994277&amp;idx=1&amp;sn=f0d3c25d805503264a78ab5eeb29044d&amp;chksm=bdbf0e368ac88720da10e901457fdbee77a90a426c20a3b95316fcbc6c8ab7b1afbd55950ad3&amp;mpshare=1&amp;scene=1&amp;srcid=0929Z1bTPNoOJWSebrDHoiwl#rd" target="_blank" rel="external">天天写「业务代码」，如何成为「技术大牛」 – 李运华</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2014,7 +1986,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-count">146</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

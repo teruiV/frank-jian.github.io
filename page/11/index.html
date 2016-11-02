@@ -292,6 +292,146 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/10/Java设计模式之观察者模式/" itemprop="url">
+                  Java设计模式之观察者模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-10T15:56:05+08:00" content="2016-05-10">
+              2016-05-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/10/Java设计模式之观察者模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/10/Java设计模式之观察者模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h6 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h6><p>观察者模式(ObservePattern),用于实时监测某些Object的动态，只要Object一改变，那么他的所有观察者Observer都会被通知到，之后观察者会根据Object的改变进行下一步操作。</p>
+<h6 id="问题的引出"><a href="#问题的引出" class="headerlink" title="问题的引出"></a>问题的引出</h6><p>要实现一个天气预报的功能，当天气的数据发生变化的时候，会实时的以三种形式来显示天气，当前天气情况、统计分析情况、天气预报。这里我们不管数据如何来，就假设我们已经能够获取到数据了，在程序中通过调用被观察的对象的notifyObserver()方法来通知所有观察者；</p>
+<h6 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h6><ol>
+<li>通过分析我们得出一个简单的结论，天气数据一旦更新，那么就要实时的改变显示，观察者模式可以很好的解决这种模型问题。</li>
+<li>既然确定观察者模型，就要定位出谁是观察者、谁是被观察者、这里有个简单的原则、观察者和被观察者之间的关系是多对一的关系，也就是说被观察者只有一个就是我们的天气数据信息，观察者则是三种要显示不同的终端;</li>
+<li>每个观察者都要动态的显示信息，所以我们应该</li>
+<li>考虑到可扩展性、低耦合性、灵活性和对扩展开放、对修改关闭的原则和面向接口编程，我们下面具体类的设计</li>
+<li>根据角色我们可以抽象三个接口：<br> a) 所有被观察者的接口 Subject<br> b) 所有观察者的接口 Observer<br> c) 显示信息的接口 DisplayElement</li>
+<li>Subject拥有三个关于Observer的方法、注册、移除和通知Observer的方法(观察者肯定要和被观察者集合起来)</li>
+<li>对于Observer肯定要有一个udpate方法，一旦监测要Subject有变动，就要更新信息，所以还要实现DisplayElement接口。</li>
+</ol>
+<h6 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h6><p>1、设计Subject接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface Subject &#123;</div><div class="line">    public void registerObserver(Observer observer);</div><div class="line">    public void removeObserver(Observer observer);</div><div class="line">    public void notifyObserver();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2、设计Observer接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface Observer &#123;</div><div class="line">    public void update(float temperature,float humidity,float pressure);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>3、设计DisplayElement接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface DisplayElement&#123;</div><div class="line"> 	public void display();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>4、Subject接口的被观察者  — WeatherDate<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">public class WeatherDate implements Subject &#123;</div><div class="line">    private List&lt;Observer&gt; observers = new ArrayList&lt;&gt;();</div><div class="line">    private float temperate;</div><div class="line">    private float humidity;</div><div class="line">    private float pressure;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void registerObserver(Observer observer) &#123;</div><div class="line">        observers.add(observer);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void removeObserver(Observer observer) &#123;</div><div class="line">        int index = observers.indexOf(observer);</div><div class="line">        if(index &gt; 0)&#123;</div><div class="line">            observers.remove(observer);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void notifyObserver() &#123;</div><div class="line">        for(int i=0; i &lt; observers.size(); i++)&#123;</div><div class="line">            Observer o = (Observer) observers.get(i);</div><div class="line">            o.update(temperate,humidity,pressure);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 模仿数据变动时，自动触发notifyObserver函数</div><div class="line">     */</div><div class="line">    public void measurementsChanged()&#123;</div><div class="line">        notifyObserver();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 模仿数据变动、即当我们调用这个方法时就说明数据有变化，这样所有的观察者都会被通知；</div><div class="line">     */</div><div class="line">    public void setMeasurements(float temperate,float humidity,float pressure)&#123;</div><div class="line">        this.temperate = temperate;</div><div class="line">        this.humidity = humidity;</div><div class="line">        this.pressure = pressure;</div><div class="line">        measurementsChanged();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>5、观察者Observer的具体实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public class CurrentConditionDisplay implements DisplayElement,Observer &#123;</div><div class="line">    private float temperature;</div><div class="line">    private float humidity;</div><div class="line">    private float pressure;</div><div class="line">    private Subject weatherDate;</div><div class="line"></div><div class="line">    public CurrentConditionDisplay(Subject weatherDate)&#123;</div><div class="line">        this.weatherDate = weatherDate;</div><div class="line">        this.weatherDate.registerObserver(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void display() &#123;</div><div class="line">        System.out.println( CurrentConditionDisplay.class.getName() + &quot; temperature = &quot; + temperature + &quot;  humidity =   &quot; + humidity + &quot; pressure = &quot; + pressure);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void update(float temperature, float humidity, float pressure) &#123;</div><div class="line">        this.temperature = temperature;</div><div class="line">        this.humidity = humidity;</div><div class="line">        this.pressure = pressure;</div><div class="line">        display();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>6、ForecastConditionDisplay 与CurrentConditionDisplay实现类似<br>7、Client测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        WeatherDate subject = new WeatherDate();</div><div class="line"></div><div class="line">        ForecastConditionDisplay condition1 = new ForecastConditionDisplay(subject);</div><div class="line">        CurrentConditionDisplay condition2 = new CurrentConditionDisplay(subject);</div><div class="line">        subject.setMeasurements(10,20,30);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h6 id="Java内置观察者模式"><a href="#Java内置观察者模式" class="headerlink" title="Java内置观察者模式"></a>Java内置观察者模式</h6><p>WeatherData类似于自己实现观察者模式中的的Subject的具体实现，继承了java提供的java.util.Observable，Observable封装了之前subject提供的所有方法;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">import java.util.Observable;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Subject</div><div class="line"> * User: jianwl</div><div class="line"> * Date: 2016/5/11</div><div class="line"> * Time: 11:16</div><div class="line"> */</div><div class="line">public class WeatherData extends Observable&#123;</div><div class="line">    private float temperature;</div><div class="line">    private float humidity;</div><div class="line">    private float pressure;</div><div class="line"></div><div class="line">    public  WeatherData()&#123;&#125;</div><div class="line"></div><div class="line">    public void messureChanged()&#123;</div><div class="line">        setChanged();</div><div class="line">        notifyObservers();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public  void setMessurements(float temperature,float humidity,float pressure)&#123;</div><div class="line">        this.temperature = temperature;</div><div class="line">        this.humidity = humidity;</div><div class="line">        this.pressure = pressure;</div><div class="line">        messureChanged();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public float getTemperature() &#123;</div><div class="line">        return temperature;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public float getHumidity() &#123;</div><div class="line">        return humidity;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public float getPressure() &#123;</div><div class="line">        return pressure;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>CurrentConditionsDisplay,类似于自己实现观察者模式中的Observer的具体实现，实现了java提供的java.util.Observer的接口和另一个自己创建的DisplayElement接口;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">public interface DisplayElement &#123;</div><div class="line">    public void display();</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">import java.util.Observable;</div><div class="line">import java.util.Observer;</div><div class="line"></div><div class="line">/**</div><div class="line"> * User: jianwl</div><div class="line"> * Date: 2016/5/11</div><div class="line"> * Time: 11:23</div><div class="line"> */</div><div class="line">public class CurrentConditionsDisplay implements Observer,DisplayElement &#123;</div><div class="line">    Observable observable;</div><div class="line">    private float temperature;</div><div class="line">    private float humidity;</div><div class="line"></div><div class="line">    public CurrentConditionsDisplay(Observable observable) &#123;</div><div class="line">        this.observable = observable;</div><div class="line">        observable.addObserver(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void display() &#123;</div><div class="line">        System.out.println(&quot;CurrentConditionsDisplay  temperature = &quot; + temperature + &quot; humidity = &quot; + humidity );</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void update(Observable o, Object arg) &#123;</div><div class="line">        if(o instanceof WeatherData)&#123;</div><div class="line">            WeatherData weatherData = (WeatherData)o;</div><div class="line">            this.temperature = weatherData.getTemperature();</div><div class="line">            this.humidity = weatherData.getHumidity();</div><div class="line">            display();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>测试Java内置的观察者模式,XFireConditionsDisplay、ForeConditionsDisplay这两个类的实现和CurrentConditionsDisplay类似;<br>同时通过测试结果可知，Java内置的观察者模式，通知的顺序是先入后出的；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line">    //通知的顺序是先入后出的；</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        WeatherData weatherData = new WeatherData();</div><div class="line">        CurrentConditionsDisplay condition1 = new CurrentConditionsDisplay(weatherData);</div><div class="line"></div><div class="line">        XFireConditionsDisplay condition2 = new XFireConditionsDisplay(weatherData);</div><div class="line">        ForeConditionsDisplay condition3 = new ForeConditionsDisplay(weatherData);</div><div class="line"></div><div class="line">        weatherData.setMessurements(22,11,11);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h6 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h6><p>Java内置的观察者模式有什么问题？<br>1、Observable是一个“类”，你必须设计一个类继承它，如果某类想同时具有Observable类和另一个超类的行为，就会陷入两难，毕竟Java不支持多重继承。限制了Observable的复用的能力；<br>2、Observable将关键的方法保护起来了，setChanged()方法被保护起来了（被定义成protected）,意味着除非你继承自Obserable，否则你无法创建Obserable实例并组合到自己的对象中来；</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/10/Java设计模式之策略模式/" itemprop="url">
                   Java设计模式之策略模式
                 </a>
@@ -1472,130 +1612,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/04/PHP数组/" itemprop="url">
-                  PHP数组
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-04T09:59:30+08:00" content="2016-05-04">
-              2016-05-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/04/PHP数组/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/04/PHP数组/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h5 id="创建数组"><a href="#创建数组" class="headerlink" title="创建数组"></a>创建数组</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">//初始化数组</div><div class="line">$products = array(&apos;tires&apos;,&apos;oil&apos;,&apos;spark&apos;);</div><div class="line">//初始化关联数组</div><div class="line">$prices = array(&apos;tires&apos;=&gt;100,&apos;oil&apos;=&gt;10,&apos;spark&apos;=&gt;4);</div><div class="line">foreach($products as $product)&#123;</div><div class="line">  echo &quot;product = &quot; . $product. &quot; - price = &quot; . $prices[$product] . &quot;&lt;/br&gt; &quot;;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-<h5 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">//初始化数组</div><div class="line">$products = array(&apos;tires&apos;,&apos;oil&apos;,&apos;spark&apos;);</div><div class="line">//初始化关联数组</div><div class="line">$prices = array(&apos;tires&apos;=&gt;100,&apos;oil&apos;=&gt;10,&apos;spark&apos;=&gt;4);</div><div class="line"></div><div class="line">#关系型数组循环方式1</div><div class="line">while(list($product,$price) = each($prices)) &#123;</div><div class="line">  echo &quot;(1) - $product - $price &lt;/br&gt;&quot;;</div><div class="line">&#125;</div><div class="line">#关系型数组循环方式2</div><div class="line">foreach($prices as $key =&gt; $value) &#123;</div><div class="line">  echo &quot; (2) - &quot;. $key.&quot; - &quot;.$value.&quot; &lt;/br&gt;&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#关系型数组循环方式3</div><div class="line">reset($prices);</div><div class="line">while($element = each($prices))&#123;</div><div class="line">   echo &quot; (3)- &quot;. $element[&apos;key&apos;].&apos; - &apos; .$element[&apos;value&apos;].&apos;&lt;/br&gt;&apos;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#特别注意，使用each函数将记录当前元素，如果脚本中两次使用该数组，应该使用reset（）重置元素至开始处</div><div class="line">reset($prices);</div><div class="line">while($element = each($prices))&#123;</div><div class="line">   echo &quot; (4) -&quot;. $element[&apos;key&apos;].&apos; - &apos; . $element[&apos;value&apos;].&apos;&lt;/br&gt;&apos;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"># 数组循环</div><div class="line">foreach($products as $product)&#123;</div><div class="line">  echo &quot;[1] - product = &quot;.$product .&quot;&lt;/br&gt;&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">$products = array(</div><div class="line">	array(&apos;code&apos; =&gt;&apos;CODE&apos;),</div><div class="line">    array(&quot;price&quot;=&gt;10)</div><div class="line">);</div><div class="line"></div><div class="line">for($row = 0; $row &lt; 3; $row ++) &#123;</div><div class="line">   while( list($key,$value) = each($products[$row])) &#123;</div><div class="line">   		echo $key .&quot;  - &quot; .$value .&quot;&lt;/br&gt;&quot;;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>数组排序<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$products = array(&apos;fruit&apos;,&apos;apple&apos;,&apos;banana&apos;);</div><div class="line">$prices = array(100,79,88);</div><div class="line"></div><div class="line">#字符串升序</div><div class="line">sort($products);</div><div class="line">foreach($products as $product)&#123;</div><div class="line"> echo  $product.&quot; &quot;;</div><div class="line">&#125;</div><div class="line">echo &quot;&lt;/br&gt;&quot;;</div><div class="line"></div><div class="line">#数字升序</div><div class="line">sort($prices);</div><div class="line">foreach($prices as $price)&#123;</div><div class="line">  echo $price.&quot; &quot; ;</div><div class="line">&#125;</div><div class="line"># 反向排序 rsort($products);</div><div class="line"></div><div class="line">echo &quot;&lt;/br&gt;&quot;;</div><div class="line"></div><div class="line">#关联数组排序</div><div class="line">$prices = array(&apos;fruit&apos;=&gt; 5,&apos;apple&apos;=&gt;20,&apos;banana&apos;=&gt;3);</div><div class="line"></div><div class="line">#按价格升序排序</div><div class="line">asort($prices);</div><div class="line">while(list($product,$price) = each($prices))&#123;</div><div class="line">  echo $product . &apos; - &apos; .$price . &quot;&lt;/br&gt;&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#按水果名升序排序</div><div class="line">ksort($prices);</div><div class="line">while(list($product,$price) = each($prices))&#123;</div><div class="line">  echo $product . &apos; - &apos; .$price . &quot;&lt;/br&gt;&quot;;</div><div class="line">&#125;</div><div class="line">#降序排 arsort($price)、 krsort($price)</div><div class="line"></div><div class="line">echo &quot;&lt;==&gt;&lt;/br&gt;&quot;;</div><div class="line">#多维数组排序,按价格升序</div><div class="line">$products = array(</div><div class="line">array(&apos;fruit&apos;,&apos;FRUIT&apos;,20),</div><div class="line">array(&apos;apple&apos;,&apos;APPLE&apos;,5),</div><div class="line">array(&apos;banana&apos;,&apos;BANANA&apos;,3)</div><div class="line">);</div><div class="line">function compare($x,$y) &#123;</div><div class="line">  if($x[2] == $y[2])&#123;</div><div class="line">    return 0;</div><div class="line">  &#125; else if($x[2] &lt; $y[2])&#123;</div><div class="line">    return -1;</div><div class="line">  &#125; else &#123;</div><div class="line">    return 1;</div><div class="line"> &#125;</div><div class="line">&#125;</div><div class="line">usort($products,&apos;compare&apos;);</div><div class="line">for($row = 0;$row &lt; 3;$row ++)&#123;</div><div class="line">for($column = 0; $column &lt; 3; $column ++)&#123;</div><div class="line">    echo $products[$row][$column] . &apos; &apos;;</div><div class="line">  &#125;</div><div class="line">echo &quot;&lt;/br&gt;&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#对数组重新排序</div><div class="line">$numbers = array(1,2,3,4,5,6,7,8,9);</div><div class="line">#对数组重新排序,应用场景每次登陆时，看到不一样的三张图片;</div><div class="line">shuffle($numbers);</div><div class="line">foreach($numbers as $number)&#123;</div><div class="line"> echo $number.&quot; &quot;;</div><div class="line">&#125;</div><div class="line">echo &quot;&lt;/br&gt;&quot;;</div><div class="line">#对数组反序</div><div class="line">$numbers = array(1,3,5,7,4);</div><div class="line">$numbers = array_reverse($numbers);</div><div class="line">foreach($numbers as $number)&#123;</div><div class="line"> echo $number.&apos; &apos;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">echo &quot;&lt;/br&gt;&quot;;</div><div class="line">#产生1-10,步长为2，数组;</div><div class="line">$numbers = range(1,10,2);</div><div class="line">foreach($numbers as $number)&#123;</div><div class="line"> echo $number.&apos; &apos;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">echo &quot;&lt;/br&gt;&quot;;</div><div class="line">$products = file(&quot;./fruit.txt&quot;);</div><div class="line">echo &quot;count = &quot;. count($products).&apos;&lt;/br&gt;&apos;;</div><div class="line">foreach($products as $product)&#123;</div><div class="line">   #分割字符串</div><div class="line">   $array = explode(&quot;\t&quot;,$product);</div><div class="line">   echo &apos;price = &apos;.$array[2].&apos;&lt;/br&gt;&apos;;</div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">#对每个元素应用任何函数</div><div class="line">$numbers = array(1,2,3,4);</div><div class="line">function my_print($value)&#123;</div><div class="line">  echo &quot;$value &lt;br/&gt;&quot;;</div><div class="line">&#125;</div><div class="line">array_walk($numbers,&apos;my_print&apos;);</div><div class="line"></div><div class="line">#统计数组元素个数count\sizeof()</div><div class="line">$array = array(1,2,3,2,1,1,1,1,1,1,6,7);</div><div class="line">echo &quot;count = &quot; . count($array).&apos; sizeof = &apos; .sizeof($array).&quot;&lt;/br&gt;&quot;;</div><div class="line"></div><div class="line">#统计数组中，每个元素出现的次数;</div><div class="line">$array = array_count_values($array);</div><div class="line">while(list($key,$value) = each($array))&#123;</div><div class="line">  echo $key . &apos; - &apos;.$value.&quot;&lt;/br&gt;&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#将数组转换成标量变量，输出变量的名称，必须是数组中变量的名称；</div><div class="line">$products = array(&apos;apple&apos;=&gt;5,&apos;banana&apos;=&gt;3);</div><div class="line">extract($products,EXTR_OVERWRITE);</div><div class="line">echo &quot;apple_price = $apple , banana_price = $banana&quot;;</div><div class="line"></div><div class="line">extract($products,EXTR_PREFIX_ALL,&quot;my_prefix&quot;);</div><div class="line">echo &quot;apple_price = $my_prefix_apple,banana_price = $my_prefix_banana&quot;;</div><div class="line"></div><div class="line">#extract_type常用值</div><div class="line">#EXTR_OVERWRITE 当关键字发生冲突时，覆盖已有的关键字；</div><div class="line">#EXTR_PREFIX_ALL 给关键字加前缀;</div><div class="line"></div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<h5 id="踩坑提示"><a href="#踩坑提示" class="headerlink" title="踩坑提示"></a>踩坑提示</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">一行代码结束，别忘了分号（；）</div><div class="line">引用变量，别忘了$</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1641,7 +1657,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-count">146</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
