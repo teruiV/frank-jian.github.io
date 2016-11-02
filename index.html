@@ -363,10 +363,10 @@
         
           
             <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>临近双11，达达App的流量突然猛增，日单量破百万单。这几天数据库出现几次报警，排查下来是某些SQL性能很差，导致慢查询。本节我们主要来学习，优化SQL。</p>
-<h3 id="查询原理"><a href="#查询原理" class="headerlink" title="查询原理"></a>查询原理</h3><p>当我们想MySQL发送一个请求时，它到底做了什么？大概有一下几个步骤：</p>
+<h3 id="查询原理"><a href="#查询原理" class="headerlink" title="查询原理"></a>查询原理</h3><p>当我们向MySQL发送一个请求时，它到底做了什么？大概有一下几个步骤：</p>
 <ol>
 <li>客户端发送一条查询给服务器</li>
-<li>服务器先检查查询缓存，如果命中缓存，则立刻返回存储在缓存中的结果，否则进入下一个阶段。</li>
+<li>服务器先检查查询缓存，如果命中缓存则立刻返回存储在缓存中的结果，否则进入下一个阶段。</li>
 <li>服务器进行SQL解析、预处理，再由优化器生成对应的执行计划</li>
 <li>MySQL根据优化器生成的执行计划，调用存储引用的API来执行查询。</li>
 <li>将结果返回给客户端。</li>
@@ -376,18 +376,18 @@
 <p>通过执行计划知道，<code>type=index</code>表示通过索引查询，预估得到2条记录<code>rows=2</code>;</p>
 <p><strong>2、不要使用count(非索引字段)</strong></p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-11-2/4766428.jpg" alt=""></p>
-<p>通过执行计划可知，<code>type=All</code>表示通过全表扫描查询，预计得到2条记录<code>rows=2</code>;</p>
+<p>通过执行计划可知，使用<code>count(非索引字段)</code>使用全表扫描查询，而使用<code>count(*)</code>或<code>count(索引字段)</code>使用索引查询。</p>
 <p><strong>3、切分查询</strong></p>
 <p><code>场景：</code> 有时候一个大查询我们需要<code>分而治之</code>，将大查询切分成小查询，每个查询功能完全一样，只完成一小部分，每次只返回一部分查询结果。</p>
-<p><code>举个栗子</code></p>
+<p><code>举个🌰</code></p>
 <blockquote>
 <p>定期删除大量数据时，如果用一个大的语句一次性完成的话，则可能需要一次锁住很多数据、占满整个事务日志、耗尽系统资源、阻塞很多很小的但很重要的查询。将一个大的DELETE语句切分成多个小的查询可以尽可能小地影响MYSQL性能，同时还可以减少MYSQL复制的延时。</p>
 </blockquote>
-<p><code>在举个线上环境的例子</code></p>
+<p><code>再举个线上环境的🌰</code></p>
 <p><code>场景：</code> 假设我需要一次查询1万个用户的信息；</p>
 <p><code>大查询：</code> SELECT * FROM ‘dada’ WHERE dada_id IN (1万个id);</p>
 <p><code>小查询:</code> SELECT * FROM ‘dada’ WHERE dada_id IN (1千个id); 查询10次；</p>
-<p><code>结果：</code> 上线时间下来，使用<code>大查询</code>很可能出现慢查询，导致性能问题，而使用<code>小查询</code>，对服务器性能影响小很多。</p>
+<p><code>结果：</code> 使用<code>大查询</code>很可能出现慢查询，导致性能问题，而使用<code>小查询</code>，对服务器性能影响小很多。</p>
 <p><strong>4、分解关联查询</strong></p>
 <p><code>关联查询</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SELECT * FROM &apos;tag&apos;</div><div class="line">JOIN &apos;tag_post&apos; ON tag_post.tag_id=tag.id </div><div class="line">JOIN &apos;post&apos; ON tag_post.post_id=post.id </div><div class="line">WHERE tag.tag=&apos;mysql&apos;;</div></pre></td></tr></table></figure>
@@ -395,7 +395,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SELECT * FROM &apos;tag&apos; WHERE tag=&apos;mysql&apos;;</div><div class="line">SELECT * FROM &apos;tag_post&apos; WHERE tag_id=1234;</div><div class="line">SELECT * FROM &apos;post&apos; WHERE post.id in(123,456,567,9098,8904);</div></pre></td></tr></table></figure>
 <p><code>关联查询分解为多个查询的好处</code></p>
 <ol>
-<li>缓存效率更高，如，上面查询中的<code>tag=mysql</code>已经被缓存了，那么应用就可以跳过第一个查询。再如，应用已经缓存<code>post.id为123、456</code>的内容，那么第三个查询的<code>IN</code>就可以少查询几个<code>post.id</code>。如果表结构变了，就不能使用查询缓存了。</li>
+<li>缓存效率更高，如:上面查询中的<code>tag=mysql</code>已经被缓存了，那么应用就可以跳过第一个查询。再如，应用已经缓存<code>post.id为123、456</code>的内容，那么第三个查询的<code>IN</code>就可以少查询几个<code>post.id</code>。如果表结构变了，就不能使用查询缓存了。</li>
 <li>查询分解后，执行单个查询可以减少锁的竞争。</li>
 <li>应用层做分解后，可以更容易对数据库进行拆分，更容易做到高性能和可扩展。</li>
 <li>查询效率会有所提升，使用<code>IN</code>代替关联查询，可让MYSQL按照ID顺序进行查询，这可能比随机关联更高效。</li>
