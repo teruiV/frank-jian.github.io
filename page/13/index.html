@@ -362,15 +362,14 @@
       
         
           
-          字符串类型1234CHAR		1~255个字符的定长字符串，它的长度必须在创建时规定NCHAR		CHAR的特殊形式，用来支持多字节或Unicode字符NVARCHAR	TEXT的特殊形式，用来支持多字节或Unicode字符TEXT(也称 VARCHAR) 边长文本
-变长字符串和定长字符串的区别？边
-          ...
+            <h5 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">CHAR		1~255个字符的定长字符串，它的长度必须在创建时规定</div><div class="line">NCHAR		CHAR的特殊形式，用来支持多字节或Unicode字符</div><div class="line">NVARCHAR	TEXT的特殊形式，用来支持多字节或Unicode字符</div><div class="line">TEXT(也称 VARCHAR) 边长文本</div></pre></td></tr></table></figure>
+<h5 id="变长字符串和定长字符串的区别？"><a href="#变长字符串和定长字符串的区别？" class="headerlink" title="变长字符串和定长字符串的区别？"></a>变长字符串和定长字符串的区别？</h5><p>边长字符串存储任意长度的文本，其最大长度随不同的数据类型和DBSM而变化<br>定长字符串接收长度固定的字符串，其长度是在创建表时指定的</p>
+<h5 id="为何不全用变长字符串？"><a href="#为何不全用变长字符串？" class="headerlink" title="为何不全用变长字符串？"></a>为何不全用变长字符串？</h5><p>DBSM处理定长字符串的速度比处理变长的快，所以许多DBSM不允许对变长列进行索引。</p>
+<h5 id="数值数据类型"><a href="#数值数据类型" class="headerlink" title="数值数据类型"></a>数值数据类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">BIT		 单个二进制位值，或者为0或者为1</div><div class="line">DECIMAL	 定点或精读可变的浮点值</div><div class="line">FLOAT    浮点值</div><div class="line">INT	     4字节整数值	支持-2147483648~2147483647的值</div><div class="line">REAL     4字节浮点值</div><div class="line">SMALLINT 2字节整数值，支持-32768~32767的值</div><div class="line">TINYINT  1字节整数值，支持0~255的值</div></pre></td></tr></table></figure>
+<h5 id="日期和时间数据类型"><a href="#日期和时间数据类型" class="headerlink" title="日期和时间数据类型"></a>日期和时间数据类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">DATE	      日期值</div><div class="line">DATETIME      日期时间值</div><div class="line">SMALLDATETIME 日期时间，精确到分</div><div class="line">TIME	      时间值</div></pre></td></tr></table></figure>
+<h5 id="二进制数据类型"><a href="#二进制数据类型" class="headerlink" title="二进制数据类型"></a>二进制数据类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">BINARY 		定长二进制数据，最大长度255B到8000B</div><div class="line">LONG RAW	变长二进制数据,最长2GB</div><div class="line">RAW			定长二进制数据，最多255B</div><div class="line">VARBINARY   变长二进制数据，最大长度255B到8000B</div></pre></td></tr></table></figure>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/29/SQL数据类型/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -488,15 +487,10 @@
       
         
           
-          什么是事务？事务，可以保证一组操作中，不会中途停止，它们要么全部执行，要么就不执行。
-事务处理的术语1234事务(transaction) 指一组SQL语句回退(rollback) 指撤销指定SQL语句的过程提交(commit) 指将未存储的SQL语句结果写入到数据库表保存点(savepoint) 
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/29/SQL事务处理/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+            <h5 id="什么是事务？"><a href="#什么是事务？" class="headerlink" title="什么是事务？"></a>什么是事务？</h5><p>事务，可以保证一组操作中，不会中途停止，它们要么全部执行，要么就不执行。</p>
+<h1 id="事务处理的术语"><a href="#事务处理的术语" class="headerlink" title="事务处理的术语"></a>事务处理的术语</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">事务(transaction) 指一组SQL语句</div><div class="line">回退(rollback) 指撤销指定SQL语句的过程</div><div class="line">提交(commit) 指将未存储的SQL语句结果写入到数据库表</div><div class="line">保存点(savepoint) 指事务处理中设置的临时占位符，可以对它发布回退。</div></pre></td></tr></table></figure>
+<h5 id="可以回退哪些语句？"><a href="#可以回退哪些语句？" class="headerlink" title="可以回退哪些语句？"></a>可以回退哪些语句？</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">事务处理用来管理INSERT、UPDATE、DELETE语句，不能回退SELECT、CREATE、DROP操作。</div></pre></td></tr></table></figure>
+          
         
       
     </div>
@@ -614,17 +608,28 @@
       
         
           
-          存储过程用户定义的一系列SQL语句的集合，设计特定表和其他对象的任务，用户可以调用存储过程。
-函数通常是数据库已定义的方法，它接收参数并返回魔种类型的值并不涉及特定用户表.
-存储过程和函数的区别
-函数只能通过RETURN语句返回单个值或对象，而存储过程不允许执行RETURN，它通过OUT参数返回多个
-          ...
+            <h4 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h4><p>用户定义的一系列SQL语句的集合，设计特定表和其他对象的任务，用户可以调用存储过程。</p>
+<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><p>通常是数据库已定义的方法，它接收参数并返回魔种类型的值并不涉及特定用户表.</p>
+<h4 id="存储过程和函数的区别"><a href="#存储过程和函数的区别" class="headerlink" title="存储过程和函数的区别"></a>存储过程和函数的区别</h4><ol>
+<li>函数只能通过RETURN语句返回单个值或对象，而存储过程不允许执行RETURN，它通过OUT参数返回多个值</li>
+<li>函数可以嵌入SQL中使用，可以在SELECT中调用，而存储过程不行</li>
+<li>存储过程实现的功能复杂一些，而函数的实现功能针对性更强一些</li>
+<li>函数限制比较多，比如不能用临时表，只能用表变量，而存储过程的限制相对少一些。</li>
+</ol>
+<h4 id="存储过程的优点"><a href="#存储过程的优点" class="headerlink" title="存储过程的优点"></a>存储过程的优点</h4><ul>
+<li>通过把处理封装在容易使用的单元中，简化复杂的操作</li>
+<li>多个开发人员使用同一存储过程，保证了数据的一致性；</li>
+<li>简化对变动的管理，如果业务逻辑有变化，只需要改动存储过程的代码，使用它的人员甚至都不需要知道这些变化。</li>
+<li>因为存储过程通常以编译过的形式存储，而且性能更高；</li>
+</ul>
+<h4 id="存储过程的缺点"><a href="#存储过程的缺点" class="headerlink" title="存储过程的缺点"></a>存储过程的缺点</h4><ul>
+<li>不同DBMS的存储过程语法不同，移植性较差；</li>
+<li>编写存储过程比编写简单SQL语句复杂，要求比较高；</li>
+</ul>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"># 创建存储过程</div><div class="line">CREATE PROCEDURE productpricing()</div><div class="line">BEGIN</div><div class="line">	SELECT AVG(prod_price) AS priceaverage</div><div class="line">    FROM products;</div><div class="line">END;</div><div class="line"></div><div class="line"># 调用存储过程</div><div class="line">CALL productpricing();</div><div class="line"></div><div class="line"># 删除存储过程</div><div class="line"></div><div class="line">DROP PROCEDURE productpricing();</div><div class="line"></div><div class="line"># 使用参数</div><div class="line">CREATE PROCEDURE productpricing(</div><div class="line">	OUT pl DECIMAL(8,2),</div><div class="line">    OUT ph DECIMAL(8,2),</div><div class="line">    OUT pa DECIMAL(8,2)</div><div class="line">)</div><div class="line">BEGIN</div><div class="line">	SELECT Min(prod_price)</div><div class="line">    INTO pl</div><div class="line">    FROM products;</div><div class="line">    SELECT Max(prod_price)</div><div class="line">    INTO ph</div><div class="line">    FROM products;</div><div class="line">	SELECT AVG(prod_price)</div><div class="line">    INTO pa</div><div class="line">    FROM products;</div><div class="line">END;</div><div class="line"></div><div class="line">提示：DECIMAL(8,2)表示输出的数总共有8位，小数点有2位；</div><div class="line"></div><div class="line"># 调用，所有MYSQL变量名都必须以@开始</div><div class="line">CALL productpricing(@pricelow,@pricehigh,@priceaverage);</div><div class="line"></div><div class="line"># 显示</div><div class="line">SELECT @pricelow,@pricehigh,@priceaverage;</div><div class="line"></div><div class="line"># IN、OUT 参数</div><div class="line">CREATE PROCEDURE ordertotal(</div><div class="line">	IN onumber INT,</div><div class="line">    OUT ototal DECIMAL(8,2)</div><div class="line">)</div><div class="line">BEGIN</div><div class="line">	SELECT SUM(item_price * quantity)</div><div class="line">    FROM orderitems</div><div class="line">    WHERE order_num = onumber;</div><div class="line">    INTO ototal;</div><div class="line">END;</div><div class="line"></div><div class="line"># 调用</div><div class="line">CALL ordertotal(20005,@ototal);</div><div class="line"></div><div class="line"># 显示</div><div class="line">SELECT @ototal;</div><div class="line"></div><div class="line">提示：</div><div class="line">IN、OUT参数相当于高级语言中的函数的传值和传引用</div><div class="line">DECLARE定义局部变量</div><div class="line">SHOW PROCEDURE STATUS 可以查看存储过程列表</div></pre></td></tr></table></figure>
+<p>参考资料：<br><a href="http://fqk.io/mysql-proceduce-function-diff/" target="_blank" rel="external">MySQL 存储过程和函数区别</a><br><a href="http://fqk.io/note-mysql-5/" target="_blank" rel="external">MySQL 笔记 5</a></p>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/29/SQL存储过程/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -742,19 +747,29 @@
       
         
           
-          什么是视图？视图是虚拟的表，只包含使用时动态检索的查询，同时视图本身是不包含数据的，返回的数据是从其他表检索出来的。
-使用视图的好处？
-保护数据，只让开发者看到表中的部分数据；
-更改数据格式和表示，视图可返回与底层数据表的表示和格式不同的数据；
-重用SQL；
-简化复杂的SQL,在编写查询后，可以方便
-          ...
+            <h4 id="什么是视图？"><a href="#什么是视图？" class="headerlink" title="什么是视图？"></a>什么是视图？</h4><p>视图是虚拟的表，只包含使用时动态检索的查询，同时视图本身是不包含数据的，返回的数据是从其他表检索出来的。</p>
+<h4 id="使用视图的好处？"><a href="#使用视图的好处？" class="headerlink" title="使用视图的好处？"></a>使用视图的好处？</h4><ul>
+<li>保护数据，只让开发者看到表中的部分数据；</li>
+<li>更改数据格式和表示，视图可返回与底层数据表的表示和格式不同的数据；</li>
+<li>重用SQL；</li>
+<li>简化复杂的SQL,在编写查询后，可以方便的重写它而不必知道其他查询细节</li>
+<li>可以嵌套查询，支持子查询；</li>
+</ul>
+<h4 id="视图的规则"><a href="#视图的规则" class="headerlink" title="视图的规则"></a>视图的规则</h4><ol>
+<li>视图需唯一命名</li>
+<li>创建视图，必须具有足够的权限</li>
+<li>视图不能索引，也不能关联触发器或默认值</li>
+<li>视图可以和表一起使用</li>
+<li>创建视图的数目没有限制</li>
+<li>ORDER BY 可以用在视图中，若SELECT语句中也有ORDER BY，则会覆盖视图中的ORDER BY</li>
+<li>视图可以嵌套</li>
+<li>视图只做只读查询，不能将数据写回底层表；</li>
+</ol>
+<h4 id="视图的缺点"><a href="#视图的缺点" class="headerlink" title="视图的缺点"></a>视图的缺点</h4><p>因为视图不包含数据，所以每次使用视图是，都必须处理查询执行时的所有检索。如果使用多个联结和过滤创建了复杂的视图或者嵌套视图，性能可能下降的很厉害。</p>
+<h4 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h4><p>视图一般只用于检索，而不用于更新</p>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># 创建视图</div><div class="line">CREATE VIEW ProductCustomers AS</div><div class="line">SELECT cust_name,cust_contact,prod_id</div><div class="line">FROM Customers,Orders,OrderItems</div><div class="line">WHERE Customers.cust_id = Orders.cust_id</div><div class="line">AND OrderItems.order_num = Orders.order_num ;</div><div class="line"></div><div class="line"># 查询视图数据</div><div class="line">SELECT * FROM ProductCustomers;</div><div class="line"></div><div class="line"># 移除视图</div><div class="line">DROP VIEW ProductCustomers;</div></pre></td></tr></table></figure>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/29/SQL视图/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -872,14 +887,18 @@
       
         
           
-          创建表1234567891011121314151617181920212223242526272829303132333435363738# 创建表CREATE TABLE Products( prod_id	CHAR(10)	NOT NULL, vend_id	CHAR(10) 	NOT NUL
-          ...
+            <h5 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"># 创建表</div><div class="line">CREATE TABLE Products(</div><div class="line"> prod_id	CHAR(10)	NOT NULL,</div><div class="line"> vend_id	CHAR(10) 	NOT NULL,</div><div class="line"> prod_name	CHAR(254)	DEFAULT &apos;xxx&apos;,</div><div class="line"> PRIMARY KEY  (prod_id)</div><div class="line">)ENGINE=InnoDB;</div><div class="line"></div><div class="line"># 创建索引</div><div class="line">CREATE INDEX indexname ON Products(prod_name);</div><div class="line"></div><div class="line"># 索引的作用</div><div class="line">1、索引用于数据过滤和数据排序</div><div class="line">2、索引改善检索操作性能，但降低了数据插入、修改、删除的性能；</div><div class="line">3、索引要占大量的存储空间</div><div class="line"></div><div class="line"></div><div class="line"># 添加列</div><div class="line">ALTER TABLE Products ADD prod_price INT;</div><div class="line"></div><div class="line"># 删除列</div><div class="line">ALTER TABLE Products DROP COLUMN prod_price;</div><div class="line"></div><div class="line">特别注意：更新/删除表之前最好做一个完整的备份，数据库的更改不能撤销;</div><div class="line"></div><div class="line">#定义外键</div><div class="line">ALTER TABLE Products</div><div class="line">ADD CONSTRAINT vend_id</div><div class="line">FOREIGN KEY(vend_id) REFERENCES Vendor(vend_id);</div><div class="line"></div><div class="line">#定义外键的好处</div><div class="line">两张表关联,保证数据的一致性</div><div class="line"></div><div class="line">#创建外键的条件</div><div class="line">外键是表中的一列，其值必须列在另一表的主键中；</div><div class="line"></div><div class="line">#重命名表</div><div class="line">RENAME TABLE Customers TO customers;</div></pre></td></tr></table></figure>
+<h5 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h5><p>唯一标识表示表中的每一行的列；</p>
+<h5 id="NOT-NULL"><a href="#NOT-NULL" class="headerlink" title="NOT NULL"></a>NOT NULL</h5><p>指定列名不为空；</p>
+<h5 id="DEFAULT"><a href="#DEFAULT" class="headerlink" title="DEFAULT"></a>DEFAULT</h5><p>插入时，如果不给出值，自动采用默认值,MYSQL中默认值只支持常量，不允许使用函数</p>
+<h5 id="引擎类型"><a href="#引擎类型" class="headerlink" title="引擎类型"></a>引擎类型</h5><ul>
+<li>InnoDB是一个可靠的事务处理引擎，它不支持全文搜索</li>
+<li>MEMORY在功能等同于MYISAM，但由于数据存储在内存中，速度很快(适合创建临时表)</li>
+<li>MyISAM是一个性能极高的引擎，它支持全文搜索，但不支持事务处理</li>
+<li>引擎可以混用，但外键不能跨引擎</li>
+</ul>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/29/SQL创建表/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -997,15 +1016,10 @@
       
         
           
-          UPDATE1234# 更新一条数据UPDATE Customers SET cust_email = &quot;kim@163.com&quot; WHERE cust_id = &quot;10005&quot;;特别注意：别忘了WHERE条件，否则将影响整张表;
-DELETE12345678
-          ...
+            <p>UPDATE<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 更新一条数据</div><div class="line">UPDATE Customers SET cust_email = &quot;kim@163.com&quot; WHERE cust_id = &quot;10005&quot;;</div><div class="line"></div><div class="line">特别注意：别忘了WHERE条件，否则将影响整张表;</div></pre></td></tr></table></figure></p>
+<p>DELETE<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># 删除一条记录</div><div class="line">DELETE FROM Customers WHERE cust_id = &quot;10006&quot;;</div><div class="line"></div><div class="line">特别注意：别忘了WHERE条件，否则将删除整张表,推荐先用SELECT查询需要删除的记录，再执行删除操作;</div><div class="line"></div><div class="line">#删除整个表</div><div class="line">DROP TABLE Customers;</div><div class="line"></div><div class="line"># 外键的好处</div><div class="line">使用外键确保完整性的好处是，可以防止删除某个关系需要用到的行。</div></pre></td></tr></table></figure></p>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/29/SQL更新删除数据/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -1123,14 +1137,9 @@ DELETE12345678
       
         
           
-          INSERT12345678910111213141516INSERT INTO Customers VALUES(NULL, &apos;张三&apos;);# 推荐更安全、扩展性更好的方式INSERT INTO Customers(cust_id, cust_name) VALUES(NULL,
-          ...
+            <p>INSERT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">INSERT INTO Customers VALUES(NULL, &apos;张三&apos;);</div><div class="line"></div><div class="line"># 推荐更安全、扩展性更好的方式</div><div class="line">INSERT INTO Customers(cust_id, cust_name) VALUES(NULL, &apos;张三&apos;);</div><div class="line"></div><div class="line"># 进一步，无需插入 AUTO_INCREMENT属性的列</div><div class="line">INSERT INTO Customers(cust_name) VALUES(&apos;张三&apos;);</div><div class="line"></div><div class="line"># 插入多条数据，单条语句插入比多次语句性能更高</div><div class="line">INSERT INTO Customers(cust_name) VALUES(&apos;张三&apos;),(&apos;李四&apos;);</div><div class="line"></div><div class="line"># 插入检索出来的数据</div><div class="line">INSERT INTO Customers(cust_id,cust_name) SELECT cust_id,cust_name FROM Old_Customers;</div><div class="line"></div><div class="line"># 从一个表复制到另外一个表</div><div class="line">CREATE TABLE CustCopy AS SELECT * FROM Customers;</div></pre></td></tr></table></figure></p>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/29/SQL插入数据/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -1248,16 +1257,17 @@ DELETE12345678
       
         
           
-          MYSQL无法插入中文，报Incorrect string value: ‘\xD5\xC5\xC8\xFD’错误mysql&gt; status;
-使用的库的字符集是latin1，该字符集不支持中文字符mysql&gt; show CREATE TABLE person1;
-修改表字符集mysql
-          ...
+            <h5 id="MYSQL无法插入中文，报Incorrect-string-value-‘-xD5-xC5-xC8-xFD’错误"><a href="#MYSQL无法插入中文，报Incorrect-string-value-‘-xD5-xC5-xC8-xFD’错误" class="headerlink" title="MYSQL无法插入中文，报Incorrect string value: ‘\xD5\xC5\xC8\xFD’错误"></a>MYSQL无法插入中文，报Incorrect string value: ‘\xD5\xC5\xC8\xFD’错误</h5><p><code>mysql&gt; status;</code><br><img src="/images/mysql中文无法插入.png" alt=""></p>
+<h5 id="使用的库的字符集是latin1，该字符集不支持中文字符"><a href="#使用的库的字符集是latin1，该字符集不支持中文字符" class="headerlink" title="使用的库的字符集是latin1，该字符集不支持中文字符"></a>使用的库的字符集是latin1，该字符集不支持中文字符</h5><p><code>mysql&gt; show CREATE TABLE person1;</code><br><img src="/images/mysql中文无法插入2.png" alt=""></p>
+<h5 id="修改表字符集"><a href="#修改表字符集" class="headerlink" title="修改表字符集"></a>修改表字符集</h5><p><code>mysql&gt; ALTER TABLE person1 character set utf8;</code></p>
+<p><code>mysql&gt; show CREATE TABLE person1;</code><br><img src="/images/mysql中文无法插入3.png" alt=""></p>
+<h5 id="修改字段字符集"><a href="#修改字段字符集" class="headerlink" title="修改字段字符集"></a>修改字段字符集</h5><p><code>mysql&gt; ALTER TABLE person1 modify name varchar(20) character set utf8;</code><br><img src="/images/mysql中文无法插入4.png" alt=""></p>
+<h5 id="这时在windows下的CMD控制台的MYSQL中执行"><a href="#这时在windows下的CMD控制台的MYSQL中执行" class="headerlink" title="这时在windows下的CMD控制台的MYSQL中执行"></a>这时在windows下的CMD控制台的MYSQL中执行</h5><p><code>mysql&gt;INSERT INTO person1(id,name,age) VALUES (7,&#39;张三&#39;,21);</code><br><img src="/images/mysql中文无法插入5.png" alt=""></p>
+<h5 id="发现仍然报错，什么原因呢？"><a href="#发现仍然报错，什么原因呢？" class="headerlink" title="发现仍然报错，什么原因呢？"></a>发现仍然报错，什么原因呢？</h5><p><img src="/images/mysql中文无法插入6.png" alt=""><br>因为CMD控制台的编码是GBK的，但MYSQL的编码是UTF8所以出错;最后，用第三方软件navicate，在person1表中，执行刚刚的插入操作是可以成功.</p>
+<h5 id="最后设置数据库的编码："><a href="#最后设置数据库的编码：" class="headerlink" title="最后设置数据库的编码："></a>最后设置数据库的编码：</h5><p><code>mysql&gt;show variables like &#39;character_set_%&#39;;</code><br><img src="/images/mysql中文无法插入7.png" alt=""><br><code>mysql&gt;set character_set_database=utf8;</code><br><img src="/images/mysql中文无法插入8.png" alt=""></p>
+<h5 id="关于MYSQL数据库的配置"><a href="#关于MYSQL数据库的配置" class="headerlink" title="关于MYSQL数据库的配置"></a>关于MYSQL数据库的配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">1、修改mysql/my.ini 配置文件</div><div class="line">[client]</div><div class="line">default-character-set=utf8</div><div class="line"></div><div class="line">[mysqld]</div><div class="line">default-storage-engine=INNODB</div><div class="line">character-set-server=utf8</div><div class="line"></div><div class="line">2、重启MYSQL</div><div class="line">#windows下，停止MYSQL服务</div><div class="line">net stop mysql</div><div class="line"></div><div class="line">#启动服务</div><div class="line">net start mysql</div><div class="line"></div><div class="line">3、修改成功，进入MYSQL查看字符集</div><div class="line">show variables like &apos;character_set_%&apos;;</div></pre></td></tr></table></figure>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/29/MYSQL数据库无法插入中文/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -1375,14 +1385,11 @@ DELETE12345678
       
         
           
-          常用文本处理函数12345678910Concat(str1,str2,str3)拼接字符串Ltrim()	去掉左边的空格Trim()	去掉所有的空格Left()	返回串左边的字符Locate() 找出串的一个子串Lower() 将串转换为小写Right() 返回串右边的字符Soundex() 返回
-          ...
+            <h4 id="常用文本处理函数"><a href="#常用文本处理函数" class="headerlink" title="常用文本处理函数"></a>常用文本处理函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Concat(str1,str2,str3)拼接字符串</div><div class="line">Ltrim()	去掉左边的空格</div><div class="line">Trim()	去掉所有的空格</div><div class="line">Left()	返回串左边的字符</div><div class="line">Locate() 找出串的一个子串</div><div class="line">Lower() 将串转换为小写</div><div class="line">Right() 返回串右边的字符</div><div class="line">Soundex() 返回串的SOUNDEX值</div><div class="line">SubString() 返回子串的字符</div><div class="line">Upper() 将串转换为大写</div></pre></td></tr></table></figure>
+<h4 id="日期和时间处理函数"><a href="#日期和时间处理函数" class="headerlink" title="日期和时间处理函数"></a>日期和时间处理函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">AddDate() 增加一个日期（天、周等）</div><div class="line">AddTime() 增加一个时间（时、分等）</div><div class="line">CurDate() 返回当前日期</div><div class="line">CurTime() 返回当前时间</div><div class="line">Date()</div><div class="line">DateDiff()</div><div class="line">Date_Add()</div><div class="line">Date_Format()</div><div class="line">Day()</div><div class="line">DayOfWeek()</div><div class="line">Hour()</div><div class="line">Minute()</div><div class="line">Month()</div><div class="line">Now()</div><div class="line">Second()</div><div class="line">Time()</div><div class="line">Year()</div><div class="line"></div><div class="line"># 实战</div><div class="line">SELECT cust_id, order_num FROM orders WHERE Date(order_date) BETWEEN &apos;2005-09-01&apos; AND &apos;2005-09-30&apos;;</div><div class="line"></div><div class="line">SELECT cust_id, order_num FROM orders WHERE Year(order_date) = 2005 AND Month(order_date) = 9;</div></pre></td></tr></table></figure>
+<h4 id="数值处理函数"><a href="#数值处理函数" class="headerlink" title="数值处理函数"></a>数值处理函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Abs() 绝对值</div><div class="line">Cos()</div><div class="line">Exp() 指数</div><div class="line">Mod()</div><div class="line">Pi() </div><div class="line">Rand()</div><div class="line">Sin()</div><div class="line">Sqrt() 平方根</div><div class="line">Tan() 正切值</div></pre></td></tr></table></figure>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/28/SQL常用函数/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -1500,15 +1507,10 @@ DELETE12345678
       
         
           
-          SQL注释12  --    行内注释/* */   多行注释
-SELECT1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/28/SQL查询/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+            <h4 id="SQL注释"><a href="#SQL注释" class="headerlink" title="SQL注释"></a>SQL注释</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  --    行内注释</div><div class="line">/* */   多行注释</div></pre></td></tr></table></figure>
+<h4 id="SELECT"><a href="#SELECT" class="headerlink" title="SELECT"></a>SELECT</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div></pre></td><td class="code"><pre><div class="line"># 返回不同的值</div><div class="line">SELECT DISTINC name FROM person;</div><div class="line"></div><div class="line">特别注意：不能部分使用DISTINC，如, SELECT DISTINC name, age FROM person;查询结果显示name和age都不同的记录</div><div class="line"></div><div class="line"># 分页查询</div><div class="line">SELECT name, age FROM person LIMIT 1,4;</div><div class="line"></div><div class="line"># 排序检索数据</div><div class="line">SELECT name, age FROM person ORDER BY name DESC, age DESC;</div><div class="line"></div><div class="line"># 过滤查询</div><div class="line">SELECT name, age FROM person WHERE age BETWEEN 23 AND 30;</div><div class="line"></div><div class="line">## WHERE子句操作符</div><div class="line">    &lt;&gt;				不等于</div><div class="line">    !=				不等于</div><div class="line">    &lt;=				小于等于</div><div class="line">    &gt;=				大于等于</div><div class="line">    BETWEEN AND	    在指定两值之间</div><div class="line">    IS NULL 	    为NULL的值</div><div class="line">    OR				匹配任一条件的记录</div><div class="line">    IN				指定匹配清单的关键字，功能和OR相当,多个条件用逗号隔开如：IN(condition1,condition2)</div><div class="line">    NOT			    否定其后跟的所有条件</div><div class="line"></div><div class="line">特别注意：ORDER BY 应放于最后一条子语句，否则报错; 默认排序为升序ASC; DESC关键字只应用到直接位于其前面的列名。</div><div class="line"></div><div class="line"># 模糊查询</div><div class="line">SELECT name, age FROM person WHERE name LIKE &apos;张%&apos;;</div><div class="line"></div><div class="line">特别注意：</div><div class="line">%  	任意0个、1个、多个字符,可以匹配任何东西，除了NULL</div><div class="line">_	有且仅匹配一个字符</div><div class="line"></div><div class="line"></div><div class="line"># 字段使用别名</div><div class="line">SELECT name AS new_name,age FROM person;</div><div class="line"></div><div class="line"># 表使用别名</div><div class="line">SELECT cust_name,cust_contact FROM Customers AS C,Orders AS O WHERE C.cust_id = O.cust_id;</div><div class="line"></div><div class="line"># 分组</div><div class="line">SELECT age, name,COUNT(*) AS numbers FROM person GROUP BY age,name;</div><div class="line"></div><div class="line">特别注意：</div><div class="line">1、分组中如果包含具有NULL值的行，则NULL将作为一个分组返回，如果列中包含多个NULL，将它们分为同一组；</div><div class="line">2、除聚集计算外(如：COUNT()、MAX()等)，SELECT语句中的每一列都必须在GROUP BY 子句中给出；</div><div class="line">3、GROUP BY 子句可以包含任意数目的列</div><div class="line"></div><div class="line"># 分组过滤</div><div class="line">SELECT age, name, COUNT(*) AS numbers FROM person GROUP BY age,name HAVING COUNT(*) &gt; 2;</div><div class="line"></div><div class="line">特别注意：</div><div class="line">HAVING等同于WHERE，唯一的区别是，HAVING可用于分组过滤，WHERE不可以。WHERE是分组前的过滤，HAVING是分组后的过滤；</div><div class="line"></div><div class="line"># 子查询练习</div><div class="line">查询所有购买order_item = 1的用户信息；</div><div class="line">SELECT order_num FROM orderitems where order_item=1;</div><div class="line"></div><div class="line">Select cust_id from orders where order_num in (SELECT order_num FROM orderitems where order_item=1);</div><div class="line"></div><div class="line">SELECT cust_name,cust_address,cust_city FROM customer WHERE cust_id in (Select cust_id from orders where order_num in (SELECT order_num FROM orderitems where order_item=1));</div><div class="line"></div><div class="line"># 等值联结查询</div><div class="line">SELECT vend_name, prod_name, prod_price FROM Vendors, Products WHERE Vendors.vend_id = Products.vend_id;</div><div class="line"></div><div class="line">特别注意：联结两表时，实际要做的是将第一个表的每一行和第二个表的每一行进行配对;如果没有联结条件，检索出行的数目将是两个表行数的乘积；</div><div class="line"></div><div class="line"># 内联查询</div><div class="line">SELECT vend_name, prod_name, prod_price FROM Vendors INNER JOIN Products ON Vendors.vend_id = Products.vend_id;</div><div class="line"></div><div class="line">特别注意：内联条件用特定的ON而不是WHERE; 匹配两表都包含的记录，不包含列为NULL记录；</div><div class="line"></div><div class="line"># 自联结查询</div><div class="line">SELECT c1.cust_id,c1.cust_name,c1.cust_contact FROM Custormer AS c1,Custormer AS c2 WHERE c1.cust_name = c2.cust_name AND c2.cust_contact = &quot;JIM jones&quot;;</div><div class="line"></div><div class="line">特别注意：别忘了c1.cust_name = c2.cust_name的条件！两表联结时，检索出行的数目是两表行数的乘积；</div><div class="line"></div><div class="line"># 外联结查询</div><div class="line">左外联：SELECT c.cust_id,o.order_num FROM Custormers AS c LEFT OUTER JOIN Orders AS o ON c.cust_id = o.cust_id;</div><div class="line"></div><div class="line">右外联：SELECT c.cust_id,o.order_num FROM Custormers AS c RIGHT OUTER JOIN Orders AS o ON c.cust_id = o.cust_id;</div><div class="line"></div><div class="line">特别注意：外联包含没有关联的行，RIGHT或LEFT指定了包含其所有行的表,RIGHT指出使用右边表的所有行，LEFT则反之；且，如果包含匹配项为NULL的记录；</div><div class="line"></div><div class="line"># 带聚合函数的联结</div><div class="line">SELECT c.cust_id,COUNT(*) AS num FROM Customers AS c INNER JOIN Orders AS o ON c.cust_id = o.cust_id GROUP BY c.cust_id;</div><div class="line"></div><div class="line"># 组合查询</div><div class="line">SELECT cust_name,cust_city FROM Customers WHERE cust_name = &apos;张三&apos; UNION SELECT cust_name,cust_city FROM Customers WHERE cust_city = &quot;shangHai&quot;;</div><div class="line"></div><div class="line">等价于 SELECT cust_name,cust_city FROM Customers WHERE cust_name = &apos;张三&apos; OR cust_city = &apos;shangHai&apos;;</div><div class="line"></div><div class="line">特别注意：</div><div class="line">1、组合查询各个查询，查询列名应相同，且顺序也要一致；</div><div class="line">2、UNION必须由两条或以上的SELECT语句组成</div><div class="line">3、默认去除重复行，使用UNION ALL可以返回所有行</div></pre></td></tr></table></figure>
+<h1 id="总结回顾"><a href="#总结回顾" class="headerlink" title="总结回顾"></a>总结回顾</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># SELECT子句及其顺序</div><div class="line"></div><div class="line">SELECT		要返回的列或表达式</div><div class="line">FROM        从中检索数据的表</div><div class="line">WHERE	    行级过滤</div><div class="line">GROUP BY	分组说明</div><div class="line">HAVING		分组过滤</div><div class="line">ORDER BY	输出排序顺序</div></pre></td></tr></table></figure>
+          
         
       
     </div>

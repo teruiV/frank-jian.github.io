@@ -362,25 +362,109 @@
       
         
           
-          前言 代码是写给人看的，顺便在计算机上运行而已。把常用的标准记录下来，时常检验自己的代码是否符合规范，避免写烂代码。
-烂代码是如何出现？
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p> 代码是写给人看的，顺便在计算机上运行而已。把常用的标准记录下来，时常检验自己的代码是否符合规范，避免写烂代码。</p>
+<h3 id="烂代码是如何出现？"><a href="#烂代码是如何出现？" class="headerlink" title="烂代码是如何出现？"></a>烂代码是如何出现？</h3><blockquote>
+<ol>
+<li>未经思考就开始编码</li>
+<li>功能完成就结束编码</li>
+<li>修改已有代码</li>
+</ol>
+</blockquote>
+<h3 id="Java代码的一些规范"><a href="#Java代码的一些规范" class="headerlink" title="Java代码的一些规范"></a>Java代码的一些规范</h3><p><strong>命名</strong></p>
+<ol>
+<li>私有方法以「_ 」作为前缀</li>
+<li>以获取为目的的数据库查询方法以get作为前缀，以搜索为目的的数据库查询方法以find作为前缀。</li>
+<li>测试方法以test最为前缀</li>
+<li>类名一般以名词结尾，方法名应该是动词或者动词短语</li>
+<li>接口类以字母I作为前缀(常量类除外)</li>
+<li>抽象父类以Base作为前缀</li>
+<li>普通父类以类别作为后缀，比如xxxController,xxxService,xxxConstants,xxxVO(页面模型)、xxxQO(查询模型)、xxxHelper(带状态工具类),xxxUtils(无状态工具类)等</li>
+<li>测试类以Test作为后缀，与被测试类使用同一包名</li>
+<li>VO、QO的成员同一命名(包括大小写)</li>
+<li>增加重要细节，比如时间变量的单位</li>
+<li>对于作用域大的变量使用较长的名字。</li>
+</ol>
+<p><strong>代码</strong></p>
+<ol>
+<li>尽量编码使用NULL、使用Optional.ofNullable替代</li>
+<li>不要使用Optional作为默认参数，使用重载或者拆分方法</li>
+<li>Stream仅限于方法内部使用，接口层面使用List或Set</li>
+<li>循环流程中尽量避免自动装箱，显式调用Integer.intValue()或Integer.valueOf()</li>
+<li>工具类不应该捕获异常，而应将异常抛出由调用方处理</li>
+<li>使用JAVA8的DateTime，不要用JodaTime.</li>
+<li>除非会有多个实现，或者有解耦需求，不要使用Inteface.</li>
+<li>与常量做比较时，应该把常量放在前面避免空指针异常</li>
+<li>私有常量直接定义在类层面，而非方法层面。</li>
+</ol>
+<h3 id="抽象-amp-分类"><a href="#抽象-amp-分类" class="headerlink" title="抽象 &amp; 分类"></a>抽象 &amp; 分类</h3><p><code>抽象和分类是程序员/架构师最重要的能力</code></p>
+<p>架构和编程都是一个不断抽象的过程，我们把业务需求抽象成数据模型、服务和应用，面向对象就是抽象出类和对象，面向过程就是抽象出方法和函数。</p>
+<p>抽象出模块后，需要合理的将功能分到不同的模块，清楚的定义模块的边界，才能保证模块的可维护性和健壮性。</p>
+<p>抽象和分类是将复杂的东西简单化的过程。对于司机，汽车是一个抽象，它的接口是方向盘、档位、刹车和油门。 对于汽车，轮胎是一个抽象，轮胎的规格都是固定的几种，可以安装在不同的汽车上。</p>
+<h3 id="单一职责原则-Simple-Responsibility-Principle-SRP"><a href="#单一职责原则-Simple-Responsibility-Principle-SRP" class="headerlink" title="单一职责原则 Simple Responsibility Principle SRP"></a>单一职责原则 Simple Responsibility Principle SRP</h3><p><code>一个模块，只应该做一件事，并把这件事做好，或者只有一个引起该模块变化的原因。</code></p>
+<h3 id="开放封闭原则-Open-Closed-Principle-OCP"><a href="#开放封闭原则-Open-Closed-Principle-OCP" class="headerlink" title="开放封闭原则 Open/Closed Principle,OCP"></a>开放封闭原则 Open/Closed Principle,OCP</h3><p>对扩展开放，对修改封闭。当需求改变时，我们可以扩展模块以满足新的需求，但扩展时，不应该需要修改原模块的实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">public class Square &#123; </div><div class="line">    public double side;</div><div class="line">&#125;</div><div class="line">public class Rectangle &#123; </div><div class="line">    public double height;</div><div class="line">    public double width;</div><div class="line">&#125;</div><div class="line">public class Circle &#123; </div><div class="line">    public double radius;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class Geometry &#123;</div><div class="line">    public double area(Object shape) &#123;</div><div class="line">        if (shape instanceof Square) &#123;</div><div class="line">            Square s = (Square)shape;</div><div class="line">            return s.side * s.side;</div><div class="line">        &#125; else if (shape instanceof Rectangle) &#123;</div><div class="line">            Rectangle r = (Rectangle)shape;</div><div class="line">            return r.height * r.width;</div><div class="line">        &#125; else if (shape instanceof Square) &#123;</div><div class="line">            Circle c = (Circle)shape;</div><div class="line">            return PI * c.radius * c.radius;</div><div class="line">        &#125; else &#123;</div><div class="line">            throw new NoSuchShareException();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public class Square implements Share &#123; </div><div class="line">    public double side;</div><div class="line">    </div><div class="line">    public double area() &#123;</div><div class="line">        return side * side;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class Rectangle implements Share &#123; </div><div class="line">    public double height;</div><div class="line">    public double width;</div><div class="line">    </div><div class="line">    public double area() &#123;</div><div class="line">        return height * width;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class Circle implements Share &#123; </div><div class="line">    public double radius;</div><div class="line">    </div><div class="line">    public double area() &#123;</div><div class="line">        return PI * radius * radius;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>过程式代码难以添加新数据结构，面向对象代码难以添加新方法。</p>
+<p>如果要添加一个新的形状(比如椭圆)，那面向对象的实现会方便些；</p>
+<p>如果要添加一个新的方法(比如计算周长)，那过程式的实现会方便些。</p>
+<h3 id="依赖倒置原则-Dependency-Inversion-Principle，DIP"><a href="#依赖倒置原则-Dependency-Inversion-Principle，DIP" class="headerlink" title="依赖倒置原则(Dependency Inversion Principle，DIP)"></a>依赖倒置原则(Dependency Inversion Principle，DIP)</h3><p>高层模块不应该依赖于底层模块的实现，两者都应该依赖于抽象，抽象不应该依赖于细节，细节应该依赖于抽象。</p>
+<p><code>所有的协议和标准化都是DIP的一种实现</code></p>
+<ol>
+<li>TCP、HTTP等网络协议</li>
+<li>JDBC和SQL</li>
+<li>操作系统、JVM</li>
+<li>Spring框架及各种设计模式</li>
+<li>编程语言 </li>
+</ol>
+<p><code>生活中也有很多例子</code></p>
+<ol>
+<li>汽车和轮胎</li>
+<li>铅笔和笔芯</li>
+<li>电源插座</li>
+<li>USB接口</li>
+</ol>
+<h3 id="里氏替换原则-Liskov-Substitution-Principle-LSP"><a href="#里氏替换原则-Liskov-Substitution-Principle-LSP" class="headerlink" title="里氏替换原则 Liskov Substitution Principle,LSP"></a>里氏替换原则 Liskov Substitution Principle,LSP</h3><p>子类必须能够替换他们的基类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class Rectangle &#123; </div><div class="line">    public double height;</div><div class="line">    public double width;</div><div class="line">    </div><div class="line">    public void setHeight(int height) &#123; ... &#125;</div><div class="line">    public void setWidth(int width) &#123; ... &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class Square extends Rectangle &#123; </div><div class="line">    ???</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>正方形是一个特殊的长方形，那么，正方形可以是长方形的子类吗？</p>
+<h3 id="接口隔离原则-Interface-Segregation-Principle-ISP"><a href="#接口隔离原则-Interface-Segregation-Principle-ISP" class="headerlink" title="接口隔离原则(Interface Segregation Principle, ISP)"></a>接口隔离原则(Interface Segregation Principle, ISP)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">interface Shape &#123;</div><div class="line">    public function area();</div><div class="line">    public function volume();</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class Square extends Shape &#123; </div><div class="line">    ???</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果正方形继承了Shape接口，该如何计算体积以实现volume方法？</p>
+<h3 id="迪米特法则-Law-of-Demeter"><a href="#迪米特法则-Law-of-Demeter" class="headerlink" title="迪米特法则(Law of Demeter)"></a>迪米特法则(Law of Demeter)</h3><p>模块不应该了解它所操作的对象的内部情况。</p>
+<p><code>生活中案例</code></p>
+<p>如果你想让你的狗跑的话，你会对狗狗说，还是对四条狗腿说？<br>如果你去店里买东西，你会把钱交给店员，还是会把钱包交给店员让他自己拿？</p>
+<p><code>代码例子</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">final String outputDir = ctxt.getOptions().getScratchDir().getAbsolutePath();</div></pre></td></tr></table></figure>
+<p>这样的代码把对象内部实现暴露了出来，应该考虑讲该功能直接暴露为接口，或者合理使用设计模式（如Facade）。</p>
+<h3 id="其他原则"><a href="#其他原则" class="headerlink" title="其他原则"></a>其他原则</h3><ul>
+<li>Don’t Repeat Yourself (DRY)</li>
+<li>Keep It Simple, Stupid (KISS)</li>
+<li>You Ain’t Gonna Need It (YAGNI)</li>
+<li>命令/查询分离原则(Command-Query Separation, CQS)</li>
+<li>惯例优于配置原则(Convention over Configuration, CoC)</li>
+<li>高内聚/低耦合(High Cohesion &amp; Loose Coupling)</li>
+</ul>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://www.devtf.cn/?p=1134" target="_blank" rel="external">http://www.devtf.cn/?p=1134</a></li>
+<li><a href="http://www.jianshu.com/p/7645a5ea7f46" target="_blank" rel="external">http://www.jianshu.com/p/7645a5ea7f46</a></li>
+<li><a href="http://blog.2baxb.me/archives/1343" target="_blank" rel="external">http://blog.2baxb.me/archives/1343</a></li>
+<li><a href="http://blog.2baxb.me/archives/1378" target="_blank" rel="external">http://blog.2baxb.me/archives/1378</a></li>
+<li><a href="http://blog.2baxb.me/archives/1499" target="_blank" rel="external">http://blog.2baxb.me/archives/1499</a></li>
+<li><a href="http://beiyuu.com/readable-code/" target="_blank" rel="external">http://beiyuu.com/readable-code/</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html</a></li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzA5Nzc4OTA1Mw==&amp;mid=408703236&amp;idx=1&amp;sn=3f78abcca906d5edee06ff85b2d22416&amp;scene=0#wechat_redirect" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MzA5Nzc4OTA1Mw==&amp;mid=408703236&amp;idx=1&amp;sn=3f78abcca906d5edee06ff85b2d22416&amp;scene=0#wechat_redirect</a></li>
+<li><a href="http://coolshell.cn/articles/4535.html" target="_blank" rel="external">http://coolshell.cn/articles/4535.html</a></li>
+<li><a href="http://blog.jobbole.com/86267/" target="_blank" rel="external">http://blog.jobbole.com/86267/</a></li>
+<li><a href="http://www.importnew.com/10656.html" target="_blank" rel="external">http://www.importnew.com/10656.html</a></li>
+<li><a href="http://luopq.com/2016/02/21/write-good-function/" target="_blank" rel="external">http://luopq.com/2016/02/21/write-good-function/</a></li>
+</ul>
+<hr>
+<ul>
+<li><a href="http://book.douban.com/subject/4199741/" target="_blank" rel="external">「代码整洁之道」</a></li>
+<li><a href="https://book.douban.com/subject/10797189/" target="_blank" rel="external">「编写可读代码的艺术」</a></li>
+<li><a href="http://book.douban.com/subject/1140457/" target="_blank" rel="external">「敏捷软件开发：原则、模式与实践」</a></li>
+<li><a href="http://book.douban.com/subject/1467587/" target="_blank" rel="external">「UNIX编程艺术」</a></li>
+</ul>
 
-未经思考就开始编码
-功能完成就结束编码
-修改已有代码
-
-
-Java代码的一些规范命名
-
-私有方法以「_ 」作为前缀
-以获取为目的的数据库查询方法以get作为前缀
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/14/JAVA代码规范/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -498,17 +582,21 @@ Java代码的一些规范命名
       
         
           
-          前言现有的项目，对于数据库查询的性能要求挺高的，对于查询性能的优化也是迫在眉睫，接下来，让我们一同来学习MySQL查询性能优化。
-查询性能低下，最基本的原因是访问的数据太多。大部分性能低下的查询都可以通过减少访问的数据量的方式进行优化。
-案例查询不需要的记录
-场景：有些开发者习惯先使用SELECT语
-          ...
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>现有的项目，对于数据库查询的性能要求挺高的，对于查询性能的优化也是迫在眉睫，接下来，让我们一同来学习MySQL查询性能优化。</p>
+<p>查询性能低下，最基本的原因是访问的数据太多。大部分性能低下的查询都可以通过减少访问的数据量的方式进行优化。</p>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><p><strong>查询不需要的记录</strong></p>
+<p>场景：有些开发者习惯先使用<code>SELECT</code>语句查询大量的结果，然后获取前面N行后关闭结果集，他们认为MYSQL会执行查询，并只返回他们需要的10条数据，然后停止查询。但实际是MYSQL回查询出所有的结果集。客户端接受所有结果集，然后抛弃大部分数据。最有效的方式是在查询后加上LIMIT。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SELECT username from USER LIMIT 10</div></pre></td></tr></table></figure>
+<p><strong>多表关联时返回全部的列</strong></p>
+<p>场景：我想获取电影My Love中出现的演员</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SELECT * FROM actor </div><div class="line">INNER JOIN film_actor USIGN(actor_id)</div><div class="line">INNER JOIN film USIGN(film_id)</div><div class="line">WHERE film.title = &quot;My Love&quot;</div></pre></td></tr></table></figure>
+<p>这将返回三个表的全部数据列，正确的做法应该是<code>SELECT actor.* FROM actor ....</code></p>
+<p>未完待续…</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>高性能MySQL第三版</li>
+</ul>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/14/MySQL之查询性能优化/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -626,14 +714,22 @@ Java代码的一些规范命名
       
         
           
-          前言今天和同事对接项目，对方请求我的服务，请求参数是一个JSON；在进入服务之前，需要做一个签名验证，所以在拦截器部分，读取了请求参数。但拦截器读取完请求参数之后，Controller层便不能读取了。因为Spring MVC中@RequestBody是流的读取方式，而流只能读取一次，在拦截器中读取了
-          ...
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>今天和同事对接项目，对方请求我的服务，请求参数是一个<code>JSON</code>；在进入服务之前，需要做一个签名验证，所以在拦截器部分，读取了请求参数。但拦截器读取完请求参数之后，Controller层便不能读取了。因为<code>Spring MVC</code>中<code>@RequestBody</code>是流的读取方式，而流只能读取一次，在拦截器中读取了，在Controller中再次读取便为空数据。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p><strong>SpringMVC解决方案</strong></p>
+<p>流只能读一次，读了就没有了，为了后面的代码还能够取得的流，应该将其写出去。封装请求流，将请求流写出去。</p>
+<p><code>CustomServletRequestWrapper.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 包装HttpServletRequest</div><div class="line"> */</div><div class="line">public class CustomServletRequestWrapper extends HttpServletRequestWrapper &#123;</div><div class="line"></div><div class="line">    private final byte[] body;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * Construct a wrapper for the specified request.</div><div class="line">     *</div><div class="line">     * @param request The request to be wrapped</div><div class="line">     */</div><div class="line">    public CustomServletRequestWrapper(HttpServletRequest request) throws IOException &#123;</div><div class="line">        super(request);</div><div class="line">        body = toByteArray(super.getInputStream());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public BufferedReader getReader() throws IOException &#123;</div><div class="line">        return new BufferedReader(new InputStreamReader(getInputStream()));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public ServletInputStream getInputStream() throws IOException &#123;</div><div class="line">        return new RequestBodyCachingInputStream(body);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private class RequestBodyCachingInputStream extends ServletInputStream &#123;</div><div class="line">        private byte[] body;</div><div class="line">        private int lastIndexRetrieved = -1;</div><div class="line">        private ReadListener listener;</div><div class="line"></div><div class="line">        public RequestBodyCachingInputStream(byte[] body) &#123;</div><div class="line">            this.body = body;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public int read() throws IOException &#123;</div><div class="line">            if (isFinished()) &#123;</div><div class="line">                return -1;</div><div class="line">            &#125;</div><div class="line">            int i = body[lastIndexRetrieved + 1];</div><div class="line">            lastIndexRetrieved++;</div><div class="line">            if (isFinished() &amp;&amp; listener != null) &#123;</div><div class="line">                try &#123;</div><div class="line">                    listener.onAllDataRead();</div><div class="line">                &#125; catch (IOException e) &#123;</div><div class="line">                    listener.onError(e);</div><div class="line">                    throw e;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            return i;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public boolean isFinished() &#123;</div><div class="line">            return lastIndexRetrieved == body.length - 1;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public boolean isReady() &#123;</div><div class="line">            // This implementation will never block</div><div class="line">            // We also never need to call the readListener from this method, as this method will never return false</div><div class="line">            return isFinished();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void setReadListener(ReadListener listener) &#123;</div><div class="line">            if (listener == null) &#123;</div><div class="line">                throw new IllegalArgumentException(&quot;listener cann not be null&quot;);</div><div class="line">            &#125;</div><div class="line">            if (this.listener != null) &#123;</div><div class="line">                throw new IllegalArgumentException(&quot;listener has been set&quot;);</div><div class="line">            &#125;</div><div class="line">            this.listener = listener;</div><div class="line">            if (!isFinished()) &#123;</div><div class="line">                try &#123;</div><div class="line">                    listener.onAllDataRead();</div><div class="line">                &#125; catch (IOException e) &#123;</div><div class="line">                    listener.onError(e);</div><div class="line">                &#125;</div><div class="line">            &#125; else &#123;</div><div class="line">                try &#123;</div><div class="line">                    listener.onAllDataRead();</div><div class="line">                &#125; catch (IOException e) &#123;</div><div class="line">                    listener.onError(e);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public int available() throws IOException &#123;</div><div class="line">            return body.length - lastIndexRetrieved - 1;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void close() throws IOException &#123;</div><div class="line">            lastIndexRetrieved = body.length - 1;</div><div class="line">            body = null;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>设置过滤器，封装请求流: RequestReplaceFilter.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 替换Request对象</div><div class="line"> */</div><div class="line">public class RequestReplaceFilter extends OncePerRequestFilter &#123;</div><div class="line">    @Override</div><div class="line">    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException &#123;</div><div class="line">        if (!(request instanceof CustomServletRequestWrapper)) &#123;</div><div class="line">            request = new CustomServletRequestWrapper(request);</div><div class="line">        &#125;</div><div class="line">        filterChain.doFilter(request, response);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>在web.xml中添加过滤器</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;filter&gt;</div><div class="line">	&lt;filter-name&gt;requestReplaceFilter&lt;/filter-name&gt;</div><div class="line">	&lt;filter-class&gt;com.dada.bd.filter.RequestReplaceFilter&lt;/filter-class&gt;</div><div class="line">&lt;/filter&gt;</div><div class="line"></div><div class="line">&lt;filter-mapping&gt;</div><div class="line">	&lt;filter-name&gt;requestReplaceFilter&lt;/filter-name&gt;</div><div class="line">	&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">&lt;/filter-mapping&gt;</div></pre></td></tr></table></figure>
+<p><strong>SpringBoot解决方案</strong></p>
+<p><code>CustomServletRequestWrapper.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 包装HttpServletRequest</div><div class="line"> */</div><div class="line">public class CustomServletRequestWrapper extends HttpServletRequestWrapper &#123;</div><div class="line"></div><div class="line">    private final byte[] body;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * Construct a wrapper for the specified request.</div><div class="line">     *</div><div class="line">     * @param request The request to be wrapped</div><div class="line">     */</div><div class="line">    public CustomServletRequestWrapper(HttpServletRequest request) throws IOException &#123;</div><div class="line">        super(request);</div><div class="line">        body = toByteArray(super.getInputStream());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public BufferedReader getReader() throws IOException &#123;</div><div class="line">        return new BufferedReader(new InputStreamReader(getInputStream()));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public ServletInputStream getInputStream() throws IOException &#123;</div><div class="line">        return new RequestBodyCachingInputStream(body);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private class RequestBodyCachingInputStream extends ServletInputStream &#123;</div><div class="line">        private byte[] body;</div><div class="line">        private int lastIndexRetrieved = -1;</div><div class="line">        private ReadListener listener;</div><div class="line"></div><div class="line">        public RequestBodyCachingInputStream(byte[] body) &#123;</div><div class="line">            this.body = body;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public int read() throws IOException &#123;</div><div class="line">            if (isFinished()) &#123;</div><div class="line">                return -1;</div><div class="line">            &#125;</div><div class="line">            int i = body[lastIndexRetrieved + 1];</div><div class="line">            lastIndexRetrieved++;</div><div class="line">            if (isFinished() &amp;&amp; listener != null) &#123;</div><div class="line">                try &#123;</div><div class="line">                    listener.onAllDataRead();</div><div class="line">                &#125; catch (IOException e) &#123;</div><div class="line">                    listener.onError(e);</div><div class="line">                    throw e;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            return i;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public boolean isFinished() &#123;</div><div class="line">            return lastIndexRetrieved == body.length - 1;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public boolean isReady() &#123;</div><div class="line">            // This implementation will never block</div><div class="line">            // We also never need to call the readListener from this method, as this method will never return false</div><div class="line">            return isFinished();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void setReadListener(ReadListener listener) &#123;</div><div class="line">            if (listener == null) &#123;</div><div class="line">                throw new IllegalArgumentException(&quot;listener cann not be null&quot;);</div><div class="line">            &#125;</div><div class="line">            if (this.listener != null) &#123;</div><div class="line">                throw new IllegalArgumentException(&quot;listener has been set&quot;);</div><div class="line">            &#125;</div><div class="line">            this.listener = listener;</div><div class="line">            if (!isFinished()) &#123;</div><div class="line">                try &#123;</div><div class="line">                    listener.onAllDataRead();</div><div class="line">                &#125; catch (IOException e) &#123;</div><div class="line">                    listener.onError(e);</div><div class="line">                &#125;</div><div class="line">            &#125; else &#123;</div><div class="line">                try &#123;</div><div class="line">                    listener.onAllDataRead();</div><div class="line">                &#125; catch (IOException e) &#123;</div><div class="line">                    listener.onError(e);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public int available() throws IOException &#123;</div><div class="line">            return body.length - lastIndexRetrieved - 1;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void close() throws IOException &#123;</div><div class="line">            lastIndexRetrieved = body.length - 1;</div><div class="line">            body = null;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>添加@Component注解，注册过滤器</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 替换Request对象</div><div class="line"> */</div><div class="line">@Component</div><div class="line">public class RequestReplaceFilter extends OncePerRequestFilter &#123;</div><div class="line">    private static final Logger logger = LoggerFactory.getLogger(RequestReplaceFilter.class);</div><div class="line">    @Override</div><div class="line">    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException &#123;</div><div class="line">        if (!(request instanceof CustomServletRequestWrapper)) &#123;</div><div class="line">            request = new CustomServletRequestWrapper(request);</div><div class="line">        &#125;</div><div class="line">        filterChain.doFilter(request, response);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/13/解决拦截器读取Request中的流-Controller读取不到的问题/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -751,15 +847,13 @@ Java代码的一些规范命名
       
         
           
-          SpringCloud简介SpringCloud是一个基于SpringBoot的云应用开发工具，它为基于JVM的云应用开发中的配置管理、服务发现、断路器、智能路由、微代理、控制总线、全局锁、决策竞选、分布式会话和集群状态等操作提供了一种简单的开发方式。
-SpringCloud包含了许多子项目，比如S
-          ...
+            <h3 id="SpringCloud简介"><a href="#SpringCloud简介" class="headerlink" title="SpringCloud简介"></a>SpringCloud简介</h3><p><code>SpringCloud</code>是一个基于<code>SpringBoot</code>的云应用开发工具，它为基于<code>JVM</code>的云应用开发中的配置管理、服务发现、断路器、智能路由、微代理、控制总线、全局锁、决策竞选、分布式会话和集群状态等操作提供了一种简单的开发方式。</p>
+<p>SpringCloud包含了许多子项目，比如<code>Spring Cloud Config</code>、<code>Spring Cloud Netflix</code>、<code>Spring Cloud CloudFoundry</code>、<code>Spring Cloud AWS</code>、<code>Spring Cloud Security</code>、<code>Spring Cloud Commons</code>、<code>Spring Cloud Zookeeper</code>、<code>Spring Cloud CLI</code>等项目。</p>
+<h3 id="微服务架构是什么？"><a href="#微服务架构是什么？" class="headerlink" title="微服务架构是什么？"></a>微服务架构是什么？</h3><p>微服务架构是将一个完整的应用从数据存储开始垂直拆分多个不同的服务，每个服务都能够独立部署、独立维护、独立扩展、服务和服务间通过诸如<code>RestFul API</code>的方式互相调用。</p>
+<h3 id="服务注册与发现"><a href="#服务注册与发现" class="headerlink" title="服务注册与发现"></a>服务注册与发现</h3><p>在简单介绍了Spring Cloud和微服务架构之后，接下来将会使用Spring Cloud搭建服务注册和发现模块，这里我们会用到Spring Cloud Netflix,该项目是Spring Cloud的子项目之一，主要对Netflix一系列开源的产品的包装，通过简单的注解，开发者可以快速的在应用中配置一下常用模块并构建庞大的分布式系统。它主要提供的模块包括：服务发现(Eureka)、断路器(Hystrix)、智能路由(Zuul)、客户端负载均衡(Ribbon)等。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>未完待续….</p>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/13/SpringCloud入门/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -877,21 +971,50 @@ SpringCloud包含了许多子项目，比如S
       
         
           
-          前言IntelliJ在业界被公认为最好的java开发工具之一,了解其常用快捷键对于工作效率会有一定提升。
-场景查询最近的文件
-应用场景：可以快速跳转到之前刚刚查看过的文件。
-快捷键：command + E
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>IntelliJ在业界被公认为最好的java开发工具之一,了解其常用快捷键对于工作效率会有一定提升。</p>
+<h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p><strong>查询最近的文件</strong></p>
+<p>应用场景：可以快速跳转到之前刚刚查看过的文件。</p>
+<p>快捷键：<code>command + E</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/51543212.jpg" alt=""></p>
+<p><strong>查看最近编辑的文件</strong></p>
+<p>应用场景：可以快速跳转到之前刚刚编辑过的文件。</p>
+<p>快捷键：<code>command + shift +  E</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/51543212.jpg" alt=""></p>
+<p><strong>快速定位到大括号的开头或结尾</strong></p>
+<p>快捷键：<code>command + ]</code> 或 <code>command + [</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/97015680.jpg" alt=""></p>
+<p><strong>快速查找类</strong></p>
+<p>快捷键：<code>command + N</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/42335832.jpg" alt=""></p>
+<p><strong>格式化代码</strong></p>
+<p>快捷键：<code>command + alt + L</code></p>
+<p><strong>文本替换</strong></p>
+<p>快捷键：<code>command + R</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/60502414.jpg" alt=""></p>
+<p><strong>全局查找</strong></p>
+<p>快捷键： <code>control + shift + F</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/85182590.jpg" alt=""></p>
+<p><strong>删除行</strong></p>
+<p>快捷键：<code>command + X</code></p>
+<p><strong>复制行</strong></p>
+<p>快捷键：<code>command + D</code></p>
+<p><strong>跳到方法实现处</strong></p>
+<p>使用场景：通常我们会声明一个接口，然后让一个类实现这个接口。那么怎么从接口，跳到方法实现处呢？可以用这个快捷键</p>
+<p>快捷键： <code>command + alt + B</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/41820209.jpg" alt=""></p>
+<p><strong>隐藏工具窗口</strong></p>
+<p>快捷键： <code>shift + esc</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/75772825.jpg" alt=""></p>
+<p><strong>定位到具体某一行</strong></p>
+<p>快捷键：<code>command + G</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/99125758.jpg" alt=""></p>
+<p><strong>复制当前文件的路径</strong></p>
+<p>快捷键：<code>command + shift + C</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/26431733.jpg" alt=""></p>
+<p><strong>重命名</strong></p>
+<p>快捷键：<code>shift + fn + F6</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/88468445.jpg" alt=""></p>
 
-查看最近编辑的文件
-应用场景：可以快速跳转到之前刚刚编辑过的文件。
-快捷键：command 
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/11/Intellij-常用快捷键/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -990,18 +1113,16 @@ SpringCloud包含了许多子项目，比如S
       
         
           
-          背景本地MySQL一直都能够正常启动的，昨晚关机了Mac，今早启动MySQL,出错了。
+            <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>本地MySQL一直都能够正常启动的，昨晚关机了Mac，今早启动MySQL,出错了。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-8/77573533.jpg" alt=""></p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>删除下面这个错误文件就可以了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo rm -rf /usr/local/var/mysql/jianweilindeMacBook-Pro.local.err</div></pre></td></tr></table></figure></p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-8/23129111.jpg" alt=""></p>
+<p>由于<code>jianweilindeMacBook-Pro.local.err</code>的用户权限是<code>_mysql</code>,而不是我自己的用户权限，故启动的时候会报错。删除这个文件或修改用户权限均可。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://pein0119.github.io/2015/03/25/MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E9%94%99%E8%AF%AF-The-server-quit-without-updating-PID-file/" target="_blank" rel="external">MySQL服务器启动错误<code>The server quit without updating PID file</code></a></li>
+</ul>
 
-解决方案删除下面这个错误文件就可以了1sudo rm -rf /usr/local/var/mysql/jianweilindeMacBook-Pro.local.err
-分析
-由于jianweilindeMa
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/08/Mysql服务启动错误-The-server-quit-without-updating-PID-file/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -1119,20 +1240,40 @@ SpringCloud包含了许多子项目，比如S
       
         
           
-          前言上篇文章介绍了ES6之字符串的扩展，本文将学习ES6中数组的扩展，数组在实际项目中比较常用，所以非常有必要了解一下。
-实战将数组对象转化为真正的数组：Array.from
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上篇文章介绍了<a href="http://jianwl.com/2016/09/06/ES6%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%89%A9%E5%B1%95/">ES6之字符串的扩展</a>，本文将学习ES6中数组的扩展，数组在实际项目中比较常用，所以非常有必要了解一下。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>将数组对象转化为真正的数组：<code>Array.from</code></strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/44455334.jpg" alt=""></p>
+<p><strong>将一组值转化为数组：Array.of</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/42839910.jpg" alt=""></p>
+<p><strong>将当前数组内部指定位置的成员复制到其他的位置：copyWithin</strong></p>
+<p>具体语法为<code>Array.prototype.copyWithin(target,start = 0, end = this.length)</code>,接受三个参数，target(必选)，从当前位置开始替换数据，start(可选)，从该位置开始读取数据，负数表示倒数，end(可选)，默认为数组长度；</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/3645079.jpg" alt=""></p>
+<p><strong>寻找数组中符合条件的元素：find和findIndex</strong></p>
+<p><code>find</code>方法，数组中每个元素都会执行回调函数，若找到返回这个元素，没找到则返回<code>undefine</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/91334943.jpg" alt=""></p>
+<p><code>findIndex</code>，数组中每个元素都会执行回调函数，找到返回具体的索引位置，找不到返回 -1</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/86472470.jpg" alt=""></p>
+<p><strong>定值填充数组</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/35563292.jpg" alt=""></p>
+<p><strong>数组实例的entries、keys、values</strong></p>
+<p><code>keys</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/20213197.jpg" alt=""></p>
+<p><code>values:报错，暂时不清楚什么原因？后续解决🤔</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/67413393.jpg" alt=""></p>
+<p><code>entries</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/89340245.jpg" alt=""></p>
+<p><strong>数组实例includes</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/36818030.jpg" alt=""></p>
+<p><strong>数组空位</strong><br><code>比如Array构造函数返回的数组都是空位 Array[3] // [,,,]</code>；空位没有任何值，一个位置的值等于undefined仍是有值得。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/68402315.jpg" alt=""></p>
+<p><strong>数组推导</strong></p>
+<p>数组推导允许直接通过现有数组生成新数组。</p>
+<p><code>案例1：暂时不清楚其为何报错，后续解决🤔</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/18821221.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>ES6标准入门 – 阮一峰</li>
+</ul>
 
-将一组值转化为数组：Array.of
-
-将当前数组内部指定位置的成员复制到其他的位置：copyWithin
-具体语法为Ar
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/07/ES6之数组的扩展/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -1250,23 +1391,44 @@ SpringCloud包含了许多子项目，比如S
       
         
           
-          前言上一篇文章学习了ES6之解构，本文将学习ES6中字符串的扩展。
-实战字符串遍历:由for…of循环遍历
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上一篇文章学习了<a href="http://jianwl.com/2016/09/03/ES6%E4%B9%8B%E8%A7%A3%E6%9E%84/#more">ES6之解构</a>，本文将学习ES6中字符串的扩展。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>字符串遍历:由for…of循环遍历</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-6/54541215.jpg" alt=""></p>
+<p>除了遍历以外，这个遍历器最好的优点是可以识别大于<code>0xFFFF</code>的码点，传统的for循环无法识别这样的码点。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-6/2647027.jpg" alt=""></p>
+<p><strong>新增includes()、startWith()、endsWith()方法</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方法</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">includes()</td>
+<td style="text-align:center">是否找到参数字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">startsWith</td>
+<td style="text-align:center">是否以参数字符串开头</td>
+</tr>
+<tr>
+<td style="text-align:left">endsWith</td>
+<td style="text-align:center">是否以参数字符串结尾</td>
+</tr>
+</tbody>
+</table>
+<p><code>案例1</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-6/27503911.jpg" alt=""></p>
+<p><strong>模板字符串</strong></p>
+<p>传统的JavaScript输出模板通常是这样写的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var world = &quot;liuMing&quot;;</div><div class="line">$(&quot;#result&quot;).append(&quot;Hello: &quot; + world + &quot;!&quot;);</div></pre></td></tr></table></figure></p>
+<p>ES6引入了模板字符串来解决这个问题，用反引号 ` 标识，它可以当做普通字符串、也可以定义多行字符串，也可以在字符串中嵌入变量。<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-6/47264420.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>ES6标准入门 – 阮一峰</li>
+</ul>
 
-除了遍历以外，这个遍历器最好的优点是可以识别大于0xFFFF的码点，传统的for循环无法识别这样的码点。
-
-新增includes()、startWith()、endsWith()方法
-
-
-
-
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/06/ES6之字符串的扩展/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -1384,15 +1546,39 @@ SpringCloud包含了许多子项目，比如S
       
         
           
-          前言上篇文章介绍SpringBoot集成JOOQ，本文是其之上的延伸，将介绍在SpringBoot下，JOOQ如何配置多个数据源。
-为何需要配置多个数据库？默认情况下，SpringBoot使用的是单数据库配置（通过spring.datasource.*配置具体数据库连接信息）。对于绝大多数Sprin
-          ...
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上篇文章介绍<a href="http://jianwl.com/2016/09/04/SpringBoot%E9%9B%86%E6%88%90JOOQ/">SpringBoot集成JOOQ</a>，本文是其之上的延伸，将介绍在<code>SpringBoot</code>下，<code>JOOQ</code>如何配置多个数据源。</p>
+<h3 id="为何需要配置多个数据库？"><a href="#为何需要配置多个数据库？" class="headerlink" title="为何需要配置多个数据库？"></a>为何需要配置多个数据库？</h3><p>默认情况下，<code>SpringBoot</code>使用的是单数据库配置（通过spring.datasource.*配置具体数据库连接信息）。对于绝大多数<code>SpringBoot</code>应用，这是符合其使用场景的，因为<code>Spring Boot</code>提倡的是微服务理念，每个应用对应一个单独的业务领域。但在某些特殊情况下，一个应用对应多个数据库又是无法避免的，例如实施数据库分库后原本单个数据库变为多个数据库。本文就结合实际代码介绍如何在单个<code>Boot</code>应用中配置多数据库，以及与之相关的<code>Druid</code>，<code>jOOQ</code>数据服务框架的配置改造。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>数据对象</strong></p>
+<p><code>TEST库Admin表</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE `admin` (</div><div class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</div><div class="line">  `username` varchar(20) DEFAULT &apos;&apos;,</div><div class="line">  `password` varchar(20) DEFAULT &apos;&apos;,</div><div class="line">  `nick_name` varchar(20) DEFAULT NULL,</div><div class="line">  `address` varchar(20) DEFAULT NULL,</div><div class="line">  `is_del` int(11) DEFAULT &apos;0&apos;,</div><div class="line">  `created_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,</div><div class="line">  `updated_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">  KEY `username` (`username`)</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;</div></pre></td></tr></table></figure>
+<p><code>DADA库User表</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE `user` (</div><div class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</div><div class="line">  `username` varchar(11) NOT NULL DEFAULT &apos;&apos;,</div><div class="line">  `is_del` int(11) NOT NULL DEFAULT &apos;0&apos;,</div><div class="line">  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,</div><div class="line">  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (`id`)</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;</div></pre></td></tr></table></figure>
+<p><strong>pom.xml</strong></p>
+<p>可参考这篇文章<a href="http://jianwl.com/2016/09/04/SpringBoot%E9%9B%86%E6%88%90JOOQ/">SpringBoot集成JOOQ</a>的<code>pom.xml</code>,增加如下配置：<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-5/43787554.jpg" alt=""></p>
+<p><strong>自动生成代码</strong></p>
+<p>在控制台，执行<code>mvn clean compile</code>，JOOQ会读取相应数据库的表生成对应的POJO。</p>
+<p><strong>Druid连接池</strong></p>
+<p>Druid是阿里巴巴开源的数据库连接池，提供了强大的监控支持，号称Java语言中最好的连接池。创建两个配置类分别注册对应TEST库和DADA库。<em>特别注意，声明多个库时，需要声明某一个库为默认装配实例，用注解@Primary，否则将报错，不能同时注册多个实例。</em></p>
+<p><code>TestDbConfig.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">public class TestDbConfig &#123;</div><div class="line">    @Bean(initMethod = &quot;init&quot;, destroyMethod = &quot;close&quot;)</div><div class="line">    @ConfigurationProperties(prefix = &quot;db.test&quot;)</div><div class="line">    @Primary</div><div class="line">    public DataSource dataSourceA() &#123;</div><div class="line">        return new DruidDataSource();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    @Primary</div><div class="line">    public DataSourceTransactionManager transactionManagerA() &#123;</div><div class="line">        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();</div><div class="line">        transactionManager.setDataSource(dataSourceA());</div><div class="line">        return transactionManager;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>DadaDbConfig.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">public class DadaDbConfig &#123;</div><div class="line">    @Bean(initMethod = &quot;init&quot;, destroyMethod = &quot;close&quot;)</div><div class="line">    @ConfigurationProperties(prefix = &quot;db.dada&quot;)</div><div class="line">    public DataSource dataSourceB() &#123;</div><div class="line">        return new DruidDataSource();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public DataSourceTransactionManager transactionManagerB() &#123;</div><div class="line">        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();</div><div class="line">        transactionManager.setDataSource(dataSourceB());</div><div class="line">        return transactionManager;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>数据库参数配置：application.properties</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">db.test.url=jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;rewriteBatchedStatements=true</div><div class="line">db.test.username=root</div><div class="line">db.test.password=</div><div class="line">db.test.initialSize=1</div><div class="line">db.test.minIdle=1</div><div class="line">db.test.maxActive=100</div><div class="line">db.test.filters=stat</div><div class="line"></div><div class="line">db.dada.url=jdbc:mysql://127.0.0.1:3306/dada?useUnicode=true&amp;characterEncoding=UTF-8&amp;rewriteBatchedStatements=true</div><div class="line">db.dada.username=root</div><div class="line">db.dada.password=</div><div class="line">db.dada.initialSize=1</div><div class="line">db.dada.minIdle=1</div><div class="line">db.dada.maxActive=100</div><div class="line">db.dada.filters=stat</div></pre></td></tr></table></figure>
+<p><strong>JOOQ配置</strong></p>
+<p>特别注意，需要声明某一个数据库为默认装载数据库，用注解<code>@Primary</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">public class JooqConfig &#123;</div><div class="line">    @Bean</div><div class="line">    public DataSourceConnectionProvider dataSourceConnectionProviderA(</div><div class="line">            @Qualifier(&quot;dataSourceA&quot;) DataSource dataSourceA) &#123;</div><div class="line">        return new DataSourceConnectionProvider(</div><div class="line">                new TransactionAwareDataSourceProxy(dataSourceA));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public SpringTransactionProvider transactionProviderA(</div><div class="line">            @Qualifier(&quot;transactionManagerA&quot;) DataSourceTransactionManager txManagerW) &#123;</div><div class="line">        return new SpringTransactionProvider(txManagerW);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public DataSourceConnectionProvider dataSourceConnectionProviderB(</div><div class="line">            @Qualifier(&quot;dataSourceB&quot;) DataSource dataSourceB) &#123;</div><div class="line">        return new DataSourceConnectionProvider(</div><div class="line">                new TransactionAwareDataSourceProxy(dataSourceB));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public SpringTransactionProvider transactionProviderB(</div><div class="line">            @Qualifier(&quot;transactionManagerB&quot;) DataSourceTransactionManager txManagerB) &#123;</div><div class="line">        return new SpringTransactionProvider(txManagerB);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Configuration</div><div class="line">    public static class DslContextConfig &#123;</div><div class="line"></div><div class="line">        @Autowired(required = false)</div><div class="line">        private RecordMapperProvider recordMapperProvider;</div><div class="line"></div><div class="line">        @Autowired(required = false)</div><div class="line">        private Settings settings;</div><div class="line"></div><div class="line">        @Autowired(required = false)</div><div class="line">        private RecordListenerProvider[] recordListenerProviders;</div><div class="line"></div><div class="line">        @Autowired</div><div class="line">        private ExecuteListenerProvider[] executeListenerProviders;</div><div class="line"></div><div class="line">        @Autowired(required = false)</div><div class="line">        private VisitListenerProvider[] visitListenerProviders;</div><div class="line"></div><div class="line">        @Bean</div><div class="line">        @Primary</div><div class="line">        public DefaultDSLContext dslContextA(@Qualifier(value = &quot;dataSourceConnectionProviderA&quot;) DataSourceConnectionProvider connectionProviderA,</div><div class="line">                                             @Qualifier(&quot;transactionProviderA&quot;) SpringTransactionProvider transactionProviderA) &#123;</div><div class="line">            return new DefaultDSLContext(configuration(connectionProviderA, transactionProviderA));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Bean</div><div class="line">        public DefaultDSLContext dslContextB(@Qualifier(value = &quot;dataSourceConnectionProviderB&quot;) DataSourceConnectionProvider connectionProviderB,</div><div class="line">                                             @Qualifier(&quot;transactionProviderB&quot;) SpringTransactionProvider transactionProviderB) &#123;</div><div class="line">            return new DefaultDSLContext(configuration(connectionProviderB, transactionProviderB));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        private DefaultConfiguration configuration(ConnectionProvider connectionProvider, TransactionProvider transactionProvider) &#123;</div><div class="line">            DefaultConfiguration configuration = new DefaultConfiguration();</div><div class="line">            configuration.setSQLDialect(SQLDialect.MYSQL);</div><div class="line">            configuration.set(connectionProvider);</div><div class="line">            configuration.set(transactionProvider);</div><div class="line">            if (this.recordMapperProvider != null) &#123;</div><div class="line">                configuration.set(this.recordMapperProvider);</div><div class="line">            &#125;</div><div class="line">            if (this.settings != null) &#123;</div><div class="line">                configuration.set(this.settings);</div><div class="line">            &#125;</div><div class="line">            configuration.set(this.recordListenerProviders);</div><div class="line">            configuration.set(this.executeListenerProviders);</div><div class="line">            configuration.set(this.visitListenerProviders);</div><div class="line">            return configuration;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>事务配置</strong></p>
+<p><code>SpringTransaction.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class SpringTransaction implements Transaction &#123;</div><div class="line"></div><div class="line">    // Based on the jOOQ-spring-example from https://github.com/jOOQ/jOOQ</div><div class="line"></div><div class="line">    private final TransactionStatus transactionStatus;</div><div class="line"></div><div class="line">    SpringTransaction(TransactionStatus transactionStatus) &#123;</div><div class="line">        this.transactionStatus = transactionStatus;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public TransactionStatus getTxStatus() &#123;</div><div class="line">        return this.transactionStatus;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>SpringTransactionProvider.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">public class SpringTransactionProvider implements TransactionProvider &#123;</div><div class="line"></div><div class="line">    // Based on the jOOQ-spring-example from https://github.com/jOOQ/jOOQ</div><div class="line"></div><div class="line">    private final PlatformTransactionManager transactionManager;</div><div class="line"></div><div class="line">    public SpringTransactionProvider(PlatformTransactionManager transactionManager) &#123;</div><div class="line">        this.transactionManager = transactionManager;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void begin(TransactionContext context) &#123;</div><div class="line">        TransactionDefinition definition = new DefaultTransactionDefinition(</div><div class="line">                TransactionDefinition.PROPAGATION_NESTED);</div><div class="line">        TransactionStatus status = this.transactionManager.getTransaction(definition);</div><div class="line">        context.transaction(new SpringTransaction(status));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void commit(TransactionContext ctx) &#123;</div><div class="line">        this.transactionManager.commit(getTransactionStatus(ctx));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void rollback(TransactionContext ctx) &#123;</div><div class="line">        this.transactionManager.rollback(getTransactionStatus(ctx));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private TransactionStatus getTransactionStatus(TransactionContext ctx) &#123;</div><div class="line">        SpringTransaction transaction = (SpringTransaction) ctx.transaction();</div><div class="line">        return transaction.getTxStatus();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>至此完成了，在SpringBoot下JOOQ配置多个数据源。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://emacoo.cn/blog/spring-boot-multi-db" target="_blank" rel="external">【Spring】如何在单个Boot应用中配置多数据库？</a></li>
+</ul>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/05/SpringBoot配置多个数据源/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -1510,17 +1696,21 @@ SpringCloud包含了许多子项目，比如S
       
         
           
-          前言移动互联网应用的流行使得每周都有成百上千的应用部署在云平台上，而背后支撑这些云的正是Linux.Linux服务器上大量的数据处理和管理工作需要使用命令行和Shell脚本。
-命令实战文件权限符
-上述红色框圈出的部分是描述文件和目录权限码，具体含义如下（从左到右）：
-1234567891011121
-          ...
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>移动互联网应用的流行使得每周都有成百上千的应用部署在云平台上，而背后支撑这些云的正是<code>Linux</code>.<code>Linux</code>服务器上大量的数据处理和管理工作需要使用命令行和<code>Shell</code>脚本。</p>
+<h3 id="命令实战"><a href="#命令实战" class="headerlink" title="命令实战"></a>命令实战</h3><p><strong>文件权限符</strong><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-4/30894252.jpg" alt=""></p>
+<p>上述红色框圈出的部分是描述文件和目录权限码，具体含义如下（从左到右）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">// 第一个字符代表对象类型</div><div class="line">- 代表文件</div><div class="line">d 代表目录</div><div class="line">l 代表链接</div><div class="line">c 代表字符型设备</div><div class="line">b 代表块设备</div><div class="line">n 代表网络设备</div><div class="line"></div><div class="line">//之后有3组三个字符的码</div><div class="line">r 代表对象是可读的</div><div class="line">w 代表对象是可写的</div><div class="line">x 代表对象是可执行的</div><div class="line"></div><div class="line">// 3组三字码对应对象的三个安全级别</div><div class="line">对象的属主</div><div class="line">对象的属组</div><div class="line">系统其他用户</div></pre></td></tr></table></figure>
+<p><code>案例1：修改所属主权限</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-4/88563757.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">u 代表用户</div><div class="line">g 代表组</div><div class="line">o 代表其他</div><div class="line">a 代表上述所有</div></pre></td></tr></table></figure>
+<p><code>将该文件的三个安全级别均设为可读、写、执行</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-4/47093815.jpg" alt=""></p>
+<p><code>案例2：改变所属关系</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-4/99885145.jpg" alt=""><br>改变所属关系用chown命令，语法为<code>chown owner:group file</code></p>
+<p><code>查询所有组</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-4/8200700.jpg" alt=""></p>
+<p>未完待续…</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>Linux命令行与Shell脚本编程大全（第2版）</li>
+</ul>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/04/Shell入门/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>

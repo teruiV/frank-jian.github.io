@@ -362,15 +362,20 @@
       
         
           
-          为何要持久化？Redis是内存数据库，它将自己的数据库状态存在内存里面，如果不想办法将储存在内存中的数据库状态保存到磁盘里面，那么一旦服务器进程退出，服务器中的数据库状态也会消失不见。
-为了解决这个问题，Redis提供了RDB的功能，RDB持久化生成的RDB文件是一个经过压缩的二进制文件，通过二进制
-          ...
+            <h2 id="为何要持久化？"><a href="#为何要持久化？" class="headerlink" title="为何要持久化？"></a>为何要持久化？</h2><p>Redis是内存数据库，它将自己的数据库状态存在内存里面，如果不想办法将储存在内存中的数据库状态保存到磁盘里面，那么一旦服务器进程退出，服务器中的数据库状态也会消失不见。</p>
+<p>为了解决这个问题，Redis提供了RDB的功能，RDB持久化生成的RDB文件是一个经过压缩的二进制文件，通过二进制文件可以还原生成RDB文件时的数据库状态。</p>
+<h2 id="RDB文件的创建"><a href="#RDB文件的创建" class="headerlink" title="RDB文件的创建"></a>RDB文件的创建</h2><p>生成RDB文件的两种命令：</p>
+<ol>
+<li>SAVE</li>
+<li>BGSAVE</li>
+</ol>
+<p>SAVE命令会<strong>阻塞</strong>Redis服务器进程，直到RDB文件创建完毕为止，在服务器进程阻塞期间，服务器不能处理任何命令请求。</p>
+<p>BGSAVE命令会派生出一个子进程，然后由子进程负责创建RDB文件，服务器进程(父进程)继续处理命令请求。</p>
+<h2 id="自动间隔性保存"><a href="#自动间隔性保存" class="headerlink" title="自动间隔性保存"></a>自动间隔性保存</h2><p>用户可以通过设置服务器配置的save选项设置多个保存条件，但只要其中任意一个条件被满足，服务器就会执行BGSAVE操作。</p>
+<p>举个例子，如果我们向服务器提供以下配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">save  900  1    //服务器在900秒之内，对数据库进行了至少一次修改</div><div class="line">save  300  10  </div><div class="line">save  60    10000</div></pre></td></tr></table></figure></p>
+<p>只要满足以上三个条件中任意之一，BGSAVE命令就会被执行。</p>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/18/Redis之RDB持久化/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -488,18 +493,28 @@
       
         
           
-          Redis过期键删除有三种策略：
+            <p>Redis过期键删除有三种策略：</p>
+<ol>
+<li>定时删除：在设置键的过期时间的同时，创建一个定时器，让定时器在键的过期时间来临时，立即执行对键的删除操作。（主动删除）</li>
+<li>惰性删除：放任键过期不管，但是每次从键空间中获取键时，都检查取得的键是否过期，如果过期的话，就删除该键；如果没有，就返回该键。（被动删除）</li>
+<li>定期删除：每隔一段时间，程序就对数据库进行一次检查，删除里面的过期键。至于要删除多少过期键，以及要检查多少个数据库，则有算法决定。（主动删除）</li>
+</ol>
+<h2 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a>定时删除</h2><p>定时删除策略对内存是最友好的，通过定时器，定时删除策略可以保证过期键会尽可能地被删除，并释放过期键所占用的内存。另外一方面，定时删除策略的缺点是，它对CPU时间是最不友好的，在过期键比较多的情况下，删除过期键这一行为可能会占用相当一部分CPU时间，在内存不紧张但是CPU时间非常紧张的情况下，将CPU时间用在删除和当前任务无关的过期键上，对服务器的响应时间和吞吐量造成影响。</p>
+<h2 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a>惰性删除</h2><p>惰性删除策略对CPU是最友好的：程序只会在取出键时才对键进行过期检查，这可以保证删除过期键的操作只会在非做不可的情况下进行，并且删除的目标仅限于当前处理的键，这个策略并不会在删除其他无关的过期键上花费任何CPU时间。<br>惰性删除策略的缺点是，它对内存是最不友好的，过期键保留在数据库中，那么只要它没有被访问到的话，那么他们永远不会被删除（除非用户手动执行FLUSHDB），我们可以将这种情况看做是内存泄漏 —-无用的垃圾数据占用了大量的内存，而服务器却不释放它们</p>
+<h2 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a>定期删除</h2><p>定期删除策略每个一段时间执行一次删除过期操作，并通过限制删除操作执行的时长和频率来减少删除操作对CPU时间的影响;期删除过期键，还能减少过期键带来的内存浪费</p>
+<p>定期删除的难点：</p>
+<ol>
+<li>如果删除太频繁，或者执行时间过程，定期删除就会退化到定时删除；</li>
+<li>如果删除操作执行太少，或者执行时间太短，定期删除就会和惰性删除策略一样，出现浪费内存的情况。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>定时删除，耗CPU但对内存友好，高并发时，影响服务器的响应时间和吞吐量。</li>
+<li>惰性删除，耗内存，对CPU友好；</li>
+<li>定期删除，是定时删除和惰性删除的折中。</li>
+</ul>
+<p>参考资料：<br>Redis设计与实现  –黄健宏</p>
 
-定时删除：在设置键的过期时间的同时，创建一个定时器，让定时器在键的过期时间来临时，立即执行对键的删除操作。（主动删除）
-惰性删除：放任键过期不管，但是每次从键空间中获取键时，都检查取得的键是否过期，如果过期的话，就删除该键；如果没有，就返回该键。（被动删除）
-定期
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/18/Redis过期键删除策略/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -617,22 +632,34 @@
       
         
           
-          对象的类型
+            <p>对象的类型</p>
+<ol>
+<li>字符串对象 – REDIS_STRING</li>
+<li>列表对象 – REDIS_LIST</li>
+<li>哈希对象 – REDIS_HASH</li>
+<li>集合对象 – REDIS_SET</li>
+<li>有序集合对象 – REDIS_ZSET</li>
+</ol>
+<p>实战操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"># 键为字符串对象，值为字符串对象</div><div class="line">redis&gt; SET msg &quot;hello world&quot;</div><div class="line">OK</div><div class="line"></div><div class="line">redis&gt; TYPE msg</div><div class="line">string</div><div class="line"></div><div class="line">#键为字符串对象，值为列表对象</div><div class="line">redis&gt; RPUSH numbers 1 3 5</div><div class="line">3</div><div class="line"></div><div class="line">redis&gt; TYPE numbers</div><div class="line">list</div><div class="line"></div><div class="line">#键为字符串对象，值为哈希对象</div><div class="line">redis&gt; HMSET profile name Tom age 25 career programmer</div><div class="line">OK</div><div class="line"></div><div class="line">redis&gt; TYPE profile</div><div class="line">hash</div><div class="line"></div><div class="line">#键为集合对象，值为集合对象</div><div class="line">redis&gt; SADD fruits apples banana cherry</div><div class="line">3</div><div class="line"></div><div class="line">redis&gt; TYPE fruits</div><div class="line">set</div><div class="line"></div><div class="line">#键为字符串对象，值为有序集合对象</div><div class="line">redis&gt; ZADD price 8.5 apple 5.0 banana 6.0 cherry</div><div class="line">3</div><div class="line"></div><div class="line">redis&gt; TYPE price</div><div class="line">zset</div></pre></td></tr></table></figure></p>
+<p>集合和列表的区别</p>
+<ul>
+<li>集合中的元素是唯一的，但列表中的元素是不唯一</li>
+<li>集合中的元素是没有顺序的，底层实现是散列表，列表中的元素是有顺序的，列表的底层实现是双向链表，所以获取两端的数据的速度快，但获取中间的数据速度慢，时间复杂度是O(N);</li>
+<li>相同点是存储内容都是至多为2^32-1个字符串;</li>
+</ul>
+<p>有序集合和列表的共同点和区别？</p>
+<h6 id="共同点"><a href="#共同点" class="headerlink" title="共同点"></a>共同点</h6><ul>
+<li>两者均有序；</li>
+<li>两者均可获得某一范围的元素</li>
+</ul>
+<h5 id="不同点"><a href="#不同点" class="headerlink" title="不同点"></a>不同点</h5><ul>
+<li>列表是通过链表来实现的，获取靠近两端的数据速度极快，而当元素增多后，访问中间速度的速度会较慢，常用场景，适合实现如“新鲜事”、“日志”这样访问中间元素少的应用；</li>
+<li>有序集合是通过散列表和跳跃表来实现的，所以读取位于中间部分的数据速度也很快(时间复杂度是O(logN))</li>
+<li>列表不能简单地调整某个元素的位置，但有序集合可以，通过改变这个元素的分数</li>
+<li>有序集合比列表更消耗内存</li>
+</ul>
 
-字符串对象 – REDIS_STRING
-列表对象 – REDIS_LIST
-哈希对象 – REDIS_HASH
-集合对象 – REDIS_SET
-有序集合对象 – REDIS_ZSET
-
-实战操作12345678910111213141516171819202122232425262
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/15/Redis对象类型介绍/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -750,17 +777,20 @@
       
         
           
+            <blockquote>
+<p>喜欢写Blog的人，会经历三个阶段<br>第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费的空间来写。<br>第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。<br>第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。</p>
+</blockquote>
+<p>的确，大多数Blog作者，都停留在第一阶段和第二阶段，因为第三阶段太不容易到达，你很难找到俯首听命，愿意为你管理服务器的人。但是，现在情况发生了变化，我们可以在github搭建个人博客。主要是以下步骤：</p>
+<ol>
+<li>在Github 上注册账号；</li>
+<li>在Godaddy上买域名；</li>
+<li>在DNSPOD上设置域名解析；</li>
+<li>在Github创建username.github.io项目；</li>
+<li>Hexo生成静态博客框架并部署到github上；</li>
+</ol>
+<p>具体操作步骤，参考以下资料<br>参考资料：<br><a href="http://sunwhut.com/2015/10/30/buildBlog/" target="_blank" rel="external">如何利用GitHub Pages和Hexo快速搭建个人博客</a><br><a href="http://cnfeat.com/blog/2014/05/10/how-to-build-a-blog/" target="_blank" rel="external">如何搭建一个独立博客——简明 Github Pages与 jekyll 教程</a><br><a href="http://http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html" target="_blank" rel="external">搭建一个免费的，无限流量的Blog—-github Pages和Jekyll入门</a></p>
+
           
-喜欢写Blog的人，会经历三个阶段第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费的空间来写。第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。
-
-的确，大多数Blog作者，都停留在
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/14/利用Github-Pages和Hexo搭建个人博客/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
         
       
     </div>
@@ -878,14 +908,24 @@
       
         
           
-          在使用hexo deploy命令部署hexo到github时，每次都要输入用户名和密码，这种重复机械的流程，让人感觉很烦躁。以下是介绍如何解决这个问题：方案一：在本机新建文本，明文存储github的账号和密码1、在系统环境变量中新增一个环境变量2、接着在你的用户目录(C:\Users\usernam
-          ...
+            <p>在使用hexo deploy命令部署hexo到github时，每次都要输入用户名和密码，这种重复机械的流程，让人感觉很烦躁。以下是介绍如何解决这个问题：<br>方案一：在本机新建文本，明文存储github的账号和密码<br>1、在系统环境变量中新增一个环境变量<br><img src="/images/env.png" alt=""><br>2、接着在你的用户目录(C:\Users\username)下新建一个叫_netrc的文件，在文件中添加以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">machine github.com</div><div class="line">login username //username为github账户名 （ps：请将注释内容去掉）</div><div class="line">password password //password为github账户的密码</div></pre></td></tr></table></figure></p>
+<p>3、设置好这些之后，当你再次部署时，就不用再输入用户名和密码了。</p>
+<p>方案二：本机生成SSH密钥，配置到github中<br>1、设置Git的user name和email<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name &quot;shuangziliuyun&quot;</div><div class="line">git config --global user.email &quot;1515970958@qq.com&quot;</div></pre></td></tr></table></figure></p>
+<p>2、生成SSH密钥</p>
+<ul>
+<li>查看是否已经有了ssh密钥<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd ~/.ssh</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果没有密钥则不会有此文件夹，有则备份删除</p>
+<ul>
+<li>生成密码<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -f rsa -C &quot;1515970958@qq.com&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>按3个回车，密码为空，得到两个文件id_rsa和id_rsa.pub</p>
+<p>3、在github上添加ssh密钥，这里添加的是id_rsa.pub里面的公钥<br><img src="/images/ssh配置.png" alt=""></p>
+<p>4、修改_config.yml中deploy的参数，部署仓库以SSH的方式发布不需输入密码，反之如果以HTTPS的方式发布则需要密码。<br><img src="/images/hexo的deploy参数.png" alt=""><br>参考资料：<br><a href="http://www.foreverpx.cn/2014/09/25/Hexo%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E9%83%A8%E7%BD%B2%E5%88%B0github/" target="_blank" rel="external">Hexo免输入密码部署到Github</a></p>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/14/Hexo免输入密码部署到Github/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>

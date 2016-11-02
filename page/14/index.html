@@ -362,14 +362,17 @@
       
         
           
-          应用层面优化技巧1、注意LIKE模糊查询的使用，避免%%，可以使用后面带% ，双%是不走索引的。123原来语句： select * from admin where admin_name like ‘%de%&apos;优化为： select * from admin where admin_nam
-          ...
+            <h6 id="应用层面优化技巧"><a href="#应用层面优化技巧" class="headerlink" title="应用层面优化技巧"></a>应用层面优化技巧</h6><p>1、注意LIKE模糊查询的使用，避免%%，可以使用后面带% ，双%是不走索引的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">原来语句： select * from admin where admin_name like ‘%de%&apos;</div><div class="line"></div><div class="line">优化为： select * from admin where admin_name &gt;=&apos;de&apos; and admin_nam &lt;&apos;df&apos; （注意不是等效的这里试试提供优化的思路）</div></pre></td></tr></table></figure></p>
+<p>2、尽量避免在列上进行运算，这样会导致索引失效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">原语句： select * from admin where year(admin_time)&gt;2014</div><div class="line"></div><div class="line">优化为： select * from admin where admin_time&gt; &apos;2014-01-01′</div></pre></td></tr></table></figure></p>
+<p>3、仅列出需要查询的字段，这对速度不会有明显影响，主要考虑节省内存。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">原来语句： select * from admin</div><div class="line"></div><div class="line">优化为： select admin_id,admin_name,admin_password from admin</div></pre></td></tr></table></figure></p>
+<p>4、使用批量插入语句节省交互。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">原来语句：insert into admin(admin_name,admin_password) values (‘test1′,&apos;pass1′);</div><div class="line"></div><div class="line">insert into admin(admin_name,admin_password) values (‘test2′,&apos;pass2′);</div><div class="line"></div><div class="line">insert into admin(admin_name,admin_password) values (‘test3′,&apos;pass3′)</div><div class="line"></div><div class="line">优化为： insert into admin(admin_name,admin_password) values(‘test1′,&apos;pass1′),(‘test2′,&apos;pass2′),(‘test3′,&apos;pass3′)</div></pre></td></tr></table></figure></p>
+<p>5、limit的基数比较大时使用between。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">原来语句：select * from admin order by admin_id limit 100000,10</div><div class="line"></div><div class="line">优化为：  select * from admin where admin_id between 100000 admin 100010 order by admin_id</div></pre></td></tr></table></figure></p>
+<p>6、不要使用rand函数获取多条随机记录。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">原来语句： select * from admin order by rand() limit 20</div><div class="line"></div><div class="line">优化为： select * from admin as t1 Join(select round(rand()*((select max(admin_id) from admin)-(select min(id) from admin))+(select min(id) from admin)) as id) as t2 where t1.id&gt;=t2.id order by t1.id limit</div></pre></td></tr></table></figure></p>
+<p>7、避免使用NULL<br>8、不要做无谓的排序操作，而应尽可能在索引中完成排序<br>9、不要使用count(col)，而应该是count(*)</p>
+<h6 id="count-col-和count-有什么区别？"><a href="#count-col-和count-有什么区别？" class="headerlink" title="count(col)和count(*)有什么区别？"></a>count(col)和count(*)有什么区别？</h6><p>count(*)通常是对主键进行索引扫描，统计表中所有符合的记录总数;而count(col)是对某个字段进行扫描，统计表中所有符合COL的记录总数;顺便提一下，count(col)统计记录总数时，是不包含col值为NULL的记录的；</p>
+<h6 id="count时的WHERE执行原理？"><a href="#count时的WHERE执行原理？" class="headerlink" title="count时的WHERE执行原理？"></a>count时的WHERE执行原理？</h6><p>count的时候，如果有WHERE限制的情况，总是需要对MYSQL进行全表遍历，然后返回所得记录的总数；</p>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/28/优化SQL性能小结/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -487,19 +490,15 @@
       
         
           
-          Web攻击模式主要有以下两种：
+            <p>Web攻击模式主要有以下两种：</p>
+<ul>
+<li>主动攻击</li>
+<li>被动攻击</li>
+</ul>
+<h3 id="主动攻击"><a href="#主动攻击" class="headerlink" title="主动攻击"></a>主动攻击</h3><p>攻击者通过直接访问Web应用，把攻击代码传入的攻击模式。由于该模式是直接针对服务器上的资源进行攻击，因此攻击者需要能够访问这些资源。主动攻击力最具代表性的就是SQL注入攻击和OS命令注入工具。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//跨站脚本攻击</div><div class="line">比如修改用户信息时，将用户名字改为“ 张三 &lt;script&gt; ”,经浏览器解析后，造成意想不到的灾难。</div><div class="line"></div><div class="line">//SQL注入攻击</div><div class="line">假设需要查询参数为name=张三 &amp; state=1， 正常的输入URL是这样的http://xxx/get?name=张三&amp;state=1，如果在张三后面加上 &apos;--&apos; 就会导致 state=1的条件将被注释掉，类似于SQL --&gt; SELECT * FROM person WHERE name=张三 -- AND state=1</div></pre></td></tr></table></figure></p>
+<h3 id="被动攻击"><a href="#被动攻击" class="headerlink" title="被动攻击"></a>被动攻击</h3><p>利用圈套策略执行攻击代码的攻击模式，在被动攻击过程中，攻击者不直接对目标web应用访问发起攻击。</p>
 
-主动攻击
-被动攻击
-
-主动攻击攻击者通过直接访问Web应用，把攻击代码传入的攻击模式。由于该模式是直接针对服务器上的资源进行攻击，因此攻击者需要能够访问这些资源。主动攻击力最具代表性的就是SQL注入攻击和OS命令注入工具。12345//跨站脚本攻击比如修改用户信息时
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/28/Web攻击技术/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -617,14 +616,11 @@
       
         
           
-          WebSocket技术为何出现？WebSocket技术的出现是为了解决HTTP协议的瓶颈123451、一条连接只可发送一个请求2、请求只能从客户端开始，客户端不能接收除响应以外的指令。3、请求/响应首部未经压缩就发送，首部信息越大，延时越高。4、发送冗长的首部，每次互相发送相同的首部造成资源的浪费。
-          ...
+            <h3 id="WebSocket技术为何出现？"><a href="#WebSocket技术为何出现？" class="headerlink" title="WebSocket技术为何出现？"></a>WebSocket技术为何出现？</h3><p>WebSocket技术的出现是为了解决HTTP协议的瓶颈<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1、一条连接只可发送一个请求</div><div class="line">2、请求只能从客户端开始，客户端不能接收除响应以外的指令。</div><div class="line">3、请求/响应首部未经压缩就发送，首部信息越大，延时越高。</div><div class="line">4、发送冗长的首部，每次互相发送相同的首部造成资源的浪费。</div><div class="line">5、可任意选择压缩格式，非强制压缩发送。</div></pre></td></tr></table></figure></p>
+<h3 id="WebSocket技术的主要特点"><a href="#WebSocket技术的主要特点" class="headerlink" title="WebSocket技术的主要特点"></a>WebSocket技术的主要特点</h3><h4 id="推送功能"><a href="#推送功能" class="headerlink" title="推送功能"></a>推送功能</h4><p>支持服务端向客户端推送数据的推送功能，这样服务器可直接发送数据，不必等待客户端的请求。</p>
+<h4 id="减少通信量"><a href="#减少通信量" class="headerlink" title="减少通信量"></a>减少通信量</h4><p>只要建立起Socket连接，就希望一直保持连接状态，和HTTP相比，不但每次连接时的总开销小了，而且WebSocket首部信息也很小，通信量也相应减小了。</p>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/28/WebSocket协议/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -742,21 +738,24 @@
       
         
           
-          Http使用的认证方式如下所示：
+            <p>Http使用的认证方式如下所示：</p>
+<ol>
+<li>BASIC认证</li>
+<li>DIGEST认证</li>
+<li>SSL客户端认证</li>
+<li>基于表单的认证</li>
+</ol>
+<h3 id="BASIC认证"><a href="#BASIC认证" class="headerlink" title="BASIC认证"></a>BASIC认证</h3><p>1、当请求资源需要BASIC认证时，服务器会随状态码401，返回带WWW-Authenticate首部字段响应<br>2、接收到状态码401，需要将用户ID和密码发送给服务器。发送密码由用户ID和密码组成，中间用”:”连接，后经过BASE64编码处理。<br>3、接收到首部字段你Authticate请求的服务器，会认证信息的正确性进行验证，通过验证，则返回Request-URI的响应。</p>
+<p>缺点：<br>BASIC认证虽然采用BASE64编码，但这并不是加密，不需要附加任何信息就能将其解码。在认证过程中被窃听，泄露账号密码的可能性较高</p>
+<h3 id="DIGEST认证"><a href="#DIGEST认证" class="headerlink" title="DIGEST认证"></a>DIGEST认证</h3><p>1、客户端发送请求给服务端<br>2、服务端发送临时的咨询码(随机数，nonce)以及告知需要认证的状态码401<br>3、客户端接收到状态码401，发送摘要以及由咨询码算出来的响应码<br>4、认证成功返回200，失败再次发送状态码401</p>
+<p>缺点：<br>虽然可以提供防止密码被盗的保护机制，但无法防止伪装用户。</p>
+<h3 id="SSL客户端认证"><a href="#SSL客户端认证" class="headerlink" title="SSL客户端认证"></a>SSL客户端认证</h3><p>1、接收到认证资源的请求，服务端会发送Certificate Request报文，要求客户端提供客户端证书。<br>2、客户端会把客户端证书信息以Client Certificate报文方式发送给服务器。<br>3、服务器验证客户端证书，验证通过后方可领取证书内客户端的公开密钥。</p>
+<p>缺点：<br>导入和维护的费用昂贵</p>
+<h3 id="基于表单认证"><a href="#基于表单认证" class="headerlink" title="基于表单认证"></a>基于表单认证</h3><p>1、客户端向服务器端发送用户信息（ID和密码）；<br>2、服务端想用户发放SessionID，将包含SessionId的cookie放到响应首部字段Set-Cookie中<br>3、客户端得到Cookie，之后再次请求该资源时，会将Cookie信息带入到请求中<br>4、服务器得到Cookie信息，通过SessionId来判断对方是否为真实用户。</p>
+<h3 id="安全的做法"><a href="#安全的做法" class="headerlink" title="安全的做法"></a>安全的做法</h3><p>1、给密码加盐（salt）的方式增加额外的信息，在使用散列（hash）函数计算出散列值后保存。</p>
+<p>盐(salt):由服务器随机生成的一个字符串，把和密码拼接后生成散列值。</p>
 
-BASIC认证
-DIGEST认证
-SSL客户端认证
-基于表单的认证
-
-BASIC认证1、当请求资源需要BASIC认证时，服务器会随状态码401，返回带WWW-Authenticate首部字段响应2、接收到状态码401，需要将用户ID和密码发送给服务器。发送密码由用
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/28/HTTP使用的认证方式/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -874,16 +873,26 @@ BASIC认证1、当请求资源需要BASIC认证时，服务器会随状态码401
       
         
           
-          为了更好的理解HTTPS，总结一下HTTPS的通信步骤。
-1、客户端通过发送Client Hello报文开始SSL通信，报文中包含客户端支持的SSL的指定版本，加密组件（Cipher Suite）列表
-2、服务端进行SSL通信时，会以Server Hello报文作为应答，和客户端一样，在报文中包含S
-          ...
+            <p>为了更好的理解HTTPS，总结一下HTTPS的通信步骤。</p>
+<p><img src="/images/HTTPS通信机制.jpg" alt=""><br>1、客户端通过发送Client Hello报文开始SSL通信，报文中包含客户端支持的SSL的指定版本，加密组件（Cipher Suite）列表</p>
+<p>2、服务端进行SSL通信时，会以Server Hello报文作为应答，和客户端一样，在报文中包含SSL版本，加密组件。服务器的加密组件内容是从接收到的客户端机密组件内筛选出来的。</p>
+<p>3、服务器发送Certificate报文，报文中包含公开密钥证书。</p>
+<p>4、服务器发送ServerHelloDone报文通知客户端，最初阶段的SSL握手协商部分结束了</p>
+<p>5、SSL第一次握手结束之后，客户端以Client Key Exchange报文作为回应，报文中包含通信加密中使用的一种被称为Pre-master secret的随机密码串。该报文已用步骤3中的公钥进行加密</p>
+<p>6、客户端继续发送Change Ciper Spec报文，该报文会提示服务器，在此报文之后的通信会采用Pre-master-secret密钥加密</p>
+<p>7、客户端发送Finished报文，该报文包含连接至今全部报文的整体校验值，这次握手协议能否成功，要以服务器是否能够正确解密该报文作为判定标准。</p>
+<p>8、服务器同样发送Change Cipher Spec报文。</p>
+<p>9、服务器同样发送Finished报文</p>
+<p>10、服务器和客户端的Finished报文交换完毕之后，SSL连接就算建立完成，当然，通信会受到SSL的保护，从此处开始进行应用层协议的通信，即发送HTTP请求。</p>
+<p>11、应用层协议通信，即发送HTTP响应</p>
+<p>12、最后由客户端断开连接，断开连接时，发送close_notify报文。</p>
+<h3 id="使用服务端的公开密码证书建立HTTPS通信的整个过程"><a href="#使用服务端的公开密码证书建立HTTPS通信的整个过程" class="headerlink" title="使用服务端的公开密码证书建立HTTPS通信的整个过程"></a>使用服务端的公开密码证书建立HTTPS通信的整个过程</h3><p>1、服务端将公开密钥证书下发给客户端 （公开密钥证书包含服务器的公钥和认证机构的证书）</p>
+<p>2、客户端取出证书确认其有效性，取出公开密钥，用公开密钥对随机密码串pre-master-secret进行加密,并发送给服务端</p>
+<p>3、服务端用私钥解密客户端发送过来的加密信息，得到随机密码串pre-master-secret。</p>
+<p>4、这样在客户端和服务端都拥有了共享密钥pre-master-secret，之后的通信就可以用这个共享密钥进行加密通信。</p>
+<h3 id="HTTPS的缺点"><a href="#HTTPS的缺点" class="headerlink" title="HTTPS的缺点"></a>HTTPS的缺点</h3><p>使用HTTPS存在一些问题，它的处理速度会变慢，SSL的慢分两种，一种是服务器和客户端都需要做加密和解密操作大量消耗CPU及内存等资源，另一种是通信慢，因为SSL通信部分消耗网络资源。</p>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/28/HTTPS通信机制/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -1001,15 +1010,53 @@ BASIC认证1、当请求资源需要BASIC认证时，服务器会随状态码401
       
         
           
-          1、HTTP协议规定，先从客户端开始建立通信，服务端在没有收到请求之前不会发送响应。
-2、请求报文由请求方法，请求URI、协议版本、可选的请求首部字段和内容实体构成的12345678910POST(请求方法)    /form/query(请求URI)   HTTP/1.1(协议版本)(请求首部字段
-          ...
+            <p>1、HTTP协议规定，先从客户端开始建立通信，服务端在没有收到请求之前不会发送响应。</p>
+<p>2、请求报文由请求方法，请求URI、协议版本、可选的请求首部字段和内容实体构成的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">POST(请求方法)    /form/query(请求URI)   HTTP/1.1(协议版本)</div><div class="line"></div><div class="line">(请求首部字段)</div><div class="line">Host:jianwl.com</div><div class="line">Connection: keep-alive</div><div class="line">Content-Type: appliation/x-www-form-urlencoded</div><div class="line">Content-Length: 16</div><div class="line"></div><div class="line">(内容实体)</div><div class="line">name=zhangsan&amp;age=21</div></pre></td></tr></table></figure></p>
+<p>3、HTTP协议的特点</p>
+<ul>
+<li>支持客户端/服务端模式</li>
+<li>简单快速，客户端向服务器请求服务时，只需传送请求方法和路径。</li>
+<li>灵活，HTTP允许传输任意的数据对象，传输类型由Content-Type来标记</li>
+<li>HTTP 0.9和1.0使用非持续连接，限制每次连接只处理一个请求，服务器处理完客户端的请求，并收到客户的应答后，即断开连接，采用这种方式节省传输的时间.HTTP1.1使用持续连接，创建TCP连接后，只要任意一方没有明确提出断开连接，则保持TCP连接状态。</li>
+<li>无状态：HTTP协议是无状态协议，无状态是指对事物处理没有记忆能力，缺乏状态以为着如果后续处理需要前面的信息，必须重传，这样会导致每次连接传送数据量大，引入Cookie，可以将对象的状态记录下来。</li>
+</ul>
+<p>HTTP协议的缺点：<br>1、通信使用明文（不加密），内容可能会被窃听；<br>2、不验证通信方的身份，因此有可能遭遇伪装；<br>3、无法证明报文的完整性，所以有可能已遭篡改；</p>
+<p>4、TCP断开连接要四次握手，服务端发送带有FIN的首部字段数据包，客户端收到数据包后先发送带有ACK字段的数据包，然后在发送带有FIN字段的数据包，服务端收到后，返回ACK的数据包，断开连接；</p>
+<p>5、持久化连接：<br>持久化连接的特点：只要任意一方没有明确提出断开连接，则保持TCP连接状态。</p>
+<p>持久化连接的好处，减少了TCP连接重复建立和断开所造成的额外开销，减轻服务器端的负载。</p>
+<p>6、管线化<br>持久连接使得多数请求以管线化方式发送成为可能，从前发送请求后需等待并收到响应才能发送下一个请求，管线化技术出现后，不用等待响应也可直接发送下一个请求。</p>
+<p>7、Http使用cookie来管理状态<br>Cookie会根据服务端发送的响应报文内的一个叫做Set-Cookie的首部字段信息，通知客户端保存Cookie，当下次客户端再往该服务器发送请求时，客户端会自动在请求报文中的加入Cookie值后发送出去。服务器发现客户端发送过来的Cookie后，会去检查究竟是从哪一个客户端发过来的连接请求，然后对比服务器的记录，最后得到之前的状态。<br><img src="/images/Cookie交互场景.jpg" alt=""></p>
+<p>8、编码提升传输效率<br>内容编码指明应用在实体内容上的编码格式，并保持实体信息原样压缩，内容编码后的实体由客户端接收并负责解码；<br>常见的内容编码有：<br>gzip<br>compress（unix系统标准压缩）<br>deflate（zlib）<br>identify(不进行编码)</p>
+<p>9、分块传输<br>分块传输编码会将实体主体分成多个部分块，每一块都会用十六进制来标记块的大小，而实体主体的最后一块会用“0（CR+LF）来标记”</p>
+<p>10、报文主体和实体主体的差异？<br>报文(message)：<br>HTTP通信中的基本单位，由8位组字节流组成，通过HTTP通信传输。</p>
+<p>实体(Entity):<br>作为请求或响应的有效载荷数据被传输，其内容由实体首部和实体主体组成。</p>
+<p>HTTP报文的主体用于传输请求或响应的实体主体，通常报文主体等于实体主体，只有当传输中进行编码操作是，实体主体内容才会变化。</p>
+<p>11、HTTP返回状态码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">状态码    描述</div><div class="line"></div><div class="line"> 2xx	请求正常处理完毕</div><div class="line"> 200	请求被正常处理了</div><div class="line"> 204	请求被服务端正常处理，但返回的响应报文中不含实体的主体部分。</div><div class="line"> 206	客户端进行范围请求，客户端成功执行了这部分的GET请求。</div><div class="line"></div><div class="line"> 3xx	重定向状态码</div><div class="line"> 301    永久重定向，请求资源已被分配了新的URI，以后应使用现在的URI</div><div class="line"> 302	临时性重定向，请求资源已被分配新的URI，希望用户本次能够使用新的URI访问</div><div class="line"> 303	303和302状态码有相同的功能，但要求客户端以GET方法获取资源</div><div class="line"> 304	客户端发送附带条件的请求时，服务器端允许访问，但因请求未满足条件，直接返回304.（如：服务端资源未变可使用客户端未过期的缓存）</div><div class="line"> 307	和302有着相同的含义</div><div class="line"> </div><div class="line"> 4xx	客户端错误</div><div class="line"> 400	请求报文中存在语法错误</div><div class="line"> 401	发送请求需要通过HTTP认证（BASIC认证 DIGST认证）的认证信息</div><div class="line"> 403	对请求资源的访问被服务器拒绝了</div><div class="line"> 404	服务器上没有找到请求资源</div><div class="line"> </div><div class="line"> 5xx	服务器错误</div><div class="line"> 500	服务端执行请求时，发生错误。</div><div class="line"> 503 	服务器暂时处于超负荷或者正在进行停机维护</div></pre></td></tr></table></figure></p>
+<p>12、通信数据转发程序：代理、网关、隧道概念</p>
+<h5 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h5><p>一种具有转发功能的应用程序，它扮演了位于服务器和客户端“中间人”的角色，接收由客户端发送的请求并转发给服务器，同时也接收服务器返回的响应并转发客户端。</p>
+<h5 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h5><p>转发其他服务器通信数据的服务器，接收从客户端发送来的请求时，它就像自己拥有资源的源服务器一样对请求进行处理。</p>
+<h5 id="隧道"><a href="#隧道" class="headerlink" title="隧道"></a>隧道</h5><p>在相隔甚远的客户端和服务器两者之间进行中转，并保持双方通信连接的应用程序，使用隧道的目的是确保客户端能与服务器进行安全的通信。</p>
+<p>13、使用代理服务器的好处？<br>利用缓存技术减少网络带宽的流量，使用代理的两个基准，一种是是否使用缓存，另一种是是否会修改报文。</p>
+<p>14、缓存代理<br>代理转发响应时，缓存代理会预先将资源的副本保存在代理服务器上，当代理再次接收到相同的资源的请求时，就可以不用从源服务器哪里获取资源了，将之前的缓存资源直接作为响应返回。</p>
+<p>15、4种HTTP首部字段类型<br>HTTP首部字段根据实际用途被分为以下4种：<br>通用首部字段(General Heaher Fields) – 请求报文和响应报文都会用到的首部<br>请求首部字段(Request Header Fields) – 客户端向服务端发送请求报文时使用的首部<br>响应首部字段（Response Header Fields） – 服务端向客户端响应报文时使用的字段<br>实体首部字段(Entity Header Fields) – 请求报文和响应报文都会用到的首部</p>
+<p>16、缓存的工作机制<br>Cache-Control: private, max-age=60, no-cache</p>
+<h6 id="常用的缓存指令"><a href="#常用的缓存指令" class="headerlink" title="常用的缓存指令"></a>常用的缓存指令</h6><p>private: 缓存服务器只给特定的用户提供资源缓存的服务；<br>public: 缓存服务给所有的用户提供资源缓存服务；<br>max-age=60,当服务器返回响应中包含max-age指令，缓存过期没有超过60秒，缓存服务器将不对资源的有效性进行确认，直接将缓存响应给客户端。<br>no-cache,表示缓存服务器会向源服务器进行有效期确认后处理资源;<br>no-store,不缓存资源<br>min-fresh:缓存服务器返回至少还未过指定时间的缓存资源。</p>
+<p>应用HTTP/1.1版本的缓存服务器遇到同时存在Expires首部字段的情况时，会有限处理max-age指令，而忽略掉Expires首部字段。</p>
+<p>17、实体标记Etag是与特定资源关联的确定值，资源更新后ETag也会随之而更新。</p>
+<p>18、  加密的两种方式：</p>
+<h6 id="通信的加密"><a href="#通信的加密" class="headerlink" title="通信的加密"></a>通信的加密</h6><p>HTTP协议中没有加密的机制，但可以通过和SSL（Secure Socket Layer,安全套接层）和TLS（Transport Layer Security,安全传输层协议）的组合使用。用SSL建立安全通信线路之后，就可以在这条线路上进行HTTP通信了，与SSL组合使用的HTTP被称为HTTPS。</p>
+<h6 id="内容加密"><a href="#内容加密" class="headerlink" title="内容加密"></a>内容加密</h6><p>由于HTTP协议中没有加密机制，那么就对HTTP协议传输的内容本身加密，在这种情况下，客户端要对HTTP报文进行加密处理后再发送请求。仅仅被报文的主体进行加密，对报文的首部不加密，但这样做也会出现一个问题，虽然内容加密了，但仍有被篡改的风险。</p>
+<p>19、HTTP的隐患？<br>1、无法确定请求发送至目标的Web服务器是否按真实意图返回响应的那台服务器，有可能是已伪装的Web服务器。<br>2、无法确定响应返回到的客户端是否是按真实意图接受响应的那个客户端，有可能是已伪装的客户端。<br>3、无法确定正在通信的对方是否具备访问权限，因为某些Web服务器上保存着重要的信息，只想发给特定用户通信的权限。<br>4、无法判定请求是来自何方，出自谁手。<br>5、即使是无意义的请求也会照单全收，无法阻止海量请求下的DOS攻击（Denial of Service,拒绝服务攻击）行为</p>
+<p>20、常见的几种加密技术</p>
+<h6 id="共享秘钥加密"><a href="#共享秘钥加密" class="headerlink" title="共享秘钥加密"></a>共享秘钥加密</h6><p>加密和解密用同一个密钥的方式，也称为对称加密；</p>
+<p>缺点是发送密钥，有可能被窃听，对方得到密钥，就能够机密，不安全。</p>
+<h6 id="公开密钥加密"><a href="#公开密钥加密" class="headerlink" title="公开密钥加密"></a>公开密钥加密</h6><p>使用一把非对称的密钥，一把叫做私有密钥，另一把叫做公开密钥。发送密文的一方，使用对方的公开密钥进行加密，对方收到被加密的信息后，用私有密钥进行解密。</p>
+<p>缺点是，无法证明公开密钥本身就是货真价实的公开密钥，比如，正准备和某台服务器建立公开密钥加密方式下的通信时，如何证明收到的公开密钥就是原本预想的那台服务器发行的公开密钥。或者在公开密钥传输途中，真正的公开密钥已经被攻击者替换掉了。</p>
+<h6 id="混合加密机制"><a href="#混合加密机制" class="headerlink" title="混合加密机制"></a>混合加密机制</h6><p>1、使用公开密钥加密方式安全地交换稍后共享密钥中要使用的密钥；<br>2、确保交换的密钥是安全的前提下，使用共享密钥加密的方式进行加密；</p>
+<p>这样做的理由？<br>公开密钥机密比共享密钥复杂，处理速度慢，所以利用各自的优势，增加效率。</p>
+<h6 id="证明公开密钥正确性的证书"><a href="#证明公开密钥正确性的证书" class="headerlink" title="证明公开密钥正确性的证书"></a>证明公开密钥正确性的证书</h6><p><img src="/images/确认公钥的真实性.jpg" alt=""></p>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/27/HTTP基础/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -1127,17 +1174,26 @@ BASIC认证1、当请求资源需要BASIC认证时，服务器会随状态码401
       
         
           
-          HTTP 的方法中GET和POST方法的区别？
-GET 用于从服务器获得资源，POST用于向服务器发送数据的，
-GET 提交请求时，将参数放到URL中，用户可以从URL中看到传输的参数，POST是将参数填到一个表单中，然后发送给服务器，参数在URL中不可见。
-GET 提交的数据上限是1024字节，P
-          ...
+            <h5 id="HTTP-的方法中GET和POST方法的区别？"><a href="#HTTP-的方法中GET和POST方法的区别？" class="headerlink" title="HTTP 的方法中GET和POST方法的区别？"></a>HTTP 的方法中GET和POST方法的区别？</h5><ul>
+<li>GET 用于从服务器获得资源，POST用于向服务器发送数据的，</li>
+<li>GET 提交请求时，将参数放到URL中，用户可以从URL中看到传输的参数，POST是将参数填到一个表单中，然后发送给服务器，参数在URL中不可见。</li>
+<li>GET 提交的数据上限是1024字节，POST方式没有数据长度的限制。</li>
+</ul>
+<h5 id="HTTP-的方法中PUT和POST方法的区别？"><a href="#HTTP-的方法中PUT和POST方法的区别？" class="headerlink" title="HTTP 的方法中PUT和POST方法的区别？"></a>HTTP 的方法中PUT和POST方法的区别？</h5><ul>
+<li>POST用于提交请求，可以更新或者创建资源，是非幂等的,举个例子，一个接口的功能是将当前余额减一个值，每次提交指定该值为100，调用一次余额减100，二次减200，这个时候就用POST</li>
+<li>PUT用于向指定的URI传送更新资源，是幂等的，举个例子，更新某个blog文章，因为该文章具有单一的具体URI，所以每次更新提交相同的内容，结果都一致，这个时候就用PUT</li>
+</ul>
+<p>幂等性：幂等是数学的一个用语，对于单个输入的运算方法，如果传入值相同，结果也相同，则称其为幂等的。</p>
+<h5 id="HTTP-的方法中GET、POST、PUT、HEAD、DELETE、OPTIONS、TRACE、CONNECT方法各是什么含义？"><a href="#HTTP-的方法中GET、POST、PUT、HEAD、DELETE、OPTIONS、TRACE、CONNECT方法各是什么含义？" class="headerlink" title="HTTP 的方法中GET、POST、PUT、HEAD、DELETE、OPTIONS、TRACE、CONNECT方法各是什么含义？"></a>HTTP 的方法中GET、POST、PUT、HEAD、DELETE、OPTIONS、TRACE、CONNECT方法各是什么含义？</h5><p>GET: 向服务器获取某个资源，发送GET请求一般会附带一些参数，这些参数会附在请求链接的后面。</p>
+<p>POST: 向服务器发送数据，数据不会被附加在请求链接之后的，常用于表单提交。</p>
+<p>PUT: 向服务器传输文件，要求在请求报文的主体中包含文件内容，然后保存到请求URI指定的位置，但由于HTTP/1.1自身不带验证机制，任何人都可以上传文件，存在安全问题。</p>
+<p>TRACE: 让Web服务器将之前的请求通信环回给客户端，容易引发XST（Cross-Site Tracing）跨站追踪攻击，通常不会用到。</p>
+<p>HEAD: 与GET类似，但服务器在响应中只返回首部，不返回实体的主体部分。</p>
+<p>OPTIONS: 请求Web服务器告知其支持的各种功能。</p>
+<p>DELETE: 请求服务器删除请求URL指定的资源。</p>
+<p>CONNECT:在代理服务器通信时，建立隧道，实现将隧道协议进行TCP通信，主要使用SSL(Secure Socket Layer 安全套接层)和TLS（Transport Layer Security 传输层安全）协议把通信内容加密后经网络隧道传输。</p>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/27/HTTP常见面试题/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -1255,16 +1311,27 @@ GET 提交的数据上限是1024字节，P
       
         
           
-          为了了解HTTP，有必要事先了解一下TCP/IP协议簇，TCP/IP协议族最重要的一点就是分层，按层次可分为应用层、传输层、网络层和数据链路层。
+            <p>为了了解HTTP，有必要事先了解一下TCP/IP协议簇，TCP/IP协议族最重要的一点就是分层，按层次可分为应用层、传输层、网络层和数据链路层。</p>
+<blockquote>
+<p>分层优点：<br>把TCP/IP分层是有好处的，比如，如果互联网只由一个协议统筹，某个地方需要改变设计时，就必须把所有部分整体换掉，而分层之后，只需要把变动的层换掉即可；分层之后，设计也变得简单了，处于应用层上的应用只考虑分派给自己的任务就可以了，不用弄清楚对方在地球上哪个地方，对方的传输线路是怎么样的传输送达的问题。</p>
+</blockquote>
+<h5 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h5><p>应用层决定了向用户提供应用服务时通信的活动。TCP/IP协议族内预存了各类通用的应用服务，比如FTP(File Transfer Protocol,文本传输协议)、DNS(Domain Name System 域名系统)服务、HTTP(HyperText Transfer Protocol,超文本传输协议)</p>
+<h5 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h5><p>传输层对上层应用层，提供处于网络连接中的两台计算机之间的数据传输。在传输层有两个性质不同的协议：TCP(Transmission Control Protocol 传输控制协议)和UDP（User Data Protocol,用户数据报协议）。</p>
+<h5 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h5><p>网络层用来处理在网络上流动的数据包。数据包是网络传输的最小数据单位。该层规定了通过怎样的路径到达对方计算机，并把数据包传给对方。与对方的计算机，通过多台计算机或网络设备进行传输时，网络层所起的作用就是在众多的选项中，选择一条传输路线。</p>
+<h5 id="链路层"><a href="#链路层" class="headerlink" title="链路层"></a>链路层</h5><p>用来处理连接网络的硬件部分。包括控制操作系统、硬件的设备驱动、NIC(Network Interface Card,网络适配器，即网卡),及光纤等物理可见部分</p>
+<h3 id="TCP-IP通信传输流"><a href="#TCP-IP通信传输流" class="headerlink" title="TCP/IP通信传输流"></a>TCP/IP通信传输流</h3><p><img src="/images/TCP通信传输流.jpg" alt=""><br>利用TCP/IP协议簇进行通信时，会通过分层顺序与对方进行通信，发送端从应用层往下走，接收端则从应用层网上走。</p>
+<blockquote>
+<p>举例说明<br>作为发送端的客户端在应用层发出一个想看某个Web页面的HTTP请求，为了方便传输，在传输层把从应用层处收到的数据进行分割，并在报文上打上标记和序号及端口后转发给网络层。在网络层(IP协议)，增加作为通信目的地的MAC地址后转发给链路层，接收端的服务器在链路层接收到数据，按序往上层发送，一直到应用层，当传输到应用层，才能算真正接收到客户端发送过来的HTTP请求。</p>
+</blockquote>
+<h3 id="TCP协议的可靠性"><a href="#TCP协议的可靠性" class="headerlink" title="TCP协议的可靠性"></a>TCP协议的可靠性</h3><p>TCP协议采用三次握手策略，来保证可靠性。发送端首先先发送一个带SYN标志的数据传给对方，接收端收到后，回传一个带用SYN/ACK标志的数据包以示传达确认消息，最后，发送端在回传一个带ACK标志的数据包，代表“握手”结束。若在握手过程中，某个阶段莫名中断，TCP协议会再次以相同的顺序发送数据包。<br><img src="/images/TCP三次握手.jpg" alt="TCP三次握手"></p>
+<h3 id="IP协议"><a href="#IP协议" class="headerlink" title="IP协议"></a>IP协议</h3><p>IP协议位于网络层，它的作用是把各种数据包传递给对方，要保证确实传送到对方那里，需要两个重要的条件IP地址和MAC地址。IP地址指明了节点被分配到的地址，MAC地址是指网卡所属的固定地址。IP地址可以和MAC地址进行配对，IP地址可变换，但MAC地址基本不会变。</p>
+<blockquote>
+<p>//IP通信是如何依赖MAC地址的？<br>通信双方经过多台计算机和网络设备中转才能连接到对方，在中转时，会利用下一站中转设备的MAC地址来搜索下一个中转目标，利用ARP协议(Address Resolution Protocol 解析地址协议)，根据通信方的IP地址，可以得到对应的MAC地址，所以当中转设备的MAC地址为该通信方的MAC地址时，表示双方已经连接上了。</p>
+</blockquote>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>通过一张图来解释，IP协议，TCP协议，DNS服务在使用HTTP协议通信过程中各自发挥了什么作用？</p>
+<p><img src="/images/完整HTTP请求.jpg" alt=""></p>
 
-分层优点：把TCP/IP分层是有好处的，比如，如果互联网只由一个协议统筹，某个地方需要改变设计时，就必须把所有部分整体换掉，而分层之后，只需要把变动的层
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/27/TCP协议介绍/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -1382,14 +1449,27 @@ GET 提交的数据上限是1024字节，P
       
         
           
-          前序：总是羡慕别人过得比自己好，想要努力奋斗，赶超他们，计划实施了几天，热情骤减；想要高薪，却不付出努力，想不劳而获；想要承担更多的责任，却又担心能力不足。觉得能力不足，却又不行动起来。这样的状态持续下去，我即将看到一个抱怨现实却又对改变现状无能无力的自己；我并不想成为这样的人，将目前所拥有的坏习惯
-          ...
+            <p><strong>前序</strong>：总是羡慕别人过得比自己好，想要努力奋斗，赶超他们，计划实施了几天，热情骤减；想要高薪，却不付出努力，想不劳而获；想要承担更多的责任，却又担心能力不足。觉得能力不足，却又不行动起来。这样的状态持续下去，我即将看到一个抱怨现实却又对改变现状无能无力的自己；我并不想成为这样的人，将目前所拥有的坏习惯和不好状态，<strong>以文字的方式记录下来，警示自己</strong>。</p>
+<h2 id="习惯即刻回报"><a href="#习惯即刻回报" class="headerlink" title="习惯即刻回报"></a>习惯即刻回报</h2><p>春天播种，秋天才会有收获。刚刚付出一点点，甚至还没有付出，就想要得到回报。技术刚刚掌握，能一边谷歌一边干活了就觉得该拿到多少多少钱了。找工作先想着多少多少钱，入职了没干几个月就想着要加多少多少钱，干了没几个月，薪水要是没涨，就放弃了，准备通过跳槽加薪，不跳槽的话，往往也会因为没加薪而牢骚满腹，工作敷衍了事。</p>
+<p>一个程序员的价值，是通过他带给公司的价值体现的。先给公司带来了价值，然后才会反过来在薪水上体现出自己的价值。公司都很现实，很少会为你的潜力买单，在你还没有体现出价值时就给你很高的薪水。</p>
+<p>在生活和工作中，一定要懂得付出，不要那么急功近利，马上想得到回报。天下没有白吃的午餐，你想获得什么，就得先付出什么。唯有种下种子，然后浇水、施肥、除草、杀虫，然后才能等来收获。</p>
+<h2 id="缺乏学习热情"><a href="#缺乏学习热情" class="headerlink" title="缺乏学习热情"></a>缺乏学习热情</h2><p>软件开发的技术日新月异，而每一项技术又往往博大精深，不持续、深入钻研是很难掌握的，更别谈精通了。如果你对一项技术不能深刻理解熟练应用，表现出来的水准仅仅是能干活、还行，那很难说会有公司愿意为“还行”付出大的代价，只有脱颖而出，才可能备受重视。</p>
+<p>假如你对学习、掌握、精通技术没有兴趣，面对不断涌现的新语言新技术新框架没有学习欲望，那但就软件开发这个工作而言，你不但眼下不太可能拿到高薪，将来也不会。在这样一个快速变化的时代，只有不断地学习才不会被抛弃。</p>
+<h2 id="不够努力"><a href="#不够努力" class="headerlink" title="不够努力"></a>不够努力</h2><p>虽然我们都知道努力学习可以改变我们的技能水平，持续努力不懈坚持可以让自己有所建树，可还是有很多人浅尝辄止，三天打鱼两天晒网，搞两下能Run就放下了。</p>
+<p>人和人在聪明才智上的差距并没有想象中大，甚至很多时候，从大多数人的努力程度之低来看，根本还轮不到拼天赋。如果两个人的实力半斤八两的话，热情工作努力坚持的人，一定比较容易成功。</p>
+<h2 id="畏难"><a href="#畏难" class="headerlink" title="畏难"></a>畏难</h2><p>做事拈轻怕重，不愿挑战。殊不知能力就是在不断挑战不断突破自己的过程中历练出来的。在一个公司里面，经常承担高难度任务的程序员，一定是成长比较快的，薪水增长也一定是比较快的。越是困难的事情，越能体现出个人价值，也越能带给个人成长。万事起头难，不要害怕困难。事情做不好往往不是因为没有能力，大都是由于缺乏恒心。只要不怕困难，坚持前行，一定会有不一样的收获。</p>
+<h2 id="缺乏责任心"><a href="#缺乏责任心" class="headerlink" title="缺乏责任心"></a>缺乏责任心</h2><p>工作上不管什么事儿，反正不是自己的事儿，缺乏责任心，干好干不好都无所谓，对交付承诺、对产品质量都不在意，没什么事儿上心。一个人的责任心如何，决定着他在工作中的态度，决定着其事业的好坏和成败。如果一个人没有责任心，即使他有再大的能耐，也不一定能做出好的成绩来。</p>
+<h2 id="消极，抱怨"><a href="#消极，抱怨" class="headerlink" title="消极，抱怨"></a>消极，抱怨</h2><p>工作稍有不顺，就怨气沸腾，这个怎么怎么样，那个怎么怎么样，而我怎么就这样，任务不公平，资源不公平，那谁谁不支持我，那谁谁不配合……</p>
+<p>抱怨不能使事情变好，反之，它会让负面情绪蔓延，蚕食你的精力和时间，让你产出更低。成功者永不抱怨，抱怨者永不成功。立刻停止抱怨，早一分钟停止，你就离目标近一分钟。</p>
+<h2 id="没有时间管理观念"><a href="#没有时间管理观念" class="headerlink" title="没有时间管理观念"></a>没有时间管理观念</h2><p>每个人的一天都只有24小时，人和人的差别就在于如何利用时间上。</p>
+<p>有的人每周都有目标，每天都有计划，早上起来会想今天要做的几件重要的事，晚上会回顾今天完成的事，总结干成了什么干坏了什么，还会有计划的学习新知识新技能，这样日积月累不断坚持，每一天都是高效的，每一天都朝着更丰富更完美的自己前进。</p>
+<p>而有的人则漫无目的，走哪算哪，到了公司，上午基本做不成事儿，到下午了还不知道要做什么，晚上也发愁如何消磨时间……</p>
+<h2 id="为薪水工作"><a href="#为薪水工作" class="headerlink" title="为薪水工作"></a>为薪水工作</h2><p>虽然工作的一大目的是获取薪水，养活自己以及供给家庭所需；但是，这只是工作最直接的报偿，同时也是最低级的目标。</p>
+<p>如果我们为薪水而工作，将注定我们是短视的，也将注定受到最深的伤害。假如你看不到工资以外的东西，斤斤计较于薪水、福利、职位等，那外界的些微风吹草动就可能让你像浮萍一样飘来荡去，你很快就会失去平衡，失去信心，失去热情，失去平和，进而在工作时总是采取一种应付了事的态度，能少做就少做，能躲避就躲避，觉得只要对得起自己的那份薪水就成了。长此以往，你追求的高薪水反倒得不到。</p>
+<p>我们进入一个公司工作，是为了自己，不是薪水也不是别人，比薪水更重要的，是成长和成就自己的机会。我们一定要明白，公司、企业、组织，都是我们锻炼自己、修炼自我的平台，我们不是为薪水工作、不是为老板工作、不是为家人工作，是为实现自我而工作，是为更完美的自己而工作。</p>
+<p>参考资料：<br><a href="http://http://www.codeceo.com/article/programmer-hole.html" target="_blank" rel="external">月薪3万的程序员都避开了哪些坑？</a></p>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/20/浮躁的环境，浮躁的我/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -1507,15 +1587,42 @@ GET 提交的数据上限是1024字节，P
       
         
           
-          什么是注解？
-Annotations, a form of metadata, provide data about a program that is not part of the program itself. Annotations have no direct effect on the 
-          ...
+            <h2 id="什么是注解？"><a href="#什么是注解？" class="headerlink" title="什么是注解？"></a>什么是注解？</h2><blockquote>
+<p>Annotations, a form of metadata, provide data about a program that is not part of the program itself. Annotations have no direct effect on the operation of the code they annotate.</p>
+</blockquote>
+<p>注解是JAVA 5的一个新特性，它相当于是一种嵌入在程序中的元数据</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><blockquote>
+<ul>
+<li>Information for the compiler — Annotations can be used by the compiler to detect errors or suppress warnings.</li>
+<li>Compile-time and deployment-time processing — Software tools can process annotation information to generate code, XML files, and so forth.</li>
+<li>Runtime processing — Some annotations are available to be examined at runtime.</li>
+</ul>
+</blockquote>
+<p>运用场景主要是三个方面：</p>
+<ul>
+<li>内置注解，用于告诉编译器，哪些方法被覆盖，哪些方法忽略警告；</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//内置注解举例说明</div><div class="line">@Override</div><div class="line">当我们想要覆盖父类的一个方法时，需要使用该注解告知编译器，我们正在覆盖一个方法。这样的话，当父类的方法被删除或修改了，编译器会提示错误信息。</div><div class="line"></div><div class="line">@Deprecated</div><div class="line">当我们想要让编译器知道一个方法已经被弃用时，应该使用这个注解。</div><div class="line"></div><div class="line">@SuppressWarning</div><div class="line">告知编译器，忽略他们产生的特殊警告</div></pre></td></tr></table></figure>
+<ul>
+<li>用注解解析工具对其进行解析</li>
+<li>注解可以指定在运行时有效</li>
+</ul>
+<h2 id="Java自定义注解"><a href="#Java自定义注解" class="headerlink" title="Java自定义注解"></a>Java自定义注解</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">package com.journaldev.annotations;</div><div class="line">import java.lang.annotation.Documented;</div><div class="line">import java.lang.annotation.ElementType;</div><div class="line">import java.lang.annotation.Inherited;</div><div class="line">import java.lang.annotation.Retention;</div><div class="line">import java.lang.annotation.RetentionPolicy;</div><div class="line">import java.lang.annotation.Target;</div><div class="line"></div><div class="line">@Documented</div><div class="line">@Target(ElementType.METHOD)</div><div class="line">@Inherited</div><div class="line">@Retention(RetentionPolicy.RUNTIME)</div><div class="line">public @interface MethodInfo&#123;</div><div class="line">    String author() default &quot;Pankaj&quot;;</div><div class="line">    String date();</div><div class="line">    int revision() default 1;</div><div class="line">    String comments();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>注解方法不能有参数</li>
+<li>注解方法的返回类型局限于基本类型，字符串，枚举</li>
+<li>注解方法可以包含默认值</li>
+<li>注解可以包含与其绑定的元注解，元注解为注解提供信息，有四种元注解类型</li>
+</ul>
+<ol>
+<li>@Documented – 表示使用该注解的元素应被javadoc或类似工具文档化，它应用于类型声明，类型声明的注解会影响客户端对注解元素的使用。如果一个类型声明添加了Documented注解，那么它的注解会成为被注解元素的公共API的一部分。</li>
+<li>@Target – 表示支持注解的程序元素的种类，一些可能的值有TYPE, METHOD, CONSTRUCTOR, FIELD等等。如果Target元注解不存在，那么该注解就可以使用在任何程序元素之上。</li>
+<li>@Inherited – 表示一个注解类型会被自动继承，如果用户在类声明的时候查询注解类型，同时类声明中也没有这个类型的注解，那么注解类型会自动查询该类的父类，这个过程将会不停地重复，直到该类型的注解被找到为止，或是到达类结构的顶层（Object）。</li>
+<li>@Retention – 表示注解类型保留时间的长短，它接收RetentionPolicy参数，可能的值有SOURCE, CLASS, 以及RUNTIME。</li>
+</ol>
+<h2 id="Java注解解析"><a href="#Java注解解析" class="headerlink" title="Java注解解析"></a>Java注解解析</h2><p>我们将使用Java反射机制从一个类中解析注解，请记住，注解保持性策略应该是RUNTIME，否则它的信息在运行期无效，我们也不能从中获取任何数据。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">package com.journaldev.annotations;</div><div class="line">import java.io.FileNotFoundException;</div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line">public class AnnotationExample &#123;</div><div class="line">    @Override</div><div class="line">    @MethodInfo(author = &quot;Pankaj&quot;, comments = &quot;Main method&quot;, date = &quot;Nov 17 2012&quot;, revision = 1)</div><div class="line">    public String toString() &#123;</div><div class="line">        return &quot;Overriden toString method&quot;;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @Deprecated</div><div class="line">    @MethodInfo(comments = &quot;deprecated method&quot;, date = &quot;Nov 17 2012&quot;)</div><div class="line">    public static void oldMethod() &#123;</div><div class="line">        System.out.println(&quot;old method, don&apos;t use it.&quot;);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @SuppressWarnings(&#123; &quot;unchecked&quot;, &quot;deprecation&quot; &#125;)</div><div class="line">    @MethodInfo(author = &quot;Pankaj&quot;, comments = &quot;Main method&quot;, date = &quot;Nov 17 2012&quot;, revision = 10)</div><div class="line">    public static void genericsTest() throws FileNotFoundException &#123;</div><div class="line">        List l = new ArrayList();</div><div class="line">        l.add(&quot;abc&quot;);</div><div class="line">        oldMethod();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">package com.journaldev.annotations;</div><div class="line"></div><div class="line">import java.lang.annotation.Annotation;</div><div class="line">import java.lang.reflect.Method;</div><div class="line">public class AnnotationParsing &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        try &#123;</div><div class="line">            for (Method method : AnnotationParsing.class</div><div class="line">                    .getClassLoader()</div><div class="line">                    .loadClass((&quot;com.journaldev.annotations.AnnotationExample&quot;))</div><div class="line">                    .getMethods()) &#123;</div><div class="line">                // checks if MethodInfo annotation is present for the method</div><div class="line">                if (method.isAnnotationPresent(com.journaldev.annotations.MethodInfo.class)) &#123;</div><div class="line">                    try &#123;</div><div class="line">                        // iterates all the annotations available in the method</div><div class="line">                        for (Annotation anno : method.getDeclaredAnnotations()) &#123;</div><div class="line">                            System.out.println(&quot;Annotation in Method &apos;&quot;</div><div class="line">                                    + method + &quot;&apos; : &quot; + anno);</div><div class="line">                        &#125;</div><div class="line">                        MethodInfo methodAnno = method.getAnnotation(MethodInfo.class);</div><div class="line">                        if (methodAnno.revision() == 1) &#123;</div><div class="line">                            System.out.println(&quot;Method with revision no 1 = &quot;+ method);</div><div class="line">                        &#125;</div><div class="line">                    &#125; catch (Throwable ex) &#123;</div><div class="line">                        ex.printStackTrace();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125; catch (SecurityException | ClassNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/20/Java注解/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
