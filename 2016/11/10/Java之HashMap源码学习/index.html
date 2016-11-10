@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="SpringBoot," />
+  <meta name="keywords" content="JAVA," />
 
 
 
@@ -85,19 +85,48 @@
 
 
 
-<meta name="description" content="前言在项目应用开发时，用户一个操作实际是对数据读写的多步操作的结合，由于数据操作在顺序执行的过程中，任何一步操作都有可能发生异常，异常会导致后续操作无法完成，此时由于业务逻辑并没有正确完成，之前成功操作数据并不可靠，需要在这种情况下进行回退。
-事务的作用事务是为了保证用户的每一个操作都是可靠的，事务中的每一步操作都必须成功执行，只要有异常发生就回退到事务刚开始未进行操作的状态；事务管理是Sprin">
+<meta name="description" content="前言总是在写重复代码，有没有觉得很煎熬？对代码多点挑剔，你会想法设法尽量去避免写重复代码。学习和借鉴优秀源码的设计思想，用于实际项目中，让你的代码变得更加优雅。
+架构
+实战1. Map接口
+解读Map源码，学到了以下几点：
+
+泛型的使用
+default声明方法体的方法；
+接口中可声明静态方法
+接口中嵌套接口
+
+12345678910111213141516171819202122232425262">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SpringBoot中的事务管理">
-<meta property="og:url" content="http://jianwl.com/2016/09/23/SpringBoot中的事务管理/index.html">
+<meta property="og:title" content="Java之HashMap源码学习">
+<meta property="og:url" content="http://jianwl.com/2016/11/10/Java之HashMap源码学习/index.html">
 <meta property="og:site_name" content="记录点滴成长">
-<meta property="og:description" content="前言在项目应用开发时，用户一个操作实际是对数据读写的多步操作的结合，由于数据操作在顺序执行的过程中，任何一步操作都有可能发生异常，异常会导致后续操作无法完成，此时由于业务逻辑并没有正确完成，之前成功操作数据并不可靠，需要在这种情况下进行回退。
-事务的作用事务是为了保证用户的每一个操作都是可靠的，事务中的每一步操作都必须成功执行，只要有异常发生就回退到事务刚开始未进行操作的状态；事务管理是Sprin">
-<meta property="og:updated_time" content="2016-10-01T13:10:01.000Z">
+<meta property="og:description" content="前言总是在写重复代码，有没有觉得很煎熬？对代码多点挑剔，你会想法设法尽量去避免写重复代码。学习和借鉴优秀源码的设计思想，用于实际项目中，让你的代码变得更加优雅。
+架构
+实战1. Map接口
+解读Map源码，学到了以下几点：
+
+泛型的使用
+default声明方法体的方法；
+接口中可声明静态方法
+接口中嵌套接口
+
+12345678910111213141516171819202122232425262">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/public/16-11-10/90063033.jpg">
+<meta property="og:updated_time" content="2016-11-10T16:21:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringBoot中的事务管理">
-<meta name="twitter:description" content="前言在项目应用开发时，用户一个操作实际是对数据读写的多步操作的结合，由于数据操作在顺序执行的过程中，任何一步操作都有可能发生异常，异常会导致后续操作无法完成，此时由于业务逻辑并没有正确完成，之前成功操作数据并不可靠，需要在这种情况下进行回退。
-事务的作用事务是为了保证用户的每一个操作都是可靠的，事务中的每一步操作都必须成功执行，只要有异常发生就回退到事务刚开始未进行操作的状态；事务管理是Sprin">
+<meta name="twitter:title" content="Java之HashMap源码学习">
+<meta name="twitter:description" content="前言总是在写重复代码，有没有觉得很煎熬？对代码多点挑剔，你会想法设法尽量去避免写重复代码。学习和借鉴优秀源码的设计思想，用于实际项目中，让你的代码变得更加优雅。
+架构
+实战1. Map接口
+解读Map源码，学到了以下几点：
+
+泛型的使用
+default声明方法体的方法；
+接口中可声明静态方法
+接口中嵌套接口
+
+12345678910111213141516171819202122232425262">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/public/16-11-10/90063033.jpg">
 
 
 
@@ -118,9 +147,9 @@
 
 
 
-  <link rel="canonical" href="http://jianwl.com/2016/09/23/SpringBoot中的事务管理/"/>
+  <link rel="canonical" href="http://jianwl.com/2016/11/10/Java之HashMap源码学习/"/>
 
-  <title> SpringBoot中的事务管理 | 记录点滴成长 </title>
+  <title> Java之HashMap源码学习 | 记录点滴成长 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -293,7 +322,7 @@
             
             
               
-                SpringBoot中的事务管理
+                Java之HashMap源码学习
               
             
           </h1>
@@ -305,8 +334,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-23T00:24:19+08:00" content="2016-09-23">
-              2016-09-23
+            <time itemprop="dateCreated" datetime="2016-11-10T23:06:55+08:00" content="2016-11-10">
+              2016-11-10
             </time>
           </span>
 
@@ -319,8 +348,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/SpringBoot/" itemprop="url" rel="index">
-                    <span itemprop="name">SpringBoot</span>
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
                   </a>
                 </span>
 
@@ -335,8 +364,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/09/23/SpringBoot中的事务管理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/23/SpringBoot中的事务管理/" itemprop="commentsCount"></span>
+                <a href="/2016/11/10/Java之HashMap源码学习/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/10/Java之HashMap源码学习/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -359,9 +388,29 @@
       
 
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在项目应用开发时，用户一个操作实际是对数据读写的多步操作的结合，由于数据操作在顺序执行的过程中，任何一步操作都有可能发生异常，异常会导致后续操作无法完成，此时由于业务逻辑并没有正确完成，之前成功操作数据并不可靠，需要在这种情况下进行回退。</p>
-<h3 id="事务的作用"><a href="#事务的作用" class="headerlink" title="事务的作用"></a>事务的作用</h3><p>事务是为了保证用户的每一个操作都是可靠的，事务中的每一步操作都必须成功执行，只要有异常发生就回退到事务刚开始未进行操作的状态；事务管理是Spring框架中最为常用的功能之一，我们在使用SpringBoot开发时，大部分情况下也都需要使用事务；</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>未完待续….</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>总是在写重复代码，有没有觉得很煎熬？对代码多点挑剔，你会想法设法尽量去避免写重复代码。学习和借鉴优秀源码的设计思想，用于实际项目中，让你的代码变得更加优雅。</p>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/public/16-11-10/90063033.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1. <code>Map</code>接口</strong></p>
+<p>解读<code>Map</code>源码，学到了以下几点：</p>
+<ol>
+<li>泛型的使用</li>
+<li><code>default</code>声明方法体的方法；</li>
+<li>接口中可声明静态方法</li>
+<li>接口中嵌套接口</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">public interface Map&lt;K, V&gt; &#123;</div><div class="line"></div><div class="line">    // 1. 通用接口方法</div><div class="line">    boolean containsKey(Object key);</div><div class="line"></div><div class="line">    // 2. 泛型</div><div class="line">    V get(Object key);</div><div class="line"></div><div class="line">    // 3. 泛型共同父类</div><div class="line">    void putAll(Map&lt;? extends K, ? extends V&gt; m);</div><div class="line"></div><div class="line">    // 4. 接口中声明接口</div><div class="line">    interface Entry&lt;K, V&gt; &#123;</div><div class="line"></div><div class="line">        K getKey();</div><div class="line"></div><div class="line">        V getValue();</div><div class="line"></div><div class="line">        // 5. 接口中声明静态方法</div><div class="line">        public static &lt;K extends Comparable&lt;? super K&gt;, V&gt; Comparator&lt;Entry&lt;K,V&gt;&gt; comparingByKey() &#123;</div><div class="line">            return (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)</div><div class="line">                    (c1, c2) -&gt; c1.getKey().compareTo(c2.getKey());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 6. 接口中声明默认方法</div><div class="line">    default V getOrDefault(Object key, V defaultValue) &#123;</div><div class="line">        V v;</div><div class="line">        return (((v = get(key)) != null) || containsKey(key))</div><div class="line">                ? v</div><div class="line">                : defaultValue;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    Set&lt;Entry&lt;K, V&gt;&gt; entrySet();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>2. <code>MapAbstract</code>抽象方法</strong></p>
+<p>解读<code>MapAbstract</code>源码，学习到以下几点：</p>
+<ol>
+<li>抽象类中，至少要有一个抽象方法。</li>
+<li>抽象类，不能有接口，除了抽象方法，方法必须有方法体。</li>
+<li>抽象类中，可以声明静态类。 </li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">public abstract class AbstractMap&lt;K,V&gt; implements Map&lt;K,V&gt; &#123;</div><div class="line"></div><div class="line">    // 1. 实现containsKey接口方法</div><div class="line">    public boolean containsKey(Object key) &#123;</div><div class="line">        Iterator&lt;Map.Entry&lt;K,V&gt;&gt; i = entrySet().iterator();</div><div class="line">        if (key==null) &#123;</div><div class="line">            while (i.hasNext()) &#123;</div><div class="line">                Entry&lt;K,V&gt; e = i.next();</div><div class="line">                if (e.getKey()==null)</div><div class="line">                    return true;</div><div class="line">            &#125;</div><div class="line">        &#125; else &#123;</div><div class="line">            while (i.hasNext()) &#123;</div><div class="line">                Entry&lt;K,V&gt; e = i.next();</div><div class="line">                if (key.equals(e.getKey()))</div><div class="line">                    return true;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 2. 声明抽象方法体,没有方法体,继承类必须实现该方法</div><div class="line">    public abstract Set&lt;Entry&lt;K,V&gt;&gt; entrySet();</div><div class="line"></div><div class="line">    // 3. 抽象方法中可声明静态类</div><div class="line">    public static class SimpleEntry&lt;K,V&gt;</div><div class="line">        implements Entry&lt;K,V&gt;, java.io.Serializable</div><div class="line">    &#123;</div><div class="line">        private static final long serialVersionUID = -8499721149061103585L;</div><div class="line"></div><div class="line">        private final K key;</div><div class="line">        private V value;</div><div class="line">        </div><div class="line">        public SimpleEntry(K key, V value) &#123;</div><div class="line">            this.key   = key;</div><div class="line">            this.value = value;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        public K getKey() &#123;</div><div class="line">            return key;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public V getValue() &#123;</div><div class="line">            return value;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>未完待续….</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>JDK1.8源码</li>
+</ul>
 
       
     </div>
@@ -384,7 +433,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SpringBoot/" rel="tag">#SpringBoot</a>
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
           
         </div>
       
@@ -393,17 +442,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/18/SpringBoot中使用JavaMailSender发送邮件/" rel="next" title="SpringBoot中使用JavaMailSender发送邮件">
-                <i class="fa fa-chevron-left"></i> SpringBoot中使用JavaMailSender发送邮件
+              <a href="/2016/11/02/MySQL查询优化/" rel="next" title="MySQL查询优化">
+                <i class="fa fa-chevron-left"></i> MySQL查询优化
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/09/24/Java序列化/" rel="prev" title="Java序列化">
-                Java序列化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -418,10 +463,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/09/23/SpringBoot中的事务管理/"
-     data-title="SpringBoot中的事务管理"
+        <div class="ds-share flat" data-thread-key="2016/11/10/Java之HashMap源码学习/"
+     data-title="Java之HashMap源码学习"
      data-content=""
-     data-url="http://jianwl.com/2016/09/23/SpringBoot中的事务管理/">
+     data-url="http://jianwl.com/2016/11/10/Java之HashMap源码学习/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -448,8 +493,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/09/23/SpringBoot中的事务管理/"
-           data-title="SpringBoot中的事务管理" data-url="http://jianwl.com/2016/09/23/SpringBoot中的事务管理/">
+      <div class="ds-thread" data-thread-key="2016/11/10/Java之HashMap源码学习/"
+           data-title="Java之HashMap源码学习" data-url="http://jianwl.com/2016/11/10/Java之HashMap源码学习/">
       </div>
     
   </div>
@@ -540,7 +585,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务的作用"><span class="nav-number">2.</span> <span class="nav-text">事务的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-number">3.</span> <span class="nav-text">实战</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构"><span class="nav-number">2.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-number">3.</span> <span class="nav-text">实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
         </section>

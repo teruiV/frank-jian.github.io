@@ -292,6 +292,148 @@
             
               
                 
+                <a class="post-title-link" href="/2016/11/10/Java之HashMap源码学习/" itemprop="url">
+                  Java之HashMap源码学习
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-10T23:06:55+08:00" content="2016-11-10">
+              2016-11-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/10/Java之HashMap源码学习/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/10/Java之HashMap源码学习/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>总是在写重复代码，有没有觉得很煎熬？对代码多点挑剔，你会想法设法尽量去避免写重复代码。学习和借鉴优秀源码的设计思想，用于实际项目中，让你的代码变得更加优雅。</p>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/public/16-11-10/90063033.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1. <code>Map</code>接口</strong></p>
+<p>解读<code>Map</code>源码，学到了以下几点：</p>
+<ol>
+<li>泛型的使用</li>
+<li><code>default</code>声明方法体的方法；</li>
+<li>接口中可声明静态方法</li>
+<li>接口中嵌套接口</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">public interface Map&lt;K, V&gt; &#123;</div><div class="line"></div><div class="line">    // 1. 通用接口方法</div><div class="line">    boolean containsKey(Object key);</div><div class="line"></div><div class="line">    // 2. 泛型</div><div class="line">    V get(Object key);</div><div class="line"></div><div class="line">    // 3. 泛型共同父类</div><div class="line">    void putAll(Map&lt;? extends K, ? extends V&gt; m);</div><div class="line"></div><div class="line">    // 4. 接口中声明接口</div><div class="line">    interface Entry&lt;K, V&gt; &#123;</div><div class="line"></div><div class="line">        K getKey();</div><div class="line"></div><div class="line">        V getValue();</div><div class="line"></div><div class="line">        // 5. 接口中声明静态方法</div><div class="line">        public static &lt;K extends Comparable&lt;? super K&gt;, V&gt; Comparator&lt;Entry&lt;K,V&gt;&gt; comparingByKey() &#123;</div><div class="line">            return (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)</div><div class="line">                    (c1, c2) -&gt; c1.getKey().compareTo(c2.getKey());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 6. 接口中声明默认方法</div><div class="line">    default V getOrDefault(Object key, V defaultValue) &#123;</div><div class="line">        V v;</div><div class="line">        return (((v = get(key)) != null) || containsKey(key))</div><div class="line">                ? v</div><div class="line">                : defaultValue;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    Set&lt;Entry&lt;K, V&gt;&gt; entrySet();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>2. <code>MapAbstract</code>抽象方法</strong></p>
+<p>解读<code>MapAbstract</code>源码，学习到以下几点：</p>
+<ol>
+<li>抽象类中，至少要有一个抽象方法。</li>
+<li>抽象类，不能有接口，除了抽象方法，方法必须有方法体。</li>
+<li>抽象类中，可以声明静态类。 </li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">public abstract class AbstractMap&lt;K,V&gt; implements Map&lt;K,V&gt; &#123;</div><div class="line"></div><div class="line">    // 1. 实现containsKey接口方法</div><div class="line">    public boolean containsKey(Object key) &#123;</div><div class="line">        Iterator&lt;Map.Entry&lt;K,V&gt;&gt; i = entrySet().iterator();</div><div class="line">        if (key==null) &#123;</div><div class="line">            while (i.hasNext()) &#123;</div><div class="line">                Entry&lt;K,V&gt; e = i.next();</div><div class="line">                if (e.getKey()==null)</div><div class="line">                    return true;</div><div class="line">            &#125;</div><div class="line">        &#125; else &#123;</div><div class="line">            while (i.hasNext()) &#123;</div><div class="line">                Entry&lt;K,V&gt; e = i.next();</div><div class="line">                if (key.equals(e.getKey()))</div><div class="line">                    return true;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 2. 声明抽象方法体,没有方法体,继承类必须实现该方法</div><div class="line">    public abstract Set&lt;Entry&lt;K,V&gt;&gt; entrySet();</div><div class="line"></div><div class="line">    // 3. 抽象方法中可声明静态类</div><div class="line">    public static class SimpleEntry&lt;K,V&gt;</div><div class="line">        implements Entry&lt;K,V&gt;, java.io.Serializable</div><div class="line">    &#123;</div><div class="line">        private static final long serialVersionUID = -8499721149061103585L;</div><div class="line"></div><div class="line">        private final K key;</div><div class="line">        private V value;</div><div class="line">        </div><div class="line">        public SimpleEntry(K key, V value) &#123;</div><div class="line">            this.key   = key;</div><div class="line">            this.value = value;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        public K getKey() &#123;</div><div class="line">            return key;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public V getValue() &#123;</div><div class="line">            return value;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>未完待续….</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>JDK1.8源码</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/11/02/MySQL查询优化/" itemprop="url">
                   MySQL查询优化
                 </a>
@@ -1591,150 +1733,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/17/Java之模板方法/" itemprop="url">
-                  Java之模板方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-17T23:16:56+08:00" content="2016-10-17">
-              2016-10-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/17/Java之模板方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/17/Java之模板方法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>模板方法之前写过一篇<a href="http://jianwl.com/2016/08/11/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/">Java设计模式之模板方法模式</a>,当回过头来再看这篇文章时，发现原来的文章过于累赘，无法让人快速理解，故重新梳理。</p>
-<h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><p><strong>什么是模板方法？</strong></p>
-<p>提取了类库中的公共行为，将公共行为放在父类中，通过其子类来实现不同的行为。</p>
-<p><strong>优点</strong></p>
-<ol>
-<li>将不变的行为搬到超类，去除了子类中的重复代码</li>
-<li>子类实现算法的细节，有助于算法的扩展。</li>
-<li>父类调用子类实现的操作，通过子类扩展新的行为，符合开闭原则。</li>
-</ol>
-<p><strong>缺点</strong></p>
-<ol>
-<li>每个不同的实现都需要定义一个子类，这会导致类的个数的增加，设计更加抽象。</li>
-</ol>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1. 定义算法骨架</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public abstract class StealingMethod &#123;</div><div class="line"></div><div class="line">  protected abstract String pickTarget();</div><div class="line"></div><div class="line">  protected abstract void confuseTarget(String target);</div><div class="line"></div><div class="line">  protected abstract void stealTheItem(String target);</div><div class="line"></div><div class="line">  public void steal() &#123;</div><div class="line">    String target = pickTarget();</div><div class="line">    System.out.println(&quot;The target has been chosen as &quot; + target + &quot;.&quot;);</div><div class="line">    confuseTarget(target);</div><div class="line">    stealTheItem(target);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>2. 主对象使用骨架算法</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class HalflingThief &#123;</div><div class="line"></div><div class="line">  private StealingMethod method;</div><div class="line"></div><div class="line">  public HalflingThief(StealingMethod method) &#123;</div><div class="line">    this.method = method;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public void steal() &#123;</div><div class="line">    method.steal();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public void changeMethod(StealingMethod method) &#123;</div><div class="line">    this.method = method;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>3. 子类A实现骨架算法</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class HitAndRunMethod extends StealingMethod &#123;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected String pickTarget() &#123;</div><div class="line">    return &quot;old goblin woman&quot;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected void confuseTarget(String target) &#123;</div><div class="line">    System.out.println(&quot;Approach the &quot; + target + &quot; from behind.&quot;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected void stealTheItem(String target) &#123;</div><div class="line">    System.out.println(&quot;Grab the handbag and run away fast!&quot;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>4. 子类B实现骨架算法</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class SubtleMethod extends StealingMethod &#123;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected String pickTarget() &#123;</div><div class="line">    return &quot;shop keeper&quot;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected void confuseTarget(String target) &#123;</div><div class="line">    System.out.println(&quot;Approach the &quot; + target + &quot; with tears running and hug him!&quot;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected void stealTheItem(String target) &#123;</div><div class="line">    System.out.println(&quot;While in close contact grab the &quot; + target + &quot;&apos;s wallet.&quot;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>5. Main方法运行</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class App &#123;</div><div class="line">  public static void main(String[] args) &#123;</div><div class="line">    HalflingThief thief = new HalflingThief(new HitAndRunMethod());</div><div class="line">    thief.steal();</div><div class="line">    thief.changeMethod(new SubtleMethod());</div><div class="line">    thief.steal();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-17/79477811.jpg" alt=""></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1780,7 +1778,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">146</span>
+              <span class="site-state-item-count">147</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
