@@ -362,31 +362,22 @@
       
         
           
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>总是在写重复代码，有没有觉得很煎熬？对代码多点挑剔，你会想法设法尽量去避免写重复代码。学习和借鉴优秀源码的设计思想，用于实际项目中，让你的代码变得更加优雅。</p>
-<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/public/16-11-10/90063033.jpg" alt=""></p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1. <code>Map</code>接口</strong></p>
-<p>解读<code>Map</code>源码，学到了以下几点：</p>
-<ol>
-<li>泛型的使用</li>
-<li><code>default</code>声明方法体的方法；</li>
-<li>接口中可声明静态方法</li>
-<li>接口中嵌套接口</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">public interface Map&lt;K, V&gt; &#123;</div><div class="line"></div><div class="line">    // 1. 通用接口方法</div><div class="line">    boolean containsKey(Object key);</div><div class="line"></div><div class="line">    // 2. 泛型</div><div class="line">    V get(Object key);</div><div class="line"></div><div class="line">    // 3. 泛型共同父类</div><div class="line">    void putAll(Map&lt;? extends K, ? extends V&gt; m);</div><div class="line"></div><div class="line">    // 4. 接口中声明接口</div><div class="line">    interface Entry&lt;K, V&gt; &#123;</div><div class="line"></div><div class="line">        K getKey();</div><div class="line"></div><div class="line">        V getValue();</div><div class="line"></div><div class="line">        // 5. 接口中声明静态方法</div><div class="line">        public static &lt;K extends Comparable&lt;? super K&gt;, V&gt; Comparator&lt;Entry&lt;K,V&gt;&gt; comparingByKey() &#123;</div><div class="line">            return (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)</div><div class="line">                    (c1, c2) -&gt; c1.getKey().compareTo(c2.getKey());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 6. 接口中声明默认方法</div><div class="line">    default V getOrDefault(Object key, V defaultValue) &#123;</div><div class="line">        V v;</div><div class="line">        return (((v = get(key)) != null) || containsKey(key))</div><div class="line">                ? v</div><div class="line">                : defaultValue;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    Set&lt;Entry&lt;K, V&gt;&gt; entrySet();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>2. <code>MapAbstract</code>抽象方法</strong></p>
-<p>解读<code>MapAbstract</code>源码，学习到以下几点：</p>
-<ol>
-<li>抽象类中，至少要有一个抽象方法。</li>
-<li>抽象类，不能有接口，除了抽象方法，方法必须有方法体。</li>
-<li>抽象类中，可以声明静态类。 </li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">public abstract class AbstractMap&lt;K,V&gt; implements Map&lt;K,V&gt; &#123;</div><div class="line"></div><div class="line">    // 1. 实现containsKey接口方法</div><div class="line">    public boolean containsKey(Object key) &#123;</div><div class="line">        Iterator&lt;Map.Entry&lt;K,V&gt;&gt; i = entrySet().iterator();</div><div class="line">        if (key==null) &#123;</div><div class="line">            while (i.hasNext()) &#123;</div><div class="line">                Entry&lt;K,V&gt; e = i.next();</div><div class="line">                if (e.getKey()==null)</div><div class="line">                    return true;</div><div class="line">            &#125;</div><div class="line">        &#125; else &#123;</div><div class="line">            while (i.hasNext()) &#123;</div><div class="line">                Entry&lt;K,V&gt; e = i.next();</div><div class="line">                if (key.equals(e.getKey()))</div><div class="line">                    return true;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 2. 声明抽象方法体,没有方法体,继承类必须实现该方法</div><div class="line">    public abstract Set&lt;Entry&lt;K,V&gt;&gt; entrySet();</div><div class="line"></div><div class="line">    // 3. 抽象方法中可声明静态类</div><div class="line">    public static class SimpleEntry&lt;K,V&gt;</div><div class="line">        implements Entry&lt;K,V&gt;, java.io.Serializable</div><div class="line">    &#123;</div><div class="line">        private static final long serialVersionUID = -8499721149061103585L;</div><div class="line"></div><div class="line">        private final K key;</div><div class="line">        private V value;</div><div class="line">        </div><div class="line">        public SimpleEntry(K key, V value) &#123;</div><div class="line">            this.key   = key;</div><div class="line">            this.value = value;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        public K getKey() &#123;</div><div class="line">            return key;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public V getValue() &#123;</div><div class="line">            return value;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>未完待续….</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>JDK1.8源码</li>
-</ul>
+          前言总是在写重复代码，有没有觉得很煎熬？对代码多点挑剔，你会想法设法尽量去避免写重复代码。学习和借鉴优秀源码的设计思想，用于实际项目中，让你的代码变得更加优雅。
+架构
+实战1. Map接口
+解读Map源码，学到了以下几点：
 
-          
+泛型的使用
+default声明方法体的方法；
+接口中可声明静态方法
+接口中
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/11/10/Java之HashMap源码学习/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -504,50 +495,18 @@
       
         
           
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>临近双11，达达App的流量突然猛增，日单量破百万单。这几天数据库出现几次报警，排查下来是某些SQL性能很差，导致慢查询。本节我们主要来学习，优化SQL。</p>
-<h3 id="查询原理"><a href="#查询原理" class="headerlink" title="查询原理"></a>查询原理</h3><p>当我们向MySQL发送一个请求时，它到底做了什么？大概有一下几个步骤：</p>
-<ol>
-<li>客户端发送一条查询给服务器</li>
-<li>服务器先检查查询缓存，如果命中缓存则立刻返回存储在缓存中的结果，否则进入下一个阶段。</li>
-<li>服务器进行SQL解析、预处理，再由优化器生成对应的执行计划</li>
-<li>MySQL根据优化器生成的执行计划，调用存储引用的API来执行查询。</li>
-<li>将结果返回给客户端。</li>
-</ol>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1、查询执行计划</strong></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-11-2/73226876.jpg" alt=""></p>
-<p>通过执行计划知道，<code>type=index</code>表示通过索引查询，预估得到2条记录<code>rows=2</code>;</p>
-<p><strong>2、不要使用count(非索引字段)</strong></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-11-2/4766428.jpg" alt=""></p>
-<p>通过执行计划可知，使用<code>count(非索引字段)</code>使用全表扫描查询，而使用<code>count(*)</code>或<code>count(索引字段)</code>使用索引查询。</p>
-<p><strong>3、切分查询</strong></p>
-<p><code>场景：</code> 有时候一个大查询我们需要<code>分而治之</code>，将大查询切分成小查询，每个查询功能完全一样，只完成一小部分，每次只返回一部分查询结果。</p>
-<p><code>举个🌰</code></p>
-<blockquote>
-<p>定期删除大量数据时，如果用一个大的语句一次性完成的话，则可能需要一次锁住很多数据、占满整个事务日志、耗尽系统资源、阻塞很多很小的但很重要的查询。将一个大的DELETE语句切分成多个小的查询可以尽可能小地影响MYSQL性能，同时还可以减少MYSQL复制的延时。</p>
-</blockquote>
-<p><code>再举个线上环境的🌰</code></p>
-<p><code>场景：</code> 假设我需要一次查询1万个用户的信息；</p>
-<p><code>大查询：</code> SELECT * FROM ‘dada’ WHERE dada_id IN (1万个id);</p>
-<p><code>小查询:</code> SELECT * FROM ‘dada’ WHERE dada_id IN (1千个id); 查询10次；</p>
-<p><code>结果：</code> 使用<code>大查询</code>很可能出现慢查询，导致性能问题，而使用<code>小查询</code>，对服务器性能影响小很多。</p>
-<p><strong>4、分解关联查询</strong></p>
-<p><code>关联查询</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SELECT * FROM &apos;tag&apos;</div><div class="line">JOIN &apos;tag_post&apos; ON tag_post.tag_id=tag.id </div><div class="line">JOIN &apos;post&apos; ON tag_post.post_id=post.id </div><div class="line">WHERE tag.tag=&apos;mysql&apos;;</div></pre></td></tr></table></figure>
-<p><code>分解查询</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SELECT * FROM &apos;tag&apos; WHERE tag=&apos;mysql&apos;;</div><div class="line">SELECT * FROM &apos;tag_post&apos; WHERE tag_id=1234;</div><div class="line">SELECT * FROM &apos;post&apos; WHERE post.id in(123,456,567,9098,8904);</div></pre></td></tr></table></figure>
-<p><code>关联查询分解为多个查询的好处</code></p>
-<ol>
-<li>缓存效率更高，如:上面查询中的<code>tag=mysql</code>已经被缓存了，那么应用就可以跳过第一个查询。再如，应用已经缓存<code>post.id为123、456</code>的内容，那么第三个查询的<code>IN</code>就可以少查询几个<code>post.id</code>。如果表结构变了，就不能使用查询缓存了。</li>
-<li>查询分解后，执行单个查询可以减少锁的竞争。</li>
-<li>应用层做分解后，可以更容易对数据库进行拆分，更容易做到高性能和可扩展。</li>
-<li>查询效率会有所提升，使用<code>IN</code>代替关联查询，可让MYSQL按照ID顺序进行查询，这可能比随机关联更高效。</li>
-<li>减少冗余记录的查询，在应用层做分解查询，意味着对于某条记录应用只需查询一次，而在数据库做关联查询，则需要重复访问一部分数据，可减少网路和内存的消耗。</li>
-</ol>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li>高性能MYSQL(第三版)</li>
-</ol>
+          前言临近双11，达达App的流量突然猛增，日单量破百万单。这几天数据库出现几次报警，排查下来是某些SQL性能很差，导致慢查询。本节我们主要来学习，优化SQL。
+查询原理当我们向MySQL发送一个请求时，它到底做了什么？大概有一下几个步骤：
 
-          
+客户端发送一条查询给服务器
+服务器先检查查询缓存，如果命中
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/11/02/MySQL查询优化/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -665,20 +624,16 @@
       
         
           
-            <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1、grep高级用法</strong></p>
-<p><code>语法</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">grep [-A] [-B] [-n] &apos;搜索字符串&apos;</div><div class="line"></div><div class="line">-A ：后面可加数字，为after的意思，除了列出该行之后，后续的n行也列出来。</div><div class="line">-B ：后面可加数字，为before的意思，除了列出该行之后，前面的n行也列出来。</div><div class="line">-n : 将找到的关键字显色，且加上行号来表示</div></pre></td></tr></table></figure>
-<p><code>实战1</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/14.jpg" alt=""></p>
-<p><strong>2、nl命令</strong></p>
-<p>输出文件内容，并自动加上行号</p>
-<p><code>实战2</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/15.jpg" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>鸟哥的Linux私房菜</li>
-</ul>
+          实战1、grep高级用法
+语法
+12345grep [-A] [-B] [-n] &apos;搜索字符串&apos;-A ：后面可加数字，为after的意思，除了列出该行之后，后续的n行也列出来。-B ：后面可加数字，为before的意思，除了列出该行之后，前面的n行也列出来。-n : 将找到的关键
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/29/Linux之高级命令/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -796,47 +751,15 @@
       
         
           
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>半年前写过一篇<a href="http://jianwl.com/2016/05/10/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">观察者模式</a>,当我再次翻阅这篇文章时，我已看不懂，我当初写这篇文章的主线是什么？仅仅是将「Head First设计模式」书中的代码搬过来。这样没有经过思考的学习笔记，对知识的理解是很浅的，且忘记后再看原文不容易重新拾起。本文将重新梳理「JAVA观察者模式」。</p>
-<h3 id="观察者模式介绍"><a href="#观察者模式介绍" class="headerlink" title="观察者模式介绍"></a>观察者模式介绍</h3><p>一个目标对象管理所有依赖于它的观察者对象，并且在它本身的状态改变时，主动发出通知。</p>
-<p><code>优点</code></p>
-<p>观察者和被观察者是抽象耦合的</p>
-<p><code>缺点</code></p>
-<ol>
-<li>如果一个目标对象有很多的观察者，通知所有观察者会花费很多时间</li>
-<li>目标对象和观察者之间有循环依赖的话，会触发循环调用，导致系统崩溃。</li>
-<li>观察者模式没有相应的机制让观察者知道目标对象是怎么发生变化的，仅仅只是知道观察目标发生了变化。</li>
-</ol>
-<p><code>组成</code></p>
-<ol>
-<li><code>抽象主题角色「Subject」:</code>把所有观察者对象的引用保存在一个聚集里，每个主题都可以有任何数量的观察者。抽象主题提供一个接口，可以增加和删除观察者对象。</li>
-<li><code>具体主题角色 「ConcreteSubject」：</code>存入具体观察者对象，在具体主题的内部状态改变时，给所有登记过的观察者发出通知。</li>
-<li><code>抽象观察者角色「Observer」：</code>为所有的具体观察者定义一个接口，在得到主题的通知时，更新自己。</li>
-<li><code>具体观察角色「ConsreteObserver」：</code>具体观察者实现抽象观察者所要求的所有接口。</li>
-</ol>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1、定义抽象观察者角色</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Observer</div><div class="line"> * @param &lt;S&gt; Subject</div><div class="line"> * @param &lt;O&gt; Observer</div><div class="line"> * @param &lt;A&gt; Argument type</div><div class="line"> */</div><div class="line">public interface Observer&lt;S extends Observable&lt;S, O, A&gt;, O extends Observer&lt;S, O, A&gt;, A&gt; &#123;</div><div class="line"></div><div class="line">  void update(S subject, A argument);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>Race.java</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public interface Race extends Observer&lt;GWeather, Race, WeatherType&gt; &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>2、定义具体观察者角色</strong></p>
-<p><code>具体观察者角色：GOrcs.java</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class GOrcs implements Race &#123;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public void update(GWeather weather, WeatherType weatherType) &#123;</div><div class="line">    switch (weatherType) &#123;</div><div class="line">      case COLD:</div><div class="line">        System.out.println(&quot;The orcs are freezing cold.&quot;);</div><div class="line">        break;</div><div class="line">      case RAINY:</div><div class="line">        System.out.println(&quot;The orcs are dripping wet.&quot;);</div><div class="line">        break;</div><div class="line">      case SUNNY:</div><div class="line">        System.out.println(&quot;The sun hurts the orcs&apos; eyes.&quot;);</div><div class="line">        break;</div><div class="line">      case WINDY:</div><div class="line">        System.out.println(&quot;The orc smell almost vanishes in the wind.&quot;);</div><div class="line">        break;</div><div class="line">      default:</div><div class="line">        break;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>具体观察者角色：GHobbits.java</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class GHobbits implements Race &#123;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public void update(GWeather weather, WeatherType weatherType) &#123;</div><div class="line">    switch (weatherType) &#123;</div><div class="line">      case COLD:</div><div class="line">        System.out.println(&quot;The hobbits are shivering in the cold weather.&quot;);</div><div class="line">        break;</div><div class="line">      case RAINY:</div><div class="line">        System.out.println(&quot;The hobbits look for cover from the rain.&quot;);</div><div class="line">        break;</div><div class="line">      case SUNNY:</div><div class="line">        System.out.println(&quot;The happy hobbits bade in the warm sun.&quot;);</div><div class="line">        break;</div><div class="line">      case WINDY:</div><div class="line">        System.out.println(&quot;The hobbits hold their hats tightly in the windy weather.&quot;);</div><div class="line">        break;</div><div class="line">      default:</div><div class="line">        break;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>3、定义抽象主题角色</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Subject</div><div class="line"> * @param &lt;S&gt; Subject</div><div class="line"> * @param &lt;O&gt; Observer</div><div class="line"> * @param &lt;A&gt; Argument type</div><div class="line"> */</div><div class="line">public abstract class Observable&lt;S extends Observable&lt;S, O, A&gt;, O extends Observer&lt;S, O, A&gt;, A&gt; &#123;</div><div class="line"></div><div class="line">  protected List&lt;O&gt; observers;</div><div class="line"></div><div class="line">  public Observable() &#123;</div><div class="line">    this.observers = new CopyOnWriteArrayList&lt;&gt;();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public void addObserver(O observer) &#123;</div><div class="line">    this.observers.add(observer);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public void removeObserver(O observer) &#123;</div><div class="line">    this.observers.remove(observer);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * Notify observers</div><div class="line">   */</div><div class="line">  @SuppressWarnings(&quot;unchecked&quot;)</div><div class="line">  public void notifyObservers(A argument) &#123;</div><div class="line">    for (O observer : observers) &#123;</div><div class="line">      observer.update((S) this, argument);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>4、定义具体的主题</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class GWeather extends Observable&lt;GWeather, Race, WeatherType&gt; &#123;</div><div class="line"></div><div class="line">  private WeatherType currentWeather;</div><div class="line"></div><div class="line">  public GWeather() &#123;</div><div class="line">    currentWeather = WeatherType.SUNNY;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * Makes time pass for weather</div><div class="line">   */</div><div class="line">  public void timePasses() &#123;</div><div class="line">    WeatherType[] enumValues = WeatherType.values();</div><div class="line">    currentWeather = enumValues[(currentWeather.ordinal() + 1) % enumValues.length];</div><div class="line">    System.out.println(&quot;The weather changed to &quot; + currentWeather + &quot;.&quot;);</div><div class="line">    notifyObservers(currentWeather);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>WeatherType.class</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public enum WeatherType &#123;</div><div class="line"></div><div class="line">  SUNNY, RAINY, WINDY, COLD;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public String toString() &#123;</div><div class="line">    return this.name().toLowerCase();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>5、运行观察者模式</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class App &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        GWeather gWeather = new GWeather();</div><div class="line">        gWeather.addObserver(new GOrcs());</div><div class="line">        gWeather.addObserver(new GHobbits());</div><div class="line"></div><div class="line">        gWeather.timePasses();</div><div class="line">        gWeather.timePasses();</div><div class="line">        gWeather.timePasses();</div><div class="line">        gWeather.timePasses();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p><code>结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/13.jpg" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="https://zh.wikipedia.org/wiki/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F" target="_blank" rel="external">观察者模式-维基百科</a></li>
-</ul>
+          前言半年前写过一篇观察者模式,当我再次翻阅这篇文章时，我已看不懂，我当初写这篇文章的主线是什么？仅仅是将「Head First设计模式」书中的代码搬过来。这样没有经过思考的学习笔记，对知识的理解是很浅的，且忘记后再看原文不容易重新拾起。本文将重新梳理「JAVA观察者模式」。
+观察者模式介绍一个目标对
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/29/JAVA之观察者模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -954,33 +877,15 @@
       
         
           
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>算法对一个工程师来说是极其重要的，初级工程师虽然在工作中，鲜有用到算法，但对算法的训练仍不能有丝毫的含糊，算法对工程师的思维训练也是有极大的好处的。从基础算法起步，逐步学习算法。本节主要介绍插入排序算法。</p>
-<h3 id="插入排序介绍"><a href="#插入排序介绍" class="headerlink" title="插入排序介绍"></a>插入排序介绍</h3><p>通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。</p>
-<p><code>举个实际生活中的例子</code></p>
-<blockquote>
-<p>排序一手扑克牌，开始时，我们的左手为空并且桌子上的牌面向下，然后我们每次从桌子上拿走一张牌并将它插入左手中正确的位置。为了找到一张牌的正确位置，我们从右到左将它与已在手中的每张牌进行比较，拿在左手上的牌总是排序好的。</p>
-</blockquote>
-<h3 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h3><p><code>时间复杂度</code></p>
-<p>O(n^2)</p>
-<p><code>空间复杂度</code></p>
-<p>O(n),需要辅助空间O(1)</p>
-<h3 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h3><ol>
-<li>第一个元素开始，该元素可以认为已经被排序</li>
-<li>取出下一个元素，在已经排序的元素序列中从后向前扫描</li>
-<li>如果该元素「已排序」大于新元素，将该元素移动下一位置</li>
-<li>重复步骤3，直到找到已排序的元素小于或者等于新元素的位置</li>
-<li>将新元素插入到该位置后</li>
-<li>重复步骤2~5</li>
-</ol>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_001() &#123;</div><div class="line">    // 初始化数组</div><div class="line">    int[] arr = &#123;6, 2, 4, 1, 5, 9&#125;;</div><div class="line"></div><div class="line">    // 默认第一个元素为已排序(以「i = 1」,简述流程)</div><div class="line">    for (int i = 1; i &lt; arr.length; i++) &#123;</div><div class="line"></div><div class="line">        // 当前新插入元素 arr[1] = 2;</div><div class="line">        int temp = arr[i];</div><div class="line"></div><div class="line">        // 当前已排序的最大下标位是0,结束条件是「下标位&gt;=0 且 已排序元素大于插入元素」</div><div class="line">        for (int j = i - 1; j &gt;= 0 &amp;&amp; arr[j] &gt; temp; j--) &#123;</div><div class="line">            // 从后往前,交换插入新元素 和 已排序的元素</div><div class="line">            arr[j + 1] = arr[j];</div><div class="line">            arr[j] = temp;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    System.out.println(&quot;inserted sorted ==&gt; &quot; + JSON.toJSON(arr));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/10.jpg" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="https://zh.wikipedia.org/wiki/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F#Java" target="_blank" rel="external">插入排序-维基百科</a></li>
-<li>算法导论(第三版)</li>
-</ul>
+          前言算法对一个工程师来说是极其重要的，初级工程师虽然在工作中，鲜有用到算法，但对算法的训练仍不能有丝毫的含糊，算法对工程师的思维训练也是有极大的好处的。从基础算法起步，逐步学习算法。本节主要介绍插入排序算法。
+插入排序介绍通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/29/算法基础之插入排序/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1079,30 +984,16 @@
       
         
           
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>Java8</code>新增了一个集合工具类<code>java.util.stream.Collectors</code>，超级好用，在平时处理业务逻辑时，会经常用到。熟练掌握其用法，对于提高工作效率有很大的帮助。当然，这仅仅是最初级的，之后会抽空写一篇关于其源码解读的文章。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><code>对象模型</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public class User &#123;</div><div class="line">    private String name;</div><div class="line">    private Integer age;</div><div class="line"></div><div class="line">    public User() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public User(String name, Integer age) &#123;</div><div class="line">        this.name = name;</div><div class="line">        this.age = age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Integer getAge() &#123;</div><div class="line">        return age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setAge(Integer age) &#123;</div><div class="line">        this.age = age;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>1、聚合对象某一属性<code>Collectors.toList()</code></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">    public void test_001() &#123;</div><div class="line">        // 初始化用户对象</div><div class="line">        List&lt;User&gt; users = Collections.unmodifiableList(Arrays.asList(new User(&quot;对象C&quot;, 21), new User(&quot;对象B&quot;, 27), new User(&quot;对象A&quot;, 22), new User(&quot;对象D&quot;, 22)));</div><div class="line">        // 此处JSON类引用「阿里巴巴的fastjson包」</div><div class="line">        System.out.println(&quot;users ==&gt; &quot; + JSON.toJSON(users));</div><div class="line"></div><div class="line">        // 获取用户年龄的集合,包含重复年龄</div><div class="line">        List&lt;Integer&gt; ages = users.stream().map(User::getAge).collect(Collectors.toList());</div><div class="line">        System.out.println(&quot;ages ==&gt; &quot; + JSON.toJSON(ages));</div><div class="line"></div><div class="line">        // 获取年龄的集合,并去重</div><div class="line">        List&lt;Integer&gt; distinctAges = users.stream().map(User::getAge).distinct().collect(Collectors.toList());</div><div class="line">        System.out.println(&quot;distinctAges ==&gt; &quot; + JSON.toJSON(distinctAges));</div><div class="line"></div><div class="line">        // 按年龄排序 小 -&gt; 大</div><div class="line">        List&lt;User&gt; ageSortedUser = users.stream().sorted((u1,u2) -&gt; u1.getAge() - u2.getAge()).collect(Collectors.toList());</div><div class="line">        System.out.println(&quot;ageSortedUser ==&gt; &quot; + JSON.toJSON(ageSortedUser));</div><div class="line"></div><div class="line">        // 按名字排序按字母从 A - &gt; Z || a - &gt; z</div><div class="line">        List&lt;User&gt; nameSortedUser = users.stream().sorted((u1,u2) -&gt; u1.getName().compareTo(u2.getName())).collect(Collectors.toList());</div><div class="line">        System.out.println(&quot;nameSortedUser ==&gt; &quot; + JSON.toJSON(nameSortedUser));</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p><code>提一点</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/8.jpg" alt=""></p>
-<p><code>结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/4.jpg" alt=""></p>
-<p><strong>2、将每个年龄的用户分组<code>Collectors.groupingBy()</code></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">    public void test_002() &#123;</div><div class="line">        // 初始化用户对象</div><div class="line">        List&lt;User&gt; users = Collections.unmodifiableList(Arrays.asList(new User(&quot;对象A&quot;, 21), new User(&quot;对象B&quot;, 22), new User(&quot;对象C&quot;, 22)));</div><div class="line"></div><div class="line">        // 每个年龄的用户分组</div><div class="line">        Map&lt;Integer, List&lt;User&gt;&gt; usersGroup = users.stream().collect(Collectors.groupingBy(User::getAge));</div><div class="line">        System.out.println(&quot;usersGroup ==&gt; &quot; + JSON.toJSON(usersGroup));</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p><code>结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/2.jpg" alt=""></p>
-<p><strong>3、其他</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">    public void test_003() &#123;</div><div class="line">        // 初始化用户对象</div><div class="line">        List&lt;User&gt; users = Collections.unmodifiableList(Arrays.asList(new User(&quot;对象C&quot;, 21), new User(&quot;对象B&quot;, 27), new User(&quot;对象A&quot;, 22), new User(&quot;对象D&quot;, 22)));</div><div class="line"></div><div class="line">        // 用户平均年龄</div><div class="line">        Double averageAge = users.stream().collect(Collectors.averagingInt(User::getAge));</div><div class="line">        System.out.println(&quot;averageAge ==&gt; &quot; + averageAge);</div><div class="line"></div><div class="line">        // 计算年龄大于22岁的人数</div><div class="line">        Long objectCount = users.stream().filter(user -&gt; user.getAge() &gt; 22).collect(Collectors.counting());</div><div class="line">        System.out.println(&quot;objectCount ==&gt; &quot; + objectCount);</div><div class="line"></div><div class="line">        // 将所有对象用「,」拼接</div><div class="line">        String userNames = users.stream().map(User::getName).collect(Collectors.joining(&quot;,&quot;));</div><div class="line">        System.out.println(&quot;userNames ==&gt; &quot; + userNames);</div><div class="line"></div><div class="line">        // =================================== 聚合为映射 ===========================================================================</div><div class="line"></div><div class="line">        // 将用户分为「大于22岁」和「小于等于22岁」两组</div><div class="line">        Map&lt;Boolean, List&lt;User&gt;&gt; partitionUsers = users.stream().collect(Collectors.partitioningBy(user -&gt; user.getAge() &gt; 22));</div><div class="line">        System.out.println(&quot;partitionUsers ==&gt;  &quot; + JSON.toJSON(partitionUsers));</div><div class="line"></div><div class="line">        // 将用户列表转化为「对象名 -&gt; 对象」的映射关系</div><div class="line">        Map&lt;String, User&gt; userMap = users.stream().collect(Collectors.toMap(User::getName, user -&gt; user));</div><div class="line">        System.out.println(&quot;userMap ==&gt; &quot; + JSON.toJSON(userMap));</div><div class="line"></div><div class="line">        // =================================== 映射排序 ===========================================================================</div><div class="line"></div><div class="line">        // 对用户映射表userMap排序 从大 -&gt; 小</div><div class="line">        Map&lt;String, User&gt; descUserMap = new LinkedHashMap&lt;&gt;();</div><div class="line">        userMap.entrySet().stream().sorted(Map.Entry.&lt;String, User&gt;comparingByKey().reversed()).forEachOrdered(entry -&gt; descUserMap.put(entry.getKey(), entry.getValue()));</div><div class="line">        System.out.println(&quot;descUserMap ==&gt;&quot; + descUserMap);</div><div class="line">        // 「特别需要注意JSON.toJSON()会对内容顺序重排」 --&gt; 对比上一条输出</div><div class="line">        System.out.println(&quot;descUserMap ==&gt;&quot; + JSON.toJSON(descUserMap));</div><div class="line"></div><div class="line">        // 对用户映射表userMap排序 从小 -&gt; 到</div><div class="line">        Map&lt;String, User&gt; ascUserMap = new LinkedHashMap&lt;&gt;();</div><div class="line">        userMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEachOrdered(entry -&gt; ascUserMap.put(entry.getKey(), entry.getValue()));</div><div class="line">        System.out.println(&quot;ascUserMap ==&gt;&quot; + ascUserMap);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p><code>提一点</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/6.jpg" alt=""></p>
-<p><code>结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/5.jpg" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>Java8官方文档之<code>java.util.stream.Collectors</code></li>
-</ul>
+          前言Java8新增了一个集合工具类java.util.stream.Collectors，超级好用，在平时处理业务逻辑时，会经常用到。熟练掌握其用法，对于提高工作效率有很大的帮助。当然，这仅仅是最初级的，之后会抽空写一篇关于其源码解读的文章。
+实战对象模型
+123456789101112131415
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/29/JAVA8之java-util-stream-Collectors实战/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1220,31 +1111,18 @@
       
         
           
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>接触<code>JAVA</code>2年多了，写代码总是随心所遇，怎么快，怎么来。写代码时，没有去思考怎么避免重复代码，降低多个模块间的耦合，都是事后填坑。看优秀的源码是一个很好地学习方式,同时有助于加深理解。</p>
-<h3 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-28/26213741.jpg" alt=""></p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>为何ArrayList能够动态扩容？</strong></p>
-<p><code>1. 定义变量</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// 默认容量</div><div class="line">private static final int DEFAULT_CAPACITY = 10;</div><div class="line">    </div><div class="line">// 数组元素,其长度代表总的容量,实际元素个数，小于总容量</div><div class="line">transient Object[] elementData; </div><div class="line">  </div><div class="line">// 实际元素个数</div><div class="line">private int size;</div><div class="line">    </div><div class="line">// 默认空实例</div><div class="line">private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</div></pre></td></tr></table></figure>
-<p><code>2. 初始化，实际元素个数为0</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public ArrayList() &#123;</div><div class="line">    this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>3.增加元素</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public boolean add(E e) &#123;</div><div class="line">// 确保数组的容量够，不够自动扩容，具体来看下实现。</div><div class="line">   ensureCapacityInternal(size + 1);</div><div class="line">        </div><div class="line">// 数组指定位置赋值</div><div class="line">   elementData[size++] = e;</div><div class="line">   return true;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>ensureCapacityInternal 具体实现</code></p>
-<p>简单叙述一下步骤：</p>
-<ol>
-<li>初始化,元素个数(<code>size=0</code>)为0</li>
-<li>此时<code>elementData</code>为空，故<code>minCapacity=10</code> </li>
-<li>因<code>minCapacity=10</code>而<code>elementData.length=0</code>故第一次自动扩容。</li>
-<li><code>当前元素的个数 * 1.5 = 0</code>小于<code>minCapacity=10</code>,所以扩容的长度为10.</li>
-<li>赋值<code>elementData</code>的长度为10。自此完成一次完整扩容。</li>
-<li>再次增加元素，因<code>minCapacity - elementData.length == 0</code>，故不会再次扩容，直到元素的个数为11个，此时<code>minCapacity=11</code>而<code>elementData.length=10</code>，将再次触发扩容。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">private void ensureCapacityInternal(int minCapacity) &#123;</div><div class="line">      if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;</div><div class="line">          minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      ensureExplicitCapacity(minCapacity);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  private void ensureExplicitCapacity(int minCapacity) &#123;</div><div class="line">      modCount++;</div><div class="line"></div><div class="line">      // 实际元素个数大于数组容量时,进行扩容。</div><div class="line">      if (minCapacity - elementData.length &gt; 0)</div><div class="line">          grow(minCapacity);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  // 扩容</div><div class="line">  private void grow(int minCapacity) &#123;</div><div class="line">      // overflow-conscious code</div><div class="line">      int oldCapacity = elementData.length;</div><div class="line">      </div><div class="line">      // 新容量为当前元素个数的1.5倍</div><div class="line">      int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1);</div><div class="line">      if (newCapacity - minCap。、acity &lt; 0)</div><div class="line">          newCapacity = minCapacity;</div><div class="line">      if (newCapacity - MAX_ARRAY_SIZE &gt; 0)</div><div class="line">          newCapacity = hugeCapacity(minCapacity);</div><div class="line">      // minCapacity is usually close to size, so this is a win:</div><div class="line">      elementData = Arrays.copyOf(elementData, newCapacity);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li>JDK8源码</li>
-</ul>
+          前言接触JAVA2年多了，写代码总是随心所遇，怎么快，怎么来。写代码时，没有去思考怎么避免重复代码，降低多个模块间的耦合，都是事后填坑。看优秀的源码是一个很好地学习方式,同时有助于加深理解。
+架构图
+实战为何ArrayList能够动态扩容？
+1. 定义变量
+1234567891011// 默认容量p
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/26/JAVA之ArrayList源码学习/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1362,57 +1240,27 @@
       
         
           
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上一节我们学习了<a href="http://jianwl.com/2016/10/17/Java%E4%B9%8B%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95/">模板方法</a>，这一节让我们来学习简单工厂模式。</p>
-<p><code>定义</code></p>
-<p>工厂模式就是按照要求返回一个类型的对象。</p>
-<p><code>目的</code></p>
-<p>使对象的实例化与主程序代码解耦。</p>
-<p><code>设计原则</code></p>
-<ul>
-<li>变量不要持有具体类的引用</li>
-<li>不要让类继承具体类，要继承抽象类或接口</li>
-<li>不要覆盖基类中已实现的方法</li>
-</ul>
-<p><code>优点</code></p>
-<ul>
-<li>简单工厂模式实现了对责任的分割，提供了专门的工厂类创建对象</li>
-<li>引入配置文件，在不需要修改客户端代码的情况下更换和增加新的产品类，一定程度提高系统的灵活性。</li>
-</ul>
-<p><code>缺点</code></p>
-<ul>
-<li>扩展困难，一旦添加新产品需要修改工厂逻辑</li>
-<li>产品类型较多时，可能造成工厂逻辑过于复杂，不利于系统扩展和维护</li>
-<li>工厂类集中了所有产品创建逻辑，一旦不能工作，整个系统将受影响。</li>
-<li>简单工厂模式会增加系统中类的个数，一定程度上增加了系统的复杂性和理解难度</li>
-<li>使用静态工厂方法，造成工厂角色无法形成基于继承的等级结构</li>
-</ul>
-<p><code>应用场景A</code></p>
-<p>我们与银行有业务来往，需要与银行方进行报文通信，不同的业务的报文不同，为此我们需要有一个工厂来简单创建不同的报文。</p>
-<p><code>应用场景B</code></p>
-<p>写一个Servlet处理客户端请求的时候，往往会给一个Servlet处理多个业务逻辑，为此我们需要有一个工厂类简单创建不同的Servlet。</p>
-<h3 id="实战-应用场景A："><a href="#实战-应用场景A：" class="headerlink" title="实战 - 应用场景A："></a>实战 - 应用场景A：</h3><p><strong>1. 定义产品接口</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface IProduct &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>2. 定义一个抽象类，他是所有产品的父类</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public abstract class AnswerHead &#123;</div><div class="line">    protected String requestType;</div><div class="line">    protected String agentCode;</div><div class="line">    protected String trnCode;</div><div class="line">    protected String frontTraceno;</div><div class="line">    public abstract String toXML();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>3. 产品类A，只应答报文头</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class AnswerHeadOnly extends AnswerHead &#123;</div><div class="line">    @Override</div><div class="line">    public String toXML() &#123;</div><div class="line">        System.out.println(&quot;AnswerHeadOnly to xml&quot;);</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>4. 产品类B，只应答报文体</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class AnswerBodyMobile extends AnswerHead &#123;</div><div class="line">    @Override</div><div class="line">    public String toXML() &#123;</div><div class="line">        System.out.println(&quot;AnswerBodyMobile to xml&quot;);</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>5. 简单工厂类，根据参数不同生成不同的实例</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class ProductFactory &#123;</div><div class="line">    public static AnswerHead createProduct(String type)&#123;</div><div class="line">       switch (type)&#123;</div><div class="line">           case &quot;answerHeadOnly&quot;:</div><div class="line">               return new AnswerHeadOnly();</div><div class="line">           case &quot;answerHeadMobile&quot;:</div><div class="line">               return new AnswerBodyMobile();</div><div class="line">           default:</div><div class="line">               return null;</div><div class="line">       &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ProductFactory.createProduct(&quot;answerHeadOnly&quot;).toXML();</div><div class="line">        ProductFactory.createProduct(&quot;answerHeadMobile&quot;).toXML();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>6、结果</strong></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-25/57629976.jpg" alt=""></p>
-<h3 id="实战-应用场景B"><a href="#实战-应用场景B" class="headerlink" title="实战 - 应用场景B"></a>实战 - 应用场景B</h3><p>我们在写一个Servlet处理客户端请求的时候，往往会一个Servlet处理多个业务逻辑，比如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">protected void doPost(HttpServletRequest request, HttpServletResponse response) &#123;</div><div class="line">    String flag = request.getParameter(&quot;flag&quot;);</div><div class="line">    if(flag.equals(&quot;service1&quot;)) &#123;</div><div class="line">        service1();</div><div class="line">    &#125;else if(flag.equals(&quot;service2&quot;)) &#123;</div><div class="line">        service2();</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>以上是我们的Servlet处理多业务逻辑的常规方法，写一坨<code>if else</code>语句，一种比较好的办法就是，将请求的分发与Servlet分离，让Servlet之处理业务逻辑。我们把各种请求的Servlet看做产品类，<code>javax.servlet.HttpServlet</code>是产品父类，<code>javax.servlet.Servlet</code>是产品接口，这样我们定义一个<code>ServletFactory</code>,在过滤器里解析url请求并交给<code>ServletFactory</code>来处理就可以了。这是一个典型的简单工厂应用。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">@WebFilter(&quot;/TransRequest&quot;)</div><div class="line">public class TransRequest implements Filter&#123;</div><div class="line">    private String servletName;</div><div class="line">    @Override</div><div class="line">    public void doFilter(ServletRequest request, ServletResponse response,</div><div class="line">            FilterChain chain) throws IOException, ServletException &#123;</div><div class="line">        HttpServletRequest myRequest = (HttpServletRequest)request;</div><div class="line">        //拿到请求的servlet名字， 这里我们约定请求都是/servletName形式</div><div class="line">        String names[] = myRequest.getRequestURI().trim().split(&quot;/&quot;);</div><div class="line">        servletName = names[2];</div><div class="line">        if( servletName != null) &#123;</div><div class="line">        //以下是最典型的两句简单工厂的例子</div><div class="line">            Servlet servlet = ServletFactory.createServlet(servletName);</div><div class="line">            servlet.service(request, response);</div><div class="line">        &#125;else</div><div class="line">            chain.doFilter(request, response);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>每次类一个请求我们用工厂生产一个Servlet，这样可以免去xml配置大量的servlet路径信息比较方便，逻辑也更加清晰。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> public class ServletFactory &#123;</div><div class="line">    public static Servlet createServlet(String servletName) throws ServletException &#123;</div><div class="line">        if(servletName.equals(&quot;servletName1&quot;)) &#123;</div><div class="line">            return new Service1();</div><div class="line">        &#125;else if(servletName.equals(&quot;servletName2&quot;))&#123;</div><div class="line">            return new Service2();</div><div class="line">        &#125;else&#123;</div><div class="line">            throw new ServletException(&quot;No such servlet&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="http://blog.csdn.net/zuoxiaolong8810/article/details/9044033" target="_blank" rel="external">简单工厂模式详解</a></li>
-</ul>
+          前言上一节我们学习了模板方法，这一节让我们来学习简单工厂模式。
+定义
+工厂模式就是按照要求返回一个类型的对象。
+目的
+使对象的实例化与主程序代码解耦。
+设计原则
 
-          
+变量不要持有具体类的引用
+不要让类继承具体类，要继承抽象类或接口
+不要覆盖基类中已实现的方法
+
+优点
+
+简单工厂模式实现了对责任的分割，
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/24/JAVA之简单工厂模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1530,33 +1378,15 @@
       
         
           
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>内容呈现的<code>次序</code>，对于演讲者来说是经常会碰到的。一般来说，演讲的内容会分为好多点来呈现，当然你可以用最简单的方式，每一页呈现一点，但听众可能听到后面会忘了前面的内容。这一节我们将会来学习，怎么在一页中呈现所有点，并且在讲解当前点时，观众不会被其他点分散注意力。</p>
-<h3 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h3><p><code>描述：</code> 第一点说完，讲解第二点时，将第一点置为透明；讲解第3点时，将第2点至为透明；讲解第4点时，将第3点至为透明；最后将所有点都呈现出来。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/56992915.jpg" alt=""></p>
-<h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p><strong>1、介绍个人履历</strong></p>
-<p><code>描述：</code>在介绍个人履历时，介绍某个阶段时，将之前的经历至为透明，避免观众分散注意力。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/65788428.jpg" alt=""></p>
-<p><strong>2、英语读物推荐</strong></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/634423.jpg" alt=""></p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1、出现「数字2时将数字1透明」</strong></p>
-<p><code>设置「数字2」的出现效果</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/46206252.jpg" alt=""></p>
-<p><code>设置「数字1」的透明程度为90%</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/7820640.jpg" alt=""></p>
-<p><code>设置构建的顺序，当「数字2」出现时，「数字1」变为透明</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/55957232.jpg" alt=""></p>
-<p><code>效果图</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/68799891.jpg" alt=""></p>
-<p><strong>2、介绍好所有点，最后将所有点都非透明呈现出来</strong></p>
-<p><code>拷贝所有点到新的一页，设置新的一页和之前一页的出现次序为「渐隐渐现」</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/73577781.jpg" alt=""></p>
-<p><code>实现效果</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/93172671.jpg" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://www.youtube.com/watch?v=f3tZhoX82v0&amp;index=5&amp;list=PLnt8-ZhVs2dupUpGriwiVceamkpVdZ5yF" target="_blank" rel="external">许岑KeyNote教学 –需要翻墙</a></li>
-</ol>
+          前言内容呈现的次序，对于演讲者来说是经常会碰到的。一般来说，演讲的内容会分为好多点来呈现，当然你可以用最简单的方式，每一页呈现一点，但听众可能听到后面会忘了前面的内容。这一节我们将会来学习，怎么在一页中呈现所有点，并且在讲解当前点时，观众不会被其他点分散注意力。
+效果图描述： 第一点说完，讲解第二点
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/22/KeyNote技巧之次序/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1674,39 +1504,19 @@
       
         
           
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近遇到一个比较困惑的问题：<code>项目工程做出来了，但是怎么样展示项目，让别人了解它。</code>用<code>KeyNote</code>是一种比较好的展现方式，所以学习<code>KeyNote</code>使用技巧是非常有必要的。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1.文字水平&amp;竖直居中</strong></p>
-<p><code>操作：拖动文字当文字呈现出一个十字标识时，处于水平、竖直居中位置</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/6424996.jpg" alt=""></p>
-<p><strong>2.文字间距相同</strong></p>
-<p><code>操作：移动「平凡之路」与「参考线与对齐」出现双箭头时，说明「平凡之路」、「参考线与对齐」、「走在平坦的路上」间距相同，当出现竖线时，说明它们竖直居中对齐</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/32772264.jpg" alt=""></p>
-<p><strong>3.文字左对齐</strong></p>
-<p><code>方式1：手动左对齐</code></p>
-<p><code>操作</code></p>
-<p>1、 <code>Command + R</code>快捷键，开启标签<br>2、 拉出一条对齐线</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/9811713.jpg" alt=""></p>
-<p>3、 调节直到文字在一条直线上，且间距相同。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/45974538.jpg" alt=""> </p>
-<p><code>方式2：自动左对齐</code></p>
-<p><code>操作</code></p>
-<p>1、 选中所有文字, 在其中一个文字旁右键选择对齐方式</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/30119857.jpg" alt=""></p>
-<p>2、得到左对齐文字后，在一个文字旁右键选择<code>分布对象</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/18045225.jpg" alt=""></p>
-<p>3、得到左对齐且竖直间距相同的文字</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/34020849.jpg" alt=""></p>
-<p><strong>4.调整图片为相同大小</strong></p>
-<p><code>操作</code></p>
-<p>1、有两张比例相同，但大小不同的图片</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/45034017.jpg" alt=""></p>
-<p>2、按比例缩放一张图片，当图片的长宽均出现双箭头时，此时两张图片大小一致</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/24118872.jpg" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="https://www.youtube.com/watch?v=Z02qoRAWULE&amp;list=PLnt8-ZhVs2dupUpGriwiVceamkpVdZ5yF&amp;index=4" target="_blank" rel="external">许岑KeyNote教学</a></li>
-</ul>
+          前言最近遇到一个比较困惑的问题：项目工程做出来了，但是怎么样展示项目，让别人了解它。用KeyNote是一种比较好的展现方式，所以学习KeyNote使用技巧是非常有必要的。
+实战1.文字水平&amp;竖直居中
+操作：拖动文字当文字呈现出一个十字标识时，处于水平、竖直居中位置
 
-          
+2.文字间距相同
+操作：
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/22/KeyNote技巧之参考线与对齐/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
