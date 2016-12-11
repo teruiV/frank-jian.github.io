@@ -1,0 +1,1025 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="baidu-site-verification" content="Y1BuCj8QZI" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="常用方法梳理
+
+
+常用方法
+返回值
+类型/使用Function Interface接口
+Function Interface描述符
+
+
+
+
+filter
+Stream&amp;lt;T&amp;gt;
+Predicate&amp;lt;T&amp;gt;
+T -&amp;gt; boolean
+
+
+distinct
+Stream&amp;lt;T&amp;gt;
+
+
+
+
+skip
+Stream&amp;lt;T&amp;gt;
+long
+
+
+
+limit
+Stream">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA8之Stream特性总结">
+<meta property="og:url" content="http://jianwl.com/2016/12/11/JAVA8之Stream特性总结/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="常用方法梳理
+
+
+常用方法
+返回值
+类型/使用Function Interface接口
+Function Interface描述符
+
+
+
+
+filter
+Stream&amp;lt;T&amp;gt;
+Predicate&amp;lt;T&amp;gt;
+T -&amp;gt; boolean
+
+
+distinct
+Stream&amp;lt;T&amp;gt;
+
+
+
+
+skip
+Stream&amp;lt;T&amp;gt;
+long
+
+
+
+limit
+Stream">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-12-11/38986855-file_1481433637180_11981.png">
+<meta property="og:updated_time" content="2016-12-11T05:23:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JAVA8之Stream特性总结">
+<meta name="twitter:description" content="常用方法梳理
+
+
+常用方法
+返回值
+类型/使用Function Interface接口
+Function Interface描述符
+
+
+
+
+filter
+Stream&amp;lt;T&amp;gt;
+Predicate&amp;lt;T&amp;gt;
+T -&amp;gt; boolean
+
+
+distinct
+Stream&amp;lt;T&amp;gt;
+
+
+
+
+skip
+Stream&amp;lt;T&amp;gt;
+long
+
+
+
+limit
+Stream">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-12-11/38986855-file_1481433637180_11981.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://jianwl.com/2016/12/11/JAVA8之Stream特性总结/"/>
+
+  <title> JAVA8之Stream特性总结 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">记录点滴成长</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            书单
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JAVA8之Stream特性总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-11T12:20:24+08:00" content="2016-12-11">
+              2016-12-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/11/JAVA8之Stream特性总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/11/JAVA8之Stream特性总结/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="常用方法梳理"><a href="#常用方法梳理" class="headerlink" title="常用方法梳理"></a>常用方法梳理</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">常用方法</th>
+<th style="text-align:center">返回值</th>
+<th style="text-align:center">类型/使用<code>Function Interface</code>接口</th>
+<th style="text-align:center"><code>Function Interface</code>描述符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">filter</td>
+<td style="text-align:center"><code>Stream&lt;T&gt;</code></td>
+<td style="text-align:center"><code>Predicate&lt;T&gt;</code></td>
+<td style="text-align:center"><code>T -&gt; boolean</code></td>
+</tr>
+<tr>
+<td style="text-align:left">distinct</td>
+<td style="text-align:center"><code>Stream&lt;T&gt;</code></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">skip</td>
+<td style="text-align:center"><code>Stream&lt;T&gt;</code></td>
+<td style="text-align:center"><code>long</code></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">limit</td>
+<td style="text-align:center"><code>Stream&lt;T&gt;</code></td>
+<td style="text-align:center"><code>long</code></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">map</td>
+<td style="text-align:center"><code>Stream&lt;R&gt;</code></td>
+<td style="text-align:center"><code>Function&lt;T, R&gt;</code></td>
+<td style="text-align:center"><code>T -&gt; R</code></td>
+</tr>
+<tr>
+<td style="text-align:left">flatMap</td>
+<td style="text-align:center"><code>Stream&lt;R&gt;</code></td>
+<td style="text-align:center"><code>Function&lt;T,Stream&lt;R&gt;&gt;</code></td>
+<td style="text-align:center"><code>T -&gt; Stream&lt;R&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:left">sorted</td>
+<td style="text-align:center"><code>Stream&lt;T&gt;</code></td>
+<td style="text-align:center"><code>Comparator&lt;T&gt;</code></td>
+<td style="text-align:center"><code>(T,T) -&gt; int</code></td>
+</tr>
+<tr>
+<td style="text-align:left">anyMatch</td>
+<td style="text-align:center"><code>boolean</code></td>
+<td style="text-align:center"><code>Predicate&lt;T&gt;</code></td>
+<td style="text-align:center"><code>T -&gt; boolean</code></td>
+</tr>
+<tr>
+<td style="text-align:left">noteMatch</td>
+<td style="text-align:center"><code>boolean</code></td>
+<td style="text-align:center"><code>Predicate&lt;T&gt;</code></td>
+<td style="text-align:center"><code>T -&gt; boolean</code></td>
+</tr>
+<tr>
+<td style="text-align:left">allMatch</td>
+<td style="text-align:center"><code>boolean</code></td>
+<td style="text-align:center"><code>Predicate&lt;T&gt;</code></td>
+<td style="text-align:center"><code>T -&gt; boolean</code></td>
+</tr>
+<tr>
+<td style="text-align:left">findAny</td>
+<td style="text-align:center"><code>Optional&lt;T&gt;</code></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">findFirst</td>
+<td style="text-align:center"><code>Optional&lt;T&gt;</code></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">forEach</td>
+<td style="text-align:center"><code>void</code></td>
+<td style="text-align:center"><code>Consumer&lt;T&gt;</code></td>
+<td style="text-align:center"><code>T -&gt; void</code></td>
+</tr>
+<tr>
+<td style="text-align:left">collect</td>
+<td style="text-align:center"><code>R</code></td>
+<td style="text-align:center"><code>Collector&lt;T, A, R&gt;</code></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">reduce</td>
+<td style="text-align:center"><code>Optional&lt;T&gt;</code></td>
+<td style="text-align:center"><code>BinaryOperator&lt;T&gt;</code></td>
+<td style="text-align:center"><code>(T, T) -&gt; T</code></td>
+</tr>
+<tr>
+<td style="text-align:left">count</td>
+<td style="text-align:center"><code>long</code></td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">   public void test_004()&#123;</div><div class="line">       List&lt;Integer&gt; nums = Arrays.asList(1,1,1,2,2,2,2,2,3,4,5,6,7,8,9);</div><div class="line">       List&lt;List&lt;Integer&gt;&gt; numsList = Arrays.asList(Arrays.asList(1,2,3),Arrays.asList(4,5,6),Arrays.asList(7,8,9));</div><div class="line"></div><div class="line">       // filter</div><div class="line">       Stream&lt;Integer&gt; filter = nums.stream().filter(num -&gt; num &gt; 5);</div><div class="line">       System.out.println(&quot;filter =&gt; &quot; + JSON.toJSONString(filter.collect(Collectors.toList())));</div><div class="line"></div><div class="line">       // distinct</div><div class="line">       Stream&lt;Integer&gt; distinct = nums.stream().distinct();</div><div class="line">       System.out.println(&quot;distinct =&gt; &quot; + JSON.toJSONString(distinct.collect(Collectors.toList())));</div><div class="line"></div><div class="line">       // skip</div><div class="line">       Stream&lt;Integer&gt; skip = nums.stream().skip(5);</div><div class="line">       System.out.println(&quot;skip =&gt; &quot; + JSON.toJSONString(skip.collect(Collectors.toList())));</div><div class="line"></div><div class="line">       // limit</div><div class="line">       Stream&lt;Integer&gt; limit = nums.stream().limit(5);</div><div class="line">       System.out.println(&quot;limit =&gt; &quot; + JSON.toJSONString(limit.collect(Collectors.toList())));</div><div class="line"></div><div class="line">       // map</div><div class="line">       Stream&lt;Integer&gt; map = nums.stream().map(num -&gt; num * 2);</div><div class="line">       System.out.println(&quot;map =&gt; &quot; + JSON.toJSONString(map.collect(Collectors.toList())));</div><div class="line"></div><div class="line">       // flatMap</div><div class="line">       Stream&lt;Integer&gt; flatMap = numsList.stream().flatMap(ns -&gt; ns.stream());</div><div class="line">       System.out.println(&quot;flatMap =&gt; &quot; + JSON.toJSONString(flatMap.collect(Collectors.toList())));</div><div class="line"></div><div class="line">       // sorted</div><div class="line">       Stream&lt;Integer&gt; sorted = nums.stream().sorted((n1,n2) -&gt; n2.compareTo(n1));</div><div class="line">       System.out.println(&quot;sorted =&gt; &quot; + JSON.toJSONString(sorted.collect(Collectors.toList())));</div><div class="line"></div><div class="line">       // anyMatch</div><div class="line">       boolean anyMatch = nums.stream().anyMatch(num -&gt; num == 1);</div><div class="line">       System.out.println(&quot;anyMatch =&gt; &quot; + anyMatch);</div><div class="line"></div><div class="line">       // noneMatch</div><div class="line">       boolean noneMatch = nums.stream().noneMatch(num -&gt; num == 1);</div><div class="line">       System.out.println(&quot;noneMatch =&gt; &quot; + noneMatch);</div><div class="line"></div><div class="line">       // allMatch</div><div class="line">       boolean allMatch = nums.stream().allMatch(num -&gt; num &gt; 0);</div><div class="line">       System.out.println(&quot;allMatch =&gt; &quot; + allMatch);</div><div class="line"></div><div class="line">       // findAny</div><div class="line">       Optional&lt;Integer&gt; findAny = nums.stream().findAny();</div><div class="line">       System.out.println(&quot;findAny =&gt; &quot; + JSON.toJSONString(findAny));</div><div class="line"></div><div class="line">       // findAny</div><div class="line">       Optional&lt;Integer&gt; findFirst = nums.stream().findFirst();</div><div class="line">       System.out.println(&quot;findFirst =&gt; &quot; + JSON.toJSONString(findFirst));</div><div class="line"></div><div class="line">       // forEach</div><div class="line">       nums.stream().filter(num -&gt; num == 9).forEach(num -&gt; System.out.println(&quot;forEach =&gt; &quot; + num ++));</div><div class="line"></div><div class="line">       // collect</div><div class="line">       Map&lt;Integer,List&lt;Integer&gt;&gt; groupBy = nums.stream().collect(Collectors.groupingBy(num -&gt; num));</div><div class="line">       System.out.println(&quot;collect =&gt; &quot; + JSON.toJSONString(groupBy));</div><div class="line"></div><div class="line">       // reduce</div><div class="line">       Optional&lt;Integer&gt; reduce1 = nums.stream().reduce((n1,n2) -&gt; n1 + n2);</div><div class="line">       Integer reduce2 = nums.stream().reduce(0,(n1,n2) -&gt; n1 + n2);</div><div class="line">       System.out.println(&quot;reduce1 =&gt; &quot; + reduce1.get() + &quot; reduce2 =&gt; &quot; + reduce2);</div><div class="line"></div><div class="line">       // count</div><div class="line">       Long count = nums.stream().count();</div><div class="line">       System.out.println(&quot;count =&gt; &quot; + count);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-12-11/38986855-file_1481433637180_11981.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>Java8 in action</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/10/Java8之FlatMap用法/" rel="next" title="Java8之FlatMap用法">
+                <i class="fa fa-chevron-left"></i> Java8之FlatMap用法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/12/11/JAVA8之Stream特性总结/"
+     data-title="JAVA8之Stream特性总结"
+     data-content=""
+     data-url="http://jianwl.com/2016/12/11/JAVA8之Stream特性总结/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/11/JAVA8之Stream特性总结/"
+           data-title="JAVA8之Stream特性总结" data-url="http://jianwl.com/2016/12/11/JAVA8之Stream特性总结/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/16-10-7/31807945.jpg"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+          <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">151</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用方法梳理"><span class="nav-number">1.</span> <span class="nav-text">常用方法梳理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-number">2.</span> <span class="nav-text">实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果"><span class="nav-number">3.</span> <span class="nav-text">结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+<a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jianwl"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
