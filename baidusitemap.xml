@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://jianwl.com/2017/02/04/2016%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</loc>
+    <lastmod>2017-02-04T09:46:02.000Z</lastmod>
+    <data>
+        <display>
+        <title>2016年终总结</title>
+        <pubTime>2017-02-04T08:00:58.000Z</pubTime>
+        
+        <tag>思绪</tag>
+         
+         
+           
+             
+              <breadCrumb title="思绪" url="http://jianwl.com/categories/%E6%80%9D%E7%BB%AA/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://jianwl.com/2017/01/27/%E4%BD%95%E4%B8%BA%E8%87%AA%E6%88%91%E6%84%8F%E8%AF%86%EF%BC%9F/</loc>
     <lastmod>2017-01-27T05:02:27.000Z</lastmod>
     <data>
@@ -560,26 +580,6 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/05/04/PHP%E6%95%B0%E7%BB%84/</loc>
-    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
-    <data>
-        <display>
-        <title>PHP数组</title>
-        <pubTime>2016-05-04T01:59:30.000Z</pubTime>
-        
-        <tag>PHP</tag>
-         
-         
-           
-             
-              <breadCrumb title="PHP" url="http://jianwl.com/categories/PHP/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://jianwl.com/2016/09/16/JAVA%E6%8A%80%E8%83%BD%E6%A0%91/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
@@ -620,12 +620,12 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/08/10/Java-IO-%E6%96%87%E4%BB%B6/</loc>
+    <loc>http://jianwl.com/2016/08/14/JAVA%E7%BA%BF%E7%A8%8B%E6%B1%A0/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>Java IO: 文件</title>
-        <pubTime>2016-08-10T09:09:21.000Z</pubTime>
+        <title>JAVA线程池</title>
+        <pubTime>2016-08-14T15:30:39.000Z</pubTime>
         
         <tag>JAVA</tag>
          
@@ -653,6 +653,26 @@
            
              
               <breadCrumb title="JOOQ" url="http://jianwl.com/categories/JOOQ/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://jianwl.com/2016/08/10/Java-IO-%E6%96%87%E4%BB%B6/</loc>
+    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java IO: 文件</title>
+        <pubTime>2016-08-10T09:09:21.000Z</pubTime>
+        
+        <tag>JAVA</tag>
+         
+         
+           
+             
+              <breadCrumb title="JAVA" url="http://jianwl.com/categories/JAVA/"/>
           
         </display>
     </data>
@@ -700,79 +720,19 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/08/22/ES6%E5%B8%B8%E8%A7%81%E7%9A%84%E5%9D%91/</loc>
+    <loc>http://jianwl.com/2016/06/10/Git%E5%91%BD%E4%BB%A4%E4%B9%8B%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>ES6常见的坑</title>
-        <pubTime>2016-08-22T14:53:14.000Z</pubTime>
+        <title>Git命令之使用场景</title>
+        <pubTime>2016-06-10T08:39:34.000Z</pubTime>
         
-        <tag>JavaScript</tag>
+        <tag>Git</tag>
          
          
            
              
-              <breadCrumb title="JavaScript" url="http://jianwl.com/categories/JavaScript/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://jianwl.com/2016/05/17/HTTP%E6%8A%A5%E6%96%87%E8%AF%A6%E8%A7%A3/</loc>
-    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
-    <data>
-        <display>
-        <title>HTTP报文详解</title>
-        <pubTime>2016-05-17T04:15:05.000Z</pubTime>
-        
-        <tag>HTTP</tag>
-         
-         
-           
-             
-              <breadCrumb title="HTTP" url="http://jianwl.com/categories/HTTP/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://jianwl.com/2016/09/03/ES6%E4%B9%8B%E8%A7%A3%E6%9E%84/</loc>
-    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
-    <data>
-        <display>
-        <title>ES6之解构</title>
-        <pubTime>2016-09-03T14:12:10.000Z</pubTime>
-        
-        <tag>JavaScript</tag>
-         
-         
-           
-             
-              <breadCrumb title="JavaScript" url="http://jianwl.com/categories/JavaScript/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://jianwl.com/2016/04/14/Hexo%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E9%83%A8%E7%BD%B2%E5%88%B0Github/</loc>
-    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
-    <data>
-        <display>
-        <title>Hexo免输入密码部署到Github</title>
-        <pubTime>2016-04-14T04:37:31.000Z</pubTime>
-        
-        <tag>Hexo</tag>
-         
-         
-           
-             
-              <breadCrumb title="Hexo" url="http://jianwl.com/categories/Hexo/"/>
+              <breadCrumb title="Git" url="http://jianwl.com/categories/Git/"/>
           
         </display>
     </data>
@@ -793,6 +753,47 @@
            
              
               <breadCrumb title="JAVA" url="http://jianwl.com/categories/JAVA/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>http://jianwl.com/2016/06/05/HTTP%E4%B9%8B%E9%87%8D%E5%AE%9A%E5%90%91%E5%92%8C%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91/</loc>
+    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
+    <data>
+        <display>
+        <title>HTTP之重定向和请求转发</title>
+        <pubTime>2016-06-05T10:00:47.000Z</pubTime>
+        
+        <tag>HTTP</tag>
+         
+         
+           
+             
+              <breadCrumb title="HTTP" url="http://jianwl.com/categories/HTTP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://jianwl.com/2016/04/28/HTTP%E4%BD%BF%E7%94%A8%E7%9A%84%E8%AE%A4%E8%AF%81%E6%96%B9%E5%BC%8F/</loc>
+    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
+    <data>
+        <display>
+        <title>HTTP使用的认证方式</title>
+        <pubTime>2016-04-28T06:25:08.000Z</pubTime>
+        
+        <tag>HTTP</tag>
+         
+         
+           
+             
+              <breadCrumb title="HTTP" url="http://jianwl.com/categories/HTTP/"/>
           
         </display>
     </data>
@@ -820,19 +821,19 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/06/04/Hexo%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%BA%91%E7%AB%AF%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%81%E7%A7%BB/</loc>
+    <loc>http://jianwl.com/2016/04/27/HTTP%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>Hexo博客的云端备份和迁移</title>
-        <pubTime>2016-06-04T10:23:50.000Z</pubTime>
+        <title>HTTP基础</title>
+        <pubTime>2016-04-27T12:58:45.000Z</pubTime>
         
-        <tag>Hexo</tag>
+        <tag>HTTP</tag>
          
          
            
              
-              <breadCrumb title="Hexo" url="http://jianwl.com/categories/Hexo/"/>
+              <breadCrumb title="HTTP" url="http://jianwl.com/categories/HTTP/"/>
           
         </display>
     </data>
@@ -840,12 +841,12 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/04/28/HTTPS%E9%80%9A%E4%BF%A1%E6%9C%BA%E5%88%B6/</loc>
+    <loc>http://jianwl.com/2016/04/27/HTTP%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>HTTPS通信机制</title>
-        <pubTime>2016-04-28T03:32:07.000Z</pubTime>
+        <title>HTTP常见面试题</title>
+        <pubTime>2016-04-27T04:38:37.000Z</pubTime>
         
         <tag>HTTP</tag>
          
@@ -900,19 +901,19 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/06/24/Hystrix%E5%85%A5%E9%97%A8%E7%AF%87/</loc>
+    <loc>http://jianwl.com/2016/05/17/HTTP%E6%8A%A5%E6%96%87%E8%AF%A6%E8%A7%A3/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>Hystrix入门篇</title>
-        <pubTime>2016-06-24T01:28:10.000Z</pubTime>
+        <title>HTTP报文详解</title>
+        <pubTime>2016-05-17T04:15:05.000Z</pubTime>
         
-        <tag>Hystrix</tag>
+        <tag>HTTP</tag>
          
          
            
              
-              <breadCrumb title="Hystrix" url="http://jianwl.com/categories/Hystrix/"/>
+              <breadCrumb title="HTTP" url="http://jianwl.com/categories/HTTP/"/>
           
         </display>
     </data>
@@ -940,12 +941,12 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/04/20/Java%E6%B3%A8%E8%A7%A3/</loc>
+    <loc>http://jianwl.com/2016/08/12/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>Java注解</title>
-        <pubTime>2016-04-20T02:28:14.000Z</pubTime>
+        <title>Java设计模式之单例模式</title>
+        <pubTime>2016-08-12T09:06:23.000Z</pubTime>
         
         <tag>JAVA</tag>
          
@@ -960,12 +961,12 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/08/12/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</loc>
+    <loc>http://jianwl.com/2016/04/20/Java%E6%B3%A8%E8%A7%A3/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>Java设计模式之单例模式</title>
-        <pubTime>2016-08-12T09:06:23.000Z</pubTime>
+        <title>Java注解</title>
+        <pubTime>2016-04-20T02:28:14.000Z</pubTime>
         
         <tag>JAVA</tag>
          
@@ -1080,52 +1081,12 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/08/07/Intellij-IDEA%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/</loc>
+    <loc>http://jianwl.com/2016/05/17/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E8%AF%A6%E8%A7%A3/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>Intellij IDEA常用技巧</title>
-        <pubTime>2016-08-07T13:22:41.000Z</pubTime>
-        
-        <tag>Intellij IDEA</tag>
-         
-         
-           
-             
-              <breadCrumb title="Intellij IDEA" url="http://jianwl.com/categories/Intellij-IDEA/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://jianwl.com/2016/09/11/Intellij-%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</loc>
-    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
-    <data>
-        <display>
-        <title>Intellij 常用快捷键</title>
-        <pubTime>2016-09-11T14:15:36.000Z</pubTime>
-        
-        <tag>Intellij IDEA</tag>
-         
-         
-           
-             
-              <breadCrumb title="Intellij IDEA" url="http://jianwl.com/categories/Intellij-IDEA/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://jianwl.com/2016/04/28/HTTP%E4%BD%BF%E7%94%A8%E7%9A%84%E8%AE%A4%E8%AF%81%E6%96%B9%E5%BC%8F/</loc>
-    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
-    <data>
-        <display>
-        <title>HTTP使用的认证方式</title>
-        <pubTime>2016-04-28T06:25:08.000Z</pubTime>
+        <title>HTTP请求报文详解</title>
+        <pubTime>2016-05-17T03:52:51.000Z</pubTime>
         
         <tag>HTTP</tag>
          
@@ -1133,6 +1094,66 @@
            
              
               <breadCrumb title="HTTP" url="http://jianwl.com/categories/HTTP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://jianwl.com/2016/04/14/Hexo%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E9%83%A8%E7%BD%B2%E5%88%B0Github/</loc>
+    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
+    <data>
+        <display>
+        <title>Hexo免输入密码部署到Github</title>
+        <pubTime>2016-04-14T04:37:31.000Z</pubTime>
+        
+        <tag>Hexo</tag>
+         
+         
+           
+             
+              <breadCrumb title="Hexo" url="http://jianwl.com/categories/Hexo/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://jianwl.com/2016/06/04/Hexo%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%BA%91%E7%AB%AF%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%81%E7%A7%BB/</loc>
+    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
+    <data>
+        <display>
+        <title>Hexo博客的云端备份和迁移</title>
+        <pubTime>2016-06-04T10:23:50.000Z</pubTime>
+        
+        <tag>Hexo</tag>
+         
+         
+           
+             
+              <breadCrumb title="Hexo" url="http://jianwl.com/categories/Hexo/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://jianwl.com/2016/09/03/ES6%E4%B9%8Blet%E5%92%8Cconst%E5%91%BD%E4%BB%A4/</loc>
+    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
+    <data>
+        <display>
+        <title>ES6之let和const命令</title>
+        <pubTime>2016-09-03T01:44:51.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+         
+           
+             
+              <breadCrumb title="JavaScript" url="http://jianwl.com/categories/JavaScript/"/>
           
         </display>
     </data>
@@ -1160,26 +1181,6 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/08/16/JAVA%E4%B9%8B%E5%BC%82%E5%B8%B8/</loc>
-    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
-    <data>
-        <display>
-        <title>JAVA之异常</title>
-        <pubTime>2016-08-16T14:26:26.000Z</pubTime>
-        
-        <tag>JAVA</tag>
-         
-         
-           
-             
-              <breadCrumb title="JAVA" url="http://jianwl.com/categories/JAVA/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://jianwl.com/2016/08/13/MYSQL%E4%B9%8B%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
@@ -1200,19 +1201,19 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/06/10/Git%E5%91%BD%E4%BB%A4%E4%B9%8B%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/</loc>
+    <loc>http://jianwl.com/2016/06/24/Hystrix%E5%85%A5%E9%97%A8%E7%AF%87/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>Git命令之使用场景</title>
-        <pubTime>2016-06-10T08:39:34.000Z</pubTime>
+        <title>Hystrix入门篇</title>
+        <pubTime>2016-06-24T01:28:10.000Z</pubTime>
         
-        <tag>Git</tag>
+        <tag>Hystrix</tag>
          
          
            
              
-              <breadCrumb title="Git" url="http://jianwl.com/categories/Git/"/>
+              <breadCrumb title="Hystrix" url="http://jianwl.com/categories/Hystrix/"/>
           
         </display>
     </data>
@@ -1240,12 +1241,12 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/08/28/MYSQL%E4%B9%8B%E7%B4%A2%E5%BC%95/</loc>
+    <loc>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>MYSQL之索引</title>
-        <pubTime>2016-08-28T14:31:48.000Z</pubTime>
+        <title>MYSQL存储引擎优化</title>
+        <pubTime>2016-05-17T02:43:13.000Z</pubTime>
         
         <tag>MYSQL</tag>
          
@@ -1260,12 +1261,12 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</loc>
+    <loc>http://jianwl.com/2016/08/28/MYSQL%E4%B9%8B%E7%B4%A2%E5%BC%95/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>MYSQL存储引擎优化</title>
-        <pubTime>2016-05-17T02:43:13.000Z</pubTime>
+        <title>MYSQL之索引</title>
+        <pubTime>2016-08-28T14:31:48.000Z</pubTime>
         
         <tag>MYSQL</tag>
          
@@ -1420,26 +1421,6 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/04/27/HTTP%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
-    <data>
-        <display>
-        <title>HTTP基础</title>
-        <pubTime>2016-04-27T12:58:45.000Z</pubTime>
-        
-        <tag>HTTP</tag>
-         
-         
-           
-             
-              <breadCrumb title="HTTP" url="http://jianwl.com/categories/HTTP/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://jianwl.com/2016/08/13/MySQL%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
@@ -1453,6 +1434,26 @@
            
              
               <breadCrumb title="MYSQL" url="http://jianwl.com/categories/MYSQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://jianwl.com/2016/08/07/Intellij-IDEA%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/</loc>
+    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
+    <data>
+        <display>
+        <title>Intellij IDEA常用技巧</title>
+        <pubTime>2016-08-07T13:22:41.000Z</pubTime>
+        
+        <tag>Intellij IDEA</tag>
+         
+         
+           
+             
+              <breadCrumb title="Intellij IDEA" url="http://jianwl.com/categories/Intellij-IDEA/"/>
           
         </display>
     </data>
@@ -1500,12 +1501,12 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/08/28/Mybatis%E5%85%A5%E9%97%A8/</loc>
+    <loc>http://jianwl.com/2016/06/09/Mysql-for-Mac-%E5%AE%89%E8%A3%85%E5%92%8C%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>Mybatis入门</title>
-        <pubTime>2016-08-27T16:50:09.000Z</pubTime>
+        <title>Mysql for Mac 安装和基本操作</title>
+        <pubTime>2016-06-09T09:28:23.000Z</pubTime>
         
         <tag>MYSQL</tag>
          
@@ -1520,12 +1521,12 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/06/09/Mysql-for-Mac-%E5%AE%89%E8%A3%85%E5%92%8C%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</loc>
+    <loc>http://jianwl.com/2016/08/28/Mybatis%E5%85%A5%E9%97%A8/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>Mysql for Mac 安装和基本操作</title>
-        <pubTime>2016-06-09T09:28:23.000Z</pubTime>
+        <title>Mybatis入门</title>
+        <pubTime>2016-08-27T16:50:09.000Z</pubTime>
         
         <tag>MYSQL</tag>
          
@@ -1557,19 +1558,19 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/09/03/ES6%E4%B9%8Blet%E5%92%8Cconst%E5%91%BD%E4%BB%A4/</loc>
+    <loc>http://jianwl.com/2016/09/11/Intellij-%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>ES6之let和const命令</title>
-        <pubTime>2016-09-03T01:44:51.000Z</pubTime>
+        <title>Intellij 常用快捷键</title>
+        <pubTime>2016-09-11T14:15:36.000Z</pubTime>
         
-        <tag>JavaScript</tag>
+        <tag>Intellij IDEA</tag>
          
          
            
              
-              <breadCrumb title="JavaScript" url="http://jianwl.com/categories/JavaScript/"/>
+              <breadCrumb title="Intellij IDEA" url="http://jianwl.com/categories/Intellij-IDEA/"/>
           
         </display>
     </data>
@@ -1577,19 +1578,19 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/05/04/PHP%E5%AD%97%E7%AC%A6%E4%B8%B2/</loc>
+    <loc>http://jianwl.com/2016/09/06/ES6%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%89%A9%E5%B1%95/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>PHP字符串</title>
-        <pubTime>2016-05-04T02:00:24.000Z</pubTime>
+        <title>ES6之字符串的扩展</title>
+        <pubTime>2016-09-06T15:19:06.000Z</pubTime>
         
-        <tag>PHP</tag>
+        <tag>JavaScript</tag>
          
          
            
              
-              <breadCrumb title="PHP" url="http://jianwl.com/categories/PHP/"/>
+              <breadCrumb title="JavaScript" url="http://jianwl.com/categories/JavaScript/"/>
           
         </display>
     </data>
@@ -1637,19 +1638,19 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/06/05/HTTP%E4%B9%8B%E9%87%8D%E5%AE%9A%E5%90%91%E5%92%8C%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91/</loc>
+    <loc>http://jianwl.com/2016/05/04/PHP%E6%95%B0%E7%BB%84/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>HTTP之重定向和请求转发</title>
-        <pubTime>2016-06-05T10:00:47.000Z</pubTime>
+        <title>PHP数组</title>
+        <pubTime>2016-05-04T01:59:30.000Z</pubTime>
         
-        <tag>HTTP</tag>
+        <tag>PHP</tag>
          
          
            
              
-              <breadCrumb title="HTTP" url="http://jianwl.com/categories/HTTP/"/>
+              <breadCrumb title="PHP" url="http://jianwl.com/categories/PHP/"/>
           
         </display>
     </data>
@@ -1857,12 +1858,12 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/08/19/Python%E4%B9%8B%E6%96%87%E4%BB%B6%E4%B8%8E%E5%BC%82%E5%B8%B8/</loc>
+    <loc>http://jianwl.com/2016/08/20/Python%E4%B9%8B%E5%88%97%E8%A1%A8%E5%92%8C%E9%9B%86%E5%90%88/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>Python之文件与异常</title>
-        <pubTime>2016-08-19T13:24:38.000Z</pubTime>
+        <title>Python之列表和集合</title>
+        <pubTime>2016-08-20T07:24:17.000Z</pubTime>
         
         <tag>Python</tag>
          
@@ -1877,12 +1878,12 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/08/20/Python%E4%B9%8B%E5%88%97%E8%A1%A8%E5%92%8C%E9%9B%86%E5%90%88/</loc>
+    <loc>http://jianwl.com/2016/08/19/Python%E4%B9%8B%E6%96%87%E4%BB%B6%E4%B8%8E%E5%BC%82%E5%B8%B8/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>Python之列表和集合</title>
-        <pubTime>2016-08-20T07:24:17.000Z</pubTime>
+        <title>Python之文件与异常</title>
+        <pubTime>2016-08-19T13:24:38.000Z</pubTime>
         
         <tag>Python</tag>
          
@@ -2294,6 +2295,26 @@
 
     
   <url>
+    <loc>http://jianwl.com/2016/09/07/ES6%E4%B9%8B%E6%95%B0%E7%BB%84%E7%9A%84%E6%89%A9%E5%B1%95/</loc>
+    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
+    <data>
+        <display>
+        <title>ES6之数组的扩展</title>
+        <pubTime>2016-09-06T16:17:28.000Z</pubTime>
+        
+        <tag>JavaScirpt</tag>
+         
+         
+           
+             
+              <breadCrumb title="JavaScript" url="http://jianwl.com/categories/JavaScript/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://jianwl.com/2016/06/05/Simplest-SpringMVC%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
@@ -2307,26 +2328,6 @@
            
              
               <breadCrumb title="Spring MVC" url="http://jianwl.com/categories/Spring-MVC/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://jianwl.com/2016/08/19/JAVA%E4%B9%8B%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</loc>
-    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
-    <data>
-        <display>
-        <title>JAVA之正则表达式</title>
-        <pubTime>2016-08-19T01:55:25.000Z</pubTime>
-        
-        <tag>JAVA</tag>
-         
-         
-           
-             
-              <breadCrumb title="正则表达式" url="http://jianwl.com/categories/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
           
         </display>
     </data>
@@ -2474,26 +2475,6 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/08/24/SpringBoot%E9%9B%86%E6%88%90Swagger/</loc>
-    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
-    <data>
-        <display>
-        <title>SpringBoot集成Swagger</title>
-        <pubTime>2016-08-24T14:50:57.000Z</pubTime>
-        
-        <tag>SpringBoot</tag>
-         
-         
-           
-             
-              <breadCrumb title="SpringBoot" url="http://jianwl.com/categories/SpringBoot/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://jianwl.com/2016/09/04/SpringBoot%E9%9B%86%E6%88%90JOOQ/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
@@ -2514,19 +2495,19 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/04/27/HTTP%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/</loc>
+    <loc>http://jianwl.com/2016/08/24/SpringBoot%E9%9B%86%E6%88%90Swagger/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>HTTP常见面试题</title>
-        <pubTime>2016-04-27T04:38:37.000Z</pubTime>
+        <title>SpringBoot集成Swagger</title>
+        <pubTime>2016-08-24T14:50:57.000Z</pubTime>
         
-        <tag>HTTP</tag>
+        <tag>SpringBoot</tag>
          
          
            
              
-              <breadCrumb title="HTTP" url="http://jianwl.com/categories/HTTP/"/>
+              <breadCrumb title="SpringBoot" url="http://jianwl.com/categories/SpringBoot/"/>
           
         </display>
     </data>
@@ -2567,6 +2548,26 @@
            
              
               <breadCrumb title="Spring" url="http://jianwl.com/categories/Spring/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://jianwl.com/2016/08/16/JAVA%E4%B9%8B%E5%BC%82%E5%B8%B8/</loc>
+    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
+    <data>
+        <display>
+        <title>JAVA之异常</title>
+        <pubTime>2016-08-16T14:26:26.000Z</pubTime>
+        
+        <tag>JAVA</tag>
+         
+         
+           
+             
+              <breadCrumb title="JAVA" url="http://jianwl.com/categories/JAVA/"/>
           
         </display>
     </data>
@@ -2654,19 +2655,19 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/05/17/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E8%AF%A6%E8%A7%A3/</loc>
+    <loc>http://jianwl.com/2016/09/03/ES6%E4%B9%8B%E8%A7%A3%E6%9E%84/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>HTTP请求报文详解</title>
-        <pubTime>2016-05-17T03:52:51.000Z</pubTime>
+        <title>ES6之解构</title>
+        <pubTime>2016-09-03T14:12:10.000Z</pubTime>
         
-        <tag>HTTP</tag>
+        <tag>JavaScript</tag>
          
          
            
              
-              <breadCrumb title="HTTP" url="http://jianwl.com/categories/HTTP/"/>
+              <breadCrumb title="JavaScript" url="http://jianwl.com/categories/JavaScript/"/>
           
         </display>
     </data>
@@ -2754,19 +2755,19 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/09/07/ES6%E4%B9%8B%E6%95%B0%E7%BB%84%E7%9A%84%E6%89%A9%E5%B1%95/</loc>
+    <loc>http://jianwl.com/2016/08/19/JAVA%E4%B9%8B%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>ES6之数组的扩展</title>
-        <pubTime>2016-09-06T16:17:28.000Z</pubTime>
+        <title>JAVA之正则表达式</title>
+        <pubTime>2016-08-19T01:55:25.000Z</pubTime>
         
-        <tag>JavaScirpt</tag>
+        <tag>JAVA</tag>
          
          
            
              
-              <breadCrumb title="JavaScript" url="http://jianwl.com/categories/JavaScript/"/>
+              <breadCrumb title="正则表达式" url="http://jianwl.com/categories/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
           
         </display>
     </data>
@@ -2814,19 +2815,19 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/08/13/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</loc>
+    <loc>http://jianwl.com/2016/09/14/JAVA%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>排序算法</title>
-        <pubTime>2016-08-13T15:11:42.000Z</pubTime>
+        <title>JAVA代码规范</title>
+        <pubTime>2016-09-14T05:14:59.000Z</pubTime>
         
-        <tag>算法</tag>
+        <tag>JAVA</tag>
          
          
            
              
-              <breadCrumb title="算法" url="http://jianwl.com/categories/%E7%AE%97%E6%B3%95/"/>
+              <breadCrumb title="JAVA" url="http://jianwl.com/categories/JAVA/"/>
           
         </display>
     </data>
@@ -2854,39 +2855,19 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/04/20/%E6%B5%AE%E8%BA%81%E7%9A%84%E7%8E%AF%E5%A2%83%EF%BC%8C%E6%B5%AE%E8%BA%81%E7%9A%84%E6%88%91/</loc>
+    <loc>http://jianwl.com/2016/08/13/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>浮躁的环境，浮躁的我</title>
-        <pubTime>2016-04-20T04:39:28.000Z</pubTime>
+        <title>排序算法</title>
+        <pubTime>2016-08-13T15:11:42.000Z</pubTime>
         
-        <tag>思绪</tag>
+        <tag>算法</tag>
          
          
            
              
-              <breadCrumb title="思绪" url="http://jianwl.com/categories/%E6%80%9D%E7%BB%AA/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://jianwl.com/2016/09/14/JAVA%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/</loc>
-    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
-    <data>
-        <display>
-        <title>JAVA代码规范</title>
-        <pubTime>2016-09-14T05:14:59.000Z</pubTime>
-        
-        <tag>JAVA</tag>
-         
-         
-           
-             
-              <breadCrumb title="JAVA" url="http://jianwl.com/categories/JAVA/"/>
+              <breadCrumb title="算法" url="http://jianwl.com/categories/%E7%AE%97%E6%B3%95/"/>
           
         </display>
     </data>
@@ -2914,6 +2895,26 @@
 
     
   <url>
+    <loc>http://jianwl.com/2016/04/20/%E6%B5%AE%E8%BA%81%E7%9A%84%E7%8E%AF%E5%A2%83%EF%BC%8C%E6%B5%AE%E8%BA%81%E7%9A%84%E6%88%91/</loc>
+    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
+    <data>
+        <display>
+        <title>浮躁的环境，浮躁的我</title>
+        <pubTime>2016-04-20T04:39:28.000Z</pubTime>
+        
+        <tag>思绪</tag>
+         
+         
+           
+             
+              <breadCrumb title="思绪" url="http://jianwl.com/categories/%E6%80%9D%E7%BB%AA/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://jianwl.com/2016/08/13/%E7%AE%97%E6%B3%95%E5%85%A5%E9%97%A8%E7%AF%87/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
@@ -2934,19 +2935,19 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/08/14/JAVA%E7%BA%BF%E7%A8%8B%E6%B1%A0/</loc>
+    <loc>http://jianwl.com/2016/04/28/HTTPS%E9%80%9A%E4%BF%A1%E6%9C%BA%E5%88%B6/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>JAVA线程池</title>
-        <pubTime>2016-08-14T15:30:39.000Z</pubTime>
+        <title>HTTPS通信机制</title>
+        <pubTime>2016-04-28T03:32:07.000Z</pubTime>
         
-        <tag>JAVA</tag>
+        <tag>HTTP</tag>
          
          
            
              
-              <breadCrumb title="JAVA" url="http://jianwl.com/categories/JAVA/"/>
+              <breadCrumb title="HTTP" url="http://jianwl.com/categories/HTTP/"/>
           
         </display>
     </data>
@@ -2994,26 +2995,6 @@
 
     
   <url>
-    <loc>http://jianwl.com/2016/08/11/%E9%94%8B%E5%88%A9%E7%9A%84JQuery-Ajax/</loc>
-    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
-    <data>
-        <display>
-        <title>锋利的JQuery -- Ajax</title>
-        <pubTime>2016-08-11T15:34:28.000Z</pubTime>
-        
-        <tag>JavaScript</tag>
-         
-         
-           
-             
-              <breadCrumb title="JavaScript" url="http://jianwl.com/categories/JavaScript/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://jianwl.com/2016/09/13/%E8%A7%A3%E5%86%B3%E6%8B%A6%E6%88%AA%E5%99%A8%E8%AF%BB%E5%8F%96Request%E4%B8%AD%E7%9A%84%E6%B5%81-Controller%E8%AF%BB%E5%8F%96%E4%B8%8D%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
@@ -3027,6 +3008,26 @@
            
              
               <breadCrumb title="Spring" url="http://jianwl.com/categories/Spring/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://jianwl.com/2016/08/11/%E9%94%8B%E5%88%A9%E7%9A%84JQuery-Ajax/</loc>
+    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
+    <data>
+        <display>
+        <title>锋利的JQuery -- Ajax</title>
+        <pubTime>2016-08-11T15:34:28.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+         
+           
+             
+              <breadCrumb title="JavaScript" url="http://jianwl.com/categories/JavaScript/"/>
           
         </display>
     </data>
@@ -3075,12 +3076,12 @@
     
     
   <url>
-    <loc>http://jianwl.com/2016/09/06/ES6%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%89%A9%E5%B1%95/</loc>
+    <loc>http://jianwl.com/2016/08/22/ES6%E5%B8%B8%E8%A7%81%E7%9A%84%E5%9D%91/</loc>
     <lastmod>2016-10-01T13:10:01.000Z</lastmod>
     <data>
         <display>
-        <title>ES6之字符串的扩展</title>
-        <pubTime>2016-09-06T15:19:06.000Z</pubTime>
+        <title>ES6常见的坑</title>
+        <pubTime>2016-08-22T14:53:14.000Z</pubTime>
         
         <tag>JavaScript</tag>
          
@@ -3095,4 +3096,23 @@
 
     
     
+  <url>
+    <loc>http://jianwl.com/2016/05/04/PHP%E5%AD%97%E7%AC%A6%E4%B8%B2/</loc>
+    <lastmod>2016-10-01T13:10:01.000Z</lastmod>
+    <data>
+        <display>
+        <title>PHP字符串</title>
+        <pubTime>2016-05-04T02:00:24.000Z</pubTime>
+        
+        <tag>PHP</tag>
+         
+         
+           
+             
+              <breadCrumb title="PHP" url="http://jianwl.com/categories/PHP/"/>
+          
+        </display>
+    </data>
+    </url>
+
 </urlset>
