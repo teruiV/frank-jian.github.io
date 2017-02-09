@@ -98,7 +98,7 @@ RabbitMQ是什么？RabbitMQ是一种消息队列，用于程序间的通信。�
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-9/96740032-file_1486607059259_25b2.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-9/45749176-file_1486607063361_10969.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-9/30963342-file_1486607954707_232f.png">
-<meta property="og:updated_time" content="2017-02-09T03:06:39.000Z">
+<meta property="og:updated_time" content="2017-02-09T03:22:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RabbitMQ的基本概念和模型">
 <meta name="twitter:description" content="前言有个场景：平台每日订单量超过百万，需要实时获取订单状态，最初的方案是通过HTTP方式，实时获取每个订单状态。通过HTTP方式获取订单状态，发现大量通知会丢失。经过调研了解，使用中间件RabbitMQ可以完美解决目前出现的问题。这节主要来学习RabbitMQ的基本概念和模型。
@@ -402,8 +402,7 @@ RabbitMQ是什么？RabbitMQ是一种消息队列，用于程序间的通信。�
 <p><strong>消息的确认（Message acknowledgment）</strong></p>
 <p>若没有特别设定，消息一旦被队列分发给消费者，就被rabbitmq从内存中删除。在这种情况下，如果将一个正在处理消息的消费者强行关闭，那么，消息将未被完全处理，且RabbitMQ完全不知情。</p>
 <p>为了解决上述问题，可以配置使得消息处理完后，向RabbitMQ返回一个acknowledgment。RabbitMQ直到收到acknowledgment，才将消息删除。当消费者死亡时（its channel is closed,connection is closed or TCP connection is lost）,RabbitMQ会知道这个消费者发生问题了，将重新发送消息给空闲的消费者。消息没有timeout，即使消费者处理很长很长时间，RabbitMQ也认为消费者正在处理。</p>
-<p>###参考资料</p>
-<p>1、<a href="https://www.rabbitmq.com/tutorials/tutorial-five-java.html" target="_blank" rel="external">RabbitMQ Tutorials</a></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1、<a href="https://www.rabbitmq.com/tutorials/tutorial-five-java.html" target="_blank" rel="external">RabbitMQ Tutorials</a></p>
 
       
     </div>
@@ -578,7 +577,7 @@ RabbitMQ是什么？RabbitMQ是一种消息队列，用于程序间的通信。�
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RabbitMQ是什么？"><span class="nav-number">2.</span> <span class="nav-text">RabbitMQ是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个基本概念"><span class="nav-number">3.</span> <span class="nav-text">几个基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息流"><span class="nav-number">4.</span> <span class="nav-text">信息流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换机类型"><span class="nav-number">5.</span> <span class="nav-text">交换机类型</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RabbitMQ是什么？"><span class="nav-number">2.</span> <span class="nav-text">RabbitMQ是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个基本概念"><span class="nav-number">3.</span> <span class="nav-text">几个基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息流"><span class="nav-number">4.</span> <span class="nav-text">信息流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换机类型"><span class="nav-number">5.</span> <span class="nav-text">交换机类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
         </section>

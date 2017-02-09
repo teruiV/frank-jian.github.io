@@ -43,8 +43,7 @@
 <p><strong>消息的确认（Message acknowledgment）</strong></p>
 <p>若没有特别设定，消息一旦被队列分发给消费者，就被rabbitmq从内存中删除。在这种情况下，如果将一个正在处理消息的消费者强行关闭，那么，消息将未被完全处理，且RabbitMQ完全不知情。</p>
 <p>为了解决上述问题，可以配置使得消息处理完后，向RabbitMQ返回一个acknowledgment。RabbitMQ直到收到acknowledgment，才将消息删除。当消费者死亡时（its channel is closed,connection is closed or TCP connection is lost）,RabbitMQ会知道这个消费者发生问题了，将重新发送消息给空闲的消费者。消息没有timeout，即使消费者处理很长很长时间，RabbitMQ也认为消费者正在处理。</p>
-<p>###参考资料</p>
-<p>1、<a href="https://www.rabbitmq.com/tutorials/tutorial-five-java.html" target="_blank" rel="external">RabbitMQ Tutorials</a></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1、<a href="https://www.rabbitmq.com/tutorials/tutorial-five-java.html" target="_blank" rel="external">RabbitMQ Tutorials</a></p>
 ]]></content>
     </entry>
     
