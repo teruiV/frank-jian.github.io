@@ -4,6 +4,63 @@
   
     
     <entry>
+      <title><![CDATA[RabbitMQ的基本概念和模型]]></title>
+      <url>http://jianwl.com/2017/02/08/RabbitMQ%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E6%A8%A1%E5%9E%8B/</url>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>有个场景：平台每日订单量超过百万，需要实时获取订单状态，最初的方案是通过HTTP方式，实时获取每个订单状态。通过HTTP方式获取订单状态，发现大量通知会丢失。经过调研了解，使用中间件RabbitMQ可以完美解决目前出现的问题。这节主要来学习RabbitMQ的基本概念和模型。</p>
+<h3 id="RabbitMQ是什么？"><a href="#RabbitMQ是什么？" class="headerlink" title="RabbitMQ是什么？"></a>RabbitMQ是什么？</h3><p>RabbitMQ是一种消息队列，用于程序间的通信。形象地说，MQ就想一个邮局，发送者将消息写入MQ，MQ负责把消息发送给接收者。RabbitMQ可支持Java、PHP、Python、Go、JavaScript、Ruby等多种语言。</p>
+<h3 id="几个基本概念"><a href="#几个基本概念" class="headerlink" title="几个基本概念"></a>几个基本概念</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-8/87560623-file_1486568151391_82c0.png" alt="图1 rabbit_model"></p>
+<p>RabbitMQ的基本模型如图1所示，先介绍一些术语：</p>
+<p><strong>生产者（producer）</strong></p>
+<p>在图中为P，表示消息的发送者。</p>
+<p><strong>交换机（exchanges）</strong></p>
+<p>在图中为X，生产者发过来的消息需要经过交换机，交换机将决定消息放到哪些队列当中。</p>
+<p><strong>队列（queue）</strong></p>
+<p>队列在图1中由红色矩阵阵列表示，负责保存消息和发放消息。</p>
+<p><strong>消费者（consumer）</strong></p>
+<p>在图中为C，代表等待接收消息的程序。</p>
+<h3 id="信息流"><a href="#信息流" class="headerlink" title="信息流"></a>信息流</h3><p>消息是怎么从生产者传递到消费者的呢？<br>首先，生产者发送消息到交换机，同时发送一个key，通过这个key，交换机就知道把消息发送到哪个队列。随后交换机把消息发送到相应的队列中，由队列将消息发送给消费者。消费者监听某些队列，当有消息过来时，就立即处理消息。</p>
+<p>那么接下来就有两个问题：</p>
+<p>1）、交换机是如何根据key来分配消息到队列？<br>2）、队列怎样将消息发送给消费者？</p>
+<h3 id="交换机类型"><a href="#交换机类型" class="headerlink" title="交换机类型"></a>交换机类型</h3><p>这部分将回答第一个问题，交换机如何根据key来分配消息到队列？<br>RabbitMQ的交换机有四种类型：direct、topic、headers、fanout</p>
+<p><strong>Fanout</strong></p>
+<p>fanout交换机就跟广播一样，对消息不作选择地发给所有绑定的队列。以图1为例，两个队列都将收到消息。</p>
+<p><strong>Direct</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-9/64687545-file_1486607052126_b755.png" alt="图2 direct"></p>
+<p>在direct模式里，交换机和队列之间绑定了一个key，只有消息的key与绑定的key相同时，交换机才会把消息发给该队列。如图2所示，消息的key为orange时，消息将进入队列Q1，key为black或green时，消息将进入队列Q2.若消息的key是其他字符串，被交换机直接遗弃。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-9/96740032-file_1486607059259_25b2.png" alt="图3 多重绑定"></p>
+<p>同时，交换机支持多重绑定，多个队列可以以相同的key与交换机绑定。如图3所示，当消息的key为black时，消息将进入Q1和Q2.</p>
+<p><strong>Topic</strong></p>
+<p>topic模式可以理解为主题模式，当key包含某个主题时，即可进入该主题的队列，topic模式的key必须具有固定的格式：以「.」作为间隔的一串单词比如「quick.orange.rabbit」,key最多不能超过255byte。交换机和队列的key可以以类似正则表达式的方式存在，有两种语法：</p>
+<p>1、「*」可以替代一个单词<br>2、「#」可以替代0个或多个单词</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-9/45749176-file_1486607063361_10969.png" alt="图4 topic"><br>举个例子：图中Q1和交换机绑定的key为「<em>.orange.</em>」，故当消息的key为3个单词，且中间的单词为orange时，消息将进入Q1。Q2与exchange绑定的key为「rabbit.#」，当消息的key为rabbit开头时，消息将进入Q2.</p>
+<p><strong>Headers</strong><br>官网没介绍这个模式，大概不常用。</p>
+<p><strong>队列分发消息的方式</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-9/30963342-file_1486607954707_232f.png" alt="图5 Round-robin dispatching"></p>
+<p><strong>循环发放（Round-robin dispatching）</strong></p>
+<p>队列分发消息给消费者的方式采用循环分发，举例来说，若队列里有四个消息w,x,y,z,则C1将得到消息z和x，C2将得到消息y和w。即每个消费者按顺序每人发一个消息。注意，在这种分配方式下，消息其实在刚进入队列的时候就已经内定好将要被分发的消费者。即z,x一定给C1，y,w一定给C2。这种方式存在一些隐患，如果z和x都是耗时的命令，y,z都是简单的命令，C1将不停地工作，而C2就比较空闲，造成资源的浪费。公平发放解决了上述问题。</p>
+<p><strong>公平发放(fair dispatching)</strong></p>
+<p>这种方式下，队列只会把消息给空闲的消费者，如果他看到某个消费者正忙，就查找下一个空闲的消费者。</p>
+<p><strong>消息的确认（Message acknowledgment）</strong></p>
+<p>若没有特别设定，消息一旦被队列分发给消费者，就被rabbitmq从内存中删除。在这种情况下，如果将一个正在处理消息的消费者强行关闭，那么，消息将未被完全处理，且RabbitMQ完全不知情。</p>
+<p>为了解决上述问题，可以配置使得消息处理完后，向RabbitMQ返回一个acknowledgment。RabbitMQ直到收到acknowledgment，才将消息删除。当消费者死亡时（its channel is closed,connection is closed or TCP connection is lost）,RabbitMQ会知道这个消费者发生问题了，将重新发送消息给空闲的消费者。消息没有timeout，即使消费者处理很长很长时间，RabbitMQ也认为消费者正在处理。</p>
+<p>###参考资料</p>
+<p>1、<a href="https://www.rabbitmq.com/tutorials/tutorial-five-java.html" target="_blank" rel="external">RabbitMQ Tutorials</a></p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Java设计模式之建造者模式「Builder Pattern」]]></title>
+      <url>http://jianwl.com/2017/02/04/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F%E3%80%8CBuilder-Pattern%E3%80%8D/</url>
+      <content type="html"><![CDATA[<h3 id="何为建造者模式？"><a href="#何为建造者模式？" class="headerlink" title="何为建造者模式？"></a>何为建造者模式？</h3><p>一步步创建一个包含多个组成部件的完整对象，使用相同的构建过程构建不同的产品，建造者模式是一种对象创建型模式。</p>
+<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><ul>
+<li>用于复杂对象的组装和创建、对象间具有较多的共同点或组成部分相似；</li>
+<li>生成对象的属性相互依赖,需要指定其生成顺序；</li>
+<li>对象的创建过程独立于创建该对象的类，隔离复杂对象的创建和使用，并使得相同的创建过程可以创建不同的对象。</li>
+</ul>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">public final class User &#123;</div><div class="line">    private final String username;</div><div class="line">    private final String addresss;</div><div class="line">    private final Integer age;</div><div class="line">    private final String whereFrom;</div><div class="line"></div><div class="line">    public User(Builder builder)&#123;</div><div class="line">        this.username = builder.username;</div><div class="line">        this.addresss = builder.addresss;</div><div class="line">        this.age = builder.age;</div><div class="line">        this.whereFrom = builder.whereFrom;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getUsername() &#123;</div><div class="line">        return username;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getAddresss() &#123;</div><div class="line">        return addresss;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Integer getAge() &#123;</div><div class="line">        return age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getWhereFrom() &#123;</div><div class="line">        return whereFrom;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return &quot;User&#123;&quot; +</div><div class="line">                &quot;username=&apos;&quot; + username + &apos;\&apos;&apos; +</div><div class="line">                &quot;, addresss=&apos;&quot; + addresss + &apos;\&apos;&apos; +</div><div class="line">                &quot;, age=&quot; + age +</div><div class="line">                &quot;, whereFrom=&apos;&quot; + whereFrom + &apos;\&apos;&apos; +</div><div class="line">                &apos;&#125;&apos;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static class Builder&#123;</div><div class="line">        private   String username;</div><div class="line">        private   String addresss;</div><div class="line">        private   Integer age;</div><div class="line">        private   String whereFrom;</div><div class="line"></div><div class="line">        public Builder(String username,Integer age)&#123;</div><div class="line">            this.username = username;</div><div class="line">            this.age =age;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public Builder withAddress(String address)&#123;</div><div class="line">            this.addresss = address;</div><div class="line">            return this ;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        public Builder withWhereFrom(String whereFrom)&#123;</div><div class="line">            this.whereFrom = whereFrom;</div><div class="line">            return this;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public User builder()&#123;</div><div class="line">            return new User(this);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        System.out.println(new User.Builder(&quot;张三&quot;,12).withAddress(&quot;上海&quot;).withWhereFrom(&quot;中国&quot;).builder());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[2016年终总结]]></title>
       <url>http://jianwl.com/2017/02/04/2016%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</url>
       <content type="html"><![CDATA[<h3 id="2016年，我做了什么？"><a href="#2016年，我做了什么？" class="headerlink" title="2016年，我做了什么？"></a>2016年，我做了什么？</h3><h4 id="1、搭建个人站，至今写了150多篇文章"><a href="#1、搭建个人站，至今写了150多篇文章" class="headerlink" title="1、搭建个人站，至今写了150多篇文章"></a>1、搭建个人站，至今写了150多篇文章</h4><p>去年4月份，有跳槽的想法，便开始准备面试相关的知识储备，搭建个人站，用于记录所学过程中的心得体会。一来，将所学的知识，通过文字的方式记录下来，有了输出，对学习的积极性有一定的提高；二来，想通过个人站记录成长的过程，这样当一年过去了，可以很清晰的知道，这一年我到底做了什么？最后，想通过个人站激励自己，不断学习。</p>
