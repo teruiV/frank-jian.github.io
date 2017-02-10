@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title><![CDATA[Git实战]]></title>
+      <url>http://jianwl.com/2017/02/10/Git%E5%AE%9E%E6%88%98/</url>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>Source Tree</code>图形化界面用多了，在服务器操作时，Git命令行大部分都遗忘了。本节主要记录Git常用命令</p>
+<h3 id="工作区、暂存区的概念"><a href="#工作区、暂存区的概念" class="headerlink" title="工作区、暂存区的概念"></a>工作区、暂存区的概念</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/50500847-file_1484059096086_3789.jpg" alt=""></p>
+<p>把文件往GIT版本库里添加的时候是分两步执行的：</p>
+<p>第一步是用<code>git add</code>把文件添加进去，实际上就是把文件修改添加到暂存区；</p>
+<p>第二步是用<code>git commit</code>提交更改，实际上就是把暂存区的所有内容提交到当前分支。</p>
+<h3 id="GIT实战"><a href="#GIT实战" class="headerlink" title="GIT实战"></a>GIT实战</h3><p><code>场景1：添加文件</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/31507464-file_1484059818873_b118.png" alt=""></p>
+<p><code>场景2：将暂存区的修改回退到工作区</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/9343551-file_1484060480734_811a.png" alt=""></p>
+<p><code>场景3：放弃工作区中所有的修改</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/82204251-file_1484060562988_e215.png" alt=""></p>
+<p><code>场景4：当前分支回退到某次提交(已提交到「远程分支」和「本地分支」均可实现回滚)</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/60922523-file_1484062431722_f5f1.png" alt=""></p>
+<p><code>场景5：查看提交日志信息</code></p>
+<p><strong>方式1</strong></p>
+<p><code>git log --pretty=oneline</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/31517947-file_1484063163364_a911.png" alt=""></p>
+<p><strong>方式2</strong></p>
+<p><code>git log --graph</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/49133052-file_1484063099366_109d7.png" alt=""></p>
+<p><code>场景6：显示、创建、切换分支</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/70304771-file_1484063405708_bf84.png" alt=""></p>
+<p><code>场景7: 暂存区删除文件但工作区内容不变，命令常用于项目后期添加.gitignore文件，需要在暂存区先删除不需要的文件，再重新添加到git分支，忽略才能生效</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-10/45154025-file_1486707415977_16269.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001375840038939c291467cc7c747b1810aab2fb8863508000" target="_blank" rel="external">廖雪峰Git教程</a></li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[RabbitMQ的基本概念和模型]]></title>
       <url>http://jianwl.com/2017/02/08/RabbitMQ%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E6%A8%A1%E5%9E%8B/</url>
       <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>有个场景：平台每日订单量超过百万，需要实时获取订单状态，最初的方案是通过HTTP方式，实时获取每个订单状态。通过HTTP方式获取订单状态，发现大量通知会丢失。经过调研了解，使用中间件RabbitMQ可以完美解决目前出现的问题。这节主要来学习RabbitMQ的基本概念和模型。</p>
@@ -133,37 +166,6 @@
 <li>多态</li>
 </ol>
 <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1、<a href="https://maimai.cn/article/detail?fid=79085975" target="_blank" rel="external">2015年携程的JAVA工程师面试题</a></p>
-]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Git实战]]></title>
-      <url>http://jianwl.com/2017/01/04/Git%E5%AE%9E%E6%88%98/</url>
-      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>Source Tree</code>图形化界面用多了，在服务器操作时，Git命令行大部分都遗忘了。本节主要记录Git常用命令</p>
-<h3 id="工作区、暂存区的概念"><a href="#工作区、暂存区的概念" class="headerlink" title="工作区、暂存区的概念"></a>工作区、暂存区的概念</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/50500847-file_1484059096086_3789.jpg" alt=""></p>
-<p>把文件往GIT版本库里添加的时候是分两步执行的：</p>
-<p>第一步是用<code>git add</code>把文件添加进去，实际上就是把文件修改添加到暂存区；</p>
-<p>第二步是用<code>git commit</code>提交更改，实际上就是把暂存区的所有内容提交到当前分支。</p>
-<h3 id="GIT实战"><a href="#GIT实战" class="headerlink" title="GIT实战"></a>GIT实战</h3><p><code>场景1：添加文件</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/31507464-file_1484059818873_b118.png" alt=""></p>
-<p><code>场景2：将暂存区的修改回退到工作区</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/9343551-file_1484060480734_811a.png" alt=""></p>
-<p><code>场景3：放弃工作区中所有的修改</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/82204251-file_1484060562988_e215.png" alt=""></p>
-<p><code>场景4：当前分支回退到某次提交(已提交到「远程分支」和「本地分支」均可实现回滚)</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/60922523-file_1484062431722_f5f1.png" alt=""></p>
-<p><code>场景5：查看提交日志信息</code></p>
-<p><strong>方式1</strong></p>
-<p><code>git log --pretty=oneline</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/31517947-file_1484063163364_a911.png" alt=""></p>
-<p><strong>方式2</strong></p>
-<p><code>git log --graph</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/49133052-file_1484063099366_109d7.png" alt=""></p>
-<p><code>场景6：显示、创建、切换分支</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/70304771-file_1484063405708_bf84.png" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001375840038939c291467cc7c747b1810aab2fb8863508000" target="_blank" rel="external">廖雪峰Git教程</a></li>
-</ol>
 ]]></content>
     </entry>
     
