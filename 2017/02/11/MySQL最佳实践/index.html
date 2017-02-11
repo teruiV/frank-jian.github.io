@@ -87,21 +87,21 @@
 
 <meta name="description" content="前言前一阵听了我司首席DBA分享关于MYSQL优化的实战经验，将要点总结出来，方便在后续MYSQL实战中使用。
 实战1、表字段选型1、原则：适用就好，越小越好
-1234567TINYINT(1 Byte) &amp;lt; SMALLINT(2 Bytes) &amp;lt; MEDIUMINT(4 Bytes) &amp;lt; INT(8 Bytes) FLOAT(4 B) 、 DOUBLE(8 B)DECIMAL(">
+1234✅ TINYINT(1 Byte) &amp;lt; SMALLINT(2 Bytes) &amp;lt; MEDIUMINT(4 Bytes) &amp;lt; INT(8 Bytes) ✅ FLOAT(4 B) 、 DOUBLE(8 B)✅ DECIM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL最佳实践">
 <meta property="og:url" content="http://jianwl.com/2017/02/11/MySQL最佳实践/index.html">
 <meta property="og:site_name" content="记录点滴成长">
 <meta property="og:description" content="前言前一阵听了我司首席DBA分享关于MYSQL优化的实战经验，将要点总结出来，方便在后续MYSQL实战中使用。
 实战1、表字段选型1、原则：适用就好，越小越好
-1234567TINYINT(1 Byte) &amp;lt; SMALLINT(2 Bytes) &amp;lt; MEDIUMINT(4 Bytes) &amp;lt; INT(8 Bytes) FLOAT(4 B) 、 DOUBLE(8 B)DECIMAL(">
+1234✅ TINYINT(1 Byte) &amp;lt; SMALLINT(2 Bytes) &amp;lt; MEDIUMINT(4 Bytes) &amp;lt; INT(8 Bytes) ✅ FLOAT(4 B) 、 DOUBLE(8 B)✅ DECIM">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-11/33686351-file_1486799408569_10b41.png">
-<meta property="og:updated_time" content="2017-02-11T08:29:59.000Z">
+<meta property="og:updated_time" content="2017-02-11T08:34:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL最佳实践">
 <meta name="twitter:description" content="前言前一阵听了我司首席DBA分享关于MYSQL优化的实战经验，将要点总结出来，方便在后续MYSQL实战中使用。
 实战1、表字段选型1、原则：适用就好，越小越好
-1234567TINYINT(1 Byte) &amp;lt; SMALLINT(2 Bytes) &amp;lt; MEDIUMINT(4 Bytes) &amp;lt; INT(8 Bytes) FLOAT(4 B) 、 DOUBLE(8 B)DECIMAL(">
+1234✅ TINYINT(1 Byte) &amp;lt; SMALLINT(2 Bytes) &amp;lt; MEDIUMINT(4 Bytes) &amp;lt; INT(8 Bytes) ✅ FLOAT(4 B) 、 DOUBLE(8 B)✅ DECIM">
 <meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-11/33686351-file_1486799408569_10b41.png">
 
 
@@ -366,7 +366,7 @@
       
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前一阵听了我司首席DBA分享关于MYSQL优化的实战经验，将要点总结出来，方便在后续MYSQL实战中使用。</p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1、表字段选型"><a href="#1、表字段选型" class="headerlink" title="1、表字段选型"></a>1、表字段选型</h4><p>1、原则：适用就好，越小越好</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">TINYINT(1 Byte) &lt; SMALLINT(2 Bytes) &lt; MEDIUMINT(4 Bytes) &lt; INT(8 Bytes) </div><div class="line"></div><div class="line">FLOAT(4 B) 、 DOUBLE(8 B)</div><div class="line"></div><div class="line">DECIMAL(M,D) 「M+2 B」</div><div class="line"></div><div class="line">Char(n) 「n Bytes」、Varchar(n) 「n + 1 Bytes」</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">✅ TINYINT(1 Byte) &lt; SMALLINT(2 Bytes) &lt; MEDIUMINT(4 Bytes) &lt; INT(8 Bytes) </div><div class="line">✅ FLOAT(4 B) 、 DOUBLE(8 B)</div><div class="line">✅ DECIMAL(M,D) 「M+2 B」</div><div class="line">✅ Char(n) 「n Bytes」、Varchar(n) 「n + 1 Bytes」</div></pre></td></tr></table></figure>
 <p>2、避免使用NULL字段</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">✅ 很难进行查询优化</div><div class="line">✅ NULL列加索引，需要额外空间</div><div class="line">✅ 含NULL复合索引无效</div></pre></td></tr></table></figure>
 <p>3、尽量不要使用TEXT/BLOB</p>
