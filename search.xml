@@ -4,6 +4,22 @@
   
     
     <entry>
+      <title><![CDATA[MySQL性能查看常用命令]]></title>
+      <url>http://jianwl.com/2017/02/14/MySQL%E6%80%A7%E8%83%BD%E6%9F%A5%E7%9C%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+      <content type="html"><![CDATA[<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1、-场景：显示哪些线程正在运行"><a href="#1、-场景：显示哪些线程正在运行" class="headerlink" title="1、 场景：显示哪些线程正在运行"></a>1、 场景：显示哪些线程正在运行</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-14/84951625-file_1487082323314_593c.png" alt=""></p>
+<h4 id="2、场景：显示SQL的执行计划"><a href="#2、场景：显示SQL的执行计划" class="headerlink" title="2、场景：显示SQL的执行计划"></a>2、场景：显示SQL的执行计划</h4><p>表结构：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-14/38715377-file_1487082561514_1082c.png" alt="表结构"></p>
+<p>执行计划：</p>
+<p>有索引：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-14/98390318-file_1487082868500_135a2.png" alt=""></p>
+<p>全表遍历(全表共829条记录)：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-14/83614830-file_1487082737342_17766.png" alt=""></p>
+<p>未完待续…</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1、<a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="external">MYSQL官方文档</a></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[MySQL最佳实践]]></title>
       <url>http://jianwl.com/2017/02/11/MySQL%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</url>
       <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前一阵听了我司首席DBA分享关于MYSQL优化的实战经验，将要点总结出来，方便在后续MYSQL实战中使用。</p>
@@ -14,7 +30,7 @@
 <p>3、尽量不要使用TEXT/BLOB</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">✅ TEXT类型处理性能远低于VARCHAR</div><div class="line">✅ 强制生成硬盘临时表</div><div class="line">✅ 浪费更多空间</div><div class="line">✅ 如需使用则拆分到独立的表存放</div></pre></td></tr></table></figure>
 <h4 id="表数据量预估"><a href="#表数据量预估" class="headerlink" title="表数据量预估"></a>表数据量预估</h4><p>1、单表数据量预估</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">✅ 纯INT单表 &lt; 2000W Rows</div><div class="line">✅ 含CHAR单标 &lt; 1000W Rows</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">✅ 纯INT单表 &lt; 2000W Rows</div><div class="line">✅ 含CHAR单表 &lt; 1000W Rows</div></pre></td></tr></table></figure>
 <p>2、表字段少而精</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">✅ 单行不超过200Bytes</div><div class="line">✅ 单表不超过50个INT字段</div><div class="line">✅ 单表不超过20个CHAR(10)字段</div><div class="line">✅ 单表字段数上限控制在50个以内</div></pre></td></tr></table></figure>
 <p>3、合理分表「不超载」</p>

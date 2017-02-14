@@ -96,7 +96,7 @@
 实战1、表字段选型1、原则：适用就好，越小越好
 1234✅ TINYINT(1 Byte) &amp;lt; SMALLINT(2 Bytes) &amp;lt; MEDIUMINT(4 Bytes) &amp;lt; INT(8 Bytes) ✅ FLOAT(4 B) 、 DOUBLE(8 B)✅ DECIM">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-11/33686351-file_1486799408569_10b41.png">
-<meta property="og:updated_time" content="2017-02-11T08:34:59.000Z">
+<meta property="og:updated_time" content="2017-02-11T08:35:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL最佳实践">
 <meta name="twitter:description" content="前言前一阵听了我司首席DBA分享关于MYSQL优化的实战经验，将要点总结出来，方便在后续MYSQL实战中使用。
@@ -372,7 +372,7 @@
 <p>3、尽量不要使用TEXT/BLOB</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">✅ TEXT类型处理性能远低于VARCHAR</div><div class="line">✅ 强制生成硬盘临时表</div><div class="line">✅ 浪费更多空间</div><div class="line">✅ 如需使用则拆分到独立的表存放</div></pre></td></tr></table></figure>
 <h4 id="表数据量预估"><a href="#表数据量预估" class="headerlink" title="表数据量预估"></a>表数据量预估</h4><p>1、单表数据量预估</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">✅ 纯INT单表 &lt; 2000W Rows</div><div class="line">✅ 含CHAR单标 &lt; 1000W Rows</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">✅ 纯INT单表 &lt; 2000W Rows</div><div class="line">✅ 含CHAR单表 &lt; 1000W Rows</div></pre></td></tr></table></figure>
 <p>2、表字段少而精</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">✅ 单行不超过200Bytes</div><div class="line">✅ 单表不超过50个INT字段</div><div class="line">✅ 单表不超过20个CHAR(10)字段</div><div class="line">✅ 单表字段数上限控制在50个以内</div></pre></td></tr></table></figure>
 <p>3、合理分表「不超载」</p>
@@ -432,6 +432,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/14/MySQL性能查看常用命令/" rel="prev" title="MySQL性能查看常用命令">
+                MySQL性能查看常用命令 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -522,7 +526,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">159</span>
+              <span class="site-state-item-count">160</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
