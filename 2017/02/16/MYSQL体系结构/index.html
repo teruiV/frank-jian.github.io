@@ -102,8 +102,8 @@
 
 这两个词很容易混淆，要特别注意。MYSQL数据库实例在系统上的表现是一个进程，其被设计为一个单进">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-16/49796817-file_1487258098966_6c52.png">
-<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-16/49796817-file_1487258098966_6c52.png">
-<meta property="og:updated_time" content="2017-02-16T15:47:49.000Z">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-16/56429664-file_1487259812820_9ded.png">
+<meta property="og:updated_time" content="2017-02-16T15:50:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MYSQL体系结构">
 <meta name="twitter:description" content="前言接触MYSQL多年，却对MYSQL体系结构知之甚少，这一节主要学习这方面的知识点。
@@ -384,7 +384,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/mysql/support-files</div><div class="line">sudo ./mysql.server start</div></pre></td></tr></table></figure>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-16/49796817-file_1487258098966_6c52.png" alt=""></p>
 <p>进程号为929就是MYSQL实例，启动实例时，MYSQL数据库会去读取配置文件，根据配置文件的参数来启动数据库实例。读取的顺序为<code>/etc/my.cnf</code> -&gt; <code>/etc/mysql/my.cnf</code> -&gt; <code>/usr/local/mysql/etc/my.cnf</code> -&gt; <code>~/.my.cnf</code>,如果几个配置文件都有同一个参数，MYSQL会以最后一个配置文件的参数为准。</p>
-<h4 id="2-MYSQL体系结构"><a href="#2-MYSQL体系结构" class="headerlink" title="2. MYSQL体系结构"></a>2. MYSQL体系结构</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-16/49796817-file_1487258098966_6c52.png" alt="图1-1 MYSQL体系结构"></p>
+<h4 id="2-MYSQL体系结构"><a href="#2-MYSQL体系结构" class="headerlink" title="2. MYSQL体系结构"></a>2. MYSQL体系结构</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-16/56429664-file_1487259812820_9ded.png" alt="图1-1 MYSQL体系结构"></p>
 <p>MYSQL由以下几部分组成：</p>
 <p>连接池组件、管理组件和工具组件、SQL接口组件、查询分析器组件、优化器组件、缓冲组件、插件式存储引擎、物理文件</p>
 <p>特别注意，存储引擎是基于表的，而不是数据库。</p>
