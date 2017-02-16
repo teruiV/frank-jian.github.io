@@ -17,7 +17,7 @@
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-16/49796817-file_1487258098966_6c52.png" alt=""></p>
 <p>进程号为929就是MYSQL实例，启动实例时，MYSQL数据库会去读取配置文件，根据配置文件的参数来启动数据库实例。读取的顺序为<code>/etc/my.cnf</code> -&gt; <code>/etc/mysql/my.cnf</code> -&gt; <code>/usr/local/mysql/etc/my.cnf</code> -&gt; <code>~/.my.cnf</code>,如果几个配置文件都有同一个参数，MYSQL会以最后一个配置文件的参数为准。</p>
 <h4 id="2-MYSQL体系结构"><a href="#2-MYSQL体系结构" class="headerlink" title="2. MYSQL体系结构"></a>2. MYSQL体系结构</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-16/56429664-file_1487259812820_9ded.png" alt="图1-1 MYSQL体系结构"></p>
-<p>MYSQL由以下几部分组成：</p>
+<p>由图1-1可知，MYSQL由以下几部分组成：</p>
 <p>连接池组件、管理组件和工具组件、SQL接口组件、查询分析器组件、优化器组件、缓冲组件、插件式存储引擎、物理文件</p>
 <p>特别注意，存储引擎是基于表的，而不是数据库。</p>
 <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1、MySQL技术内幕 - InnoDB存储引擎</p>
@@ -5331,6 +5331,23 @@ tee – the output of write (:w) command is redirected using tee
     </entry>
     
     <entry>
+      <title><![CDATA[MYSQL存储引擎]]></title>
+      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
+      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[MYSQL存储引擎优化]]></title>
       <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</url>
       <content type="html"><![CDATA[<h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
@@ -5355,23 +5372,6 @@ tee – the output of write (:w) command is redirected using tee
 <h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
 <h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
 <h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
-]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[MYSQL存储引擎]]></title>
-      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
-      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 ]]></content>
     </entry>
     
