@@ -30,7 +30,7 @@
 <td style="text-align:center">YES</td>
 </tr>
 <tr>
-<td style="text-align:center">Transactions（commit、rollback..）</td>
+<td style="text-align:center">Transactions</td>
 <td style="text-align:center"></td>
 <td style="text-align:center">✅</td>
 <td style="text-align:center"></td>
