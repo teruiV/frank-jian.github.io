@@ -202,12 +202,12 @@
 </tr>
 <tr>
 <td style="text-align:center">Query cache support</td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
 </tr>
 <tr>
 <td style="text-align:center">Update Statistics for Data Dictionary</td>
