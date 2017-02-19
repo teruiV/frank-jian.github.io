@@ -7,7 +7,6 @@
       <title><![CDATA[InnoDB存储引擎之B+树索引内部实现]]></title>
       <url>http://jianwl.com/2017/02/19/InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%B9%8BB-%E6%A0%91%E7%B4%A2%E5%BC%95%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0/</url>
       <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>B+</code>树索引是InnoDB最为常用和最为有效的索引，其构造类似于<code>二叉树</code>，<code>B+</code>树中的B代表的是平衡(balance)，因为<code>B+</code>树是从最早的平衡二叉树演化而来的。</p>
-<p>特别注意：<strong><code>B+</code>树索引并不能找到一个给定键值得具体行，<code>B+</code>树索引能找到的只是被查找数据行所在的页，然后数据库通过把页读入到内存，再从内存中进行查找，最后得到要查找的数据。</strong></p>
 <p>在学习索引之前先介绍与之密切相关的一些算法与数据结构，有助于更好的理解B+树索引的工作方式。</p>
 <h4 id="1-二分查找法"><a href="#1-二分查找法" class="headerlink" title="1. 二分查找法"></a>1. 二分查找法</h4><p>基本思想：先以<strong>有序数列</strong>的中点位置为比较对象，如果找的元素值小于该中点元素，则将待查序列缩小为左半部分，否则为右半部分。通过一次比较，将查找区间缩小一半。</p>
 <p>举个例子：从以下10个数中，查找48这条记录</p>

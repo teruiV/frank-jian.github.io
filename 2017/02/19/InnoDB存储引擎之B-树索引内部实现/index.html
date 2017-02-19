@@ -86,15 +86,15 @@
 
 
 <meta name="description" content="前言B+树索引是InnoDB最为常用和最为有效的索引，其构造类似于二叉树，B+树中的B代表的是平衡(balance)，因为B+树是从最早的平衡二叉树演化而来的。
-特别注意：B+树索引并不能找到一个给定键值得具体行，B+树索引能找到的只是被查找数据行所在的页，然后数据库通过把页读入到内存，再从内存中进行查找，最后得到要查找的数据。
-在学习索引之前先介绍与之密切相关的一些算法与数据结构，有助于更好的理">
+在学习索引之前先介绍与之密切相关的一些算法与数据结构，有助于更好的理解B+树索引的工作方式。
+1. 二分查找法基本思想：先以有序数列的中点位置为比较对象，如果找的元素值小于该中点元素，则将待查序列缩小为左半部分，否则为右半部分。通过一次比">
 <meta property="og:type" content="article">
 <meta property="og:title" content="InnoDB存储引擎之B+树索引内部实现">
 <meta property="og:url" content="http://jianwl.com/2017/02/19/InnoDB存储引擎之B-树索引内部实现/index.html">
 <meta property="og:site_name" content="记录点滴成长">
 <meta property="og:description" content="前言B+树索引是InnoDB最为常用和最为有效的索引，其构造类似于二叉树，B+树中的B代表的是平衡(balance)，因为B+树是从最早的平衡二叉树演化而来的。
-特别注意：B+树索引并不能找到一个给定键值得具体行，B+树索引能找到的只是被查找数据行所在的页，然后数据库通过把页读入到内存，再从内存中进行查找，最后得到要查找的数据。
-在学习索引之前先介绍与之密切相关的一些算法与数据结构，有助于更好的理">
+在学习索引之前先介绍与之密切相关的一些算法与数据结构，有助于更好的理解B+树索引的工作方式。
+1. 二分查找法基本思想：先以有序数列的中点位置为比较对象，如果找的元素值小于该中点元素，则将待查序列缩小为左半部分，否则为右半部分。通过一次比">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/62647480-file_1487492747619_129e8.gif">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/79936845-file_1487501076247_17452.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/73962338-file_1487501771494_c1ff.png">
@@ -104,12 +104,12 @@
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/63451589-file_1487511457231_11319.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/67245038-file_1487511783693_b9ba.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/86953295-file_1487513202735_1c86.png">
-<meta property="og:updated_time" content="2017-02-19T14:37:33.000Z">
+<meta property="og:updated_time" content="2017-02-19T14:46:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="InnoDB存储引擎之B+树索引内部实现">
 <meta name="twitter:description" content="前言B+树索引是InnoDB最为常用和最为有效的索引，其构造类似于二叉树，B+树中的B代表的是平衡(balance)，因为B+树是从最早的平衡二叉树演化而来的。
-特别注意：B+树索引并不能找到一个给定键值得具体行，B+树索引能找到的只是被查找数据行所在的页，然后数据库通过把页读入到内存，再从内存中进行查找，最后得到要查找的数据。
-在学习索引之前先介绍与之密切相关的一些算法与数据结构，有助于更好的理">
+在学习索引之前先介绍与之密切相关的一些算法与数据结构，有助于更好的理解B+树索引的工作方式。
+1. 二分查找法基本思想：先以有序数列的中点位置为比较对象，如果找的元素值小于该中点元素，则将待查序列缩小为左半部分，否则为右半部分。通过一次比">
 <meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/62647480-file_1487492747619_129e8.gif">
 
 
@@ -373,7 +373,6 @@
 
       
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>B+</code>树索引是InnoDB最为常用和最为有效的索引，其构造类似于<code>二叉树</code>，<code>B+</code>树中的B代表的是平衡(balance)，因为<code>B+</code>树是从最早的平衡二叉树演化而来的。</p>
-<p>特别注意：<strong><code>B+</code>树索引并不能找到一个给定键值得具体行，<code>B+</code>树索引能找到的只是被查找数据行所在的页，然后数据库通过把页读入到内存，再从内存中进行查找，最后得到要查找的数据。</strong></p>
 <p>在学习索引之前先介绍与之密切相关的一些算法与数据结构，有助于更好的理解B+树索引的工作方式。</p>
 <h4 id="1-二分查找法"><a href="#1-二分查找法" class="headerlink" title="1. 二分查找法"></a>1. 二分查找法</h4><p>基本思想：先以<strong>有序数列</strong>的中点位置为比较对象，如果找的元素值小于该中点元素，则将待查序列缩小为左半部分，否则为右半部分。通过一次比较，将查找区间缩小一半。</p>
 <p>举个例子：从以下10个数中，查找48这条记录</p>
