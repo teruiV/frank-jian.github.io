@@ -19,7 +19,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">前序遍历：abdefgc</div><div class="line">中序遍历：debgfac</div><div class="line">后序遍历：edgfbca</div></pre></td></tr></table></figure>
 <h4 id="3-平衡二叉树"><a href="#3-平衡二叉树" class="headerlink" title="3. 平衡二叉树"></a>3. 平衡二叉树</h4><p>定义：符合二叉查找树的定义，其次必须满足任何节点的两个子数的高度最大差为1.</p>
 <h3 id="B-树"><a href="#B-树" class="headerlink" title="B+ 树"></a>B+ 树</h3><p>定义：B+树中，所有记录节点都按键值的大小的顺序存放在同一层的叶子节点上，由各叶子节点指针进行连接。先来看一个B+树，其高度为2，<strong>每页可存放4条记录</strong>，扇出(fan out)为5。</p>
-<p>从图1-1可以看出，所有记录都在叶子节点上，并且是顺序存放的，如果用户从最左边的叶子节点开始顺序遍历，可以得到所有键值的顺序排序：5、10、15、20、25、30、50、55、60、65、75、80、90。</p>
+<p>从图1-1可以看出，所有记录都在叶子节点上，并且是顺序存放的，如果用户从最左边的叶子节点开始顺序遍历，可以得到所有键值的顺序排序：5、10、15、20、25、30、50、55、60、65、75、80、85、90。</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/79936845-file_1487501076247_17452.png" alt="图1-1"></p>
 <h4 id="1-插入操作"><a href="#1-插入操作" class="headerlink" title="1. 插入操作"></a>1. 插入操作</h4><table>
 <thead>
