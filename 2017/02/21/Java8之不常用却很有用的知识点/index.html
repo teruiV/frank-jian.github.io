@@ -85,20 +85,18 @@
 
 
 
-<meta name="description" content="知识点1、forEach VS forEachOrdered
-123456@Testpublic void test_005()&amp;#123;    List&amp;lt;String&amp;gt; strs = Arrays.asList(&amp;quot;A&amp;quot;,&amp;quot;B&amp;quot;,&amp;quot;C&amp;quot;,&amp;quot;D&amp;quot;,&amp;quot;E&amp;quot;);    strs.stream">
+<meta name="description" content="知识点1. forEach VS forEachOrdered123456@Testpublic void test_005()&amp;#123;    List&amp;lt;String&amp;gt; strs = Arrays.asList(&amp;quot;A&amp;quot;,&amp;quot;B&amp;quot;,&amp;quot;C&amp;quot;,&amp;quot;D&amp;quot;,&amp;quot;E&amp;quot;);    strs.stream">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java8之不常用却很有用的知识点">
-<meta property="og:url" content="http://jianwl.com/2016/12/11/Java8之不常用却很有用的知识点/index.html">
+<meta property="og:url" content="http://jianwl.com/2017/02/21/Java8之不常用却很有用的知识点/index.html">
 <meta property="og:site_name" content="记录点滴成长">
-<meta property="og:description" content="知识点1、forEach VS forEachOrdered
-123456@Testpublic void test_005()&amp;#123;    List&amp;lt;String&amp;gt; strs = Arrays.asList(&amp;quot;A&amp;quot;,&amp;quot;B&amp;quot;,&amp;quot;C&amp;quot;,&amp;quot;D&amp;quot;,&amp;quot;E&amp;quot;);    strs.stream">
+<meta property="og:description" content="知识点1. forEach VS forEachOrdered123456@Testpublic void test_005()&amp;#123;    List&amp;lt;String&amp;gt; strs = Arrays.asList(&amp;quot;A&amp;quot;,&amp;quot;B&amp;quot;,&amp;quot;C&amp;quot;,&amp;quot;D&amp;quot;,&amp;quot;E&amp;quot;);    strs.stream">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-12-11/96792814-file_1481436578266_14fcc.png">
-<meta property="og:updated_time" content="2016-12-11T06:11:34.000Z">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-21/83737621-file_1487691562243_10db7.png">
+<meta property="og:updated_time" content="2017-02-21T15:40:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java8之不常用却很有用的知识点">
-<meta name="twitter:description" content="知识点1、forEach VS forEachOrdered
-123456@Testpublic void test_005()&amp;#123;    List&amp;lt;String&amp;gt; strs = Arrays.asList(&amp;quot;A&amp;quot;,&amp;quot;B&amp;quot;,&amp;quot;C&amp;quot;,&amp;quot;D&amp;quot;,&amp;quot;E&amp;quot;);    strs.stream">
+<meta name="twitter:description" content="知识点1. forEach VS forEachOrdered123456@Testpublic void test_005()&amp;#123;    List&amp;lt;String&amp;gt; strs = Arrays.asList(&amp;quot;A&amp;quot;,&amp;quot;B&amp;quot;,&amp;quot;C&amp;quot;,&amp;quot;D&amp;quot;,&amp;quot;E&amp;quot;);    strs.stream">
 <meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-12-11/96792814-file_1481436578266_14fcc.png">
 
 
@@ -120,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="http://jianwl.com/2016/12/11/Java8之不常用却很有用的知识点/"/>
+  <link rel="canonical" href="http://jianwl.com/2017/02/21/Java8之不常用却很有用的知识点/"/>
 
   <title> Java8之不常用却很有用的知识点 | 记录点滴成长 </title>
 </head>
@@ -307,8 +305,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-11T14:07:13+08:00" content="2016-12-11">
-              2016-12-11
+            <time itemprop="dateCreated" datetime="2017-02-21T14:07:13+08:00" content="2017-02-21">
+              2017-02-21
             </time>
           </span>
 
@@ -337,8 +335,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/12/11/Java8之不常用却很有用的知识点/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/11/Java8之不常用却很有用的知识点/" itemprop="commentsCount"></span>
+                <a href="/2017/02/21/Java8之不常用却很有用的知识点/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/21/Java8之不常用却很有用的知识点/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -361,12 +359,14 @@
       
 
       
-        <h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><p><code>1、forEach VS forEachOrdered</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_005()&#123;</div><div class="line">    List&lt;String&gt; strs = Arrays.asList(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;);</div><div class="line">    strs.stream().parallel().forEach(str -&gt; System.out.println(&quot;forEach =&gt; &quot; + str));</div><div class="line">    strs.stream().parallel().forEachOrdered(str -&gt; System.out.println(&quot;forEachOrdered =&gt; &quot; + str));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><h4 id="1-forEach-VS-forEachOrdered"><a href="#1-forEach-VS-forEachOrdered" class="headerlink" title="1. forEach VS forEachOrdered"></a>1. forEach VS forEachOrdered</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_005()&#123;</div><div class="line">    List&lt;String&gt; strs = Arrays.asList(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;);</div><div class="line">    strs.stream().parallel().forEach(str -&gt; System.out.println(&quot;forEach =&gt; &quot; + str));</div><div class="line">    strs.stream().parallel().forEachOrdered(str -&gt; System.out.println(&quot;forEachOrdered =&gt; &quot; + str));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><code>结果：</code></p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-12-11/96792814-file_1481436578266_14fcc.png" alt=""></p>
 <p><code>分析</code></p>
 <p>并行处理数据时，<code>forEach</code>处理的数据是无序的，而<code>forEachOrdered</code>处理数据是按照输入流的顺序处理的。</p>
+<h4 id="2-合并Map"><a href="#2-合并Map" class="headerlink" title="2. 合并Map"></a>2. 合并Map</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">@RunWith(JUnit4.class)</div><div class="line">public class BasicTest &#123;</div><div class="line">    /**</div><div class="line">     * 将sub合并至total,若在total中存在该键(key),则键值合并;</div><div class="line">     */</div><div class="line">    @Test</div><div class="line">    public void test_001()&#123;</div><div class="line">        Map&lt;String,List&lt;Integer&gt;&gt; total = Maps.newHashMap();</div><div class="line">        Map&lt;String,List&lt;Integer&gt;&gt; sub = Maps.newHashMap();</div><div class="line"></div><div class="line">        total.put(&quot;num1&quot;, Arrays.asList(1,2,3,4,11));</div><div class="line">        total.put(&quot;num2&quot;,Arrays.asList(1,2,3,4));</div><div class="line">        total.put(&quot;num3&quot;,Arrays.asList(1,2,3,4));</div><div class="line">        total.put(&quot;num4&quot;,Arrays.asList(1,2,3,4));</div><div class="line"></div><div class="line">        sub.put(&quot;num1&quot;,Arrays.asList(1,2,3,4,5,6,7));</div><div class="line">        sub.put(&quot;num2&quot;,Arrays.asList(1,2,3,4,4,5,6,7));</div><div class="line"></div><div class="line">        sub.keySet().forEach(key -&gt; total.merge(key,sub.get(key),(v1,v2) -&gt; Arrays.asList(v1,v2).stream().flatMap(Collection::stream).distinct().collect(Collectors.toList())));</div><div class="line"></div><div class="line">        System.out.println(&quot;total =&gt; &quot; + JSON.toJSONString(total));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-21/83737621-file_1487691562243_10db7.png" alt=""></p>
 
       
     </div>
@@ -398,17 +398,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/11/JAVA8之Stream特性总结/" rel="next" title="JAVA8之Stream特性总结">
-                <i class="fa fa-chevron-left"></i> JAVA8之Stream特性总结
+              <a href="/2017/02/20/awk及sed简明教程/" rel="next" title="awk及sed简明教程">
+                <i class="fa fa-chevron-left"></i> awk及sed简明教程
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/13/2015携程Java工程师面试题/" rel="prev" title="2015携程Java工程师面试题">
-                2015携程Java工程师面试题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -423,10 +419,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/12/11/Java8之不常用却很有用的知识点/"
+        <div class="ds-share flat" data-thread-key="2017/02/21/Java8之不常用却很有用的知识点/"
      data-title="Java8之不常用却很有用的知识点"
      data-content=""
-     data-url="http://jianwl.com/2016/12/11/Java8之不常用却很有用的知识点/">
+     data-url="http://jianwl.com/2017/02/21/Java8之不常用却很有用的知识点/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -453,8 +449,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/11/Java8之不常用却很有用的知识点/"
-           data-title="Java8之不常用却很有用的知识点" data-url="http://jianwl.com/2016/12/11/Java8之不常用却很有用的知识点/">
+      <div class="ds-thread" data-thread-key="2017/02/21/Java8之不常用却很有用的知识点/"
+           data-title="Java8之不常用却很有用的知识点" data-url="http://jianwl.com/2017/02/21/Java8之不常用却很有用的知识点/">
       </div>
     
   </div>
@@ -545,7 +541,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#知识点"><span class="nav-number">1.</span> <span class="nav-text">知识点</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#知识点"><span class="nav-number">1.</span> <span class="nav-text">知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-forEach-VS-forEachOrdered"><span class="nav-number">1.1.</span> <span class="nav-text">1. forEach VS forEachOrdered</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-合并Map"><span class="nav-number">1.2.</span> <span class="nav-text">2. 合并Map</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
