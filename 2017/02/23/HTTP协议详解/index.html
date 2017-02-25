@@ -85,49 +85,32 @@
 
 
 
-<meta name="description" content="前言HTTP协议是我们平时工作中接触最多的网络协议，但我们未必了解它，这一节主要来学习HTTP报文。
-HTTP报文HTTP协议交互的信息称为HTTP报文，请求端的HTTP报文称为请求报文，响应端的被称为响应报文。
-1.报文结构HTTP报文大致分为报文首部和报文主体两部分，两者由最初出现的空行来划分。
+<meta name="description" content="前言我们日常生活中经常会使用浏览器访问Web站点，但大家有思考过在这个过程中到底发生了什么吗？为什么我们在浏览器上输入要访问的URL就可以访问Web页面呢？
+当我们在浏览器地址栏上输入要访问的URL后，浏览器会分析出URL上的域名，然后通过NDS服务器查询出域名映射的IP地址，浏览器根据查询到的IP地址与Web服务器进行通信，而通信的协议就是HTTP协议。
 
-2.请求报文结构
-举个例子：
-3.响应报文结构
-举个例子：
-
-HTTP首部字段1.通用首部字段">
+浏览器与Web服务器使用HTTP协议进">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTP协议详解">
-<meta property="og:url" content="http://jianwl.com/2017/02/22/HTTP协议详解/index.html">
+<meta property="og:url" content="http://jianwl.com/2017/02/23/HTTP协议详解/index.html">
 <meta property="og:site_name" content="记录点滴成长">
-<meta property="og:description" content="前言HTTP协议是我们平时工作中接触最多的网络协议，但我们未必了解它，这一节主要来学习HTTP报文。
-HTTP报文HTTP协议交互的信息称为HTTP报文，请求端的HTTP报文称为请求报文，响应端的被称为响应报文。
-1.报文结构HTTP报文大致分为报文首部和报文主体两部分，两者由最初出现的空行来划分。
+<meta property="og:description" content="前言我们日常生活中经常会使用浏览器访问Web站点，但大家有思考过在这个过程中到底发生了什么吗？为什么我们在浏览器上输入要访问的URL就可以访问Web页面呢？
+当我们在浏览器地址栏上输入要访问的URL后，浏览器会分析出URL上的域名，然后通过NDS服务器查询出域名映射的IP地址，浏览器根据查询到的IP地址与Web服务器进行通信，而通信的协议就是HTTP协议。
 
-2.请求报文结构
-举个例子：
-3.响应报文结构
-举个例子：
-
-HTTP首部字段1.通用首部字段">
+浏览器与Web服务器使用HTTP协议进">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-25/53842035-file_1487985982597_a3ff.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/63335022-file_1487776806455_14596.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/18159996-file_1487777311008_1c4d.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/94747527-file_1487777973466_aaae.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/73324972-file_1487777733759_13411.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/50444905-file_1487777764748_115e3.png">
-<meta property="og:updated_time" content="2017-02-22T16:08:33.000Z">
+<meta property="og:updated_time" content="2017-02-25T01:27:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP协议详解">
-<meta name="twitter:description" content="前言HTTP协议是我们平时工作中接触最多的网络协议，但我们未必了解它，这一节主要来学习HTTP报文。
-HTTP报文HTTP协议交互的信息称为HTTP报文，请求端的HTTP报文称为请求报文，响应端的被称为响应报文。
-1.报文结构HTTP报文大致分为报文首部和报文主体两部分，两者由最初出现的空行来划分。
+<meta name="twitter:description" content="前言我们日常生活中经常会使用浏览器访问Web站点，但大家有思考过在这个过程中到底发生了什么吗？为什么我们在浏览器上输入要访问的URL就可以访问Web页面呢？
+当我们在浏览器地址栏上输入要访问的URL后，浏览器会分析出URL上的域名，然后通过NDS服务器查询出域名映射的IP地址，浏览器根据查询到的IP地址与Web服务器进行通信，而通信的协议就是HTTP协议。
 
-2.请求报文结构
-举个例子：
-3.响应报文结构
-举个例子：
-
-HTTP首部字段1.通用首部字段">
-<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/63335022-file_1487776806455_14596.png">
+浏览器与Web服务器使用HTTP协议进">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-25/53842035-file_1487985982597_a3ff.png">
 
 
 
@@ -148,7 +131,7 @@ HTTP首部字段1.通用首部字段">
 
 
 
-  <link rel="canonical" href="http://jianwl.com/2017/02/22/HTTP协议详解/"/>
+  <link rel="canonical" href="http://jianwl.com/2017/02/23/HTTP协议详解/"/>
 
   <title> HTTP协议详解 | 记录点滴成长 </title>
 </head>
@@ -335,8 +318,8 @@ HTTP首部字段1.通用首部字段">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-22T23:09:21+08:00" content="2017-02-22">
-              2017-02-22
+            <time itemprop="dateCreated" datetime="2017-02-23T23:09:21+08:00" content="2017-02-23">
+              2017-02-23
             </time>
           </span>
 
@@ -365,8 +348,8 @@ HTTP首部字段1.通用首部字段">
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/22/HTTP协议详解/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/22/HTTP协议详解/" itemprop="commentsCount"></span>
+                <a href="/2017/02/23/HTTP协议详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/23/HTTP协议详解/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -389,7 +372,10 @@ HTTP首部字段1.通用首部字段">
       
 
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>HTTP协议是我们平时工作中接触最多的网络协议，但我们未必了解它，这一节主要来学习HTTP报文。</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我们日常生活中经常会使用浏览器访问Web站点，但大家有思考过在这个过程中到底发生了什么吗？为什么我们在浏览器上输入要访问的URL就可以访问Web页面呢？</p>
+<p>当我们在浏览器地址栏上输入要访问的URL后，浏览器会分析出URL上的域名，然后通过NDS服务器查询出域名映射的IP地址，浏览器根据查询到的IP地址与Web服务器进行通信，而<strong>通信的协议就是HTTP协议。</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-25/53842035-file_1487985982597_a3ff.png" alt=""></p>
+<p>浏览器与Web服务器使用HTTP协议进行通信，接下来我们会详细介绍HTTP协议的相关知识。</p>
 <h3 id="HTTP报文"><a href="#HTTP报文" class="headerlink" title="HTTP报文"></a>HTTP报文</h3><p>HTTP协议交互的信息称为HTTP报文，请求端的HTTP报文称为请求报文，响应端的被称为响应报文。</p>
 <h4 id="1-报文结构"><a href="#1-报文结构" class="headerlink" title="1.报文结构"></a>1.报文结构</h4><p>HTTP报文大致分为报文首部和报文主体两部分，两者由最初出现的空行来划分。</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/63335022-file_1487776806455_14596.png" alt=""></p>
@@ -660,17 +646,13 @@ HTTP首部字段1.通用首部字段">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/21/Java8之不常用却很有用的知识点/" rel="next" title="Java8之不常用却很有用的知识点">
-                <i class="fa fa-chevron-left"></i> Java8之不常用却很有用的知识点
+              <a href="/2017/02/23/HTTP缓存机制/" rel="next" title="HTTP缓存机制">
+                <i class="fa fa-chevron-left"></i> HTTP缓存机制
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/23/HTTP缓存机制/" rel="prev" title="HTTP缓存机制">
-                HTTP缓存机制 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -685,10 +667,10 @@ HTTP首部字段1.通用首部字段">
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/02/22/HTTP协议详解/"
+        <div class="ds-share flat" data-thread-key="2017/02/23/HTTP协议详解/"
      data-title="HTTP协议详解"
      data-content=""
-     data-url="http://jianwl.com/2017/02/22/HTTP协议详解/">
+     data-url="http://jianwl.com/2017/02/23/HTTP协议详解/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -715,8 +697,8 @@ HTTP首部字段1.通用首部字段">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/22/HTTP协议详解/"
-           data-title="HTTP协议详解" data-url="http://jianwl.com/2017/02/22/HTTP协议详解/">
+      <div class="ds-thread" data-thread-key="2017/02/23/HTTP协议详解/"
+           data-title="HTTP协议详解" data-url="http://jianwl.com/2017/02/23/HTTP协议详解/">
       </div>
     
   </div>
