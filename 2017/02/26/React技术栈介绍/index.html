@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="SpringBoot," />
+  <meta name="keywords" content="React," />
 
 
 
@@ -85,19 +85,22 @@
 
 
 
-<meta name="description" content="前言在项目应用开发时，用户一个操作实际是对数据读写的多步操作的结合，由于数据操作在顺序执行的过程中，任何一步操作都有可能发生异常，异常会导致后续操作无法完成，此时由于业务逻辑并没有正确完成，之前成功操作数据并不可靠，需要在这种情况下进行回退。
-事务的作用事务是为了保证用户的每一个操作都是可靠的，事务中的每一步操作都必须成功执行，只要有异常发生就回退到事务刚开始未进行操作的状态；事务管理是Sprin">
+<meta name="description" content="前言React整个技术栈涉及到的技术非常多，零基础的人入门总是望而却步，几个月之前就想认真学习React技术栈一直拖延至今。最近会抽出大部分时间，好好研究React技术栈。这一节我们来学习React设计到的技术栈。
+React技术栈1. ReactReact是一个声明式、高效、灵活的、创建用户界面的JavaScript库，让我们来逐一解读：
+声明式使用React描述组件的样子就可以改变用户界面。传">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SpringBoot中的事务管理">
-<meta property="og:url" content="http://jianwl.com/2016/09/23/SpringBoot中的事务管理/index.html">
+<meta property="og:title" content="React技术栈介绍">
+<meta property="og:url" content="http://jianwl.com/2017/02/26/React技术栈介绍/index.html">
 <meta property="og:site_name" content="记录点滴成长">
-<meta property="og:description" content="前言在项目应用开发时，用户一个操作实际是对数据读写的多步操作的结合，由于数据操作在顺序执行的过程中，任何一步操作都有可能发生异常，异常会导致后续操作无法完成，此时由于业务逻辑并没有正确完成，之前成功操作数据并不可靠，需要在这种情况下进行回退。
-事务的作用事务是为了保证用户的每一个操作都是可靠的，事务中的每一步操作都必须成功执行，只要有异常发生就回退到事务刚开始未进行操作的状态；事务管理是Sprin">
-<meta property="og:updated_time" content="2016-10-01T13:10:01.000Z">
+<meta property="og:description" content="前言React整个技术栈涉及到的技术非常多，零基础的人入门总是望而却步，几个月之前就想认真学习React技术栈一直拖延至今。最近会抽出大部分时间，好好研究React技术栈。这一节我们来学习React设计到的技术栈。
+React技术栈1. ReactReact是一个声明式、高效、灵活的、创建用户界面的JavaScript库，让我们来逐一解读：
+声明式使用React描述组件的样子就可以改变用户界面。传">
+<meta property="og:updated_time" content="2017-02-26T13:17:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringBoot中的事务管理">
-<meta name="twitter:description" content="前言在项目应用开发时，用户一个操作实际是对数据读写的多步操作的结合，由于数据操作在顺序执行的过程中，任何一步操作都有可能发生异常，异常会导致后续操作无法完成，此时由于业务逻辑并没有正确完成，之前成功操作数据并不可靠，需要在这种情况下进行回退。
-事务的作用事务是为了保证用户的每一个操作都是可靠的，事务中的每一步操作都必须成功执行，只要有异常发生就回退到事务刚开始未进行操作的状态；事务管理是Sprin">
+<meta name="twitter:title" content="React技术栈介绍">
+<meta name="twitter:description" content="前言React整个技术栈涉及到的技术非常多，零基础的人入门总是望而却步，几个月之前就想认真学习React技术栈一直拖延至今。最近会抽出大部分时间，好好研究React技术栈。这一节我们来学习React设计到的技术栈。
+React技术栈1. ReactReact是一个声明式、高效、灵活的、创建用户界面的JavaScript库，让我们来逐一解读：
+声明式使用React描述组件的样子就可以改变用户界面。传">
 
 
 
@@ -118,9 +121,9 @@
 
 
 
-  <link rel="canonical" href="http://jianwl.com/2016/09/23/SpringBoot中的事务管理/"/>
+  <link rel="canonical" href="http://jianwl.com/2017/02/26/React技术栈介绍/"/>
 
-  <title> SpringBoot中的事务管理 | 记录点滴成长 </title>
+  <title> React技术栈介绍 | 记录点滴成长 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -293,7 +296,7 @@
             
             
               
-                SpringBoot中的事务管理
+                React技术栈介绍
               
             
           </h1>
@@ -305,8 +308,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-23T00:24:19+08:00" content="2016-09-23">
-              2016-09-23
+            <time itemprop="dateCreated" datetime="2017-02-26T18:21:12+08:00" content="2017-02-26">
+              2017-02-26
             </time>
           </span>
 
@@ -319,8 +322,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/SpringBoot/" itemprop="url" rel="index">
-                    <span itemprop="name">SpringBoot</span>
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
                   </a>
                 </span>
 
@@ -335,8 +338,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/09/23/SpringBoot中的事务管理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/23/SpringBoot中的事务管理/" itemprop="commentsCount"></span>
+                <a href="/2017/02/26/React技术栈介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/26/React技术栈介绍/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -359,9 +362,24 @@
       
 
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在项目应用开发时，用户一个操作实际是对数据读写的多步操作的结合，由于数据操作在顺序执行的过程中，任何一步操作都有可能发生异常，异常会导致后续操作无法完成，此时由于业务逻辑并没有正确完成，之前成功操作数据并不可靠，需要在这种情况下进行回退。</p>
-<h3 id="事务的作用"><a href="#事务的作用" class="headerlink" title="事务的作用"></a>事务的作用</h3><p>事务是为了保证用户的每一个操作都是可靠的，事务中的每一步操作都必须成功执行，只要有异常发生就回退到事务刚开始未进行操作的状态；事务管理是Spring框架中最为常用的功能之一，我们在使用SpringBoot开发时，大部分情况下也都需要使用事务；</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>未完待续….</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>React整个技术栈涉及到的技术非常多，零基础的人入门总是望而却步，几个月之前就想认真学习React技术栈一直拖延至今。最近会抽出大部分时间，好好研究React技术栈。这一节我们来学习React设计到的技术栈。</p>
+<h3 id="React技术栈"><a href="#React技术栈" class="headerlink" title="React技术栈"></a>React技术栈</h3><h4 id="1-React"><a href="#1-React" class="headerlink" title="1. React"></a>1. React</h4><p>React是一个声明式、高效、灵活的、创建用户界面的JavaScript库，让我们来逐一解读：</p>
+<h5 id="声明式"><a href="#声明式" class="headerlink" title="声明式"></a>声明式</h5><p>使用React描述组件的样子就可以改变用户界面。传统方式是命令式地操作DOM，不仅需要记住大量的API，而且还会增加代码的耦合度，使得项目难以维护。React使用自己的魔法改变界面，让开发者最大限度地减少DOM交互，较低处理视图的难度。</p>
+<h5 id="高效"><a href="#高效" class="headerlink" title="高效"></a>高效</h5><p>React高性能的Diff算法，让我们在刷新全部界面时只更新需要改变的那部分界面，其使用单向数据流改变界面，抛弃传统的数据绑定，减少了样板代码和重量。</p>
+<h5 id="灵活"><a href="#灵活" class="headerlink" title="灵活"></a>灵活</h5><p>React作为视图层与其他技术栈配合使用，比如与Redux搭配等等。</p>
+<h4 id="2-Redux"><a href="#2-Redux" class="headerlink" title="2. Redux"></a>2. Redux</h4><p>Redux是一个JavaScript状态容器，提供可预测的状态管理。Redux可以用三条基本准则来描述：单一数据源；state只读；使用纯函数来执行修改。</p>
+<h5 id="单一数据源"><a href="#单一数据源" class="headerlink" title="单一数据源"></a>单一数据源</h5><p>整个应用的state被存储在一棵对象树中，并且这个对象树只存在唯一一个store中。这里的state指的是数据。</p>
+<h5 id="state只读"><a href="#state只读" class="headerlink" title="state只读"></a>state只读</h5><p>不是无法改变state，这里的只读指的是不允许直接对state这个变量重写赋值，但可以通过action和reducer返回一个新的state，而且只能使用这一方法。</p>
+<h5 id="使用纯函数来执行修改"><a href="#使用纯函数来执行修改" class="headerlink" title="使用纯函数来执行修改"></a>使用纯函数来执行修改</h5><p>更新state的reducer只是一些纯函数，它接收先前的state和action，并返回新的state。</p>
+<p>了解以上规则后，或许你会问为什么要使用Redux?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">可预测： Redux只有一个数据源，想要修改它只能发起action，reducer又是纯函数，相同的输入永远会得到相同的输出。这一切使得程序运作变得可控、可预测。</div><div class="line"></div><div class="line">便于组织管理代码：严格而明确的程序结构是的代码更容易组织和管理，也方便团队协作。</div><div class="line"></div><div class="line">支持Universal渲染：单一数据源这一原则可以帮助解决Universal渲染中的数据传递问题，服务端渲染后只需给客户端传递一个变量即可，这个变量就是存储state的对象树。</div><div class="line"></div><div class="line">容易测试：编写可测试的代码，最重要的一条规则就是写单一功能的、没有外界依赖的小型函数。</div></pre></td></tr></table></figure>
+<h4 id="3-Node与Universal渲染"><a href="#3-Node与Universal渲染" class="headerlink" title="3.Node与Universal渲染"></a>3.Node与Universal渲染</h4><p>React与Redux既可以在浏览器运行也可以在服务器端运行，这里的服务器端指的是Node服务器。</p>
+<p>和传统Web服务器相比，Node更简单，它是单线程，与平台无关的，我们可以实现Universal渲染 – 用同一套代码在服务端和客户端渲染。</p>
+<h4 id="4-Babel"><a href="#4-Babel" class="headerlink" title="4.Babel"></a>4.Babel</h4><p>Babel是一个JavaScript编译器，可以让开发者提前使用下一代的JavaScript。</p>
+<h4 id="5-Webpack"><a href="#5-Webpack" class="headerlink" title="5.Webpack"></a>5.Webpack</h4><p>Webpack是当下最热门的前端资源模块化管理和打包工具，它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。通过加载器(loader)的转换，任何形式的资源都可以视作模块，比如CommonJS模块、AMD模块、ES2015模块、CSS、图片、JSON、LESS、Coffeescript等等。</p>
+<p>Webpack主要功能：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">编译、加载使用ES2015和JSX语法的模块</div><div class="line">实现开发服务器与热替换</div><div class="line">加载图片文件</div><div class="line">加载字体文件</div><div class="line">加载样式文件</div><div class="line">加载JSON文件</div><div class="line">视同同构工具实现同构渲染</div><div class="line">压缩代码</div><div class="line">哈希命名</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1.React与Redux开发实例精解</p>
 
       
     </div>
@@ -384,7 +402,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SpringBoot/" rel="tag">#SpringBoot</a>
+            <a href="/tags/React/" rel="tag">#React</a>
           
         </div>
       
@@ -393,17 +411,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/18/SpringBoot中使用JavaMailSender发送邮件/" rel="next" title="SpringBoot中使用JavaMailSender发送邮件">
-                <i class="fa fa-chevron-left"></i> SpringBoot中使用JavaMailSender发送邮件
+              <a href="/2017/02/26/ES6之SET、Map数据结构/" rel="next" title="ES6之SET、Map数据结构">
+                <i class="fa fa-chevron-left"></i> ES6之SET、Map数据结构
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/09/24/Java序列化/" rel="prev" title="Java序列化">
-                Java序列化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -418,10 +432,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/09/23/SpringBoot中的事务管理/"
-     data-title="SpringBoot中的事务管理"
+        <div class="ds-share flat" data-thread-key="2017/02/26/React技术栈介绍/"
+     data-title="React技术栈介绍"
      data-content=""
-     data-url="http://jianwl.com/2016/09/23/SpringBoot中的事务管理/">
+     data-url="http://jianwl.com/2017/02/26/React技术栈介绍/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -448,8 +462,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/09/23/SpringBoot中的事务管理/"
-           data-title="SpringBoot中的事务管理" data-url="http://jianwl.com/2016/09/23/SpringBoot中的事务管理/">
+      <div class="ds-thread" data-thread-key="2017/02/26/React技术栈介绍/"
+           data-title="React技术栈介绍" data-url="http://jianwl.com/2017/02/26/React技术栈介绍/">
       </div>
     
   </div>
@@ -540,7 +554,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务的作用"><span class="nav-number">2.</span> <span class="nav-text">事务的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-number">3.</span> <span class="nav-text">实战</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React技术栈"><span class="nav-number">2.</span> <span class="nav-text">React技术栈</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-React"><span class="nav-number">2.1.</span> <span class="nav-text">1. React</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#声明式"><span class="nav-number">2.1.1.</span> <span class="nav-text">声明式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#高效"><span class="nav-number">2.1.2.</span> <span class="nav-text">高效</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#灵活"><span class="nav-number">2.1.3.</span> <span class="nav-text">灵活</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Redux"><span class="nav-number">2.2.</span> <span class="nav-text">2. Redux</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#单一数据源"><span class="nav-number">2.2.1.</span> <span class="nav-text">单一数据源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#state只读"><span class="nav-number">2.2.2.</span> <span class="nav-text">state只读</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用纯函数来执行修改"><span class="nav-number">2.2.3.</span> <span class="nav-text">使用纯函数来执行修改</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Node与Universal渲染"><span class="nav-number">2.3.</span> <span class="nav-text">3.Node与Universal渲染</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Babel"><span class="nav-number">2.4.</span> <span class="nav-text">4.Babel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-Webpack"><span class="nav-number">2.5.</span> <span class="nav-text">5.Webpack</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
         </section>
