@@ -4,8 +4,8 @@
   
     
     <entry>
-      <title><![CDATA[nohup 只记录错误日志]]></title>
-      <url>http://jianwl.com/2017/03/04/nohup-%E5%8F%AA%E8%AE%B0%E5%BD%95%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97/</url>
+      <title><![CDATA[nohup只记录错误日志]]></title>
+      <url>http://jianwl.com/2017/03/04/nohup%E5%8F%AA%E8%AE%B0%E5%BD%95%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97/</url>
       <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近使用nohub创建一个后台进程，默认日志输出到nohub.out文件中，过了几周之后，发现硬盘空间不足了，发现这个nohup.out文件过大，导致硬盘空间不足了。</p>
 <h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="1-只输出错误信息到日志文件"><a href="#1-只输出错误信息到日志文件" class="headerlink" title="1. 只输出错误信息到日志文件"></a>1. 只输出错误信息到日志文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nohup ./xxx.sh &gt;/dev/null 2&gt;api.log&amp;</div></pre></td></tr></table></figure>
 <h4 id="2-任何信息都不输出"><a href="#2-任何信息都不输出" class="headerlink" title="2. 任何信息都不输出"></a>2. 任何信息都不输出</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nohup ./xxx.sh &gt;/dev/null 2&gt;&amp;1 &amp;</div></pre></td></tr></table></figure>
