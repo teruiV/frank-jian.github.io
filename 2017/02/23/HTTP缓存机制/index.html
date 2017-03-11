@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>HTTP缓存机制 | 记录点滴成长</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言HTTP缓存机制作为Web性能优化的重要手段，这一节我们主要来学习HTTP缓存，先贴出2道题，大家可以尝试解答下：
+以下为page.html内容：
+12345&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html xmlns=&amp;quot;http://www.w3.org/1999/xhtml&amp;quot;&amp;gt;&amp;lt;head&amp;gt;    &amp;lt;meta http-equiv=&amp;qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP缓存机制">
+<meta property="og:url" content="http://jianwl.com/2017/02/23/HTTP缓存机制/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="前言HTTP缓存机制作为Web性能优化的重要手段，这一节我们主要来学习HTTP缓存，先贴出2道题，大家可以尝试解答下：
+以下为page.html内容：
+12345&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html xmlns=&amp;quot;http://www.w3.org/1999/xhtml&amp;quot;&amp;gt;&amp;lt;head&amp;gt;    &amp;lt;meta http-equiv=&amp;qu">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-23/15685593-file_1487864473858_e48d.png">
+<meta property="og:updated_time" content="2017-02-23T16:00:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP缓存机制">
+<meta name="twitter:description" content="前言HTTP缓存机制作为Web性能优化的重要手段，这一节我们主要来学习HTTP缓存，先贴出2道题，大家可以尝试解答下：
+以下为page.html内容：
+12345&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html xmlns=&amp;quot;http://www.w3.org/1999/xhtml&amp;quot;&amp;gt;&amp;lt;head&amp;gt;    &amp;lt;meta http-equiv=&amp;qu">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-2-23/15685593-file_1487864473858_e48d.png">
+  
+    <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">记录点滴成长</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://jianwl.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-HTTP缓存机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2017/02/23/HTTP缓存机制/" class="article-date">
+  <time datetime="2017-02-23T14:25:50.000Z" itemprop="datePublished">2017-02-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HTTP/">HTTP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      HTTP缓存机制
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>HTTP缓存机制作为Web性能优化的重要手段，这一节我们主要来学习HTTP缓存，先贴出2道题，大家可以尝试解答下：</p>
+<p>以下为<code>page.html</code>内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;&lt;head&gt;</div><div class="line">    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</div><div class="line">    &lt;title&gt;page页&lt;/title&gt;&lt;/head&gt;&lt;body&gt;</div><div class="line">    &lt;img src=&quot;images/head.png&quot; /&gt;</div><div class="line">    &lt;a href=&quot;page.html&quot;&gt;重新访问page页&lt;/a&gt;&lt;/body&gt;&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>首次访问该页面，页面中head.png响应头信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div><div class="line">Cache-Control: no-cache</div><div class="line">Content-Type: image/png</div><div class="line">Last-Modified: Tue, 08 Nov 2016 06:59:00 GMT</div><div class="line">Accept-Ranges: bytes</div><div class="line">Date: Thu, 10 Nov 2016 02:48:50 GMT</div><div class="line">Content-Length: 3534</div></pre></td></tr></table></figure>
+<p><strong>问题1：</strong> 请问当点击<code>重新访问page页</code>链接重新加载该页面后，head.png如何二次加载？</p>
+<p><strong>问题2：</strong>如果将上述信息中的Cache-Controller设置为private，那么结果又会如何呢？</p>
+<p>以上2道题，如果你能答对，说明你已经对这些知识理解非常透彻了，否则请继续往下看。接下来我们将从系统化角度来讲讲HTTP缓存是如何协同工作的</p>
+<h3 id="HTTP缓存体系"><a href="#HTTP缓存体系" class="headerlink" title="HTTP缓存体系"></a>HTTP缓存体系</h3><p>HTTP缓存体系分为以下三个部分：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-23/15685593-file_1487864473858_e48d.png" alt=""></p>
+<h4 id="1-缓存存储策略"><a href="#1-缓存存储策略" class="headerlink" title="1. 缓存存储策略"></a>1. 缓存存储策略</h4><p>用来确定HTTP响应内容是否可以被客户端缓存，以及可以被哪些客户端存储，这个策略的作用只有一个，用于决定HTTP响应内容是否可缓存到客户端。</p>
+<p>对于<code>Cache-Controller</code>里头的Public、Private、no-cache、max-age、no-store他们都是用来指明响应内容是否可以被客户端存储的，其中前4个都会缓存文件数据(关于no-cache应理解为不建议使用本地缓存，其仍然会缓存数据到本地)，后者no-store则不会在客户端缓存任何响应数据。</p>
+<p>通过<code>Cache-Controller:</code>Public设置我们可以将HTTP响应数据存储到本地，但此时并不意味着后续浏览器会直接从缓存中读取数据并使用，为啥？因为它无法确定本地缓存的数据是否可用，还必须借助一套鉴别机制来确定才行，这就是我们下面将到的缓存过期策略</p>
+<h4 id="2-缓存过期策略"><a href="#2-缓存过期策略" class="headerlink" title="2. 缓存过期策略"></a>2. 缓存过期策略</h4><p>客户端用来确认存储在本地的缓存数据是否过期，进而决定是否要发请求到服务端获取数据，这个策略的作用也只有一个，那就是决定客户端是否可直接从本地缓存数据中加载数据并展示，否则就发请求到服务器获取。</p>
+<p>刚上面我们已阐述了数据缓存到了本地还需要经过判断才能使用，那么浏览器通过什么条件来判断呢？答案是<code>Expires</code>，Expires指名了缓存数据绝对时间，告诉客户端到这个时间点后本地缓存就作废了。</p>
+<p>注意：<br>当Cache-Control: max-age=10 与 <code>Expires</code>同时存在时，后者会被覆盖掉；</p>
+<h4 id="3-缓存对比策略"><a href="#3-缓存对比策略" class="headerlink" title="3. 缓存对比策略"></a>3. 缓存对比策略</h4><p>将缓存在客户端的数据标识发往服务端，服务端通过标识来判断客户端缓存数据是否仍有效，进而决定是否要重发数据。</p>
+<p>客户端检查到数据过期或浏览器刷新后，往往会重新发起一个HTTP请求到服务器，服务器此时并不急于返回数据，而是按请求头有没有带标识(If-Modified-Since、If-None-Match)过来，如果判断标识仍然有效，则返回304告诉客户端取本地缓存数据来用即可(这里要注意的是你必须要在首次响应时输出相应的头信息(Last-Modified、ETags)到客户端。至此我们明白了上面所说的本地缓存数据即使被认为过期，并不等于数据从此没用的道理。</p>
+<p>未完待续…</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://mp.weixin.qq.com/s/qOMO0LIdA47j3RjhbCWUEQ" target="_blank" rel="external">HTTP缓存策略</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2017/02/23/HTTP缓存机制/" data-id="cj055224i001g4t938yw6tc85" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/23/HTTP协议详解/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          HTTP协议详解
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/21/Java8之不常用却很有用的知识点/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Java8之不常用却很有用的知识点</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-HTTP缓存机制" data-title="HTTP缓存机制" data-url="http://jianwl.com/2017/02/23/HTTP缓存机制/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'jianwl'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">33</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web服务器/">Web服务器</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/">Hystrix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Intellij-IDEA/">Intellij IDEA</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">34</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JOOQ/">JOOQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScirpt/">JavaScirpt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MYSQL/">MYSQL</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Play/">Play</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit/">Retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit2/">Retrofit2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprng-MVC/">Sprng MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thymeleaf/">Thymeleaf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web服务器/">Web服务器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件/">中间件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思绪/">思绪</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Git/" style="font-size: 10.91px;">Git</a> <a href="/tags/HTTP/" style="font-size: 17.27px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 12.73px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 10px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 10.91px;">Intellij IDEA</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/JOOQ/" style="font-size: 10.91px;">JOOQ</a> <a href="/tags/JavaScirpt/" style="font-size: 10px;">JavaScirpt</a> <a href="/tags/JavaScript/" style="font-size: 15.45px;">JavaScript</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 12.73px;">Linux</a> <a href="/tags/MYSQL/" style="font-size: 19.09px;">MYSQL</a> <a href="/tags/Mac/" style="font-size: 13.64px;">Mac</a> <a href="/tags/PHP/" style="font-size: 18.18px;">PHP</a> <a href="/tags/Play/" style="font-size: 10.91px;">Play</a> <a href="/tags/Python/" style="font-size: 14.55px;">Python</a> <a href="/tags/React/" style="font-size: 10.91px;">React</a> <a href="/tags/Redis/" style="font-size: 13.64px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/Retrofit2/" style="font-size: 10px;">Retrofit2</a> <a href="/tags/SQL/" style="font-size: 18.18px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.82px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 16.36px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10.91px;">SpringCloud</a> <a href="/tags/Sprng-MVC/" style="font-size: 10px;">Sprng MVC</a> <a href="/tags/Thymeleaf/" style="font-size: 10px;">Thymeleaf</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Web服务器/" style="font-size: 10px;">Web服务器</a> <a href="/tags/中间件/" style="font-size: 10px;">中间件</a> <a href="/tags/思绪/" style="font-size: 13.64px;">思绪</a> <a href="/tags/算法/" style="font-size: 11.82px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">25</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/11/Python之字典/">Python之字典</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/11/Python之列表和元组/">Python之列表和元组</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/26/React技术栈介绍/">React技术栈介绍</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/26/ES6之SET、Map数据结构/">ES6之SET、Map数据结构</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/25/SpringBoot配置Filter、Interceptor/">SpringBoot配置Filter、Interceptor</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_pv">
+<h3 class="widget-title">访问量</h3>
+<div class="widget"> 本站总访问量<span id="busuanzi_value_site_pv"></span>次 </div>
+</span>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 流云<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

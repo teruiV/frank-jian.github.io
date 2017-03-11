@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>React入门实战 | 记录点滴成长</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="React介绍React 是一个Facebook 和Instagram 用来创建用户界面的JavaScript 库，其Github地址是http://github.com/facebook/react,截至目前已经获取48369个star，说明了React受到了很大的重视。
+React主要特点
+
+作为UI：React可以只作为视图View在MVC中使用，并且在已有项目中，很容易使用React开发新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React入门实战">
+<meta property="og:url" content="http://jianwl.com/2016/09/02/React入门实战/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="React介绍React 是一个Facebook 和Instagram 用来创建用户界面的JavaScript 库，其Github地址是http://github.com/facebook/react,截至目前已经获取48369个star，说明了React受到了很大的重视。
+React主要特点
+
+作为UI：React可以只作为视图View在MVC中使用，并且在已有项目中，很容易使用React开发新">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-9-2/93411408.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-9-2/82806925.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-9-2/87496917.jpg">
+<meta property="og:updated_time" content="2016-10-01T13:10:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React入门实战">
+<meta name="twitter:description" content="React介绍React 是一个Facebook 和Instagram 用来创建用户界面的JavaScript 库，其Github地址是http://github.com/facebook/react,截至目前已经获取48369个star，说明了React受到了很大的重视。
+React主要特点
+
+作为UI：React可以只作为视图View在MVC中使用，并且在已有项目中，很容易使用React开发新">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-9-2/93411408.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">记录点滴成长</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://jianwl.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-React入门实战" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/09/02/React入门实战/" class="article-date">
+  <time datetime="2016-09-01T16:00:06.000Z" itemprop="datePublished">2016-09-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React/">React</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      React入门实战
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="React介绍"><a href="#React介绍" class="headerlink" title="React介绍"></a>React介绍</h3><p><code>React</code> 是一个<code>Facebook</code> 和<code>Instagram</code> 用来创建用户界面的<code>JavaScript</code> 库，其<code>Github</code>地址是<code>http://github.com/facebook/react</code>,截至目前已经获取48369个star，说明了<code>React</code>受到了很大的重视。</p>
+<p><strong>React主要特点</strong></p>
+<ol>
+<li><code>作为UI</code>：<code>React</code>可以只作为视图<code>View</code>在MVC中使用，并且在已有项目中，很容易使用<code>React</code>开发新功能</li>
+<li><code>虚拟DOM</code>:这是React的一个亮点，可以很好地优化视图的渲染和刷新。以前我们更新视图时，需要先清空<code>DOM</code>容器中的内容，然后将最新的<code>DOM</code>和数据追加到容器中，现在<code>React</code>将这一操作放进内存中，<code>React</code>认为内存的操作远比视图全部更新来的高效。</li>
+<li><code>数据流</code>：<code>React</code>实现了单向的数据流，并相对于传统的数据绑定而言，<code>React</code>更加灵活，便捷。</li>
+</ol>
+<h3 id="React-实战"><a href="#React-实战" class="headerlink" title="React 实战"></a>React 实战</h3><p><strong>HTML模板</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">  &lt;head&gt;</div><div class="line">    &lt;script src=&quot;../build/react.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/react-dom.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/browser.min.js&quot;&gt;&lt;/script&gt;</div><div class="line">  &lt;/head&gt;</div><div class="line">  &lt;body&gt;</div><div class="line">    &lt;div id=&quot;example&quot;&gt;&lt;/div&gt;</div><div class="line">    &lt;script type=&quot;text/babel&quot;&gt;</div><div class="line">  	// ** our code goes here !**</div><div class="line">    &lt;/script&gt;</div><div class="line">  &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><code>scipt标签</code>的<code>type</code>属性为<code>type/babel</code>，这是因为React独有的JSX语法与<code>JavaScript</code>不兼容。上述代码一共用了三个库：<code>react.js</code>、<code>react-dom.js</code>、<code>Browser.js</code>，他们必须首先加载，<code>react.js</code>是<code>React</code>的核心库，<code>react-dom.js</code>是提供与<code>DOM</code>相关的功能，<code>Browser.js</code>是将JSX语法转化为<code>JavaScript</code>语法,这一步很耗时，实际上线应该放到服务器完成。</p>
+<p><strong>Render &amp; JSX</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">  &lt;head&gt;</div><div class="line">    &lt;script src=&quot;../build/react.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/react-dom.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/browser.min.js&quot;&gt;&lt;/script&gt;</div><div class="line">  &lt;/head&gt;</div><div class="line">  &lt;body&gt;</div><div class="line">    &lt;div id=&quot;example&quot;&gt;&lt;/div&gt;</div><div class="line">    &lt;script type=&quot;text/babel&quot;&gt;</div><div class="line">      ReactDOM.render(</div><div class="line">        &lt;h1&gt;Hello, world!&lt;/h1&gt;,</div><div class="line">        document.getElementById(&apos;example&apos;)</div><div class="line">      );</div><div class="line">    &lt;/script&gt;</div><div class="line">  &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><code>JSX</code>是React模板语法，它允许在<code>JavaScript</code>中插入<code>HTML语言</code>，<code>ReactDOM.reader()</code>用于将模板转化为<code>HTML</code>语言，并插入到指定的<code>DOM</code>节点。</p>
+<p>运行结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-2/93411408.jpg" alt=""></p>
+<p><strong>在JSX中使用JavaScript</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">  &lt;head&gt;</div><div class="line">    &lt;script src=&quot;../build/react.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/react-dom.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/browser.min.js&quot;&gt;&lt;/script&gt;</div><div class="line">  &lt;/head&gt;</div><div class="line">  &lt;body&gt;</div><div class="line">    &lt;div id=&quot;example&quot;&gt;&lt;/div&gt;</div><div class="line">    &lt;script type=&quot;text/babel&quot;&gt;</div><div class="line">      var names = [&apos;Alice&apos;, &apos;Emily&apos;, &apos;Kate&apos;];</div><div class="line">      ReactDOM.render(</div><div class="line">        &lt;div&gt;</div><div class="line">        &#123;</div><div class="line">          names.map(function (name) &#123;</div><div class="line">            return &lt;div&gt;Hello, &#123;name&#125;!&lt;/div&gt;</div><div class="line">          &#125;)</div><div class="line">        &#125;</div><div class="line">        &lt;/div&gt;,</div><div class="line">        document.getElementById(&apos;example&apos;)</div><div class="line">      );</div><div class="line">    &lt;/script&gt;</div><div class="line">  &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><code>JSX</code>的基本语法规则：遇到HTML标签（以 <code>&lt;</code>开头），就用<code>HTML</code>规则解析，遇到代码块(以<code>{</code>开头)，就用<code>JavaScript</code>解析。</p>
+<p>运行结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-2/82806925.jpg" alt=""></p>
+<hr>
+<p><strong>组件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">  &lt;head&gt;</div><div class="line">    &lt;script src=&quot;../build/react.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/react-dom.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;../build/browser.min.js&quot;&gt;&lt;/script&gt;</div><div class="line">  &lt;/head&gt;</div><div class="line">  &lt;body&gt;</div><div class="line">    &lt;div id=&quot;example&quot;&gt;&lt;/div&gt;</div><div class="line">    &lt;script type=&quot;text/babel&quot;&gt;</div><div class="line">      var HelloMessage = React.createClass(&#123;</div><div class="line">        render: function() &#123;</div><div class="line">          return &lt;h1&gt;Hello &#123;this.props.name&#125;&lt;/h1&gt;;</div><div class="line">        &#125;</div><div class="line">      &#125;);</div><div class="line"></div><div class="line">      ReactDOM.render(</div><div class="line">        &lt;HelloMessage name=&quot;John&quot; /&gt;,</div><div class="line">        document.getElementById(&apos;example&apos;)</div><div class="line">      );</div><div class="line">    &lt;/script&gt;</div><div class="line">  &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><code>React</code>运行将代码封装成组件，然后像插入普通<code>HTML</code>标签一样，在网页中插入这个组件，<code>React.createClass</code>用于生成一个组件类。注意，组件类的第一个字母必须大写，否则会报错，比如<code>HelloMessage</code>不能写成<code>helloMessage</code>,另外，组件类只能包含一个顶层标签，否则也会报错。</p>
+<p>运行结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-2/87496917.jpg" alt=""></p>
+<p>未完待续….</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><code>React Native</code> 入门与实战</li>
+</ul>
+<ul>
+<li><a href="http://www.ruanyifeng.com/blog/2015/03/react.html" target="_blank" rel="external"><code>React</code>入门实例教程</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/09/02/React入门实战/" data-id="cj05522a000az4t93376ozrgu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/">React</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/03/ES6之let和const命令/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ES6之let和const命令
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/09/01/iTerm2工具介绍/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">iTerm2工具介绍</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-React入门实战" data-title="React入门实战" data-url="http://jianwl.com/2016/09/02/React入门实战/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'jianwl'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">33</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web服务器/">Web服务器</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/">Hystrix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Intellij-IDEA/">Intellij IDEA</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">34</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JOOQ/">JOOQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScirpt/">JavaScirpt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MYSQL/">MYSQL</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Play/">Play</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit/">Retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit2/">Retrofit2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprng-MVC/">Sprng MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thymeleaf/">Thymeleaf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web服务器/">Web服务器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件/">中间件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思绪/">思绪</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Git/" style="font-size: 10.91px;">Git</a> <a href="/tags/HTTP/" style="font-size: 17.27px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 12.73px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 10px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 10.91px;">Intellij IDEA</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/JOOQ/" style="font-size: 10.91px;">JOOQ</a> <a href="/tags/JavaScirpt/" style="font-size: 10px;">JavaScirpt</a> <a href="/tags/JavaScript/" style="font-size: 15.45px;">JavaScript</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 12.73px;">Linux</a> <a href="/tags/MYSQL/" style="font-size: 19.09px;">MYSQL</a> <a href="/tags/Mac/" style="font-size: 13.64px;">Mac</a> <a href="/tags/PHP/" style="font-size: 18.18px;">PHP</a> <a href="/tags/Play/" style="font-size: 10.91px;">Play</a> <a href="/tags/Python/" style="font-size: 14.55px;">Python</a> <a href="/tags/React/" style="font-size: 10.91px;">React</a> <a href="/tags/Redis/" style="font-size: 13.64px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/Retrofit2/" style="font-size: 10px;">Retrofit2</a> <a href="/tags/SQL/" style="font-size: 18.18px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.82px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 16.36px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10.91px;">SpringCloud</a> <a href="/tags/Sprng-MVC/" style="font-size: 10px;">Sprng MVC</a> <a href="/tags/Thymeleaf/" style="font-size: 10px;">Thymeleaf</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Web服务器/" style="font-size: 10px;">Web服务器</a> <a href="/tags/中间件/" style="font-size: 10px;">中间件</a> <a href="/tags/思绪/" style="font-size: 13.64px;">思绪</a> <a href="/tags/算法/" style="font-size: 11.82px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">25</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/11/Python之字典/">Python之字典</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/11/Python之列表和元组/">Python之列表和元组</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/26/React技术栈介绍/">React技术栈介绍</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/26/ES6之SET、Map数据结构/">ES6之SET、Map数据结构</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/25/SpringBoot配置Filter、Interceptor/">SpringBoot配置Filter、Interceptor</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_pv">
+<h3 class="widget-title">访问量</h3>
+<div class="widget"> 本站总访问量<span id="busuanzi_value_site_pv"></span>次 </div>
+</span>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 流云<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

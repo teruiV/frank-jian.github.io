@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>SpringCloud之服务注册与发现 | 记录点滴成长</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="为什么要使用服务发现设想一下，我们的代码用REST API和Thrift API来调用服务，为了完成一次请求，代码需要知道服务实例的网络位置(IP地址和端口)，传统应用都运行在物理硬件上，服务实例的网络位置都是相对固定的，例如，代码可以从一个经常变更的配置文件中读取网络位置。
+而对于一个现代的，基于微服务的应用来说，这却是一个麻烦的问题，架构如图所示。
+
+服务实例的网络位置都是动态分配的，而且因为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud之服务注册与发现">
+<meta property="og:url" content="http://jianwl.com/2016/10/08/SpringCloud之服务注册与发现/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="为什么要使用服务发现设想一下，我们的代码用REST API和Thrift API来调用服务，为了完成一次请求，代码需要知道服务实例的网络位置(IP地址和端口)，传统应用都运行在物理硬件上，服务实例的网络位置都是相对固定的，例如，代码可以从一个经常变更的配置文件中读取网络位置。
+而对于一个现代的，基于微服务的应用来说，这却是一个麻烦的问题，架构如图所示。
+
+服务实例的网络位置都是动态分配的，而且因为">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-9/1336276.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-9/13733713.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-9/19412124.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-9/4076123.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-9/98601009.jpg">
+<meta property="og:updated_time" content="2016-10-09T13:32:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringCloud之服务注册与发现">
+<meta name="twitter:description" content="为什么要使用服务发现设想一下，我们的代码用REST API和Thrift API来调用服务，为了完成一次请求，代码需要知道服务实例的网络位置(IP地址和端口)，传统应用都运行在物理硬件上，服务实例的网络位置都是相对固定的，例如，代码可以从一个经常变更的配置文件中读取网络位置。
+而对于一个现代的，基于微服务的应用来说，这却是一个麻烦的问题，架构如图所示。
+
+服务实例的网络位置都是动态分配的，而且因为">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-10-9/1336276.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">记录点滴成长</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://jianwl.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-SpringCloud之服务注册与发现" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/10/08/SpringCloud之服务注册与发现/" class="article-date">
+  <time datetime="2016-10-08T11:13:06.000Z" itemprop="datePublished">2016-10-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SpringCloud/">SpringCloud</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SpringCloud之服务注册与发现
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="为什么要使用服务发现"><a href="#为什么要使用服务发现" class="headerlink" title="为什么要使用服务发现"></a>为什么要使用服务发现</h3><p>设想一下，我们的代码用<code>REST API</code>和<code>Thrift API</code>来调用服务，为了完成一次请求，代码需要知道服务实例的网络位置(IP地址和端口)，传统应用都运行在物理硬件上，服务实例的网络位置都是相对固定的，例如，代码可以从一个经常变更的配置文件中读取网络位置。</p>
+<p>而对于一个现代的，基于微服务的应用来说，这却是一个麻烦的问题，架构如图所示。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-9/1336276.jpg" alt=""></p>
+<p>服务实例的网络位置都是动态分配的，而且因为扩展、失效和升级需求，服务实例会经常动态改变，因为，客户端代码需要使用一种更加复杂的服务发现机制。</p>
+<p>目前有两大类服务发现模式：<a href="http://microservices.io/patterns/client-side-discovery.html?utm_source=service-discovery-in-a-microservices-architecture&amp;utm_medium=blog" target="_blank" rel="external">客户端发现</a>和<a href="http://microservices.io/patterns/server-side-discovery.html?utm_source=service-discovery-in-a-microservices-architecture&amp;utm_medium=blog" target="_blank" rel="external">服务端发现</a></p>
+<h3 id="客户端发现模式"><a href="#客户端发现模式" class="headerlink" title="客户端发现模式"></a>客户端发现模式</h3><p>当使用客户端发现模式时，客户端负责决定相应的服务实例的网络位置，并且对请求实现负责均衡。客户端从一个注册服务中查询，其中是所有可用服务实例的库,客户端使用负载均衡算法从多个服务实例中选择出一个，然后发出请求。架构如图所示：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-9/13733713.jpg" alt=""></p>
+<p>服务实例的网络位置是在启动时注册到服务注册表中，并且服务终止时从注册表中删除，服务实例注册信息一般使用心跳机制来定期刷新。</p>
+<p><a href="https://netflix.github.io/" target="_blank" rel="external">Netflix OSS</a>提供了一种非常棒的客户端发现模式，<a href="https://github.com/Netflix/eureka" target="_blank" rel="external">Netflix Eureka</a>是一个注册服务表，为服务实例注册管理和查询可用实例，提供了REST API接口。<a href="https://github.com/Netflix/ribbon" target="_blank" rel="external">Netflix Ribbon</a>是一种IPC客户端，与Eureka合同工作实现对请求的负载均衡。</p>
+<p><code>优点</code></p>
+<p>除了服务注册表，没有其他改变的因素，客户端知道可用服务注册表信息，因此客户端可以使用哈希一直性变得更加聪明，更加有效的负载均衡。</p>
+<p><code>缺点</code></p>
+<p>需要针对不同的编程语言注册不同的服务，在客户端需要为每种语言开发不同的服务。</p>
+<h3 id="服务端发现模式"><a href="#服务端发现模式" class="headerlink" title="服务端发现模式"></a>服务端发现模式</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-9/19412124.jpg" alt=""></p>
+<p>客户端通过负载均衡器向各某个服务器提出请求，负载均衡器向服务注册表发出请求，将每个请求转发往可用的服务实例，跟客户端发现一样，服务实例在服务注册表中注册或注销。</p>
+<p>AWS Elastic Load Balancer(ELB)是一种服务端发现路由的例子，ELB一般用于均衡从网络来的访问流量，也可以使用ELB来均衡VPC内部的流量，客户端使用DNS，通过ELB发出请求(HTTP或者TCP)，ELB负载均衡器负载在注册的EC2实例或者ECS容器之间均衡负载，并不存在一个分离的注册表，而EC2实例和ECS实例也想ELB注册。</p>
+<p>HTTP服务和类似NGNIX和<a href="https://www.nginx.com/products/" target="_blank" rel="external">NGINX Plus</a>的负载均衡器都可以作为服务端发现均衡器，例如，<a href="https://www.airpair.com/scalable-architecture-with-docker-consul-and-nginx" target="_blank" rel="external">这篇博文</a>就描述如何使用<a href="https://github.com/hashicorp/consul-template" target="_blank" rel="external">Consul Template</a>来动态配置NGNIX反向代理。Consul Template是周期性从存放在Consul Template注册表中配合数据重建配置文件的工具。当文件发生变化时，会运行一个命令，在如何博客中，Consul Template产生了一个nginx.conf文件，用于配置反向代理，然后运行一个命令，告诉NGINX重新调入配置文件，更复杂的例子可以用HTTP API或者DNS动态重新配置NGINX Plus.</p>
+<p>某些部署环境，例如<a href="https://github.com/kubernetes/kubernetes/blob/master/docs/design/architecture.md" target="_blank" rel="external">Kubernetes</a>和<a href="https://mesosphere.github.io/marathon/docs/service-discovery-load-balancing.html" target="_blank" rel="external">Marathon</a>在集群每个节点上运行一个代理，此代理作为服务端发现负载均衡器，为了向服务发出请求，客户端使用主机IP和分配的端口通过代理请求路由发出去，代理将次请求透明的转发到集群中可用的服务实例。</p>
+<p><code>优点</code></p>
+<p>客户端无需关注发现的细节，客户端只需简单的向负载均衡器发送请求，实际上减少了编程语言框架需要完成的发现逻辑。</p>
+<p><code>缺点</code></p>
+<p>除非部署环境提供负载均衡器，否则负载均衡器是另一个需要配置管理的高可用系统功能。</p>
+<h3 id="服务注册表"><a href="#服务注册表" class="headerlink" title="服务注册表"></a>服务注册表</h3><p><a href="http://microservices.io/patterns/service-registry.html" target="_blank" rel="external">服务注册表</a>是服务发现很重要的部分，它是包含服务实例网络地址的数据库，服务注册表需要高可用而且随时更新，客户端可以缓存从服务注册表获得的网络地址，然而，这些信息最终会变得过时，客户端也无法服务实例。因此，服务注册表由若干使用复制协议保持同步的服务器构成。</p>
+<p>如前所述，<a href="https://github.com/Netflix/eureka" target="_blank" rel="external">Netflix Eureka</a>是一个服务注册表很好地例子，提供了REST API注册和请求服务实例，服务实例使用POST请求注册网络地址，每30秒必须使用PUT方法更新注册表，使用HTTP DELETE请求或者实例超时来注销。客户端可以使用HTTP GET请求接受注册服务实例信息。</p>
+<p>Netflix通过在每个AWS EC2域运行一个或者多个Eureka服务实现高可用性，每个Eureka服务器都运行在拥有弹性IP地址的EC2实例上，DNS TEXT记录用于存储Eureka集群配置，其中存放从可用域到一系列Eureka服务器网络地址的列表。当Eureka服务启动时，向DNS请求接受Eureka集群配置，确认同伴位置，给自己分配一个未被使用的弹性IP地址。</p>
+<p>Eureka客户端 —&gt; 服务和服务客户端 —&gt; 向DNS请求发现Eureka服务的网络地址，客户端首选使用同一域内的服务。然而，如果没有可用服务，客户端会使用另外一个可用域的Eureka服务。</p>
+<p>另外一些服务注册表例子包括：</p>
+<ul>
+<li><a href="https://github.com/coreos/etcd" target="_blank" rel="external">etcd</a> – 是一个高可用，分布式的，一致性的，键值表，用于共享配置和服务发现。两个著名案例包括Kubernetes和Cloud Foundry。</li>
+<li><a href="https://www.consul.io/" target="_blank" rel="external">consul</a> – 是一个用于发现和配置的服务。提供了一个API允许客户端注册和发现服务。Consul可以用于健康检查来判断服务可用性。</li>
+<li><a href="http://zookeeper.apache.org/" target="_blank" rel="external">Apache ZooKeeper</a> – 是一个广泛使用，为分布式应用提供高性能整合的服务。Apache ZooKeeper最初是Hadoop的子项目，现在已经变成顶级项目。</li>
+</ul>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>注册服务中心</strong></p>
+<p>创建一个SpringBoot工程，并在<code>pom.xml</code>中引入需要依赖的内容</p>
+<p><code>pom.xml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">    &lt;groupId&gt;com.dada&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;springclouddemo&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line">    &lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">    &lt;name&gt;SpringCloudDemo&lt;/name&gt;</div><div class="line">    &lt;description&gt;SpringCloudDemo&lt;/description&gt;</div><div class="line"></div><div class="line">    &lt;parent&gt;</div><div class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;1.4.1.RELEASE&lt;/version&gt;</div><div class="line">        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</div><div class="line">    &lt;/parent&gt;</div><div class="line"></div><div class="line">    &lt;properties&gt;</div><div class="line">        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">        &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;</div><div class="line">        &lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">    &lt;/properties&gt;</div><div class="line"></div><div class="line">    &lt;dependencies&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">            &lt;scope&gt;test&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-cloud-starter-eureka-server&lt;/artifactId&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">    &lt;/dependencies&gt;</div><div class="line"></div><div class="line">    &lt;dependencyManagement&gt;</div><div class="line">        &lt;dependencies&gt;</div><div class="line">            &lt;dependency&gt;</div><div class="line">                &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;</div><div class="line">                &lt;version&gt;Brixton.RELEASE&lt;/version&gt;</div><div class="line">                &lt;type&gt;pom&lt;/type&gt;</div><div class="line">                &lt;scope&gt;import&lt;/scope&gt;</div><div class="line">            &lt;/dependency&gt;</div><div class="line">        &lt;/dependencies&gt;</div><div class="line">    &lt;/dependencyManagement&gt;</div><div class="line"></div><div class="line">    &lt;build&gt;</div><div class="line">        &lt;plugins&gt;</div><div class="line">            &lt;plugin&gt;</div><div class="line">                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</div><div class="line">            &lt;/plugin&gt;</div><div class="line">        &lt;/plugins&gt;</div><div class="line">    &lt;/build&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
+<p><code>@EnableEurekaServer</code>注解启动一个服务注册中心提供给其他应用进行对话</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@SpringBootApplication</div><div class="line">@EnableEurekaServer</div><div class="line">public class SpringCloudDemoApplication &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		new SpringApplicationBuilder(SpringCloudDemoApplication.class).web(true).run(args);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在默认配置下，该服务注册中心也会将自己作为客户端来尝试注册它自己，所以我们需要禁用他的客户端注册行为。</p>
+<p><code>application.properties</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">server.port=1111</div><div class="line">eureka.client.register-with-eureka=false</div><div class="line">eureka.client.fetch-registry=false</div><div class="line">eureka.client.serviceUrl.defaultZone=http://localhost:$&#123;server.port&#125;/eureka/</div></pre></td></tr></table></figure>
+<p>启动工程后，访问：<code>http:localhost:1111</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-9/4076123.jpg" alt=""></p>
+<p><a href="http://git.oschina.net/shuangziliuyun/SpringBoot-Learning/tree/master/SpringCloudDemo?dir=1&amp;filepath=SpringCloudDemo&amp;oid=7ea641a1decaf22920670bfb29e9e198b701def7&amp;sha=66fe516db609fdcb2d95a59d2930d970c2c1be82" target="_blank" rel="external">SpringCloudDemo项目链接</a></p>
+<p><strong>创建服务提供方</strong></p>
+<p><code>场景：</code> 假设我们有一个提供计算功能的微服务模块，我们实现一个RESTFUL API，通过传入两个参数<code>valueA</code>和<code>valueB</code>的微服务模块，我们实现一个RESTFUL API，通过传入两个参数<code>valueA</code>和<code>valueB</code>,最后返回<code>valueA + valueB</code>的结果。</p>
+<p><code>pom.xml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">	&lt;groupId&gt;com.dada&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;computeservice&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line">	&lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">	&lt;name&gt;ComputeService&lt;/name&gt;</div><div class="line">	&lt;description&gt;ComputeService&lt;/description&gt;</div><div class="line"></div><div class="line">	&lt;parent&gt;</div><div class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</div><div class="line">		&lt;version&gt;1.4.1.RELEASE&lt;/version&gt;</div><div class="line">		&lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</div><div class="line">	&lt;/parent&gt;</div><div class="line"></div><div class="line">	&lt;properties&gt;</div><div class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">		&lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;</div><div class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">	&lt;/properties&gt;</div><div class="line"></div><div class="line">	&lt;dependencies&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">			&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-cloud-starter-eureka-server&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">	&lt;/dependencies&gt;</div><div class="line"></div><div class="line">	&lt;dependencyManagement&gt;</div><div class="line">		&lt;dependencies&gt;</div><div class="line">			&lt;dependency&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;</div><div class="line">				&lt;version&gt;Brixton.RELEASE&lt;/version&gt;</div><div class="line">				&lt;type&gt;pom&lt;/type&gt;</div><div class="line">				&lt;scope&gt;import&lt;/scope&gt;</div><div class="line">			&lt;/dependency&gt;</div><div class="line">		&lt;/dependencies&gt;</div><div class="line">	&lt;/dependencyManagement&gt;</div><div class="line"></div><div class="line">	&lt;build&gt;</div><div class="line">		&lt;plugins&gt;</div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line">		&lt;/plugins&gt;</div><div class="line">	&lt;/build&gt;</div><div class="line"></div><div class="line"></div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
+<p>实现<code>/add</code>请求处理接口，通过<code>DiscoveryClient</code>对象，在日志中打印出服务实例的相关内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@RestController</div><div class="line">public class ComputeController &#123;</div><div class="line">    private static final Logger logger = LoggerFactory.getLogger(ComputeController.class);</div><div class="line"></div><div class="line">    @Autowired</div><div class="line">    private DiscoveryClient client;</div><div class="line"></div><div class="line">    @RequestMapping(value = &quot;/add&quot;,method = RequestMethod.GET)</div><div class="line">    public Integer add(@RequestParam Integer valueA,@RequestParam Integer valueB)&#123;</div><div class="line">        ServiceInstance instance = client.getLocalServiceInstance();</div><div class="line">        Integer result = valueA + valueB;</div><div class="line">        logger.info(&quot;/add, host: &quot; + instance.getHost() + &quot; service_id : &quot; + instance.getServiceId() + &quot;, result: &quot; + result);</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在主类中加上<code>@EnableDiscoveryClient</code>注解，该注解能激活Eureka中的<code>DiscoveryClient</code>实现，才能实现Controller中对服务信息的输出。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@SpringBootApplication</div><div class="line">@EnableDiscoveryClient</div><div class="line">public class ComputeServiceApplication &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		new SpringApplicationBuilder(ComputeServiceApplication.class).web(true).run(args);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>application.properties</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 指定微服务名称后续在调用只需使用名称就可以进行服务访问了</div><div class="line">spring.application.name=compute-service</div><div class="line"></div><div class="line"># 为了在本机上测试区分服务提供方和服务注册中心，设置端口。</div><div class="line">server.port=2222</div><div class="line"></div><div class="line"># 服务注册中心的位置</div><div class="line">eureka.client.serviceUrl.defaultZone=http://localhost:1111/eureka/</div></pre></td></tr></table></figure>
+<p>启动工程后，再次访问：<code>http:localhost:1111/</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-9/98601009.jpg" alt=""></p>
+<p>可以看到，我们定义的服务被注册了。</p>
+<p><a href="http://git.oschina.net/shuangziliuyun/SpringBoot-Learning/tree/master/ComputeService?dir=1&amp;filepath=ComputeService&amp;oid=8233018cf6b98106be981444bb5fe1ecf7d73630&amp;sha=66fe516db609fdcb2d95a59d2930d970c2c1be82" target="_blank" rel="external">ComputeService项目链接</a></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/?utm_source=deploying-microservices&amp;utm_medium=blog" target="_blank" rel="external">Service Discovery in a Microservices Architecture </a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/10/08/SpringCloud之服务注册与发现/" data-id="cj05522by00ek4t93feap5bo9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringCloud/">SpringCloud</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/Java之内存区域/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Java之内存区域
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/09/29/规划好技术路线，如何将想法落地？/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">规划好技术路线，如何将想法落地?</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-SpringCloud之服务注册与发现" data-title="SpringCloud之服务注册与发现" data-url="http://jianwl.com/2016/10/08/SpringCloud之服务注册与发现/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'jianwl'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">33</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web服务器/">Web服务器</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/">Hystrix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Intellij-IDEA/">Intellij IDEA</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">34</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JOOQ/">JOOQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScirpt/">JavaScirpt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MYSQL/">MYSQL</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Play/">Play</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit/">Retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit2/">Retrofit2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprng-MVC/">Sprng MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thymeleaf/">Thymeleaf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web服务器/">Web服务器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件/">中间件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思绪/">思绪</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Git/" style="font-size: 10.91px;">Git</a> <a href="/tags/HTTP/" style="font-size: 17.27px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 12.73px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 10px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 10.91px;">Intellij IDEA</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/JOOQ/" style="font-size: 10.91px;">JOOQ</a> <a href="/tags/JavaScirpt/" style="font-size: 10px;">JavaScirpt</a> <a href="/tags/JavaScript/" style="font-size: 15.45px;">JavaScript</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 12.73px;">Linux</a> <a href="/tags/MYSQL/" style="font-size: 19.09px;">MYSQL</a> <a href="/tags/Mac/" style="font-size: 13.64px;">Mac</a> <a href="/tags/PHP/" style="font-size: 18.18px;">PHP</a> <a href="/tags/Play/" style="font-size: 10.91px;">Play</a> <a href="/tags/Python/" style="font-size: 14.55px;">Python</a> <a href="/tags/React/" style="font-size: 10.91px;">React</a> <a href="/tags/Redis/" style="font-size: 13.64px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/Retrofit2/" style="font-size: 10px;">Retrofit2</a> <a href="/tags/SQL/" style="font-size: 18.18px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.82px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 16.36px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10.91px;">SpringCloud</a> <a href="/tags/Sprng-MVC/" style="font-size: 10px;">Sprng MVC</a> <a href="/tags/Thymeleaf/" style="font-size: 10px;">Thymeleaf</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Web服务器/" style="font-size: 10px;">Web服务器</a> <a href="/tags/中间件/" style="font-size: 10px;">中间件</a> <a href="/tags/思绪/" style="font-size: 13.64px;">思绪</a> <a href="/tags/算法/" style="font-size: 11.82px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">25</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/11/Python之字典/">Python之字典</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/11/Python之列表和元组/">Python之列表和元组</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/26/React技术栈介绍/">React技术栈介绍</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/26/ES6之SET、Map数据结构/">ES6之SET、Map数据结构</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/25/SpringBoot配置Filter、Interceptor/">SpringBoot配置Filter、Interceptor</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_pv">
+<h3 class="widget-title">访问量</h3>
+<div class="widget"> 本站总访问量<span id="busuanzi_value_site_pv"></span>次 </div>
+</span>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 流云<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

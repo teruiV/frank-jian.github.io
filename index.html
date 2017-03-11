@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>记录点滴成长</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="每天进步一点">
+<meta property="og:type" content="website">
+<meta property="og:title" content="记录点滴成长">
+<meta property="og:url" content="http://jianwl.com/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="每天进步一点">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记录点滴成长">
+<meta name="twitter:description" content="每天进步一点">
+  
+    <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">记录点滴成长</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://jianwl.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Python之字典" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2017/03/11/Python之字典/" class="article-date">
+  <time datetime="2017-03-11T10:20:08.000Z" itemprop="datePublished">2017-03-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/11/Python之字典/">Python之字典</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2017/03/11/Python之字典/" data-id="cj055229q00ae4t93svziq67k" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Python之列表和元组" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2017/03/11/Python之列表和元组/" class="article-date">
+  <time datetime="2017-03-11T09:36:43.000Z" itemprop="datePublished">2017-03-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/11/Python之列表和元组/">Python之列表和元组</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Python包含6种内建的序列：列表、元组、字符串、Unicode字符串、buffer对象、xrange对象，这节主要来学习列表和元组。<strong>列表和元组的区别在于，列表可以修改，元组不可以。</strong></p>
+<h3 id="通用序列操作"><a href="#通用序列操作" class="headerlink" title="通用序列操作"></a>通用序列操作</h3><p>所有序列类型都可以进行这些操作：索引、分片、加、乘、以及检查某个元素是否属于该序列的成员、序列长度、找出最大元素、最小元素。</p>
+<h4 id="1-索引"><a href="#1-索引" class="headerlink" title="1) 索引"></a>1) 索引</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/14523041-file_1489217087380_3e78.png" alt=""></p>
+<h4 id="2-分片"><a href="#2-分片" class="headerlink" title="2) 分片"></a>2) 分片</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/86520910-file_1489217253044_6475.png" alt=""></p>
+<p>获取最后三个元素：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/2981895-file_1489217362541_2232.png" alt=""></p>
+<p>更大步长：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/81377151-file_1489217450167_8f65.png" alt=""></p>
+<h4 id="3-加"><a href="#3-加" class="headerlink" title="3) 加"></a>3) 加</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/55587129-file_1489217507183_666e.png" alt=""></p>
+<h4 id="4-乘"><a href="#4-乘" class="headerlink" title="4) 乘"></a>4) 乘</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/63363847-file_1489217608021_1294.png" alt=""></p>
+<h4 id="5-长度、最大值、最小值"><a href="#5-长度、最大值、最小值" class="headerlink" title="5) 长度、最大值、最小值"></a>5) 长度、最大值、最小值</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/65898019-file_1489217734808_186c.png" alt=""></p>
+<h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><p>列表除了适用序列的标准操作方法，本节还会介绍一些可以改变列表的方法：元素赋值、元素删除、分片赋值、以及列表方法</p>
+<h4 id="1）改变列表元素"><a href="#1）改变列表元素" class="headerlink" title="1）改变列表元素"></a>1）改变列表元素</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/39445538-file_1489218070573_559e.png" alt=""></p>
+<h4 id="2-删除元素"><a href="#2-删除元素" class="headerlink" title="2) 删除元素"></a>2) 删除元素</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/83266752-file_1489218148529_12224.png" alt=""></p>
+<h4 id="3-分片赋值"><a href="#3-分片赋值" class="headerlink" title="3) 分片赋值"></a>3) 分片赋值</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/68678272-file_1489218225510_75a7.png" alt=""></p>
+<h4 id="4-列表方法"><a href="#4-列表方法" class="headerlink" title="4) 列表方法"></a>4) 列表方法</h4><p>4.1) <code>append</code> 列表末尾追加元素</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/63479534-file_1489218330479_b5b6.png" alt=""></p>
+<p>4.2) <code>count</code> 统计某个元素在列表中出现的次数</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/33437808-file_1489218501030_e517.png" alt=""></p>
+<p>4.3) <code>extend</code> 在列表后，一次性追加新的一个列表</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/81047607-file_1489218616823_b8c0.png" alt=""></p>
+<p>4.4) <code>index</code> 从列表中找出某个值，第一个匹配项的索引位置</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/87902781-file_1489218827874_12817.png" alt=""></p>
+<p>4.5) <code>insert</code> 将对象插入列表</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/87119013-file_1489218933650_15ae9.png" alt=""></p>
+<p>4.6) <code>pop</code> 默认移除最后一个元素，并返回该元素的值</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/94076650-file_1489219047630_175f8.png" alt=""></p>
+<p>4.7) <code>reverse</code> 将列表中的元素反向存放</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/46157796-file_1489219161800_1183d.png" alt=""></p>
+<p>4.8) <code>sort</code> 对列表元素排序</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/97781689-file_1489219230515_13a99.png" alt=""></p>
+<p>4.9) 高级排序</p>
+<p>sort方法有两个可选的参数–key和reverse</p>
+<p>a) <code>key</code> 根据函数，为每个元素创建一个键，然后根据键来排序；</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/32829610-file_1489219789896_8d71.png" alt=""></p>
+<p>b）<code>reverse</code>，指明列表是否需要进行反序</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/99489690-file_1489219907483_ef90.png" alt=""></p>
+<h3 id="元组：不可变序列"><a href="#元组：不可变序列" class="headerlink" title="元组：不可变序列"></a>元组：不可变序列</h3><p>元组与列表一样，也是一种序列，不同的是元组不能修改。</p>
+<p>1）空元组</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/66845723-file_1489220816664_686a.png" alt=""></p>
+<p>2) 单元素元组，—必须加个逗号</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/79464689-file_1489220865683_34a9.png" alt=""></p>
+<p>3) 创建多元素元组</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/24763301-file_1489220747488_f833.png" alt=""></p>
+<p>4) <code>tuple</code> 将一个序列转化为元组</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/85051282-file_1489220996689_13c72.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>Python基础教程</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2017/03/11/Python之列表和元组/" data-id="cj055229p00ab4t9325357h0s" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-React技术栈介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2017/02/26/React技术栈介绍/" class="article-date">
+  <time datetime="2017-02-26T10:21:12.000Z" itemprop="datePublished">2017-02-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React/">React</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/26/React技术栈介绍/">React技术栈介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>React整个技术栈涉及到的技术非常多，零基础的人入门总是望而却步，几个月之前就想认真学习React技术栈一直拖延至今。最近会抽出大部分时间，好好研究React技术栈。这一节我们来学习React涉及到的技术栈。</p>
+<h3 id="React技术栈"><a href="#React技术栈" class="headerlink" title="React技术栈"></a>React技术栈</h3><h4 id="1-React"><a href="#1-React" class="headerlink" title="1. React"></a>1. React</h4><p>React是一个声明式、高效、灵活的、创建用户界面的JavaScript库，让我们来逐一解读：</p>
+<h5 id="声明式"><a href="#声明式" class="headerlink" title="声明式"></a>声明式</h5><p>使用React描述组件的样子就可以改变用户界面。传统方式是命令式地操作DOM，不仅需要记住大量的API，而且还会增加代码的耦合度，使得项目难以维护。React使用自己的魔法改变界面，让开发者最大限度地减少DOM交互，较低处理视图的难度。</p>
+<h5 id="高效"><a href="#高效" class="headerlink" title="高效"></a>高效</h5><p>React高性能的Diff算法，让我们在刷新全部界面时只更新需要改变的那部分界面，其使用单向数据流改变界面，抛弃传统的数据绑定，减少了样板代码和重量。</p>
+<h5 id="灵活"><a href="#灵活" class="headerlink" title="灵活"></a>灵活</h5><p>React作为视图层与其他技术栈配合使用，比如与Redux搭配等等。</p>
+<h4 id="2-Redux"><a href="#2-Redux" class="headerlink" title="2. Redux"></a>2. Redux</h4><p>Redux是一个JavaScript状态容器，提供可预测的状态管理。Redux可以用三条基本准则来描述：单一数据源；state只读；使用纯函数来执行修改。</p>
+<h5 id="单一数据源"><a href="#单一数据源" class="headerlink" title="单一数据源"></a>单一数据源</h5><p>整个应用的state被存储在一棵对象树中，并且这个对象树只存在唯一一个store中。这里的state指的是数据。</p>
+<h5 id="state只读"><a href="#state只读" class="headerlink" title="state只读"></a>state只读</h5><p>不是无法改变state，这里的只读指的是不允许直接对state这个变量重写赋值，但可以通过action和reducer返回一个新的state，而且只能使用这一方法。</p>
+<h5 id="使用纯函数来执行修改"><a href="#使用纯函数来执行修改" class="headerlink" title="使用纯函数来执行修改"></a>使用纯函数来执行修改</h5><p>更新state的reducer只是一些纯函数，它接收先前的state和action，并返回新的state。</p>
+<p>了解以上规则后，或许你会问为什么要使用Redux?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">可预测： Redux只有一个数据源，想要修改它只能发起action，reducer又是纯函数，相同的输入永远会得到相同的输出。这一切使得程序运作变得可控、可预测。</div><div class="line"></div><div class="line">便于组织管理代码：严格而明确的程序结构是的代码更容易组织和管理，也方便团队协作。</div><div class="line"></div><div class="line">支持Universal渲染：单一数据源这一原则可以帮助解决Universal渲染中的数据传递问题，服务端渲染后只需给客户端传递一个变量即可，这个变量就是存储state的对象树。</div><div class="line"></div><div class="line">容易测试：编写可测试的代码，最重要的一条规则就是写单一功能的、没有外界依赖的小型函数。</div></pre></td></tr></table></figure>
+<h4 id="3-Node与Universal渲染"><a href="#3-Node与Universal渲染" class="headerlink" title="3.Node与Universal渲染"></a>3.Node与Universal渲染</h4><p>React与Redux既可以在浏览器运行也可以在服务器端运行，这里的服务器端指的是Node服务器。</p>
+<p>和传统Web服务器相比，Node更简单，它是单线程，与平台无关的，我们可以实现Universal渲染 – 用同一套代码在服务端和客户端渲染。</p>
+<h4 id="4-Babel"><a href="#4-Babel" class="headerlink" title="4.Babel"></a>4.Babel</h4><p>Babel是一个JavaScript编译器，可以让开发者提前使用下一代的JavaScript。</p>
+<h4 id="5-Webpack"><a href="#5-Webpack" class="headerlink" title="5.Webpack"></a>5.Webpack</h4><p>Webpack是当下最热门的前端资源模块化管理和打包工具，它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。通过加载器(loader)的转换，任何形式的资源都可以视作模块，比如CommonJS模块、AMD模块、ES2015模块、CSS、图片、JSON、LESS、Coffeescript等等。</p>
+<p>Webpack主要功能：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">编译、加载使用ES2015和JSX语法的模块</div><div class="line">实现开发服务器与热替换</div><div class="line">加载图片文件</div><div class="line">加载字体文件</div><div class="line">加载样式文件</div><div class="line">加载JSON文件</div><div class="line">视同同构工具实现同构渲染</div><div class="line">压缩代码</div><div class="line">哈希命名</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1.React与Redux开发实例精解</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2017/02/26/React技术栈介绍/" data-id="cj05522a500ba4t93j3fp9of8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/">React</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ES6之SET、Map数据结构" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2017/02/26/ES6之SET、Map数据结构/" class="article-date">
+  <time datetime="2017-02-26T05:12:31.000Z" itemprop="datePublished">2017-02-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/26/ES6之SET、Map数据结构/">ES6之SET、Map数据结构</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这一节我们来学习在工作中最常用的两个数据结构<code>Set</code>和<code>Map</code>，介绍两种数据结构的基本用法。</p>
+<h3 id="SET实战"><a href="#SET实战" class="headerlink" title="SET实战"></a>SET实战</h3><p>定义：类似于数组，但成员都是唯一，没有重复的</p>
+<h4 id="1-初始化SET"><a href="#1-初始化SET" class="headerlink" title="1. 初始化SET"></a>1. 初始化SET</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/27685484-file_1488086345162_a031.png" alt=""></p>
+<h4 id="2-常用方法"><a href="#2-常用方法" class="headerlink" title="2. 常用方法"></a>2. 常用方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">add : 新增某个成员</div><div class="line">delete: 删除某个成员</div><div class="line">has: 判断是否有该成员</div><div class="line">clear: 清楚所有成员</div></pre></td></tr></table></figure>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/37263173-file_1488086504381_112f0.png" alt=""></p>
+<h4 id="3-遍历"><a href="#3-遍历" class="headerlink" title="3. 遍历"></a>3. 遍历</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/3967547-file_1488086882638_3a52.png" alt=""></p>
+<h3 id="MAP实战"><a href="#MAP实战" class="headerlink" title="MAP实战"></a>MAP实战</h3><p>定义：键值对的集合，ES6提供的<code>Map</code>数据结构的键的范围不限于字符串，各种类型的值(包括对象)都可以当作键</p>
+<h4 id="1-初始化MAP"><a href="#1-初始化MAP" class="headerlink" title="1. 初始化MAP"></a>1. 初始化MAP</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/69357943-file_1488098923626_8f95.png" alt=""></p>
+<h4 id="2-常用方法-1"><a href="#2-常用方法-1" class="headerlink" title="2. 常用方法"></a>2. 常用方法</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/8039268-file_1488099286728_504e.png" alt=""></p>
+<h4 id="3-遍历-1"><a href="#3-遍历-1" class="headerlink" title="3. 遍历"></a>3. 遍历</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/86767862-file_1488100323638_7af1.png" alt=""></p>
+<h4 id="4-Map转数组"><a href="#4-Map转数组" class="headerlink" title="4. Map转数组"></a>4. Map转数组</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/78684823-file_1488100481693_81a3.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>ES6标准入门 – 阮一峰</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2017/02/26/ES6之SET、Map数据结构/" data-id="cj055223i00074t93xgwtk53x" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SpringBoot配置Filter、Interceptor" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2017/02/25/SpringBoot配置Filter、Interceptor/" class="article-date">
+  <time datetime="2017-02-25T01:45:53.000Z" itemprop="datePublished">2017-02-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SpringBoot/">SpringBoot</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/25/SpringBoot配置Filter、Interceptor/">SpringBoot配置Filter、Interceptor</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>SpringBoot自动配置的功能「加了EnableAutoConfiguration注解」，创建了一堆默认的配置，以前在web.xml中的配置，现在都可以通过Spring Bean的方式进行配置，由Spring进行生命周期的管理。本节主要来学习在SpringBoot中如何配置Filter,Interceptor。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-RequestReplaceFilter，包装请求流，允许多次读"><a href="#1-RequestReplaceFilter，包装请求流，允许多次读" class="headerlink" title="1. RequestReplaceFilter，包装请求流，允许多次读"></a>1. RequestReplaceFilter，包装请求流，允许多次读</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div></pre></td><td class="code"><pre><div class="line">public class RequestReplaceFilter extends OncePerRequestFilter &#123;</div><div class="line">    @Override</div><div class="line">    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException &#123;</div><div class="line">        if (!(request instanceof CustomServletRequestWrapper)) &#123;</div><div class="line">            request = new CustomServletRequestWrapper(request);</div><div class="line">        &#125;</div><div class="line">        filterChain.doFilter(request, response);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    class CustomServletRequestWrapper extends HttpServletRequestWrapper &#123;</div><div class="line">        private final byte[] body;</div><div class="line"></div><div class="line">        /**</div><div class="line">         * Construct a wrapper for the specified request.</div><div class="line">         *</div><div class="line">         * @param request The request to be wrapped</div><div class="line">         */</div><div class="line">        public CustomServletRequestWrapper(HttpServletRequest request) throws IOException &#123;</div><div class="line">            super(request);</div><div class="line">            body = toByteArray(super.getInputStream());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public BufferedReader getReader() throws IOException &#123;</div><div class="line">            return new BufferedReader(new InputStreamReader(getInputStream()));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public ServletInputStream getInputStream() throws IOException &#123;</div><div class="line">            return new RequestBodyCachingInputStream(body);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        private class RequestBodyCachingInputStream extends ServletInputStream &#123;</div><div class="line">            private byte[] body;</div><div class="line">            private int lastIndexRetrieved = -1;</div><div class="line">            private ReadListener listener;</div><div class="line"></div><div class="line">            public RequestBodyCachingInputStream(byte[] body) &#123;</div><div class="line">                this.body = body;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public int read() throws IOException &#123;</div><div class="line">                if (isFinished()) &#123;</div><div class="line">                    return -1;</div><div class="line">                &#125;</div><div class="line">                int i = body[lastIndexRetrieved + 1];</div><div class="line">                lastIndexRetrieved++;</div><div class="line">                if (isFinished() &amp;&amp; listener != null) &#123;</div><div class="line">                    try &#123;</div><div class="line">                        listener.onAllDataRead();</div><div class="line">                    &#125; catch (IOException e) &#123;</div><div class="line">                        listener.onError(e);</div><div class="line">                        throw e;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                return i;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public boolean isFinished() &#123;</div><div class="line">                return lastIndexRetrieved == body.length - 1;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public boolean isReady() &#123;</div><div class="line">                // This implementation will never block</div><div class="line">                // We also never need to call the readListener from this method, as this method will never return false</div><div class="line">                return isFinished();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void setReadListener(ReadListener listener) &#123;</div><div class="line">                if (listener == null) &#123;</div><div class="line">                    throw new IllegalArgumentException(&quot;listener cann not be null&quot;);</div><div class="line">                &#125;</div><div class="line">                if (this.listener != null) &#123;</div><div class="line">                    throw new IllegalArgumentException(&quot;listener has been set&quot;);</div><div class="line">                &#125;</div><div class="line">                this.listener = listener;</div><div class="line">                if (!isFinished()) &#123;</div><div class="line">                    try &#123;</div><div class="line">                        listener.onAllDataRead();</div><div class="line">                    &#125; catch (IOException e) &#123;</div><div class="line">                        listener.onError(e);</div><div class="line">                    &#125;</div><div class="line">                &#125; else &#123;</div><div class="line">                    try &#123;</div><div class="line">                        listener.onAllDataRead();</div><div class="line">                    &#125; catch (IOException e) &#123;</div><div class="line">                        listener.onError(e);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public int available() throws IOException &#123;</div><div class="line">                return body.length - lastIndexRetrieved - 1;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void close() throws IOException &#123;</div><div class="line">                lastIndexRetrieved = body.length - 1;</div><div class="line">                body = null;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-SignInterceptor-签名验证拦截器"><a href="#2-SignInterceptor-签名验证拦截器" class="headerlink" title="2. SignInterceptor 签名验证拦截器"></a>2. SignInterceptor 签名验证拦截器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">public class SignInterceptor extends HandlerInterceptorAdapter &#123;</div><div class="line">    @Override</div><div class="line">    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;</div><div class="line"></div><div class="line">        String reqHash = request.getHeader(AppHeaders.VERIFICATION_HASH);</div><div class="line">        Map&lt;String, String[]&gt; reqParameterMap = request.getParameterMap();</div><div class="line"></div><div class="line">        log.info(&quot;Request-Url =&gt; &quot; + request.getRequestURL());</div><div class="line">        log.info(&quot;Request-Hash =&gt; &quot; + reqHash);</div><div class="line">        log.info(&quot;Request-params =&gt; &quot; + JSON.toJSONString(reqParameterMap));</div><div class="line"></div><div class="line">        if (StringUtils.isNotEmpty(reqHash)) &#123;</div><div class="line">            if (ApiConstants.NO_CHECK_SIGN_HASH.contains(reqHash)) &#123;</div><div class="line">                log.info(&quot;hash pass&quot;);</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            Object[] key_arr = reqParameterMap.keySet().toArray();</div><div class="line">            Arrays.sort(key_arr);</div><div class="line">            StringBuilder str = new StringBuilder();</div><div class="line">            for (Object key : key_arr) &#123;</div><div class="line">                String[] values = reqParameterMap.get(key);</div><div class="line">                str.append(key).append(&quot;=&quot;).append(values[values.length - 1]).append(&quot;&amp;&quot;);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            String paramStr = str.toString();</div><div class="line">            if (StringUtils.isNotBlank(paramStr)) &#123;</div><div class="line">                paramStr = paramStr.substring(0, paramStr.length() - 1);</div><div class="line">            &#125;</div><div class="line">            log.info(&quot;Server Md5 str =&gt; &quot; + paramStr);</div><div class="line"></div><div class="line">            String serverHash = DigestUtils.md5Hex(paramStr + SaltKeys.BDMS_API_SALT.getKey());</div><div class="line">            log.info(&quot;Server md5 hash =&gt; &quot; + serverHash);</div><div class="line">            if (reqHash.equals(serverHash)) &#123;</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);</div><div class="line">        response.getWriter().write(</div><div class="line">                JSON.toJSONString(ApiResponse.failed(ErrorCode.SIGN_ERROR))</div><div class="line">        );</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-注册拦截器、过滤器-amp-配置拦截器、过滤器的路径"><a href="#3-注册拦截器、过滤器-amp-配置拦截器、过滤器的路径" class="headerlink" title="3. 注册拦截器、过滤器 &amp; 配置拦截器、过滤器的路径"></a>3. 注册拦截器、过滤器 &amp; 配置拦截器、过滤器的路径</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">public class FilterRegister extends WebMvcConfigurerAdapter &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">    public void addInterceptors(InterceptorRegistry registry) &#123;</div><div class="line">        // 签名校验</div><div class="line">        registry.addInterceptor(new SignInterceptor())</div><div class="line">        .addPathPatterns(&quot;/**&quot;)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @Bean</div><div class="line">    public FilterRegistrationBean getRequestFilter()&#123;</div><div class="line">        RequestReplaceFilter filter = new RequestReplaceFilter();</div><div class="line">        FilterRegistrationBean registrationBean = new FilterRegistrationBean();</div><div class="line">        registrationBean.setFilter(filter);</div><div class="line">        List&lt;String&gt; urlPatterns = new ArrayList&lt;&gt;();</div><div class="line">        urlPatterns.add(&quot;/*&quot;);</div><div class="line">        registrationBean.setUrlPatterns(urlPatterns);</div><div class="line">        registrationBean.setOrder(1);</div><div class="line">        return registrationBean;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2017/02/25/SpringBoot配置Filter、Interceptor/" data-id="cj05522bl00dw4t93g6516or5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-HTTP协议详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2017/02/23/HTTP协议详解/" class="article-date">
+  <time datetime="2017-02-23T15:09:21.000Z" itemprop="datePublished">2017-02-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HTTP/">HTTP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/23/HTTP协议详解/">HTTP协议详解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我们日常生活中经常会使用浏览器访问Web站点，但大家有思考过在这个过程中到底发生了什么吗？为什么我们在浏览器上输入要访问的URL就可以访问Web页面呢？</p>
+<p>当我们在浏览器地址栏上输入要访问的URL后，浏览器会分析出URL上的域名，然后通过NDS服务器查询出域名映射的IP地址，浏览器根据查询到的IP地址与Web服务器进行通信，而<strong>通信的协议就是HTTP协议。</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-25/53842035-file_1487985982597_a3ff.png" alt=""></p>
+<p>浏览器与Web服务器使用HTTP协议进行通信，接下来我们会详细介绍HTTP协议的相关知识。</p>
+<h3 id="HTTP报文"><a href="#HTTP报文" class="headerlink" title="HTTP报文"></a>HTTP报文</h3><p>HTTP协议交互的信息称为HTTP报文，请求端的HTTP报文称为请求报文，响应端的被称为响应报文。</p>
+<h4 id="1-报文结构"><a href="#1-报文结构" class="headerlink" title="1.报文结构"></a>1.报文结构</h4><p>HTTP报文大致分为报文首部和报文主体两部分，两者由最初出现的空行来划分。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/63335022-file_1487776806455_14596.png" alt=""></p>
+<h4 id="2-请求报文结构"><a href="#2-请求报文结构" class="headerlink" title="2.请求报文结构"></a>2.请求报文结构</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/18159996-file_1487777311008_1c4d.png" alt=""></p>
+<p>举个例子：<br><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/94747527-file_1487777973466_aaae.png" alt=""></p>
+<h4 id="3-响应报文结构"><a href="#3-响应报文结构" class="headerlink" title="3.响应报文结构"></a>3.响应报文结构</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/73324972-file_1487777733759_13411.png" alt=""></p>
+<p>举个例子：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/50444905-file_1487777764748_115e3.png" alt=""></p>
+<h3 id="HTTP首部字段"><a href="#HTTP首部字段" class="headerlink" title="HTTP首部字段"></a>HTTP首部字段</h3><h4 id="1-通用首部字段"><a href="#1-通用首部字段" class="headerlink" title="1.通用首部字段"></a>1.通用首部字段</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">首部字段名</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Cache-Control</td>
+<td style="text-align:center">控制缓存的行为</td>
+</tr>
+<tr>
+<td style="text-align:center">Connection</td>
+<td style="text-align:center">逐跳首部、连接的管理</td>
+</tr>
+<tr>
+<td style="text-align:center">Date</td>
+<td style="text-align:center">创建报文的日期时间</td>
+</tr>
+<tr>
+<td style="text-align:center">Pragma</td>
+<td style="text-align:center">报文指令</td>
+</tr>
+<tr>
+<td style="text-align:center">Trailer</td>
+<td style="text-align:center">报文末端的首部一览</td>
+</tr>
+<tr>
+<td style="text-align:center">Transfer-Encoding</td>
+<td style="text-align:center">指定报文主体的<strong>传输编码方式</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">Upgrade</td>
+<td style="text-align:center">升级为其他协议</td>
+</tr>
+<tr>
+<td style="text-align:center">Via</td>
+<td style="text-align:center">代理服务器的相关信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Warning</td>
+<td style="text-align:center">错误通知</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-请求首部字段"><a href="#2-请求首部字段" class="headerlink" title="2.请求首部字段"></a>2.请求首部字段</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">首部字段名</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accept</td>
+<td style="text-align:center">用户代理可处理的媒体类型</td>
+</tr>
+<tr>
+<td style="text-align:center">Accept-Charset</td>
+<td style="text-align:center">优先的字符集</td>
+</tr>
+<tr>
+<td style="text-align:center">Accept-Encoding</td>
+<td style="text-align:center">优先的内容编码</td>
+</tr>
+<tr>
+<td style="text-align:center">Accept-Language</td>
+<td style="text-align:center">优先的语言</td>
+</tr>
+<tr>
+<td style="text-align:center">Authorization</td>
+<td style="text-align:center">Web认证信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Expect</td>
+<td style="text-align:center">期待服务器的特定行为</td>
+</tr>
+<tr>
+<td style="text-align:center">From</td>
+<td style="text-align:center">用户的电子邮箱地址</td>
+</tr>
+<tr>
+<td style="text-align:center">Host</td>
+<td style="text-align:center">请求资源所在服务器</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Match</td>
+<td style="text-align:center">比较实体标记ETag</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Modified-Since</td>
+<td style="text-align:center">比较资源的更新时间</td>
+</tr>
+<tr>
+<td style="text-align:center">If-None-Match</td>
+<td style="text-align:center">比较实体标记（与If-Match相反）</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Range</td>
+<td style="text-align:center">资源未更新时发送实体Byte的范围请求</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Unmodified-Since</td>
+<td style="text-align:center">比较资源的更新时间 （与If-Modified-Since相反）</td>
+</tr>
+<tr>
+<td style="text-align:center">Max-Forwards</td>
+<td style="text-align:center">最大传输逐跳数</td>
+</tr>
+<tr>
+<td style="text-align:center">Proxy-Authorization</td>
+<td style="text-align:center">代理服务器要求客户端的认证信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Range</td>
+<td style="text-align:center">实体的字节范围请求</td>
+</tr>
+<tr>
+<td style="text-align:center">Referer</td>
+<td style="text-align:center">对请求中URI的原始获取方</td>
+</tr>
+<tr>
+<td style="text-align:center">TE</td>
+<td style="text-align:center">传输编码的优先级</td>
+</tr>
+<tr>
+<td style="text-align:center">User-Agent</td>
+<td style="text-align:center">HTTP客户端程序的信息</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-响应首部字段"><a href="#3-响应首部字段" class="headerlink" title="3. 响应首部字段"></a>3. 响应首部字段</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">首部字段名</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accept-Ranges</td>
+<td style="text-align:center">是否接受字节范围请求</td>
+</tr>
+<tr>
+<td style="text-align:center">Age</td>
+<td style="text-align:center">推算资源创建经过时间</td>
+</tr>
+<tr>
+<td style="text-align:center">ETag</td>
+<td style="text-align:center">资源的匹配信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Location</td>
+<td style="text-align:center">令客户端重定向至指定URI</td>
+</tr>
+<tr>
+<td style="text-align:center">Proxy-Authenticate</td>
+<td style="text-align:center">代理服务器对客户端的认证信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Retry-After</td>
+<td style="text-align:center">对再次发起请求的时机要求</td>
+</tr>
+<tr>
+<td style="text-align:center">Server</td>
+<td style="text-align:center">HTTP服务器的安装信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Vary</td>
+<td style="text-align:center">代理服务器缓存的管理信息</td>
+</tr>
+<tr>
+<td style="text-align:center">WWW-Authenticate</td>
+<td style="text-align:center">服务器对客户端的认证信息</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4-实体首部字段"><a href="#4-实体首部字段" class="headerlink" title="4.实体首部字段"></a>4.实体首部字段</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">首部字段名</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Allow</td>
+<td style="text-align:center">资源可支持的HTTP方法</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Encoding</td>
+<td style="text-align:center">实体主体适用的编码方式</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Language</td>
+<td style="text-align:center">实体主体的自然语言</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Length</td>
+<td style="text-align:center">实体主体的大小(单位：字节)</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Location</td>
+<td style="text-align:center">替代对应资源的URI</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-MD5</td>
+<td style="text-align:center">实体主体的报文摘要</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Range</td>
+<td style="text-align:center">实体主体的位置范围</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Type</td>
+<td style="text-align:center">实体主体的媒体类型</td>
+</tr>
+<tr>
+<td style="text-align:center">Expires</td>
+<td style="text-align:center">实体主体的过期时间</td>
+</tr>
+<tr>
+<td style="text-align:center">Last-Modified</td>
+<td style="text-align:center">资源的最后修改日期时间</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>图解HTTP - 上野宣</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2017/02/23/HTTP协议详解/" data-id="cj055224b00184t93ueiq7pat" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-HTTP缓存机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2017/02/23/HTTP缓存机制/" class="article-date">
+  <time datetime="2017-02-23T14:25:50.000Z" itemprop="datePublished">2017-02-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HTTP/">HTTP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/23/HTTP缓存机制/">HTTP缓存机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>HTTP缓存机制作为Web性能优化的重要手段，这一节我们主要来学习HTTP缓存，先贴出2道题，大家可以尝试解答下：</p>
+<p>以下为<code>page.html</code>内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;&lt;head&gt;</div><div class="line">    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</div><div class="line">    &lt;title&gt;page页&lt;/title&gt;&lt;/head&gt;&lt;body&gt;</div><div class="line">    &lt;img src=&quot;images/head.png&quot; /&gt;</div><div class="line">    &lt;a href=&quot;page.html&quot;&gt;重新访问page页&lt;/a&gt;&lt;/body&gt;&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>首次访问该页面，页面中head.png响应头信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div><div class="line">Cache-Control: no-cache</div><div class="line">Content-Type: image/png</div><div class="line">Last-Modified: Tue, 08 Nov 2016 06:59:00 GMT</div><div class="line">Accept-Ranges: bytes</div><div class="line">Date: Thu, 10 Nov 2016 02:48:50 GMT</div><div class="line">Content-Length: 3534</div></pre></td></tr></table></figure>
+<p><strong>问题1：</strong> 请问当点击<code>重新访问page页</code>链接重新加载该页面后，head.png如何二次加载？</p>
+<p><strong>问题2：</strong>如果将上述信息中的Cache-Controller设置为private，那么结果又会如何呢？</p>
+<p>以上2道题，如果你能答对，说明你已经对这些知识理解非常透彻了，否则请继续往下看。接下来我们将从系统化角度来讲讲HTTP缓存是如何协同工作的</p>
+<h3 id="HTTP缓存体系"><a href="#HTTP缓存体系" class="headerlink" title="HTTP缓存体系"></a>HTTP缓存体系</h3><p>HTTP缓存体系分为以下三个部分：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-23/15685593-file_1487864473858_e48d.png" alt=""></p>
+<h4 id="1-缓存存储策略"><a href="#1-缓存存储策略" class="headerlink" title="1. 缓存存储策略"></a>1. 缓存存储策略</h4><p>用来确定HTTP响应内容是否可以被客户端缓存，以及可以被哪些客户端存储，这个策略的作用只有一个，用于决定HTTP响应内容是否可缓存到客户端。</p>
+<p>对于<code>Cache-Controller</code>里头的Public、Private、no-cache、max-age、no-store他们都是用来指明响应内容是否可以被客户端存储的，其中前4个都会缓存文件数据(关于no-cache应理解为不建议使用本地缓存，其仍然会缓存数据到本地)，后者no-store则不会在客户端缓存任何响应数据。</p>
+<p>通过<code>Cache-Controller:</code>Public设置我们可以将HTTP响应数据存储到本地，但此时并不意味着后续浏览器会直接从缓存中读取数据并使用，为啥？因为它无法确定本地缓存的数据是否可用，还必须借助一套鉴别机制来确定才行，这就是我们下面将到的缓存过期策略</p>
+<h4 id="2-缓存过期策略"><a href="#2-缓存过期策略" class="headerlink" title="2. 缓存过期策略"></a>2. 缓存过期策略</h4><p>客户端用来确认存储在本地的缓存数据是否过期，进而决定是否要发请求到服务端获取数据，这个策略的作用也只有一个，那就是决定客户端是否可直接从本地缓存数据中加载数据并展示，否则就发请求到服务器获取。</p>
+<p>刚上面我们已阐述了数据缓存到了本地还需要经过判断才能使用，那么浏览器通过什么条件来判断呢？答案是<code>Expires</code>，Expires指名了缓存数据绝对时间，告诉客户端到这个时间点后本地缓存就作废了。</p>
+<p>注意：<br>当Cache-Control: max-age=10 与 <code>Expires</code>同时存在时，后者会被覆盖掉；</p>
+<h4 id="3-缓存对比策略"><a href="#3-缓存对比策略" class="headerlink" title="3. 缓存对比策略"></a>3. 缓存对比策略</h4><p>将缓存在客户端的数据标识发往服务端，服务端通过标识来判断客户端缓存数据是否仍有效，进而决定是否要重发数据。</p>
+<p>客户端检查到数据过期或浏览器刷新后，往往会重新发起一个HTTP请求到服务器，服务器此时并不急于返回数据，而是按请求头有没有带标识(If-Modified-Since、If-None-Match)过来，如果判断标识仍然有效，则返回304告诉客户端取本地缓存数据来用即可(这里要注意的是你必须要在首次响应时输出相应的头信息(Last-Modified、ETags)到客户端。至此我们明白了上面所说的本地缓存数据即使被认为过期，并不等于数据从此没用的道理。</p>
+<p>未完待续…</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://mp.weixin.qq.com/s/qOMO0LIdA47j3RjhbCWUEQ" target="_blank" rel="external">HTTP缓存策略</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2017/02/23/HTTP缓存机制/" data-id="cj055224i001g4t938yw6tc85" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Java8之不常用却很有用的知识点" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2017/02/21/Java8之不常用却很有用的知识点/" class="article-date">
+  <time datetime="2017-02-21T06:07:13.000Z" itemprop="datePublished">2017-02-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/21/Java8之不常用却很有用的知识点/">Java8之不常用却很有用的知识点</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><h4 id="1-forEach-VS-forEachOrdered"><a href="#1-forEach-VS-forEachOrdered" class="headerlink" title="1. forEach VS forEachOrdered"></a>1. forEach VS forEachOrdered</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_005()&#123;</div><div class="line">    List&lt;String&gt; strs = Arrays.asList(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;);</div><div class="line">    strs.stream().parallel().forEach(str -&gt; System.out.println(&quot;forEach =&gt; &quot; + str));</div><div class="line">    strs.stream().parallel().forEachOrdered(str -&gt; System.out.println(&quot;forEachOrdered =&gt; &quot; + str));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-12-11/96792814-file_1481436578266_14fcc.png" alt=""></p>
+<p><code>分析</code></p>
+<p>并行处理数据时，<code>forEach</code>处理的数据是无序的，而<code>forEachOrdered</code>处理数据是按照输入流的顺序处理的。</p>
+<h4 id="2-合并Map"><a href="#2-合并Map" class="headerlink" title="2. 合并Map"></a>2. 合并Map</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">@RunWith(JUnit4.class)</div><div class="line">public class BasicTest &#123;</div><div class="line">    /**</div><div class="line">     * 将sub合并至total,若在total中存在该键(key),则键值合并;</div><div class="line">     */</div><div class="line">    @Test</div><div class="line">    public void test_001()&#123;</div><div class="line">        Map&lt;String,List&lt;Integer&gt;&gt; total = Maps.newHashMap();</div><div class="line">        Map&lt;String,List&lt;Integer&gt;&gt; sub = Maps.newHashMap();</div><div class="line"></div><div class="line">        total.put(&quot;num1&quot;, Arrays.asList(1,2,3,4,11));</div><div class="line">        total.put(&quot;num2&quot;,Arrays.asList(1,2,3,4));</div><div class="line">        total.put(&quot;num3&quot;,Arrays.asList(1,2,3,4));</div><div class="line">        total.put(&quot;num4&quot;,Arrays.asList(1,2,3,4));</div><div class="line"></div><div class="line">        sub.put(&quot;num1&quot;,Arrays.asList(1,2,3,4,5,6,7));</div><div class="line">        sub.put(&quot;num2&quot;,Arrays.asList(1,2,3,4,4,5,6,7));</div><div class="line"></div><div class="line">        sub.keySet().forEach(key -&gt; total.merge(key,sub.get(key),(v1,v2) -&gt; Arrays.asList(v1,v2).stream().flatMap(Collection::stream).distinct().collect(Collectors.toList())));</div><div class="line"></div><div class="line">        System.out.println(&quot;total =&gt; &quot; + JSON.toJSONString(total));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-21/83737621-file_1487691562243_10db7.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2017/02/21/Java8之不常用却很有用的知识点/" data-id="cj055226700444t93v4ap7gvf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-awk及sed简明教程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2017/02/20/awk及sed简明教程/" class="article-date">
+  <time datetime="2017-02-20T15:32:05.000Z" itemprop="datePublished">2017-02-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/20/awk及sed简明教程/">awk及sed简明教程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://coolshell.cn/articles/9104.html" target="_blank" rel="external">SED简明教程 – 酷壳</a></li>
+<li><a href="http://coolshell.cn/articles/9070.html" target="_blank" rel="external">AWK简明教程 – 酷壳</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2017/02/20/awk及sed简明教程/" data-id="cj05522ci00fe4t93ysvgtbbc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-InnoDB存储引擎之B-树索引内部实现" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2017/02/19/InnoDB存储引擎之B-树索引内部实现/" class="article-date">
+  <time datetime="2017-02-19T08:02:17.000Z" itemprop="datePublished">2017-02-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MYSQL/">MYSQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/19/InnoDB存储引擎之B-树索引内部实现/">InnoDB存储引擎之B+树索引内部实现</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>B+</code>树索引是InnoDB最为常用和最为有效的索引，其构造类似于<code>二叉树</code>，<code>B+</code>树中的B代表的是平衡(balance)，因为<code>B+</code>树是从最早的平衡二叉树演化而来的。</p>
+<p>在学习索引之前先介绍与之密切相关的一些算法与数据结构，有助于更好的理解B+树索引的工作方式。</p>
+<h4 id="1-二分查找法"><a href="#1-二分查找法" class="headerlink" title="1. 二分查找法"></a>1. 二分查找法</h4><p>基本思想：先以<strong>有序数列</strong>的中点位置为比较对象，如果找的元素值小于该中点元素，则将待查序列缩小为左半部分，否则为右半部分。通过一次比较，将查找区间缩小一半。</p>
+<p>举个例子：从以下10个数中，查找48这条记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">5 10 19 21 31 37(✅) 42 48 50 55</div><div class="line"></div><div class="line">5 10 19 21 31 37 42 48 50(✅) 55</div><div class="line"></div><div class="line">5 10 19 21 31 37 42 48(✅) 50 55</div><div class="line"></div><div class="line">顺序查找平均次数: (1+2+3+4+5+6+7+8+9+10)/10 = 5.5次</div><div class="line"></div><div class="line">二分查找法平均次数: (4+3+2+4+3+1+4+3+2+3)/10 = 4次</div></pre></td></tr></table></figure>
+<h4 id="2-二叉查找树"><a href="#2-二叉查找树" class="headerlink" title="2. 二叉查找树"></a>2. 二叉查找树</h4><p>定义：在二叉查找树中，左子树的键值总是小于跟的键值，右子树的键值总是大于根的键值。</p>
+<p>三种遍历方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">前序遍历：根节点-&gt;左子树-&gt;右子树</div><div class="line">中序遍历：左子树-&gt;根节点-&gt;右子树</div><div class="line">后序遍历：左子树-&gt;右子树-&gt;根节点</div></pre></td></tr></table></figure>
+<p>举个例子：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/62647480-file_1487492747619_129e8.gif" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">前序遍历：abdefgc</div><div class="line">中序遍历：debgfac</div><div class="line">后序遍历：edgfbca</div></pre></td></tr></table></figure>
+<h4 id="3-平衡二叉树"><a href="#3-平衡二叉树" class="headerlink" title="3. 平衡二叉树"></a>3. 平衡二叉树</h4><p>定义：符合二叉查找树的定义，其次必须满足任何节点的两个子数的高度最大差为1.</p>
+<h3 id="B-树"><a href="#B-树" class="headerlink" title="B+ 树"></a>B+ 树</h3><p>定义：B+树中，所有记录节点都按键值的大小的顺序存放在同一层的叶子节点上，由各叶子节点指针进行连接。先来看一个B+树，其高度为2，<strong>每页可存放4条记录</strong>，扇出(fan out)为5。</p>
+<p>从图1-1可以看出，所有记录都在叶子节点上，并且是顺序存放的，如果用户从最左边的叶子节点开始顺序遍历，可以得到所有键值的顺序排序：5、10、15、20、25、30、50、55、60、65、75、80、85、90。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/79936845-file_1487501076247_17452.png" alt="图1-1"></p>
+<h4 id="1-插入操作"><a href="#1-插入操作" class="headerlink" title="1. 插入操作"></a>1. 插入操作</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">Leaf Page满</th>
+<th style="text-align:center">Index Page满</th>
+<th style="text-align:left">操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:left">直接将记录插入到叶子节点</td>
+</tr>
+<tr>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:left">1）拆分Leaf Page  2) 将中间的节点放入到Index Page中 3）小于中间节点的记录放左边</td>
+</tr>
+<tr>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:left">1）拆分Leaf Page 2) 小于中间节点的记录放左边 3）大于或等于中间节点的记录放右边 4）拆分Index Page 5) 小于中间节点的记录放左边 6）大于中间节点放右边 7） 中间节点放入上一层Index Page</td>
+</tr>
+</tbody>
+</table>
+<p>操作1. 用户插入28键值，发现当前Leaf Page与Index Page都没有满</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/73962338-file_1487501771494_c1ff.png" alt=""></p>
+<p>操作2. 继操作1之后，再插入70这个键值，此时Leaf Page满了，但Index Page还没有满</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/91261615-file_1487502263260_fa07.png" alt=""></p>
+<p>操作3. 继操作2之后，再插入键值95，此时Leaf Page与Index Page都满了。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/87480241-file_1487503232532_1e17.png" alt=""></p>
+<h4 id="2-删除操作"><a href="#2-删除操作" class="headerlink" title="2. 删除操作"></a>2. 删除操作</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">叶子节点小于填充因子</th>
+<th style="text-align:center">中间节点小于填充因子</th>
+<th style="text-align:left">操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:left">直接将记录从叶子节点删除，如果该节点还是Index Page的节点，用该节点的右节点代替</td>
+</tr>
+<tr>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:left">合并叶子节点和他的兄弟节点，同时更新Index Page</td>
+</tr>
+<tr>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:left">1) 合并叶子节点和它的兄弟节点 2）更新Index Page 3) 合并Index Page和它的兄弟节点</td>
+</tr>
+</tbody>
+</table>
+<p>操作1. 删除键值为70的记录，符合上述第一种情况：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/52906554-file_1487511007704_aa56.png" alt=""></p>
+<p>操作2. 继操作1之后，删除键值为25记录，符合上述第二种情况：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/63451589-file_1487511457231_11319.png" alt=""></p>
+<p>操作3. 继操作2之后，删除键值60的记录，填充因子小于50%，进行合并操作，符合上述第三种情况：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/67245038-file_1487511783693_b9ba.png" alt=""></p>
+<h3 id="B-索引类型"><a href="#B-索引类型" class="headerlink" title="B+ 索引类型"></a>B+ 索引类型</h3><p>B+树索引可以分为聚集索引、辅助索引，但不管是聚集还是辅助索引，其内部都是B+树的，高度平衡，叶子节点存放着所有的数据。</p>
+<h4 id="1-聚集索引"><a href="#1-聚集索引" class="headerlink" title="1. 聚集索引"></a>1. 聚集索引</h4><p>定义：按照每张表的主键构造一棵B+树，同时叶子节点中存放的即为整张表的行记录数据，也将聚集索引的叶子节点称为数据页。</p>
+<p>好处：</p>
+<p>1）对于主键的排序查找和范围查找速度非常快。由于B+数索引是双向链表，用户可以快速找到最后一个数据页。</p>
+<p>举个例子：<br>因为B+树索引是双向链表的，可以快速找到最后一个数据页，并获取10条记录。<br><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/86953295-file_1487513202735_1c86.png" alt=""></p>
+<h4 id="2-辅助索引"><a href="#2-辅助索引" class="headerlink" title="2. 辅助索引"></a>2. 辅助索引</h4><p>定义：叶子节点并不包含行记录的全部数据，叶子节点除了包含键值以外，每个叶子节点中的索引行还包含了一个书签。该书签用来告诉InnoDB存储引擎哪里可以找到索引相对应的行数据。由于InnoDB存储引擎表是索引组织表，因此InnoDB存储引擎的辅助索引的书签就是相应的行数据的聚集索引键。</p>
+<p>未完待续…</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>MYSQL技术内幕</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2017/02/19/InnoDB存储引擎之B-树索引内部实现/" data-id="cj055224x00204t9315gvocg8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MYSQL/">MYSQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">33</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web服务器/">Web服务器</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/">Hystrix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Intellij-IDEA/">Intellij IDEA</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">34</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JOOQ/">JOOQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScirpt/">JavaScirpt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MYSQL/">MYSQL</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Play/">Play</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit/">Retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit2/">Retrofit2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprng-MVC/">Sprng MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thymeleaf/">Thymeleaf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web服务器/">Web服务器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件/">中间件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思绪/">思绪</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Git/" style="font-size: 10.91px;">Git</a> <a href="/tags/HTTP/" style="font-size: 17.27px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 12.73px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 10px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 10.91px;">Intellij IDEA</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/JOOQ/" style="font-size: 10.91px;">JOOQ</a> <a href="/tags/JavaScirpt/" style="font-size: 10px;">JavaScirpt</a> <a href="/tags/JavaScript/" style="font-size: 15.45px;">JavaScript</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 12.73px;">Linux</a> <a href="/tags/MYSQL/" style="font-size: 19.09px;">MYSQL</a> <a href="/tags/Mac/" style="font-size: 13.64px;">Mac</a> <a href="/tags/PHP/" style="font-size: 18.18px;">PHP</a> <a href="/tags/Play/" style="font-size: 10.91px;">Play</a> <a href="/tags/Python/" style="font-size: 14.55px;">Python</a> <a href="/tags/React/" style="font-size: 10.91px;">React</a> <a href="/tags/Redis/" style="font-size: 13.64px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/Retrofit2/" style="font-size: 10px;">Retrofit2</a> <a href="/tags/SQL/" style="font-size: 18.18px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spring/" style="font-size: 11.82px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 16.36px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10.91px;">SpringCloud</a> <a href="/tags/Sprng-MVC/" style="font-size: 10px;">Sprng MVC</a> <a href="/tags/Thymeleaf/" style="font-size: 10px;">Thymeleaf</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Web服务器/" style="font-size: 10px;">Web服务器</a> <a href="/tags/中间件/" style="font-size: 10px;">中间件</a> <a href="/tags/思绪/" style="font-size: 13.64px;">思绪</a> <a href="/tags/算法/" style="font-size: 11.82px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">25</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/11/Python之字典/">Python之字典</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/11/Python之列表和元组/">Python之列表和元组</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/26/React技术栈介绍/">React技术栈介绍</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/26/ES6之SET、Map数据结构/">ES6之SET、Map数据结构</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/25/SpringBoot配置Filter、Interceptor/">SpringBoot配置Filter、Interceptor</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_pv">
+<h3 class="widget-title">访问量</h3>
+<div class="widget"> 本站总访问量<span id="busuanzi_value_site_pv"></span>次 </div>
+</span>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 流云<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
