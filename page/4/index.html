@@ -1,91 +1,11 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8"/>
-<meta name="baidu-site-verification" content="Y1BuCj8QZI" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
+  <meta charset="utf-8">
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
-
-
-
-
-
-
-<meta name="description" content="每天进步一点">
+  <title>记录点滴成长</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="每天进步一点">
 <meta property="og:type" content="website">
 <meta property="og:title" content="记录点滴成长">
 <meta property="og:url" content="http://jianwl.com/page/4/index.html">
@@ -94,1848 +14,1059 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记录点滴成长">
 <meta name="twitter:description" content="每天进步一点">
+  
+    <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
 
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: 0,
-      author: '博主'
-    }
-  };
-</script>
-
-
-
-
-  <link rel="canonical" href="http://jianwl.com/page/4/"/>
-
-  <title> 记录点滴成长 </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">记录点滴成长</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://jianwl.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-JAVA之ArrayList源码学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/10/26/JAVA之ArrayList源码学习/" class="article-date">
+  <time datetime="2016-10-25T16:01:16.000Z" itemprop="datePublished">2016-10-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/26/JAVA之ArrayList源码学习/">JAVA之ArrayList源码学习</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>接触<code>JAVA</code>2年多了，写代码总是随心所遇，怎么快，怎么来。写代码时，没有去思考怎么避免重复代码，降低多个模块间的耦合，都是事后填坑。看优秀的源码是一个很好地学习方式,同时有助于加深理解。</p>
+<h3 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-28/26213741.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>为何ArrayList能够动态扩容？</strong></p>
+<p><code>1. 定义变量</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// 默认容量</div><div class="line">private static final int DEFAULT_CAPACITY = 10;</div><div class="line">    </div><div class="line">// 数组元素,其长度代表总的容量,实际元素个数，小于总容量</div><div class="line">transient Object[] elementData; </div><div class="line">  </div><div class="line">// 实际元素个数</div><div class="line">private int size;</div><div class="line">    </div><div class="line">// 默认空实例</div><div class="line">private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</div></pre></td></tr></table></figure>
+<p><code>2. 初始化，实际元素个数为0</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public ArrayList() &#123;</div><div class="line">    this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>3.增加元素</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public boolean add(E e) &#123;</div><div class="line">// 确保数组的容量够，不够自动扩容，具体来看下实现。</div><div class="line">   ensureCapacityInternal(size + 1);</div><div class="line">        </div><div class="line">// 数组指定位置赋值</div><div class="line">   elementData[size++] = e;</div><div class="line">   return true;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>ensureCapacityInternal 具体实现</code></p>
+<p>简单叙述一下步骤：</p>
+<ol>
+<li>初始化,元素个数(<code>size=0</code>)为0</li>
+<li>此时<code>elementData</code>为空，故<code>minCapacity=10</code> </li>
+<li>因<code>minCapacity=10</code>而<code>elementData.length=0</code>故第一次自动扩容。</li>
+<li><code>当前元素的个数 * 1.5 = 0</code>小于<code>minCapacity=10</code>,所以扩容的长度为10.</li>
+<li>赋值<code>elementData</code>的长度为10。自此完成一次完整扩容。</li>
+<li>再次增加元素，因<code>minCapacity - elementData.length == 0</code>，故不会再次扩容，直到元素的个数为11个，此时<code>minCapacity=11</code>而<code>elementData.length=10</code>，将再次触发扩容。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">private void ensureCapacityInternal(int minCapacity) &#123;</div><div class="line">      if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;</div><div class="line">          minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      ensureExplicitCapacity(minCapacity);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  private void ensureExplicitCapacity(int minCapacity) &#123;</div><div class="line">      modCount++;</div><div class="line"></div><div class="line">      // 实际元素个数大于数组容量时,进行扩容。</div><div class="line">      if (minCapacity - elementData.length &gt; 0)</div><div class="line">          grow(minCapacity);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  // 扩容</div><div class="line">  private void grow(int minCapacity) &#123;</div><div class="line">      // overflow-conscious code</div><div class="line">      int oldCapacity = elementData.length;</div><div class="line">      </div><div class="line">      // 新容量为当前元素个数的1.5倍</div><div class="line">      int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1);</div><div class="line">      if (newCapacity - minCap。、acity &lt; 0)</div><div class="line">          newCapacity = minCapacity;</div><div class="line">      if (newCapacity - MAX_ARRAY_SIZE &gt; 0)</div><div class="line">          newCapacity = hugeCapacity(minCapacity);</div><div class="line">      // minCapacity is usually close to size, so this is a win:</div><div class="line">      elementData = Arrays.copyOf(elementData, newCapacity);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>JDK8源码</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/10/26/JAVA之ArrayList源码学习/" data-id="cj052ly1d002wws93heyhfbz4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-JAVA之简单工厂模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/10/24/JAVA之简单工厂模式/" class="article-date">
+  <time datetime="2016-10-24T15:56:11.000Z" itemprop="datePublished">2016-10-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/24/JAVA之简单工厂模式/">JAVA之简单工厂模式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上一节我们学习了<a href="http://jianwl.com/2016/10/17/Java%E4%B9%8B%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95/">模板方法</a>，这一节让我们来学习简单工厂模式。</p>
+<p><code>定义</code></p>
+<p>工厂模式就是按照要求返回一个类型的对象。</p>
+<p><code>目的</code></p>
+<p>使对象的实例化与主程序代码解耦。</p>
+<p><code>设计原则</code></p>
+<ul>
+<li>变量不要持有具体类的引用</li>
+<li>不要让类继承具体类，要继承抽象类或接口</li>
+<li>不要覆盖基类中已实现的方法</li>
+</ul>
+<p><code>优点</code></p>
+<ul>
+<li>简单工厂模式实现了对责任的分割，提供了专门的工厂类创建对象</li>
+<li>引入配置文件，在不需要修改客户端代码的情况下更换和增加新的产品类，一定程度提高系统的灵活性。</li>
+</ul>
+<p><code>缺点</code></p>
+<ul>
+<li>扩展困难，一旦添加新产品需要修改工厂逻辑</li>
+<li>产品类型较多时，可能造成工厂逻辑过于复杂，不利于系统扩展和维护</li>
+<li>工厂类集中了所有产品创建逻辑，一旦不能工作，整个系统将受影响。</li>
+<li>简单工厂模式会增加系统中类的个数，一定程度上增加了系统的复杂性和理解难度</li>
+<li>使用静态工厂方法，造成工厂角色无法形成基于继承的等级结构</li>
+</ul>
+<p><code>应用场景A</code></p>
+<p>我们与银行有业务来往，需要与银行方进行报文通信，不同的业务的报文不同，为此我们需要有一个工厂来简单创建不同的报文。</p>
+<p><code>应用场景B</code></p>
+<p>写一个Servlet处理客户端请求的时候，往往会给一个Servlet处理多个业务逻辑，为此我们需要有一个工厂类简单创建不同的Servlet。</p>
+<h3 id="实战-应用场景A："><a href="#实战-应用场景A：" class="headerlink" title="实战 - 应用场景A："></a>实战 - 应用场景A：</h3><p><strong>1. 定义产品接口</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface IProduct &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>2. 定义一个抽象类，他是所有产品的父类</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public abstract class AnswerHead &#123;</div><div class="line">    protected String requestType;</div><div class="line">    protected String agentCode;</div><div class="line">    protected String trnCode;</div><div class="line">    protected String frontTraceno;</div><div class="line">    public abstract String toXML();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>3. 产品类A，只应答报文头</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class AnswerHeadOnly extends AnswerHead &#123;</div><div class="line">    @Override</div><div class="line">    public String toXML() &#123;</div><div class="line">        System.out.println(&quot;AnswerHeadOnly to xml&quot;);</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>4. 产品类B，只应答报文体</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class AnswerBodyMobile extends AnswerHead &#123;</div><div class="line">    @Override</div><div class="line">    public String toXML() &#123;</div><div class="line">        System.out.println(&quot;AnswerBodyMobile to xml&quot;);</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>5. 简单工厂类，根据参数不同生成不同的实例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class ProductFactory &#123;</div><div class="line">    public static AnswerHead createProduct(String type)&#123;</div><div class="line">       switch (type)&#123;</div><div class="line">           case &quot;answerHeadOnly&quot;:</div><div class="line">               return new AnswerHeadOnly();</div><div class="line">           case &quot;answerHeadMobile&quot;:</div><div class="line">               return new AnswerBodyMobile();</div><div class="line">           default:</div><div class="line">               return null;</div><div class="line">       &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ProductFactory.createProduct(&quot;answerHeadOnly&quot;).toXML();</div><div class="line">        ProductFactory.createProduct(&quot;answerHeadMobile&quot;).toXML();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>6、结果</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-25/57629976.jpg" alt=""></p>
+<h3 id="实战-应用场景B"><a href="#实战-应用场景B" class="headerlink" title="实战 - 应用场景B"></a>实战 - 应用场景B</h3><p>我们在写一个Servlet处理客户端请求的时候，往往会一个Servlet处理多个业务逻辑，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">protected void doPost(HttpServletRequest request, HttpServletResponse response) &#123;</div><div class="line">    String flag = request.getParameter(&quot;flag&quot;);</div><div class="line">    if(flag.equals(&quot;service1&quot;)) &#123;</div><div class="line">        service1();</div><div class="line">    &#125;else if(flag.equals(&quot;service2&quot;)) &#123;</div><div class="line">        service2();</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上是我们的Servlet处理多业务逻辑的常规方法，写一坨<code>if else</code>语句，一种比较好的办法就是，将请求的分发与Servlet分离，让Servlet之处理业务逻辑。我们把各种请求的Servlet看做产品类，<code>javax.servlet.HttpServlet</code>是产品父类，<code>javax.servlet.Servlet</code>是产品接口，这样我们定义一个<code>ServletFactory</code>,在过滤器里解析url请求并交给<code>ServletFactory</code>来处理就可以了。这是一个典型的简单工厂应用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">@WebFilter(&quot;/TransRequest&quot;)</div><div class="line">public class TransRequest implements Filter&#123;</div><div class="line">    private String servletName;</div><div class="line">    @Override</div><div class="line">    public void doFilter(ServletRequest request, ServletResponse response,</div><div class="line">            FilterChain chain) throws IOException, ServletException &#123;</div><div class="line">        HttpServletRequest myRequest = (HttpServletRequest)request;</div><div class="line">        //拿到请求的servlet名字， 这里我们约定请求都是/servletName形式</div><div class="line">        String names[] = myRequest.getRequestURI().trim().split(&quot;/&quot;);</div><div class="line">        servletName = names[2];</div><div class="line">        if( servletName != null) &#123;</div><div class="line">        //以下是最典型的两句简单工厂的例子</div><div class="line">            Servlet servlet = ServletFactory.createServlet(servletName);</div><div class="line">            servlet.service(request, response);</div><div class="line">        &#125;else</div><div class="line">            chain.doFilter(request, response);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>每次类一个请求我们用工厂生产一个Servlet，这样可以免去xml配置大量的servlet路径信息比较方便，逻辑也更加清晰。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> public class ServletFactory &#123;</div><div class="line">    public static Servlet createServlet(String servletName) throws ServletException &#123;</div><div class="line">        if(servletName.equals(&quot;servletName1&quot;)) &#123;</div><div class="line">            return new Service1();</div><div class="line">        &#125;else if(servletName.equals(&quot;servletName2&quot;))&#123;</div><div class="line">            return new Service2();</div><div class="line">        &#125;else&#123;</div><div class="line">            throw new ServletException(&quot;No such servlet&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://blog.csdn.net/zuoxiaolong8810/article/details/9044033" target="_blank" rel="external">简单工厂模式详解</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/10/24/JAVA之简单工厂模式/" data-id="cj052ly1k0037ws93ggg1w7df" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-KeyNote技巧之次序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/10/22/KeyNote技巧之次序/" class="article-date">
+  <time datetime="2016-10-22T02:37:08.000Z" itemprop="datePublished">2016-10-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Mac/">Mac</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/22/KeyNote技巧之次序/">KeyNote技巧之次序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>内容呈现的<code>次序</code>，对于演讲者来说是经常会碰到的。一般来说，演讲的内容会分为好多点来呈现，当然你可以用最简单的方式，每一页呈现一点，但听众可能听到后面会忘了前面的内容。这一节我们将会来学习，怎么在一页中呈现所有点，并且在讲解当前点时，观众不会被其他点分散注意力。</p>
+<h3 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h3><p><code>描述：</code> 第一点说完，讲解第二点时，将第一点置为透明；讲解第3点时，将第2点至为透明；讲解第4点时，将第3点至为透明；最后将所有点都呈现出来。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/56992915.jpg" alt=""></p>
+<h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p><strong>1、介绍个人履历</strong></p>
+<p><code>描述：</code>在介绍个人履历时，介绍某个阶段时，将之前的经历至为透明，避免观众分散注意力。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/65788428.jpg" alt=""></p>
+<p><strong>2、英语读物推荐</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/634423.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1、出现「数字2时将数字1透明」</strong></p>
+<p><code>设置「数字2」的出现效果</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/46206252.jpg" alt=""></p>
+<p><code>设置「数字1」的透明程度为90%</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/7820640.jpg" alt=""></p>
+<p><code>设置构建的顺序，当「数字2」出现时，「数字1」变为透明</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/55957232.jpg" alt=""></p>
+<p><code>效果图</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/68799891.jpg" alt=""></p>
+<p><strong>2、介绍好所有点，最后将所有点都非透明呈现出来</strong></p>
+<p><code>拷贝所有点到新的一页，设置新的一页和之前一页的出现次序为「渐隐渐现」</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/73577781.jpg" alt=""></p>
+<p><code>实现效果</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/93172671.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://www.youtube.com/watch?v=f3tZhoX82v0&amp;index=5&amp;list=PLnt8-ZhVs2dupUpGriwiVceamkpVdZ5yF" target="_blank" rel="external">许岑KeyNote教学 –需要翻墙</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/10/22/KeyNote技巧之次序/" data-id="cj052ly33005zws931n9s6y4l" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/">Mac</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-KeyNote技巧之参考线与对齐" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/10/22/KeyNote技巧之参考线与对齐/" class="article-date">
+  <time datetime="2016-10-22T00:26:13.000Z" itemprop="datePublished">2016-10-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Mac/">Mac</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/22/KeyNote技巧之参考线与对齐/">KeyNote技巧之参考线与对齐</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近遇到一个比较困惑的问题：<code>项目工程做出来了，但是怎么样展示项目，让别人了解它。</code>用<code>KeyNote</code>是一种比较好的展现方式，所以学习<code>KeyNote</code>使用技巧是非常有必要的。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1.文字水平&amp;竖直居中</strong></p>
+<p><code>操作：拖动文字当文字呈现出一个十字标识时，处于水平、竖直居中位置</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/6424996.jpg" alt=""></p>
+<p><strong>2.文字间距相同</strong></p>
+<p><code>操作：移动「平凡之路」与「参考线与对齐」出现双箭头时，说明「平凡之路」、「参考线与对齐」、「走在平坦的路上」间距相同，当出现竖线时，说明它们竖直居中对齐</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/32772264.jpg" alt=""></p>
+<p><strong>3.文字左对齐</strong></p>
+<p><code>方式1：手动左对齐</code></p>
+<p><code>操作</code></p>
+<p>1、 <code>Command + R</code>快捷键，开启标签<br>2、 拉出一条对齐线</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/9811713.jpg" alt=""></p>
+<p>3、 调节直到文字在一条直线上，且间距相同。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/45974538.jpg" alt=""> </p>
+<p><code>方式2：自动左对齐</code></p>
+<p><code>操作</code></p>
+<p>1、 选中所有文字, 在其中一个文字旁右键选择对齐方式</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/30119857.jpg" alt=""></p>
+<p>2、得到左对齐文字后，在一个文字旁右键选择<code>分布对象</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/18045225.jpg" alt=""></p>
+<p>3、得到左对齐且竖直间距相同的文字</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/34020849.jpg" alt=""></p>
+<p><strong>4.调整图片为相同大小</strong></p>
+<p><code>操作</code></p>
+<p>1、有两张比例相同，但大小不同的图片</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/45034017.jpg" alt=""></p>
+<p>2、按比例缩放一张图片，当图片的长宽均出现双箭头时，此时两张图片大小一致</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-22/24118872.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="https://www.youtube.com/watch?v=Z02qoRAWULE&amp;list=PLnt8-ZhVs2dupUpGriwiVceamkpVdZ5yF&amp;index=4" target="_blank" rel="external">许岑KeyNote教学</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/10/22/KeyNote技巧之参考线与对齐/" data-id="cj052ly31005wws93thttdbdl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/">Mac</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Java之模板方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/10/17/Java之模板方法/" class="article-date">
+  <time datetime="2016-10-17T15:16:56.000Z" itemprop="datePublished">2016-10-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/17/Java之模板方法/">Java之模板方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>模板方法之前写过一篇<a href="http://jianwl.com/2016/08/11/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/">Java设计模式之模板方法模式</a>,当回过头来再看这篇文章时，发现原来的文章过于累赘，无法让人快速理解，故重新梳理。</p>
+<h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><p><strong>什么是模板方法？</strong></p>
+<p>提取了类库中的公共行为，将公共行为放在父类中，通过其子类来实现不同的行为。</p>
+<p><strong>优点</strong></p>
+<ol>
+<li>将不变的行为搬到超类，去除了子类中的重复代码</li>
+<li>子类实现算法的细节，有助于算法的扩展。</li>
+<li>父类调用子类实现的操作，通过子类扩展新的行为，符合开闭原则。</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ol>
+<li>每个不同的实现都需要定义一个子类，这会导致类的个数的增加，设计更加抽象。</li>
+</ol>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1. 定义算法骨架</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public abstract class StealingMethod &#123;</div><div class="line"></div><div class="line">  protected abstract String pickTarget();</div><div class="line"></div><div class="line">  protected abstract void confuseTarget(String target);</div><div class="line"></div><div class="line">  protected abstract void stealTheItem(String target);</div><div class="line"></div><div class="line">  public void steal() &#123;</div><div class="line">    String target = pickTarget();</div><div class="line">    System.out.println(&quot;The target has been chosen as &quot; + target + &quot;.&quot;);</div><div class="line">    confuseTarget(target);</div><div class="line">    stealTheItem(target);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>2. 主对象使用骨架算法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class HalflingThief &#123;</div><div class="line"></div><div class="line">  private StealingMethod method;</div><div class="line"></div><div class="line">  public HalflingThief(StealingMethod method) &#123;</div><div class="line">    this.method = method;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public void steal() &#123;</div><div class="line">    method.steal();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public void changeMethod(StealingMethod method) &#123;</div><div class="line">    this.method = method;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>3. 子类A实现骨架算法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class HitAndRunMethod extends StealingMethod &#123;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected String pickTarget() &#123;</div><div class="line">    return &quot;old goblin woman&quot;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected void confuseTarget(String target) &#123;</div><div class="line">    System.out.println(&quot;Approach the &quot; + target + &quot; from behind.&quot;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected void stealTheItem(String target) &#123;</div><div class="line">    System.out.println(&quot;Grab the handbag and run away fast!&quot;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>4. 子类B实现骨架算法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class SubtleMethod extends StealingMethod &#123;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected String pickTarget() &#123;</div><div class="line">    return &quot;shop keeper&quot;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected void confuseTarget(String target) &#123;</div><div class="line">    System.out.println(&quot;Approach the &quot; + target + &quot; with tears running and hug him!&quot;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected void stealTheItem(String target) &#123;</div><div class="line">    System.out.println(&quot;While in close contact grab the &quot; + target + &quot;&apos;s wallet.&quot;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>5. Main方法运行</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class App &#123;</div><div class="line">  public static void main(String[] args) &#123;</div><div class="line">    HalflingThief thief = new HalflingThief(new HitAndRunMethod());</div><div class="line">    thief.steal();</div><div class="line">    thief.changeMethod(new SubtleMethod());</div><div class="line">    thief.steal();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-17/79477811.jpg" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/10/17/Java之模板方法/" data-id="cj052ly2g0050ws93yv5nukm7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Java8之HashMap新特性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/10/17/Java8之HashMap新特性/" class="article-date">
+  <time datetime="2016-10-17T03:11:48.000Z" itemprop="datePublished">2016-10-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/17/Java8之HashMap新特性/">Java8之HashMap新特性</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><code>简介</code></p>
+<p><code>Hash table</code>也是基于<code>Map接口</code>实现的，功能与<code>HashMap</code>基本相似，不同的是<code>HashMap</code>允许key和value插入空值，且<code>HashMap</code>是一个线程不安全类。</p>
+<p><code>性能</code></p>
+<p><code>HashMap</code>影响其性能的有两个参数：初始化容量(<code>initial capacity</code>)和负载因子(<code>load factor</code>)。初始化容量是哈希表创建时的容量。负载因子决定了哈希表充分哈希的比例多大时，自动扩容。当哈希表中的数量大于负载因子乘以哈希表的容量时，哈希表将扩容并重新哈希已存入的数据。</p>
+<p>默认负载因子是<code>0.75</code>是时间和空间成本的权衡比较好的一个平衡点。那负载因子为何是<code>0.75</code>？增大负载因子有什么影响？ 增大负载因子会降低空间开销，但提高查找成本（体现HashMap类的操作，包括get和put)。后文会举例说明。</p>
+<p><code>如何提高性能</code></p>
+<p>预估向<code>HashMap</code>塞的数量来设置初始容量，尽可能减少重新哈希(<code>rehash</code>)的操作，如果初始化容量大于最大条目数<code>除以</code>负载因子，重新哈希操作(<code>rehash</code>)将不会发生。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1、无设置初始化容量 VS 设置初始化容量</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_001() &#123;</div><div class="line">    long start = System.currentTimeMillis();</div><div class="line">    Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();</div><div class="line">    for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">        map.put(String.valueOf(i), i);</div><div class="line">    &#125;</div><div class="line">    System.out.println(&quot;not init capacity =&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Test</div><div class="line">public void test_002() &#123;</div><div class="line">    long start = System.currentTimeMillis();</div><div class="line">    Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;(20560000);</div><div class="line">    for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">        map.put(String.valueOf(i), i);</div><div class="line">    &#125;</div><div class="line">    System.out.println(&quot;init capacity=&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%8812.32.06.png" alt=""></p>
+<p>很明显，设置初始化容量之后的效率会更高。</p>
+<p><strong>2、默认负载因子(0.75f)  VS 设置更高的负载因子</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line"> public void test_002() &#123;</div><div class="line">     long start = System.currentTimeMillis();</div><div class="line">     Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;(20560000, 075f);</div><div class="line">     for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">         map.put(String.valueOf(i), i);</div><div class="line">     &#125;</div><div class="line">     System.out.println(&quot;default load capacity=&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> @Test</div><div class="line"> public void test_0021() &#123;</div><div class="line">     long start = System.currentTimeMillis();</div><div class="line">     Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;(20560000, 0.9f);</div><div class="line">     for (int i = 0; i &lt; 10000000; i++) &#123;</div><div class="line">         map.put(String.valueOf(i), i);</div><div class="line">     &#125;</div><div class="line">     System.out.println(&quot;0.9 load capacity =&gt; &quot; + (System.currentTimeMillis() - start));</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%8812.55.36.png" alt=""></p>
+<p>很明显，增大负载因子后，效率变低。</p>
+<p><strong>3、compute方法</strong></p>
+<p><code>作用：</code>新增数据时，若<code>Map</code>中已存在该Key,可以对Value进行操作。</p>
+<p><code>场景：</code>统计一个数字出现的次数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_011() &#123;</div><div class="line">    List&lt;Integer&gt; list = Arrays.asList(1, 1, 1, 2, 3, 4, 4, 5, 5, 8);</div><div class="line">    Map&lt;Integer, Integer&gt; numCounts = new HashMap&lt;&gt;();</div><div class="line"></div><div class="line">    list.stream().forEach(num -&gt; &#123;</div><div class="line">        if (numCounts.containsKey(num)) &#123;</div><div class="line">            numCounts.compute(num, (k, v) -&gt; (v != null) ? v = v + 1 : v);</div><div class="line">        &#125; else &#123;</div><div class="line">            numCounts.put(num, 1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    </div><div class="line">    numCounts.forEach((k, v) -&gt; System.out.println(&quot;key -&gt; &quot; + k + &quot; value -&gt; &quot; + v));</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.22.00.png" alt=""></p>
+<p><strong>4、遍历forEach</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_006() &#123;</div><div class="line">    Map&lt;String, String&gt; map = new HashMap&lt;&gt;(16, 0.75f);</div><div class="line">    map.put(&quot;1&quot;, &quot;1&quot;);</div><div class="line">    map.put(&quot;2&quot;, &quot;2&quot;);</div><div class="line">    map.put(&quot;3&quot;, &quot;3&quot;);</div><div class="line">    map.forEach((k, v) -&gt; System.out.println(&quot; key -&gt; &quot; + k + &quot; value -&gt; &quot; + v));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.24.14.png" alt=""></p>
+<p><strong>5、合并merge</strong></p>
+<p><code>作用：</code>新增数据，当存在该key，则对该value做处理，反之则新增数据。</p>
+<p><code>场景：</code>统计一个数字出现的次数；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> @Test</div><div class="line">public void test_012() &#123;</div><div class="line">    List&lt;Integer&gt; list = Arrays.asList(1, 1, 1, 2, 3, 4, 4, 5, 5, 8);</div><div class="line">    Map&lt;Integer, Integer&gt; numCounts = new HashMap&lt;&gt;();</div><div class="line"></div><div class="line">    list.stream().forEach(num -&gt; &#123;</div><div class="line">        numCounts.merge(num,1,Integer::sum);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    numCounts.forEach((k, v) -&gt; System.out.println(&quot;key -&gt; &quot; + k + &quot; value -&gt; &quot; + v));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.22.00.png" alt=""></p>
+<p><strong>6、获取所有键值values()</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_008() &#123;</div><div class="line">    Map&lt;String, String&gt; map = new HashMap&lt;&gt;(16, 0.75f);</div><div class="line">    map.put(&quot;1&quot;, &quot;1&quot;);</div><div class="line">    map.put(&quot;2&quot;, &quot;2&quot;);</div><div class="line">    map.put(&quot;3&quot;, &quot;Oh!&quot;);</div><div class="line">    System.out.println(JSON.toJSON(map.values()));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-17%20%E4%B8%8B%E5%8D%881.36.30.png" alt=""></p>
+<p><strong>7、按键值排序顺序或逆序</strong></p>
+<p><code>用LinkedHashMap排序</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_013()&#123;</div><div class="line">    Map&lt;String,Double&gt; map = new LinkedHashMap&lt;&gt;();</div><div class="line">    Map&lt;String,Double&gt; sortedMapA = new LinkedHashMap&lt;&gt;();</div><div class="line">    Map&lt;String,Double&gt; sortedMapB = new LinkedHashMap&lt;&gt;();</div><div class="line">    map.put(&quot;1&quot;,1.0);</div><div class="line">    map.put(&quot;4&quot;,4.0);</div><div class="line">    map.put(&quot;3&quot;,3.0);</div><div class="line">    map.put(&quot;2&quot;,2.0);</div><div class="line">    map.put(&quot;5&quot;,5.0);</div><div class="line">    </div><div class="line">    map.entrySet().stream().sorted(Map.Entry.&lt;String,Double&gt;comparingByValue().reversed()).forEachOrdered(entry -&gt; sortedMapA.put(entry.getKey(),entry.getValue()));</div><div class="line">    map.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEachOrdered(entry -&gt; sortedMapB.put(entry.getKey(),entry.getValue()));</div><div class="line"></div><div class="line">    // 逆序</div><div class="line">    System.out.println(sortedMapA);</div><div class="line"></div><div class="line">    // 顺序</div><div class="line">    System.out.println(sortedMapB);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-20/30575157.jpg" alt=""></p>
+<p>但是….如果用<code>HashMap</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-20/60385941.jpg" alt=""></p>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-20/71588571.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>JAVA8官方文档之HashMap</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/10/17/Java8之HashMap新特性/" data-id="cj052ly28004iws93cgpcz77s" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-分享「代码家」的学习过程和学习方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/10/17/分享「代码家」的学习过程和学习方法/" class="article-date">
+  <time datetime="2016-10-16T16:12:35.000Z" itemprop="datePublished">2016-10-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/思绪/">思绪</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/17/分享「代码家」的学习过程和学习方法/">分享「代码家」的学习过程和学习方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>今天逛博客的时候，发现一篇非常棒的文章，出自「<a href="http://blog.daimajia.com/fen-xiang-yi-xie-zi-ji-de-xue-xi-guo-cheng-he-xue-xi-fang-fa/" target="_blank" rel="external">代码家</a>」之手，觉得一时可能难以消化所有的知识，转录过来,方便后续随时查阅。</p>
+<p><code>注：以下内容均来自于「代码家」的博客</code></p>
+<p>每天，都会有人在微博上私信我，问我关于学习和成长的问题。这种问题我一般都不会回复某个j，毕竟每个人的情况不一样，每个人对待事物的性格也不一样，我不能夸下海口的说，你看某本书几个月就能如何如何，我能做的多数时候只是鼓励鼓励，其次我也从不认为我已经成长到一个多高的境界上，让我去给别人做指导，我还是当之有愧的。</p>
+<p>但是，有时候看到大家私信我的时候，确实是处于一种很痛苦或是需要帮助的状态上。 最近晚上有空，就想写写自己从第一次接触程序，到一路颠簸学到今天的一些故事和经验，希望对大家有所帮助。</p>
+<h3 id="学习的三个阶段"><a href="#学习的三个阶段" class="headerlink" title="学习的三个阶段"></a>学习的三个阶段</h3><p><strong>第一阶段：消费者阶段</strong></p>
+<p>我在快上高中的时候，开始接触的程序。那会儿家里有一本 Visual Basic 的书，30 多页左右，也是家里唯一一本计算机类书籍，是我哥学校发的一本课外书，他对计算机貌似没有什么兴趣，就一直堆在家里，直到无意中被我翻到。</p>
+<p>书里的程序格外的简单，几行简单的英语代码，就能让计算机弹出一个对话框，当时看到简直神奇极了！跃跃欲试的在老妈店里的电脑上一步一步的敲下代码，弹出一个简单的对话框，那一瞬间，感觉像是推开了新世界的大门，从此一发不可收拾。 实践完 VB 后，又在小书摊，看到了一本 《黑客 X 档案》，看着各路高深的入侵，木马，盗号，试图努力学会这些技能，然后去跟朋友们炫耀，但一直都无法入门。因为需要太多计算机的基础知识了，不是写个弹框，或者计算器水平的人能搞定的。</p>
+<p>那会儿家里也没有懂电脑的，也没有人可以问，又处在小城市，连个培训班都没有。</p>
+<p>随即，开始漫漫买书求学路。</p>
+<blockquote>
+<p>一旦开始买书，就进入了学习的第一个阶段：消费者阶段。当个消费者其实是个挺轻松的事情，对着书本照猫画虎，一会儿就能跑起来一个看着很有趣的程序。</p>
+</blockquote>
+<p>那会儿，疯狂的买各种书，但是由于周围没有人指导，买了很多类似 21 天 xxx 系列的书，那会儿真的有这种书，我还抱有幻想⋯⋯觉得 21 天后我就⋯⋯</p>
+<p>现在想想国内的图书市场简直恶劣到一定程度。很多高校，教师升职评比需要考察发表书籍情况，导致国内一大批烂书其实都是高校老师发出来的。我现在依然认为国内 95% 的技术类书籍是不值得买的，除了像侯杰老师这种文笔很好的技术人以外。</p>
+<p>很多作者总是做不到『以读者能理解的顺序，而非自己认为的顺序』写文章，坑害了不少对计算机有兴趣的同学。我一直很崇拜侯杰老师的另一个原因是侯杰老师的书，总是能把你最想问的，如同庖丁解牛，深入浅出的解答出来。就如同 MFC 框架（很早前的一个 Windows SDK 框架，现在已经用的很少了），MFC 是很复杂的一个框架，所有初学的人，都会问一样的问题：”这玩意儿是怎么工作起来的？！”，但所有国产的 Visual C++ 的书，都避而不答，让你照猫画虎的做，就能弹出一个窗体。当初国内只有 《深入浅出 MFC》一书，讲明白了背后的一切。</p>
+<p>学完一些基础知识后，就进入了学习的第二个阶段 <strong>实践者阶段</strong> 阶段。所谓实践者，就是开始用自己所学，去开发程序，成为一名专业或非专业的码农，很多人的职业生涯，也就停留在了这个阶段，过上了小富即安的程序员的日子。</p>
+<p>我从<strong>消费者阶段</strong>过度到<strong>实践者阶段</strong>大概用了三四年的时间，其实已经挺长的了。我一直都认为我是一只笨鸟，无意中起飞，却飞了很久的那种。</p>
+<p><strong>第二阶段：实践者阶段</strong></p>
+<p>我真正开始实践的，是在本科学校做的几个网站。</p>
+<p>第一个是个学校的匿名聊天系统，就是所有人都可以登录学校的站点，然后会匿名匹配到一个异性，开始聊天，当时用的 Asp.net 做的开发，配合 ajax + jquery，但由于当时技术太差，导致很多人聊着聊着就断线了，导致小产品不告而终。</p>
+<p>第二个是给我们信息学院开发的一个官网，用的 PHP。在做这个网站的同时，我选修了一门叫《网络安全》的课程，这门课的老师叫陈路，我曾当着老师的面儿，夸下海口，我开发的官网，坚不可摧…(大概这个意思😳)陈老师知道了我做的网站，随即下达一个作业:”谁能攻陷我们的官网，一个漏洞加五分…”，后来，咳咳⋯网站数据没有了⋯⋯ 有个同学用一个很通用的扫描工具，在他也不知道发生了什么的情况下，工具把网站内容都删除了⋯⋯恩，我犯了个超低级的错误⋯⋯ GET 请求可以删除数据，外加身份认证代码有误⋯⋯</p>
+<p>幸好，查看 Apache 日志的时候，发现删除请求到来的前几分钟，Google 爬虫来过（那会儿 Google 还能用），随即马上去 Google 的缓存里找回了所有的数据。 后来陈路老师被学校批斗了一顿，批斗的罪名是『鼓励学生攻击校园网络』，我其实是极力跟学校执事说明这个错误是我犯的，陈老师做的并没有错，而且我到现在还是很喜欢陈老师这种教学方法，毕竟实践出真知。</p>
+<blockquote>
+<p>可能现在陈老师在教《网络安全》课程的时候，会以 “当年有个学生….” 作为开头，有时候想想也挺有意思的。</p>
+</blockquote>
+<p>再后来我花了很多实践学习 Web 安全相关的知识。写各种 Web 程序时，都会最大程度的考虑安全问题。 网站攻陷后没多久，Android 出来了，我买了第一部 Android 手机，然后自己照着官方文档开始学 Android，动力的源头，是我听说写 App 能赚钱。赚钱真是学技术的很强的动力，之前写网站零零星星的赚了六七千块钱，作为同学里的小土豪，我又把目光转到了刚出来没多久的 Android 上。 当时先定了一个目标，写一个图片类 App，打算叫『无尽画廊』。因为很喜欢 WeHeartIt 这个小众文艺图片网站。随即计划利用正则解析图片地址，然后用把图片呈现在 App 上。那会儿 Java 和 Android 完全零基础。</p>
+<p>自己在入门 Android 的时候真的超级拼。早上 6 点起床，然后开始悄悄下床（不能吵着舍友），打开电脑开始研究加开发。折腾到早上 7点半左右就和舍友一起去吃早饭，然后上课。中午回来也不午休，开发到快上课，晚上基本都会熬到 12 点左右。持续了 1 个月左右，终于从零基础到开发出一个粗糙的 1.0 版本，发到了国内的几个 App 市场。反馈不是很多，但是都挺积极，随即决定开发 2.0 版本，还加入了广告积分墙。就这样超拼的持续了 3 个月左右。现在网上能看到的基本都是 2.0 版本。我从这个 App 里，也赚到了一些广告费，大概几百块。但是因为广告服务商倒闭了⋯⋯ 钱到现在还没取出来⋯⋯ 心痛⋯⋯ 持续更新那个 App 到快毕业的时候，选择了保送到北师大。</p>
+<p>暑假的时候去上海一家小公司去实习了，在实习的这家小公司，我做了一个到现在来看依然很屌的功能。现在来看是一个相当不错的 Growth Hacker 的一个案例（那会儿可没有增长黑客这个概念）。</p>
+<p>实习所在的公司，是做类似小米盒子的东西。当时的盒子，最重要的当属内容，版权还处于蛮荒时代的时候，大家纷纷解析优酷，土豆这类的网站，以最少的成本，盗用优酷的带宽。简单点而来说，就是做视频聚合。视频聚合最麻烦的就是提取视频的真实文件地址，这样能为所有的创业公司免去版权纠纷，同时解决带宽费用问题。</p>
+<p>我去那家公司实习的主要内容，就是用 Node 语言做视频地址解析，费劲功夫搞定了几乎所有的视频网站，各种黑科技都用上了，抓包，逆向，Headless Browser 等等。搞定所有网站后，也算勉强跟竞争对手站在同一起跑线。实习第二周的时候，已经有些没事儿干了，就在这会儿疯狂的想法出现了！</p>
+<p>可能很多人还记得当年伟大的迅雷云播，解救了不知道多少个少男寂寞的夜。我们疯狂的想法就是要让我们的小盒子，能够流畅的播放用户从电脑上推送的任意种子文件，无需等待。在那会儿 TV 上，这种功能简直就是创举！</p>
+<p>想法出来后，我抗下大旗，开始用代码模拟迅雷云播的全套流程。开发的过程十分艰难，得从不同平台的迅雷上抓包，寻找蛛丝马迹。优先从 Web 端模拟登陆和提交种子文件，这些都相对容易一些，最难的是如何提取到视频的真实地址。花了大概一周时间攻陷了所有的流程，然后公司买了 10 几个迅雷会员，又和各路 BT 网站开始合作，开启了浩浩荡荡的用户增长之旅。具体增长了多少新用户，其实我心里没有数，但是看见旁边的小朋友，每天都在加服务器，优化 Socket 连接数，我猜那一周得新增了 5 - 10万用户，更为壮观的是每到夜里，所有的迅雷账号里就瞬间塞满各种不可描述的日本电影，全部清空后，又被瞬间塞满。以至于后来，实习到第十七八天的时候，我的老板和 CTO 喊我过去，直接送了我 20 万期权，那感觉也是蛮爽的。后来微博上，这个功能也是火了一阵子，不过很快就挂了，起因是有用户在微博上 at 了小米电视和迅雷，让他们跟我们学着点儿⋯⋯ 然后，不超过半小时⋯⋯ 服务就挂掉了⋯⋯ 不过挂掉没几天我就去帝都准备研究生报名了。</p>
+<p>还有一件很爽的事，就是我上了研究生后的半年里，那家公司一直给我支付着工资⋯⋯ 每个月轻轻松松就有几千块钱零花钱⋯⋯ 再后来的后来，那家公司倒闭了⋯⋯</p>
+<p>快从上海实习结束的时候（实习一个月），我又认识了少楠，加入了 AT！组织。AT! 组织是一个分享优质原创动画的小团队，从此我从一枚野生开发正式晋升为一枚正规军。少楠是一枚非常优秀的产品经理兼设计师，跟着他学到了很多产品的知识和团队协作的技巧，也让我最后真的开发出了近百万用户的 App。AT！组织到现在都是我爱的组织，大家虽然从事不同行业，但就跟亲人一样。每次聚会都是一年一度最嗨皮的日子，都是我经历过最真诚的聊天。从后来做了 AnimeTaste 再到 EverMemo，我第一感觉到团队的重要性，第一次见识到优秀的设计师和 iOS 开发者。</p>
+<p>以上的诸多经历也为自己创业埋下了很多伏笔。这些都是我是我的实践者阶段，漫长的三四年。</p>
+<p><strong>第三阶段：创造者阶段</strong></p>
+<p>实践者阶段之后，自己开始尝试创造。也是我认为学习的第三个阶段 — 创造者阶段，这个阶段是没有结束节点，就一直这么存在着。</p>
+<p>我大致是研究生一年级的时候开始摸到创造者阶段的门梁，大三的时候接触的 GitHub，感觉是我学程序来，打开的第二个世界的大门（第一个，算是那个 VB 程序的弹框）。接触到 GitHub 让我第一次开始学习和研究脚本语言（ Python，Node，PhantomJS 等等），第一次开始接触真正的生产工具（类似 Less，Sass 等等），GitHub 简直是求学者的宝库，你会很期待明天的 Trending 榜单上会是什么新东西冒了出来。</p>
+<p>那会儿在研究生阶段，每个月有了公司发的几千块钱，也开始入手了人生第一台 iPhone，一台土豪金版的 iPhone5s，买 App 太贵便折腾起了越狱（现在都是买 App 了）。装了一款越狱后的 Store（我忘了叫什么了），那个 Store，在下载一个 App 的时候，有个超漂亮的进度条，我每次都会认真的的盯着那个进度条，一边看，一边感叹，一边也暗许自己也要在 Android 上实现一套，这也是我开始第一次开发自定义组件的初衷，也是 NumberProgressBar 诞生的最初原因。</p>
+<p>啃下第一个自定义组件，对很多人来说都是很痛苦的，我也一样，那会儿的 Android 组件少的可怜，不断的看文档，看源码，读别人的代码，试图搞清楚更多更底层的东西，不断的尝试运行，折腾了一周左右（每天超过 10 小时投入），终于做出来了，照猫画虎的写好文档，做好测试，小心翼翼的发布到 GitHub，然后发表到当时为数不多的 GitHub Android 分享社群里。地址在这里：<a href="https://plus.google.com/+daimajia/posts/d6DJhLhLn1c" target="_blank" rel="external">https://plus.google.com/+daimajia/posts/d6DJhLhLn1c</a></p>
+<p>再到后来的几个月，又陆续写了一些其他的库，发到 GitHub 上，其实我根本没想到会有那么多人去 Star，可能跟下手比较早有关，恩。</p>
+<p>创造者阶段，就是努力创造那些没有的，源自你脑海里的东西，而不是别人安排给你的。努力做到让更多的人用到，可以是一个 App，可以是一个帮助人们提高效率的 Chrome 插件，也可以是一个简单的组件。创造是最挑战你对一个行业的热爱程度的。</p>
+<p>我从来不反对重复发明轮子。每一个轮子即便有一些小的改进，都是适应自然法则，优胜劣汰的。</p>
+<p>就我身边而言，我最崇拜的创造者是尤小右，将一个小的 Framework，一点点的做大，再到做出国际影响力，真是个不得了的事情，也是很多技术人梦寐以求的事情。</p>
+<p><strong>总而言之</strong></p>
+<p>如果你忽然觉得自己这几年一直处在一个很稳定的状态中，觉得自己没有提升，那你得想想是不是我卡在了某个阶段，一直无法突破，你是否需要做些什么，突破到下一阶段去。随后的文章我也总结了一些误区和突破方法</p>
+<h3 id="被误以为的学习"><a href="#被误以为的学习" class="headerlink" title="被误以为的学习"></a>被误以为的学习</h3><p>当年，有一本书刊特别流行，叫《故事会》。《故事会》后来销声匿迹了，在我眼里，取代《故事会》的是知乎。对，就是那个知乎。 我其实一直很反对一个论调：“上知乎，学知识”。醒醒吧。知乎明显就是现代版的故事会好吗？！ 我不否认知乎存在有价值的知识，但，根本不值得你花那么多时间，去发现那少的可怜的知识。去读书吧。用最系统的逻辑，去学会一项技能，哪怕你去《硅谷百年史》里去读那些振奋人心的仙童半导体的故事，也比你不断的知乎看着水的一笔的帖子要强的多。现在，最可怕的是大家在知乎上消费着垃圾，却依然觉得自己在吃着奶酪，学习的过程都是伴随着思考和痛苦的，如果你边笑边学习，那你真的得醒醒了。</p>
+<h3 id="目标和激励很重要"><a href="#目标和激励很重要" class="headerlink" title="目标和激励很重要"></a>目标和激励很重要</h3><p>我在大三下半学期被保研后，开始了另一个小项目，一个叫 小熊词典 的 App，起因是因为在学英语的时候，所有词典类 App 想要获取最全的词语解释都需要联网，流量消耗大不说，电量是最大问题，自习一早上电量就没了。所以，自己想动手写一个词典 App，主打离线词库和快速查询。</p>
+<p>但最后的时候，小项目胎死腹中。说实话，整个 App，已经开发到 95% 了，抓取了非常多有名的词库的数据，并且整理成了规范格式。但项目最后还是放弃了。即便今天来看这个词典依然很酷！（最丰富的词库和最快的查询速度）</p>
+<p>现在想想，当初一个人开发的时候，每次想到一个很酷的功能，就决定加进来，项目进度遥遥无期。完全没有项目管理的思路，也没有意识到这样会很快拖垮我的体力，消磨掉自己的意志和热情。</p>
+<p>对于很多初学者来说，总是抱着书学，其实也是同样的后果，你无法获得任何的反馈和激励，以至于觉得一件事情越做越难。学习的过程，最好能定一个简单的目标，比如：“我即便现在什么都不会，我就要做个小游戏出来，这个游戏应该是这样的一个玩儿法，blablabla。”，做出来后，快些去找用户，可以是你的朋友，也可以是你的父母，最好是那些不吝惜赞美的朋友们，让他们无形之中给你一些动力。</p>
+<h3 id="你永远无法一步达到完美"><a href="#你永远无法一步达到完美" class="headerlink" title="你永远无法一步达到完美"></a>你永远无法一步达到完美</h3><p>我认识的朋友中，他们都有各种稀奇古怪的想法亟待实现，但最后，以信誓旦旦开始 Side projects，最后却都销声匿迹了，这是不无原因的。因为很多的开发者在刚开始的时候，缺乏清晰的计划，却想一步登顶完美的境地。这是很可怕的想法。就好比，我一个很少登山的人，却在第一次的时候，就决定登顶珠峰，结果自然可想而知。在实践自己想法的时候，最好能考虑以最低成本去展现你想法的核心部分，而非一个大而全的方案。</p>
+<p>从最小成本的想法核心，一步步的去验证自己的想法，去收集反馈，调整策略。最终抵达一个正确的目标。</p>
+<h3 id="赶在兴趣消失之前，去学习新知"><a href="#赶在兴趣消失之前，去学习新知" class="headerlink" title="赶在兴趣消失之前，去学习新知"></a>赶在兴趣消失之前，去学习新知</h3><p>不得不承认懒惰是人的共性，当你看到别的朋友做出来很酷的小游戏的时候，你是否也有几分钟冲动的想要去学习游戏制作。不要等！快去买两本书抓紧学起来，哪怕你知道你这个热情的苗头很快会熄灭，但请不要放弃任何发现新大陆的机会，在学习冲动消失之前，去入个门先。</p>
+<p>我每次跟人互相分享初高中生涯的时候，我总是能想起来我初中时候的一位语文老师，微胖，性格和蔼。 她在一次自由复习准备期末考试的时候给我说： “你复习，不要局限在课本上，你背会 24 节气都是很有意义的，想看什么书，就去看，不要等，不要担心自己学不会。” 这话对我学习新东西影响特别深，现在我基本上想学习什么东西，立马去学，即便可能一周后气馁了，放弃了，但是从来不会怀疑学这些零碎知识的意义。 我学过吉他，写过毛笔字，写过 Delphi，用 Sketch 画过 icon，用 Blender 画过 3D 保龄球，写过 Unity 小游戏⋯⋯ 很多我都没坚持下来，但给我带来的最大改变就是我不会惧怕去接受新事物，思考问题的时候总是能把很多场景考虑到。也能慢慢的找到自己最爱做的那件事情，更清楚的定位自己。 所以，当你忽然对某件事情有兴趣的时候，抓住那几分钟，那几天，赶紧去学点新东西。 毕竟，点总是会串成线的。</p>
+<h3 id="少看别人写的文章，多看优秀的代码"><a href="#少看别人写的文章，多看优秀的代码" class="headerlink" title="少看别人写的文章，多看优秀的代码"></a>少看别人写的文章，多看优秀的代码</h3><p>我做 Gank 以来，很多开发者都投稿过，以至于现在后台还挤压着 2000 多个投稿没有处理。看过这么一圈而后，我开始不主张去看别人写的技术类文章。看别人的文章，你看到的是他想讲给你的，而这些可能只是他在自己的项目里用到的，而不是一个客观全面的角度。时间一长，以至于你只知道这个东西的一两种用法，更可怕的是你可能已经对思考丧失兴趣，总想走捷径，可能这样前期学习效果显著，但是后期会很快到达瓶颈。我想如果你经常读各种语言的官方文档，总是会有 “啊哈！这样都可以，我以前都不知道还有这种方法存在。” 的感叹，但你看别人的文章，却很少有这种感觉。</p>
+<p>至于主张看优秀的代码，其实是希望学习一个技术细节，是伴随着思考的。其实，评价某一种方案好与不好，是没有意义的。只有多积累其他人解决同一问题的方法，才能在下一次做决策的时候，找到适合当前场景的最优解，很多时候，也能触类旁通，给解决其他问题提供思路。</p>
+<h3 id="慢慢减少对二手知识的依赖"><a href="#慢慢减少对二手知识的依赖" class="headerlink" title="慢慢减少对二手知识的依赖"></a>慢慢减少对二手知识的依赖</h3><p>技术提升这个过程，其实是你对二手知识减少依赖的过程。二手知识是什么？就是那些经过别人翻译，总结的文章。一开始入门，大家看到的都是二手知识（也可能是三手，四手的知识），但，想要提升自己的能力，强迫自己多去看些更官方的文档，体系化去学习。这个过程是很消耗体力和脑力的，但多坚持，一定会有明显改善的。</p>
+<h3 id="收藏的意义不大，收藏也不能改变什么"><a href="#收藏的意义不大，收藏也不能改变什么" class="headerlink" title="收藏的意义不大，收藏也不能改变什么"></a>收藏的意义不大，收藏也不能改变什么</h3><p>很多人看到不错的文章，总要 @我的印象笔记⋯⋯ 我之前也会这么干，经常把一些不错的文章，存到 Pocket 或者 Readability 里，但，真的回顾去看那些文章的机会太少了，而收藏这些文章给我带来不少压力。有的文章，我只是浅显的读了读，脑子里总是得记着有时间了再去读完剩下部分，正如大多数人一样，再也不会去读了。久而久之，拖延症也就变得理所应当。</p>
+<p>有可能你会说万一哪天用到呢？其实我觉得再 Google 一次就好啦，可能会找到比这篇文章更好的。就这样。</p>
+<p>现在，看到一篇不错的文章，首先从标题推测下内容，再扫一眼，如果跟我猜测的八九不离十，我基本就关掉了。如果有跟我的推测大相径庭，我一定会一口气读完，而不是收藏起来以后再读。</p>
+<p>之所以我说收藏什么也改变不了，是因为读别人的东西，思考的过程是别人的。努力去减少从别人文章里阅读学习的频率，多去读一手资料然后自己总结。</p>
+<h3 id="培养一些对产品的感觉"><a href="#培养一些对产品的感觉" class="headerlink" title="培养一些对产品的感觉"></a>培养一些对产品的感觉</h3><p>你有没有在 PM 说了要实现某个效果或者功能的时候，你站出来反对，说这样并不合理。如果你有过，那么我想你也是一个有理想的开发者，而不是一个“码农”。聪明人喜欢跟聪明人合作，大家一开口就互相明白了。没有人是天生聪明的，只是看的多了，想的多了，就显得聪明了。</p>
+<p>看些什么呢？看看一个优秀的 App 早起的冷启动是怎么做的，看看 Apple Store 或者 Google Play 上最近有没有什么新奇的 App 出现，看看 Tech Crunch 上最近又有什么天马行空的项目融到了钱。</p>
+<p>想些什么呢？想想一个产品功能的存在有没有意义，他的下个阶段又会怎么发展，想想某段文案是否会降低产品某个功能的转换率，想想某个动画效果是否是很恼人的存在，如果你可以对微信加一个功能，减一个功能，你又会作何选择。</p>
+<h3 id="每个人都应该有个-idea-list"><a href="#每个人都应该有个-idea-list" class="headerlink" title="每个人都应该有个 idea list"></a>每个人都应该有个 idea list</h3><p>我在西安读大学那会儿开始，就有一个小本子，记录着突然冲入自己脑海的一些靠谱或是离谱小想法。上面会写着类似：</p>
+<ul>
+<li>做个 Every big moment，用手机记录自己的每个值得纪念的瞬间，然后打印成相册发给我或者放在网上当做自己的 Profile。</li>
+<li>狗狗出门便便，主人打扫很不方便，有没有更好的方案？</li>
+<li>程序一旦崩溃，直接发送操作记录和堆栈信息到 Dashboard，而不要让测试人员努力重现，写个 SDK，搭建一套服务，一定会很好用。</li>
+<li>很多的 Bug 追踪服务，为什么不在错误堆栈旁边，展示出来这个 Bug 的解决方案，哪怕是一个 StackOverflow 的链接也好，这样我就不用去自己搜索了。</li>
+</ul>
+<p>那个小本上记录了自己好多做产品的想法，有不少，后来市面上都出来了相应的产品。也有一些现在看来很可笑，有的想法今天再翻看的时候，仍然会冲动的想要组团队去实现。</p>
+<p>Idea list 总是能激发你去创造的欲望，有空，就去不断的记录自己的 Idea list 吧。</p>
+<p>另外，不要把自己的 idea 当做一个秘密，多和人去讨论自己的想法，在不断的否认和肯定中，完善自己的想法，idea 是不值钱的，只有实现它才是有价值的。</p>
+<h3 id="争取去更优秀的地方"><a href="#争取去更优秀的地方" class="headerlink" title="争取去更优秀的地方"></a>争取去更优秀的地方</h3><p>这句话可能大家都懂，但我的体会却比大家都深刻。</p>
+<p>我在西安一个叫西北大学的地方读的大学，是一个普通的 211。计算机专业客观来说比较一般，在来北京师范大学读研究生之前，我甚至没听说过 ACM。</p>
+<p>Python、Ruby、Node 这种编程语言在我们的计算机系，根本连影子都没有，所以正统的计算机技能点基本都是 C，C++这样，这并没有什么错⋯⋯ 但路子就变窄了很多，学长毕业去个腾讯、阿里，已经能被大家推上神坛。</p>
+<p>本科学校大二会给计算机系开一门日语课。为什么会给计算机系开日语课呢？因为很多外包来自日本。这个逻辑我一直都接受不能。这都什么年代了，我们早都不需要用外包支撑我国的 IT 产业了。</p>
+<p>学校给学生的定位更多是一个学校展示就业率的棋子，你会什么不重要啦，只要你最后有个工作就好了，不要拖累了学校的名声。</p>
+<p>来师大后，感受到了前所未有的转变。学校整体的气氛相当自由，很多老师们，都是各自领域的专家，你问一个问题，他们能给你引导出很多有意思的点。久而久之，你也会被这些感染到。有时候，我也会想，以后稳定下来之后，要不要去申请个美国名校读一读。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://blog.daimajia.com/fen-xiang-yi-xie-zi-ji-de-xue-xi-guo-cheng-he-xue-xi-fang-fa/" target="_blank" rel="external">分享一些自己的学习过程和学习方法</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/10/17/分享「代码家」的学习过程和学习方法/" data-id="cj052ly8e00fnws93p69olnjb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/思绪/">思绪</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Shell编程入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/10/16/Shell编程入门/" class="article-date">
+  <time datetime="2016-10-16T05:04:06.000Z" itemprop="datePublished">2016-10-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/16/Shell编程入门/">Shell编程入门</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>Shell</code>是基于命令行的解释器，它连接用户和操作系统，允许通过编写脚本来执行系统命令。</p>
+<h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><p><strong>1、环境变量</strong></p>
+<p><code>实战1：查看环境变量env</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/33734703.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">HOME : 代表用户主文件夹</div><div class="line">SHELL : 目前这个环境使用的SHELL是哪个程序</div><div class="line">PATH : 执行文件查找路径，目录与目录中间以冒号`:`分隔</div><div class="line">LANG : 语系数据，很多信息都会用到它。</div></pre></td></tr></table></figure>
+<p><strong>2、文件系统及程序的限制关系：ulimit</strong></p>
+<p><code>场景：</code>Linux主机里同时登陆10个人，每个人同时打开100个文件，每个文件10MB，那么Linux主机内存需要<code>10 * 100 * 10 = 10000MB = 10G</code>,这样系统不挂掉才怪，为了预防这种情况<code>bash</code>可以限制用户的某些系统资源，具体配置用<code>ulimit</code>命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">-H : 严格设置，必定不能超过这个设置的数值</div><div class="line">-S : 警告设置，可以超过这个数值，但若超过则有警告信息</div><div class="line">-a : 后面不接任何参数，可列出所有限制额度</div><div class="line">-c : 当某些进程发成错误时，系统可能会将进程在内存中的信息写成文件，这种文件成为内核文件。</div><div class="line">-f : 此SHELL可以创建的最大文件容量(一般设为2GB)单位KB</div><div class="line">-d : 进程可使用的最大断裂内存容量</div><div class="line">-l : 可用于锁定内存量</div><div class="line">-t : 可使用最大CPU时间</div><div class="line">-u : 单一用户可以使用的最大进程数量</div></pre></td></tr></table></figure>
+<p><code>实战1：查看当前用户的所有限制数据值</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/71746717.jpg" alt=""></p>
+<p><code>实战2：限制用户仅仅能创建10MB容量以下的文件</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/80080741.jpg" alt=""></p>
+<p><strong>3、一次执行多个命令 &amp;&amp; 、||</strong></p>
+<p><code>场景：</code>很多命令我想要一次输入去执行，而不想分次执行。有两个办法，一个是编写<code>shell script</code>脚本去执行，另一个是一次性输入多重命令。</p>
+<p><code>基本语法如下</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cmd1 &amp;&amp; cmd2 --&gt; 若cmd1成功，$?(命令回传码)=0，则执行cmd2，反之cmd1失败，$?≠0，则cmd2不执行</div><div class="line"></div><div class="line">cmd1 || cmd2 --&gt; 若cmd1成功，$?(命令回传码)=0，则不执行cmd2，反之cmd1失败，$?≠0，则cmd2执行</div></pre></td></tr></table></figure>
+<p><code>实战1：&amp;&amp;命令</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/3250026.jpg" alt=""></p>
+<p><code>实战2：||命令,cmd1执行不成功，执行cmd2</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/27649803.jpg" alt=""></p>
+<p><code>实战3：||命令，cmd2执行成功，不执行cmd2</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/78874389.jpg" alt=""></p>
+<p><strong>4、选取命令cut、grep</strong></p>
+<p><code>cut</code>命令，可以将一段信息的某一段切出来，处理的信息是以行为单位，基本语法<code>cut -d &#39;分隔字符&#39; -f &#39;第几段&#39;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-d : 后面接分隔字符，与-f一起使用</div><div class="line">-f : 依据-d的分隔符将一段信息切割成为数段，用-f取出第几段的意思；</div><div class="line">-c : 以字符的单位取出固定字符区间</div></pre></td></tr></table></figure>
+<p><code>实战1：将PATH变量取出，找出第5个路径</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/34433783.jpg" alt=""></p>
+<p><code>实战2，将PATH变量取出，找出第3个和第5个路径</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/77994451.jpg" alt=""></p>
+<p><code>grep命令</code>是分析一行信息，若当中有需要的信息，将该行拿出来，基本语法<code>grep [-acinv] [--color=auto] &#39;查找字符串&#39; filename</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-a : 将binary文件以text文件的方式查找数据</div><div class="line">-c : 计算找到&apos;查找字符串&apos;的次数</div><div class="line">-i : 忽略大小写的不同</div><div class="line">-v : 反向选择</div><div class="line">--color=auto : 可以将找到的关键字部分加上颜色；</div></pre></td></tr></table></figure>
+<p><code>实战1：将last当中出现jianweilin的那一行取出来</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/64550336.jpg" alt=""></p>
+<p><code>实战2：取出jianweilin那一行的第一列</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/56948030.jpg" alt=""></p>
+<p><code>实战3：取出文件中包含console的行，并标红关键字</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/65838802.jpg" alt=""></p>
+<p><strong>5、排序命令sort、wc、uniq</strong></p>
+<p><code>sort</code>命令可以依据不同的数据类型来排序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-f : 忽略大小写的差异</div><div class="line">-b : 忽略最前面的空格符部分</div><div class="line">-M : 以月份的名字来排序</div><div class="line">-n : 使用纯数字来进行排序</div><div class="line">-r : 反向排序</div><div class="line">-u : uniq，相同的数据中，仅出现一行代表</div><div class="line">-t : 分隔符</div><div class="line">-k : 以那个区间来进行排序</div></pre></td></tr></table></figure>
+<p><code>实战1：利用last输出的数据，并加以排序</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/47905704.jpg" alt=""></p>
+<p><code>实战2：1.log的内容，每行的数据以:分隔，按第2列来排序</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/77485521.jpg" alt=""></p>
+<p><code>uniq</code>命令，将重复的数据仅列出一个显示<code>uniq [-ic]</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-i : 忽略大小写字符</div><div class="line">-c : 进行计数</div></pre></td></tr></table></figure>
+<p><code>实战1：统计每个用户登录的总次数</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/83045345.jpg" alt=""></p>
+<p><code>wc</code>命令，用于统计文件里有多少字，多少行，多少字符,基本语法<code>wc [-lwm]</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-l : 仅列出行</div><div class="line">-w : 仅列出多少字</div><div class="line">-m : 多少字符</div></pre></td></tr></table></figure>
+<p><code>实战1：统计行数、单词数、字符数</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/17425650.jpg" alt=""></p>
+<p><code>6、字符转换命令tr</code></p>
+<p><code>tr</code>命令可以删除一段信息中的文字，并用其他文字信息进行替换。语法为<code>tr [-ds] set1  set</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-d ：删除信息中‘set1’字符串</div><div class="line">-s : 用‘set’字符串替换‘set1’</div></pre></td></tr></table></figure>
+<p><code>实战1：将小写字符换成大写字符</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/38444009.jpg" alt=""></p>
+<p><code>实战2：PATH路径，删除&#39;:&#39;</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/24188455.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>Linux鸟哥的私房菜</li>
+<li>Linux命令行与shell脚本编程大全</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/10/16/Shell编程入门/" data-id="cj052ly6n00csws93g7rxqn61" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Linux之常用命令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/10/15/Linux之常用命令/" class="article-date">
+  <time datetime="2016-10-15T15:36:37.000Z" itemprop="datePublished">2016-10-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/15/Linux之常用命令/">Linux之常用命令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Linux命令非常多，我的策略是熟练掌握常用的命令，遇到不懂的用<code>man</code>命令查下即可。下面总结下常用的Linux命令。</p>
+<h3 id="理论-amp-实战"><a href="#理论-amp-实战" class="headerlink" title="理论 &amp; 实战"></a>理论 &amp; 实战</h3><p><strong>1、cd命令</strong></p>
+<p>用于切换当前名录</p>
+<p><code>实战1：切换到上一层目录</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-15/12530934.jpg" alt=""></p>
+<p><code>实战2：切换到下一层目录</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-15/95348529.jpg" alt=""></p>
+<p><strong>2、ls命令</strong></p>
+<p>查看文件与目录的命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-l : 列出长数据串，包含文件的属性与权限数据等</div><div class="line">-a : 列出全部的文件，连同隐藏文件（开头为.的文件）一起列出来（常用） </div><div class="line">-d ：仅列出目录本身，而不是列出目录的文件数据</div><div class="line">-h ：将文件容量以较易读的方式（GB，kB等）列出来  </div><div class="line">-R ：连同子目录的内容一起列出（递归列出），等于该目录下的所有文件都会显示出来</div></pre></td></tr></table></figure>
+<p><code>实战1：查看当前文件下的所有文件，并显示文件属性和权限数据</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/32656794.jpg" alt=""></p>
+<p><strong>3、grep命令</strong></p>
+<p>用于一些命令的输出进行筛选</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-a ：将binary文件以text文件的方式查找数据  </div><div class="line">-c ：计算找到‘查找字符串’的次数</div><div class="line">-i ：忽略大小写的区别，即把大小写视为相同</div><div class="line">-v ：反向选择，即显示出没有‘查找字符串’内容的那一行</div></pre></td></tr></table></figure>
+<p><code>实战1：检索Java文件夹</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/4322651.jpg" alt=""></p>
+<p><code>实战2：统计名为Java文件夹的数量</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/85863738.jpg" alt=""></p>
+<p><strong>4、find命令</strong></p>
+<p><code>find</code>是一个基于查找的功能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 与时间有关的参数：</div><div class="line">-mtime n : n为数字，意思为在n天之前的“一天内”被更改过的文件；</div><div class="line">-mtime +n : 列出在n天之前（不含n天本身）被更改过的文件名；</div><div class="line">-mtime -n : 列出在n天之内（含n天本身）被更改过的文件名；</div><div class="line">-newer file : 列出比file还要新的文件名   </div><div class="line"></div><div class="line"># 与文件权限及名称有关的参数：</div><div class="line">-name filename ：找出文件名为filename的文件</div></pre></td></tr></table></figure>
+<p><code>实战1：查找今天内改过的文件</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/93572660.jpg" alt=""></p>
+<p><code>实战2：查找Work目录下的test.txt文件</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/49366537.jpg" alt=""></p>
+<p><strong>5、cp命令</strong></p>
+<p>复制文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-a ：将文件的特性一起复制</div><div class="line">-p ：连同文件的属性一起复制，而非使用默认方式，与-a相似，常用于备份</div><div class="line">-i ：若目标文件已经存在时，在覆盖时会先询问操作的进行</div><div class="line">-r ：递归持续复制，用于目录的复制行为 </div><div class="line">-u ：目标文件与源文件有差异时才会复制</div></pre></td></tr></table></figure>
+<p><code>实战1：复制文件若目标文件已存在，会询问是否覆盖</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/73728478.jpg" alt=""></p>
+<p><strong>6、mv命令</strong></p>
+<p>移动文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-f ：force强制的意思，如果目标文件已经存在，不会询问而直接覆盖  </div><div class="line">-i ：若目标文件已经存在，就会询问是否覆盖  </div><div class="line">-u ：若目标文件已经存在，且比目标文件新，才会更新</div></pre></td></tr></table></figure>
+<p><code>实战1：移动文件</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/42236280.jpg" alt=""></p>
+<p><strong>7、rm命令</strong></p>
+<p>删除文件或目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-f ：就是force的意思，忽略不存在的文件，不会出现警告消息 </div><div class="line">-i ：互动模式，在删除前会询问用户是否操作</div><div class="line">-r ：递归删除，最常用于目录删除，它是一个非常危险的参数</div></pre></td></tr></table></figure>
+<p><code>实战1：删除文件前，会询问用户是否删除</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/42206997.jpg" alt=""></p>
+<p><strong>8、ps命令</strong></p>
+<p>将某个时间点的进程运行情况选取下来并输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-A ：所有的进程均显示出来 </div><div class="line">-a ：不与terminal有关的所有进程</div><div class="line">-u ：有效用户的相关进程</div><div class="line">-x ：一般与a参数一起使用，可列出较完整的信息 </div><div class="line">-l ：较长，较详细地将PID的信息列出</div></pre></td></tr></table></figure>
+<p><code>ps</code>命令常用搭配</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ps aux # 查看系统所有的进程数据</div><div class="line">ps ax # 查看不与terminal有关的所有进程 </div><div class="line">ps -lA # 查看系统所有的进程数据</div></pre></td></tr></table></figure>
+<p><code>实战1：查看系统所有进程</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/17901898.jpg" alt=""></p>
+<p><strong>9、kill命令</strong></p>
+<p>向某个PID传送一个信号,基本语法如下：<code>kill -signal PID</code></p>
+<p><code>signal常用参数</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1：SIGHUP，启动被终止的进程  </div><div class="line">2：SIGINT，相当于输入ctrl+c，中断一个程序的进行  </div><div class="line">9：SIGKILL，强制中断一个进程的进行 </div><div class="line">15：SIGTERM，以正常的结束进程方式来终止进程 </div><div class="line">17：SIGSTOP，相当于输入ctrl+z，暂停一个进程的进行</div></pre></td></tr></table></figure>
+<p><code>实战1：杀死某个PID</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/64733197.jpg" alt=""></p>
+<p><strong>10、file命令</strong></p>
+<p>判断文件的基本数据，基本语法<code>file filename</code></p>
+<p><code>实战1：确定文件的基本数据</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/47080888.jpg" alt=""></p>
+<p><strong>11、tar命令</strong></p>
+<p>对文件进行打包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-c ：新建打包文件 </div><div class="line">-t ：查看打包文件的内容含有哪些文件名 </div><div class="line">-x ：解打包或解压缩的功能，可以搭配-C（大写）指定解压的目录，注意-c,-t,-x不能同时出现在同一条命令中 </div><div class="line">-j ：通过bzip2的支持进行压缩/解压缩</div><div class="line">-z ：通过gzip的支持进行压缩/解压缩 </div><div class="line">-v ：在压缩/解压缩过程中，将正在处理的文件名显示出来</div><div class="line">-f filename ：filename为要处理的文件</div><div class="line">-C dir ：指定压缩/解压缩的目录dir</div></pre></td></tr></table></figure>
+<p><code>tar命令常用组合</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># tar包</div><div class="line">tar -cvf text_02.tar text_02.txt 压缩text_02.txt为text_02.tar</div><div class="line">tar -xvf text_02.tar 解压text_02.tar为text_02.txt</div><div class="line"> </div><div class="line"># tar.gz包</div><div class="line">tar -czf text_02.tar.gz text_02.txt 压缩text_02.txt为text_02.tar.gz</div><div class="line">tar -xzvf text_02.tar.gz 解压text_02.tar.gz为text_02.txt</div></pre></td></tr></table></figure>
+<p><code>实战1：压缩为tar.gz包</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/44362048.jpg" alt=""></p>
+<p><code>实战2：解压tar.gz包</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/7921494.jpg" alt=""></p>
+<p><strong>12、chown命令</strong></p>
+<p>用于改变文件的所有者，基本语法是<code>chown 用户:用户组 需要修改的文件名</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-c :显示更改的部分的信息</div><div class="line">-f :忽略错误信息</div><div class="line">-h :修复符号链接</div><div class="line">-R :处理指定目录以及其子目录下的所有文件</div><div class="line">-v :显示详细的处理信息</div></pre></td></tr></table></figure>
+<p><code>实战1：改变test_02.txt文件的拥有者为root权限,用户组为staff</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/50637932.jpg" alt=""></p>
+<p><code>实战2：改变test_02.txt文件的拥有者为jianweilin权限</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/49550628.jpg" alt=""></p>
+<p><strong>13、chmod命令</strong></p>
+<p>用于改变文件的权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">-c 当发生改变时，报告处理信息</div><div class="line">-f 错误信息不输出</div><div class="line">-R 处理指定目录以及其子目录下的所有文件</div><div class="line">-v 运行时显示详细处理信息</div><div class="line"></div><div class="line"># 权限范围</div><div class="line">u ：目录或者文件的当前的用户</div><div class="line">g ：目录或者文件的当前的群组</div><div class="line">o ：除了目录或者文件的当前用户或群组之外的用户或者群组</div><div class="line">a ：所有的用户及群组</div><div class="line"></div><div class="line"># 权限代号</div><div class="line">r ：读权限，用数字4表示</div><div class="line">w ：写权限，用数字2表示</div><div class="line">x ：执行权限，用数字1表示</div><div class="line">- ：删除权限，用数字0表示</div></pre></td></tr></table></figure>
+<p><code>实战1：test_02.txt文件删除当前用户的读权限</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/14943806.jpg" alt=""></p>
+<p><code>实战2：test_02.txt文件给当前用户及所有用户组加上写权限</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-16/13772423.jpg" alt=""><br>未完待续….</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>Linux命令行与Shell脚本编程大全</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/10/15/Linux之常用命令/" data-id="cj052ly340062ws934zlhwzqb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-MYSQL之日期函数运算" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+
+    <a href="/2016/10/13/MYSQL之日期函数运算/" class="article-date">
+  <time datetime="2016-10-13T02:53:29.000Z" itemprop="datePublished">2016-10-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MYSQL/">MYSQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/13/MYSQL之日期函数运算/">MYSQL之日期函数运算</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在日常项目中，常常需要查询某个时间的数据，那么熟练运用<code>MYSQL</code>的日期函数就显得很有用了。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>场景1:获取当前时间</strong></p>
+<p><code>方式1：获取年月日时分秒 -&gt; SELECT NOW()</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/1444048.jpg" alt=""></p>
+<p><code>方式2：获取年月日时分秒 -&gt; SELECT CURRENT_TIMESTAMP()</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/92157935.jpg" alt=""></p>
+<p><code>方式3: 获取年月日 -&gt; SELECT current_date()</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/2987579.jpg" alt=""></p>
+<p><code>方式4: 获取时分秒 -&gt; SELECT current_time()</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/43833424.jpg" alt=""></p>
+<p><strong>场景2:时间加法&amp;减法运算</strong></p>
+<p><code>方式1: 增加天数 -&gt;  SELECT date_add(NOW(),interval &#39;1 01:01:01&#39; day_second)</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/54720309.jpg" alt=""></p>
+<p><code>方式2：增加小时 -&gt; SELECT date_add(NOW(),interval &#39;01:01:01&#39; hour_second)</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/49340433.jpg" alt=""></p>
+<p><code>方式3：增加月数 -&gt; SELECT date_add(now(),interval 1 month)</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/82457234.jpg" alt=""></p>
+<p><code>减法运算与加法运算相似,减少月数 -&gt; SELECT  date_sub(NOW(),interval 1 month)</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-10-13/91908338.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://ylive.blog.51cto.com/881983/537257" target="_blank" rel="external">Mysql日期函数</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://jianwl.com/2016/10/13/MYSQL之日期函数运算/" data-id="cj052ly3c006hws93fxs5hk6j" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MYSQL/">MYSQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
 
   
 
 
-
-
-
-
-
-
-
-
-  
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/5/">__('next') &raquo;</a>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
   
     
-  
-
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">记录点滴成长</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-  <p class="site-subtitle"></p>
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-books">
-          <a href="/books" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
-            
-            书单
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup">
- <span class="search-icon fa fa-search"></span>
- <input type="text" id="local-search-input">
- <div id="local-search-result"></div>
- <span class="popup-btn-close">close</span>
-</div>
-
-
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">33</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web服务器/">Web服务器</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li></ul>
     </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hystrix/">Hystrix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Intellij-IDEA/">Intellij IDEA</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">34</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JOOQ/">JOOQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScirpt/">JavaScirpt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MYSQL/">MYSQL</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Play/">Play</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit/">Retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Retrofit2/">Retrofit2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprng-MVC/">Sprng MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thymeleaf/">Thymeleaf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web服务器/">Web服务器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件/">中间件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/思绪/">思绪</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Git/" style="font-size: 11px;">Git</a> <a href="/tags/HTTP/" style="font-size: 17px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 13px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 10px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 11px;">Intellij IDEA</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/JOOQ/" style="font-size: 11px;">JOOQ</a> <a href="/tags/JavaScirpt/" style="font-size: 10px;">JavaScirpt</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/Linux/" style="font-size: 13px;">Linux</a> <a href="/tags/MYSQL/" style="font-size: 19px;">MYSQL</a> <a href="/tags/Mac/" style="font-size: 14px;">Mac</a> <a href="/tags/PHP/" style="font-size: 18px;">PHP</a> <a href="/tags/Play/" style="font-size: 11px;">Play</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/React/" style="font-size: 11px;">React</a> <a href="/tags/Redis/" style="font-size: 14px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 10px;">Retrofit</a> <a href="/tags/Retrofit2/" style="font-size: 10px;">Retrofit2</a> <a href="/tags/SQL/" style="font-size: 18px;">SQL</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spring/" style="font-size: 12px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 16px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 11px;">SpringCloud</a> <a href="/tags/Sprng-MVC/" style="font-size: 10px;">Sprng MVC</a> <a href="/tags/Thymeleaf/" style="font-size: 10px;">Thymeleaf</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Web服务器/" style="font-size: 10px;">Web服务器</a> <a href="/tags/中间件/" style="font-size: 10px;">中间件</a> <a href="/tags/思绪/" style="font-size: 14px;">思绪</a> <a href="/tags/算法/" style="font-size: 12px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">25</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/11/Python之列表和元组/">Python之列表和元组</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/26/React技术栈介绍/">React技术栈介绍</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/26/ES6之SET、Map数据结构/">ES6之SET、Map数据结构</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/25/SpringBoot配置Filter、Interceptor/">SpringBoot配置Filter、Interceptor</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/23/HTTP协议详解/">HTTP协议详解</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_pv">
+<h3 class="widget-title">访问量</h3>
+<div class="widget"> 本站总访问量<span id="busuanzi_value_site_pv"></span>次 </div>
+</span>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 流云<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
   
 </nav>
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-  <section id="posts" class="posts-expand">
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/26/JAVA之ArrayList源码学习/" itemprop="url">
-                  JAVA之ArrayList源码学习
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-26T00:01:16+08:00" content="2016-10-26">
-              2016-10-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/26/JAVA之ArrayList源码学习/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/26/JAVA之ArrayList源码学习/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
     
 
+<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
 
-    <div class="post-body" itemprop="articleBody">
 
-      
-      
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
-      
-        
-          
-          前言接触JAVA2年多了，写代码总是随心所遇，怎么快，怎么来。写代码时，没有去思考怎么避免重复代码，降低多个模块间的耦合，都是事后填坑。看优秀的源码是一个很好地学习方式,同时有助于加深理解。
-架构图
-实战为何ArrayList能够动态扩容？
-1. 定义变量
-1234567891011// 默认容量p
-          ...
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/26/JAVA之ArrayList源码学习/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
+<script src="/js/script.js"></script>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/24/JAVA之简单工厂模式/" itemprop="url">
-                  JAVA之简单工厂模式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-24T23:56:11+08:00" content="2016-10-24">
-              2016-10-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/24/JAVA之简单工厂模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/24/JAVA之简单工厂模式/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          前言上一节我们学习了模板方法，这一节让我们来学习简单工厂模式。
-定义
-工厂模式就是按照要求返回一个类型的对象。
-目的
-使对象的实例化与主程序代码解耦。
-设计原则
-
-变量不要持有具体类的引用
-不要让类继承具体类，要继承抽象类或接口
-不要覆盖基类中已实现的方法
-
-优点
-
-简单工厂模式实现了对责任的分割，
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/24/JAVA之简单工厂模式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/22/KeyNote技巧之次序/" itemprop="url">
-                  KeyNote技巧之次序
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-22T10:37:08+08:00" content="2016-10-22">
-              2016-10-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Mac/" itemprop="url" rel="index">
-                    <span itemprop="name">Mac</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/22/KeyNote技巧之次序/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/22/KeyNote技巧之次序/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          前言内容呈现的次序，对于演讲者来说是经常会碰到的。一般来说，演讲的内容会分为好多点来呈现，当然你可以用最简单的方式，每一页呈现一点，但听众可能听到后面会忘了前面的内容。这一节我们将会来学习，怎么在一页中呈现所有点，并且在讲解当前点时，观众不会被其他点分散注意力。
-效果图描述： 第一点说完，讲解第二点
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/22/KeyNote技巧之次序/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/22/KeyNote技巧之参考线与对齐/" itemprop="url">
-                  KeyNote技巧之参考线与对齐
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-22T08:26:13+08:00" content="2016-10-22">
-              2016-10-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Mac/" itemprop="url" rel="index">
-                    <span itemprop="name">Mac</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/22/KeyNote技巧之参考线与对齐/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/22/KeyNote技巧之参考线与对齐/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          前言最近遇到一个比较困惑的问题：项目工程做出来了，但是怎么样展示项目，让别人了解它。用KeyNote是一种比较好的展现方式，所以学习KeyNote使用技巧是非常有必要的。
-实战1.文字水平&amp;竖直居中
-操作：拖动文字当文字呈现出一个十字标识时，处于水平、竖直居中位置
-
-2.文字间距相同
-操作：
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/22/KeyNote技巧之参考线与对齐/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/17/Java之模板方法/" itemprop="url">
-                  Java之模板方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-17T23:16:56+08:00" content="2016-10-17">
-              2016-10-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/17/Java之模板方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/17/Java之模板方法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          前言模板方法之前写过一篇Java设计模式之模板方法模式,当回过头来再看这篇文章时，发现原来的文章过于累赘，无法让人快速理解，故重新梳理。
-理论什么是模板方法？
-提取了类库中的公共行为，将公共行为放在父类中，通过其子类来实现不同的行为。
-优点
-
-将不变的行为搬到超类，去除了子类中的重复代码
-子类实现算
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/17/Java之模板方法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/17/Java8之HashMap新特性/" itemprop="url">
-                  Java8之HashMap新特性
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-17T11:11:48+08:00" content="2016-10-17">
-              2016-10-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/17/Java8之HashMap新特性/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/17/Java8之HashMap新特性/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          概述简介
-Hash table也是基于Map接口实现的，功能与HashMap基本相似，不同的是HashMap允许key和value插入空值，且HashMap是一个线程不安全类。
-性能
-HashMap影响其性能的有两个参数：初始化容量(initial capacity)和负载因子(load facto
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/17/Java8之HashMap新特性/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/17/分享「代码家」的学习过程和学习方法/" itemprop="url">
-                  分享「代码家」的学习过程和学习方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-17T00:12:35+08:00" content="2016-10-17">
-              2016-10-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/思绪/" itemprop="url" rel="index">
-                    <span itemprop="name">思绪</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/17/分享「代码家」的学习过程和学习方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/17/分享「代码家」的学习过程和学习方法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          前言今天逛博客的时候，发现一篇非常棒的文章，出自「代码家」之手，觉得一时可能难以消化所有的知识，转录过来,方便后续随时查阅。
-注：以下内容均来自于「代码家」的博客
-每天，都会有人在微博上私信我，问我关于学习和成长的问题。这种问题我一般都不会回复某个j，毕竟每个人的情况不一样，每个人对待事物的性格也不
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/17/分享「代码家」的学习过程和学习方法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/16/Shell编程入门/" itemprop="url">
-                  Shell编程入门
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-16T13:04:06+08:00" content="2016-10-16">
-              2016-10-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/16/Shell编程入门/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/16/Shell编程入门/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          前言Shell是基于命令行的解释器，它连接用户和操作系统，允许通过编写脚本来执行系统命令。
-理论1、环境变量
-实战1：查看环境变量env
-
-1234HOME : 代表用户主文件夹SHELL : 目前这个环境使用的SHELL是哪个程序PATH : 执行文件查找路径，目录与目录中间以冒号`:`分隔LAN
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/16/Shell编程入门/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/15/Linux之常用命令/" itemprop="url">
-                  Linux之常用命令
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-15T23:36:37+08:00" content="2016-10-15">
-              2016-10-15
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/15/Linux之常用命令/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/15/Linux之常用命令/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          前言Linux命令非常多，我的策略是熟练掌握常用的命令，遇到不懂的用man命令查下即可。下面总结下常用的Linux命令。
-理论 &amp; 实战1、cd命令
-用于切换当前名录
-实战1：切换到上一层目录
-
-实战2：切换到下一层目录
-
-2、ls命令
-查看文件与目录的命令
-12345-l : 列出长数据串
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/15/Linux之常用命令/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/13/MYSQL之日期函数运算/" itemprop="url">
-                  MYSQL之日期函数运算
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-13T10:53:29+08:00" content="2016-10-13">
-              2016-10-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MYSQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/13/MYSQL之日期函数运算/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/13/MYSQL之日期函数运算/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          前言在日常项目中，常常需要查询某个时间的数据，那么熟练运用MYSQL的日期函数就显得很有用了。
-实战场景1:获取当前时间
-方式1：获取年月日时分秒 -&gt; SELECT NOW()
-
-方式2：获取年月日时分秒 -&gt; SELECT CURRENT_TIMESTAMP()
-
-方式3: 获取年月
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/13/MYSQL之日期函数运算/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
-
-
-          </div>
-          
-
-
-          
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
   </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="http://oc5a5l0a0.bkt.clouddn.com/16-10-7/31807945.jpg"
-               alt="流云" />
-          <p class="site-author-name" itemprop="name">流云</p>
-          <p class="site-description motion-element" itemprop="description">每天进步一点</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">171</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">31</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">33</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-      </section>
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">流云</span>
-</div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-<a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
-    NexT.Pisces
-  </a>
-</div>
-
-        
-
-        
-      </div>
-    </footer>
-
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
-
-
-
-  
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
-
-
-
-  
-
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"jianwl"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
-
-
-
-
-
-
-  
-  
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length == 0) {
-       search_path = "search.xml";
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    function proceedsearch() {
-      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
-      $('.popup').toggle();
-
-    }
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-    'use strict';
-    $.ajax({
-        url: path,
-        dataType: "xml",
-        async: true,
-        success: function( xmlResponse ) {
-            // get the contents from search data
-            isfetched = true;
-            $('.popup').detach().appendTo('.header-inner');
-            var datas = $( "entry", xmlResponse ).map(function() {
-                return {
-                    title: $( "title", this ).text(),
-                    content: $("content",this).text(),
-                    url: $( "url" , this).text()
-                };
-            }).get();
-            var $input = document.getElementById(search_id);
-            var $resultContent = document.getElementById(content_id);
-            $input.addEventListener('input', function(){
-                var matchcounts = 0;
-                var str='<ul class=\"search-result-list\">';
-                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-                $resultContent.innerHTML = "";
-                if (this.value.trim().length > 1) {
-                // perform local searching
-                datas.forEach(function(data) {
-                    var isMatch = true;
-                    var content_index = [];
-                    var data_title = data.title.trim().toLowerCase();
-                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
-                    var data_url = data.url;
-                    var index_title = -1;
-                    var index_content = -1;
-                    var first_occur = -1;
-                    // only match artiles with not empty titles and contents
-                    if(data_title != '' && data_content != '') {
-                        keywords.forEach(function(keyword, i) {
-                            index_title = data_title.indexOf(keyword);
-                            index_content = data_content.indexOf(keyword);
-                            if( index_title < 0 && index_content < 0 ){
-                                isMatch = false;
-                            } else {
-                                if (index_content < 0) {
-                                    index_content = 0;
-                                }
-                                if (i == 0) {
-                                    first_occur = index_content;
-                                }
-                            }
-                        });
-                    }
-                    // show search results
-                    if (isMatch) {
-                        matchcounts += 1;
-                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
-                        var content = data.content.trim().replace(/<[^>]+>/g,"");
-                        if (first_occur >= 0) {
-                            // cut out 100 characters
-                            var start = first_occur - 20;
-                            var end = first_occur + 80;
-                            if(start < 0){
-                                start = 0;
-                            }
-                            if(start == 0){
-                                end = 50;
-                            }
-                            if(end > content.length){
-                                end = content.length;
-                            }
-                            var match_content = content.substring(start, end);
-                            // highlight all keywords
-                            keywords.forEach(function(keyword){
-                                var regS = new RegExp(keyword, "gi");
-                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
-                            });
-
-                            str += "<p class=\"search-result\">" + match_content +"...</p>"
-                        }
-                        str += "</li>";
-                    }
-                })};
-                str += "</ul>";
-                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
-                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
-                $resultContent.innerHTML = str;
-            });
-            proceedsearch();
-        }
-    });}
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched == false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-
-    });
-
-    $('.popup-btn-close').click(function(e){
-      $('.popup').hide();
-      $(".popoverlay").remove();
-      $('body').css('overflow', '');
-    });
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-  </script>
-
-
-  
-
-  
-
-  
-
 </body>
 </html>
