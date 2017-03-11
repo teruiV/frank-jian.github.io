@@ -1,0 +1,1390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>记录点滴成长</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://jianwl.com/"/>
+  <updated>2017-03-11T12:58:13.000Z</updated>
+  <id>http://jianwl.com/</id>
+  
+  <author>
+    <name>流云</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python之字典</title>
+    <link href="http://jianwl.com/2017/03/11/Python%E4%B9%8B%E5%AD%97%E5%85%B8/"/>
+    <id>http://jianwl.com/2017/03/11/Python之字典/</id>
+    <published>2017-03-11T10:20:08.000Z</published>
+    <updated>2017-03-11T12:58:13.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;
+    
+    </summary>
+    
+      <category term="Python" scheme="http://jianwl.com/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="http://jianwl.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python之列表和元组</title>
+    <link href="http://jianwl.com/2017/03/11/Python%E4%B9%8B%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84/"/>
+    <id>http://jianwl.com/2017/03/11/Python之列表和元组/</id>
+    <published>2017-03-11T09:36:43.000Z</published>
+    <updated>2017-03-11T09:37:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Python包含6种内建的序列：列表、元组、字符串、Unicode字符串、buffer对象、xrange对象，这节主要来学习列表和元组。<strong>列表和元组的区别在于，列表可以修改，元组不可以。</strong></p>
+<h3 id="通用序列操作"><a href="#通用序列操作" class="headerlink" title="通用序列操作"></a>通用序列操作</h3><p>所有序列类型都可以进行这些操作：索引、分片、加、乘、以及检查某个元素是否属于该序列的成员、序列长度、找出最大元素、最小元素。</p>
+<h4 id="1-索引"><a href="#1-索引" class="headerlink" title="1) 索引"></a>1) 索引</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/14523041-file_1489217087380_3e78.png" alt=""></p>
+<h4 id="2-分片"><a href="#2-分片" class="headerlink" title="2) 分片"></a>2) 分片</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/86520910-file_1489217253044_6475.png" alt=""></p>
+<p>获取最后三个元素：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/2981895-file_1489217362541_2232.png" alt=""></p>
+<p>更大步长：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/81377151-file_1489217450167_8f65.png" alt=""></p>
+<h4 id="3-加"><a href="#3-加" class="headerlink" title="3) 加"></a>3) 加</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/55587129-file_1489217507183_666e.png" alt=""></p>
+<h4 id="4-乘"><a href="#4-乘" class="headerlink" title="4) 乘"></a>4) 乘</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/63363847-file_1489217608021_1294.png" alt=""></p>
+<h4 id="5-长度、最大值、最小值"><a href="#5-长度、最大值、最小值" class="headerlink" title="5) 长度、最大值、最小值"></a>5) 长度、最大值、最小值</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/65898019-file_1489217734808_186c.png" alt=""></p>
+<h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><p>列表除了适用序列的标准操作方法，本节还会介绍一些可以改变列表的方法：元素赋值、元素删除、分片赋值、以及列表方法</p>
+<h4 id="1）改变列表元素"><a href="#1）改变列表元素" class="headerlink" title="1）改变列表元素"></a>1）改变列表元素</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/39445538-file_1489218070573_559e.png" alt=""></p>
+<h4 id="2-删除元素"><a href="#2-删除元素" class="headerlink" title="2) 删除元素"></a>2) 删除元素</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/83266752-file_1489218148529_12224.png" alt=""></p>
+<h4 id="3-分片赋值"><a href="#3-分片赋值" class="headerlink" title="3) 分片赋值"></a>3) 分片赋值</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/68678272-file_1489218225510_75a7.png" alt=""></p>
+<h4 id="4-列表方法"><a href="#4-列表方法" class="headerlink" title="4) 列表方法"></a>4) 列表方法</h4><p>4.1) <code>append</code> 列表末尾追加元素</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/63479534-file_1489218330479_b5b6.png" alt=""></p>
+<p>4.2) <code>count</code> 统计某个元素在列表中出现的次数</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/33437808-file_1489218501030_e517.png" alt=""></p>
+<p>4.3) <code>extend</code> 在列表后，一次性追加新的一个列表</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/81047607-file_1489218616823_b8c0.png" alt=""></p>
+<p>4.4) <code>index</code> 从列表中找出某个值，第一个匹配项的索引位置</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/87902781-file_1489218827874_12817.png" alt=""></p>
+<p>4.5) <code>insert</code> 将对象插入列表</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/87119013-file_1489218933650_15ae9.png" alt=""></p>
+<p>4.6) <code>pop</code> 默认移除最后一个元素，并返回该元素的值</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/94076650-file_1489219047630_175f8.png" alt=""></p>
+<p>4.7) <code>reverse</code> 将列表中的元素反向存放</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/46157796-file_1489219161800_1183d.png" alt=""></p>
+<p>4.8) <code>sort</code> 对列表元素排序</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/97781689-file_1489219230515_13a99.png" alt=""></p>
+<p>4.9) 高级排序</p>
+<p>sort方法有两个可选的参数–key和reverse</p>
+<p>a) <code>key</code> 根据函数，为每个元素创建一个键，然后根据键来排序；</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/32829610-file_1489219789896_8d71.png" alt=""></p>
+<p>b）<code>reverse</code>，指明列表是否需要进行反序</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/99489690-file_1489219907483_ef90.png" alt=""></p>
+<h3 id="元组：不可变序列"><a href="#元组：不可变序列" class="headerlink" title="元组：不可变序列"></a>元组：不可变序列</h3><p>元组与列表一样，也是一种序列，不同的是元组不能修改。</p>
+<p>1）空元组</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/66845723-file_1489220816664_686a.png" alt=""></p>
+<p>2) 单元素元组，—必须加个逗号</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/79464689-file_1489220865683_34a9.png" alt=""></p>
+<p>3) 创建多元素元组</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/24763301-file_1489220747488_f833.png" alt=""></p>
+<p>4) <code>tuple</code> 将一个序列转化为元组</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/85051282-file_1489220996689_13c72.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>Python基础教程</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;Python包含6种内建的序列：列表、元组、字符串、Unicode字符串、buffer对象、xrange对象，这节主要来学习列表和元组。&lt;s
+    
+    </summary>
+    
+      <category term="Python" scheme="http://jianwl.com/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="http://jianwl.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>React技术栈介绍</title>
+    <link href="http://jianwl.com/2017/02/26/React%E6%8A%80%E6%9C%AF%E6%A0%88%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://jianwl.com/2017/02/26/React技术栈介绍/</id>
+    <published>2017-02-26T10:21:12.000Z</published>
+    <updated>2017-02-26T13:49:05.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>React整个技术栈涉及到的技术非常多，零基础的人入门总是望而却步，几个月之前就想认真学习React技术栈一直拖延至今。最近会抽出大部分时间，好好研究React技术栈。这一节我们来学习React涉及到的技术栈。</p>
+<h3 id="React技术栈"><a href="#React技术栈" class="headerlink" title="React技术栈"></a>React技术栈</h3><h4 id="1-React"><a href="#1-React" class="headerlink" title="1. React"></a>1. React</h4><p>React是一个声明式、高效、灵活的、创建用户界面的JavaScript库，让我们来逐一解读：</p>
+<h5 id="声明式"><a href="#声明式" class="headerlink" title="声明式"></a>声明式</h5><p>使用React描述组件的样子就可以改变用户界面。传统方式是命令式地操作DOM，不仅需要记住大量的API，而且还会增加代码的耦合度，使得项目难以维护。React使用自己的魔法改变界面，让开发者最大限度地减少DOM交互，较低处理视图的难度。</p>
+<h5 id="高效"><a href="#高效" class="headerlink" title="高效"></a>高效</h5><p>React高性能的Diff算法，让我们在刷新全部界面时只更新需要改变的那部分界面，其使用单向数据流改变界面，抛弃传统的数据绑定，减少了样板代码和重量。</p>
+<h5 id="灵活"><a href="#灵活" class="headerlink" title="灵活"></a>灵活</h5><p>React作为视图层与其他技术栈配合使用，比如与Redux搭配等等。</p>
+<h4 id="2-Redux"><a href="#2-Redux" class="headerlink" title="2. Redux"></a>2. Redux</h4><p>Redux是一个JavaScript状态容器，提供可预测的状态管理。Redux可以用三条基本准则来描述：单一数据源；state只读；使用纯函数来执行修改。</p>
+<h5 id="单一数据源"><a href="#单一数据源" class="headerlink" title="单一数据源"></a>单一数据源</h5><p>整个应用的state被存储在一棵对象树中，并且这个对象树只存在唯一一个store中。这里的state指的是数据。</p>
+<h5 id="state只读"><a href="#state只读" class="headerlink" title="state只读"></a>state只读</h5><p>不是无法改变state，这里的只读指的是不允许直接对state这个变量重写赋值，但可以通过action和reducer返回一个新的state，而且只能使用这一方法。</p>
+<h5 id="使用纯函数来执行修改"><a href="#使用纯函数来执行修改" class="headerlink" title="使用纯函数来执行修改"></a>使用纯函数来执行修改</h5><p>更新state的reducer只是一些纯函数，它接收先前的state和action，并返回新的state。</p>
+<p>了解以上规则后，或许你会问为什么要使用Redux?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">可预测： Redux只有一个数据源，想要修改它只能发起action，reducer又是纯函数，相同的输入永远会得到相同的输出。这一切使得程序运作变得可控、可预测。</div><div class="line"></div><div class="line">便于组织管理代码：严格而明确的程序结构是的代码更容易组织和管理，也方便团队协作。</div><div class="line"></div><div class="line">支持Universal渲染：单一数据源这一原则可以帮助解决Universal渲染中的数据传递问题，服务端渲染后只需给客户端传递一个变量即可，这个变量就是存储state的对象树。</div><div class="line"></div><div class="line">容易测试：编写可测试的代码，最重要的一条规则就是写单一功能的、没有外界依赖的小型函数。</div></pre></td></tr></table></figure>
+<h4 id="3-Node与Universal渲染"><a href="#3-Node与Universal渲染" class="headerlink" title="3.Node与Universal渲染"></a>3.Node与Universal渲染</h4><p>React与Redux既可以在浏览器运行也可以在服务器端运行，这里的服务器端指的是Node服务器。</p>
+<p>和传统Web服务器相比，Node更简单，它是单线程，与平台无关的，我们可以实现Universal渲染 – 用同一套代码在服务端和客户端渲染。</p>
+<h4 id="4-Babel"><a href="#4-Babel" class="headerlink" title="4.Babel"></a>4.Babel</h4><p>Babel是一个JavaScript编译器，可以让开发者提前使用下一代的JavaScript。</p>
+<h4 id="5-Webpack"><a href="#5-Webpack" class="headerlink" title="5.Webpack"></a>5.Webpack</h4><p>Webpack是当下最热门的前端资源模块化管理和打包工具，它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。通过加载器(loader)的转换，任何形式的资源都可以视作模块，比如CommonJS模块、AMD模块、ES2015模块、CSS、图片、JSON、LESS、Coffeescript等等。</p>
+<p>Webpack主要功能：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">编译、加载使用ES2015和JSX语法的模块</div><div class="line">实现开发服务器与热替换</div><div class="line">加载图片文件</div><div class="line">加载字体文件</div><div class="line">加载样式文件</div><div class="line">加载JSON文件</div><div class="line">视同同构工具实现同构渲染</div><div class="line">压缩代码</div><div class="line">哈希命名</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1.React与Redux开发实例精解</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;React整个技术栈涉及到的技术非常多，零基础的人入门总是望而却步，几个月之前就想认真学习React技术栈一直拖延至今。最近会抽出大部分时间
+    
+    </summary>
+    
+      <category term="React" scheme="http://jianwl.com/categories/React/"/>
+    
+    
+      <category term="React" scheme="http://jianwl.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ES6之SET、Map数据结构</title>
+    <link href="http://jianwl.com/2017/02/26/ES6%E4%B9%8BSET%E3%80%81Map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    <id>http://jianwl.com/2017/02/26/ES6之SET、Map数据结构/</id>
+    <published>2017-02-26T05:12:31.000Z</published>
+    <updated>2017-02-26T09:22:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这一节我们来学习在工作中最常用的两个数据结构<code>Set</code>和<code>Map</code>，介绍两种数据结构的基本用法。</p>
+<h3 id="SET实战"><a href="#SET实战" class="headerlink" title="SET实战"></a>SET实战</h3><p>定义：类似于数组，但成员都是唯一，没有重复的</p>
+<h4 id="1-初始化SET"><a href="#1-初始化SET" class="headerlink" title="1. 初始化SET"></a>1. 初始化SET</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/27685484-file_1488086345162_a031.png" alt=""></p>
+<h4 id="2-常用方法"><a href="#2-常用方法" class="headerlink" title="2. 常用方法"></a>2. 常用方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">add : 新增某个成员</div><div class="line">delete: 删除某个成员</div><div class="line">has: 判断是否有该成员</div><div class="line">clear: 清楚所有成员</div></pre></td></tr></table></figure>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/37263173-file_1488086504381_112f0.png" alt=""></p>
+<h4 id="3-遍历"><a href="#3-遍历" class="headerlink" title="3. 遍历"></a>3. 遍历</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/3967547-file_1488086882638_3a52.png" alt=""></p>
+<h3 id="MAP实战"><a href="#MAP实战" class="headerlink" title="MAP实战"></a>MAP实战</h3><p>定义：键值对的集合，ES6提供的<code>Map</code>数据结构的键的范围不限于字符串，各种类型的值(包括对象)都可以当作键</p>
+<h4 id="1-初始化MAP"><a href="#1-初始化MAP" class="headerlink" title="1. 初始化MAP"></a>1. 初始化MAP</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/69357943-file_1488098923626_8f95.png" alt=""></p>
+<h4 id="2-常用方法-1"><a href="#2-常用方法-1" class="headerlink" title="2. 常用方法"></a>2. 常用方法</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/8039268-file_1488099286728_504e.png" alt=""></p>
+<h4 id="3-遍历-1"><a href="#3-遍历-1" class="headerlink" title="3. 遍历"></a>3. 遍历</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/86767862-file_1488100323638_7af1.png" alt=""></p>
+<h4 id="4-Map转数组"><a href="#4-Map转数组" class="headerlink" title="4. Map转数组"></a>4. Map转数组</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/78684823-file_1488100481693_81a3.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>ES6标准入门 – 阮一峰</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;这一节我们来学习在工作中最常用的两个数据结构&lt;code&gt;Set&lt;/code&gt;和&lt;code&gt;Map&lt;/code&gt;，介绍两种数据结构的基本用法。
+    
+    </summary>
+    
+      <category term="JavaScript" scheme="http://jianwl.com/categories/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://jianwl.com/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SpringBoot配置Filter、Interceptor</title>
+    <link href="http://jianwl.com/2017/02/25/SpringBoot%E9%85%8D%E7%BD%AEFilter%E3%80%81Interceptor/"/>
+    <id>http://jianwl.com/2017/02/25/SpringBoot配置Filter、Interceptor/</id>
+    <published>2017-02-25T01:45:53.000Z</published>
+    <updated>2017-02-25T02:06:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>SpringBoot自动配置的功能「加了EnableAutoConfiguration注解」，创建了一堆默认的配置，以前在web.xml中的配置，现在都可以通过Spring Bean的方式进行配置，由Spring进行生命周期的管理。本节主要来学习在SpringBoot中如何配置Filter,Interceptor。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-RequestReplaceFilter，包装请求流，允许多次读"><a href="#1-RequestReplaceFilter，包装请求流，允许多次读" class="headerlink" title="1. RequestReplaceFilter，包装请求流，允许多次读"></a>1. RequestReplaceFilter，包装请求流，允许多次读</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div></pre></td><td class="code"><pre><div class="line">public class RequestReplaceFilter extends OncePerRequestFilter &#123;</div><div class="line">    @Override</div><div class="line">    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException &#123;</div><div class="line">        if (!(request instanceof CustomServletRequestWrapper)) &#123;</div><div class="line">            request = new CustomServletRequestWrapper(request);</div><div class="line">        &#125;</div><div class="line">        filterChain.doFilter(request, response);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    class CustomServletRequestWrapper extends HttpServletRequestWrapper &#123;</div><div class="line">        private final byte[] body;</div><div class="line"></div><div class="line">        /**</div><div class="line">         * Construct a wrapper for the specified request.</div><div class="line">         *</div><div class="line">         * @param request The request to be wrapped</div><div class="line">         */</div><div class="line">        public CustomServletRequestWrapper(HttpServletRequest request) throws IOException &#123;</div><div class="line">            super(request);</div><div class="line">            body = toByteArray(super.getInputStream());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public BufferedReader getReader() throws IOException &#123;</div><div class="line">            return new BufferedReader(new InputStreamReader(getInputStream()));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public ServletInputStream getInputStream() throws IOException &#123;</div><div class="line">            return new RequestBodyCachingInputStream(body);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        private class RequestBodyCachingInputStream extends ServletInputStream &#123;</div><div class="line">            private byte[] body;</div><div class="line">            private int lastIndexRetrieved = -1;</div><div class="line">            private ReadListener listener;</div><div class="line"></div><div class="line">            public RequestBodyCachingInputStream(byte[] body) &#123;</div><div class="line">                this.body = body;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public int read() throws IOException &#123;</div><div class="line">                if (isFinished()) &#123;</div><div class="line">                    return -1;</div><div class="line">                &#125;</div><div class="line">                int i = body[lastIndexRetrieved + 1];</div><div class="line">                lastIndexRetrieved++;</div><div class="line">                if (isFinished() &amp;&amp; listener != null) &#123;</div><div class="line">                    try &#123;</div><div class="line">                        listener.onAllDataRead();</div><div class="line">                    &#125; catch (IOException e) &#123;</div><div class="line">                        listener.onError(e);</div><div class="line">                        throw e;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                return i;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public boolean isFinished() &#123;</div><div class="line">                return lastIndexRetrieved == body.length - 1;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public boolean isReady() &#123;</div><div class="line">                // This implementation will never block</div><div class="line">                // We also never need to call the readListener from this method, as this method will never return false</div><div class="line">                return isFinished();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void setReadListener(ReadListener listener) &#123;</div><div class="line">                if (listener == null) &#123;</div><div class="line">                    throw new IllegalArgumentException(&quot;listener cann not be null&quot;);</div><div class="line">                &#125;</div><div class="line">                if (this.listener != null) &#123;</div><div class="line">                    throw new IllegalArgumentException(&quot;listener has been set&quot;);</div><div class="line">                &#125;</div><div class="line">                this.listener = listener;</div><div class="line">                if (!isFinished()) &#123;</div><div class="line">                    try &#123;</div><div class="line">                        listener.onAllDataRead();</div><div class="line">                    &#125; catch (IOException e) &#123;</div><div class="line">                        listener.onError(e);</div><div class="line">                    &#125;</div><div class="line">                &#125; else &#123;</div><div class="line">                    try &#123;</div><div class="line">                        listener.onAllDataRead();</div><div class="line">                    &#125; catch (IOException e) &#123;</div><div class="line">                        listener.onError(e);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public int available() throws IOException &#123;</div><div class="line">                return body.length - lastIndexRetrieved - 1;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void close() throws IOException &#123;</div><div class="line">                lastIndexRetrieved = body.length - 1;</div><div class="line">                body = null;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-SignInterceptor-签名验证拦截器"><a href="#2-SignInterceptor-签名验证拦截器" class="headerlink" title="2. SignInterceptor 签名验证拦截器"></a>2. SignInterceptor 签名验证拦截器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">public class SignInterceptor extends HandlerInterceptorAdapter &#123;</div><div class="line">    @Override</div><div class="line">    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;</div><div class="line"></div><div class="line">        String reqHash = request.getHeader(AppHeaders.VERIFICATION_HASH);</div><div class="line">        Map&lt;String, String[]&gt; reqParameterMap = request.getParameterMap();</div><div class="line"></div><div class="line">        log.info(&quot;Request-Url =&gt; &quot; + request.getRequestURL());</div><div class="line">        log.info(&quot;Request-Hash =&gt; &quot; + reqHash);</div><div class="line">        log.info(&quot;Request-params =&gt; &quot; + JSON.toJSONString(reqParameterMap));</div><div class="line"></div><div class="line">        if (StringUtils.isNotEmpty(reqHash)) &#123;</div><div class="line">            if (ApiConstants.NO_CHECK_SIGN_HASH.contains(reqHash)) &#123;</div><div class="line">                log.info(&quot;hash pass&quot;);</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            Object[] key_arr = reqParameterMap.keySet().toArray();</div><div class="line">            Arrays.sort(key_arr);</div><div class="line">            StringBuilder str = new StringBuilder();</div><div class="line">            for (Object key : key_arr) &#123;</div><div class="line">                String[] values = reqParameterMap.get(key);</div><div class="line">                str.append(key).append(&quot;=&quot;).append(values[values.length - 1]).append(&quot;&amp;&quot;);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            String paramStr = str.toString();</div><div class="line">            if (StringUtils.isNotBlank(paramStr)) &#123;</div><div class="line">                paramStr = paramStr.substring(0, paramStr.length() - 1);</div><div class="line">            &#125;</div><div class="line">            log.info(&quot;Server Md5 str =&gt; &quot; + paramStr);</div><div class="line"></div><div class="line">            String serverHash = DigestUtils.md5Hex(paramStr + SaltKeys.BDMS_API_SALT.getKey());</div><div class="line">            log.info(&quot;Server md5 hash =&gt; &quot; + serverHash);</div><div class="line">            if (reqHash.equals(serverHash)) &#123;</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);</div><div class="line">        response.getWriter().write(</div><div class="line">                JSON.toJSONString(ApiResponse.failed(ErrorCode.SIGN_ERROR))</div><div class="line">        );</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-注册拦截器、过滤器-amp-配置拦截器、过滤器的路径"><a href="#3-注册拦截器、过滤器-amp-配置拦截器、过滤器的路径" class="headerlink" title="3. 注册拦截器、过滤器 &amp; 配置拦截器、过滤器的路径"></a>3. 注册拦截器、过滤器 &amp; 配置拦截器、过滤器的路径</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">public class FilterRegister extends WebMvcConfigurerAdapter &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">    public void addInterceptors(InterceptorRegistry registry) &#123;</div><div class="line">        // 签名校验</div><div class="line">        registry.addInterceptor(new SignInterceptor())</div><div class="line">        .addPathPatterns(&quot;/**&quot;)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @Bean</div><div class="line">    public FilterRegistrationBean getRequestFilter()&#123;</div><div class="line">        RequestReplaceFilter filter = new RequestReplaceFilter();</div><div class="line">        FilterRegistrationBean registrationBean = new FilterRegistrationBean();</div><div class="line">        registrationBean.setFilter(filter);</div><div class="line">        List&lt;String&gt; urlPatterns = new ArrayList&lt;&gt;();</div><div class="line">        urlPatterns.add(&quot;/*&quot;);</div><div class="line">        registrationBean.setUrlPatterns(urlPatterns);</div><div class="line">        registrationBean.setOrder(1);</div><div class="line">        return registrationBean;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;SpringBoot自动配置的功能「加了EnableAutoConfiguration注解」，创建了一堆默认的配置，以前在web.xml中的
+    
+    </summary>
+    
+      <category term="SpringBoot" scheme="http://jianwl.com/categories/SpringBoot/"/>
+    
+    
+      <category term="SpringBoot" scheme="http://jianwl.com/tags/SpringBoot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTTP协议详解</title>
+    <link href="http://jianwl.com/2017/02/23/HTTP%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/"/>
+    <id>http://jianwl.com/2017/02/23/HTTP协议详解/</id>
+    <published>2017-02-23T15:09:21.000Z</published>
+    <updated>2017-02-25T01:27:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我们日常生活中经常会使用浏览器访问Web站点，但大家有思考过在这个过程中到底发生了什么吗？为什么我们在浏览器上输入要访问的URL就可以访问Web页面呢？</p>
+<p>当我们在浏览器地址栏上输入要访问的URL后，浏览器会分析出URL上的域名，然后通过NDS服务器查询出域名映射的IP地址，浏览器根据查询到的IP地址与Web服务器进行通信，而<strong>通信的协议就是HTTP协议。</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-25/53842035-file_1487985982597_a3ff.png" alt=""></p>
+<p>浏览器与Web服务器使用HTTP协议进行通信，接下来我们会详细介绍HTTP协议的相关知识。</p>
+<h3 id="HTTP报文"><a href="#HTTP报文" class="headerlink" title="HTTP报文"></a>HTTP报文</h3><p>HTTP协议交互的信息称为HTTP报文，请求端的HTTP报文称为请求报文，响应端的被称为响应报文。</p>
+<h4 id="1-报文结构"><a href="#1-报文结构" class="headerlink" title="1.报文结构"></a>1.报文结构</h4><p>HTTP报文大致分为报文首部和报文主体两部分，两者由最初出现的空行来划分。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/63335022-file_1487776806455_14596.png" alt=""></p>
+<h4 id="2-请求报文结构"><a href="#2-请求报文结构" class="headerlink" title="2.请求报文结构"></a>2.请求报文结构</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/18159996-file_1487777311008_1c4d.png" alt=""></p>
+<p>举个例子：<br><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/94747527-file_1487777973466_aaae.png" alt=""></p>
+<h4 id="3-响应报文结构"><a href="#3-响应报文结构" class="headerlink" title="3.响应报文结构"></a>3.响应报文结构</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/73324972-file_1487777733759_13411.png" alt=""></p>
+<p>举个例子：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-22/50444905-file_1487777764748_115e3.png" alt=""></p>
+<h3 id="HTTP首部字段"><a href="#HTTP首部字段" class="headerlink" title="HTTP首部字段"></a>HTTP首部字段</h3><h4 id="1-通用首部字段"><a href="#1-通用首部字段" class="headerlink" title="1.通用首部字段"></a>1.通用首部字段</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">首部字段名</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Cache-Control</td>
+<td style="text-align:center">控制缓存的行为</td>
+</tr>
+<tr>
+<td style="text-align:center">Connection</td>
+<td style="text-align:center">逐跳首部、连接的管理</td>
+</tr>
+<tr>
+<td style="text-align:center">Date</td>
+<td style="text-align:center">创建报文的日期时间</td>
+</tr>
+<tr>
+<td style="text-align:center">Pragma</td>
+<td style="text-align:center">报文指令</td>
+</tr>
+<tr>
+<td style="text-align:center">Trailer</td>
+<td style="text-align:center">报文末端的首部一览</td>
+</tr>
+<tr>
+<td style="text-align:center">Transfer-Encoding</td>
+<td style="text-align:center">指定报文主体的<strong>传输编码方式</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">Upgrade</td>
+<td style="text-align:center">升级为其他协议</td>
+</tr>
+<tr>
+<td style="text-align:center">Via</td>
+<td style="text-align:center">代理服务器的相关信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Warning</td>
+<td style="text-align:center">错误通知</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-请求首部字段"><a href="#2-请求首部字段" class="headerlink" title="2.请求首部字段"></a>2.请求首部字段</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">首部字段名</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accept</td>
+<td style="text-align:center">用户代理可处理的媒体类型</td>
+</tr>
+<tr>
+<td style="text-align:center">Accept-Charset</td>
+<td style="text-align:center">优先的字符集</td>
+</tr>
+<tr>
+<td style="text-align:center">Accept-Encoding</td>
+<td style="text-align:center">优先的内容编码</td>
+</tr>
+<tr>
+<td style="text-align:center">Accept-Language</td>
+<td style="text-align:center">优先的语言</td>
+</tr>
+<tr>
+<td style="text-align:center">Authorization</td>
+<td style="text-align:center">Web认证信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Expect</td>
+<td style="text-align:center">期待服务器的特定行为</td>
+</tr>
+<tr>
+<td style="text-align:center">From</td>
+<td style="text-align:center">用户的电子邮箱地址</td>
+</tr>
+<tr>
+<td style="text-align:center">Host</td>
+<td style="text-align:center">请求资源所在服务器</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Match</td>
+<td style="text-align:center">比较实体标记ETag</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Modified-Since</td>
+<td style="text-align:center">比较资源的更新时间</td>
+</tr>
+<tr>
+<td style="text-align:center">If-None-Match</td>
+<td style="text-align:center">比较实体标记（与If-Match相反）</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Range</td>
+<td style="text-align:center">资源未更新时发送实体Byte的范围请求</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Unmodified-Since</td>
+<td style="text-align:center">比较资源的更新时间 （与If-Modified-Since相反）</td>
+</tr>
+<tr>
+<td style="text-align:center">Max-Forwards</td>
+<td style="text-align:center">最大传输逐跳数</td>
+</tr>
+<tr>
+<td style="text-align:center">Proxy-Authorization</td>
+<td style="text-align:center">代理服务器要求客户端的认证信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Range</td>
+<td style="text-align:center">实体的字节范围请求</td>
+</tr>
+<tr>
+<td style="text-align:center">Referer</td>
+<td style="text-align:center">对请求中URI的原始获取方</td>
+</tr>
+<tr>
+<td style="text-align:center">TE</td>
+<td style="text-align:center">传输编码的优先级</td>
+</tr>
+<tr>
+<td style="text-align:center">User-Agent</td>
+<td style="text-align:center">HTTP客户端程序的信息</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-响应首部字段"><a href="#3-响应首部字段" class="headerlink" title="3. 响应首部字段"></a>3. 响应首部字段</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">首部字段名</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accept-Ranges</td>
+<td style="text-align:center">是否接受字节范围请求</td>
+</tr>
+<tr>
+<td style="text-align:center">Age</td>
+<td style="text-align:center">推算资源创建经过时间</td>
+</tr>
+<tr>
+<td style="text-align:center">ETag</td>
+<td style="text-align:center">资源的匹配信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Location</td>
+<td style="text-align:center">令客户端重定向至指定URI</td>
+</tr>
+<tr>
+<td style="text-align:center">Proxy-Authenticate</td>
+<td style="text-align:center">代理服务器对客户端的认证信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Retry-After</td>
+<td style="text-align:center">对再次发起请求的时机要求</td>
+</tr>
+<tr>
+<td style="text-align:center">Server</td>
+<td style="text-align:center">HTTP服务器的安装信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Vary</td>
+<td style="text-align:center">代理服务器缓存的管理信息</td>
+</tr>
+<tr>
+<td style="text-align:center">WWW-Authenticate</td>
+<td style="text-align:center">服务器对客户端的认证信息</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4-实体首部字段"><a href="#4-实体首部字段" class="headerlink" title="4.实体首部字段"></a>4.实体首部字段</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">首部字段名</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Allow</td>
+<td style="text-align:center">资源可支持的HTTP方法</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Encoding</td>
+<td style="text-align:center">实体主体适用的编码方式</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Language</td>
+<td style="text-align:center">实体主体的自然语言</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Length</td>
+<td style="text-align:center">实体主体的大小(单位：字节)</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Location</td>
+<td style="text-align:center">替代对应资源的URI</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-MD5</td>
+<td style="text-align:center">实体主体的报文摘要</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Range</td>
+<td style="text-align:center">实体主体的位置范围</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Type</td>
+<td style="text-align:center">实体主体的媒体类型</td>
+</tr>
+<tr>
+<td style="text-align:center">Expires</td>
+<td style="text-align:center">实体主体的过期时间</td>
+</tr>
+<tr>
+<td style="text-align:center">Last-Modified</td>
+<td style="text-align:center">资源的最后修改日期时间</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>图解HTTP - 上野宣</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;我们日常生活中经常会使用浏览器访问Web站点，但大家有思考过在这个过程中到底发生了什么吗？为什么我们在浏览器上输入要访问的URL就可以访问W
+    
+    </summary>
+    
+      <category term="HTTP" scheme="http://jianwl.com/categories/HTTP/"/>
+    
+    
+      <category term="HTTP" scheme="http://jianwl.com/tags/HTTP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTTP缓存机制</title>
+    <link href="http://jianwl.com/2017/02/23/HTTP%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/"/>
+    <id>http://jianwl.com/2017/02/23/HTTP缓存机制/</id>
+    <published>2017-02-23T14:25:50.000Z</published>
+    <updated>2017-02-23T16:00:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>HTTP缓存机制作为Web性能优化的重要手段，这一节我们主要来学习HTTP缓存，先贴出2道题，大家可以尝试解答下：</p>
+<p>以下为<code>page.html</code>内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;&lt;head&gt;</div><div class="line">    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</div><div class="line">    &lt;title&gt;page页&lt;/title&gt;&lt;/head&gt;&lt;body&gt;</div><div class="line">    &lt;img src=&quot;images/head.png&quot; /&gt;</div><div class="line">    &lt;a href=&quot;page.html&quot;&gt;重新访问page页&lt;/a&gt;&lt;/body&gt;&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>首次访问该页面，页面中head.png响应头信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div><div class="line">Cache-Control: no-cache</div><div class="line">Content-Type: image/png</div><div class="line">Last-Modified: Tue, 08 Nov 2016 06:59:00 GMT</div><div class="line">Accept-Ranges: bytes</div><div class="line">Date: Thu, 10 Nov 2016 02:48:50 GMT</div><div class="line">Content-Length: 3534</div></pre></td></tr></table></figure>
+<p><strong>问题1：</strong> 请问当点击<code>重新访问page页</code>链接重新加载该页面后，head.png如何二次加载？</p>
+<p><strong>问题2：</strong>如果将上述信息中的Cache-Controller设置为private，那么结果又会如何呢？</p>
+<p>以上2道题，如果你能答对，说明你已经对这些知识理解非常透彻了，否则请继续往下看。接下来我们将从系统化角度来讲讲HTTP缓存是如何协同工作的</p>
+<h3 id="HTTP缓存体系"><a href="#HTTP缓存体系" class="headerlink" title="HTTP缓存体系"></a>HTTP缓存体系</h3><p>HTTP缓存体系分为以下三个部分：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-23/15685593-file_1487864473858_e48d.png" alt=""></p>
+<h4 id="1-缓存存储策略"><a href="#1-缓存存储策略" class="headerlink" title="1. 缓存存储策略"></a>1. 缓存存储策略</h4><p>用来确定HTTP响应内容是否可以被客户端缓存，以及可以被哪些客户端存储，这个策略的作用只有一个，用于决定HTTP响应内容是否可缓存到客户端。</p>
+<p>对于<code>Cache-Controller</code>里头的Public、Private、no-cache、max-age、no-store他们都是用来指明响应内容是否可以被客户端存储的，其中前4个都会缓存文件数据(关于no-cache应理解为不建议使用本地缓存，其仍然会缓存数据到本地)，后者no-store则不会在客户端缓存任何响应数据。</p>
+<p>通过<code>Cache-Controller:</code>Public设置我们可以将HTTP响应数据存储到本地，但此时并不意味着后续浏览器会直接从缓存中读取数据并使用，为啥？因为它无法确定本地缓存的数据是否可用，还必须借助一套鉴别机制来确定才行，这就是我们下面将到的缓存过期策略</p>
+<h4 id="2-缓存过期策略"><a href="#2-缓存过期策略" class="headerlink" title="2. 缓存过期策略"></a>2. 缓存过期策略</h4><p>客户端用来确认存储在本地的缓存数据是否过期，进而决定是否要发请求到服务端获取数据，这个策略的作用也只有一个，那就是决定客户端是否可直接从本地缓存数据中加载数据并展示，否则就发请求到服务器获取。</p>
+<p>刚上面我们已阐述了数据缓存到了本地还需要经过判断才能使用，那么浏览器通过什么条件来判断呢？答案是<code>Expires</code>，Expires指名了缓存数据绝对时间，告诉客户端到这个时间点后本地缓存就作废了。</p>
+<p>注意：<br>当Cache-Control: max-age=10 与 <code>Expires</code>同时存在时，后者会被覆盖掉；</p>
+<h4 id="3-缓存对比策略"><a href="#3-缓存对比策略" class="headerlink" title="3. 缓存对比策略"></a>3. 缓存对比策略</h4><p>将缓存在客户端的数据标识发往服务端，服务端通过标识来判断客户端缓存数据是否仍有效，进而决定是否要重发数据。</p>
+<p>客户端检查到数据过期或浏览器刷新后，往往会重新发起一个HTTP请求到服务器，服务器此时并不急于返回数据，而是按请求头有没有带标识(If-Modified-Since、If-None-Match)过来，如果判断标识仍然有效，则返回304告诉客户端取本地缓存数据来用即可(这里要注意的是你必须要在首次响应时输出相应的头信息(Last-Modified、ETags)到客户端。至此我们明白了上面所说的本地缓存数据即使被认为过期，并不等于数据从此没用的道理。</p>
+<p>未完待续…</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://mp.weixin.qq.com/s/qOMO0LIdA47j3RjhbCWUEQ" target="_blank" rel="external">HTTP缓存策略</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;HTTP缓存机制作为Web性能优化的重要手段，这一节我们主要来学习HTTP缓存，先贴出2道题，大家可以尝试解答下：&lt;/p&gt;
+&lt;p&gt;以下为&lt;c
+    
+    </summary>
+    
+      <category term="HTTP" scheme="http://jianwl.com/categories/HTTP/"/>
+    
+    
+      <category term="HTTP" scheme="http://jianwl.com/tags/HTTP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java8之不常用却很有用的知识点</title>
+    <link href="http://jianwl.com/2017/02/21/Java8%E4%B9%8B%E4%B8%8D%E5%B8%B8%E7%94%A8%E5%8D%B4%E5%BE%88%E6%9C%89%E7%94%A8%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
+    <id>http://jianwl.com/2017/02/21/Java8之不常用却很有用的知识点/</id>
+    <published>2017-02-21T06:07:13.000Z</published>
+    <updated>2017-02-21T15:40:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><h4 id="1-forEach-VS-forEachOrdered"><a href="#1-forEach-VS-forEachOrdered" class="headerlink" title="1. forEach VS forEachOrdered"></a>1. forEach VS forEachOrdered</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_005()&#123;</div><div class="line">    List&lt;String&gt; strs = Arrays.asList(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;);</div><div class="line">    strs.stream().parallel().forEach(str -&gt; System.out.println(&quot;forEach =&gt; &quot; + str));</div><div class="line">    strs.stream().parallel().forEachOrdered(str -&gt; System.out.println(&quot;forEachOrdered =&gt; &quot; + str));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-12-11/96792814-file_1481436578266_14fcc.png" alt=""></p>
+<p><code>分析</code></p>
+<p>并行处理数据时，<code>forEach</code>处理的数据是无序的，而<code>forEachOrdered</code>处理数据是按照输入流的顺序处理的。</p>
+<h4 id="2-合并Map"><a href="#2-合并Map" class="headerlink" title="2. 合并Map"></a>2. 合并Map</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">@RunWith(JUnit4.class)</div><div class="line">public class BasicTest &#123;</div><div class="line">    /**</div><div class="line">     * 将sub合并至total,若在total中存在该键(key),则键值合并;</div><div class="line">     */</div><div class="line">    @Test</div><div class="line">    public void test_001()&#123;</div><div class="line">        Map&lt;String,List&lt;Integer&gt;&gt; total = Maps.newHashMap();</div><div class="line">        Map&lt;String,List&lt;Integer&gt;&gt; sub = Maps.newHashMap();</div><div class="line"></div><div class="line">        total.put(&quot;num1&quot;, Arrays.asList(1,2,3,4,11));</div><div class="line">        total.put(&quot;num2&quot;,Arrays.asList(1,2,3,4));</div><div class="line">        total.put(&quot;num3&quot;,Arrays.asList(1,2,3,4));</div><div class="line">        total.put(&quot;num4&quot;,Arrays.asList(1,2,3,4));</div><div class="line"></div><div class="line">        sub.put(&quot;num1&quot;,Arrays.asList(1,2,3,4,5,6,7));</div><div class="line">        sub.put(&quot;num2&quot;,Arrays.asList(1,2,3,4,4,5,6,7));</div><div class="line"></div><div class="line">        sub.keySet().forEach(key -&gt; total.merge(key,sub.get(key),(v1,v2) -&gt; Arrays.asList(v1,v2).stream().flatMap(Collection::stream).distinct().collect(Collectors.toList())));</div><div class="line"></div><div class="line">        System.out.println(&quot;total =&gt; &quot; + JSON.toJSONString(total));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-21/83737621-file_1487691562243_10db7.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;知识点&quot;&gt;&lt;a href=&quot;#知识点&quot; class=&quot;headerlink&quot; title=&quot;知识点&quot;&gt;&lt;/a&gt;知识点&lt;/h3&gt;&lt;h4 id=&quot;1-forEach-VS-forEachOrdered&quot;&gt;&lt;a href=&quot;#1-forEach-VS-forEachOr
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
+    
+    
+      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>awk及sed简明教程</title>
+    <link href="http://jianwl.com/2017/02/20/awk%E5%8F%8Ased%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/"/>
+    <id>http://jianwl.com/2017/02/20/awk及sed简明教程/</id>
+    <published>2017-02-20T15:32:05.000Z</published>
+    <updated>2017-02-20T15:34:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://coolshell.cn/articles/9104.html" target="_blank" rel="external">SED简明教程 – 酷壳</a></li>
+<li><a href="http://coolshell.cn/articles/9070.html" target="_blank" rel="external">AWK简明教程 – 酷壳</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://coolshell.cn/articles/9104.html&quot; target=
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://jianwl.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://jianwl.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>InnoDB存储引擎之B+树索引内部实现</title>
+    <link href="http://jianwl.com/2017/02/19/InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%B9%8BB-%E6%A0%91%E7%B4%A2%E5%BC%95%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://jianwl.com/2017/02/19/InnoDB存储引擎之B-树索引内部实现/</id>
+    <published>2017-02-19T08:02:17.000Z</published>
+    <updated>2017-02-19T14:54:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>B+</code>树索引是InnoDB最为常用和最为有效的索引，其构造类似于<code>二叉树</code>，<code>B+</code>树中的B代表的是平衡(balance)，因为<code>B+</code>树是从最早的平衡二叉树演化而来的。</p>
+<p>在学习索引之前先介绍与之密切相关的一些算法与数据结构，有助于更好的理解B+树索引的工作方式。</p>
+<h4 id="1-二分查找法"><a href="#1-二分查找法" class="headerlink" title="1. 二分查找法"></a>1. 二分查找法</h4><p>基本思想：先以<strong>有序数列</strong>的中点位置为比较对象，如果找的元素值小于该中点元素，则将待查序列缩小为左半部分，否则为右半部分。通过一次比较，将查找区间缩小一半。</p>
+<p>举个例子：从以下10个数中，查找48这条记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">5 10 19 21 31 37(✅) 42 48 50 55</div><div class="line"></div><div class="line">5 10 19 21 31 37 42 48 50(✅) 55</div><div class="line"></div><div class="line">5 10 19 21 31 37 42 48(✅) 50 55</div><div class="line"></div><div class="line">顺序查找平均次数: (1+2+3+4+5+6+7+8+9+10)/10 = 5.5次</div><div class="line"></div><div class="line">二分查找法平均次数: (4+3+2+4+3+1+4+3+2+3)/10 = 4次</div></pre></td></tr></table></figure>
+<h4 id="2-二叉查找树"><a href="#2-二叉查找树" class="headerlink" title="2. 二叉查找树"></a>2. 二叉查找树</h4><p>定义：在二叉查找树中，左子树的键值总是小于跟的键值，右子树的键值总是大于根的键值。</p>
+<p>三种遍历方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">前序遍历：根节点-&gt;左子树-&gt;右子树</div><div class="line">中序遍历：左子树-&gt;根节点-&gt;右子树</div><div class="line">后序遍历：左子树-&gt;右子树-&gt;根节点</div></pre></td></tr></table></figure>
+<p>举个例子：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/62647480-file_1487492747619_129e8.gif" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">前序遍历：abdefgc</div><div class="line">中序遍历：debgfac</div><div class="line">后序遍历：edgfbca</div></pre></td></tr></table></figure>
+<h4 id="3-平衡二叉树"><a href="#3-平衡二叉树" class="headerlink" title="3. 平衡二叉树"></a>3. 平衡二叉树</h4><p>定义：符合二叉查找树的定义，其次必须满足任何节点的两个子数的高度最大差为1.</p>
+<h3 id="B-树"><a href="#B-树" class="headerlink" title="B+ 树"></a>B+ 树</h3><p>定义：B+树中，所有记录节点都按键值的大小的顺序存放在同一层的叶子节点上，由各叶子节点指针进行连接。先来看一个B+树，其高度为2，<strong>每页可存放4条记录</strong>，扇出(fan out)为5。</p>
+<p>从图1-1可以看出，所有记录都在叶子节点上，并且是顺序存放的，如果用户从最左边的叶子节点开始顺序遍历，可以得到所有键值的顺序排序：5、10、15、20、25、30、50、55、60、65、75、80、85、90。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/79936845-file_1487501076247_17452.png" alt="图1-1"></p>
+<h4 id="1-插入操作"><a href="#1-插入操作" class="headerlink" title="1. 插入操作"></a>1. 插入操作</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">Leaf Page满</th>
+<th style="text-align:center">Index Page满</th>
+<th style="text-align:left">操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:left">直接将记录插入到叶子节点</td>
+</tr>
+<tr>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:left">1）拆分Leaf Page  2) 将中间的节点放入到Index Page中 3）小于中间节点的记录放左边</td>
+</tr>
+<tr>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:left">1）拆分Leaf Page 2) 小于中间节点的记录放左边 3）大于或等于中间节点的记录放右边 4）拆分Index Page 5) 小于中间节点的记录放左边 6）大于中间节点放右边 7） 中间节点放入上一层Index Page</td>
+</tr>
+</tbody>
+</table>
+<p>操作1. 用户插入28键值，发现当前Leaf Page与Index Page都没有满</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/73962338-file_1487501771494_c1ff.png" alt=""></p>
+<p>操作2. 继操作1之后，再插入70这个键值，此时Leaf Page满了，但Index Page还没有满</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/91261615-file_1487502263260_fa07.png" alt=""></p>
+<p>操作3. 继操作2之后，再插入键值95，此时Leaf Page与Index Page都满了。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/87480241-file_1487503232532_1e17.png" alt=""></p>
+<h4 id="2-删除操作"><a href="#2-删除操作" class="headerlink" title="2. 删除操作"></a>2. 删除操作</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">叶子节点小于填充因子</th>
+<th style="text-align:center">中间节点小于填充因子</th>
+<th style="text-align:left">操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:left">直接将记录从叶子节点删除，如果该节点还是Index Page的节点，用该节点的右节点代替</td>
+</tr>
+<tr>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:left">合并叶子节点和他的兄弟节点，同时更新Index Page</td>
+</tr>
+<tr>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:left">1) 合并叶子节点和它的兄弟节点 2）更新Index Page 3) 合并Index Page和它的兄弟节点</td>
+</tr>
+</tbody>
+</table>
+<p>操作1. 删除键值为70的记录，符合上述第一种情况：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/52906554-file_1487511007704_aa56.png" alt=""></p>
+<p>操作2. 继操作1之后，删除键值为25记录，符合上述第二种情况：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/63451589-file_1487511457231_11319.png" alt=""></p>
+<p>操作3. 继操作2之后，删除键值60的记录，填充因子小于50%，进行合并操作，符合上述第三种情况：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/67245038-file_1487511783693_b9ba.png" alt=""></p>
+<h3 id="B-索引类型"><a href="#B-索引类型" class="headerlink" title="B+ 索引类型"></a>B+ 索引类型</h3><p>B+树索引可以分为聚集索引、辅助索引，但不管是聚集还是辅助索引，其内部都是B+树的，高度平衡，叶子节点存放着所有的数据。</p>
+<h4 id="1-聚集索引"><a href="#1-聚集索引" class="headerlink" title="1. 聚集索引"></a>1. 聚集索引</h4><p>定义：按照每张表的主键构造一棵B+树，同时叶子节点中存放的即为整张表的行记录数据，也将聚集索引的叶子节点称为数据页。</p>
+<p>好处：</p>
+<p>1）对于主键的排序查找和范围查找速度非常快。由于B+数索引是双向链表，用户可以快速找到最后一个数据页。</p>
+<p>举个例子：<br>因为B+树索引是双向链表的，可以快速找到最后一个数据页，并获取10条记录。<br><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/86953295-file_1487513202735_1c86.png" alt=""></p>
+<h4 id="2-辅助索引"><a href="#2-辅助索引" class="headerlink" title="2. 辅助索引"></a>2. 辅助索引</h4><p>定义：叶子节点并不包含行记录的全部数据，叶子节点除了包含键值以外，每个叶子节点中的索引行还包含了一个书签。该书签用来告诉InnoDB存储引擎哪里可以找到索引相对应的行数据。由于InnoDB存储引擎表是索引组织表，因此InnoDB存储引擎的辅助索引的书签就是相应的行数据的聚集索引键。</p>
+<p>未完待续…</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>MYSQL技术内幕</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;code&gt;B+&lt;/code&gt;树索引是InnoDB最为常用和最为有效的索引，其构造类似于&lt;code&gt;二叉树&lt;/code&gt;，&lt;code&gt;B+&lt;
+    
+    </summary>
+    
+      <category term="MYSQL" scheme="http://jianwl.com/categories/MYSQL/"/>
+    
+    
+      <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>InnoDB存储引擎之日志文件</title>
+    <link href="http://jianwl.com/2017/02/19/InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%B9%8B%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6/"/>
+    <id>http://jianwl.com/2017/02/19/InnoDB存储引擎之日志文件/</id>
+    <published>2017-02-19T05:10:00.000Z</published>
+    <updated>2017-02-19T07:21:18.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>InnoDB存储引擎表的有以下几种文件：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">文件</th>
+<th style="text-align:center">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">参数文件</td>
+<td style="text-align:center">告诉MYSQL启动时，哪里可以找到数据库文件，并指定某些初始化参数，这些参数定义了某种内存结构的大小</td>
+</tr>
+<tr>
+<td style="text-align:center">日志文件</td>
+<td style="text-align:center">记录MYSQL实例对某种条件作出响应时写入的文件，如：错误日志、二进制日志文件、慢查询日志文件、查询日志文件等</td>
+</tr>
+<tr>
+<td style="text-align:center">socket文件</td>
+<td style="text-align:center">当用UNIX域套接字进行连接时需要的文件</td>
+</tr>
+<tr>
+<td style="text-align:center">pid文件</td>
+<td style="text-align:center">MYSQL实例的进程ID</td>
+</tr>
+<tr>
+<td style="text-align:center">MySQL表结构文件</td>
+<td style="text-align:center">存放MYSQL表结构定义文件</td>
+</tr>
+<tr>
+<td style="text-align:center">存储引擎文件</td>
+<td style="text-align:center">因MYSQ表存储引擎的关系，每个存储引擎都会有自己的文件来保存各种数据，这些存储引擎真正存储了记录和索引等数据。</td>
+</tr>
+</tbody>
+</table>
+<p>这一节，我们主要介绍日志文件。</p>
+<h3 id="1-错误日志"><a href="#1-错误日志" class="headerlink" title="1. 错误日志"></a>1. 错误日志</h3><p>1）错误日志文件的位置</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/65048571-file_1487482229292_773f.png" alt=""></p>
+<p>2）查看错误日志</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/6724899-file_1487482372203_17997.png" alt=""></p>
+<h3 id="2-慢查询日志"><a href="#2-慢查询日志" class="headerlink" title="2. 慢查询日志"></a>2. 慢查询日志</h3><p>1）MYSQL启动时设了一个阈值，将运行时间超过该值的所有SQL语句都记录到慢查询日志文件中，阈值可通过参数<code>long_query_time</code>来设置，默认为10,代表10秒。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/70209826-file_1487482647488_b735.png" alt=""></p>
+<p>2）慢查询日志参数，默认是<code>OFF</code>，需要手动设置为<code>ON</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/56036822-file_1487482980959_aa98.png" alt=""></p>
+<p>3）没有使用索引的慢查询参数，默认是OFF，需要手动设置为<code>ON</code>：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/25689763-file_1487483450794_166ec.png" alt=""></p>
+<p>4）启动慢查询</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">set global slow_query_log = ON;</div><div class="line">set global log_queries_not_using_indexes = ON;</div></pre></td></tr></table></figure>
+<p>5）慢查询日志文件位置：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/36049973-file_1487483823605_cd92.png" alt=""></p>
+<p>6）查看慢查询日志：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/22431008-file_1487483956114_4b85.png" alt=""></p>
+<p>7）越来越多的SQL查询记录到慢查询日志文件中，此时要分析该文件显得不是那么简单和直观了。MYSQL提供<code>mysqldumpslow</code>命令可以很好解决该问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># 查询执行时间最长的10条SQL语句</div><div class="line"></div><div class="line">sudo mysqldumpslow -s al -n 10 /usr/local/mysql/data/jianweilindeMacBook-Pro-slow.log</div><div class="line"></div><div class="line">-s ORDER what to sort by(al、at、ar、c、l、r、t),&apos;at&apos; is default</div><div class="line">   al : average lock time</div><div class="line">   ar : average row sent</div><div class="line">   at : average query time</div><div class="line">   c  : count</div><div class="line">   l  : lock time</div><div class="line">   r  : rows sent</div><div class="line">   t  : query time</div><div class="line"></div><div class="line">-r reverse the sort order</div><div class="line">-n Num  abstract numbers with at least n dights within names</div></pre></td></tr></table></figure>
+<h3 id="3-查询日志"><a href="#3-查询日志" class="headerlink" title="3. 查询日志"></a>3. 查询日志</h3><p>查询日志记录了所有对MYSQL数据库请求的信息，无论这些请求是否得到了正确的执行。默认文件名为：主机名.log。</p>
+<p>1）查询日志参数：默认是<code>OFF</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/15106561-file_1487485005374_3283.png" alt=""></p>
+<p>2）手动启动查询日志<code>ON</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">set global general_log = ON;</div></pre></td></tr></table></figure>
+<p>3）查看日志文件位置：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/73309992-file_1487485312775_16e30.png" alt=""></p>
+<p>4）查看日志文件：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/14055636-file_1487485396146_1862e.png" alt=""></p>
+<h3 id="4-二进制日志"><a href="#4-二进制日志" class="headerlink" title="4. 二进制日志"></a>4. 二进制日志</h3><p>二进制日志(binary log)记录了对MYSQL数据库执行更改的所有操作，但不包括<code>SELECT</code>和<code>SHOW</code>这类操作，因为这类操作对数据库本身并没有修改。二进制文件有以下几个作用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">恢复(recovery)：某些数据的恢复需要二进制日志，例如，在一个数据库全备文件恢复后，用户可以通过二进制日志进行point-in-time恢复。</div><div class="line"></div><div class="line">复制(replication)：其原理与恢复类似，通过复制和执行二进制日志使一台远程的MYSQL数据库(slave)与一台MYSQL数据库(master)进行实时同步。</div><div class="line"></div><div class="line">审计(aduit)：用户可以通过二进制日志中的信息来进行审计，判断是否有对数据库进行注入攻击。</div></pre></td></tr></table></figure>
+<p>1) 启动二进制文件</p>
+<p>MYSQL二进制日志由配置文件my.cnf的<code>log_bin</code>选项负责启用的:</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/20551906-file_1487487869672_1052.png" alt=""></p>
+<p>2) 二进制文件位置<br><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-19/70390816-file_1487487919637_78fc.png" alt=""></p>
+<p>这里的<code>mysql-bin.000001</code>即为二进制文件，我们在配置文件中指定了名字，所以没有用默认的文件名。<code>mysql-bin.indx</code>为二进制的索引文件，用来存储过往产生的二进制日志序号。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1.MySQL技术内幕 – InnoDB存储引擎</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;InnoDB存储引擎表的有以下几种文件：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:ce
+    
+    </summary>
+    
+      <category term="MYSQL" scheme="http://jianwl.com/categories/MYSQL/"/>
+    
+    
+      <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MYSQL存储引擎间的比较</title>
+    <link href="http://jianwl.com/2017/02/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E9%97%B4%E7%9A%84%E6%AF%94%E8%BE%83/"/>
+    <id>http://jianwl.com/2017/02/17/MYSQL存储引擎间的比较/</id>
+    <published>2017-02-17T14:05:50.000Z</published>
+    <updated>2017-02-17T14:53:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>存储引擎是MYSQL体系结构的核心，本节我们通过比较存储引擎加深对其的了解。</p>
+<h3 id="存储引擎对比"><a href="#存储引擎对比" class="headerlink" title="存储引擎对比"></a>存储引擎对比</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">Feature</th>
+<th style="text-align:center">MyISAM</th>
+<th style="text-align:center">BDB</th>
+<th style="text-align:center">Memory</th>
+<th style="text-align:center">InnoDB</th>
+<th style="text-align:center">Archive</th>
+<th style="text-align:center">NDB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Storage Limits</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:center">YES</td>
+<td style="text-align:center">64TB</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:center">YES</td>
+</tr>
+<tr>
+<td style="text-align:center">Transactions</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Locking granularity</td>
+<td style="text-align:center">Table</td>
+<td style="text-align:center">Page</td>
+<td style="text-align:center">Table</td>
+<td style="text-align:center">Row</td>
+<td style="text-align:center">Row</td>
+<td style="text-align:center">Row</td>
+</tr>
+<tr>
+<td style="text-align:center">MVCC/Snapshot Read</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Geospatial support</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">B-Tree indexes</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Hash indexes</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Full text search index</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Clustered index</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Data Caches</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Index Caches</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Compressed data</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Encrypted data</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Storage cost</td>
+<td style="text-align:center">Low</td>
+<td style="text-align:center">Low</td>
+<td style="text-align:center">N/A</td>
+<td style="text-align:center">High</td>
+<td style="text-align:center">Very Low</td>
+<td style="text-align:center">Low</td>
+</tr>
+<tr>
+<td style="text-align:center">Memory cost</td>
+<td style="text-align:center">Low</td>
+<td style="text-align:center">Low</td>
+<td style="text-align:center">Medium</td>
+<td style="text-align:center">High</td>
+<td style="text-align:center">Low</td>
+<td style="text-align:center">High</td>
+</tr>
+<tr>
+<td style="text-align:center">Bulk Insert Speed</td>
+<td style="text-align:center">High</td>
+<td style="text-align:center">High</td>
+<td style="text-align:center">High</td>
+<td style="text-align:center">Low</td>
+<td style="text-align:center">Very High</td>
+<td style="text-align:center">High</td>
+</tr>
+<tr>
+<td style="text-align:center">Cluster database support</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Replication support</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Foreign key support</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Backup/Point-in-time recovery</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Query cache support</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Update Statistics for Data Dictionary</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+</tbody>
+</table>
+<h4 id="1-InnoDB-存储引擎"><a href="#1-InnoDB-存储引擎" class="headerlink" title="1. InnoDB 存储引擎"></a>1. InnoDB 存储引擎</h4><p>InnoDB存储引擎支持事务，其特点是行锁设计、支持外键，InnoDB通过多版本并发控制(MVCC)来获得高并发性，并且实现了SQL标准的4中隔离级别，默认为Repeatable级别，同时使用一种被称为<code>next-key locking</code>的策略来避免幻读。InnoDB存储引擎采用了聚集的方式，因此每张表的存储都是按主键的顺序进行存放。</p>
+<h4 id="2-MyISAM-存储引擎"><a href="#2-MyISAM-存储引擎" class="headerlink" title="2. MyISAM 存储引擎"></a>2. MyISAM 存储引擎</h4><p>MyISAM存储引擎不支持事务、表锁设计、支持全文索引，此外<strong>它的缓冲池只缓存索引文件，而不缓冲数据文件，这点和大多数的数据都非常不同。</strong></p>
+<h4 id="3-NDB-存储引擎"><a href="#3-NDB-存储引擎" class="headerlink" title="3. NDB 存储引擎"></a>3. NDB 存储引擎</h4><p>NDB存储引擎是一个集群存储引擎，其特点是数据全部放在内存中(从MYSQL5.1版本开始可以将非索引数据放在磁盘上)，因此主键查找的数据极快，并且添加NDB数据存储节点可以线性提高数据性能。还有一点，<strong>NDB存储引擎的连接操作是在MYSQL数据库层完成的，而不是在存储引擎层完成的，解决了连接操作巨大的网络开销。</strong></p>
+<h4 id="4-Memory-存储引擎"><a href="#4-Memory-存储引擎" class="headerlink" title="4. Memory 存储引擎"></a>4. Memory 存储引擎</h4><p>Memory存储引擎将表中的数据存放在内存中，如果数据库重启或者发生奔溃，表中的数据都将消失，Memory存储引擎默认使用哈希索引，而不是我们熟悉的B+树索引。</p>
+<h4 id="5-Archive-存储引擎"><a href="#5-Archive-存储引擎" class="headerlink" title="5. Archive 存储引擎"></a>5. Archive 存储引擎</h4><p>Archive存储引擎只支持INSERT和SELECT操作，从MYSQL5.1开始支持索引，其使用<code>zlib</code>算法将数据行(Row)进行压缩后存储，压缩比一般可达1:10。</p>
+<h4 id="6-Federated-存储引擎"><a href="#6-Federated-存储引擎" class="headerlink" title="6. Federated 存储引擎"></a>6. Federated 存储引擎</h4><p>Federated存储引擎表并不存放数据，它只是指向一台远程MYSQL数据库服务器上的表。</p>
+<h4 id="7-Maria-存储引擎"><a href="#7-Maria-存储引擎" class="headerlink" title="7. Maria 存储引擎"></a>7. Maria 存储引擎</h4><p>Maria存储引擎是新开发的引擎，其特点是支持缓存数据和索引文件，应用行锁设计，提供MVCC功能，支持事务和非事务，以及更好的BLOB字符类型的处理性能。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>MySQL技术内幕</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;存储引擎是MYSQL体系结构的核心，本节我们通过比较存储引擎加深对其的了解。&lt;/p&gt;
+&lt;h3 id=&quot;存储引擎对比&quot;&gt;&lt;a href=&quot;#存
+    
+    </summary>
+    
+      <category term="MYSQL" scheme="http://jianwl.com/categories/MYSQL/"/>
+    
+    
+      <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MYSQL体系结构</title>
+    <link href="http://jianwl.com/2017/02/16/MYSQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/"/>
+    <id>http://jianwl.com/2017/02/16/MYSQL体系结构/</id>
+    <published>2017-02-16T14:52:49.000Z</published>
+    <updated>2017-02-16T16:15:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>接触MYSQL多年，却对MYSQL体系结构知之甚少，这一节主要学习这方面的知识点。</p>
+<h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><h4 id="1-定义数据库和实例"><a href="#1-定义数据库和实例" class="headerlink" title="1. 定义数据库和实例"></a>1. 定义数据库和实例</h4><ul>
+<li>数据库：物理操作系统文件或其他文件类型的集合</li>
+<li>数据库实例：MYSQL数据库由后台线程以及一个共享内存区组成。共享内存可以被运行的后台线程所共享。数据库实例才是真正用于操作数据库文件的。</li>
+</ul>
+<p>这两个词很容易混淆，要特别注意。MYSQL数据库实例在系统上的表现是一个进程，其被设计为一个单进程多线程架构的数据库。</p>
+<p>Mac系统下启动MYSQL</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/mysql/support-files</div><div class="line">sudo ./mysql.server start</div></pre></td></tr></table></figure>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-16/49796817-file_1487258098966_6c52.png" alt=""></p>
+<p>进程号为929就是MYSQL实例，启动实例时，MYSQL数据库会去读取配置文件，根据配置文件的参数来启动数据库实例。读取的顺序为<code>/etc/my.cnf</code> -&gt; <code>/etc/mysql/my.cnf</code> -&gt; <code>/usr/local/mysql/etc/my.cnf</code> -&gt; <code>~/.my.cnf</code>,如果几个配置文件都有同一个参数，MYSQL会以最后一个配置文件的参数为准。</p>
+<h4 id="2-MYSQL体系结构"><a href="#2-MYSQL体系结构" class="headerlink" title="2. MYSQL体系结构"></a>2. MYSQL体系结构</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-16/56429664-file_1487259812820_9ded.png" alt="图1-1 MYSQL体系结构"></p>
+<p>由图1-1可知，MYSQL由以下几部分组成：</p>
+<p>连接池组件、管理组件和工具组件、SQL接口组件、查询分析器组件、优化器组件、缓冲组件、插件式存储引擎、物理文件</p>
+<p>特别注意，存储引擎是基于表的，而不是数据库。</p>
+<h4 id="3-连接MYSQL"><a href="#3-连接MYSQL" class="headerlink" title="3. 连接MYSQL"></a>3. 连接MYSQL</h4><p>连接MYSQL操作是一个连接进程和MySQL数据库实例进行通信。常用的进程通信方式有管道、命名管道、TCP/IP套接字、UNIX域套接字。</p>
+<p><strong>1）TCP/IP方式</strong></p>
+<p>客户端在一台服务器上，MYSQL实例在另外一台服务器上，这两台机器通过TCP/IP网络连接。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-17/32797080-file_1487261300938_33f5.png" alt=""></p>
+<p><strong>2）UNIX域套接字方式</strong></p>
+<p>UNIX域套接字其实不是一个网络协议，所以<strong>只能在MYSQL客户端和数据库实例在一台服务器上</strong>的情况下使用。用户可以通过下列命令进行UNIX域套接字文件的查找:</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-17/32760164-file_1487261521375_d445.png" alt=""></p>
+<p>在知道了UNIX域套接字文件的路径后，就可以通过该方式进行连接了：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-17/52720077-file_1487261638596_2970.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1、MySQL技术内幕 - InnoDB存储引擎</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;接触MYSQL多年，却对MYSQL体系结构知之甚少，这一节主要学习这方面的知识点。&lt;/p&gt;
+&lt;h3 id=&quot;理论&quot;&gt;&lt;a href=&quot;#理论
+    
+    </summary>
+    
+      <category term="MYSQL" scheme="http://jianwl.com/categories/MYSQL/"/>
+    
+    
+      <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL性能查看常用命令</title>
+    <link href="http://jianwl.com/2017/02/14/MySQL%E6%80%A7%E8%83%BD%E6%9F%A5%E7%9C%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <id>http://jianwl.com/2017/02/14/MySQL性能查看常用命令/</id>
+    <published>2017-02-14T13:42:05.000Z</published>
+    <updated>2017-02-14T14:40:36.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1、-场景：显示哪些线程正在运行"><a href="#1、-场景：显示哪些线程正在运行" class="headerlink" title="1、 场景：显示哪些线程正在运行"></a>1、 场景：显示哪些线程正在运行</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-14/84951625-file_1487082323314_593c.png" alt=""></p>
+<h4 id="2、场景：显示SQL的执行计划"><a href="#2、场景：显示SQL的执行计划" class="headerlink" title="2、场景：显示SQL的执行计划"></a>2、场景：显示SQL的执行计划</h4><p>表结构：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-14/38715377-file_1487082561514_1082c.png" alt="表结构"></p>
+<p>执行计划：</p>
+<p>有索引：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-14/98390318-file_1487082868500_135a2.png" alt=""></p>
+<p>全表遍历(全表共829条记录)：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-14/83614830-file_1487082737342_17766.png" alt=""></p>
+<p>未完待续…</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1、<a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="external">MYSQL官方文档</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; class=&quot;headerlink&quot; title=&quot;实战&quot;&gt;&lt;/a&gt;实战&lt;/h3&gt;&lt;h4 id=&quot;1、-场景：显示哪些线程正在运行&quot;&gt;&lt;a href=&quot;#1、-场景：显示哪些线程正在运行&quot; class=&quot;headerlink&quot; 
+    
+    </summary>
+    
+      <category term="MYSQL" scheme="http://jianwl.com/categories/MYSQL/"/>
+    
+    
+      <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL最佳实践</title>
+    <link href="http://jianwl.com/2017/02/11/MySQL%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"/>
+    <id>http://jianwl.com/2017/02/11/MySQL最佳实践/</id>
+    <published>2017-02-11T06:56:51.000Z</published>
+    <updated>2017-02-11T08:35:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前一阵听了我司首席DBA分享关于MYSQL优化的实战经验，将要点总结出来，方便在后续MYSQL实战中使用。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1、表字段选型"><a href="#1、表字段选型" class="headerlink" title="1、表字段选型"></a>1、表字段选型</h4><p>1、原则：适用就好，越小越好</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">✅ TINYINT(1 Byte) &lt; SMALLINT(2 Bytes) &lt; MEDIUMINT(4 Bytes) &lt; INT(8 Bytes) </div><div class="line">✅ FLOAT(4 B) 、 DOUBLE(8 B)</div><div class="line">✅ DECIMAL(M,D) 「M+2 B」</div><div class="line">✅ Char(n) 「n Bytes」、Varchar(n) 「n + 1 Bytes」</div></pre></td></tr></table></figure>
+<p>2、避免使用NULL字段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">✅ 很难进行查询优化</div><div class="line">✅ NULL列加索引，需要额外空间</div><div class="line">✅ 含NULL复合索引无效</div></pre></td></tr></table></figure>
+<p>3、尽量不要使用TEXT/BLOB</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">✅ TEXT类型处理性能远低于VARCHAR</div><div class="line">✅ 强制生成硬盘临时表</div><div class="line">✅ 浪费更多空间</div><div class="line">✅ 如需使用则拆分到独立的表存放</div></pre></td></tr></table></figure>
+<h4 id="表数据量预估"><a href="#表数据量预估" class="headerlink" title="表数据量预估"></a>表数据量预估</h4><p>1、单表数据量预估</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">✅ 纯INT单表 &lt; 2000W Rows</div><div class="line">✅ 含CHAR单表 &lt; 1000W Rows</div></pre></td></tr></table></figure>
+<p>2、表字段少而精</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">✅ 单行不超过200Bytes</div><div class="line">✅ 单表不超过50个INT字段</div><div class="line">✅ 单表不超过20个CHAR(10)字段</div><div class="line">✅ 单表字段数上限控制在50个以内</div></pre></td></tr></table></figure>
+<p>3、合理分表「不超载」</p>
+<h4 id="表设计"><a href="#表设计" class="headerlink" title="表设计"></a>表设计</h4><p>1、平衡是门艺术</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">✅ 严格遵循三大范式？</div><div class="line">✅ 效率优先，提升性能</div><div class="line">✅ 没有绝对的对与错</div><div class="line">✅ 适当牺牲范式，加入冗余</div><div class="line">✅ 会增加代码复杂度</div></pre></td></tr></table></figure>
+<h4 id="InnoDB索引"><a href="#InnoDB索引" class="headerlink" title="InnoDB索引"></a>InnoDB索引</h4><p>1、结构</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-11/33686351-file_1486799408569_10b41.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">✅ 排好序</div><div class="line">✅ InnoDB主索引 = 数据文件</div><div class="line">✅ 叶子节点包含完整的数据记录(聚集索引)</div><div class="line">✅ 关键字可能分布在多个节点</div><div class="line">✅ 叶节点间双向链表</div></pre></td></tr></table></figure>
+<p>2、InnoDB索引适合查询场景</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; 等值匹配（=、in、or）</div><div class="line">✅ SELECT * FROM point_score WHERE NAME=?</div><div class="line"></div><div class="line">&gt; 范围查询30% (&gt;、&lt;、between)</div><div class="line">✅ SELECT * FROM point_score WHERE score &gt; ? and score &lt; ?</div></pre></td></tr></table></figure>
+<p>3、InnoDB索引不适合的场景</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&gt; 非等值查询 (!=、not in)</div><div class="line">❌ SELECT * FROM point_score WHERE NAME!=?</div><div class="line"></div><div class="line">&gt; 模糊查询（%**%）</div><div class="line">❌ SELECT * FROM point_score WHERE NAME like ‘%aa%’</div><div class="line"></div><div class="line">&gt; 运算查询</div><div class="line">❌ SELECT * FROM point_score WHERE date_index + 30 &gt;= now()</div><div class="line"></div><div class="line">&gt; 方法查询</div><div class="line">❌ SELECT * FROM point_score WHERE abs(now - date_index) &lt;= 30</div></pre></td></tr></table></figure>
+<h4 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a>联合索引</h4><p>1、最左前缀原理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">假设table有col1~col5五列，已创建组合索引idx_1(col1、col2、col3)</div><div class="line"></div><div class="line">✅ Select * from table where col1=?</div><div class="line">✅ Select * from table where col1=? And col2=?</div><div class="line">✅ Select * from table where col1=? And col2=? And col3=?</div><div class="line">❌ Select * from table where col2=?</div><div class="line">❌ Select * from table where col3=?</div><div class="line">❌ Select * from table where col2=? And col3=?</div></pre></td></tr></table></figure>
+<p>2、联合索引匹配传递原则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">第1等级：&quot;=&quot;，可向后传递</div><div class="line">第2等级：&quot;IN&quot;，如果后面是“=”或“IN”则可传递</div><div class="line">第3等级：“&lt;”，&quot;&gt;&quot; ,&quot;GROUP BY&quot;, &quot;ORDER BY&quot;, &quot;LIKE&quot;不会向后传递</div></pre></td></tr></table></figure>
+<p>3、练习</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">1、假设table已建索引idx_1 (col1,col3,col4)，分析下面的sql有如下的操作符号‘=’、‘&gt;’ 、‘&lt;’、‘IN’、‘GROUP BY’、‘ORDER BY’ 、‘LIKE’ 会用到 col4 这列嘛？</div><div class="line"></div><div class="line">SELECT * FROM table WHERE col1=? AND col2&gt;? AND col2&lt;? AND col3 IN(?) AND col4 LIKE ? GROUP BY col5 LIMIT ?</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">答案: 会，SQL会自动选择查询条件的最佳顺序即执行时实际为：</div><div class="line"></div><div class="line">SELECT * FROM table WHERE col1=? AND col3 IN(?) AND col4 LIKE ? AND col2&gt;? AND col2&lt;? GROUP BY col5 LIMIT ?</div><div class="line"></div><div class="line"></div><div class="line">2、假设某个表有一个复合索引 （c1,c2,c3,c4）</div><div class="line"></div><div class="line">WHERE c1=X AND c2=X AND c3&gt;X AND c4 = X</div><div class="line">WHERE c1=X AND c2=X AND c4 = X ORDER BY c3</div><div class="line">WHERE c1=X AND c2=X AND c4 = X GROUP BY c3</div><div class="line">WHERE c1=X AND c4=X GROUP BY c2,c3</div><div class="line"></div><div class="line">这四条语句分别怎么使用这个索引？</div><div class="line"></div><div class="line">如果需要设计两个最佳索引，你会怎么设计？</div></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>1、Schema总结</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">字段长度(大小)使用就好，越小越好</div><div class="line">预估表数据量</div><div class="line">控制表字段数</div><div class="line">避免使用NULL字段</div><div class="line">尽量不用TEXT/BLOB</div><div class="line">合理拆分数据表</div><div class="line">打破传统，适当冗余</div></pre></td></tr></table></figure>
+<p>2、索引总结</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">等值查询最优</div><div class="line">范围查询也可</div><div class="line">禁用反向查找、运算查找、方法查找</div><div class="line">最左匹配</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;前一阵听了我司首席DBA分享关于MYSQL优化的实战经验，将要点总结出来，方便在后续MYSQL实战中使用。&lt;/p&gt;
+&lt;h3 id=&quot;实战&quot;&gt;
+    
+    </summary>
+    
+      <category term="MYSQL" scheme="http://jianwl.com/categories/MYSQL/"/>
+    
+    
+      <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git实战</title>
+    <link href="http://jianwl.com/2017/02/10/Git%E5%AE%9E%E6%88%98/"/>
+    <id>http://jianwl.com/2017/02/10/Git实战/</id>
+    <published>2017-02-10T14:29:55.000Z</published>
+    <updated>2017-02-10T06:20:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>Source Tree</code>图形化界面用多了，在服务器操作时，Git命令行大部分都遗忘了。本节主要记录Git常用命令</p>
+<h3 id="工作区、暂存区的概念"><a href="#工作区、暂存区的概念" class="headerlink" title="工作区、暂存区的概念"></a>工作区、暂存区的概念</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/50500847-file_1484059096086_3789.jpg" alt=""></p>
+<p>把文件往GIT版本库里添加的时候是分两步执行的：</p>
+<p>第一步是用<code>git add</code>把文件添加进去，实际上就是把文件修改添加到暂存区；</p>
+<p>第二步是用<code>git commit</code>提交更改，实际上就是把暂存区的所有内容提交到当前分支。</p>
+<h3 id="GIT实战"><a href="#GIT实战" class="headerlink" title="GIT实战"></a>GIT实战</h3><p><code>场景1：添加文件</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/31507464-file_1484059818873_b118.png" alt=""></p>
+<p><code>场景2：将暂存区的修改回退到工作区</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/9343551-file_1484060480734_811a.png" alt=""></p>
+<p><code>场景3：放弃工作区中所有的修改</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/82204251-file_1484060562988_e215.png" alt=""></p>
+<p><code>场景4：当前分支回退到某次提交(已提交到「远程分支」和「本地分支」均可实现回滚)</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/60922523-file_1484062431722_f5f1.png" alt=""></p>
+<p><code>场景5：查看提交日志信息</code></p>
+<p><strong>方式1</strong></p>
+<p><code>git log --pretty=oneline</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/31517947-file_1484063163364_a911.png" alt=""></p>
+<p><strong>方式2</strong></p>
+<p><code>git log --graph</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/49133052-file_1484063099366_109d7.png" alt=""></p>
+<p><code>场景6：显示、创建、切换分支</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/70304771-file_1484063405708_bf84.png" alt=""></p>
+<p><code>场景7: 暂存区删除文件但工作区内容不变，命令常用于项目后期添加.gitignore文件，需要在暂存区先删除不需要的文件，再重新添加到git分支，忽略才能生效</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-10/45154025-file_1486707415977_16269.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001375840038939c291467cc7c747b1810aab2fb8863508000" target="_blank" rel="external">廖雪峰Git教程</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Source Tree&lt;/code&gt;图形化界面用多了，在服务器操作时，Git命令行大部分都遗忘了。本节主要记录Git常用命令&lt;/
+    
+    </summary>
+    
+      <category term="Git" scheme="http://jianwl.com/categories/Git/"/>
+    
+    
+      <category term="Git" scheme="http://jianwl.com/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RabbitMQ的基本概念和模型</title>
+    <link href="http://jianwl.com/2017/02/08/RabbitMQ%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E6%A8%A1%E5%9E%8B/"/>
+    <id>http://jianwl.com/2017/02/08/RabbitMQ的基本概念和模型/</id>
+    <published>2017-02-08T14:56:16.000Z</published>
+    <updated>2017-02-09T03:22:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>有个场景：平台每日订单量超过百万，需要实时获取订单状态，最初的方案是通过HTTP方式，实时获取每个订单状态。通过HTTP方式获取订单状态，发现大量通知会丢失。经过调研了解，使用中间件RabbitMQ可以完美解决目前出现的问题。这节主要来学习RabbitMQ的基本概念和模型。</p>
+<h3 id="RabbitMQ是什么？"><a href="#RabbitMQ是什么？" class="headerlink" title="RabbitMQ是什么？"></a>RabbitMQ是什么？</h3><p>RabbitMQ是一种消息队列，用于程序间的通信。形象地说，MQ就想一个邮局，发送者将消息写入MQ，MQ负责把消息发送给接收者。RabbitMQ可支持Java、PHP、Python、Go、JavaScript、Ruby等多种语言。</p>
+<h3 id="几个基本概念"><a href="#几个基本概念" class="headerlink" title="几个基本概念"></a>几个基本概念</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-8/87560623-file_1486568151391_82c0.png" alt="图1 rabbit_model"></p>
+<p>RabbitMQ的基本模型如图1所示，先介绍一些术语：</p>
+<p><strong>生产者（producer）</strong></p>
+<p>在图中为P，表示消息的发送者。</p>
+<p><strong>交换机（exchanges）</strong></p>
+<p>在图中为X，生产者发过来的消息需要经过交换机，交换机将决定消息放到哪些队列当中。</p>
+<p><strong>队列（queue）</strong></p>
+<p>队列在图1中由红色矩阵阵列表示，负责保存消息和发放消息。</p>
+<p><strong>消费者（consumer）</strong></p>
+<p>在图中为C，代表等待接收消息的程序。</p>
+<h3 id="信息流"><a href="#信息流" class="headerlink" title="信息流"></a>信息流</h3><p>消息是怎么从生产者传递到消费者的呢？<br>首先，生产者发送消息到交换机，同时发送一个key，通过这个key，交换机就知道把消息发送到哪个队列。随后交换机把消息发送到相应的队列中，由队列将消息发送给消费者。消费者监听某些队列，当有消息过来时，就立即处理消息。</p>
+<p>那么接下来就有两个问题：</p>
+<p>1）、交换机是如何根据key来分配消息到队列？<br>2）、队列怎样将消息发送给消费者？</p>
+<h3 id="交换机类型"><a href="#交换机类型" class="headerlink" title="交换机类型"></a>交换机类型</h3><p>这部分将回答第一个问题，交换机如何根据key来分配消息到队列？<br>RabbitMQ的交换机有四种类型：direct、topic、headers、fanout</p>
+<p><strong>Fanout</strong></p>
+<p>fanout交换机就跟广播一样，对消息不作选择地发给所有绑定的队列。以图1为例，两个队列都将收到消息。</p>
+<p><strong>Direct</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-9/64687545-file_1486607052126_b755.png" alt="图2 direct"></p>
+<p>在direct模式里，交换机和队列之间绑定了一个key，只有消息的key与绑定的key相同时，交换机才会把消息发给该队列。如图2所示，消息的key为orange时，消息将进入队列Q1，key为black或green时，消息将进入队列Q2.若消息的key是其他字符串，被交换机直接遗弃。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-9/96740032-file_1486607059259_25b2.png" alt="图3 多重绑定"></p>
+<p>同时，交换机支持多重绑定，多个队列可以以相同的key与交换机绑定。如图3所示，当消息的key为black时，消息将进入Q1和Q2.</p>
+<p><strong>Topic</strong></p>
+<p>topic模式可以理解为主题模式，当key包含某个主题时，即可进入该主题的队列，topic模式的key必须具有固定的格式：以「.」作为间隔的一串单词比如「quick.orange.rabbit」,key最多不能超过255byte。交换机和队列的key可以以类似正则表达式的方式存在，有两种语法：</p>
+<p>1、「*」可以替代一个单词<br>2、「#」可以替代0个或多个单词</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-9/45749176-file_1486607063361_10969.png" alt="图4 topic"><br>举个例子：图中Q1和交换机绑定的key为「<em>.orange.</em>」，故当消息的key为3个单词，且中间的单词为orange时，消息将进入Q1。Q2与exchange绑定的key为「rabbit.#」，当消息的key为rabbit开头时，消息将进入Q2.</p>
+<p><strong>Headers</strong><br>官网没介绍这个模式，大概不常用。</p>
+<p><strong>队列分发消息的方式</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-9/30963342-file_1486607954707_232f.png" alt="图5 Round-robin dispatching"></p>
+<p><strong>循环发放（Round-robin dispatching）</strong></p>
+<p>队列分发消息给消费者的方式采用循环分发，举例来说，若队列里有四个消息w,x,y,z,则C1将得到消息z和x，C2将得到消息y和w。即每个消费者按顺序每人发一个消息。注意，在这种分配方式下，消息其实在刚进入队列的时候就已经内定好将要被分发的消费者。即z,x一定给C1，y,w一定给C2。这种方式存在一些隐患，如果z和x都是耗时的命令，y,z都是简单的命令，C1将不停地工作，而C2就比较空闲，造成资源的浪费。公平发放解决了上述问题。</p>
+<p><strong>公平发放(fair dispatching)</strong></p>
+<p>这种方式下，队列只会把消息给空闲的消费者，如果他看到某个消费者正忙，就查找下一个空闲的消费者。</p>
+<p><strong>消息的确认（Message acknowledgment）</strong></p>
+<p>若没有特别设定，消息一旦被队列分发给消费者，就被rabbitmq从内存中删除。在这种情况下，如果将一个正在处理消息的消费者强行关闭，那么，消息将未被完全处理，且RabbitMQ完全不知情。</p>
+<p>为了解决上述问题，可以配置使得消息处理完后，向RabbitMQ返回一个acknowledgment。RabbitMQ直到收到acknowledgment，才将消息删除。当消费者死亡时（its channel is closed,connection is closed or TCP connection is lost）,RabbitMQ会知道这个消费者发生问题了，将重新发送消息给空闲的消费者。消息没有timeout，即使消费者处理很长很长时间，RabbitMQ也认为消费者正在处理。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1、<a href="https://www.rabbitmq.com/tutorials/tutorial-five-java.html" target="_blank" rel="external">RabbitMQ Tutorials</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;有个场景：平台每日订单量超过百万，需要实时获取订单状态，最初的方案是通过HTTP方式，实时获取每个订单状态。通过HTTP方式获取订单状态，发
+    
+    </summary>
+    
+      <category term="中间件" scheme="http://jianwl.com/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="中间件" scheme="http://jianwl.com/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java设计模式之建造者模式「Builder Pattern」</title>
+    <link href="http://jianwl.com/2017/02/04/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F%E3%80%8CBuilder-Pattern%E3%80%8D/"/>
+    <id>http://jianwl.com/2017/02/04/Java设计模式之建造者模式「Builder-Pattern」/</id>
+    <published>2017-02-04T11:23:19.000Z</published>
+    <updated>2017-02-10T07:00:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="何为建造者模式？"><a href="#何为建造者模式？" class="headerlink" title="何为建造者模式？"></a>何为建造者模式？</h3><p>一步步创建一个包含多个组成部件的完整对象，使用相同的构建过程构建不同的产品，建造者模式是一种对象创建型模式。</p>
+<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><ul>
+<li>用于复杂对象的组装和创建、对象间具有较多的共同点或组成部分相似；</li>
+<li>生成对象的属性相互依赖,需要指定其生成顺序；</li>
+<li>对象的创建过程独立于创建该对象的类，隔离复杂对象的创建和使用，并使得相同的创建过程可以创建不同的对象。</li>
+</ul>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">public final class User &#123;</div><div class="line">    private final String username;</div><div class="line">    private final String addresss;</div><div class="line">    private final Integer age;</div><div class="line">    private final String whereFrom;</div><div class="line"></div><div class="line">    public User(Builder builder)&#123;</div><div class="line">        this.username = builder.username;</div><div class="line">        this.addresss = builder.addresss;</div><div class="line">        this.age = builder.age;</div><div class="line">        this.whereFrom = builder.whereFrom;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getUsername() &#123;</div><div class="line">        return username;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getAddresss() &#123;</div><div class="line">        return addresss;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Integer getAge() &#123;</div><div class="line">        return age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getWhereFrom() &#123;</div><div class="line">        return whereFrom;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return &quot;User&#123;&quot; +</div><div class="line">                &quot;username=&apos;&quot; + username + &apos;\&apos;&apos; +</div><div class="line">                &quot;, addresss=&apos;&quot; + addresss + &apos;\&apos;&apos; +</div><div class="line">                &quot;, age=&quot; + age +</div><div class="line">                &quot;, whereFrom=&apos;&quot; + whereFrom + &apos;\&apos;&apos; +</div><div class="line">                &apos;&#125;&apos;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static class Builder&#123;</div><div class="line">        private   String username;</div><div class="line">        private   String addresss;</div><div class="line">        private   Integer age;</div><div class="line">        private   String whereFrom;</div><div class="line"></div><div class="line">        public Builder(String username,Integer age)&#123;</div><div class="line">            this.username = username;</div><div class="line">            this.age =age;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public Builder withAddress(String address)&#123;</div><div class="line">            this.addresss = address;</div><div class="line">            return this ;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        public Builder withWhereFrom(String whereFrom)&#123;</div><div class="line">            this.whereFrom = whereFrom;</div><div class="line">            return this;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public User builder()&#123;</div><div class="line">            return new User(this);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        System.out.println(new User.Builder(&quot;张三&quot;,12).withAddress(&quot;上海&quot;).withWhereFrom(&quot;中国&quot;).builder());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;何为建造者模式？&quot;&gt;&lt;a href=&quot;#何为建造者模式？&quot; class=&quot;headerlink&quot; title=&quot;何为建造者模式？&quot;&gt;&lt;/a&gt;何为建造者模式？&lt;/h3&gt;&lt;p&gt;一步步创建一个包含多个组成部件的完整对象，使用相同的构建过程构建不同的产品，建造者模式是一种
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
+    
+    
+      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2016年终总结</title>
+    <link href="http://jianwl.com/2017/02/04/2016%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
+    <id>http://jianwl.com/2017/02/04/2016年终总结/</id>
+    <published>2017-02-04T08:00:58.000Z</published>
+    <updated>2017-02-04T09:57:25.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="2016年，我做了什么？"><a href="#2016年，我做了什么？" class="headerlink" title="2016年，我做了什么？"></a>2016年，我做了什么？</h3><h4 id="1、搭建个人站，至今写了150多篇文章"><a href="#1、搭建个人站，至今写了150多篇文章" class="headerlink" title="1、搭建个人站，至今写了150多篇文章"></a>1、搭建个人站，至今写了150多篇文章</h4><p>去年4月份，有跳槽的想法，便开始准备面试相关的知识储备，搭建个人站，用于记录所学过程中的心得体会。一来，将所学的知识，通过文字的方式记录下来，有了输出，对学习的积极性有一定的提高；二来，想通过个人站记录成长的过程，这样当一年过去了，可以很清晰的知道，这一年我到底做了什么？最后，想通过个人站激励自己，不断学习。</p>
+<h4 id="2、看了20多本技术书"><a href="#2、看了20多本技术书" class="headerlink" title="2、看了20多本技术书"></a>2、看了20多本技术书</h4><p>去年，跳槽了2次，每次跳槽在面试前，都做足了准备；针对相关技术，购买经典书籍，查缺补漏；同时根据面试的反馈，不断弥补自身的不足；</p>
+<h4 id="3、读了6本投资理财📚"><a href="#3、读了6本投资理财📚" class="headerlink" title="3、读了6本投资理财📚"></a>3、读了6本投资理财📚</h4><p>人民币不断贬值，每年CPI上涨2%左右。学习投资理财的相关知识，是今后的一大重点；去年，开始尝试玩股票，炒短线，最后亏损离场。体验下来，现阶段的我不适合炒股，过于花时间且考验人性。今年会涉足基金，考虑长期投资，并学习相关基金知识。</p>
+<h4 id="4、独立1人，负责整个项目"><a href="#4、独立1人，负责整个项目" class="headerlink" title="4、独立1人，负责整个项目"></a>4、独立1人，负责整个项目</h4><p>早先的项目，或多或少都是多个同事一起参与完成的(一个架构师、2个工程师「加上我」)，今年跳槽到另一家公司B，开始一个人hold住整个项目，刚开始是有所畏惧的，接手下来，一路过关斩将，技术上感觉成长了许多。</p>
+<h4 id="5、个人项目"><a href="#5、个人项目" class="headerlink" title="5、个人项目"></a>5、个人项目</h4><p>去年开始做些个人项目，接触到了许多在平时工作中接触不到东西，个人项目对于技术的提升是一大助力。同时，可以为今后的求职，增加很大的筹码；</p>
+<h3 id="2016年的几点思考"><a href="#2016年的几点思考" class="headerlink" title="2016年的几点思考"></a>2016年的几点思考</h3><h4 id="1、工程师不止眼前的逻辑和代码，还有底层的框架和架构"><a href="#1、工程师不止眼前的逻辑和代码，还有底层的框架和架构" class="headerlink" title="1、工程师不止眼前的逻辑和代码，还有底层的框架和架构"></a>1、工程师不止眼前的逻辑和代码，还有底层的框架和架构</h4><p>工作中，我经常忙于业务代码逻辑，并囤于业务之中，忘记了开发的初衷，关注于当前框架的易用性、可扩展性，当前使用框架的优劣，并思考未来项目中自己如何去搭建架构、去设计。</p>
+<h4 id="2、金字塔目标计划落实"><a href="#2、金字塔目标计划落实" class="headerlink" title="2、金字塔目标计划落实"></a>2、金字塔目标计划落实</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-4/4368253-file_1486199535149_1531e.jpg" alt=""></p>
+<p>在制定计划时发现，上面的金字塔计划模型，对我来说很管用，主要体现在：</p>
+<p>1、能清楚明了的看到目标内容和时间节点</p>
+<p>2、能督促我以时间节点为目标，考核自己计划任务的落实、阶段目标的完成。</p>
+<p>如果不写出来，很容易忘记我当初设定的目标和方向。如果不写出来，很容易到「终极目标节点」时，连「近期目标」的内容都没有完成。</p>
+<h4 id="3、人生中有很多比刷「朋友圈」、关注「今日头条」更重要的事情"><a href="#3、人生中有很多比刷「朋友圈」、关注「今日头条」更重要的事情" class="headerlink" title="3、人生中有很多比刷「朋友圈」、关注「今日头条」更重要的事情"></a>3、人生中有很多比刷「朋友圈」、关注「今日头条」更重要的事情</h4><p>「朋友圈」的优势是以时间轴的形式，记录生活的点滴。但是，我们手里的它已然叛离了初衷。「朋友圈」里充斥着各种伪奢靡的浪漫，「朋友圈」的东西渐成为给别人看的东西，这和生活的真相是完全背道而驰的。</p>
+<p>「今日头条」的推荐功能也是投我们兴趣所好，延绵不断的推送各种浏览量相关度高的新闻、消息。在海量的信息轰炸中，多的是撅头，少的是诚意，有的是速度，缺的是思考深度。严重消磨了心智，使得我们变得人云亦云，缺乏独立思考。</p>
+<p>今年开始会有意识的减少刷朋友圈的频率，现在是重度患者，有瘾需要逐步戒除。</p>
+<h4 id="4、花钱能搞定的事情，不要浪费其他资源"><a href="#4、花钱能搞定的事情，不要浪费其他资源" class="headerlink" title="4、花钱能搞定的事情，不要浪费其他资源"></a>4、花钱能搞定的事情，不要浪费其他资源</h4><p>有时候会遇到问题需要麻烦朋友，但深入思考会发现「能自己花钱搞定的事情，不要浪费其他资源」，这里的其他资源包括麻烦朋友</p>
+<h4 id="5、专精一门技术"><a href="#5、专精一门技术" class="headerlink" title="5、专精一门技术"></a>5、专精一门技术</h4><p>缺乏持续深入钻研和学习一门技术的毅力，往往是有所小成，就停滞不前了。这是非常可怕的事情，设定计划，一步一个脚印，不断修炼基本功。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>思路越发清晰，前行的步伐也就越发稳健，<strong>向着光亮那方，奔跑前进。</strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;2016年，我做了什么？&quot;&gt;&lt;a href=&quot;#2016年，我做了什么？&quot; class=&quot;headerlink&quot; title=&quot;2016年，我做了什么？&quot;&gt;&lt;/a&gt;2016年，我做了什么？&lt;/h3&gt;&lt;h4 id=&quot;1、搭建个人站，至今写了150多篇文章&quot;&gt;&lt;a h
+    
+    </summary>
+    
+      <category term="思绪" scheme="http://jianwl.com/categories/%E6%80%9D%E7%BB%AA/"/>
+    
+    
+      <category term="思绪" scheme="http://jianwl.com/tags/%E6%80%9D%E7%BB%AA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>何为自我意识？</title>
+    <link href="http://jianwl.com/2017/01/27/%E4%BD%95%E4%B8%BA%E8%87%AA%E6%88%91%E6%84%8F%E8%AF%86%EF%BC%9F/"/>
+    <id>http://jianwl.com/2017/01/27/何为自我意识？/</id>
+    <published>2017-01-27T02:57:31.000Z</published>
+    <updated>2017-01-27T05:02:27.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>2016本命年是一个波折的一年，发生了很多事，大部分事情，我都没法搞定。我开始意识到，我对自己的认识是那么浅薄，我根本就不了解自己。当我在笑的时候，我无法意识到自己在笑，当我开心的时候，我无法享受着我笑的那一刻。我发现大多数情况下，我都处于无意识或半意识下，靠条件反射去应付生活中的所有事情。换言之，控制自己的行为和思考的，仅仅只是本能而已。这是一个让人很后怕的事情，为了让自己尽快地摆脱现状，我想我需要尽快的去了解它。</p>
+<p>何为自我意识？就是意识到“自我”的存在。</p>
+<p>一个优秀的人，你所看到的他的优秀只是他的外部而已，你所看不到的是他内在的高度自律和思想的完整秩序。就如同一棵参天大树，你感叹它的奇伟挺拔，你却不知道这棵树的根基扎得有多深多广。当你尝试跟他交流的时候，你才发现，他的知识广博远超乎你的想象，他的见解深刻到你膜拜不已。你会觉得，究竟是怎么的大脑，经过怎样的训练，才能有如此的见识与智慧。</p>
+<p>感受力高的人拥有更多的自我意识，也就是–他能突然意识到自己的心理变化过程，从而意识到问题的存在。感受力低的人往往意识不到问题所在，我的意思是说：根本！意识不到！问题所在！</p>
+<p>举个例子：坚持</p>
+<p>情商高的人更懂坚持,然后呢？你只看到他无比厉害的外表 – 然后他怎么坚持下去的?当你实在找不到原因的时候，只能把原因归功于“他情商高”。</p>
+<p>问题的关键在于：<strong>情商高的人他能注意到坚持过程中自己的负面情绪，从而及时处理这些问题，但是情商低的人他不会注意到这也是一个问题–我，正在讨厌这件事，这是一个不好的信号，所以，他需要被解决。</strong>你有没有意识到你的情绪，有没有注意到自己的一些想法。</p>
+<p>在举个例子：自我为中心</p>
+<p>写作中如何加粗是一个学问：因为你认为你能了解到的东西，人家不一定能有耐心–意识到其中的“自我中心”也是一个问题。一个人会突然意识到，我看到的，感觉到的，和别人是不同的！如何加粗，如何排版，如何使阅读体验最大化，是一个需要被注意到的问题。</p>
+<p><strong>这个世界究竟是怎么样的，不是你头脑认为如何就是如何的。那些厉害的人，一定是发现了什么不可告人的认知世界的方式</strong></p>
+<blockquote>
+<p>人是思想的产物，心里想的是什么，就会变成什么样的人。 –甘地</p>
+</blockquote>
+<p>既然自我意识那么重要，那我该如何改变现状，让自我意识为我所用？我调研了下，具体有几个关键性概念。</p>
+<p><strong>1、自我监视</strong></p>
+<p>自我监视和反思不同点在于：自我监视更强调集中观察 – 在做事情的时候就意识到，属于及时反馈。反思是经过一段时间后的整体感知，例如写日记往往在意的是今天影响最深的东西，而无法注意到最细微的当时感受。</p>
+<p>自我监视常常容易被事后遗忘，建立一套及时信息记录系统非常有必要。高三时，有位学霸有个习惯非常值得深思：每次考完月考考试时，他就会把一些想法记下来 – 因为他知道当把月考试卷发回到手里的时候，很多感觉就不见了。这些感觉不限于针对知识点，还有心态调节，各种方面。</p>
+<p><strong>2、可视化</strong></p>
+<p>关注自己的内心是一种非常抽象的探索，有时候这种感觉只是一道闪光就不见了。<strong>只有很少一部分最懂得关注自我的人能把这些体验用图像呈现在脑海中，这就是体验的可视化。</strong></p>
+<p><strong>3、悦纳与接受</strong></p>
+<p>人天生就有一种让自己只看到想看到的东西的本领，<strong>选择性过滤也许是自我监视最大的敌人 – 我们时时刻刻被一些不重要的但困扰着我们的东西所干扰着，但是我们不想也不愿去正视它们。</strong>但是坦然接受一切，再重新审视什么在困扰着你的时候，你也许能够发现问题所在。</p>
+<p><strong>4、刻意练习、实验</strong></p>
+<p>当我们发现了内心的冲突的时候，心理问题也许仅仅采取接受的方法就能解决，但是<strong>有很多高阶的、更加复杂的问题则需要进行刻意练习。</strong> 其实可以练习理论根本上来自于对自我的关注，没有对自我的关注和反馈就永远不可能有提升。</p>
+<p>刻意练习理论需要有<strong>最好的教练和最强大的意志力，很多时候我们只是不知道自己处于一种什么样的水平，我们需要什么样的训练，这才是刻意练习最难的地方。</strong></p>
+<p>最后提一点：<strong>问题从来都是不一样的，解决问题时候内心的感受很多时候都是相同的，你模糊地感受到了同样的感觉，就能够指引你从别处找到方法。自我意识是一个成熟的理性人所拥有的最明显和本质的标志，而成长，必然是一个充满顿悟、反惯性、痛苦、枯燥但不乏趣味的自我意识过程。唯有一个意识到问题存在的人才能进步，这事通往成熟和自我完善的门，而自我意识就是这扇门的钥匙。问题，永远是自己思维的问题 – 你需要更多的自我意识，需要注意更多的问题。</strong> </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;2016本命年是一个波折的一年，发生了很多事，大部分事情，我都没法搞定。我开始意识到，我对自己的认识是那么浅薄，我根本就不了解自己。当我在笑的时候，我无法意识到自己在笑，当我开心的时候，我无法享受着我笑的那一刻。我发现大多数情况下，我都处于无意识或半意识下，靠条件反射去应付
+    
+    </summary>
+    
+      <category term="思绪" scheme="http://jianwl.com/categories/%E6%80%9D%E7%BB%AA/"/>
+    
+    
+      <category term="思绪" scheme="http://jianwl.com/tags/%E6%80%9D%E7%BB%AA/"/>
+    
+  </entry>
+  
+</feed>
