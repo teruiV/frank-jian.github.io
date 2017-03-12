@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-03-12T03:24:57.000Z</updated>
+  <updated>2017-03-12T15:33:33.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python操作MYSQL数据库</title>
+    <link href="http://jianwl.com/2017/03/12/Python%E6%93%8D%E4%BD%9CMYSQL%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <id>http://jianwl.com/2017/03/12/Python操作MYSQL数据库/</id>
+    <published>2017-03-12T15:20:55.000Z</published>
+    <updated>2017-03-12T15:33:33.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Python操作MySQL数据库是入门必须要掌握的技能，这节主要学习Python对MYSQL的增删改查操作。</p>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 安装Python-MySQL</div><div class="line">pip install MySQL-python</div></pre></td></tr></table></figure>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><code>mysql_test.py</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div></pre></td><td class="code"><pre><div class="line"># -*- coding: UTF-8 -*-</div><div class="line"></div><div class="line">import MySQLdb</div><div class="line"></div><div class="line"></div><div class="line">def init_db():</div><div class="line">    return MySQLdb.connect(&quot;localhost&quot;, &quot;root&quot;, &apos;&apos;, &quot;dada&quot;)</div><div class="line"></div><div class="line"></div><div class="line">def create(db):</div><div class="line">    print &quot;========= create start==========&quot;</div><div class="line">    cursor = db.cursor()</div><div class="line">    try:</div><div class="line">        sql = &quot;&quot;&quot;CREATE TABLE EMPLOYEE (</div><div class="line">                     FIRST_NAME  CHAR(20) NOT NULL,</div><div class="line">                     LAST_NAME  CHAR(20),</div><div class="line">                     AGE INT,</div><div class="line">                     SEX CHAR(1),</div><div class="line">                     INCOME FLOAT )&quot;&quot;&quot;</div><div class="line">        cursor.execute(sql)</div><div class="line">        print &quot;========= create end==========&quot;</div><div class="line">    except:</div><div class="line">        print &quot;Error: unable to create table&quot;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">def select(db):</div><div class="line">    cursor = db.cursor()</div><div class="line">    sql = &quot;SELECT * FROM EMPLOYEE \</div><div class="line">           WHERE INCOME &gt; &apos;%d&apos;&quot; % (1000)</div><div class="line"></div><div class="line">    try:</div><div class="line">        print &quot;========= select start==========&quot;</div><div class="line">        cursor.execute(sql)</div><div class="line">        results = cursor.fetchall()</div><div class="line">        for row in results:</div><div class="line">            fname = row[0]</div><div class="line">            lname = row[1]</div><div class="line">            age = row[2]</div><div class="line">            sex = row[3]</div><div class="line">            income = row[4]</div><div class="line">            # 打印结果</div><div class="line">            print &quot;fname=%s,lname=%s,age=%d,sex=%s,income=%d&quot; % \</div><div class="line">                  (fname, lname, age, sex, income)</div><div class="line">        print &quot;========= select end==========&quot;</div><div class="line"></div><div class="line">    except:</div><div class="line">        print &quot;Error: unable to fecth data&quot;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">def save(db):</div><div class="line">    print &quot;========= save start==========&quot;</div><div class="line">    cursor = db.cursor()</div><div class="line">    try:</div><div class="line">    	 # 三引号可输入多行文本</div><div class="line">        sql = &quot;&quot;&quot;INSERT INTO EMPLOYEE(FIRST_NAME,</div><div class="line">         LAST_NAME, AGE, SEX, INCOME)</div><div class="line">         VALUES (&apos;Mac&apos;, &apos;Mohan&apos;, 20, &apos;M&apos;, 2000)&quot;&quot;&quot;</div><div class="line">        cursor.execute(sql)</div><div class="line">        db.commit()</div><div class="line">        print &quot;========= save end==========&quot;</div><div class="line">    except:</div><div class="line">        db.rollback()</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">def update(db):</div><div class="line">    print &quot;========= update start==========&quot;</div><div class="line">    cursor = db.cursor()</div><div class="line">    try:</div><div class="line">        sql = &quot;UPDATE EMPLOYEE SET AGE = AGE + 1 WHERE SEX = &apos;%c&apos;&quot; % (&apos;M&apos;)</div><div class="line">        cursor.execute(sql)</div><div class="line">        db.commit()</div><div class="line">        print &quot;========= update end==========&quot;</div><div class="line">    except:</div><div class="line">        db.rollback()</div><div class="line"></div><div class="line"></div><div class="line">def delete(db):</div><div class="line">    print &quot;========= delete start==========&quot;</div><div class="line">    cursor = db.cursor()</div><div class="line">    try:</div><div class="line">        sql = &quot;DELETE FROM EMPLOYEE WHERE AGE &gt; &apos;%d&apos;&quot; % (20)</div><div class="line">        cursor.execute(sql)</div><div class="line">        db.commit()</div><div class="line">        print &quot;========= delete end==========&quot;</div><div class="line">    except:</div><div class="line">        db.rollback()</div><div class="line"></div><div class="line"></div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">    # 初始化db</div><div class="line">    db = init_db()</div><div class="line"></div><div class="line">    # 保存一条记录</div><div class="line">    save(db)</div><div class="line"></div><div class="line">    # 查看记录</div><div class="line">    select(db)</div><div class="line"></div><div class="line">    # 修改记录</div><div class="line">    update(db)</div><div class="line"></div><div class="line">    # 查看修改后的记录</div><div class="line">    select(db)</div><div class="line"></div><div class="line">    # 删除记录</div><div class="line">    delete(db)</div><div class="line"></div><div class="line">    # 查看删除后的记录</div><div class="line">    select(db)</div></pre></td></tr></table></figure>
+<p>运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python mysql_test.py</div></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/23315645-file_1489332690876_12b7e.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;Python操作MySQL数据库是入门必须要掌握的技能，这节主要学习Python对MYSQL的增删改查操作。&lt;/p&gt;
+&lt;h3 id=&quot;环境准
+    
+    </summary>
+    
+      <category term="Python" scheme="http://jianwl.com/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="http://jianwl.com/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>Python之字典</title>
@@ -1450,53 +1481,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;2016年，我做了什么？&quot;&gt;&lt;a href=&quot;#2016年，我做了什么？&quot; class=&quot;headerlink&quot; title=&quot;2016年，我做了什么？&quot;&gt;&lt;/a&gt;2016年，我做了什么？&lt;/h3&gt;&lt;h4 id=&quot;1、搭建个人站，至今写了150多篇文章&quot;&gt;&lt;a h
-    
-    </summary>
-    
-      <category term="思绪" scheme="http://jianwl.com/categories/%E6%80%9D%E7%BB%AA/"/>
-    
-    
-      <category term="思绪" scheme="http://jianwl.com/tags/%E6%80%9D%E7%BB%AA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>何为自我意识？</title>
-    <link href="http://jianwl.com/2017/01/27/%E4%BD%95%E4%B8%BA%E8%87%AA%E6%88%91%E6%84%8F%E8%AF%86%EF%BC%9F/"/>
-    <id>http://jianwl.com/2017/01/27/何为自我意识？/</id>
-    <published>2017-01-27T02:57:31.000Z</published>
-    <updated>2017-01-27T05:02:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>2016本命年是一个波折的一年，发生了很多事，大部分事情，我都没法搞定。我开始意识到，我对自己的认识是那么浅薄，我根本就不了解自己。当我在笑的时候，我无法意识到自己在笑，当我开心的时候，我无法享受着我笑的那一刻。我发现大多数情况下，我都处于无意识或半意识下，靠条件反射去应付生活中的所有事情。换言之，控制自己的行为和思考的，仅仅只是本能而已。这是一个让人很后怕的事情，为了让自己尽快地摆脱现状，我想我需要尽快的去了解它。</p>
-<p>何为自我意识？就是意识到“自我”的存在。</p>
-<p>一个优秀的人，你所看到的他的优秀只是他的外部而已，你所看不到的是他内在的高度自律和思想的完整秩序。就如同一棵参天大树，你感叹它的奇伟挺拔，你却不知道这棵树的根基扎得有多深多广。当你尝试跟他交流的时候，你才发现，他的知识广博远超乎你的想象，他的见解深刻到你膜拜不已。你会觉得，究竟是怎么的大脑，经过怎样的训练，才能有如此的见识与智慧。</p>
-<p>感受力高的人拥有更多的自我意识，也就是–他能突然意识到自己的心理变化过程，从而意识到问题的存在。感受力低的人往往意识不到问题所在，我的意思是说：根本！意识不到！问题所在！</p>
-<p>举个例子：坚持</p>
-<p>情商高的人更懂坚持,然后呢？你只看到他无比厉害的外表 – 然后他怎么坚持下去的?当你实在找不到原因的时候，只能把原因归功于“他情商高”。</p>
-<p>问题的关键在于：<strong>情商高的人他能注意到坚持过程中自己的负面情绪，从而及时处理这些问题，但是情商低的人他不会注意到这也是一个问题–我，正在讨厌这件事，这是一个不好的信号，所以，他需要被解决。</strong>你有没有意识到你的情绪，有没有注意到自己的一些想法。</p>
-<p>在举个例子：自我为中心</p>
-<p>写作中如何加粗是一个学问：因为你认为你能了解到的东西，人家不一定能有耐心–意识到其中的“自我中心”也是一个问题。一个人会突然意识到，我看到的，感觉到的，和别人是不同的！如何加粗，如何排版，如何使阅读体验最大化，是一个需要被注意到的问题。</p>
-<p><strong>这个世界究竟是怎么样的，不是你头脑认为如何就是如何的。那些厉害的人，一定是发现了什么不可告人的认知世界的方式</strong></p>
-<blockquote>
-<p>人是思想的产物，心里想的是什么，就会变成什么样的人。 –甘地</p>
-</blockquote>
-<p>既然自我意识那么重要，那我该如何改变现状，让自我意识为我所用？我调研了下，具体有几个关键性概念。</p>
-<p><strong>1、自我监视</strong></p>
-<p>自我监视和反思不同点在于：自我监视更强调集中观察 – 在做事情的时候就意识到，属于及时反馈。反思是经过一段时间后的整体感知，例如写日记往往在意的是今天影响最深的东西，而无法注意到最细微的当时感受。</p>
-<p>自我监视常常容易被事后遗忘，建立一套及时信息记录系统非常有必要。高三时，有位学霸有个习惯非常值得深思：每次考完月考考试时，他就会把一些想法记下来 – 因为他知道当把月考试卷发回到手里的时候，很多感觉就不见了。这些感觉不限于针对知识点，还有心态调节，各种方面。</p>
-<p><strong>2、可视化</strong></p>
-<p>关注自己的内心是一种非常抽象的探索，有时候这种感觉只是一道闪光就不见了。<strong>只有很少一部分最懂得关注自我的人能把这些体验用图像呈现在脑海中，这就是体验的可视化。</strong></p>
-<p><strong>3、悦纳与接受</strong></p>
-<p>人天生就有一种让自己只看到想看到的东西的本领，<strong>选择性过滤也许是自我监视最大的敌人 – 我们时时刻刻被一些不重要的但困扰着我们的东西所干扰着，但是我们不想也不愿去正视它们。</strong>但是坦然接受一切，再重新审视什么在困扰着你的时候，你也许能够发现问题所在。</p>
-<p><strong>4、刻意练习、实验</strong></p>
-<p>当我们发现了内心的冲突的时候，心理问题也许仅仅采取接受的方法就能解决，但是<strong>有很多高阶的、更加复杂的问题则需要进行刻意练习。</strong> 其实可以练习理论根本上来自于对自我的关注，没有对自我的关注和反馈就永远不可能有提升。</p>
-<p>刻意练习理论需要有<strong>最好的教练和最强大的意志力，很多时候我们只是不知道自己处于一种什么样的水平，我们需要什么样的训练，这才是刻意练习最难的地方。</strong></p>
-<p>最后提一点：<strong>问题从来都是不一样的，解决问题时候内心的感受很多时候都是相同的，你模糊地感受到了同样的感觉，就能够指引你从别处找到方法。自我意识是一个成熟的理性人所拥有的最明显和本质的标志，而成长，必然是一个充满顿悟、反惯性、痛苦、枯燥但不乏趣味的自我意识过程。唯有一个意识到问题存在的人才能进步，这事通往成熟和自我完善的门，而自我意识就是这扇门的钥匙。问题，永远是自己思维的问题 – 你需要更多的自我意识，需要注意更多的问题。</strong> </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;2016本命年是一个波折的一年，发生了很多事，大部分事情，我都没法搞定。我开始意识到，我对自己的认识是那么浅薄，我根本就不了解自己。当我在笑的时候，我无法意识到自己在笑，当我开心的时候，我无法享受着我笑的那一刻。我发现大多数情况下，我都处于无意识或半意识下，靠条件反射去应付
     
     </summary>
     
