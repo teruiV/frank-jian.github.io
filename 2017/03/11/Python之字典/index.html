@@ -89,16 +89,145 @@
 
 
 
-<meta name="description" content="前言">
+<meta name="description" content="前言字典是Python中唯一内建的映射类型，构造字典的目的是通过某个特定的键，轻松找到其对应的值。
+字典基本操作字典的基本操作包括：
+
+
+
+序号
+字典常用方法
+描述
+
+
+
+
+1
+len(d)
+返回d中键值对的数量
+
+
+2
+d[k]
+返回关联到键k上的值
+
+
+3
+d[k] = v
+将值v关联到键k上
+
+
+4
+del d[k]
+删除键为k的项
+
+
+5
+k in d
+检查d中是否有含有键为k的项
+
+
+6">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python之字典">
 <meta property="og:url" content="http://jianwl.com/2017/03/11/Python之字典/index.html">
 <meta property="og:site_name" content="记录点滴成长">
-<meta property="og:description" content="前言">
-<meta property="og:updated_time" content="2017-03-11T12:58:13.000Z">
+<meta property="og:description" content="前言字典是Python中唯一内建的映射类型，构造字典的目的是通过某个特定的键，轻松找到其对应的值。
+字典基本操作字典的基本操作包括：
+
+
+
+序号
+字典常用方法
+描述
+
+
+
+
+1
+len(d)
+返回d中键值对的数量
+
+
+2
+d[k]
+返回关联到键k上的值
+
+
+3
+d[k] = v
+将值v关联到键k上
+
+
+4
+del d[k]
+删除键为k的项
+
+
+5
+k in d
+检查d中是否有含有键为k的项
+
+
+6">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/51156140-file_1489285794306_25da.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/30802879-file_1489285860276_3fd1.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/62014407-file_1489285908551_1509c.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/62540962-file_1489285964580_1059.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/99042578-file_1489286045292_15b09.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/19340560-file_1489286089117_15e4f.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/1088979-file_1489286221891_a032.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/11813325-file_1489286328979_137e.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/62310043-file_1489286393838_46f1.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/29896375-file_1489286444406_54ba.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/67390503-file_1489286499089_aec8.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/10181597-file_1489286546021_4e01.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/57529412-file_1489286599806_163f5.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/26922130-file_1489286675036_b62b.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/96093454-file_1489286800270_298b.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/5491167-file_1489286924873_d5e3.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/5253501-file_1489286967576_e7bf.png">
+<meta property="og:updated_time" content="2017-03-12T02:49:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python之字典">
-<meta name="twitter:description" content="前言">
+<meta name="twitter:description" content="前言字典是Python中唯一内建的映射类型，构造字典的目的是通过某个特定的键，轻松找到其对应的值。
+字典基本操作字典的基本操作包括：
+
+
+
+序号
+字典常用方法
+描述
+
+
+
+
+1
+len(d)
+返回d中键值对的数量
+
+
+2
+d[k]
+返回关联到键k上的值
+
+
+3
+d[k] = v
+将值v关联到键k上
+
+
+4
+del d[k]
+删除键为k的项
+
+
+5
+k in d
+检查d中是否有含有键为k的项
+
+
+6">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/51156140-file_1489285794306_25da.png">
 
 
 
@@ -385,7 +514,126 @@
       
 
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>字典是Python中唯一内建的映射类型，构造字典的目的是通过某个特定的键，轻松找到其对应的值。</p>
+<h3 id="字典基本操作"><a href="#字典基本操作" class="headerlink" title="字典基本操作"></a>字典基本操作</h3><p>字典的基本操作包括：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">序号</th>
+<th style="text-align:center">字典常用方法</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">len(d)</td>
+<td style="text-align:center">返回d中键值对的数量</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">d[k]</td>
+<td style="text-align:center">返回关联到键k上的值</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">d[k] = v</td>
+<td style="text-align:center">将值v关联到键k上</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">del d[k]</td>
+<td style="text-align:center">删除键为k的项</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">k in d</td>
+<td style="text-align:center">检查d中是否有含有键为k的项</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:center">clear</td>
+<td style="text-align:center">清除字典中所有的项</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">copy</td>
+<td style="text-align:center">返回一个具有相同键值对的字典</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:center">fromkeys</td>
+<td style="text-align:center">使用给定的键建立新字典，每个键对应一个默认值None</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:center">get</td>
+<td style="text-align:center">获取字典项，若不存在该键，会出错</td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:center">has_key</td>
+<td style="text-align:center">检查字典中是否含有特定的键</td>
+</tr>
+<tr>
+<td style="text-align:center">11</td>
+<td style="text-align:center">items、iteritems</td>
+<td style="text-align:center">将字典所有项以列表方式返回</td>
+</tr>
+<tr>
+<td style="text-align:center">12</td>
+<td style="text-align:center">keys、iterkeys</td>
+<td style="text-align:center">将字典所有的键以列表方式返回</td>
+</tr>
+<tr>
+<td style="text-align:center">13</td>
+<td style="text-align:center">pop</td>
+<td style="text-align:center">获取给定键值，并建这个键值对从字典中删除</td>
+</tr>
+<tr>
+<td style="text-align:center">14</td>
+<td style="text-align:center">popitems</td>
+<td style="text-align:center">弹出<strong>随机</strong>的项</td>
+</tr>
+<tr>
+<td style="text-align:center">15</td>
+<td style="text-align:center">setdefault</td>
+<td style="text-align:center">设置键的值，若键存在，返回该键位的值，否则，为该键设置值</td>
+</tr>
+<tr>
+<td style="text-align:center">16</td>
+<td style="text-align:center">update</td>
+<td style="text-align:center">利用一个字典，更新另外一个字典</td>
+</tr>
+<tr>
+<td style="text-align:center">17</td>
+<td style="text-align:center">values</td>
+<td style="text-align:center">itervaues</td>
+<td>将字典中所有的值以列表方式返回</td>
+</tr>
+</tbody>
+</table>
+<h4 id="1）"><a href="#1）" class="headerlink" title="1）"></a>1）</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/51156140-file_1489285794306_25da.png" alt=""></p>
+<h4 id="2"><a href="#2" class="headerlink" title="2)"></a>2)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/30802879-file_1489285860276_3fd1.png" alt=""></p>
+<h4 id="3"><a href="#3" class="headerlink" title="3)"></a>3)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/62014407-file_1489285908551_1509c.png" alt=""></p>
+<h4 id="4"><a href="#4" class="headerlink" title="4)"></a>4)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/62540962-file_1489285964580_1059.png" alt=""></p>
+<h4 id="5"><a href="#5" class="headerlink" title="5)"></a>5)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/99042578-file_1489286045292_15b09.png" alt=""></p>
+<h4 id="6"><a href="#6" class="headerlink" title="6)"></a>6)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/19340560-file_1489286089117_15e4f.png" alt=""></p>
+<h4 id="7"><a href="#7" class="headerlink" title="7)"></a>7)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/1088979-file_1489286221891_a032.png" alt=""></p>
+<h4 id="8"><a href="#8" class="headerlink" title="8)"></a>8)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/11813325-file_1489286328979_137e.png" alt=""></p>
+<h4 id="9"><a href="#9" class="headerlink" title="9)"></a>9)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/62310043-file_1489286393838_46f1.png" alt=""></p>
+<h4 id="10"><a href="#10" class="headerlink" title="10)"></a>10)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/29896375-file_1489286444406_54ba.png" alt=""></p>
+<h4 id="11"><a href="#11" class="headerlink" title="11)"></a>11)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/67390503-file_1489286499089_aec8.png" alt=""></p>
+<h4 id="12"><a href="#12" class="headerlink" title="12)"></a>12)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/10181597-file_1489286546021_4e01.png" alt=""></p>
+<h4 id="13"><a href="#13" class="headerlink" title="13)"></a>13)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/57529412-file_1489286599806_163f5.png" alt=""></p>
+<h4 id="14"><a href="#14" class="headerlink" title="14)"></a>14)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/26922130-file_1489286675036_b62b.png" alt=""></p>
+<h4 id="15"><a href="#15" class="headerlink" title="15)"></a>15)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/96093454-file_1489286800270_298b.png" alt=""></p>
+<h4 id="16）"><a href="#16）" class="headerlink" title="16）"></a>16）</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/5491167-file_1489286924873_d5e3.png" alt=""></p>
+<h4 id="17"><a href="#17" class="headerlink" title="17)"></a>17)</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/5253501-file_1489286967576_e7bf.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>Python基础教程</li>
+</ol>
+
       
     </div>
 
@@ -588,7 +836,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字典基本操作"><span class="nav-number">2.</span> <span class="nav-text">字典基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1）"><span class="nav-number">2.1.</span> <span class="nav-text">1）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2"><span class="nav-number">2.2.</span> <span class="nav-text">2)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3"><span class="nav-number">2.3.</span> <span class="nav-text">3)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4"><span class="nav-number">2.4.</span> <span class="nav-text">4)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5"><span class="nav-number">2.5.</span> <span class="nav-text">5)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6"><span class="nav-number">2.6.</span> <span class="nav-text">6)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7"><span class="nav-number">2.7.</span> <span class="nav-text">7)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8"><span class="nav-number">2.8.</span> <span class="nav-text">8)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9"><span class="nav-number">2.9.</span> <span class="nav-text">9)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10"><span class="nav-number">2.10.</span> <span class="nav-text">10)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11"><span class="nav-number">2.11.</span> <span class="nav-text">11)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12"><span class="nav-number">2.12.</span> <span class="nav-text">12)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13"><span class="nav-number">2.13.</span> <span class="nav-text">13)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14"><span class="nav-number">2.14.</span> <span class="nav-text">14)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15"><span class="nav-number">2.15.</span> <span class="nav-text">15)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#16）"><span class="nav-number">2.16.</span> <span class="nav-text">16）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17"><span class="nav-number">2.17.</span> <span class="nav-text">17)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
