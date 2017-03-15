@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-03-12T15:33:33.000Z</updated>
+  <updated>2017-03-15T15:54:08.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,214 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Shell脚本基本功</title>
+    <link href="http://jianwl.com/2017/03/15/Shell%E8%84%9A%E6%9C%AC%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
+    <id>http://jianwl.com/2017/03/15/Shell脚本基本功/</id>
+    <published>2017-03-15T15:49:16.000Z</published>
+    <updated>2017-03-15T15:54:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本节主要介绍Shell常用的命令和语法，这个章节节会持续更新….</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-数值比较"><a href="#1-数值比较" class="headerlink" title="1. 数值比较"></a>1. 数值比较</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/94282744-file_1489584983851_14e8a.png" alt=""></p>
+<p>数字比较</p>
+<table>
+<thead>
+<tr>
+<th>比较</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>n1 -eq n2</td>
+<td>n1是否与n2相等</td>
+</tr>
+<tr>
+<td>n1 -ge n2</td>
+<td>n1是否大于或等于n2</td>
+</tr>
+<tr>
+<td>n1 -gt n2</td>
+<td>n1是否大于n2</td>
+</tr>
+<tr>
+<td>n1 -le n2</td>
+<td>n1是否小于或等于n2</td>
+</tr>
+<tr>
+<td>n1 -lt n2</td>
+<td>n1是否小于n2</td>
+</tr>
+<tr>
+<td>n1 -ne n2</td>
+<td>n1是否不等于n2</td>
+</tr>
+</tbody>
+</table>
+<p>字符串比较</p>
+<table>
+<thead>
+<tr>
+<th>比较</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>str1 = str2</td>
+<td>str1和str2相同</td>
+</tr>
+<tr>
+<td>str1 != str2</td>
+<td>str1和str2不相等</td>
+</tr>
+<tr>
+<td>str1 &lt; str2</td>
+<td>str1是否比str2小</td>
+</tr>
+<tr>
+<td>str1 &gt; str2</td>
+<td>str1是否比str2大</td>
+</tr>
+<tr>
+<td>-n str1</td>
+<td>str1的长度是否非0</td>
+</tr>
+<tr>
+<td>-z str1</td>
+<td>str2的长度是否为0</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-文件比较"><a href="#2-文件比较" class="headerlink" title="2. 文件比较"></a>2. 文件比较</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/5842677-file_1489586826777_16d8c.png" alt=""></p>
+<p>文件比较</p>
+<table>
+<thead>
+<tr>
+<th>比较</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-d file</td>
+<td>file是否存在并是一个目录</td>
+</tr>
+<tr>
+<td>-e file</td>
+<td>file是否存在</td>
+</tr>
+<tr>
+<td>-f file</td>
+<td>file是否存在并是个文件</td>
+</tr>
+<tr>
+<td>-r file</td>
+<td>file是否存在并可读</td>
+</tr>
+<tr>
+<td>-s file</td>
+<td>file是否存在并非空</td>
+</tr>
+<tr>
+<td>-w file</td>
+<td>file是否存在并可写</td>
+</tr>
+<tr>
+<td>-x file</td>
+<td>file是否存在并可执行</td>
+</tr>
+<tr>
+<td>-O file</td>
+<td>file是否存在并属当前用户所有</td>
+</tr>
+<tr>
+<td>-G file</td>
+<td>file是否存在并且默认组与当前用户相同</td>
+</tr>
+<tr>
+<td>file1 -nt file2</td>
+<td>file1是否比file2新</td>
+</tr>
+<tr>
+<td>file1 -ot file2</td>
+<td>file1是否比file2旧</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-for命令"><a href="#3-for命令" class="headerlink" title="3. for命令"></a>3. for命令</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/79683869-file_1489587635186_1b43.png" alt=""></p>
+<h4 id="4-修改分割符"><a href="#4-修改分割符" class="headerlink" title="4. 修改分割符"></a>4. 修改分割符</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/21867516-file_1489588386921_5740.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>分割符设置</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IFS=<code>$&#39;\n&#39;</code></td>
+<td>设置换行符为分隔符</td>
+</tr>
+<tr>
+<td>IFS=<code>$&#39;\n:;&quot;&#39;</code></td>
+<td>设置换行符、冒号、分好、双引号为分隔符</td>
+</tr>
+</tbody>
+</table>
+<h4 id="5-while命令"><a href="#5-while命令" class="headerlink" title="5. while命令"></a>5. while命令</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/34656202-file_1489588951940_12c28.png" alt=""></p>
+<h4 id="6-continue命令"><a href="#6-continue命令" class="headerlink" title="6. continue命令"></a>6. continue命令</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/19067708-file_1489589502995_10596.png" alt=""></p>
+<h4 id="7-case命令"><a href="#7-case命令" class="headerlink" title="7. case命令"></a>7. case命令</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/50152327-file_1489591476267_3699.png" alt=""></p>
+<h4 id="8-创建函数"><a href="#8-创建函数" class="headerlink" title="8. 创建函数"></a>8. 创建函数</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/31595596-file_1489590492602_f1cf.png" alt=""></p>
+<p>bash shell会把函数当做小型脚本，运行结束时会返回一个退出状态码,用<code>$?</code>判断程序的运行状态。</p>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>命令成功结束 </td>
+</tr>
+<tr>
+<td>1</td>
+<td>通用未知错误</td>
+</tr>
+<tr>
+<td>2</td>
+<td>误用shell命令</td>
+</tr>
+<tr>
+<td>126</td>
+<td>命令不可执行</td>
+</tr>
+</tbody>
+</table>
+<p>…</p>
+<h4 id="9、特殊参数变量"><a href="#9、特殊参数变量" class="headerlink" title="9、特殊参数变量"></a>9、特殊参数变量</h4><p> <img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/19213513-file_1489592788517_3396.png" alt=""></p>
+<p> 运行：</p>
+<p> <img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/3625461-file_1489592376768_13f93.png" alt=""></p>
+<p> 特别注意：<code>“$*”</code>变量会将所有参数当做单个参数，<code>“$@”</code>会单独处理每个参数;而<code>$*</code>变量和<code>$@</code>变量均会将所有参数当做单个参数。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1.Linux命令行与Shell脚本编程大全</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;本节主要介绍Shell常用的命令和语法，这个章节节会持续更新….&lt;/p&gt;
+&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; class=&quot;
+    
+    </summary>
+    
+      <category term="Shell" scheme="http://jianwl.com/categories/Shell/"/>
+    
+    
+      <category term="Shell" scheme="http://jianwl.com/tags/Shell/"/>
+    
+  </entry>
   
   <entry>
     <title>Python操作MYSQL数据库</title>
@@ -1449,45 +1657,6 @@
     
     
       <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2016年终总结</title>
-    <link href="http://jianwl.com/2017/02/04/2016%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
-    <id>http://jianwl.com/2017/02/04/2016年终总结/</id>
-    <published>2017-02-04T08:00:58.000Z</published>
-    <updated>2017-02-04T09:57:25.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="2016年，我做了什么？"><a href="#2016年，我做了什么？" class="headerlink" title="2016年，我做了什么？"></a>2016年，我做了什么？</h3><h4 id="1、搭建个人站，至今写了150多篇文章"><a href="#1、搭建个人站，至今写了150多篇文章" class="headerlink" title="1、搭建个人站，至今写了150多篇文章"></a>1、搭建个人站，至今写了150多篇文章</h4><p>去年4月份，有跳槽的想法，便开始准备面试相关的知识储备，搭建个人站，用于记录所学过程中的心得体会。一来，将所学的知识，通过文字的方式记录下来，有了输出，对学习的积极性有一定的提高；二来，想通过个人站记录成长的过程，这样当一年过去了，可以很清晰的知道，这一年我到底做了什么？最后，想通过个人站激励自己，不断学习。</p>
-<h4 id="2、看了20多本技术书"><a href="#2、看了20多本技术书" class="headerlink" title="2、看了20多本技术书"></a>2、看了20多本技术书</h4><p>去年，跳槽了2次，每次跳槽在面试前，都做足了准备；针对相关技术，购买经典书籍，查缺补漏；同时根据面试的反馈，不断弥补自身的不足；</p>
-<h4 id="3、读了6本投资理财📚"><a href="#3、读了6本投资理财📚" class="headerlink" title="3、读了6本投资理财📚"></a>3、读了6本投资理财📚</h4><p>人民币不断贬值，每年CPI上涨2%左右。学习投资理财的相关知识，是今后的一大重点；去年，开始尝试玩股票，炒短线，最后亏损离场。体验下来，现阶段的我不适合炒股，过于花时间且考验人性。今年会涉足基金，考虑长期投资，并学习相关基金知识。</p>
-<h4 id="4、独立1人，负责整个项目"><a href="#4、独立1人，负责整个项目" class="headerlink" title="4、独立1人，负责整个项目"></a>4、独立1人，负责整个项目</h4><p>早先的项目，或多或少都是多个同事一起参与完成的(一个架构师、2个工程师「加上我」)，今年跳槽到另一家公司B，开始一个人hold住整个项目，刚开始是有所畏惧的，接手下来，一路过关斩将，技术上感觉成长了许多。</p>
-<h4 id="5、个人项目"><a href="#5、个人项目" class="headerlink" title="5、个人项目"></a>5、个人项目</h4><p>去年开始做些个人项目，接触到了许多在平时工作中接触不到东西，个人项目对于技术的提升是一大助力。同时，可以为今后的求职，增加很大的筹码；</p>
-<h3 id="2016年的几点思考"><a href="#2016年的几点思考" class="headerlink" title="2016年的几点思考"></a>2016年的几点思考</h3><h4 id="1、工程师不止眼前的逻辑和代码，还有底层的框架和架构"><a href="#1、工程师不止眼前的逻辑和代码，还有底层的框架和架构" class="headerlink" title="1、工程师不止眼前的逻辑和代码，还有底层的框架和架构"></a>1、工程师不止眼前的逻辑和代码，还有底层的框架和架构</h4><p>工作中，我经常忙于业务代码逻辑，并囤于业务之中，忘记了开发的初衷，关注于当前框架的易用性、可扩展性，当前使用框架的优劣，并思考未来项目中自己如何去搭建架构、去设计。</p>
-<h4 id="2、金字塔目标计划落实"><a href="#2、金字塔目标计划落实" class="headerlink" title="2、金字塔目标计划落实"></a>2、金字塔目标计划落实</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-4/4368253-file_1486199535149_1531e.jpg" alt=""></p>
-<p>在制定计划时发现，上面的金字塔计划模型，对我来说很管用，主要体现在：</p>
-<p>1、能清楚明了的看到目标内容和时间节点</p>
-<p>2、能督促我以时间节点为目标，考核自己计划任务的落实、阶段目标的完成。</p>
-<p>如果不写出来，很容易忘记我当初设定的目标和方向。如果不写出来，很容易到「终极目标节点」时，连「近期目标」的内容都没有完成。</p>
-<h4 id="3、人生中有很多比刷「朋友圈」、关注「今日头条」更重要的事情"><a href="#3、人生中有很多比刷「朋友圈」、关注「今日头条」更重要的事情" class="headerlink" title="3、人生中有很多比刷「朋友圈」、关注「今日头条」更重要的事情"></a>3、人生中有很多比刷「朋友圈」、关注「今日头条」更重要的事情</h4><p>「朋友圈」的优势是以时间轴的形式，记录生活的点滴。但是，我们手里的它已然叛离了初衷。「朋友圈」里充斥着各种伪奢靡的浪漫，「朋友圈」的东西渐成为给别人看的东西，这和生活的真相是完全背道而驰的。</p>
-<p>「今日头条」的推荐功能也是投我们兴趣所好，延绵不断的推送各种浏览量相关度高的新闻、消息。在海量的信息轰炸中，多的是撅头，少的是诚意，有的是速度，缺的是思考深度。严重消磨了心智，使得我们变得人云亦云，缺乏独立思考。</p>
-<p>今年开始会有意识的减少刷朋友圈的频率，现在是重度患者，有瘾需要逐步戒除。</p>
-<h4 id="4、花钱能搞定的事情，不要浪费其他资源"><a href="#4、花钱能搞定的事情，不要浪费其他资源" class="headerlink" title="4、花钱能搞定的事情，不要浪费其他资源"></a>4、花钱能搞定的事情，不要浪费其他资源</h4><p>有时候会遇到问题需要麻烦朋友，但深入思考会发现「能自己花钱搞定的事情，不要浪费其他资源」，这里的其他资源包括麻烦朋友</p>
-<h4 id="5、专精一门技术"><a href="#5、专精一门技术" class="headerlink" title="5、专精一门技术"></a>5、专精一门技术</h4><p>缺乏持续深入钻研和学习一门技术的毅力，往往是有所小成，就停滞不前了。这是非常可怕的事情，设定计划，一步一个脚印，不断修炼基本功。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>思路越发清晰，前行的步伐也就越发稳健，<strong>向着光亮那方，奔跑前进。</strong></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;2016年，我做了什么？&quot;&gt;&lt;a href=&quot;#2016年，我做了什么？&quot; class=&quot;headerlink&quot; title=&quot;2016年，我做了什么？&quot;&gt;&lt;/a&gt;2016年，我做了什么？&lt;/h3&gt;&lt;h4 id=&quot;1、搭建个人站，至今写了150多篇文章&quot;&gt;&lt;a h
-    
-    </summary>
-    
-      <category term="思绪" scheme="http://jianwl.com/categories/%E6%80%9D%E7%BB%AA/"/>
-    
-    
-      <category term="思绪" scheme="http://jianwl.com/tags/%E6%80%9D%E7%BB%AA/"/>
     
   </entry>
   
