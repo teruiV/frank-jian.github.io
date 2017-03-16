@@ -65,20 +65,20 @@
 
 <meta name="description" content="前言Maven项目中某些依赖，只需要在编译阶段有效，运行时不需要该依赖，该如何配置？之前对依赖的有效范围的配置理解的很模糊，这一节主要来学习Maven依赖的有效范围配置。
 实战声明一个依赖可以包含以下元素：
-1234567891011121314&amp;lt;dependency&amp;gt;		&amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;">
+1234567891011121314&amp;lt;dependency&amp;gt;	&amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;	&amp;l">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Maven依赖的有效范围">
 <meta property="og:url" content="http://jianwl.com/2017/03/16/Maven依赖的有效范围/index.html">
 <meta property="og:site_name" content="记录点滴成长">
 <meta property="og:description" content="前言Maven项目中某些依赖，只需要在编译阶段有效，运行时不需要该依赖，该如何配置？之前对依赖的有效范围的配置理解的很模糊，这一节主要来学习Maven依赖的有效范围配置。
 实战声明一个依赖可以包含以下元素：
-1234567891011121314&amp;lt;dependency&amp;gt;		&amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;">
-<meta property="og:updated_time" content="2017-03-16T15:32:56.000Z">
+1234567891011121314&amp;lt;dependency&amp;gt;	&amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;	&amp;l">
+<meta property="og:updated_time" content="2017-03-16T15:41:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Maven依赖的有效范围">
 <meta name="twitter:description" content="前言Maven项目中某些依赖，只需要在编译阶段有效，运行时不需要该依赖，该如何配置？之前对依赖的有效范围的配置理解的很模糊，这一节主要来学习Maven依赖的有效范围配置。
 实战声明一个依赖可以包含以下元素：
-1234567891011121314&amp;lt;dependency&amp;gt;		&amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;">
+1234567891011121314&amp;lt;dependency&amp;gt;	&amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;	&amp;l">
 
 
 
@@ -367,7 +367,7 @@
       
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Maven项目中某些依赖，只需要在编译阶段有效，运行时不需要该依赖，该如何配置？之前对依赖的有效范围的配置理解的很模糊，这一节主要来学习Maven依赖的有效范围配置。</p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>声明一个依赖可以包含以下元素：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">		&lt;version&gt;1.4.0.RELEASE&lt;/version&gt;</div><div class="line">		&lt;type&gt;jar&lt;/type&gt;</div><div class="line">		&lt;optional&gt;true&lt;/optional&gt;</div><div class="line">		&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">		&lt;exclusions&gt;</div><div class="line">			&lt;exclusion&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">			&lt;/exclusion&gt;</div><div class="line">		&lt;/exclusions&gt;</div><div class="line">  &lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;1.4.0.RELEASE&lt;/version&gt;</div><div class="line">	&lt;type&gt;jar&lt;/type&gt;</div><div class="line">	&lt;optional&gt;true&lt;/optional&gt;</div><div class="line">	&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">	&lt;exclusions&gt;</div><div class="line">		&lt;exclusion&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">		&lt;/exclusion&gt;</div><div class="line">	&lt;/exclusions&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
 <p>groupId、artifactId、version：依赖的基本坐标</p>
 <p>type: 依赖的类型</p>
 <p>optional:标记依赖是否可选</p>
