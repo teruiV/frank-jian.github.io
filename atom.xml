@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-03-15T15:59:25.000Z</updated>
+  <updated>2017-03-16T03:34:43.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="http://jianwl.com/2017/03/15/Shell%E8%84%9A%E6%9C%AC%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
     <id>http://jianwl.com/2017/03/15/Shell脚本基本功/</id>
     <published>2017-03-15T15:49:16.000Z</published>
-    <updated>2017-03-15T15:59:25.000Z</updated>
+    <updated>2017-03-16T03:34:43.000Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本节主要介绍Shell常用的命令和语法，这个章节会持续更新….</p>
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本节主要介绍Shell常用的命令和语法，这个章节会持续更新，<a href="git@git.oschina.net:shuangziliuyun/shell.git">本节练习脚本请查看GIT</a></p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-数值比较"><a href="#1-数值比较" class="headerlink" title="1. 数值比较"></a>1. 数值比较</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/94282744-file_1489584983851_14e8a.png" alt=""></p>
 <p>数字比较</p>
 <table>
@@ -213,8 +213,7 @@
     
     <summary type="html">
     
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;本节主要介绍Shell常用的命令和语法，这个章节会持续更新….&lt;/p&gt;
-&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; class=&quot;h
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;本节主要介绍Shell常用的命令和语法，这个章节会持续更新，&lt;a href=&quot;git@git.oschina.net:shuangziliu
     
     </summary>
     
