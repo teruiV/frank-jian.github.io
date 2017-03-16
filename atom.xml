@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-03-16T03:37:11.000Z</updated>
+  <updated>2017-03-16T15:32:56.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,70 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Maven依赖的有效范围</title>
+    <link href="http://jianwl.com/2017/03/16/Maven%E4%BE%9D%E8%B5%96%E7%9A%84%E6%9C%89%E6%95%88%E8%8C%83%E5%9B%B4/"/>
+    <id>http://jianwl.com/2017/03/16/Maven依赖的有效范围/</id>
+    <published>2017-03-16T15:14:48.000Z</published>
+    <updated>2017-03-16T15:32:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Maven项目中某些依赖，只需要在编译阶段有效，运行时不需要该依赖，该如何配置？之前对依赖的有效范围的配置理解的很模糊，这一节主要来学习Maven依赖的有效范围配置。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>声明一个依赖可以包含以下元素：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">		&lt;version&gt;1.4.0.RELEASE&lt;/version&gt;</div><div class="line">		&lt;type&gt;jar&lt;/type&gt;</div><div class="line">		&lt;optional&gt;true&lt;/optional&gt;</div><div class="line">		&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">		&lt;exclusions&gt;</div><div class="line">			&lt;exclusion&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">			&lt;/exclusion&gt;</div><div class="line">		&lt;/exclusions&gt;</div><div class="line">  &lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<p>groupId、artifactId、version：依赖的基本坐标</p>
+<p>type: 依赖的类型</p>
+<p>optional:标记依赖是否可选</p>
+<p>exclusions: 用来排除传递性依赖</p>
+<p>scope: 依赖的有效范围</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">依赖范围</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">compile</td>
+<td style="text-align:center">没有指定默认依赖范围，对于编译、测试、运行三种classpath都有效</td>
+<td style="text-align:center">大部分依赖</td>
+</tr>
+<tr>
+<td style="text-align:center">test</td>
+<td style="text-align:center">只对测试classpath有效</td>
+<td style="text-align:center">测试依赖</td>
+</tr>
+<tr>
+<td style="text-align:center">provided</td>
+<td style="text-align:center">对于编译和测试classpath均有效，运行时无效</td>
+<td style="text-align:center">servlet-api，编译和测试项目时需要该依赖，运行时无效，因为运行时容器已提供该依赖</td>
+</tr>
+<tr>
+<td style="text-align:center">runtime</td>
+<td style="text-align:center">对测试和运行classpath有效，编译主代码时无效</td>
+<td style="text-align:center">JDBC驱动实现，项目主代码的编译主需要JDK提供的接口，只有在测试或者运行时才需要实现上述接口的具体JDBC驱动</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>Maven实战</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;Maven项目中某些依赖，只需要在编译阶段有效，运行时不需要该依赖，该如何配置？之前对依赖的有效范围的配置理解的很模糊，这一节主要来学习Ma
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
+    
+    
+      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
+    
+  </entry>
   
   <entry>
     <title>Shell脚本基本功</title>
@@ -1630,34 +1694,6 @@
     
     
       <category term="中间件" scheme="http://jianwl.com/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java设计模式之建造者模式「Builder Pattern」</title>
-    <link href="http://jianwl.com/2017/02/04/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F%E3%80%8CBuilder-Pattern%E3%80%8D/"/>
-    <id>http://jianwl.com/2017/02/04/Java设计模式之建造者模式「Builder-Pattern」/</id>
-    <published>2017-02-04T11:23:19.000Z</published>
-    <updated>2017-02-10T07:00:37.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="何为建造者模式？"><a href="#何为建造者模式？" class="headerlink" title="何为建造者模式？"></a>何为建造者模式？</h3><p>一步步创建一个包含多个组成部件的完整对象，使用相同的构建过程构建不同的产品，建造者模式是一种对象创建型模式。</p>
-<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><ul>
-<li>用于复杂对象的组装和创建、对象间具有较多的共同点或组成部分相似；</li>
-<li>生成对象的属性相互依赖,需要指定其生成顺序；</li>
-<li>对象的创建过程独立于创建该对象的类，隔离复杂对象的创建和使用，并使得相同的创建过程可以创建不同的对象。</li>
-</ul>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">public final class User &#123;</div><div class="line">    private final String username;</div><div class="line">    private final String addresss;</div><div class="line">    private final Integer age;</div><div class="line">    private final String whereFrom;</div><div class="line"></div><div class="line">    public User(Builder builder)&#123;</div><div class="line">        this.username = builder.username;</div><div class="line">        this.addresss = builder.addresss;</div><div class="line">        this.age = builder.age;</div><div class="line">        this.whereFrom = builder.whereFrom;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getUsername() &#123;</div><div class="line">        return username;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getAddresss() &#123;</div><div class="line">        return addresss;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Integer getAge() &#123;</div><div class="line">        return age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getWhereFrom() &#123;</div><div class="line">        return whereFrom;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return &quot;User&#123;&quot; +</div><div class="line">                &quot;username=&apos;&quot; + username + &apos;\&apos;&apos; +</div><div class="line">                &quot;, addresss=&apos;&quot; + addresss + &apos;\&apos;&apos; +</div><div class="line">                &quot;, age=&quot; + age +</div><div class="line">                &quot;, whereFrom=&apos;&quot; + whereFrom + &apos;\&apos;&apos; +</div><div class="line">                &apos;&#125;&apos;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static class Builder&#123;</div><div class="line">        private   String username;</div><div class="line">        private   String addresss;</div><div class="line">        private   Integer age;</div><div class="line">        private   String whereFrom;</div><div class="line"></div><div class="line">        public Builder(String username,Integer age)&#123;</div><div class="line">            this.username = username;</div><div class="line">            this.age =age;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public Builder withAddress(String address)&#123;</div><div class="line">            this.addresss = address;</div><div class="line">            return this ;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        public Builder withWhereFrom(String whereFrom)&#123;</div><div class="line">            this.whereFrom = whereFrom;</div><div class="line">            return this;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public User builder()&#123;</div><div class="line">            return new User(this);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        System.out.println(new User.Builder(&quot;张三&quot;,12).withAddress(&quot;上海&quot;).withWhereFrom(&quot;中国&quot;).builder());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;何为建造者模式？&quot;&gt;&lt;a href=&quot;#何为建造者模式？&quot; class=&quot;headerlink&quot; title=&quot;何为建造者模式？&quot;&gt;&lt;/a&gt;何为建造者模式？&lt;/h3&gt;&lt;p&gt;一步步创建一个包含多个组成部件的完整对象，使用相同的构建过程构建不同的产品，建造者模式是一种
-    
-    </summary>
-    
-      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
-    
-    
-      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
     
   </entry>
   
