@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-03-18T08:57:22.000Z</updated>
+  <updated>2017-03-18T09:02:52.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://jianwl.com/2017/03/18/Git%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     <id>http://jianwl.com/2017/03/18/Git读书笔记/</id>
     <published>2017-03-18T05:20:23.000Z</published>
-    <updated>2017-03-18T08:57:22.000Z</updated>
+    <updated>2017-03-18T09:02:52.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Git非常强大，本节主要记录些常用，但之前不知道的技巧；在此之前Git操作基本按照以下这个套路：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">1.git init //初始化本地仓库</div><div class="line">2.git clone git@git.oschina.net:shuangziliuyun/Hexo.git //拷贝远程项目到本地</div><div class="line">3.touch README.md //新建文件</div><div class="line">4.git add . //提交新建文件到暂存区(Stage)</div><div class="line">5.git commit -m &quot;新增README.md文件&quot;//将暂存区的文件提交到本地仓库</div><div class="line">6.git pull origin master //下载远端主分支，并合并到本地主分支。</div><div class="line">7.git push origin master //提交本地分支到远端</div></pre></td></tr></table></figure>
@@ -86,7 +86,7 @@
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-18/78783161-file_1489827077268_253f.png" alt=""></p>
 <p>所在分支是topic分支，执行变基：</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-18/29230732-file_1489827178578_16545.png" alt=""></p>
-<p>变基后的提交日志：</p>
+<p>变基后topic分支的提交记录：</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-18/60646943-file_1489827247580_2db0.png" alt=""></p>
 <p>提示：</p>
 <p>执行变基的过程，有很大概率会出现冲突。如果多个开发人员，更改同一文件时，将会出现</p>
