@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-03-18T04:22:52.000Z</updated>
+  <updated>2017-03-18T04:38:40.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SpringBoot之下载文件&amp;下载zip文件</title>
+    <link href="http://jianwl.com/2017/03/18/SpringBoot%E4%B9%8B%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6-%E4%B8%8B%E8%BD%BDzip%E6%96%87%E4%BB%B6/"/>
+    <id>http://jianwl.com/2017/03/18/SpringBoot之下载文件-下载zip文件/</id>
+    <published>2017-03-18T04:33:21.000Z</published>
+    <updated>2017-03-18T04:38:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>下载文件这一块之前都没接触过，话不多说直接贴出代码，备忘。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-下载文件"><a href="#1-下载文件" class="headerlink" title="1. 下载文件"></a>1. 下载文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@RequestMapping(value = &quot;/download&quot;,method = RequestMethod.POST)</div><div class="line">public ResponseEntity&lt;InputStreamResource&gt; downloadFile(@RequestParam String gifUrl) throws IOException &#123;</div><div class="line">    InputStream inputStream = new URL(gifUrl).openStream();</div><div class="line">    HttpHeaders headers = new HttpHeaders();</div><div class="line">    headers.add(&quot;Cache-Control&quot;, &quot;no-cache, no-store, must-revalidate&quot;);</div><div class="line">    headers.add(&quot;Content-Disposition&quot;, String.format(&quot;attachment; filename=\&quot;%s\&quot;.gif&quot;, UUID.randomUUID().toString()));</div><div class="line">    headers.add(&quot;Pragma&quot;, &quot;no-cache&quot;);</div><div class="line">    headers.add(&quot;Expires&quot;, &quot;0&quot;);</div><div class="line"></div><div class="line">    return ResponseEntity</div><div class="line">            .ok()</div><div class="line">            .headers(headers)</div><div class="line">            .contentType(MediaType.parseMediaType(&quot;application/octet-stream&quot;))</div><div class="line">            .body(new InputStreamResource(inputStream));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-下载zip文件"><a href="#2-下载zip文件" class="headerlink" title="2. 下载zip文件"></a>2. 下载zip文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">@RequestMapping(value = &quot;/batch/download&quot;,method = RequestMethod.POST,produces=&quot;application/zip&quot;)</div><div class="line">    public void batchDownload(@RequestParam String gifUrls,HttpServletResponse response) throws IOException &#123;</div><div class="line">        response.setStatus(HttpServletResponse.SC_OK);</div><div class="line">        response.addHeader(&quot;Content-Disposition&quot;,String.format(&quot;attachment; filename=\&quot;%s\&quot;.zip&quot;, UUID.randomUUID().toString()));</div><div class="line"></div><div class="line">        ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());</div><div class="line">        List&lt;String&gt; gifs = Arrays.asList(gifUrls.split(&quot;,&quot;));</div><div class="line">        System.out.println(&quot;gifs =&gt; &quot; + gifs.size());</div><div class="line">        if(gifs.size() == 0)&#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        for(String gif : gifs)&#123;</div><div class="line">            zipOutputStream.putNextEntry(new ZipEntry(UUID.randomUUID().toString().concat(&quot;.gif&quot;)));</div><div class="line">            InputStream inputStream = new URL(gif).openStream();</div><div class="line">            IOUtils.copy(inputStream, zipOutputStream);</div><div class="line">            inputStream.close();</div><div class="line">            zipOutputStream.closeEntry();</div><div class="line">        &#125;</div><div class="line">        zipOutputStream.close();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;下载文件这一块之前都没接触过，话不多说直接贴出代码，备忘。&lt;/p&gt;
+&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; class=&quot;hea
+    
+    </summary>
+    
+      <category term="SpringBoot" scheme="http://jianwl.com/categories/SpringBoot/"/>
+    
+    
+      <category term="SpringBoot" scheme="http://jianwl.com/tags/SpringBoot/"/>
+    
+  </entry>
   
   <entry>
     <title>JAVA之IO</title>
@@ -1862,55 +1887,6 @@
     
     
       <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git实战</title>
-    <link href="http://jianwl.com/2017/02/10/Git%E5%AE%9E%E6%88%98/"/>
-    <id>http://jianwl.com/2017/02/10/Git实战/</id>
-    <published>2017-02-10T14:29:55.000Z</published>
-    <updated>2017-02-10T06:20:07.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>Source Tree</code>图形化界面用多了，在服务器操作时，Git命令行大部分都遗忘了。本节主要记录Git常用命令</p>
-<h3 id="工作区、暂存区的概念"><a href="#工作区、暂存区的概念" class="headerlink" title="工作区、暂存区的概念"></a>工作区、暂存区的概念</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/50500847-file_1484059096086_3789.jpg" alt=""></p>
-<p>把文件往GIT版本库里添加的时候是分两步执行的：</p>
-<p>第一步是用<code>git add</code>把文件添加进去，实际上就是把文件修改添加到暂存区；</p>
-<p>第二步是用<code>git commit</code>提交更改，实际上就是把暂存区的所有内容提交到当前分支。</p>
-<h3 id="GIT实战"><a href="#GIT实战" class="headerlink" title="GIT实战"></a>GIT实战</h3><p><code>场景1：添加文件</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/31507464-file_1484059818873_b118.png" alt=""></p>
-<p><code>场景2：将暂存区的修改回退到工作区</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/9343551-file_1484060480734_811a.png" alt=""></p>
-<p><code>场景3：放弃工作区中所有的修改</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/82204251-file_1484060562988_e215.png" alt=""></p>
-<p><code>场景4：当前分支回退到某次提交(已提交到「远程分支」和「本地分支」均可实现回滚)</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/60922523-file_1484062431722_f5f1.png" alt=""></p>
-<p><code>场景5：查看提交日志信息</code></p>
-<p><strong>方式1</strong></p>
-<p><code>git log --pretty=oneline</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/31517947-file_1484063163364_a911.png" alt=""></p>
-<p><strong>方式2</strong></p>
-<p><code>git log --graph</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/49133052-file_1484063099366_109d7.png" alt=""></p>
-<p><code>场景6：显示、创建、切换分支</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-1-10/70304771-file_1484063405708_bf84.png" alt=""></p>
-<p><code>场景7: 暂存区删除文件但工作区内容不变，命令常用于项目后期添加.gitignore文件，需要在暂存区先删除不需要的文件，再重新添加到git分支，忽略才能生效</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-10/45154025-file_1486707415977_16269.png" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001375840038939c291467cc7c747b1810aab2fb8863508000" target="_blank" rel="external">廖雪峰Git教程</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Source Tree&lt;/code&gt;图形化界面用多了，在服务器操作时，Git命令行大部分都遗忘了。本节主要记录Git常用命令&lt;/
-    
-    </summary>
-    
-      <category term="Git" scheme="http://jianwl.com/categories/Git/"/>
-    
-    
-      <category term="Git" scheme="http://jianwl.com/tags/Git/"/>
     
   </entry>
   
