@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-03-19T06:48:23.000Z</updated>
+  <updated>2017-03-20T16:23:15.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,120 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python之变量类型</title>
+    <link href="http://jianwl.com/2017/03/20/Python%E4%B9%8B%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B/"/>
+    <id>http://jianwl.com/2017/03/20/Python之变量类型/</id>
+    <published>2017-03-20T14:55:46.000Z</published>
+    <updated>2017-03-20T16:23:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这一节我们来学习Python变量的基本类型以及其常用方法,<a href="http://git.oschina.net/shuangziliuyun/Python_Basic" target="_blank" rel="external">本节实战的代码请查看这里</a>；</p>
+<h3 id="理论-amp-实战"><a href="#理论-amp-实战" class="headerlink" title="理论 &amp; 实战"></a>理论 &amp; 实战</h3><h4 id="1-变量赋值"><a href="#1-变量赋值" class="headerlink" title="1. 变量赋值"></a>1. 变量赋值</h4><p><code>Python</code>中的变量赋值不需要类型声明，每个变量在内存中创建，在使用前都必须赋值，变量赋值以后该变量才会被创建。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-20/63585377-file_1490022387614_5327.png" alt=""></p>
+<h4 id="2-多变量赋值"><a href="#2-多变量赋值" class="headerlink" title="2. 多变量赋值"></a>2. 多变量赋值</h4><p>Python允许你同时为多个变量赋值；</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-20/61524509-file_1490022684600_9741.png" alt=""></p>
+<h4 id="3-标准数据类型"><a href="#3-标准数据类型" class="headerlink" title="3. 标准数据类型"></a>3. 标准数据类型</h4><p>Python有五个标准的数据类型：Number(数字)、String(字符串)、List(列表)、Tuple(元组)、Dictionary(字典)</p>
+<h5 id="1）数字"><a href="#1）数字" class="headerlink" title="1）数字"></a>1）数字</h5><p>Python支持4种不同的数字类型：1️⃣ int(有符号整型) 2️⃣ long(长整形)  3️⃣ float(浮点型) 4️⃣ complex(复数)</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-20/61536331-file_1490023177580_6fdf.png" alt=""></p>
+<h5 id="2-字符串"><a href="#2-字符串" class="headerlink" title="2) 字符串"></a>2) 字符串</h5><p>字符串是由数字、字母、下划线组成的，有两种取值的顺序1️⃣ 从左到右默认从0开始 2️⃣ 从右到左默认-1开始</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-20/10908781-file_1490023740462_7a8f.png" alt=""></p>
+<h5 id="3-列表"><a href="#3-列表" class="headerlink" title="3) 列表"></a>3) 列表</h5><p>List(列表)是Python中使用最频繁的数据结构，加号(+)是列表运算符，星号(*)是重复操作。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-20/12281863-file_1490024341078_15a2f.png" alt=""></p>
+<h5 id="4-元组"><a href="#4-元组" class="headerlink" title="4) 元组"></a>4) 元组</h5><p>元组类似于列表，但元组不能二次赋值，相当于只读列表</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-20/70503194-file_1490025007659_e7e1.png" alt=""></p>
+<h5 id="5-字典"><a href="#5-字典" class="headerlink" title="5) 字典"></a>5) 字典</h5><p>字典是除列表以外最灵活的内置数据结构类型，列表是有序的对象结合，字典是无序的对象集合。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-20/3467668-file_1490025356039_5bab.png" alt=""></p>
+<h4 id="4-Python数据类型转换"><a href="#4-Python数据类型转换" class="headerlink" title="4. Python数据类型转换"></a>4. Python数据类型转换</h4><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int(x[,base])</td>
+<td>将x转化为一个整数</td>
+</tr>
+<tr>
+<td>long(x[,base])</td>
+<td>将x转化为一个长整数</td>
+</tr>
+<tr>
+<td>float(x)</td>
+<td>将x转化为一个浮点数</td>
+</tr>
+<tr>
+<td>complex(real[,imag])</td>
+<td>创建一个复数</td>
+</tr>
+<tr>
+<td>str(x)</td>
+<td>将对象x转化为字符串</td>
+</tr>
+<tr>
+<td>repr(x)</td>
+<td>将对象x转化为表达式字符串</td>
+</tr>
+<tr>
+<td>eval(str)</td>
+<td>用来计算在字符串中的有效Python表达式，并返回一个对象</td>
+</tr>
+<tr>
+<td>tuple(s)</td>
+<td>将序列s转换为一个元组</td>
+</tr>
+<tr>
+<td>list(s)</td>
+<td>将序列s转换为一个列表</td>
+</tr>
+<tr>
+<td>set(s)</td>
+<td>转换为可变集合</td>
+</tr>
+<tr>
+<td>dict(d)</td>
+<td>创建一个字典，d必须是一个序列(key,value)元组</td>
+</tr>
+<tr>
+<td>frozenset(s)</td>
+<td>创建不可变集合</td>
+</tr>
+<tr>
+<td>chr(x)</td>
+<td>将一个整数转换为一个字符</td>
+</tr>
+<tr>
+<td>unichr(x)</td>
+<td>将一个整数转换为Unicode字符</td>
+</tr>
+<tr>
+<td>ord(x)</td>
+<td>将一个字符转化为他的整数值</td>
+</tr>
+<tr>
+<td>hex(x)</td>
+<td>将一个整数转化为一个十六进制字符串</td>
+</tr>
+<tr>
+<td>oct(x)</td>
+<td>将一个整数转化为一个八进制字符串</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-21/39388905-file_1490026722871_148f8.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1.<a href="http://www.runoob.com/python/python-variable-types.html" target="_blank" rel="external">Python变量类型</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;这一节我们来学习Python变量的基本类型以及其常用方法,&lt;a href=&quot;http://git.oschina.net/shuangzil
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>常用Git命令清单</title>
@@ -1882,53 +1996,6 @@
     
       &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;存储引擎是MYSQL体系结构的核心，本节我们通过比较存储引擎加深对其的了解。&lt;/p&gt;
 &lt;h3 id=&quot;存储引擎对比&quot;&gt;&lt;a href=&quot;#存
-    
-    </summary>
-    
-      <category term="MYSQL" scheme="http://jianwl.com/categories/MYSQL/"/>
-    
-    
-      <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MYSQL体系结构</title>
-    <link href="http://jianwl.com/2017/02/16/MYSQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/"/>
-    <id>http://jianwl.com/2017/02/16/MYSQL体系结构/</id>
-    <published>2017-02-16T14:52:49.000Z</published>
-    <updated>2017-02-16T16:15:22.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>接触MYSQL多年，却对MYSQL体系结构知之甚少，这一节主要学习这方面的知识点。</p>
-<h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><h4 id="1-定义数据库和实例"><a href="#1-定义数据库和实例" class="headerlink" title="1. 定义数据库和实例"></a>1. 定义数据库和实例</h4><ul>
-<li>数据库：物理操作系统文件或其他文件类型的集合</li>
-<li>数据库实例：MYSQL数据库由后台线程以及一个共享内存区组成。共享内存可以被运行的后台线程所共享。数据库实例才是真正用于操作数据库文件的。</li>
-</ul>
-<p>这两个词很容易混淆，要特别注意。MYSQL数据库实例在系统上的表现是一个进程，其被设计为一个单进程多线程架构的数据库。</p>
-<p>Mac系统下启动MYSQL</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/mysql/support-files</div><div class="line">sudo ./mysql.server start</div></pre></td></tr></table></figure>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-16/49796817-file_1487258098966_6c52.png" alt=""></p>
-<p>进程号为929就是MYSQL实例，启动实例时，MYSQL数据库会去读取配置文件，根据配置文件的参数来启动数据库实例。读取的顺序为<code>/etc/my.cnf</code> -&gt; <code>/etc/mysql/my.cnf</code> -&gt; <code>/usr/local/mysql/etc/my.cnf</code> -&gt; <code>~/.my.cnf</code>,如果几个配置文件都有同一个参数，MYSQL会以最后一个配置文件的参数为准。</p>
-<h4 id="2-MYSQL体系结构"><a href="#2-MYSQL体系结构" class="headerlink" title="2. MYSQL体系结构"></a>2. MYSQL体系结构</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-16/56429664-file_1487259812820_9ded.png" alt="图1-1 MYSQL体系结构"></p>
-<p>由图1-1可知，MYSQL由以下几部分组成：</p>
-<p>连接池组件、管理组件和工具组件、SQL接口组件、查询分析器组件、优化器组件、缓冲组件、插件式存储引擎、物理文件</p>
-<p>特别注意，存储引擎是基于表的，而不是数据库。</p>
-<h4 id="3-连接MYSQL"><a href="#3-连接MYSQL" class="headerlink" title="3. 连接MYSQL"></a>3. 连接MYSQL</h4><p>连接MYSQL操作是一个连接进程和MySQL数据库实例进行通信。常用的进程通信方式有管道、命名管道、TCP/IP套接字、UNIX域套接字。</p>
-<p><strong>1）TCP/IP方式</strong></p>
-<p>客户端在一台服务器上，MYSQL实例在另外一台服务器上，这两台机器通过TCP/IP网络连接。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-17/32797080-file_1487261300938_33f5.png" alt=""></p>
-<p><strong>2）UNIX域套接字方式</strong></p>
-<p>UNIX域套接字其实不是一个网络协议，所以<strong>只能在MYSQL客户端和数据库实例在一台服务器上</strong>的情况下使用。用户可以通过下列命令进行UNIX域套接字文件的查找:</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-17/32760164-file_1487261521375_d445.png" alt=""></p>
-<p>在知道了UNIX域套接字文件的路径后，就可以通过该方式进行连接了：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-17/52720077-file_1487261638596_2970.png" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1、MySQL技术内幕 - InnoDB存储引擎</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;接触MYSQL多年，却对MYSQL体系结构知之甚少，这一节主要学习这方面的知识点。&lt;/p&gt;
-&lt;h3 id=&quot;理论&quot;&gt;&lt;a href=&quot;#理论
     
     </summary>
     
