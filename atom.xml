@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-03-23T15:36:55.000Z</updated>
+  <updated>2017-03-25T07:18:36.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://jianwl.com/2017/03/25/ssh-public-key%E8%AE%A4%E8%AF%81%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95/"/>
+    <id>http://jianwl.com/2017/03/25/ssh-public-key认证免密码登录/</id>
+    <published>2017-03-25T06:48:58.000Z</published>
+    <updated>2017-03-25T07:18:36.000Z</updated>
+    
+    <content type="html"><![CDATA[<hr>
+<p>title: ssh public key认证免密码登录<br>date: 2017-03-25 14:48:58<br>tags: [Linux]</p>
+<h2 id="categories-Linux"><a href="#categories-Linux" class="headerlink" title="categories: Linux"></a>categories: Linux</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这一节主要来学习使用public key免密登录服务器。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-生成公钥"><a href="#1-生成公钥" class="headerlink" title="1. 生成公钥"></a>1. 生成公钥</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen</div></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-25/83784257-file_1490425255076_ce1b.png" alt=""></p>
+<h4 id="2-将公钥id-rsa-pub的内容，添加服务器的authorized-keys中"><a href="#2-将公钥id-rsa-pub的内容，添加服务器的authorized-keys中" class="headerlink" title="2. 将公钥id_rsa.pub的内容，添加服务器的authorized_keys中"></a>2. 将公钥<code>id_rsa.pub</code>的内容，添加服务器的<code>authorized_keys</code>中</h4><p>查看公钥id_rsa.pub</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-25/31140109-file_1490425420722_d9e0.png" alt=""></p>
+<p>将客户端公钥内容添加到服务器<code>authorized_keys</code>，此处显示添加后的结果。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-25/97597421-file_1490426288907_118ad.png" alt=""></p>
+<h4 id="3-客户端免密码登录服务器"><a href="#3-客户端免密码登录服务器" class="headerlink" title="3. 客户端免密码登录服务器"></a>3. 客户端免密码登录服务器</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-25/10331226-file_1490426155457_f122.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;p&gt;title: ssh public key认证免密码登录&lt;br&gt;date: 2017-03-25 14:48:58&lt;br&gt;tags: [Linux]&lt;/p&gt;
+&lt;h2 id=&quot;categories-Linux&quot;&gt;&lt;a href=&quot;#categories-Linux&quot;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>install mysql on centos7</title>
@@ -1601,33 +1632,6 @@
     
     
       <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>awk及sed简明教程</title>
-    <link href="http://jianwl.com/2017/02/20/awk%E5%8F%8Ased%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/"/>
-    <id>http://jianwl.com/2017/02/20/awk及sed简明教程/</id>
-    <published>2017-02-20T15:32:05.000Z</published>
-    <updated>2017-02-20T15:34:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="http://coolshell.cn/articles/9104.html" target="_blank" rel="external">SED简明教程 – 酷壳</a></li>
-<li><a href="http://coolshell.cn/articles/9070.html" target="_blank" rel="external">AWK简明教程 – 酷壳</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;http://coolshell.cn/articles/9104.html&quot; target=
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://jianwl.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="http://jianwl.com/tags/Linux/"/>
     
   </entry>
   
