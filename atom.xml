@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-03-25T08:31:12.000Z</updated>
+  <updated>2017-03-25T16:07:41.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,68 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MYSQL主从服务搭建</title>
+    <link href="http://jianwl.com/2017/03/25/MYSQL%E4%B8%BB%E4%BB%8E%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/"/>
+    <id>http://jianwl.com/2017/03/25/MYSQL主从服务搭建/</id>
+    <published>2017-03-25T11:21:55.000Z</published>
+    <updated>2017-03-25T16:07:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>MYSQL</code>主从服务器，主服务器用于<strong>写操作</strong>，从服务器用于<strong>读操作</strong>，从服务器通过<code>bin-log</code>日志，与主服务器数据完全同步。对于主从服务的搭建，之前处于空白状态，这一节主要来学习，主从服务器搭建，实现从服务器<strong>实时复制</strong>主服务器的数据。</p>
+<h3 id="主服务器配置"><a href="#主服务器配置" class="headerlink" title="主服务器配置"></a>主服务器配置</h3><p>1、 打开主服务器配置文件<code>/etc/my.cnf</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/my.cnf</div></pre></td></tr></table></figure>
+<p>2、 在<code>/etc/my.cnf</code>配置文件中，配置绑定服务器到本机IP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bind-address=192.168.1.102</div></pre></td></tr></table></figure>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-25/87553736-file_1490453723082_127f2.png" alt=""></p>
+<p>3、 在<code>/etc/my.cnf</code>配置文件中,设置<code>server-id</code>,你可以选择任意一个数字(这里设定为1)，但这个数字必须是唯一的，不能和集群中的其他的<code>server-id</code>相同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service-id=1</div></pre></td></tr></table></figure>
+<p>4、 在<code>/etc/my.cnf</code>配置文件中,开启<code>bin-log</code>日志，从服务器将会同步主服务器的改变，通过<code>bin-log</code>日志。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">log_bin = mysql-bin</div></pre></td></tr></table></figure>
+<p>5、 在<code>/etc/my.cnf</code>配置文件中,配置主服务器中需要同步到从服务器的数据库。可以设置多个数据库，重复以下配置即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">binlog_do_db=test</div></pre></td></tr></table></figure>
+<p>6、重启MYSQL</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo service mysql restart</div></pre></td></tr></table></figure>
+<p>主服务器MYSQL配置</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-25/90687897-file_1490454303385_14e6e.png" alt=""></p>
+<h3 id="登录主服务器MYSQL的操作"><a href="#登录主服务器MYSQL的操作" class="headerlink" title="登录主服务器MYSQL的操作"></a>登录主服务器MYSQL的操作</h3><h4 id="1-登录MYSQL"><a href="#1-登录MYSQL" class="headerlink" title="1. 登录MYSQL"></a>1. 登录MYSQL</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql -u root -p</div></pre></td></tr></table></figure>
+<h4 id="2-创建一个账号，允许从服务器复制主服务器"><a href="#2-创建一个账号，允许从服务器复制主服务器" class="headerlink" title="2. 创建一个账号，允许从服务器复制主服务器"></a>2. 创建一个账号，允许从服务器复制主服务器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">GRANT REPLICATION SLAVE ON *.* TO &apos;slave_user&apos;@&apos;%&apos; IDENTIFIED BY &apos;slave_user&apos;;</div><div class="line"></div><div class="line"># 只有刷新之后，该账号才生效</div><div class="line">FLUSH PRIVILEGES;</div></pre></td></tr></table></figure>
+<h4 id="3-切换到需要同步的库"><a href="#3-切换到需要同步的库" class="headerlink" title="3. 切换到需要同步的库"></a>3. 切换到需要同步的库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">USER test;</div></pre></td></tr></table></figure>
+<h4 id="4-锁住test数据库，防止新的写入操作。"><a href="#4-锁住test数据库，防止新的写入操作。" class="headerlink" title="4. 锁住test数据库，防止新的写入操作。"></a>4. 锁住<code>test</code>数据库，防止新的写入操作。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">FLUSH TABLES WITH READ LOCK;</div></pre></td></tr></table></figure>
+<h4 id="5-查看主服务器的状态"><a href="#5-查看主服务器的状态" class="headerlink" title="5. 查看主服务器的状态"></a>5. 查看主服务器的状态</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">SHOW MASTER STATUS;</div><div class="line">``` </div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/17-3-25/30036109-file_1490454974982_11ad4.png)</div><div class="line"></div><div class="line">`position`表示从服务器从哪里开始同步主服务器，特别注意这些数字。在同一个窗口操作，任何改变，都会导致数据自动解锁。所以建议下一个操作在另外一个窗口操作。</div><div class="line"></div><div class="line">#### 6. 用`mysqldump`导出test数据库(此操作是在Shell中执行，不是在MYSQL命令行。)</div></pre></td></tr></table></figure>
+<p>mysqldump -u root -p –opt newdatabase &gt; newdatabase.sql<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/17-3-25/44038793-file_1490455335340_6c80.png)</div><div class="line"></div><div class="line">#### 7. 回到原来MYSQL的命令行窗口，解锁数据库</div></pre></td></tr></table></figure></p>
+<p>UNLOCK TABLES;</p>
+<h1 id="退出"><a href="#退出" class="headerlink" title="退出"></a>退出</h1><p>QUIT;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 配置从服务器</div><div class="line"></div><div class="line">#### 1. 登录从服务器，并创建需要同步的数据库</div></pre></td></tr></table></figure></p>
+<p>CREATE DATABASE test;</p>
+<h1 id="退出-1"><a href="#退出-1" class="headerlink" title="退出"></a>退出</h1><p>EXIT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 2. 远程复制主服务器的`test.sql`到从服务器</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/17-3-25/30040145-file_1490455882333_f6a2.png)</div><div class="line"></div><div class="line">#### 3. 将`test.sql`导入到从服务器</div></pre></td></tr></table></figure></p>
+<p>mysql -u root -p newdatabase &lt; /path/to/newdatabase.sql<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/17-3-25/61737716-file_1490456057973_8831.png)</div><div class="line"></div><div class="line">#### 4. 配置从服务器`/etc/my.cnf`文件</div></pre></td></tr></table></figure></p>
+<p>server-id = 2<br>relay-log = mysql-relay<br>log-bin=mysql-bin<br>binlog_do_db<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">从服务器的配置</div><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/17-3-25/74025224-file_1490456239753_4f5b.png)</div><div class="line"></div><div class="line">#### 5. 重启从服务器服务</div></pre></td></tr></table></figure></p>
+<p>sudo service mysql restart<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 6. 登录从服务器,更改以下配置</div></pre></td></tr></table></figure></p>
+<p>CHANGE MASTER TO MASTER_HOST=’192.168.1.102’,MASTER_USER=’slave_user’, MASTER_PASSWORD=’slave_user’, MASTER_LOG_FILE=’mysql-bin.000006’, MASTER_LOG_POS=637;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">![](http://oc5a5l0a0.bkt.clouddn.com/17-3-25/71580385-file_1490457323447_5f79.png)</div><div class="line"></div><div class="line">完成以上配置则实现以下几个功能点：1️⃣ 指定当前服务器为主数据库的从库；2️⃣ 提供`从库`登录`主库`的账号，可以复制bin-log，实现数据同步; 3️⃣ 从服务器知道从哪里开始同步主库，主库的`bin-log`日志文件和`position`位置都已知。</div><div class="line"></div><div class="line">#### 7. 激活从库</div></pre></td></tr></table></figure></p>
+<p>START SLAVE<br>```</p>
+<h4 id="8-查看从库状态，-G让信息更加可读"><a href="#8-查看从库状态，-G让信息更加可读" class="headerlink" title="8. 查看从库状态，\G让信息更加可读"></a>8. 查看从库状态，<code>\G</code>让信息更加可读</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-26/74608681-file_1490457653091_134b8.png" alt=""></p>
+<h3 id="验证主从是否同步"><a href="#验证主从是否同步" class="headerlink" title="验证主从是否同步"></a>验证主从是否同步</h3><h4 id="1-主库中person表的数据"><a href="#1-主库中person表的数据" class="headerlink" title="1. 主库中person表的数据"></a>1. 主库中<code>person</code>表的数据</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-26/97547013-file_1490457820526_1585e.png" alt=""></p>
+<h4 id="2-从库中person表的数据"><a href="#2-从库中person表的数据" class="headerlink" title="2. 从库中person表的数据"></a>2. 从库中<code>person</code>表的数据</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-26/14095639-file_1490457857983_118.png" alt=""></p>
+<h4 id="3-主库对person表新增一条记录"><a href="#3-主库对person表新增一条记录" class="headerlink" title="3. 主库对person表新增一条记录"></a>3. 主库对<code>person</code>表新增一条记录</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-26/68583068-file_1490457930231_9fa.png" alt=""></p>
+<h4 id="4-查看从库person表，是否同步新增了一条记录"><a href="#4-查看从库person表，是否同步新增了一条记录" class="headerlink" title="4. 查看从库person表，是否同步新增了一条记录"></a>4. 查看从库<code>person</code>表，是否同步新增了一条记录</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-26/45737952-file_1490457975198_ef73.png" alt=""></p>
+<p>从库同步主库数据，至此完成主从库的配置。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql" target="_blank" rel="external">How To Set Up Master Slave Replication in MySQL</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;code&gt;MYSQL&lt;/code&gt;主从服务器，主服务器用于&lt;strong&gt;写操作&lt;/strong&gt;，从服务器用于&lt;strong&gt;读操作&lt;/
+    
+    </summary>
+    
+      <category term="MYSQL" scheme="http://jianwl.com/categories/MYSQL/"/>
+    
+    
+      <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
+    
+  </entry>
   
   <entry>
     <title>客户端免密码登录服务器</title>
@@ -1586,51 +1648,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;我们日常生活中经常会使用浏览器访问Web站点，但大家有思考过在这个过程中到底发生了什么吗？为什么我们在浏览器上输入要访问的URL就可以访问W
-    
-    </summary>
-    
-      <category term="HTTP" scheme="http://jianwl.com/categories/HTTP/"/>
-    
-    
-      <category term="HTTP" scheme="http://jianwl.com/tags/HTTP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HTTP缓存机制</title>
-    <link href="http://jianwl.com/2017/02/23/HTTP%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/"/>
-    <id>http://jianwl.com/2017/02/23/HTTP缓存机制/</id>
-    <published>2017-02-23T14:25:50.000Z</published>
-    <updated>2017-02-23T16:00:24.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>HTTP缓存机制作为Web性能优化的重要手段，这一节我们主要来学习HTTP缓存，先贴出2道题，大家可以尝试解答下：</p>
-<p>以下为<code>page.html</code>内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;&lt;head&gt;</div><div class="line">    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</div><div class="line">    &lt;title&gt;page页&lt;/title&gt;&lt;/head&gt;&lt;body&gt;</div><div class="line">    &lt;img src=&quot;images/head.png&quot; /&gt;</div><div class="line">    &lt;a href=&quot;page.html&quot;&gt;重新访问page页&lt;/a&gt;&lt;/body&gt;&lt;/html&gt;</div></pre></td></tr></table></figure>
-<p>首次访问该页面，页面中head.png响应头信息如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div><div class="line">Cache-Control: no-cache</div><div class="line">Content-Type: image/png</div><div class="line">Last-Modified: Tue, 08 Nov 2016 06:59:00 GMT</div><div class="line">Accept-Ranges: bytes</div><div class="line">Date: Thu, 10 Nov 2016 02:48:50 GMT</div><div class="line">Content-Length: 3534</div></pre></td></tr></table></figure>
-<p><strong>问题1：</strong> 请问当点击<code>重新访问page页</code>链接重新加载该页面后，head.png如何二次加载？</p>
-<p><strong>问题2：</strong>如果将上述信息中的Cache-Controller设置为private，那么结果又会如何呢？</p>
-<p>以上2道题，如果你能答对，说明你已经对这些知识理解非常透彻了，否则请继续往下看。接下来我们将从系统化角度来讲讲HTTP缓存是如何协同工作的</p>
-<h3 id="HTTP缓存体系"><a href="#HTTP缓存体系" class="headerlink" title="HTTP缓存体系"></a>HTTP缓存体系</h3><p>HTTP缓存体系分为以下三个部分：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-23/15685593-file_1487864473858_e48d.png" alt=""></p>
-<h4 id="1-缓存存储策略"><a href="#1-缓存存储策略" class="headerlink" title="1. 缓存存储策略"></a>1. 缓存存储策略</h4><p>用来确定HTTP响应内容是否可以被客户端缓存，以及可以被哪些客户端存储，这个策略的作用只有一个，用于决定HTTP响应内容是否可缓存到客户端。</p>
-<p>对于<code>Cache-Controller</code>里头的Public、Private、no-cache、max-age、no-store他们都是用来指明响应内容是否可以被客户端存储的，其中前4个都会缓存文件数据(关于no-cache应理解为不建议使用本地缓存，其仍然会缓存数据到本地)，后者no-store则不会在客户端缓存任何响应数据。</p>
-<p>通过<code>Cache-Controller:</code>Public设置我们可以将HTTP响应数据存储到本地，但此时并不意味着后续浏览器会直接从缓存中读取数据并使用，为啥？因为它无法确定本地缓存的数据是否可用，还必须借助一套鉴别机制来确定才行，这就是我们下面将到的缓存过期策略</p>
-<h4 id="2-缓存过期策略"><a href="#2-缓存过期策略" class="headerlink" title="2. 缓存过期策略"></a>2. 缓存过期策略</h4><p>客户端用来确认存储在本地的缓存数据是否过期，进而决定是否要发请求到服务端获取数据，这个策略的作用也只有一个，那就是决定客户端是否可直接从本地缓存数据中加载数据并展示，否则就发请求到服务器获取。</p>
-<p>刚上面我们已阐述了数据缓存到了本地还需要经过判断才能使用，那么浏览器通过什么条件来判断呢？答案是<code>Expires</code>，Expires指名了缓存数据绝对时间，告诉客户端到这个时间点后本地缓存就作废了。</p>
-<p>注意：<br>当Cache-Control: max-age=10 与 <code>Expires</code>同时存在时，后者会被覆盖掉；</p>
-<h4 id="3-缓存对比策略"><a href="#3-缓存对比策略" class="headerlink" title="3. 缓存对比策略"></a>3. 缓存对比策略</h4><p>将缓存在客户端的数据标识发往服务端，服务端通过标识来判断客户端缓存数据是否仍有效，进而决定是否要重发数据。</p>
-<p>客户端检查到数据过期或浏览器刷新后，往往会重新发起一个HTTP请求到服务器，服务器此时并不急于返回数据，而是按请求头有没有带标识(If-Modified-Since、If-None-Match)过来，如果判断标识仍然有效，则返回304告诉客户端取本地缓存数据来用即可(这里要注意的是你必须要在首次响应时输出相应的头信息(Last-Modified、ETags)到客户端。至此我们明白了上面所说的本地缓存数据即使被认为过期，并不等于数据从此没用的道理。</p>
-<p>未完待续…</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="http://mp.weixin.qq.com/s/qOMO0LIdA47j3RjhbCWUEQ" target="_blank" rel="external">HTTP缓存策略</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;HTTP缓存机制作为Web性能优化的重要手段，这一节我们主要来学习HTTP缓存，先贴出2道题，大家可以尝试解答下：&lt;/p&gt;
-&lt;p&gt;以下为&lt;c
     
     </summary>
     
