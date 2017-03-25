@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-03-25T08:22:22.000Z</updated>
+  <updated>2017-03-25T08:27:17.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Sequel Pro | Navicat连接虚拟机CentOS中的MYSQL</title>
-    <link href="http://jianwl.com/2017/03/25/Sequel-Pro-Navicat%E8%BF%9E%E6%8E%A5%E8%99%9A%E6%8B%9F%E6%9C%BACentOS%E4%B8%AD%E7%9A%84MYSQL/"/>
-    <id>http://jianwl.com/2017/03/25/Sequel-Pro-Navicat连接虚拟机CentOS中的MYSQL/</id>
+    <title>MYSQL允许远程登录</title>
+    <link href="http://jianwl.com/2017/03/25/MYSQL%E5%85%81%E8%AE%B8%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95/"/>
+    <id>http://jianwl.com/2017/03/25/MYSQL允许远程登录/</id>
     <published>2017-03-25T07:27:58.000Z</published>
-    <updated>2017-03-25T08:22:22.000Z</updated>
+    <updated>2017-03-25T08:27:17.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在虚拟机安装了<code>MYSQL</code>并启动服务，在虚拟机中能够登录到<code>MYSQL</code>,但通过<code>Sequal Pro</code>远程登录虚拟机中的MYSQL却始终连不上。</p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-防火墙对外增加3306端口"><a href="#1-防火墙对外增加3306端口" class="headerlink" title="1. 防火墙对外增加3306端口"></a>1. 防火墙对外增加<code>3306端口</code></h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-25/76701170-file_1490427451254_f1e7.png" alt=""></p>
@@ -52,13 +52,13 @@
   
   <entry>
     <title></title>
-    <link href="http://jianwl.com/2017/03/25/ssh-public-key%E8%AE%A4%E8%AF%81%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95/"/>
-    <id>http://jianwl.com/2017/03/25/ssh-public-key认证免密码登录/</id>
+    <link href="http://jianwl.com/2017/03/25/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <id>http://jianwl.com/2017/03/25/客户端免密码登录服务器/</id>
     <published>2017-03-25T06:48:58.000Z</published>
-    <updated>2017-03-25T07:19:31.000Z</updated>
+    <updated>2017-03-25T08:26:33.000Z</updated>
     
     <content type="html"><![CDATA[<hr>
-<p>title: ssh public key认证免密码登录<br>date: 2017-03-25 14:48:58<br>tags: [Linux]</p>
+<p>title: 客户端免密码登录服务器<br>date: 2017-03-25 14:48:58<br>tags: [Linux]</p>
 <h2 id="categories-Linux"><a href="#categories-Linux" class="headerlink" title="categories: Linux"></a>categories: Linux</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这一节主要来学习使用public key免密登录服务器。</p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-客户端生成公钥"><a href="#1-客户端生成公钥" class="headerlink" title="1. 客户端生成公钥"></a>1. 客户端生成公钥</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen</div></pre></td></tr></table></figure>
 <p>运行结果：</p>
@@ -73,8 +73,8 @@
     <summary type="html">
     
       &lt;hr&gt;
-&lt;p&gt;title: ssh public key认证免密码登录&lt;br&gt;date: 2017-03-25 14:48:58&lt;br&gt;tags: [Linux]&lt;/p&gt;
-&lt;h2 id=&quot;categories-Linux&quot;&gt;&lt;a href=&quot;#categories-Linux&quot;
+&lt;p&gt;title: 客户端免密码登录服务器&lt;br&gt;date: 2017-03-25 14:48:58&lt;br&gt;tags: [Linux]&lt;/p&gt;
+&lt;h2 id=&quot;categories-Linux&quot;&gt;&lt;a href=&quot;#categories-Linux&quot; class=&quot;he
     
     </summary>
     
