@@ -4,6 +4,46 @@
   
     
     <entry>
+      <title><![CDATA[MYSQL之并发问题]]></title>
+      <url>http://jianwl.com/2017/03/27/MYSQL%E4%B9%8B%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>MYSQL</code>很少在单用户环境下使用，通常它会同时处理很多的连接线程，这些线程来自不同的用户，执行不同的任务。这些并行连接可能访问同样的数据库和表，所以当某个连接发生问题的时候，很难判断数据库的状态。</p>
+<p><code>MYSQL</code>服务器有内部机制来避免其他用户损坏其他用户的数据，其使<strong>锁</strong>和<strong>事务</strong>来处理对表的并发访问，接下来将会学习<code>锁的类型</code>和<code>事务处理</code>，然后介绍排错的技术。</p>
+<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><p><code>MYSQL</code>服务器和独立存储引擎都可以设置锁，<code>读锁(共享锁)</code>允许并发线程读取加锁的数据，但禁止写数据；<code>写锁</code>阻止其他线程读写操作。</p>
+<h4 id="锁的类型"><a href="#锁的类型" class="headerlink" title="锁的类型"></a>锁的类型</h4><p><code>MYSQL</code>有四种类型的锁：1️⃣ 表锁，会锁住整个表，没有人可以访问表中任何行，直到持有锁解锁该表；2️⃣ 行锁，仅会锁住一行或者正在被线程访问的任何几行，因此同一个表中的其他行可以并发线程访问；3️⃣ 页锁，会锁住一页，仅在比较少见的<code>BDB存储引擎</code>存在。 4️⃣ 元数据锁是<code>MYSQL 5.5</code>版本中的新特性。仅对表中的元数据启用，当有线程使用表的时候，元数据锁会锁住表的所有元数据。<strong>元数据是DDL语句的更改信息，如CREATE、DROP、ALTER等修改方案的语句</strong>，引入元数据锁是为了解决线程可以在其他线程的并发事务使用相同表的情况下修改表定义或是删除表的问题。</p>
+<h5 id="1）表锁"><a href="#1）表锁" class="headerlink" title="1）表锁"></a>1）表锁</h5><p>定义：触发表锁时，整个表会被锁住。</p>
+<p>在<code>MyISAM</code>存储引擎创建一张表&amp;初始化数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 建表</div><div class="line">CREATE TABLE `user` (</div><div class="line">  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,</div><div class="line">  PRIMARY KEY (`id`)</div><div class="line">) ENGINE= MyISAM DEFAULT CHARSET=latin1;</div><div class="line"></div><div class="line"># 插入数据</div><div class="line">INSERT INTO `user` (`id`) VALUES (&apos;1&apos;),(&apos;2&apos;),(&apos;3&apos;),(&apos;4&apos;);</div></pre></td></tr></table></figure>
+<p>模拟表锁场景:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 用一个客户端，更新数据并休眠</div><div class="line">UPDATE user set id = sleep(60) where id = 1</div><div class="line"></div><div class="line"># 另一个客户端，查询数据user表</div><div class="line">SELECT * FROM user</div></pre></td></tr></table></figure>
+<p>为何同样一个查询，一个花了<strong>51s</strong>，另一个是<strong>秒查</strong>呢？</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-28/39621214-file_1490662837316_7505.png" alt=""></p>
+<p>在<strong>查询正在进行中</strong>时，在MYSQL客户端执行<code>SHOW PROCESSLIST \G</code>，观察如下：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-28/88029875-file_1490662629751_e877.png" alt=""></p>
+<p>在查询<code>user</code>表时，另一个<code>MYSQL</code>客户端对<code>user</code>表执行更新操作，将整个表锁住，其他用户此时不可读写<code>user</code>表，等待<code>user</code>表释放锁。</p>
+<p>调试技巧 1️⃣ ：当你怀疑是并发线程影响了查询的时候，使用<code>SHOW PROCESSLIST</code>命令查看状态.</p>
+<h5 id="2-行锁"><a href="#2-行锁" class="headerlink" title="2) 行锁"></a>2) 行锁</h5><p>定义：触发行锁时，会锁住一些行而不是整个表；</p>
+<p>在<code>InnoDB</code>存储引擎中创建表&amp;初始化表数据:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 建表</div><div class="line">CREATE TABLE `user` (</div><div class="line">  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,</div><div class="line">  PRIMARY KEY (`id`)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=latin1;</div><div class="line"></div><div class="line"># 插入数据</div><div class="line">INSERT INTO `user` (`id`) VALUES (&apos;1&apos;),(&apos;2&apos;),(&apos;3&apos;),(&apos;4&apos;);</div></pre></td></tr></table></figure>
+<p>模拟行锁场景:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 用一个客户端，更新数据并休眠</div><div class="line">UPDATE user set id = sleep(60) where id = 1</div><div class="line"></div><div class="line"># 另一个客户端</div><div class="line">SELECT * FROM user;</div><div class="line"></div><div class="line">SELECT * FROM user where id = 1;</div><div class="line"></div><div class="line">update user set id = 111 where id = 1;</div></pre></td></tr></table></figure>
+<p>操作1: 更新并休眠</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-28/98337967-file_1490675424759_11f2c.png" alt=""></p>
+<p>操作2: 另一个客户端，查询<code>user</code>表，<strong>行锁</strong>在此处为<strong>读锁</strong>，不影响其他用户的<code>读操作</code>。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-28/29004933-file_1490675511078_d6f8.png" alt=""></p>
+<p>操作3: 另一个客户端，更新<code>操作1</code>相同的行, 触发行锁，需要等待读锁释放，才能更新数据。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-28/69956688-file_1490675659555_e2ed.png" alt=""></p>
+<p>在<strong>查询正在进行中</strong>时，在MYSQL客户端执行<code>SHOW PROCESSLIST \G</code>，观察如下：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-28/34057315-file_1490675865544_4f11.png" alt=""></p>
+<p>调试技巧2️⃣：分析并发语句事务用<code>SHOW ENGINE INNODB STATUS \G</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-28/25021109-file_1490696658342_b8d.png" alt=""></p>
+<p>未完待续…</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>MYSQL排错指南</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[关于刻意练习的思考]]></title>
       <url>http://jianwl.com/2017/03/26/%E5%85%B3%E4%BA%8E%E5%88%BB%E6%84%8F%E7%BB%83%E4%B9%A0%E7%9A%84%E6%80%9D%E8%80%83/</url>
       <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
@@ -7123,6 +7163,23 @@ tee – the output of write (:w) command is redirected using tee
     </entry>
     
     <entry>
+      <title><![CDATA[MYSQL存储引擎]]></title>
+      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
+      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[MYSQL存储引擎优化]]></title>
       <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</url>
       <content type="html"><![CDATA[<h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
@@ -7147,23 +7204,6 @@ tee – the output of write (:w) command is redirected using tee
 <h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
 <h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
 <h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
-]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[MYSQL存储引擎]]></title>
-      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
-      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 ]]></content>
     </entry>
     
