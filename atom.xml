@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-03-28T10:35:17.000Z</updated>
+  <updated>2017-03-28T10:38:09.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://jianwl.com/2017/03/27/MYSQL%E4%B9%8B%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98/"/>
     <id>http://jianwl.com/2017/03/27/MYSQL之并发问题/</id>
     <published>2017-03-27T14:48:19.000Z</published>
-    <updated>2017-03-28T10:35:17.000Z</updated>
+    <updated>2017-03-28T10:38:09.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>MYSQL</code>很少在单用户环境下使用，通常它会同时处理很多的连接线程，这些线程来自不同的用户，执行不同的任务。这些并行连接可能访问同样的数据库和表，所以当某个连接发生问题的时候，很难判断数据库的状态。</p>
 <p><code>MYSQL</code>服务器有内部机制来避免其他用户损坏其他用户的数据，其使<strong>锁</strong>和<strong>事务</strong>来处理对表的并发访问，接下来将会学习<code>锁的类型</code>和<code>事务处理</code>，然后介绍排错的技术。</p>
@@ -50,7 +50,7 @@
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-28/69956688-file_1490675659555_e2ed.png" alt=""></p>
 <p>在<strong>查询正在进行中</strong>时，在MYSQL客户端执行<code>SHOW PROCESSLIST \G</code>，观察如下：</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-28/34057315-file_1490675865544_4f11.png" alt=""></p>
-<p>调试技巧2️⃣：分析并发语句事务用<code>SHOW ENGINE INNODB STATUS \G</code></p>
+<p>调试技巧 2️⃣ : 分析并发语句事务用<code>SHOW ENGINE INNODB STATUS \G</code></p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-28/25021109-file_1490696658342_b8d.png" alt=""></p>
 <p>未完待续…</p>
 <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>

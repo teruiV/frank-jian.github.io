@@ -34,7 +34,7 @@
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-28/69956688-file_1490675659555_e2ed.png" alt=""></p>
 <p>在<strong>查询正在进行中</strong>时，在MYSQL客户端执行<code>SHOW PROCESSLIST \G</code>，观察如下：</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-28/34057315-file_1490675865544_4f11.png" alt=""></p>
-<p>调试技巧2️⃣：分析并发语句事务用<code>SHOW ENGINE INNODB STATUS \G</code></p>
+<p>调试技巧 2️⃣ : 分析并发语句事务用<code>SHOW ENGINE INNODB STATUS \G</code></p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-28/25021109-file_1490696658342_b8d.png" alt=""></p>
 <p>未完待续…</p>
 <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
