@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-03-29T07:30:59.000Z</updated>
+  <updated>2017-03-30T16:06:44.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python之SQLAlchemy增删改查</title>
+    <link href="http://jianwl.com/2017/03/30/Python%E4%B9%8BSQLAlchemy%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/"/>
+    <id>http://jianwl.com/2017/03/30/Python之SQLAlchemy增删改查/</id>
+    <published>2017-03-30T15:59:39.000Z</published>
+    <updated>2017-03-30T16:06:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>刚接触Python对于DB操作不熟练，简单写了个Demo，用来学习<code>SQLAlchemy</code>的增删改查操作。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-数据库创建表"><a href="#1-数据库创建表" class="headerlink" title="1. 数据库创建表"></a>1. 数据库创建表</h4><p><code>MYSQL</code>的test数据库创建一张表<code>daojia_audit_info</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE `daojia_audit_info` (</div><div class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</div><div class="line">  `bd_id` bigint(11) NOT NULL COMMENT &apos;BD编号&apos;,</div><div class="line">  `audit_type` int(11) NOT NULL COMMENT &apos;1 招商审核 2 续签审核&apos;,</div><div class="line">  `collection_id` varchar(11) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;招商审核主键标识，招商审核时一定不为空&apos;,</div><div class="line">  `org_code` varchar(11) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;商家编码，续签审核时肯定不为空&apos;,</div><div class="line">  `left_time` bigint(11) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;审核剩余时间&apos;,</div><div class="line">  `is_read` int(11) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;0 未读 1 已读&apos;,</div><div class="line">  `is_del` int(11) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;0 未删除 1 已删除&apos;,</div><div class="line">  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,</div><div class="line">  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (`id`)</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;</div></pre></td></tr></table></figure>
+<h4 id="2-增删改查操作"><a href="#2-增删改查操作" class="headerlink" title="2. 增删改查操作"></a>2. 增删改查操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line"># _*_ coding:UTF-8 _*_</div><div class="line">from sqlalchemy import BIGINT</div><div class="line">from sqlalchemy import Column</div><div class="line">from sqlalchemy import Integer</div><div class="line">from sqlalchemy import String</div><div class="line">from sqlalchemy import TIMESTAMP</div><div class="line">from sqlalchemy import create_engine</div><div class="line">from sqlalchemy.ext.declarative import declarative_base</div><div class="line">from sqlalchemy.orm import sessionmaker</div><div class="line"></div><div class="line">DB_CONNECT_STRING = &quot;mysql://root:root@localhost/test&quot;</div><div class="line">engine = create_engine(DB_CONNECT_STRING, echo=False)</div><div class="line"></div><div class="line">DB_Session = sessionmaker(bind=engine)</div><div class="line">session = DB_Session()</div><div class="line"></div><div class="line">BaseModel = declarative_base()</div><div class="line"></div><div class="line">def init_db():</div><div class="line">    BaseModel.metadata.create_all(engine)</div><div class="line"></div><div class="line">def drop_db():</div><div class="line">    BaseModel.metadata.drop_all(engine)</div><div class="line"></div><div class="line">class DaoJiaAuditInfo(BaseModel):</div><div class="line">    __tablename__ = &apos;daojia_audit_info&apos;</div><div class="line">    __table_args__ = &#123;&quot;mysql_engine&quot;: &quot;InnoDB&quot;, &quot;mysql_charset&quot;: &quot;utf8&quot;&#125;</div><div class="line"></div><div class="line">    id = Column(Integer, primary_key=True, nullable=False)</div><div class="line">    bd_id = Column(BIGINT, nullable=False)</div><div class="line">    audit_type = Column(Integer, nullable=False)</div><div class="line">    collection_id = Column(String(11, collation=&quot;utf8_unicode_ci&quot;))</div><div class="line">    org_code = Column(String(11, collation=&quot;utf8_unicode_ci&quot;))</div><div class="line">    is_read = Column(Integer, default=0)</div><div class="line">    is_del = Column(Integer, default=0)</div><div class="line">    left_time = Column(BIGINT, default=0)</div><div class="line">    create_time = Column(TIMESTAMP)</div><div class="line">    update_time = Column(TIMESTAMP)</div><div class="line"></div><div class="line">    db = init_db()</div><div class="line"></div><div class="line">    @staticmethod</div><div class="line">    def select(bd_id):</div><div class="line">        # 获取第一个记录的第一个元素</div><div class="line">        print &quot;return the first row of the first column =&gt; %d &quot; % session.query(DaoJiaAuditInfo.bd_id,DaoJiaAuditInfo.collection_id).filter(DaoJiaAuditInfo.bd_id == bd_id).scalar()</div><div class="line"></div><div class="line">    @classmethod</div><div class="line">    def save(cls,org_code,collection_id,bd_id,left_time,audit_type):</div><div class="line">        obj = cls()</div><div class="line">        obj.org_code = org_code</div><div class="line">        obj.collection_id = collection_id</div><div class="line">        obj.bd_id = bd_id</div><div class="line">        obj.left_time = left_time</div><div class="line">        obj.audit_type = audit_type</div><div class="line">        session.add(obj)</div><div class="line">        session.commit()</div><div class="line">        print &quot;finish save&quot;</div><div class="line"></div><div class="line">    @staticmethod</div><div class="line">    def update(org_code,bd_id):</div><div class="line">        print &quot;before update =&gt; %s &quot; % str(session.query(DaoJiaAuditInfo.bd_id,DaoJiaAuditInfo.org_code).first())</div><div class="line">        session.query(DaoJiaAuditInfo).filter(DaoJiaAuditInfo.bd_id == bd_id).update(&#123;DaoJiaAuditInfo.org_code : org_code&#125;)</div><div class="line">        session.commit()</div><div class="line">        print &quot;finish update  =&gt; %s &quot; % str(session.query(DaoJiaAuditInfo.bd_id,DaoJiaAuditInfo.org_code).first())</div><div class="line"></div><div class="line">    @staticmethod</div><div class="line">    def delete(bd_id):</div><div class="line">        session.query(DaoJiaAuditInfo).filter(DaoJiaAuditInfo.bd_id == bd_id).delete()</div><div class="line">        session.commit()</div><div class="line">        print &quot;finish delete&quot;</div><div class="line"></div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">    # 增</div><div class="line">    DaoJiaAuditInfo.save(&quot;xxx_2&quot;, &quot;xxxx_2&quot;, 1010, 22222, 1)</div><div class="line"></div><div class="line">    # 查</div><div class="line">    DaoJiaAuditInfo.select(1010)</div><div class="line"></div><div class="line">    # 改</div><div class="line">    DaoJiaAuditInfo.update(&quot;xxxx_5&quot;,1010);</div><div class="line"></div><div class="line">    # 删</div><div class="line">    DaoJiaAuditInfo.delete(1010)</div></pre></td></tr></table></figure>
+<h4 id="3-运行结果"><a href="#3-运行结果" class="headerlink" title="3. 运行结果"></a>3. 运行结果</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/22646587-file_1490889902432_a8d0.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://itindex.net/detail/40939-sqlalchemy-%E7%BB%8F%E9%AA%8C" target="_blank" rel="external">SQLAlchemy使用经验 - IT瘾 </a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;刚接触Python对于DB操作不熟练，简单写了个Demo，用来学习&lt;code&gt;SQLAlchemy&lt;/code&gt;的增删改查操作。&lt;/p&gt;
+&lt;
+    
+    </summary>
+    
+      <category term="Python" scheme="http://jianwl.com/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="http://jianwl.com/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>Maven设置JDK版本</title>
@@ -1433,42 +1464,6 @@
     
     
       <category term="React" scheme="http://jianwl.com/tags/React/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ES6之SET、Map数据结构</title>
-    <link href="http://jianwl.com/2017/02/26/ES6%E4%B9%8BSET%E3%80%81Map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    <id>http://jianwl.com/2017/02/26/ES6之SET、Map数据结构/</id>
-    <published>2017-02-26T05:12:31.000Z</published>
-    <updated>2017-02-26T09:22:17.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这一节我们来学习在工作中最常用的两个数据结构<code>Set</code>和<code>Map</code>，介绍两种数据结构的基本用法。</p>
-<h3 id="SET实战"><a href="#SET实战" class="headerlink" title="SET实战"></a>SET实战</h3><p>定义：类似于数组，但成员都是唯一，没有重复的</p>
-<h4 id="1-初始化SET"><a href="#1-初始化SET" class="headerlink" title="1. 初始化SET"></a>1. 初始化SET</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/27685484-file_1488086345162_a031.png" alt=""></p>
-<h4 id="2-常用方法"><a href="#2-常用方法" class="headerlink" title="2. 常用方法"></a>2. 常用方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">add : 新增某个成员</div><div class="line">delete: 删除某个成员</div><div class="line">has: 判断是否有该成员</div><div class="line">clear: 清楚所有成员</div></pre></td></tr></table></figure>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/37263173-file_1488086504381_112f0.png" alt=""></p>
-<h4 id="3-遍历"><a href="#3-遍历" class="headerlink" title="3. 遍历"></a>3. 遍历</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/3967547-file_1488086882638_3a52.png" alt=""></p>
-<h3 id="MAP实战"><a href="#MAP实战" class="headerlink" title="MAP实战"></a>MAP实战</h3><p>定义：键值对的集合，ES6提供的<code>Map</code>数据结构的键的范围不限于字符串，各种类型的值(包括对象)都可以当作键</p>
-<h4 id="1-初始化MAP"><a href="#1-初始化MAP" class="headerlink" title="1. 初始化MAP"></a>1. 初始化MAP</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/69357943-file_1488098923626_8f95.png" alt=""></p>
-<h4 id="2-常用方法-1"><a href="#2-常用方法-1" class="headerlink" title="2. 常用方法"></a>2. 常用方法</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/8039268-file_1488099286728_504e.png" alt=""></p>
-<h4 id="3-遍历-1"><a href="#3-遍历-1" class="headerlink" title="3. 遍历"></a>3. 遍历</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/86767862-file_1488100323638_7af1.png" alt=""></p>
-<h4 id="4-Map转数组"><a href="#4-Map转数组" class="headerlink" title="4. Map转数组"></a>4. Map转数组</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-26/78684823-file_1488100481693_81a3.png" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li>ES6标准入门 – 阮一峰</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;这一节我们来学习在工作中最常用的两个数据结构&lt;code&gt;Set&lt;/code&gt;和&lt;code&gt;Map&lt;/code&gt;，介绍两种数据结构的基本用法。
-    
-    </summary>
-    
-      <category term="JavaScript" scheme="http://jianwl.com/categories/JavaScript/"/>
-    
-    
-      <category term="JavaScript" scheme="http://jianwl.com/tags/JavaScript/"/>
     
   </entry>
   
