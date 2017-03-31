@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-03-31T05:43:49.000Z</updated>
+  <updated>2017-03-31T09:50:33.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -16,11 +16,59 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Python之易出错语法</title>
+    <link href="http://jianwl.com/2017/03/31/Python%E4%B9%8B%E6%98%93%E5%87%BA%E9%94%99%E8%AF%AD%E6%B3%95/"/>
+    <id>http://jianwl.com/2017/03/31/Python之易出错语法/</id>
+    <published>2017-03-31T06:36:34.000Z</published>
+    <updated>2017-03-31T09:50:33.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本节主要记录<code>Python</code>和<code>Java</code>不一样的语法，用于备忘。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-三目运算"><a href="#1-三目运算" class="headerlink" title="1. 三目运算"></a>1. 三目运算</h4><p>语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">为真的结果  if 判断条件 else 为假的结果</div></pre></td></tr></table></figure>
+<p>实战</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/68640470-file_1490942427899_33c0.png" alt=""></p>
+<h5 id="2-flask-josnify与json-dumps的区别"><a href="#2-flask-josnify与json-dumps的区别" class="headerlink" title="2. flask.josnify与json.dumps的区别"></a>2. flask.josnify与json.dumps的区别</h5><p>json操作：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/98569674-file_1490945276911_e3be.png" alt=""></p>
+<p>jsonify操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">def render_success(content=None):</div><div class="line">    data = dict(</div><div class="line">        status=u&apos;ok&apos;</div><div class="line">    )</div><div class="line"></div><div class="line">    if content is not None:</div><div class="line">        data.update(</div><div class="line">            content=content</div><div class="line">        )</div><div class="line"></div><div class="line">    return jsonify(data)</div></pre></td></tr></table></figure>
+<p>区别：</p>
+<p>jsonify在flask中返回<code>flask.Response()</code>已经在返回的对象的<code>Header</code>中塞入<code>content-type: application/json</code>，而<code>json.dumps()</code>仅仅是返回一个编码后的字符串。</p>
+<h4 id="3-判断是否是某一类型"><a href="#3-判断是否是某一类型" class="headerlink" title="3. 判断是否是某一类型"></a>3. 判断是否是某一类型</h4><p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">isinstance(object,classinfo)</div></pre></td></tr></table></figure>
+<p>实战：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/9606019-file_1490947230781_fc6f.png" alt=""></p>
+<h4 id="4-args和-kwargs区别？"><a href="#4-args和-kwargs区别？" class="headerlink" title="4. *args和**kwargs区别？"></a>4. <code>*args</code>和<code>**kwargs</code>区别？</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">*args 元组,特别注意入参的方式</div><div class="line">**kwargs 字典,特别注意入参的方式</div></pre></td></tr></table></figure>
+<p>实战:</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/7333141-file_1490950330464_129f0.png" alt=""></p>
+<h4 id="5-set取交集"><a href="#5-set取交集" class="headerlink" title="5. set取交集"></a>5. <code>set</code>取交集</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/57928855-file_1490953364605_13cda.png" alt=""></p>
+<h4 id="6-xrange数据集"><a href="#6-xrange数据集" class="headerlink" title="6. xrange数据集"></a>6. <code>xrange</code>数据集</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/86398939-file_1490953813150_14023.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://stackoverflow.com/questions/7907596/json-dumps-vs-flask-jsonify" target="_blank" rel="external">json-dumps-vs-flask-jsonify</a></li>
+<li><a href="https://docs.python.org/2/library/functions.html" target="_blank" rel="external">python官方文档</a></li>
+<li><a href="http://stackoverflow.com/questions/3394835/args-and-kwargs" target="_blank" rel="external">args-and-kwargs - stackoverflow</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;本节主要记录&lt;code&gt;Python&lt;/code&gt;和&lt;code&gt;Java&lt;/code&gt;不一样的语法，用于备忘。&lt;/p&gt;
+&lt;h3 id=&quot;实战
+    
+    </summary>
+    
+      <category term="Python" scheme="http://jianwl.com/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="http://jianwl.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Python之时间模块</title>
     <link href="http://jianwl.com/2017/03/31/Python%E4%B9%8B%E6%97%B6%E9%97%B4%E6%A8%A1%E5%9D%97/"/>
     <id>http://jianwl.com/2017/03/31/Python之时间模块/</id>
     <published>2017-03-31T04:23:43.000Z</published>
-    <updated>2017-03-31T05:43:49.000Z</updated>
+    <updated>2017-03-31T05:44:25.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>Python</code>自带的时间工具，不支持对月、年的加减，找到一个好用的时间工具包<a href="http://labix.org/python-dateutil#head-1443e0f14ad5dff07efd465e080d1110920673d8" target="_blank" rel="external">python-dateutil</a>，这节主要来学习常用的时间操作。</p>
 <h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><h4 id="安装python-deteutil"><a href="#安装python-deteutil" class="headerlink" title="安装python-deteutil"></a>安装<code>python-deteutil</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install python-deteutil==1.5</div></pre></td></tr></table></figure>
@@ -98,12 +146,12 @@
     <link href="http://jianwl.com/2017/03/30/Python%E4%B9%8BSQLAlchemy%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/"/>
     <id>http://jianwl.com/2017/03/30/Python之SQLAlchemy增删改查/</id>
     <published>2017-03-30T15:59:39.000Z</published>
-    <updated>2017-03-30T16:06:44.000Z</updated>
+    <updated>2017-03-31T08:18:36.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>刚接触Python对于DB操作不熟练，简单写了个Demo，用来学习<code>SQLAlchemy</code>的增删改查操作。</p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-数据库创建表"><a href="#1-数据库创建表" class="headerlink" title="1. 数据库创建表"></a>1. 数据库创建表</h4><p><code>MYSQL</code>的test数据库创建一张表<code>daojia_audit_info</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE `daojia_audit_info` (</div><div class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</div><div class="line">  `bd_id` bigint(11) NOT NULL COMMENT &apos;BD编号&apos;,</div><div class="line">  `audit_type` int(11) NOT NULL COMMENT &apos;1 招商审核 2 续签审核&apos;,</div><div class="line">  `collection_id` varchar(11) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;招商审核主键标识，招商审核时一定不为空&apos;,</div><div class="line">  `org_code` varchar(11) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;商家编码，续签审核时肯定不为空&apos;,</div><div class="line">  `left_time` bigint(11) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;审核剩余时间&apos;,</div><div class="line">  `is_read` int(11) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;0 未读 1 已读&apos;,</div><div class="line">  `is_del` int(11) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;0 未删除 1 已删除&apos;,</div><div class="line">  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,</div><div class="line">  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (`id`)</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;</div></pre></td></tr></table></figure>
-<h4 id="2-增删改查操作"><a href="#2-增删改查操作" class="headerlink" title="2. 增删改查操作"></a>2. 增删改查操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line"># _*_ coding:UTF-8 _*_</div><div class="line">from sqlalchemy import BIGINT</div><div class="line">from sqlalchemy import Column</div><div class="line">from sqlalchemy import Integer</div><div class="line">from sqlalchemy import String</div><div class="line">from sqlalchemy import TIMESTAMP</div><div class="line">from sqlalchemy import create_engine</div><div class="line">from sqlalchemy.ext.declarative import declarative_base</div><div class="line">from sqlalchemy.orm import sessionmaker</div><div class="line"></div><div class="line">DB_CONNECT_STRING = &quot;mysql://root:root@localhost/test&quot;</div><div class="line">engine = create_engine(DB_CONNECT_STRING, echo=False)</div><div class="line"></div><div class="line">DB_Session = sessionmaker(bind=engine)</div><div class="line">session = DB_Session()</div><div class="line"></div><div class="line">BaseModel = declarative_base()</div><div class="line"></div><div class="line">def init_db():</div><div class="line">    BaseModel.metadata.create_all(engine)</div><div class="line"></div><div class="line">def drop_db():</div><div class="line">    BaseModel.metadata.drop_all(engine)</div><div class="line"></div><div class="line">class DaoJiaAuditInfo(BaseModel):</div><div class="line">    __tablename__ = &apos;daojia_audit_info&apos;</div><div class="line">    __table_args__ = &#123;&quot;mysql_engine&quot;: &quot;InnoDB&quot;, &quot;mysql_charset&quot;: &quot;utf8&quot;&#125;</div><div class="line"></div><div class="line">    id = Column(Integer, primary_key=True, nullable=False)</div><div class="line">    bd_id = Column(BIGINT, nullable=False)</div><div class="line">    audit_type = Column(Integer, nullable=False)</div><div class="line">    collection_id = Column(String(11, collation=&quot;utf8_unicode_ci&quot;))</div><div class="line">    org_code = Column(String(11, collation=&quot;utf8_unicode_ci&quot;))</div><div class="line">    is_read = Column(Integer, default=0)</div><div class="line">    is_del = Column(Integer, default=0)</div><div class="line">    left_time = Column(BIGINT, default=0)</div><div class="line">    create_time = Column(TIMESTAMP)</div><div class="line">    update_time = Column(TIMESTAMP)</div><div class="line"></div><div class="line">    db = init_db()</div><div class="line"></div><div class="line">    @staticmethod</div><div class="line">    def select(bd_id):</div><div class="line">        # 获取第一个记录的第一个元素</div><div class="line">        print &quot;return the first row of the first column =&gt; %d &quot; % session.query(DaoJiaAuditInfo.bd_id,DaoJiaAuditInfo.collection_id).filter(DaoJiaAuditInfo.bd_id == bd_id).scalar()</div><div class="line"></div><div class="line">    @classmethod</div><div class="line">    def save(cls,org_code,collection_id,bd_id,left_time,audit_type):</div><div class="line">        obj = cls()</div><div class="line">        obj.org_code = org_code</div><div class="line">        obj.collection_id = collection_id</div><div class="line">        obj.bd_id = bd_id</div><div class="line">        obj.left_time = left_time</div><div class="line">        obj.audit_type = audit_type</div><div class="line">        session.add(obj)</div><div class="line">        session.commit()</div><div class="line">        print &quot;finish save&quot;</div><div class="line"></div><div class="line">    @staticmethod</div><div class="line">    def update(org_code,bd_id):</div><div class="line">        print &quot;before update =&gt; %s &quot; % str(session.query(DaoJiaAuditInfo.bd_id,DaoJiaAuditInfo.org_code).first())</div><div class="line">        session.query(DaoJiaAuditInfo).filter(DaoJiaAuditInfo.bd_id == bd_id).update(&#123;DaoJiaAuditInfo.org_code : org_code&#125;)</div><div class="line">        session.commit()</div><div class="line">        print &quot;finish update  =&gt; %s &quot; % str(session.query(DaoJiaAuditInfo.bd_id,DaoJiaAuditInfo.org_code).first())</div><div class="line"></div><div class="line">    @staticmethod</div><div class="line">    def delete(bd_id):</div><div class="line">        session.query(DaoJiaAuditInfo).filter(DaoJiaAuditInfo.bd_id == bd_id).delete()</div><div class="line">        session.commit()</div><div class="line">        print &quot;finish delete&quot;</div><div class="line"></div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">    # 增</div><div class="line">    DaoJiaAuditInfo.save(&quot;xxx_2&quot;, &quot;xxxx_2&quot;, 1010, 22222, 1)</div><div class="line"></div><div class="line">    # 查</div><div class="line">    DaoJiaAuditInfo.select(1010)</div><div class="line"></div><div class="line">    # 改</div><div class="line">    DaoJiaAuditInfo.update(&quot;xxxx_5&quot;,1010);</div><div class="line"></div><div class="line">    # 删</div><div class="line">    DaoJiaAuditInfo.delete(1010)</div></pre></td></tr></table></figure>
+<h4 id="2-增删改查操作"><a href="#2-增删改查操作" class="headerlink" title="2. 增删改查操作"></a>2. 增删改查操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line"># _*_ coding:UTF-8 _*_</div><div class="line">from sqlalchemy import BIGINT</div><div class="line">from sqlalchemy import Column</div><div class="line">from sqlalchemy import Integer</div><div class="line">from sqlalchemy import String</div><div class="line">from sqlalchemy import TIMESTAMP</div><div class="line">from sqlalchemy import create_engine</div><div class="line">from sqlalchemy.ext.declarative import declarative_base</div><div class="line">from sqlalchemy.orm import sessionmaker</div><div class="line"></div><div class="line">DB_CONNECT_STRING = &quot;mysql://root:root@localhost/test&quot;</div><div class="line">engine = create_engine(DB_CONNECT_STRING, echo=False)</div><div class="line"></div><div class="line">DB_Session = sessionmaker(bind=engine)</div><div class="line">session = DB_Session()</div><div class="line"></div><div class="line">BaseModel = declarative_base()</div><div class="line"></div><div class="line">def init_db():</div><div class="line">    BaseModel.metadata.create_all(engine)</div><div class="line"></div><div class="line">def drop_db():</div><div class="line">    BaseModel.metadata.drop_all(engine)</div><div class="line"></div><div class="line">class DaoJiaAuditInfo(BaseModel):</div><div class="line">    __tablename__ = &apos;daojia_audit_info&apos;</div><div class="line">    __table_args__ = &#123;&quot;mysql_engine&quot;: &quot;InnoDB&quot;, &quot;mysql_charset&quot;: &quot;utf8&quot;&#125;</div><div class="line"></div><div class="line">    id = Column(Integer, primary_key=True, nullable=False)</div><div class="line">    bd_id = Column(BIGINT, nullable=False)</div><div class="line">    audit_type = Column(Integer, nullable=False)</div><div class="line">    collection_id = Column(String(11, collation=&quot;utf8_unicode_ci&quot;))</div><div class="line">    org_code = Column(String(11, collation=&quot;utf8_unicode_ci&quot;))</div><div class="line">    is_read = Column(Integer, default=0)</div><div class="line">    is_del = Column(Integer, default=0)</div><div class="line">    left_time = Column(BIGINT, default=0)</div><div class="line">    create_time = Column(TIMESTAMP)</div><div class="line">    update_time = Column(TIMESTAMP)</div><div class="line"></div><div class="line">    db = init_db()</div><div class="line"></div><div class="line">    @staticmethod</div><div class="line">    def select(bd_id):</div><div class="line">        # 获取第一个记录的第一个元素</div><div class="line">        print &quot;return the first row of the first column =&gt; %d &quot; % session.query(DaoJiaAuditInfo.bd_id,DaoJiaAuditInfo.collection_id).filter(DaoJiaAuditInfo.bd_id == bd_id).scalar()</div><div class="line"></div><div class="line">    @classmethod</div><div class="line">    def save(cls,org_code,collection_id,bd_id,left_time,audit_type):</div><div class="line">        obj = cls()</div><div class="line">        obj.org_code = org_code</div><div class="line">        obj.collection_id = collection_id</div><div class="line">        obj.bd_id = bd_id</div><div class="line">        obj.left_time = left_time</div><div class="line">        obj.audit_type = audit_type</div><div class="line">        session.add(obj)</div><div class="line">        session.commit()</div><div class="line">        print &quot;finish save&quot;</div><div class="line"></div><div class="line">    @staticmethod</div><div class="line">    def update(org_code,bd_id):</div><div class="line">        print &quot;before update =&gt; %s &quot; % str(session.query(DaoJiaAuditInfo.bd_id,DaoJiaAuditInfo.org_code).first())</div><div class="line">        session.query(DaoJiaAuditInfo).filter(DaoJiaAuditInfo.bd_id == bd_id).update(&#123;DaoJiaAuditInfo.org_code : org_code&#125;)</div><div class="line">        session.commit()</div><div class="line">        print &quot;finish update  =&gt; %s &quot; % str(session.query(DaoJiaAuditInfo.bd_id,DaoJiaAuditInfo.org_code).first())</div><div class="line"></div><div class="line">    @staticmethod</div><div class="line">    def delete(bd_id):</div><div class="line">        session.query(DaoJiaAuditInfo).filter(DaoJiaAuditInfo.bd_id == bd_id).delete()</div><div class="line">        session.commit()</div><div class="line">        print &quot;finish delete&quot;</div><div class="line"></div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">    # 增</div><div class="line">    DaoJiaAuditInfo.save(&quot;xxx_2&quot;, &quot;xxxx_2&quot;, 1010, 22222, 1)</div><div class="line"></div><div class="line">    # 查</div><div class="line">    DaoJiaAuditInfo.select(1010)</div><div class="line"></div><div class="line">    # 改</div><div class="line">    DaoJiaAuditInfo.update(&quot;xxxx_5&quot;,1010);</div><div class="line"></div><div class="line">    # 删</div><div class="line">    DaoJiaAuditInfo.delete(1010)</div><div class="line">    </div><div class="line">    # 主键查询</div><div class="line">    # DaoJiaAuditInfo.query.get(主键ID)</div></pre></td></tr></table></figure>
 <h4 id="3-运行结果"><a href="#3-运行结果" class="headerlink" title="3. 运行结果"></a>3. 运行结果</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/22646587-file_1490889902432_a8d0.png" alt=""></p>
 <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
 <li><a href="http://itindex.net/detail/40939-sqlalchemy-%E7%BB%8F%E9%AA%8C" target="_blank" rel="external">SQLAlchemy使用经验 - IT瘾 </a></li>
@@ -1424,77 +1472,6 @@
     
       &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;字典是Python中唯一内建的映射类型，构造字典的目的是通过某个特定的键，轻松找到其对应的值。&lt;/p&gt;
 &lt;h3 id=&quot;初始化字典&quot;&gt;&lt;a 
-    
-    </summary>
-    
-      <category term="Python" scheme="http://jianwl.com/categories/Python/"/>
-    
-    
-      <category term="Python" scheme="http://jianwl.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python之列表和元组</title>
-    <link href="http://jianwl.com/2017/03/11/Python%E4%B9%8B%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84/"/>
-    <id>http://jianwl.com/2017/03/11/Python之列表和元组/</id>
-    <published>2017-03-11T09:36:43.000Z</published>
-    <updated>2017-03-11T09:37:41.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Python包含6种内建的序列：列表、元组、字符串、Unicode字符串、buffer对象、xrange对象，这节主要来学习列表和元组。<strong>列表和元组的区别在于，列表可以修改，元组不可以。</strong></p>
-<h3 id="通用序列操作"><a href="#通用序列操作" class="headerlink" title="通用序列操作"></a>通用序列操作</h3><p>所有序列类型都可以进行这些操作：索引、分片、加、乘、以及检查某个元素是否属于该序列的成员、序列长度、找出最大元素、最小元素。</p>
-<h4 id="1-索引"><a href="#1-索引" class="headerlink" title="1) 索引"></a>1) 索引</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/14523041-file_1489217087380_3e78.png" alt=""></p>
-<h4 id="2-分片"><a href="#2-分片" class="headerlink" title="2) 分片"></a>2) 分片</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/86520910-file_1489217253044_6475.png" alt=""></p>
-<p>获取最后三个元素：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/2981895-file_1489217362541_2232.png" alt=""></p>
-<p>更大步长：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/81377151-file_1489217450167_8f65.png" alt=""></p>
-<h4 id="3-加"><a href="#3-加" class="headerlink" title="3) 加"></a>3) 加</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/55587129-file_1489217507183_666e.png" alt=""></p>
-<h4 id="4-乘"><a href="#4-乘" class="headerlink" title="4) 乘"></a>4) 乘</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/63363847-file_1489217608021_1294.png" alt=""></p>
-<h4 id="5-长度、最大值、最小值"><a href="#5-长度、最大值、最小值" class="headerlink" title="5) 长度、最大值、最小值"></a>5) 长度、最大值、最小值</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/65898019-file_1489217734808_186c.png" alt=""></p>
-<h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><p>列表除了适用序列的标准操作方法，本节还会介绍一些可以改变列表的方法：元素赋值、元素删除、分片赋值、以及列表方法</p>
-<h4 id="1）改变列表元素"><a href="#1）改变列表元素" class="headerlink" title="1）改变列表元素"></a>1）改变列表元素</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/39445538-file_1489218070573_559e.png" alt=""></p>
-<h4 id="2-删除元素"><a href="#2-删除元素" class="headerlink" title="2) 删除元素"></a>2) 删除元素</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/83266752-file_1489218148529_12224.png" alt=""></p>
-<h4 id="3-分片赋值"><a href="#3-分片赋值" class="headerlink" title="3) 分片赋值"></a>3) 分片赋值</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/68678272-file_1489218225510_75a7.png" alt=""></p>
-<h4 id="4-列表方法"><a href="#4-列表方法" class="headerlink" title="4) 列表方法"></a>4) 列表方法</h4><p>4.1) <code>append</code> 列表末尾追加元素</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/63479534-file_1489218330479_b5b6.png" alt=""></p>
-<p>4.2) <code>count</code> 统计某个元素在列表中出现的次数</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/33437808-file_1489218501030_e517.png" alt=""></p>
-<p>4.3) <code>extend</code> 在列表后，一次性追加新的一个列表</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/81047607-file_1489218616823_b8c0.png" alt=""></p>
-<p>4.4) <code>index</code> 从列表中找出某个值，第一个匹配项的索引位置</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/87902781-file_1489218827874_12817.png" alt=""></p>
-<p>4.5) <code>insert</code> 将对象插入列表</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/87119013-file_1489218933650_15ae9.png" alt=""></p>
-<p>4.6) <code>pop</code> 默认移除最后一个元素，并返回该元素的值</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/94076650-file_1489219047630_175f8.png" alt=""></p>
-<p>4.7) <code>reverse</code> 将列表中的元素反向存放</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/46157796-file_1489219161800_1183d.png" alt=""></p>
-<p>4.8) <code>sort</code> 对列表元素排序</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/97781689-file_1489219230515_13a99.png" alt=""></p>
-<p>4.9) 高级排序</p>
-<p>sort方法有两个可选的参数–key和reverse</p>
-<p>a) <code>key</code> 根据函数，为每个元素创建一个键，然后根据键来排序；</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/32829610-file_1489219789896_8d71.png" alt=""></p>
-<p>b）<code>reverse</code>，指明列表是否需要进行反序</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/99489690-file_1489219907483_ef90.png" alt=""></p>
-<h3 id="元组：不可变序列"><a href="#元组：不可变序列" class="headerlink" title="元组：不可变序列"></a>元组：不可变序列</h3><p>元组与列表一样，也是一种序列，不同的是元组不能修改。</p>
-<p>1）空元组</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/66845723-file_1489220816664_686a.png" alt=""></p>
-<p>2) 单元素元组，—必须加个逗号</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/79464689-file_1489220865683_34a9.png" alt=""></p>
-<p>3) 创建多元素元组</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/24763301-file_1489220747488_f833.png" alt=""></p>
-<p>4) <code>tuple</code> 将一个序列转化为元组</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/85051282-file_1489220996689_13c72.png" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li>Python基础教程</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;Python包含6种内建的序列：列表、元组、字符串、Unicode字符串、buffer对象、xrange对象，这节主要来学习列表和元组。&lt;s
     
     </summary>
     
