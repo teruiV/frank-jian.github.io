@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-03-30T16:06:44.000Z</updated>
+  <updated>2017-03-31T05:38:04.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,84 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python之时间模块</title>
+    <link href="http://jianwl.com/2017/03/31/Python%E4%B9%8B%E6%97%B6%E9%97%B4%E6%A8%A1%E5%9D%97/"/>
+    <id>http://jianwl.com/2017/03/31/Python之时间模块/</id>
+    <published>2017-03-31T04:23:43.000Z</published>
+    <updated>2017-03-31T05:38:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>Python</code>自带的时间工具，不支持对月、年的加减，找到一个好用的时间工具包<a href="http://labix.org/python-dateutil#head-1443e0f14ad5dff07efd465e080d1110920673d8" target="_blank" rel="external">python-dateutil</a>，这节主要来实践常用的时间操作。</p>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><h4 id="安装python-deteutil"><a href="#安装python-deteutil" class="headerlink" title="安装python-deteutil"></a>安装<code>python-deteutil</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install python-deteutil==1.5</div></pre></td></tr></table></figure>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1、时间的加减法"><a href="#1、时间的加减法" class="headerlink" title="1、时间的加减法"></a>1、时间的加减法</h4><h5 id="1-获取当前的时间"><a href="#1-获取当前的时间" class="headerlink" title="1) 获取当前的时间"></a>1) 获取当前的时间</h5><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/47211778-file_1490936317851_16eda.png" alt=""></p>
+<h5 id="2-加减天数"><a href="#2-加减天数" class="headerlink" title="2) 加减天数"></a>2) 加减天数</h5><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/61445044-file_1490936471089_d50a.png" alt=""></p>
+<h5 id="3-加减周数"><a href="#3-加减周数" class="headerlink" title="3) 加减周数"></a>3) 加减周数</h5><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/38513613-file_1490936606422_331d.png" alt=""></p>
+<h5 id="4-加减月份"><a href="#4-加减月份" class="headerlink" title="4) 加减月份"></a>4) 加减月份</h5><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/2357238-file_1490936532659_681e.png" alt=""></p>
+<h5 id="5-加减年"><a href="#5-加减年" class="headerlink" title="5) 加减年"></a>5) 加减年</h5><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/14156409-file_1490936660756_134ee.png" alt=""></p>
+<h4 id="2-时间转换"><a href="#2-时间转换" class="headerlink" title="2. 时间转换"></a>2. 时间转换</h4><h5 id="1-转换为固定格式的时间字符串"><a href="#1-转换为固定格式的时间字符串" class="headerlink" title="1) 转换为固定格式的时间字符串"></a>1) 转换为固定格式的时间字符串</h5><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/56887950-file_1490937015674_46a9.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>日期格式化符号</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%y</td>
+<td>两位数的年份表示</td>
+</tr>
+<tr>
+<td>%Y</td>
+<td>四位数的年份表示</td>
+</tr>
+<tr>
+<td>%m</td>
+<td>月份</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>月内的一天</td>
+</tr>
+<tr>
+<td>%H</td>
+<td>24小时制</td>
+</tr>
+<tr>
+<td>%l</td>
+<td>12小时制</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>分钟数</td>
+</tr>
+<tr>
+<td>%S</td>
+<td>秒</td>
+</tr>
+</tbody>
+</table>
+<h5 id="2-固定格式的字符串转化为秒级时间戳"><a href="#2-固定格式的字符串转化为秒级时间戳" class="headerlink" title="2) 固定格式的字符串转化为秒级时间戳"></a>2) 固定格式的字符串转化为秒级时间戳</h5><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/15983829-file_1490937862570_b897.png" alt=""></p>
+<h5 id="3-Float类型时间戳转换为固定格式的字符串"><a href="#3-Float类型时间戳转换为固定格式的字符串" class="headerlink" title="3) Float类型时间戳转换为固定格式的字符串"></a>3) <code>Float</code>类型时间戳转换为固定格式的字符串</h5><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-31/25777888-file_1490938652461_80e1.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://www.runoob.com/python/python-date-time.html" target="_blank" rel="external">Python 日期和时间</a></li>
+<li><a href="http://labix.org/python-dateutil#head-1443e0f14ad5dff07efd465e080d1110920673d8" target="_blank" rel="external">python-dateutil 教程</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Python&lt;/code&gt;自带的时间工具，不支持对月、年的加减，找到一个好用的时间工具包&lt;a href=&quot;http://labi
+    
+    </summary>
+    
+      <category term="Python" scheme="http://jianwl.com/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="http://jianwl.com/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>Python之SQLAlchemy增删改查</title>
@@ -1424,46 +1502,6 @@
     
     
       <category term="Python" scheme="http://jianwl.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>React技术栈介绍</title>
-    <link href="http://jianwl.com/2017/02/26/React%E6%8A%80%E6%9C%AF%E6%A0%88%E4%BB%8B%E7%BB%8D/"/>
-    <id>http://jianwl.com/2017/02/26/React技术栈介绍/</id>
-    <published>2017-02-26T10:21:12.000Z</published>
-    <updated>2017-02-26T13:49:05.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>React整个技术栈涉及到的技术非常多，零基础的人入门总是望而却步，几个月之前就想认真学习React技术栈一直拖延至今。最近会抽出大部分时间，好好研究React技术栈。这一节我们来学习React涉及到的技术栈。</p>
-<h3 id="React技术栈"><a href="#React技术栈" class="headerlink" title="React技术栈"></a>React技术栈</h3><h4 id="1-React"><a href="#1-React" class="headerlink" title="1. React"></a>1. React</h4><p>React是一个声明式、高效、灵活的、创建用户界面的JavaScript库，让我们来逐一解读：</p>
-<h5 id="声明式"><a href="#声明式" class="headerlink" title="声明式"></a>声明式</h5><p>使用React描述组件的样子就可以改变用户界面。传统方式是命令式地操作DOM，不仅需要记住大量的API，而且还会增加代码的耦合度，使得项目难以维护。React使用自己的魔法改变界面，让开发者最大限度地减少DOM交互，较低处理视图的难度。</p>
-<h5 id="高效"><a href="#高效" class="headerlink" title="高效"></a>高效</h5><p>React高性能的Diff算法，让我们在刷新全部界面时只更新需要改变的那部分界面，其使用单向数据流改变界面，抛弃传统的数据绑定，减少了样板代码和重量。</p>
-<h5 id="灵活"><a href="#灵活" class="headerlink" title="灵活"></a>灵活</h5><p>React作为视图层与其他技术栈配合使用，比如与Redux搭配等等。</p>
-<h4 id="2-Redux"><a href="#2-Redux" class="headerlink" title="2. Redux"></a>2. Redux</h4><p>Redux是一个JavaScript状态容器，提供可预测的状态管理。Redux可以用三条基本准则来描述：单一数据源；state只读；使用纯函数来执行修改。</p>
-<h5 id="单一数据源"><a href="#单一数据源" class="headerlink" title="单一数据源"></a>单一数据源</h5><p>整个应用的state被存储在一棵对象树中，并且这个对象树只存在唯一一个store中。这里的state指的是数据。</p>
-<h5 id="state只读"><a href="#state只读" class="headerlink" title="state只读"></a>state只读</h5><p>不是无法改变state，这里的只读指的是不允许直接对state这个变量重写赋值，但可以通过action和reducer返回一个新的state，而且只能使用这一方法。</p>
-<h5 id="使用纯函数来执行修改"><a href="#使用纯函数来执行修改" class="headerlink" title="使用纯函数来执行修改"></a>使用纯函数来执行修改</h5><p>更新state的reducer只是一些纯函数，它接收先前的state和action，并返回新的state。</p>
-<p>了解以上规则后，或许你会问为什么要使用Redux?</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">可预测： Redux只有一个数据源，想要修改它只能发起action，reducer又是纯函数，相同的输入永远会得到相同的输出。这一切使得程序运作变得可控、可预测。</div><div class="line"></div><div class="line">便于组织管理代码：严格而明确的程序结构是的代码更容易组织和管理，也方便团队协作。</div><div class="line"></div><div class="line">支持Universal渲染：单一数据源这一原则可以帮助解决Universal渲染中的数据传递问题，服务端渲染后只需给客户端传递一个变量即可，这个变量就是存储state的对象树。</div><div class="line"></div><div class="line">容易测试：编写可测试的代码，最重要的一条规则就是写单一功能的、没有外界依赖的小型函数。</div></pre></td></tr></table></figure>
-<h4 id="3-Node与Universal渲染"><a href="#3-Node与Universal渲染" class="headerlink" title="3.Node与Universal渲染"></a>3.Node与Universal渲染</h4><p>React与Redux既可以在浏览器运行也可以在服务器端运行，这里的服务器端指的是Node服务器。</p>
-<p>和传统Web服务器相比，Node更简单，它是单线程，与平台无关的，我们可以实现Universal渲染 – 用同一套代码在服务端和客户端渲染。</p>
-<h4 id="4-Babel"><a href="#4-Babel" class="headerlink" title="4.Babel"></a>4.Babel</h4><p>Babel是一个JavaScript编译器，可以让开发者提前使用下一代的JavaScript。</p>
-<h4 id="5-Webpack"><a href="#5-Webpack" class="headerlink" title="5.Webpack"></a>5.Webpack</h4><p>Webpack是当下最热门的前端资源模块化管理和打包工具，它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。通过加载器(loader)的转换，任何形式的资源都可以视作模块，比如CommonJS模块、AMD模块、ES2015模块、CSS、图片、JSON、LESS、Coffeescript等等。</p>
-<p>Webpack主要功能：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">编译、加载使用ES2015和JSX语法的模块</div><div class="line">实现开发服务器与热替换</div><div class="line">加载图片文件</div><div class="line">加载字体文件</div><div class="line">加载样式文件</div><div class="line">加载JSON文件</div><div class="line">视同同构工具实现同构渲染</div><div class="line">压缩代码</div><div class="line">哈希命名</div></pre></td></tr></table></figure>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1.React与Redux开发实例精解</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;React整个技术栈涉及到的技术非常多，零基础的人入门总是望而却步，几个月之前就想认真学习React技术栈一直拖延至今。最近会抽出大部分时间
-    
-    </summary>
-    
-      <category term="React" scheme="http://jianwl.com/categories/React/"/>
-    
-    
-      <category term="React" scheme="http://jianwl.com/tags/React/"/>
     
   </entry>
   
