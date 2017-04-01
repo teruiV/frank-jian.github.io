@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title><![CDATA[关于代码阅读的思考]]></title>
+      <url>http://jianwl.com/2017/04/01/%E5%85%B3%E4%BA%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB%E7%9A%84%E6%80%9D%E8%80%83/</url>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>作为一个工程师，你的价值如何体现？不是掌握了多少知识，而是体现在创造出的系统，否则空有满腹经纶，最后也只是纸上谈兵。学习编写优秀代码的最佳方式，就是阅读高品质的代码，学习别人的高明之处。这一节我们将来学习阅读优秀源码的技巧，先简单抛出阅读代码的几个好处。</p>
+<ol>
+<li>阅读代码，学习别人高明的技巧实现方式；</li>
+<li>发现惊喜，通过简明优雅的结构实现了极为复杂的功能，看完代码后，受到激励，想着如何同样整洁构造自己的代码。</li>
+<li>批判地阅读代码，不断向自己提问比如：<code>为什么要这样写</code>或<code>作者背景中的什么东西使他做出这种选择。</code></li>
+</ol>
+<h3 id="阅读代码"><a href="#阅读代码" class="headerlink" title="阅读代码"></a>阅读代码</h3><h4 id="1-为什么阅读代码"><a href="#1-为什么阅读代码" class="headerlink" title="1. 为什么阅读代码"></a>1. 为什么阅读代码</h4><p>经常花时间阅读别人编写的高质量代码，就想阅读高品质的散文能够丰富词汇，激发想象力，扩展思维一样，分析设计良好的软件系统的内部结构可以学到<code>新的架构模式</code>、<code>数据结构</code>、<code>编码方法</code>、<code>算法</code>、<code>风格</code>和<code>文档规范</code>、<code>应用程序编程接口(API)</code>，同时可以提高编写代码的水准。</p>
+<p>阅读代码的过程中，不可避免地会遇到一些在实践中应该尽量避免的代码，能够快速地从坏代码中区分出好代码是一项有价值的技能；接触一些编码的反面例子有助于提高这种能力，通过下面这些征兆，可以很容易识别出低品质的代码：1️⃣ 编码风格不一致 2️⃣ 结构不必要地复杂或难以理解 3️⃣ 明显的逻辑错误或疏忽 4️⃣ 过度使用不可移植的构造 5️⃣ 缺乏维护</p>
+<p>大型、有组织体制之下的项目都会采纳一套编码规范、指导原则或约定，代码规范提供风格上的指导，目标是增强代码的可靠性、易读性和可维护性。关注优秀源码的<code>类命名</code>、<code>变量命名</code>、<code>代码缩进</code>、<code>代码编排</code>、<code>命名约定</code>、<code>文档</code>；</p>
+<p>通过阅读优秀源码，我们可以学习到<code>分层架构的设计</code>、<code>更加合理的抽象面向对象的结构</code>、<code>如何更加合理的拆分模块</code>、<code>代码重用</code></p>
+<h4 id="2-如何阅读代码"><a href="#2-如何阅读代码" class="headerlink" title="2. 如何阅读代码"></a>2. 如何阅读代码</h4><p>有选择地阅读代码，同时还有<code>有自己的目标</code>。想学习新的模式、编码风格还是满足某些需求的方法？或者只是浏览代码，获取其中的某些亮点。</p>
+<p>从小型的程序开始阅读，不要立即陷入对大型系统的研究中，编译研究的程序并运行他们，这样可以得到即时的反馈，了解代码预想的工作方式，同时可以获得成就感。</p>
+<p>积极介入现实的代码，能够快速从中了解到一些情况，当觉得已经掌握了他们之后，再采取更有组织的方式来学习，比如：阅读相关书籍、文档、手册、参加培训课程。</p>
+<h4 id="3-实战"><a href="#3-实战" class="headerlink" title="3. 实战"></a>3. 实战</h4><p>比如：想要了解一个特定的功能是如何实现的。首先使用该系统，得到他的外部接口，根据外部接口，定位目标代码，针对它进行研究分析，忽略不相关的部分。如果觉得在原来的上下文中，理解代码有困难，就将他复制到一个历史文件中，删除所有不相关的部分。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>1、养成一个习惯，经常花时间阅读别人编写的高品质代码</p>
+<p>2、要有选择地阅读代码，同时还要有自己的目标，想学习新的模式、编码风格、还是满足某些需求的方法</p>
+<p>3、对于那些大型且组织良好的系统，只需要最低限度地了解它的全部贡呢过，就能够对它做出修改。</p>
+<p>4、向系统中增加新功能时，首先的任务就是找到类型特性的代码，将它作为待实现功能的模板。</p>
+<p>5、阅读代码寻找重构机会时，先从系统的架构开始，然后逐步细化，能够获得最大的效益。</p>
+<p>6、不需要为了效率，牺牲代码的可读性</p>
+<p>7、通过浏览项目的源代码树 – 包含项目源代码的层次目录结构，来分析一个项目的组织方式，源码树常常能够反映出项目在架构和软件过程上的结构。</p>
+<p>8、<strong>阅读代码时，应该尽可能利用任何能够得到的文档。</strong></p>
+<p>9、<strong>阅读一个小时代码所得到的信息只不过相当于阅读一分钟文档</strong></p>
+<p>10、可以将系统的设计规格说明作为认知代码结构的路线图，阅读具体代码的指引</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>代码阅读方法与实践</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Python之易出错语法]]></title>
       <url>http://jianwl.com/2017/03/31/Python%E4%B9%8B%E6%98%93%E5%87%BA%E9%94%99%E8%AF%AD%E6%B3%95/</url>
       <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本节主要记录<code>Python</code>和<code>Java</code>不一样的语法，用于备忘。</p>
@@ -7279,23 +7312,6 @@ tee – the output of write (:w) command is redirected using tee
     </entry>
     
     <entry>
-      <title><![CDATA[MYSQL存储引擎]]></title>
-      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
-      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
-]]></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[MYSQL存储引擎优化]]></title>
       <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</url>
       <content type="html"><![CDATA[<h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
@@ -7320,6 +7336,23 @@ tee – the output of write (:w) command is redirected using tee
 <h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
 <h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
 <h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[MYSQL存储引擎]]></title>
+      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
+      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 ]]></content>
     </entry>
     
