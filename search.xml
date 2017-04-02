@@ -120,12 +120,6 @@
 <td>匹配一行的结束位置</td>
 </tr>
 <tr>
-<td>`</td>
-<td>`</td>
-<td>alternation</td>
-<td>匹配任意分隔的表达式</td>
-</tr>
-<tr>
 <td><code>(...)</code></td>
 <td>括号</td>
 <td>限定多选结构的范围</td>

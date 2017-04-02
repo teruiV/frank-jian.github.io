@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-04-02T03:39:05.000Z</updated>
+  <updated>2017-04-02T03:41:26.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://jianwl.com/2017/04/01/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%85%A5%E9%97%A8/"/>
     <id>http://jianwl.com/2017/04/01/正则表达式入门/</id>
     <published>2017-04-01T15:00:58.000Z</published>
-    <updated>2017-04-02T03:39:05.000Z</updated>
+    <updated>2017-04-02T03:41:26.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>正则表达式是文本处理&amp;数据爬取的神器，但由于语法难记且在日常工作中用到的机会较少，所以对这一神器知之甚少，这节来学习正则表达式的简单用法。</p>
 <h3 id="egrep用法"><a href="#egrep用法" class="headerlink" title="egrep用法"></a>egrep用法</h3><p>文本检索是正则表达式最简单的应用之一 – Mac系统下<code>egrep</code>提供了文本正则表达式的检索功能。举个简单的例子:</p>
@@ -134,12 +134,6 @@
 <td><code>$</code></td>
 <td>美元符</td>
 <td>匹配一行的结束位置</td>
-</tr>
-<tr>
-<td>`</td>
-<td>`</td>
-<td>alternation</td>
-<td>匹配任意分隔的表达式</td>
 </tr>
 <tr>
 <td><code>(...)</code></td>
