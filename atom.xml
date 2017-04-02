@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-04-01T13:15:20.000Z</updated>
+  <updated>2017-04-01T16:04:30.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -16,11 +16,40 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>正则表达式入门</title>
+    <link href="http://jianwl.com/2017/04/01/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%85%A5%E9%97%A8/"/>
+    <id>http://jianwl.com/2017/04/01/正则表达式入门/</id>
+    <published>2017-04-01T15:00:58.000Z</published>
+    <updated>2017-04-01T16:04:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>正则表达式是文本处理&amp;数据爬取的神器，但由于语法难记且在日常工作中用到的机会较少，所以对这一神器知之甚少，这节来学习正则表达式的简单用法。</p>
+<h3 id="egrep用法"><a href="#egrep用法" class="headerlink" title="egrep用法"></a>egrep用法</h3><p>文本检索是正则表达式最简单的应用之一 – Mac系统下<code>egrep</code>提供了文本正则表达式的检索功能。举个简单的例子:</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-1/87069959-file_1491061667712_8d09.png" alt=""></p>
+<h3 id="正则表达式语法"><a href="#正则表达式语法" class="headerlink" title="正则表达式语法"></a>正则表达式语法</h3><h4 id="1-行的开始和结束"><a href="#1-行的开始和结束" class="headerlink" title="1. 行的开始和结束"></a>1. 行的开始和结束</h4><p><code>^</code>代表一行的开始，<code>$</code>代表结束</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-1/71581110-file_1491061994393_b0fa.png" alt=""></p>
+<h4 id="2-字符组"><a href="#2-字符组" class="headerlink" title="2. 字符组"></a>2. 字符组</h4><p>匹配若干字符之一，可以使用结构体<code>[...]</code>,在字符组内部，<strong>字符组元字符</strong><code>-</code>表示一个范围比如<code>[0-9]</code>。特别注意：<strong>连字符</strong><code>-</code>只有在字符组内部才能表示范围，否则就是普通字符。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/54684166-file_1491062598112_9911.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;正则表达式是文本处理&amp;amp;数据爬取的神器，但由于语法难记且在日常工作中用到的机会较少，所以对这一神器知之甚少，这节来学习正则表达式的简单
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
+    
+    
+      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Mac下效率神器之autojump</title>
     <link href="http://jianwl.com/2017/04/01/Mac%E4%B8%8B%E6%95%88%E7%8E%87%E7%A5%9E%E5%99%A8%E4%B9%8Bautojump/"/>
     <id>http://jianwl.com/2017/04/01/Mac下效率神器之autojump/</id>
     <published>2017-04-01T12:59:10.000Z</published>
-    <updated>2017-04-01T13:15:20.000Z</updated>
+    <updated>2017-04-01T14:04:28.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>过去常用到的一些命令，习惯在<code>.zshrc</code>文件中添加几行快捷键命令:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alias dada = cd /Users/jianweilin/Work/Java/dada</div><div class="line">alias test = cd /Users/jianweilin/Work/Java/test</div></pre></td></tr></table></figure>
@@ -58,10 +87,10 @@
     <link href="http://jianwl.com/2017/04/01/%E5%85%B3%E4%BA%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB%E7%9A%84%E6%80%9D%E8%80%83/"/>
     <id>http://jianwl.com/2017/04/01/关于代码阅读的思考/</id>
     <published>2017-04-01T06:04:49.000Z</published>
-    <updated>2017-04-01T08:01:02.000Z</updated>
+    <updated>2017-04-02T00:47:31.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>作为一个工程师，你的价值如何体现？不是掌握了多少知识，而是体现在创造出的系统，否则空有满腹经纶，最后也只是纸上谈兵。学习编写优秀代码的最佳方式，就是阅读高品质的代码，学习别人的高明之处。这一节我们将来学习阅读优秀源码的技巧。</p>
-<h3 id="阅读代码"><a href="#阅读代码" class="headerlink" title="阅读代码"></a>阅读代码</h3><h4 id="1-为什么阅读代码"><a href="#1-为什么阅读代码" class="headerlink" title="1. 为什么阅读代码"></a>1. 为什么阅读代码</h4><p>经常花时间阅读别人编写的高质量代码，就想阅读高品质的散文能够丰富词汇，激发想象力，扩展思维一样，分析设计良好的软件系统的内部结构可以学到<code>新的架构模式</code>、<code>数据结构</code>、<code>编码方法</code>、<code>算法</code>、<code>风格</code>和<code>文档规范</code>、<code>应用程序编程接口(API)</code>，同时可以提高编写代码的水准。</p>
+<h3 id="阅读代码"><a href="#阅读代码" class="headerlink" title="阅读代码"></a>阅读代码</h3><h4 id="1-为什么阅读代码"><a href="#1-为什么阅读代码" class="headerlink" title="1. 为什么阅读代码"></a>1. 为什么阅读代码</h4><p>经常花时间阅读别人编写的高质量代码，就像阅读高品质的散文能够丰富词汇，激发想象力，扩展思维一样，分析设计良好的软件系统的内部结构可以学到<code>新的架构模式</code>、<code>数据结构</code>、<code>编码方法</code>、<code>算法</code>、<code>风格</code>和<code>文档规范</code>、<code>应用程序编程接口(API)</code>，同时可以提高编写代码的水准。</p>
 <p>阅读代码的过程中，不可避免地会遇到一些在实践中应该尽量避免的代码，能够快速地从坏代码中区分出好代码是一项有价值的技能；接触一些编码的反面例子有助于提高这种能力，通过下面这些征兆，可以很容易识别出低品质的代码：1️⃣ 编码风格不一致 2️⃣ 结构不必要地复杂或难以理解 3️⃣ 明显的逻辑错误或疏忽 4️⃣ 过度使用不可移植的构造 5️⃣ 缺乏维护</p>
 <p>大型、有组织体制之下的项目都会采纳一套编码规范、指导原则或约定，代码规范提供风格上的指导，目标是增强代码的可靠性、易读性和可维护性。关注优秀源码的<code>类命名</code>、<code>变量命名</code>、<code>代码缩进</code>、<code>代码编排</code>、<code>命名约定</code>、<code>文档</code>；</p>
 <p>通过阅读优秀源码，我们可以学习到<code>分层架构的设计</code>、<code>更加合理的抽象面向对象的结构</code>、<code>如何更加合理的拆分模块</code>、<code>代码重用</code></p>
@@ -1179,215 +1208,6 @@
     
     
       <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Shell脚本基本功</title>
-    <link href="http://jianwl.com/2017/03/15/Shell%E8%84%9A%E6%9C%AC%E5%9F%BA%E6%9C%AC%E5%8A%9F/"/>
-    <id>http://jianwl.com/2017/03/15/Shell脚本基本功/</id>
-    <published>2017-03-15T15:49:16.000Z</published>
-    <updated>2017-03-16T03:37:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本节主要介绍Shell常用的命令和语法，这个章节会持续更新，<a href="http://git.oschina.net/shuangziliuyun/shell" target="_blank" rel="external">本节练习脚本请查看GIT</a></p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-数值比较"><a href="#1-数值比较" class="headerlink" title="1. 数值比较"></a>1. 数值比较</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/94282744-file_1489584983851_14e8a.png" alt=""></p>
-<p>数字比较</p>
-<table>
-<thead>
-<tr>
-<th>比较</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>n1 -eq n2</td>
-<td>n1是否与n2相等</td>
-</tr>
-<tr>
-<td>n1 -ge n2</td>
-<td>n1是否大于或等于n2</td>
-</tr>
-<tr>
-<td>n1 -gt n2</td>
-<td>n1是否大于n2</td>
-</tr>
-<tr>
-<td>n1 -le n2</td>
-<td>n1是否小于或等于n2</td>
-</tr>
-<tr>
-<td>n1 -lt n2</td>
-<td>n1是否小于n2</td>
-</tr>
-<tr>
-<td>n1 -ne n2</td>
-<td>n1是否不等于n2</td>
-</tr>
-</tbody>
-</table>
-<p>字符串比较</p>
-<table>
-<thead>
-<tr>
-<th>比较</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>str1 = str2</td>
-<td>str1和str2相同</td>
-</tr>
-<tr>
-<td>str1 != str2</td>
-<td>str1和str2不相等</td>
-</tr>
-<tr>
-<td>str1 &lt; str2</td>
-<td>str1是否比str2小</td>
-</tr>
-<tr>
-<td>str1 &gt; str2</td>
-<td>str1是否比str2大</td>
-</tr>
-<tr>
-<td>-n str1</td>
-<td>str1的长度是否非0</td>
-</tr>
-<tr>
-<td>-z str1</td>
-<td>str2的长度是否为0</td>
-</tr>
-</tbody>
-</table>
-<h4 id="2-文件比较"><a href="#2-文件比较" class="headerlink" title="2. 文件比较"></a>2. 文件比较</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/5842677-file_1489586826777_16d8c.png" alt=""></p>
-<p>文件比较</p>
-<table>
-<thead>
-<tr>
-<th>比较</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-d file</td>
-<td>file是否存在并是一个目录</td>
-</tr>
-<tr>
-<td>-e file</td>
-<td>file是否存在</td>
-</tr>
-<tr>
-<td>-f file</td>
-<td>file是否存在并是个文件</td>
-</tr>
-<tr>
-<td>-r file</td>
-<td>file是否存在并可读</td>
-</tr>
-<tr>
-<td>-s file</td>
-<td>file是否存在并非空</td>
-</tr>
-<tr>
-<td>-w file</td>
-<td>file是否存在并可写</td>
-</tr>
-<tr>
-<td>-x file</td>
-<td>file是否存在并可执行</td>
-</tr>
-<tr>
-<td>-O file</td>
-<td>file是否存在并属当前用户所有</td>
-</tr>
-<tr>
-<td>-G file</td>
-<td>file是否存在并且默认组与当前用户相同</td>
-</tr>
-<tr>
-<td>file1 -nt file2</td>
-<td>file1是否比file2新</td>
-</tr>
-<tr>
-<td>file1 -ot file2</td>
-<td>file1是否比file2旧</td>
-</tr>
-</tbody>
-</table>
-<h4 id="3-for命令"><a href="#3-for命令" class="headerlink" title="3. for命令"></a>3. for命令</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/79683869-file_1489587635186_1b43.png" alt=""></p>
-<h4 id="4-修改分割符"><a href="#4-修改分割符" class="headerlink" title="4. 修改分割符"></a>4. 修改分割符</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/21867516-file_1489588386921_5740.png" alt=""></p>
-<table>
-<thead>
-<tr>
-<th>分割符设置</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>IFS=<code>$&#39;\n&#39;</code></td>
-<td>设置换行符为分隔符</td>
-</tr>
-<tr>
-<td>IFS=<code>$&#39;\n:;&quot;&#39;</code></td>
-<td>设置换行符、冒号、分好、双引号为分隔符</td>
-</tr>
-</tbody>
-</table>
-<h4 id="5-while命令"><a href="#5-while命令" class="headerlink" title="5. while命令"></a>5. while命令</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/34656202-file_1489588951940_12c28.png" alt=""></p>
-<h4 id="6-continue命令"><a href="#6-continue命令" class="headerlink" title="6. continue命令"></a>6. continue命令</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/19067708-file_1489589502995_10596.png" alt=""></p>
-<h4 id="7-case命令"><a href="#7-case命令" class="headerlink" title="7. case命令"></a>7. case命令</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/50152327-file_1489591476267_3699.png" alt=""></p>
-<h4 id="8-创建函数"><a href="#8-创建函数" class="headerlink" title="8. 创建函数"></a>8. 创建函数</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/31595596-file_1489590492602_f1cf.png" alt=""></p>
-<p>bash shell会把函数当做小型脚本，运行结束时会返回一个退出状态码,用<code>$?</code>判断程序的运行状态。</p>
-<table>
-<thead>
-<tr>
-<th>状态码</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>命令成功结束 </td>
-</tr>
-<tr>
-<td>1</td>
-<td>通用未知错误</td>
-</tr>
-<tr>
-<td>2</td>
-<td>误用shell命令</td>
-</tr>
-<tr>
-<td>126</td>
-<td>命令不可执行</td>
-</tr>
-</tbody>
-</table>
-<p>…</p>
-<h4 id="9、特殊参数变量"><a href="#9、特殊参数变量" class="headerlink" title="9、特殊参数变量"></a>9、特殊参数变量</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">`$0` 读取程序名</div><div class="line">`$#` 命令行参数个数</div><div class="line">`$&#123;!#&#125;` 最后一个参数值</div><div class="line">`$*` 单个变量中存储所有的命令行参数</div><div class="line">`$@` 单个变量中存储所有的命令行参数</div></pre></td></tr></table></figure>
-<p> <code>params.sh</code></p>
-<p> <img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/19213513-file_1489592788517_3396.png" alt=""></p>
-<p> 运行：</p>
-<p> <img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-15/3625461-file_1489592376768_13f93.png" alt=""></p>
-<p> 特别注意：<code>“$*”</code>变量会将所有参数当做单个参数，<code>“$@”</code>会单独处理每个参数;而<code>$*</code>变量和<code>$@</code>变量均会将所有参数当做单个参数。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1.Linux命令行与Shell脚本编程大全</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;本节主要介绍Shell常用的命令和语法，这个章节会持续更新，&lt;a href=&quot;http://git.oschina.net/shuangzi
-    
-    </summary>
-    
-      <category term="Shell" scheme="http://jianwl.com/categories/Shell/"/>
-    
-    
-      <category term="Shell" scheme="http://jianwl.com/tags/Shell/"/>
     
   </entry>
   
