@@ -68,7 +68,7 @@ egrep用法文本检索是正则表达式最简单的应用之一 – Mac系统�
 
 正则表达式语法1. 行的开始和结束^代表一行的开始，$代表结束
 
-2. 字符组匹配若干字符之一，可以使用结构体[...">
+2. 字符组1) 范围型字符组匹配若干字符之一，可以">
 <meta property="og:type" content="article">
 <meta property="og:title" content="正则表达式入门">
 <meta property="og:url" content="http://jianwl.com/2017/04/01/正则表达式入门/index.html">
@@ -78,11 +78,20 @@ egrep用法文本检索是正则表达式最简单的应用之一 – Mac系统�
 
 正则表达式语法1. 行的开始和结束^代表一行的开始，$代表结束
 
-2. 字符组匹配若干字符之一，可以使用结构体[...">
+2. 字符组1) 范围型字符组匹配若干字符之一，可以">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-1/87069959-file_1491061667712_8d09.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-1/71581110-file_1491061994393_b0fa.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/54684166-file_1491062598112_9911.png">
-<meta property="og:updated_time" content="2017-04-01T16:04:30.000Z">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/72090159-file_1491095085321_162c1.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/77946479-file_1491096549681_13890.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/9589231-file_1491097579389_ae64.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/76759955-file_1491097883322_b1d9.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/34841121-file_1491098454865_70b6.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/93512234-file_1491099677438_125b8.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/58020717-file_1491101398884_a930.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/35875132-file_1491101901364_14a1a.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/1904614-file_1491103167597_9411.png">
+<meta property="og:updated_time" content="2017-04-02T03:35:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式入门">
 <meta name="twitter:description" content="前言正则表达式是文本处理&amp;amp;数据爬取的神器，但由于语法难记且在日常工作中用到的机会较少，所以对这一神器知之甚少，这节来学习正则表达式的简单用法。
@@ -90,7 +99,7 @@ egrep用法文本检索是正则表达式最简单的应用之一 – Mac系统�
 
 正则表达式语法1. 行的开始和结束^代表一行的开始，$代表结束
 
-2. 字符组匹配若干字符之一，可以使用结构体[...">
+2. 字符组1) 范围型字符组匹配若干字符之一，可以">
 <meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-1/87069959-file_1491061667712_8d09.png">
 
 
@@ -383,8 +392,130 @@ egrep用法文本检索是正则表达式最简单的应用之一 – Mac系统�
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-1/87069959-file_1491061667712_8d09.png" alt=""></p>
 <h3 id="正则表达式语法"><a href="#正则表达式语法" class="headerlink" title="正则表达式语法"></a>正则表达式语法</h3><h4 id="1-行的开始和结束"><a href="#1-行的开始和结束" class="headerlink" title="1. 行的开始和结束"></a>1. 行的开始和结束</h4><p><code>^</code>代表一行的开始，<code>$</code>代表结束</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-1/71581110-file_1491061994393_b0fa.png" alt=""></p>
-<h4 id="2-字符组"><a href="#2-字符组" class="headerlink" title="2. 字符组"></a>2. 字符组</h4><p>匹配若干字符之一，可以使用结构体<code>[...]</code>,在字符组内部，<strong>字符组元字符</strong><code>-</code>表示一个范围比如<code>[0-9]</code>。特别注意：<strong>连字符</strong><code>-</code>只有在字符组内部才能表示范围，否则就是普通字符。</p>
+<h4 id="2-字符组"><a href="#2-字符组" class="headerlink" title="2. 字符组"></a>2. 字符组</h4><h5 id="1-范围型字符组"><a href="#1-范围型字符组" class="headerlink" title="1) 范围型字符组"></a>1) 范围型字符组</h5><p>匹配若干字符之一，可以使用结构体<code>[...]</code>,在字符组内部，<strong>字符组元字符</strong><code>-</code>表示一个范围比如<code>[0-9]</code>。特别注意：<strong>连字符</strong><code>-</code>只有在字符组内部才能表示范围，否则就是普通字符。</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/54684166-file_1491062598112_9911.png" alt=""></p>
+<h5 id="2）排除型字符组"><a href="#2）排除型字符组" class="headerlink" title="2）排除型字符组"></a>2）排除型字符组</h5><p>字符组会匹配任何未列出的字符，可以用结构体<code>[^...]</code>表示，<code>^</code>在字符组的开头表示排除。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/72090159-file_1491095085321_162c1.png" alt=""></p>
+<h4 id="3-用点号匹配任意字符"><a href="#3-用点号匹配任意字符" class="headerlink" title="3. 用点号匹配任意字符"></a>3. 用点号匹配任意字符</h4><p>元字符<code>.</code>是用来匹配任意字符的字符组。例如我们要搜索<code>92/06/02</code>、<code>92-06-02</code>、<code>92.06.02</code>。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/77946479-file_1491096549681_13890.png" alt=""></p>
+<h4 id="4-匹配任意子表达式"><a href="#4-匹配任意子表达式" class="headerlink" title="4. 匹配任意子表达式"></a>4. 匹配任意子表达式</h4><p><code>|</code>表示或，能够匹配多个子表达式。比如<code>First</code>和<code>1st</code>是两个表达式，用正则表达式匹配<code>(Fir|1)st</code>,括号是必须的。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/9589231-file_1491097579389_ae64.png" alt=""></p>
+<h4 id="5-egrep-忽略大小写"><a href="#5-egrep-忽略大小写" class="headerlink" title="5. egrep 忽略大小写"></a>5. egrep 忽略大小写</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/76759955-file_1491097883322_b1d9.png" alt=""></p>
+<h4 id="6-可选元素"><a href="#6-可选元素" class="headerlink" title="6. 可选元素"></a>6. 可选元素</h4><p><code>?</code>代表可选项，把它加在一个字符的后面，就表示此处容许出现这个字符。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/34841121-file_1491098454865_70b6.png" alt=""></p>
+<h4 id="7-重复元素"><a href="#7-重复元素" class="headerlink" title="7. 重复元素"></a>7. 重复元素</h4><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>次数下限</th>
+<th>次数上限</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>？</code></td>
+<td>无</td>
+<td>1</td>
+<td><strong>在<code>?</code>之前的元素</strong>可以不出现，也可以只出现一次</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>无</td>
+<td>无</td>
+<td><strong>在<code>*</code>之前出现的元素</strong>可以出现无数次，也可以不出现</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>1</td>
+<td>无</td>
+<td><strong>在<code>+</code>之前出现的元素</strong>可以出现无数次，但至少要出现一次</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/93512234-file_1491099677438_125b8.png" alt=""></p>
+<p>规定重复出现的次数<code>{min,max}</code> </p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/58020717-file_1491101398884_a930.png" alt=""></p>
+<h4 id="8-神奇的转义字符"><a href="#8-神奇的转义字符" class="headerlink" title="8. 神奇的转义字符\"></a>8. 神奇的转义字符<code>\</code></h4><p>使用转义符<code>\</code>，元字符就会失去特殊含义，比如匹配<code>90.06.02</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/35875132-file_1491101901364_14a1a.png" alt=""></p>
+<h4 id="小练习"><a href="#小练习" class="headerlink" title="小练习"></a>小练习</h4><p>匹配24小时制<code>HH:MM</code>,特别注意以2开头的时间如 <code>21:59</code></p>
+<p>实战：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/1904614-file_1491103167597_9411.png" alt=""></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>元字符</th>
+<th>匹配对象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>  <code>.</code></td>
+<td>点号</td>
+<td>匹配单个任意字符</td>
+</tr>
+<tr>
+<td>  <code>[...]</code></td>
+<td>字符组</td>
+<td>匹配单个列出的字符</td>
+</tr>
+<tr>
+<td><code>[^...]</code></td>
+<td>排除型字符组</td>
+<td>匹配单个未列出的字符</td>
+</tr>
+<tr>
+<td><code>\char</code></td>
+<td>转义字符</td>
+<td>若char是元字符，匹配char对应的普通字符</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>问号</td>
+<td>容许匹配一次，但非必需</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>星号</td>
+<td>容许匹配多次，但也可不匹配</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>加号</td>
+<td>至少匹配一次，至多可以任意次</td>
+</tr>
+<tr>
+<td><code>{min,max}</code></td>
+<td>区间量词</td>
+<td>至少需要min次，至多可能任意次「不是所有egrep版本都支持」</td>
+</tr>
+<tr>
+<td><code>^</code></td>
+<td>脱字符</td>
+<td>匹配一行的开头位置</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>美元符</td>
+<td>匹配一行的结束位置</td>
+</tr>
+<tr>
+<td>`</td>
+<td>`</td>
+<td>alternation</td>
+<td>匹配任意分隔的表达式</td>
+</tr>
+<tr>
+<td><code>(...)</code></td>
+<td>括号</td>
+<td>限定多选结构的范围</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://item.jd.com/11070361.html" target="_blank" rel="external">精通正则表达式- 余晟</a> </li>
+</ol>
 
       
     </div>
@@ -588,7 +719,7 @@ egrep用法文本检索是正则表达式最简单的应用之一 – Mac系统�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#egrep用法"><span class="nav-number">2.</span> <span class="nav-text">egrep用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正则表达式语法"><span class="nav-number">3.</span> <span class="nav-text">正则表达式语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-行的开始和结束"><span class="nav-number">3.1.</span> <span class="nav-text">1. 行的开始和结束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-字符组"><span class="nav-number">3.2.</span> <span class="nav-text">2. 字符组</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#egrep用法"><span class="nav-number">2.</span> <span class="nav-text">egrep用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正则表达式语法"><span class="nav-number">3.</span> <span class="nav-text">正则表达式语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-行的开始和结束"><span class="nav-number">3.1.</span> <span class="nav-text">1. 行的开始和结束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-字符组"><span class="nav-number">3.2.</span> <span class="nav-text">2. 字符组</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-范围型字符组"><span class="nav-number">3.2.1.</span> <span class="nav-text">1) 范围型字符组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2）排除型字符组"><span class="nav-number">3.2.2.</span> <span class="nav-text">2）排除型字符组</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-用点号匹配任意字符"><span class="nav-number">3.3.</span> <span class="nav-text">3. 用点号匹配任意字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-匹配任意子表达式"><span class="nav-number">3.4.</span> <span class="nav-text">4. 匹配任意子表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-egrep-忽略大小写"><span class="nav-number">3.5.</span> <span class="nav-text">5. egrep 忽略大小写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-可选元素"><span class="nav-number">3.6.</span> <span class="nav-text">6. 可选元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-重复元素"><span class="nav-number">3.7.</span> <span class="nav-text">7. 重复元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-神奇的转义字符"><span class="nav-number">3.8.</span> <span class="nav-text">8. 神奇的转义字符\</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小练习"><span class="nav-number">3.9.</span> <span class="nav-text">小练习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
