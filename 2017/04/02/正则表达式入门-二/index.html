@@ -148,7 +148,8 @@
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/64931704-file_1491124392441_14979.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/58656792-file_1491125331588_15359.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/28220906-file_1491125753738_94b.png">
-<meta property="og:updated_time" content="2017-04-02T09:46:39.000Z">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/43300392-file_1491131531371_d909.png">
+<meta property="og:updated_time" content="2017-04-02T11:12:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式入门(二)">
 <meta name="twitter:description" content="前言上一节正则表达式入门,学习了正则表达的基本功，这一节将继续深入学习正则表达式。
@@ -531,7 +532,7 @@
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/57253842-file_1491115515846_f21d.png" alt=""></p>
 <h4 id="3-输入正-amp-负小数、正-amp-负整数"><a href="#3-输入正-amp-负小数、正-amp-负整数" class="headerlink" title="3) 输入正&amp;负小数、正&amp;负整数"></a>3) 输入正&amp;负小数、正&amp;负整数</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/34044067-file_1491116256845_4c73.png" alt=""></p>
 <h4 id="4-使用正则表达式修改文本"><a href="#4-使用正则表达式修改文本" class="headerlink" title="4) 使用正则表达式修改文本"></a>4) 使用正则表达式修改文本</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/231628-file_1491117893226_1375.png" alt=""></p>
-<h4 id="5）-四种类型的环视"><a href="#5）-四种类型的环视" class="headerlink" title="5） 四种类型的环视"></a>5） 四种类型的环视</h4><table>
+<h4 id="5）-四种类型的环视-难点"><a href="#5）-四种类型的环视-难点" class="headerlink" title="5） 四种类型的环视(难点)"></a>5） 四种类型的环视(难点)</h4><table>
 <thead>
 <tr>
 <th>类型</th>
@@ -577,9 +578,11 @@
 <h5 id="4-否定顺序实战"><a href="#4-否定顺序实战" class="headerlink" title="(4) . 否定顺序实战"></a>(4) . 否定顺序实战</h5><p><code>(?!.*?[0h])\b[a-z0-9]+\b</code>，不包含<code>0</code>和<code>h</code>的字母和数字系列</p>
 <p>实战:</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/58656792-file_1491125331588_15359.png" alt=""></p>
-<h5 id="5-否定逆序实战-有疑问，为什么不是不以z开头的单词"><a href="#5-否定逆序实战-有疑问，为什么不是不以z开头的单词" class="headerlink" title="(5) . 否定逆序实战 (有疑问，为什么不是不以z开头的单词)"></a>(5) . 否定逆序实战 (有疑问，为什么不是<code>不以z开头的单词</code>)</h5><p><code>\b[a-z]+(?&lt;!z)\b</code>, 不以<code>z</code>结尾的单词</p>
+<h5 id="5-否定逆序实战"><a href="#5-否定逆序实战" class="headerlink" title="(5) . 否定逆序实战"></a>(5) . 否定逆序实战</h5><p><code>\b[a-z]+(?&lt;!z)\b</code>, 不以<code>z</code>结尾的单词</p>
 <p>实战：</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/28220906-file_1491125753738_94b.png" alt=""></p>
+<h5 id="6-进阶的练习"><a href="#6-进阶的练习" class="headerlink" title="(6) . 进阶的练习"></a>(6) . 进阶的练习</h5><p>给一组数字从右到左，每三位加一个逗号;</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/43300392-file_1491131531371_d909.png" alt=""></p>
 <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
 <li><a href="http://www.cnblogs.com/Zjmainstay/p/regexp-lookaround.html" target="_blank" rel="external">环视的用法</a></li>
 <li><a href="http://blog.csdn.net/lxcnn/article/details/4355364" target="_blank" rel="external">\b 单词边界</a></li>
@@ -788,7 +791,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正则表达式语法进阶"><span class="nav-number">2.</span> <span class="nav-text">正则表达式语法进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-常用的字符"><span class="nav-number">2.1.</span> <span class="nav-text">1) 常用的字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-输入正整数"><span class="nav-number">2.2.</span> <span class="nav-text">2) 输入正整数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-输入正-amp-负小数、正-amp-负整数"><span class="nav-number">2.3.</span> <span class="nav-text">3) 输入正&负小数、正&负整数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-使用正则表达式修改文本"><span class="nav-number">2.4.</span> <span class="nav-text">4) 使用正则表达式修改文本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5）-四种类型的环视"><span class="nav-number">2.5.</span> <span class="nav-text">5） 四种类型的环视</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#（1）-环视概念与匹配过程示例"><span class="nav-number">2.5.1.</span> <span class="nav-text">（1）. 环视概念与匹配过程示例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-肯定顺序实战："><span class="nav-number">2.5.2.</span> <span class="nav-text">(2) . 肯定顺序实战：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-肯定逆序实战"><span class="nav-number">2.5.3.</span> <span class="nav-text">(3) . 肯定逆序实战</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-否定顺序实战"><span class="nav-number">2.5.4.</span> <span class="nav-text">(4) . 否定顺序实战</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-否定逆序实战-有疑问，为什么不是不以z开头的单词"><span class="nav-number">2.5.5.</span> <span class="nav-text">(5) . 否定逆序实战 (有疑问，为什么不是不以z开头的单词)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正则表达式语法进阶"><span class="nav-number">2.</span> <span class="nav-text">正则表达式语法进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-常用的字符"><span class="nav-number">2.1.</span> <span class="nav-text">1) 常用的字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-输入正整数"><span class="nav-number">2.2.</span> <span class="nav-text">2) 输入正整数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-输入正-amp-负小数、正-amp-负整数"><span class="nav-number">2.3.</span> <span class="nav-text">3) 输入正&负小数、正&负整数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-使用正则表达式修改文本"><span class="nav-number">2.4.</span> <span class="nav-text">4) 使用正则表达式修改文本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5）-四种类型的环视-难点"><span class="nav-number">2.5.</span> <span class="nav-text">5） 四种类型的环视(难点)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#（1）-环视概念与匹配过程示例"><span class="nav-number">2.5.1.</span> <span class="nav-text">（1）. 环视概念与匹配过程示例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-肯定顺序实战："><span class="nav-number">2.5.2.</span> <span class="nav-text">(2) . 肯定顺序实战：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-肯定逆序实战"><span class="nav-number">2.5.3.</span> <span class="nav-text">(3) . 肯定逆序实战</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-否定顺序实战"><span class="nav-number">2.5.4.</span> <span class="nav-text">(4) . 否定顺序实战</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-否定逆序实战"><span class="nav-number">2.5.5.</span> <span class="nav-text">(5) . 否定逆序实战</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-进阶的练习"><span class="nav-number">2.5.6.</span> <span class="nav-text">(6) . 进阶的练习</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
