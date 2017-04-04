@@ -4,6 +4,118 @@
   
     
     <entry>
+      <title><![CDATA[TCP之网络基础知识]]></title>
+      <url>http://jianwl.com/2017/04/04/TCP%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>TCP</code>是网络编程的基础，这一节我们主要来学习<code>协议分层</code>、<code>ARP</code>、<code>RARP</code>、<code>IP</code> 、<code>Mac地址</code>、<code>OSPF路由协议</code>、<code>硬件设备介绍</code>。</p>
+<h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><h4 id="1-OSI-7层协议-amp-各层的作用"><a href="#1-OSI-7层协议-amp-各层的作用" class="headerlink" title="1. OSI 7层协议 &amp; 各层的作用"></a>1. OSI 7层协议 &amp; 各层的作用</h4><p><code>OSI</code>参考模型分为7层，上下层之间进行交互时所遵循的约定叫<code>接口</code>，同一层之间的交互所遵循的约定叫<code>协议</code>。</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>分层名称</th>
+<th>功能</th>
+<th>每层功能概览</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>应用层</td>
+<td>针对特定应用的协议</td>
+<td>如：电子邮件 → 电子邮箱协议；文件传输 → 文件传输协议</td>
+</tr>
+<tr>
+<td>6</td>
+<td>表示层</td>
+<td>设备固有数据格式和网络标准数据格式的转换</td>
+<td>接收不同表现形式的信息，如文字流、图像、声音等</td>
+</tr>
+<tr>
+<td>5</td>
+<td>会话层</td>
+<td>负责建立和断开通讯，以及<strong>数据的分割</strong>等数据传输相关的管理</td>
+<td>何时建立连接，何时断开连接以及保持多久的连接？</td>
+</tr>
+<tr>
+<td>4</td>
+<td>传输层</td>
+<td>只在通信双方的节点上进行处理，而无需再路由器上处理，起着可靠传输的作用。</td>
+<td><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/76951531-file_1491280215483_aa6e.png" alt=""></td>
+</tr>
+<tr>
+<td>3</td>
+<td>网络层</td>
+<td>将数据传输到目标地址，目标地址可以是多个网络通过路由器连接而成的某一个地址。这一层主要<strong>负责寻址</strong>和<strong>路由选择</strong>。</td>
+<td><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/17373754-file_1491280668058_18508.png" alt=""></td>
+</tr>
+<tr>
+<td>2</td>
+<td>数据链路层</td>
+<td>负责物理层面上的互联、节点之间的通信传输，将<code>0</code>、<code>1</code>序列划分为具有意义的数据帧传给对端</td>
+<td><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/4389953-file_1491281059377_14847.png" alt=""></td>
+</tr>
+<tr>
+<td>1</td>
+<td>物理层</td>
+<td>负责<code>0</code>、<code>1</code>比特流与电压高低、光的闪灭之间的互换</td>
+<td><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/80710941-file_1491281893820_70a6.png" alt=""></td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-一个请求的从发送到返回都经历了什么？"><a href="#2-一个请求的从发送到返回都经历了什么？" class="headerlink" title="2. 一个请求的从发送到返回都经历了什么？"></a>2. 一个请求的从发送到返回都经历了什么？</h4><p><code>HTTP请求「应用层」</code> → <code>DNS协议，域名映射IP</code> → <code>HTTP基于TCP/IP协议「传输层」</code> → <code>ARP协议获取接收端Mac地址 通过OSPF路由协议找到目标主机「网络层」</code> → <code>传输数据帧「数据链路层」</code> → <code>将计算机二进制 0、1信号 转换为电压的高低电平「物理层」</code></p>
+<h4 id="3-ARP"><a href="#3-ARP" class="headerlink" title="3. ARP"></a>3. ARP</h4><p>只要确定<code>IP</code>地址，就可以向这个目标地址发送<code>IP</code>数据报，然后在<strong>数据链路层</strong>，进行实际通信时需要每个IP地址所对应的<code>MAC</code>地址。</p>
+<p><code>ARP</code>是一个解决地址问题的协议，以目标<code>IP</code>地址作为线索，用来定位下一个应该接收数据分包的网络对应的<code>MAC</code>地址。如果目标主机不在同一个链路上，可以<strong>通过代理ARP的路由器</strong>将<code>ARP</code>请求转发给相邻网段。「注：<code>ARP</code>包会被路由器隔离，<code>ARP</code>只适用于<code>IPv4</code>,<code>IPv6</code>用<code>ICMpv6</code>」</p>
+<p>举例：</p>
+<p><code>主机A</code>为了获取<code>主机B</code>的<code>Mac</code>地址，通过广播发送一个<code>ARP</code>请求包「请求中包含<code>主机B</code>的<code>IP</code>地址」，由于广播的包可以被同一个链路上所有的主机或路由器接收，如果<code>ARP</code>请求包中的目标<code>IP</code>与自己的<code>IP</code>地址一致，那么这个节点就将自己的<code>Mac</code>地址塞入<code>ARP</code>响应包返回给<code>主机A</code>。</p>
+<h4 id="4-RARP"><a href="#4-RARP" class="headerlink" title="4. RARP"></a>4. RARP</h4><p><code>RARP</code>是将<code>ARP</code>反过来，从<code>MAC</code>地址定位IP地址的一种协议。</p>
+<h4 id="5-IP地址"><a href="#5-IP地址" class="headerlink" title="5. IP地址"></a>5. IP地址</h4><p><code>IP地址</code>处于网络层， 用于在<strong>连接到网络中的所有主机识别出进行通信的目标地址；</strong> <code>IP地址</code>由32位正整数来表示，每8位为一组，分24组，每组以<code>.</code>隔开；<code>IP地址</code>由<strong>网络标识</strong>和<strong>主机标识</strong>两部分组成。相同网段内的主机必须有相同的网络标识，主机标识不允许在同一个网段内重复出现。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/15647844-file_1491288228515_fbc6.png" alt=""></p>
+<p>目前引入子网以后，一个IP地址有了两种识别码，一个是<code>IP</code>本身，另一个是<code>子网掩码</code>。子网掩码对应<code>IP网络标识</code>部分的位全部为<code>1</code>，对应<code>IP地址主机识别</code>的部分则全部为<code>0</code>。</p>
+<p>举例：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/84217771-file_1491288982288_790d.png" alt=""></p>
+<h4 id="6-MAC地址"><a href="#6-MAC地址" class="headerlink" title="6. MAC地址"></a>6. MAC地址</h4><p><code>Mac</code>地址用于识别数据链路中的互连的节点，<code>Mac</code>地址长48比特，每个<strong>网卡</strong>都有一个唯一的<code>Mac</code>地址。</p>
+<h4 id="7-OSPF"><a href="#7-OSPF" class="headerlink" title="7. OSPF"></a>7. OSPF</h4><p><code>OSPF</code>为链路状态型路由器，相邻路由器之间交换链路状态生成网络拓扑信息，然后在根据这个拓扑信息生成路由控制表。<code>OSPF</code>给每条链路赋予一个权重，并始终选择一个权重最小的路径作为最终路由。「注：连接到同一个链路的路由器称作相邻路由器」</p>
+<h4 id="8-硬件设备"><a href="#8-硬件设备" class="headerlink" title="8. 硬件设备"></a>8. 硬件设备</h4><table>
+<thead>
+<tr>
+<th>设备</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网卡</td>
+<td>使计算机连网的设备</td>
+</tr>
+<tr>
+<td>中继器</td>
+<td>从物理上延长网络的设备，由电缆传过来的电信号或光信号经由中继放大器的波形调整和放大再传给另外一个电缆。</td>
+</tr>
+<tr>
+<td>网桥/2层交换机</td>
+<td>从数据链路层上延长网络的设备，它能识别数据链路层中的数据帧，并将这些数据帧临时存储于内存中，在重新生成信号作为一个全新帧给相连的另一个网段。</td>
+</tr>
+<tr>
+<td>路由器/3层交换机</td>
+<td>通过网络层转发分组数据的设备，路由器用于连接不同的数据链路。</td>
+</tr>
+<tr>
+<td>4~7层交换机</td>
+<td>处理传输层以上各层网络传输的设备</td>
+</tr>
+<tr>
+<td>网关</td>
+<td>转换协议的设备，例子：电脑和手机之间设置了一道网关，是的电脑和手机间可以互发邮件。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>图解TCP/IP - 竹下隆史</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Vim之常用快捷键]]></title>
       <url>http://jianwl.com/2017/04/04/Vim%E4%B9%8B%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</url>
       <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>Vim</code>是最常用的文本编辑器，掌握常用的快捷键，可以极大的增强工作效率。</p>
@@ -7602,23 +7714,6 @@ tee – the output of write (:w) command is redirected using tee
     </entry>
     
     <entry>
-      <title><![CDATA[MYSQL存储引擎]]></title>
-      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
-      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
-]]></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[MYSQL存储引擎优化]]></title>
       <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</url>
       <content type="html"><![CDATA[<h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
@@ -7643,6 +7738,23 @@ tee – the output of write (:w) command is redirected using tee
 <h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
 <h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
 <h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[MYSQL存储引擎]]></title>
+      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
+      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 ]]></content>
     </entry>
     
