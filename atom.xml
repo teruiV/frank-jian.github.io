@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-04-04T07:35:51.000Z</updated>
+  <updated>2017-04-04T07:40:53.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -20,61 +20,61 @@
     <link href="http://jianwl.com/2017/04/04/TCP%E4%B9%8B%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
     <id>http://jianwl.com/2017/04/04/TCP之网络基础知识/</id>
     <published>2017-04-04T03:38:28.000Z</published>
-    <updated>2017-04-04T07:35:51.000Z</updated>
+    <updated>2017-04-04T07:40:53.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>TCP</code>是网络编程的基础，这一节我们主要来学习<code>协议分层</code>、<code>ARP</code>、<code>RARP</code>、<code>IP</code> 、<code>Mac地址</code>、<code>OSPF路由协议</code>、<code>硬件设备介绍</code>。</p>
 <h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><h4 id="1-OSI-7层协议-amp-各层的作用"><a href="#1-OSI-7层协议-amp-各层的作用" class="headerlink" title="1. OSI 7层协议 &amp; 各层的作用"></a>1. OSI 7层协议 &amp; 各层的作用</h4><p><code>OSI</code>参考模型分为7层，上下层之间进行交互时所遵循的约定叫<code>接口</code>，同一层之间的交互所遵循的约定叫<code>协议</code>。</p>
 <table>
 <thead>
 <tr>
-<th>层</th>
-<th>分层名称</th>
-<th>功能</th>
-<th>每层功能概览</th>
+<th style="text-align:center">层</th>
+<th style="text-align:center">分层名称</th>
+<th style="text-align:center">功能</th>
+<th style="text-align:center">每层功能概览</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>7</td>
-<td>应用层</td>
-<td>针对特定应用的协议</td>
-<td>如：电子邮件 → 电子邮箱协议；文件传输 → 文件传输协议</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">应用层</td>
+<td style="text-align:center">针对特定应用的协议</td>
+<td style="text-align:center">如：电子邮件 → 电子邮箱协议；文件传输 → 文件传输协议</td>
 </tr>
 <tr>
-<td>6</td>
-<td>表示层</td>
-<td>设备固有数据格式和网络标准数据格式的转换</td>
-<td>接收不同表现形式的信息，如文字流、图像、声音等</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">表示层</td>
+<td style="text-align:center">设备固有数据格式和网络标准数据格式的转换</td>
+<td style="text-align:center">接收不同表现形式的信息，如文字流、图像、声音等</td>
 </tr>
 <tr>
-<td>5</td>
-<td>会话层</td>
-<td>负责建立和断开通讯，以及<strong>数据的分割</strong>等数据传输相关的管理</td>
-<td>何时建立连接，何时断开连接以及保持多久的连接？</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">会话层</td>
+<td style="text-align:center">负责建立和断开通讯，以及<strong>数据的分割</strong>等数据传输相关的管理</td>
+<td style="text-align:center">何时建立连接，何时断开连接以及保持多久的连接？</td>
 </tr>
 <tr>
-<td>4</td>
-<td>传输层</td>
-<td>只在通信双方的节点上进行处理，而无需再路由器上处理，起着可靠传输的作用。</td>
-<td><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/76951531-file_1491280215483_aa6e.png" alt=""></td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">传输层</td>
+<td style="text-align:center">只在通信双方的节点上进行处理，而无需再路由器上处理，起着可靠传输的作用。</td>
+<td style="text-align:center"><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/76951531-file_1491280215483_aa6e.png" alt=""></td>
 </tr>
 <tr>
-<td>3</td>
-<td>网络层</td>
-<td>将数据传输到目标地址，目标地址可以是多个网络通过路由器连接而成的某一个地址。这一层主要<strong>负责寻址</strong>和<strong>路由选择</strong>。</td>
-<td><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/17373754-file_1491280668058_18508.png" alt=""></td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">网络层</td>
+<td style="text-align:center">将数据传输到目标地址，目标地址可以是多个网络通过路由器连接而成的某一个地址。这一层主要<strong>负责寻址</strong>和<strong>路由选择</strong>。</td>
+<td style="text-align:center"><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/17373754-file_1491280668058_18508.png" alt=""></td>
 </tr>
 <tr>
-<td>2</td>
-<td>数据链路层</td>
-<td>负责物理层面上的互联、节点之间的通信传输，将<code>0</code>、<code>1</code>序列划分为具有意义的数据帧传给对端</td>
-<td><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/4389953-file_1491281059377_14847.png" alt=""></td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">数据链路层</td>
+<td style="text-align:center">负责物理层面上的互联、节点之间的通信传输，将<code>0</code>、<code>1</code>序列划分为具有意义的数据帧传给对端</td>
+<td style="text-align:center"><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/4389953-file_1491281059377_14847.png" alt=""></td>
 </tr>
 <tr>
-<td>1</td>
-<td>物理层</td>
-<td>负责<code>0</code>、<code>1</code>比特流与电压高低、光的闪灭之间的互换</td>
-<td><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/80710941-file_1491281893820_70a6.png" alt=""></td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">物理层</td>
+<td style="text-align:center">负责<code>0</code>、<code>1</code>比特流与电压高低、光的闪灭之间的互换</td>
+<td style="text-align:center"><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/80710941-file_1491281893820_70a6.png" alt=""></td>
 </tr>
 </tbody>
 </table>
@@ -84,7 +84,7 @@
 <p>举例：</p>
 <p><code>主机A</code>为了获取<code>主机B</code>的<code>Mac</code>地址，通过广播发送一个<code>ARP</code>请求包「请求中包含<code>主机B</code>的<code>IP</code>地址」，由于广播的包可以被同一个链路上所有的主机或路由器接收，如果<code>ARP</code>请求包中的目标<code>IP</code>与自己的<code>IP</code>地址一致，那么这个节点就将自己的<code>Mac</code>地址塞入<code>ARP</code>响应包返回给<code>主机A</code>。</p>
 <h4 id="4-RARP"><a href="#4-RARP" class="headerlink" title="4. RARP"></a>4. RARP</h4><p><code>RARP</code>是将<code>ARP</code>反过来，从<code>MAC</code>地址定位IP地址的一种协议。</p>
-<h4 id="5-IP地址"><a href="#5-IP地址" class="headerlink" title="5. IP地址"></a>5. IP地址</h4><p><code>IP地址</code>处于网络层， 用于在<strong>连接到网络中的所有主机识别出进行通信的目标地址；</strong> <code>IP地址</code>由32位正整数来表示，每8位为一组，分24组，每组以<code>.</code>隔开；<code>IP地址</code>由<strong>网络标识</strong>和<strong>主机标识</strong>两部分组成。相同网段内的主机必须有相同的网络标识，主机标识不允许在同一个网段内重复出现。</p>
+<h4 id="5-IP地址"><a href="#5-IP地址" class="headerlink" title="5. IP地址"></a>5. IP地址</h4><p><code>IP地址</code>处于网络层， 用于在<strong>连接到网络中的所有主机识别出进行通信的目标地址；</strong> <code>IP地址</code>由32位正整数来表示，每8位为一组，分4组，每组以<code>.</code>隔开；<code>IP地址</code>由<strong>网络标识</strong>和<strong>主机标识</strong>两部分组成。相同网段内的主机必须有相同的网络标识，主机标识不允许在同一个网段内重复出现。</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/15647844-file_1491288228515_fbc6.png" alt=""></p>
 <p>目前引入子网以后，一个IP地址有了两种识别码，一个是<code>IP</code>本身，另一个是<code>子网掩码</code>。子网掩码对应<code>IP网络标识</code>部分的位全部为<code>1</code>，对应<code>IP地址主机识别</code>的部分则全部为<code>0</code>。</p>
 <p>举例：</p>
@@ -94,34 +94,34 @@
 <h4 id="8-硬件设备"><a href="#8-硬件设备" class="headerlink" title="8. 硬件设备"></a>8. 硬件设备</h4><table>
 <thead>
 <tr>
-<th>设备</th>
-<th>作用</th>
+<th style="text-align:center">设备</th>
+<th style="text-align:center">作用</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>网卡</td>
-<td>使计算机连网的设备</td>
+<td style="text-align:center">网卡</td>
+<td style="text-align:center">使计算机连网的设备</td>
 </tr>
 <tr>
-<td>中继器</td>
-<td>从物理上延长网络的设备，由电缆传过来的电信号或光信号经由中继放大器的波形调整和放大再传给另外一个电缆。</td>
+<td style="text-align:center">中继器</td>
+<td style="text-align:center">从物理上延长网络的设备，由电缆传过来的电信号或光信号经由中继放大器的波形调整和放大再传给另外一个电缆。</td>
 </tr>
 <tr>
-<td>网桥/2层交换机</td>
-<td>从数据链路层上延长网络的设备，它能识别数据链路层中的数据帧，并将这些数据帧临时存储于内存中，在重新生成信号作为一个全新帧给相连的另一个网段。</td>
+<td style="text-align:center">网桥/2层交换机</td>
+<td style="text-align:center">从数据链路层上延长网络的设备，它能识别数据链路层中的数据帧，并将这些数据帧临时存储于内存中，在重新生成信号作为一个全新帧给相连的另一个网段。</td>
 </tr>
 <tr>
-<td>路由器/3层交换机</td>
-<td>通过网络层转发分组数据的设备，路由器用于连接不同的数据链路。</td>
+<td style="text-align:center">路由器/3层交换机</td>
+<td style="text-align:center">通过网络层转发分组数据的设备，路由器用于连接不同的数据链路。</td>
 </tr>
 <tr>
-<td>4~7层交换机</td>
-<td>处理传输层以上各层网络传输的设备</td>
+<td style="text-align:center">4~7层交换机</td>
+<td style="text-align:center">处理传输层以上各层网络传输的设备</td>
 </tr>
 <tr>
-<td>网关</td>
-<td>转换协议的设备，例子：电脑和手机之间设置了一道网关，是的电脑和手机间可以互发邮件。</td>
+<td style="text-align:center">网关</td>
+<td style="text-align:center">转换协议的设备，例子：电脑和手机之间设置了一道网关，是的电脑和手机间可以互发邮件。</td>
 </tr>
 </tbody>
 </table>
