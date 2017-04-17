@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-04-09T09:27:24.000Z</updated>
+  <updated>2017-04-17T10:42:15.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,134 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java8之不常用却很有用的知识点</title>
+    <link href="http://jianwl.com/2017/04/17/Java8%E4%B9%8B%E4%B8%8D%E5%B8%B8%E7%94%A8%E5%8D%B4%E5%BE%88%E6%9C%89%E7%94%A8%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
+    <id>http://jianwl.com/2017/04/17/Java8之不常用却很有用的知识点/</id>
+    <published>2017-04-17T06:07:13.000Z</published>
+    <updated>2017-04-17T10:42:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><h4 id="1-forEach-VS-forEachOrdered"><a href="#1-forEach-VS-forEachOrdered" class="headerlink" title="1. forEach VS forEachOrdered"></a>1. forEach VS forEachOrdered</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_005()&#123;</div><div class="line">    List&lt;String&gt; strs = Arrays.asList(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;);</div><div class="line">    strs.stream().parallel().forEach(str -&gt; System.out.println(&quot;forEach =&gt; &quot; + str));</div><div class="line">    strs.stream().parallel().forEachOrdered(str -&gt; System.out.println(&quot;forEachOrdered =&gt; &quot; + str));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-12-11/96792814-file_1481436578266_14fcc.png" alt=""></p>
+<p><code>分析</code></p>
+<p>并行处理数据时，<code>forEach</code>处理的数据是无序的，而<code>forEachOrdered</code>处理数据是按照输入流的顺序处理的。</p>
+<h4 id="2-合并Map"><a href="#2-合并Map" class="headerlink" title="2. 合并Map"></a>2. 合并Map</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">@RunWith(JUnit4.class)</div><div class="line">public class BasicTest &#123;</div><div class="line">    /**</div><div class="line">     * 将sub合并至total,若在total中存在该键(key),则键值合并;</div><div class="line">     */</div><div class="line">    @Test</div><div class="line">    public void test_001()&#123;</div><div class="line">        Map&lt;String,List&lt;Integer&gt;&gt; total = Maps.newHashMap();</div><div class="line">        Map&lt;String,List&lt;Integer&gt;&gt; sub = Maps.newHashMap();</div><div class="line"></div><div class="line">        total.put(&quot;num1&quot;, Arrays.asList(1,2,3,4,11));</div><div class="line">        total.put(&quot;num2&quot;,Arrays.asList(1,2,3,4));</div><div class="line">        total.put(&quot;num3&quot;,Arrays.asList(1,2,3,4));</div><div class="line">        total.put(&quot;num4&quot;,Arrays.asList(1,2,3,4));</div><div class="line"></div><div class="line">        sub.put(&quot;num1&quot;,Arrays.asList(1,2,3,4,5,6,7));</div><div class="line">        sub.put(&quot;num2&quot;,Arrays.asList(1,2,3,4,4,5,6,7));</div><div class="line"></div><div class="line">        sub.keySet().forEach(key -&gt; total.merge(key,sub.get(key),(v1,v2) -&gt; Arrays.asList(v1,v2).stream().flatMap(Collection::stream).distinct().collect(Collectors.toList())));</div><div class="line"></div><div class="line">        System.out.println(&quot;total =&gt; &quot; + JSON.toJSONString(total));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-21/83737621-file_1487691562243_10db7.png" alt=""></p>
+<h4 id="3-排序Map"><a href="#3-排序Map" class="headerlink" title="3. 排序Map"></a>3. 排序Map</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_033() &#123;</div><div class="line">    Map&lt;String,Integer&gt; map = Maps.newHashMap();</div><div class="line">    map.put(&quot;key1&quot;,9);</div><div class="line">    map.put(&quot;key2&quot;,1);</div><div class="line">    map.put(&quot;key3&quot;,3);</div><div class="line">    map.put(&quot;key4&quot;,2);</div><div class="line">    LinkedHashMap&lt;String,Integer&gt; linkedHashMap = map.entrySet().stream().sorted(Map.Entry.comparingByValue((v1,v2) -&gt; v2.compareTo(v1))).collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue,(e1,e2) -&gt; e1,LinkedHashMap::new));</div><div class="line">    System.out.println(linkedHashMap);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-17/80305570-file_1492423465236_f04f.png" alt=""></p>
+<h4 id="4-Collections-toMap重复key的处理方式"><a href="#4-Collections-toMap重复key的处理方式" class="headerlink" title="4. Collections.toMap重复key的处理方式"></a>4. <code>Collections.toMap</code>重复key的处理方式</h4><p><code>声明User对象</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">public class User&#123;</div><div class="line">    private Integer id;</div><div class="line">    private String name;</div><div class="line"></div><div class="line">    public User(Integer id, String name) &#123;</div><div class="line">        this.id = id;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Integer getId() &#123;</div><div class="line">        return id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setId(Integer id) &#123;</div><div class="line">        this.id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>测试类：</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">  public void test_034() &#123;</div><div class="line">      User u1 = new User(1,&quot;张三&quot;);</div><div class="line">      User u2 = new User(1,&quot;王武&quot;);</div><div class="line">      User u3 = new User(2,&quot;李四&quot;);</div><div class="line">      Map&lt;Integer,String&gt; map = Arrays.asList(u1,u2,u3).stream().collect(Collectors.toMap(User::getId, User::getName,(v1,v2) -&gt; v1,HashMap::new));</div><div class="line">      System.out.println(map);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p><code>运行结果：</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-17/80087753-file_1492425664414_3370.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;知识点&quot;&gt;&lt;a href=&quot;#知识点&quot; class=&quot;headerlink&quot; title=&quot;知识点&quot;&gt;&lt;/a&gt;知识点&lt;/h3&gt;&lt;h4 id=&quot;1-forEach-VS-forEachOrdered&quot;&gt;&lt;a href=&quot;#1-forEach-VS-forEachOr
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
+    
+    
+      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redux入门</title>
+    <link href="http://jianwl.com/2017/04/11/Redux%E5%85%A5%E9%97%A8/"/>
+    <id>http://jianwl.com/2017/04/11/Redux入门/</id>
+    <published>2017-04-11T00:01:49.000Z</published>
+    <updated>2017-04-11T05:00:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>Redux</code>是参考<code>Flux</code>架构思想的库，对<code>Flux</code>许多冗余的部分做了简化。<code>Redux</code>本身只把自己定位成一个<code>可预测的状态容器</code>，接下来学习<code>Redux</code>的三大原则、并实战<code>Redux</code>和<code>React</code>如何结合使用。</p>
+<h3 id="Redux运行流程"><a href="#Redux运行流程" class="headerlink" title="Redux运行流程"></a>Redux运行流程</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-11/53696420-file_1491870916439_e756.png" alt=""></p>
+<h3 id="Redux三大原则"><a href="#Redux三大原则" class="headerlink" title="Redux三大原则"></a>Redux三大原则</h3><h4 id="1-单一数据源"><a href="#1-单一数据源" class="headerlink" title="1. 单一数据源"></a>1. 单一数据源</h4><p>在<code>Redux</code>中，一个应用永远只有唯一的数据源，这样做的好处在于整个应用状态都保存在一个对象中，这样我们随时可以提取出整个应用的状态进行持久化。同时<code>Redux</code>提供工具函数<code>combineReducers</code>化解数据源对象过于庞大的问题。后文将会介绍。</p>
+<h4 id="2-状态是只读的"><a href="#2-状态是只读的" class="headerlink" title="2. 状态是只读的"></a>2. 状态是只读的</h4><p>在<code>Redux</code>中，会定义一个<code>reducer</code>，他的功能是根据当前触发的action对当前应用的状态来进行迭代，并没有直接修改应用的状态，而是返回一份全新的状态。<code>Redux</code>提供的<code>createStore</code>方法会根据reducer生产store，最后可以利用<code>store.dispatch</code>来修改状态。</p>
+<h4 id="3-状态修改均由纯函数完成"><a href="#3-状态修改均由纯函数完成" class="headerlink" title="3. 状态修改均由纯函数完成"></a>3. 状态修改均由纯函数完成</h4><p>在<code>Redux</code>中，通过定义<code>reducer</code>来确定状态的修改，而每一个reducer都是纯函数，这样做的好处是，在<code>reducer</code>里对状态的修改变得简单、纯粹、可测试。</p>
+<h3 id="Redux核心API"><a href="#Redux核心API" class="headerlink" title="Redux核心API"></a>Redux核心API</h3><p>在<code>Redux</code>中负责响应<code>action</code>并修改数据的角色就是reducer，reducer本质上是一个函数，其函数签名为<code>reducer(previousState,action) =&gt; newState</code>, 可以看出，<code>reducer</code>在处理<code>action</code>的同时，还需要接受一个<code>previousState</code>参数。所以，<code>render</code>的职责是根据<code>previousState</code>和<code>action</code>计算出<code>newState</code>。</p>
+<p><code>reduce范例：</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">const initialState = &#123;</div><div class="line">	todos: []</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 定义的todos 这个render 在第一次执行的时候，会返回&#123;todos:[]&#125;作为初始化状态</div><div class="line">function todos(previousState = initialState,action) &#123;</div><div class="line">	switch(action.type) &#123;</div><div class="line">	 	case &apos;XXX&apos;: &#123;</div><div class="line">	 		// 具体的业务逻辑</div><div class="line">	 		return newState;</div><div class="line">	 	&#125;</div><div class="line">	 	</div><div class="line">	 	default:</div><div class="line">	 		return previousState;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getState</td>
+<td>获取store中当前的状态</td>
+</tr>
+<tr>
+<td>dispatch(action)</td>
+<td>分发一个action，并返回这个action，这是唯一能改变store中数据的方式。</td>
+</tr>
+<tr>
+<td>subscribe(listener)</td>
+<td>注册一个监听者，它在store发生变化时被调用</td>
+</tr>
+<tr>
+<td>replaceReducer(nextReducer)</td>
+<td>更新当前state里的reducer</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Redux与组件"><a href="#Redux与组件" class="headerlink" title="Redux与组件"></a>Redux与组件</h3><p>Redux有两种组件 1️⃣ 容器型组件，表示组件是怎么工作的。 2️⃣ 展示型组件表示组件是怎么渲染的。它包含<code>Virtutal DOM</code>的修改和组合或组件的样式，不依赖任何形式的<code>store</code>。</p>
+<p>容器型组件与展示型组件的对比：</p>
+<table>
+<thead>
+<tr>
+<th>目的</th>
+<th>展示型组件「标签、样式」</th>
+<th>容器型组件「获取数据、更新状态」</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否感知Redux</td>
+<td>否</td>
+<td>是</td>
+<td></td>
+</tr>
+<tr>
+<td>要获取数据</td>
+<td>从<code>this.props</code>中获取</td>
+<td>使用<code>connect</code>从<code>Redux</code>状态树中获取</td>
+</tr>
+<tr>
+<td>要改变数据</td>
+<td>调用从<code>props</code>中传入的<code>action creator</code></td>
+<td>直接分发任意<code>action</code></td>
+</tr>
+<tr>
+<td>实际创建于</td>
+<td>开发者自身</td>
+<td>由<code>React Redux</code>创建</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Redux&lt;/code&gt;是参考&lt;code&gt;Flux&lt;/code&gt;架构思想的库，对&lt;code&gt;Flux&lt;/code&gt;许多冗余的部分
+    
+    </summary>
+    
+      <category term="React" scheme="http://jianwl.com/categories/React/"/>
+    
+    
+      <category term="React" scheme="http://jianwl.com/tags/React/"/>
+    
+  </entry>
   
   <entry>
     <title>React入门实战(二)</title>
@@ -1084,64 +1212,6 @@
     
     
       <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>install mysql on centos7</title>
-    <link href="http://jianwl.com/2017/03/23/install-mysql-on-centos7/"/>
-    <id>http://jianwl.com/2017/03/23/install-mysql-on-centos7/</id>
-    <published>2017-03-23T15:09:52.000Z</published>
-    <updated>2017-03-23T15:36:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>之前只在<code>Window</code>和<code>Mac</code>环境下安装过<code>MYSQL</code>，这一节主要来学习在<code>CentOS7</code>上安装<code>MYSQL</code>。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-下载-amp-添加库-amp-更新"><a href="#1-下载-amp-添加库-amp-更新" class="headerlink" title="1. 下载 &amp; 添加库 &amp; 更新"></a>1. 下载 &amp; 添加库 &amp; 更新</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm</div><div class="line">sudo rpm -ivh mysql-community-release-el7-5.noarch.rpm</div><div class="line">yum update</div></pre></td></tr></table></figure>
-<h4 id="2-安装MYSQL"><a href="#2-安装MYSQL" class="headerlink" title="2. 安装MYSQL"></a>2. 安装MYSQL</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install mysql-server</div></pre></td></tr></table></figure>
-<h4 id="3-两种方式启动服务"><a href="#3-两种方式启动服务" class="headerlink" title="3. 两种方式启动服务"></a>3. 两种方式启动服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 方式1</div><div class="line">sudo systemctl start mysqld</div><div class="line"></div><div class="line"># 方式2</div><div class="line">service mysqld start</div></pre></td></tr></table></figure>
-<h4 id="4-登录数据库"><a href="#4-登录数据库" class="headerlink" title="4. 登录数据库"></a>4. 登录数据库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql -u root -p</div></pre></td></tr></table></figure>
-<h4 id="5-关闭服务"><a href="#5-关闭服务" class="headerlink" title="5. 关闭服务"></a>5. 关闭服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl stop mysqld</div></pre></td></tr></table></figure>
-<h4 id="6-重置密码"><a href="#6-重置密码" class="headerlink" title="6. 重置密码"></a>6. 重置密码</h4><h5 id="1-以不需要登录密码的方式，重启服务"><a href="#1-以不需要登录密码的方式，重启服务" class="headerlink" title="1) 以不需要登录密码的方式，重启服务"></a>1) 以不需要登录密码的方式，重启服务</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mysqld_safe --skip-grant-tables &amp;</div></pre></td></tr></table></figure>
-<h5 id="2-重连上MYSQL-Server的Root账号"><a href="#2-重连上MYSQL-Server的Root账号" class="headerlink" title="2) 重连上MYSQL-Server的Root账号"></a>2) 重连上MYSQL-Server的Root账号</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql -u root</div></pre></td></tr></table></figure>
-<h5 id="3-重置密码"><a href="#3-重置密码" class="headerlink" title="3) 重置密码"></a>3) 重置密码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">use mysql;</div><div class="line">update user SET PASSWORD=PASSWORD(&quot;root&quot;) WHERE USER=&quot;root&quot;;</div><div class="line">flush privileges;</div><div class="line">exit</div></pre></td></tr></table></figure>
-<h5 id="4-重启MYSQL"><a href="#4-重启MYSQL" class="headerlink" title="4) 重启MYSQL"></a>4) 重启MYSQL</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl start mysqld</div></pre></td></tr></table></figure>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://www.linode.com/docs/databases/mysql/how-to-install-mysql-on-centos-7" target="_blank" rel="external">How to Install MySQL on CentOS 7</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;之前只在&lt;code&gt;Window&lt;/code&gt;和&lt;code&gt;Mac&lt;/code&gt;环境下安装过&lt;code&gt;MYSQL&lt;/code&gt;，这一节主要
-    
-    </summary>
-    
-      <category term="MYSQL" scheme="http://jianwl.com/categories/MYSQL/"/>
-    
-    
-      <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python之基础教程&amp;实战</title>
-    <link href="http://jianwl.com/2017/03/23/Python%E4%B9%8B%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B-%E5%AE%9E%E6%88%98/"/>
-    <id>http://jianwl.com/2017/03/23/Python之基础教程-实战/</id>
-    <published>2017-03-23T12:56:47.000Z</published>
-    <updated>2017-03-23T12:59:52.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本节主要是用来练习Python基本功，参考这篇文章<a href="http://www.runoob.com/python/python-tutorial.html" target="_blank" rel="external">Python基础教程</a>，另外根据教程，写了些小练习<a href="http://git.oschina.net/shuangziliuyun/Python_Basic" target="_blank" rel="external">在这个项目中的chapter_02</a>。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;本节主要是用来练习Python基本功，参考这篇文章&lt;a href=&quot;http://www.runoob.com/python/python-
-    
-    </summary>
-    
-      <category term="Python" scheme="http://jianwl.com/categories/Python/"/>
-    
-    
-      <category term="Python" scheme="http://jianwl.com/tags/Python/"/>
     
   </entry>
   
