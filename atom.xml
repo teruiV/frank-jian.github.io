@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-04-19T13:12:46.000Z</updated>
+  <updated>2017-04-19T15:03:34.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JS之运算符</title>
+    <link href="http://jianwl.com/2017/04/19/JS%E4%B9%8B%E8%BF%90%E7%AE%97%E7%AC%A6/"/>
+    <id>http://jianwl.com/2017/04/19/JS之运算符/</id>
+    <published>2017-04-19T14:18:37.000Z</published>
+    <updated>2017-04-19T15:03:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本节主要来学习<code>JS</code>常用的一些运算符，如<code>Spread运算符</code>、<code>typeof运算符</code>、<code>instanceof运算符</code>。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1、Spread运算符「…」"><a href="#1、Spread运算符「…」" class="headerlink" title="1、Spread运算符「…」"></a>1、Spread运算符「…」</h4><p><code>场景：</code> 用于赋值数组的部分</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-19/45847198-file_1492611937925_105b8.png" alt=""></p>
+<h4 id="2、typeof运算符"><a href="#2、typeof运算符" class="headerlink" title="2、typeof运算符"></a>2、typeof运算符</h4><p><code>场景：</code>返回一个用于标识表达式的数据类型的字符串,<code>typeof</code> 返回六种可能的值：“数字”、“字符串”、“布尔值”、“对象”、“函数”和“未定义”</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-19/46037312-file_1492612991793_11991.png" alt=""></p>
+<h4 id="3、三元运算符「-」"><a href="#3、三元运算符「-」" class="headerlink" title="3、三元运算符「?:」"></a>3、三元运算符「?:」</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-19/48353265-file_1492613129543_743e.png" alt=""></p>
+<h4 id="4、IN运算符"><a href="#4、IN运算符" class="headerlink" title="4、IN运算符"></a>4、<code>IN</code>运算符</h4><p><code>场景：</code>测试一个对象中是否存在一种属性。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-19/92241650-file_1492613451214_106bc.png" alt=""></p>
+<h4 id="5、instanceof运算符"><a href="#5、instanceof运算符" class="headerlink" title="5、instanceof运算符"></a>5、<code>instanceof</code>运算符</h4><p><code>场景：</code>返回一个布尔值，该值指示一个对象是否为特定类的一个实例。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-19/74839833-file_1492613994605_12dec.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://msdn.microsoft.com/zh-cn/library/dn919259(v=vs.94" target="_blank" rel="external">MSDN之运算符</a>.aspx)</li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Data_structures" target="_blank" rel="external">MSDN之JS数据结构</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;本节主要来学习&lt;code&gt;JS&lt;/code&gt;常用的一些运算符，如&lt;code&gt;Spread运算符&lt;/code&gt;、&lt;code&gt;typeof运算符
+    
+    </summary>
+    
+      <category term="JavaScript" scheme="http://jianwl.com/categories/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://jianwl.com/tags/JavaScript/"/>
+    
+  </entry>
   
   <entry>
     <title>Redux入门</title>
@@ -1159,41 +1195,6 @@
     
     
       <category term="Linux" scheme="http://jianwl.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MYSQL允许远程登录</title>
-    <link href="http://jianwl.com/2017/03/25/MYSQL%E5%85%81%E8%AE%B8%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95/"/>
-    <id>http://jianwl.com/2017/03/25/MYSQL允许远程登录/</id>
-    <published>2017-03-25T07:27:58.000Z</published>
-    <updated>2017-03-25T08:27:17.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在虚拟机安装了<code>MYSQL</code>并启动服务，在虚拟机中能够登录到<code>MYSQL</code>,但通过<code>Sequal Pro</code>远程登录虚拟机中的MYSQL却始终连不上。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-防火墙对外增加3306端口"><a href="#1-防火墙对外增加3306端口" class="headerlink" title="1. 防火墙对外增加3306端口"></a>1. 防火墙对外增加<code>3306端口</code></h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-25/76701170-file_1490427451254_f1e7.png" alt=""></p>
-<h4 id="2-重启防火墙"><a href="#2-重启防火墙" class="headerlink" title="2. 重启防火墙"></a>2. 重启防火墙</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service iptables restart</div></pre></td></tr></table></figure>
-<h4 id="3-测试本地能否连上服务器的3306端口"><a href="#3-测试本地能否连上服务器的3306端口" class="headerlink" title="3. 测试本地能否连上服务器的3306端口"></a>3. 测试本地能否连上服务器的<code>3306</code>端口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 10.211.55.3为服务端的IP,3306为MYSQL服务的端口</div><div class="line">telnet 10.211.55.3 3306</div></pre></td></tr></table></figure>
-<p>实战:</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-25/72064355-file_1490429141344_8010.png" alt=""></p>
-<h4 id="4-配置MYSQL允许远程登录"><a href="#4-配置MYSQL允许远程登录" class="headerlink" title="4. 配置MYSQL允许远程登录"></a>4. 配置MYSQL允许远程登录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 登录MYSQL</div><div class="line">mysql -u root -p</div><div class="line"></div><div class="line"># 允许MYSQL远程登录</div><div class="line">GRANT ALL PRIVILEGES ON *.* TO &apos;root&apos;@&apos;%&apos; IDENTIFIED BY &apos;root&apos; WITH GRANT OPTION;</div><div class="line"></div><div class="line"># 刷新权限</div><div class="line">flush privileges;</div></pre></td></tr></table></figure>
-<p>实战：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-25/82480994-file_1490428841050_fdc5.png" alt=""></p>
-<h4 id="5-本机Sequel-Pro登录远程MYSQL"><a href="#5-本机Sequel-Pro登录远程MYSQL" class="headerlink" title="5. 本机Sequel Pro登录远程MYSQL"></a>5. 本机<code>Sequel Pro</code>登录远程MYSQL</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-25/43607247-file_1490430126336_10444.png" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="http://www.cnblogs.com/yjdcoder/p/5927358.html" target="_blank" rel="external">navicat连接虚拟机(centos)中的mysql</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;在虚拟机安装了&lt;code&gt;MYSQL&lt;/code&gt;并启动服务，在虚拟机中能够登录到&lt;code&gt;MYSQL&lt;/code&gt;,但通过&lt;code&gt;S
-    
-    </summary>
-    
-      <category term="MYSQL" scheme="http://jianwl.com/categories/MYSQL/"/>
-    
-    
-      <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
     
   </entry>
   
