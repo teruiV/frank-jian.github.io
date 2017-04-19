@@ -68,13 +68,14 @@ Redux运行流程
 Redux三大原则1. 单一数据源在Redux中，一个应用永远只有唯一的数据源，这样做的好处在于整个应用状态都保存在一个对象中，这样我们随时可以提取出整个应用的状态进行持久化。同">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redux入门">
-<meta property="og:url" content="http://jianwl.com/2017/04/11/Redux入门/index.html">
+<meta property="og:url" content="http://jianwl.com/2017/04/19/Redux入门/index.html">
 <meta property="og:site_name" content="记录点滴成长">
 <meta property="og:description" content="前言Redux是参考Flux架构思想的库，对Flux许多冗余的部分做了简化。Redux本身只把自己定位成一个可预测的状态容器，接下来学习Redux的三大原则、并实战Redux和React如何结合使用。
 Redux运行流程
 Redux三大原则1. 单一数据源在Redux中，一个应用永远只有唯一的数据源，这样做的好处在于整个应用状态都保存在一个对象中，这样我们随时可以提取出整个应用的状态进行持久化。同">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-11/53696420-file_1491870916439_e756.png">
-<meta property="og:updated_time" content="2017-04-11T05:00:06.000Z">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-19/34742256-file_1492607123287_af13.png">
+<meta property="og:updated_time" content="2017-04-19T13:11:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redux入门">
 <meta name="twitter:description" content="前言Redux是参考Flux架构思想的库，对Flux许多冗余的部分做了简化。Redux本身只把自己定位成一个可预测的状态容器，接下来学习Redux的三大原则、并实战Redux和React如何结合使用。
@@ -261,7 +262,7 @@ Redux三大原则1. 单一数据源在Redux中，一个应用永远只有唯一�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/04/11/Redux入门/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/04/19/Redux入门/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -297,8 +298,8 @@ Redux三大原则1. 单一数据源在Redux中，一个应用永远只有唯一�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-11T08:01:49+08:00">
-                2017-04-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-19T08:01:49+08:00">
+                2017-04-19
               </time>
             
 
@@ -338,8 +339,8 @@ Redux三大原则1. 单一数据源在Redux中，一个应用永远只有唯一�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/04/11/Redux入门/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/11/Redux入门/" itemprop="commentCount"></span>
+                <a href="/2017/04/19/Redux入门/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/19/Redux入门/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -399,40 +400,22 @@ Redux三大原则1. 单一数据源在Redux中，一个应用永远只有唯一�
 </tr>
 </tbody>
 </table>
-<h3 id="Redux与组件"><a href="#Redux与组件" class="headerlink" title="Redux与组件"></a>Redux与组件</h3><p>Redux有两种组件 1️⃣ 容器型组件，表示组件是怎么工作的。 2️⃣ 展示型组件表示组件是怎么渲染的。它包含<code>Virtutal DOM</code>的修改和组合或组件的样式，不依赖任何形式的<code>store</code>。</p>
-<p>容器型组件与展示型组件的对比：</p>
-<table>
-<thead>
-<tr>
-<th>目的</th>
-<th>展示型组件「标签、样式」</th>
-<th>容器型组件「获取数据、更新状态」</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>是否感知Redux</td>
-<td>否</td>
-<td>是</td>
-<td></td>
-</tr>
-<tr>
-<td>要获取数据</td>
-<td>从<code>this.props</code>中获取</td>
-<td>使用<code>connect</code>从<code>Redux</code>状态树中获取</td>
-</tr>
-<tr>
-<td>要改变数据</td>
-<td>调用从<code>props</code>中传入的<code>action creator</code></td>
-<td>直接分发任意<code>action</code></td>
-</tr>
-<tr>
-<td>实际创建于</td>
-<td>开发者自身</td>
-<td>由<code>React Redux</code>创建</td>
-</tr>
-</tbody>
-</table>
+<h3 id="Redux实战-加减乘除"><a href="#Redux实战-加减乘除" class="headerlink" title="Redux实战 - 加减乘除"></a>Redux实战 - 加减乘除</h3><p><code>1、入口：index.js</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">import React from &apos;react&apos;</div><div class="line">import ReactDOM from &apos;react-dom&apos;</div><div class="line">import &#123; createStore &#125; from &apos;redux&apos;</div><div class="line">import Counter from &apos;./components/Counter&apos;</div><div class="line">import counter from &apos;./reducers&apos;</div><div class="line"></div><div class="line">const store = createStore(counter)</div><div class="line">const rootEl = document.getElementById(&apos;root&apos;)</div><div class="line"></div><div class="line">const render = () =&gt; ReactDOM.render(</div><div class="line">    &lt;Counter</div><div class="line">        value=&#123;store.getState()&#125;</div><div class="line">        onIncrement=&#123;() =&gt; store.dispatch(&#123; type: &apos;INCREMENT&apos; &#125;)&#125;</div><div class="line">        onDecrement=&#123;() =&gt; store.dispatch(&#123; type: &apos;DECREMENT&apos; &#125;)&#125;</div><div class="line">        onMutil=&#123;() =&gt; store.dispatch(&#123; type : &apos;MUTIL&apos;&#125;)&#125;</div><div class="line">        onDiv=&#123;() =&gt; store.dispatch(&#123; type: &apos;DIV&apos;&#125;)&#125;</div><div class="line">    /&gt;,</div><div class="line">    rootEl</div><div class="line">)</div><div class="line"></div><div class="line">render()</div><div class="line">store.subscribe(render)</div></pre></td></tr></table></figure>
+<p><code>2、纯函数：reducers/index.js</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">export default (state = 0, action) =&gt; &#123;</div><div class="line">  switch (action.type) &#123;</div><div class="line">    case &apos;INCREMENT&apos;:</div><div class="line">      return state + 1</div><div class="line">    case &apos;DECREMENT&apos;:</div><div class="line">      return state - 1</div><div class="line">    case &apos;MUTIL&apos;:</div><div class="line">      return state * 2</div><div class="line">    case &apos;DIV&apos;:</div><div class="line">      return state / 2</div><div class="line">    default:</div><div class="line">      return state</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>3、组件：components/Counter.js</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component, PropTypes &#125; from &apos;react&apos;</div><div class="line"></div><div class="line">class Counter extends Component &#123;</div><div class="line">    static propTypes = &#123;</div><div class="line">        value: PropTypes.number.isRequired,</div><div class="line">        onIncrement: PropTypes.func.isRequired,</div><div class="line">        onDecrement: PropTypes.func.isRequired,</div><div class="line">        onMutil: PropTypes.func.isRequired,</div><div class="line">        onDiv: PropTypes.func.isRequired</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    incrementIfOdd = () =&gt; &#123;</div><div class="line">        if (this.props.value % 2 !== 0) &#123;</div><div class="line">            this.props.onIncrement()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    incrementAsync = () =&gt; &#123;</div><div class="line">        setTimeout(this.props.onIncrement, 1000)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    render() &#123;</div><div class="line">        const &#123; value, onIncrement, onDecrement, onMutil, onDiv &#125; = this.props</div><div class="line">        return (</div><div class="line">            &lt;p&gt;</div><div class="line">                Clicked: &#123;value&#125; times</div><div class="line">                &#123;&apos; &apos;&#125;</div><div class="line">                &lt;button onClick=&#123;onIncrement&#125;&gt;</div><div class="line">                    +</div><div class="line">                &lt;/button&gt;</div><div class="line">                &#123;&apos; &apos;&#125;</div><div class="line">                &lt;button onClick=&#123;onDecrement&#125;&gt;</div><div class="line">                    -</div><div class="line">                &lt;/button&gt;</div><div class="line">                &#123;&apos; &apos;&#125;</div><div class="line">                &lt;button onClick=&#123;this.incrementIfOdd&#125;&gt;</div><div class="line">                    Increment if odd</div><div class="line">                &lt;/button&gt;</div><div class="line">                &#123;&apos; &apos;&#125;</div><div class="line">                &lt;button onClick=&#123;this.incrementAsync&#125;&gt;</div><div class="line">                    Increment async</div><div class="line">                &lt;/button&gt;</div><div class="line">                &#123;&apos; &apos;&#125;</div><div class="line">                &lt;button onClick=&#123;onMutil&#125;&gt;</div><div class="line">                    *</div><div class="line">                &lt;/button&gt;</div><div class="line">                &#123;&apos; &apos;&#125;</div><div class="line">                &lt;button onClick=&#123;onDiv&#125;&gt;</div><div class="line">                    /</div><div class="line">                &lt;/button&gt;</div><div class="line">            &lt;/p&gt;</div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">export default Counter</div></pre></td></tr></table></figure>
+<p>运行效果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-19/34742256-file_1492607123287_af13.png" alt=""></p>
+<p>Redux API接口介绍:</p>
+<p><code>createStore(reducer,[preloadedState], enhancer)</code> 创建一个 Redux store 来以存放应用中所有的 state。</p>
+<ul>
+<li><code>reducer</code>「function」接收两个参数，分别是当前的 state 树和要处理的 action，返回新的 state 树。</li>
+<li><code>[preloadedState]</code>「any」: 初始时的 state</li>
+<li><code>enhancer</code> 「function」: <code>Store enhancer</code> 是一个组合 store creator 的高阶函数，返回一个新的强化过的 store creator</li>
+</ul>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1、<a href="http://cn.redux.js.org/docs/api/createStore.html" target="_blank" rel="external">Redux中文文档</a></p>
 
       
     </div>
@@ -469,8 +452,8 @@ Redux三大原则1. 单一数据源在Redux中，一个应用永远只有唯一�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/09/React入门实战-二/" rel="next" title="React入门实战(二)">
-                <i class="fa fa-chevron-left"></i> React入门实战(二)
+              <a href="/2017/04/17/Java8之不常用却很有用的知识点/" rel="next" title="Java8之不常用却很有用的知识点">
+                <i class="fa fa-chevron-left"></i> Java8之不常用却很有用的知识点
               </a>
             
           </div>
@@ -478,10 +461,6 @@ Redux三大原则1. 单一数据源在Redux中，一个应用永远只有唯一�
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/17/Java8之不常用却很有用的知识点/" rel="prev" title="Java8之不常用却很有用的知识点">
-                Java8之不常用却很有用的知识点 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -507,8 +486,8 @@ Redux三大原则1. 单一数据源在Redux中，一个应用永远只有唯一�
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/04/11/Redux入门/"
-           data-title="Redux入门" data-url="http://jianwl.com/2017/04/11/Redux入门/">
+      <div class="ds-thread" data-thread-key="2017/04/19/Redux入门/"
+           data-title="Redux入门" data-url="http://jianwl.com/2017/04/19/Redux入门/">
       </div>
     
   </div>
@@ -621,7 +600,7 @@ Redux三大原则1. 单一数据源在Redux中，一个应用永远只有唯一�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redux运行流程"><span class="nav-number">2.</span> <span class="nav-text">Redux运行流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redux三大原则"><span class="nav-number">3.</span> <span class="nav-text">Redux三大原则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-单一数据源"><span class="nav-number">3.1.</span> <span class="nav-text">1. 单一数据源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-状态是只读的"><span class="nav-number">3.2.</span> <span class="nav-text">2. 状态是只读的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-状态修改均由纯函数完成"><span class="nav-number">3.3.</span> <span class="nav-text">3. 状态修改均由纯函数完成</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redux核心API"><span class="nav-number">4.</span> <span class="nav-text">Redux核心API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redux与组件"><span class="nav-number">5.</span> <span class="nav-text">Redux与组件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redux运行流程"><span class="nav-number">2.</span> <span class="nav-text">Redux运行流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redux三大原则"><span class="nav-number">3.</span> <span class="nav-text">Redux三大原则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-单一数据源"><span class="nav-number">3.1.</span> <span class="nav-text">1. 单一数据源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-状态是只读的"><span class="nav-number">3.2.</span> <span class="nav-text">2. 状态是只读的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-状态修改均由纯函数完成"><span class="nav-number">3.3.</span> <span class="nav-text">3. 状态修改均由纯函数完成</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redux核心API"><span class="nav-number">4.</span> <span class="nav-text">Redux核心API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redux实战-加减乘除"><span class="nav-number">5.</span> <span class="nav-text">Redux实战 - 加减乘除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
