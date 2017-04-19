@@ -1,0 +1,881 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="HTTP," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言TCP是网络编程的基础，这一节我们主要来学习协议分层、ARP、RARP、IP 、Mac地址、OSPF路由协议、硬件设备介绍。
+理论1. OSI 7层协议 &amp;amp; 各层的作用OSI参考模型分为7层，上下层之间进行交互时所遵循的约定叫接口，同一层之间的交互所遵循的约定叫协议。
+
+
+
+层
+分层名称
+功能
+每层功能概览
+
+
+
+
+7
+应用层
+针对特定应用的协议
+如：电子邮件 → 电子邮箱协议；文件传">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP之网络基础知识">
+<meta property="og:url" content="http://jianwl.com/2017/04/04/TCP之网络基础知识/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="前言TCP是网络编程的基础，这一节我们主要来学习协议分层、ARP、RARP、IP 、Mac地址、OSPF路由协议、硬件设备介绍。
+理论1. OSI 7层协议 &amp;amp; 各层的作用OSI参考模型分为7层，上下层之间进行交互时所遵循的约定叫接口，同一层之间的交互所遵循的约定叫协议。
+
+
+
+层
+分层名称
+功能
+每层功能概览
+
+
+
+
+7
+应用层
+针对特定应用的协议
+如：电子邮件 → 电子邮箱协议；文件传">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/76951531-file_1491280215483_aa6e.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/17373754-file_1491280668058_18508.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/4389953-file_1491281059377_14847.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/80710941-file_1491281893820_70a6.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/15647844-file_1491288228515_fbc6.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/84217771-file_1491288982288_790d.png">
+<meta property="og:updated_time" content="2017-04-04T07:40:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TCP之网络基础知识">
+<meta name="twitter:description" content="前言TCP是网络编程的基础，这一节我们主要来学习协议分层、ARP、RARP、IP 、Mac地址、OSPF路由协议、硬件设备介绍。
+理论1. OSI 7层协议 &amp;amp; 各层的作用OSI参考模型分为7层，上下层之间进行交互时所遵循的约定叫接口，同一层之间的交互所遵循的约定叫协议。
+
+
+
+层
+分层名称
+功能
+每层功能概览
+
+
+
+
+7
+应用层
+针对特定应用的协议
+如：电子邮件 → 电子邮箱协议；文件传">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/76951531-file_1491280215483_aa6e.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> TCP之网络基础知识 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/04/04/TCP之网络基础知识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/45643127-file_1491302803857_12baa.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                TCP之网络基础知识
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-04T11:38:28+08:00">
+                2017-04-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/04/TCP之网络基础知识/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/04/TCP之网络基础知识/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>TCP</code>是网络编程的基础，这一节我们主要来学习<code>协议分层</code>、<code>ARP</code>、<code>RARP</code>、<code>IP</code> 、<code>Mac地址</code>、<code>OSPF路由协议</code>、<code>硬件设备介绍</code>。</p>
+<h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><h4 id="1-OSI-7层协议-amp-各层的作用"><a href="#1-OSI-7层协议-amp-各层的作用" class="headerlink" title="1. OSI 7层协议 &amp; 各层的作用"></a>1. OSI 7层协议 &amp; 各层的作用</h4><p><code>OSI</code>参考模型分为7层，上下层之间进行交互时所遵循的约定叫<code>接口</code>，同一层之间的交互所遵循的约定叫<code>协议</code>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">层</th>
+<th style="text-align:center">分层名称</th>
+<th style="text-align:center">功能</th>
+<th style="text-align:center">每层功能概览</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">应用层</td>
+<td style="text-align:center">针对特定应用的协议</td>
+<td style="text-align:center">如：电子邮件 → 电子邮箱协议；文件传输 → 文件传输协议</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:center">表示层</td>
+<td style="text-align:center">设备固有数据格式和网络标准数据格式的转换</td>
+<td style="text-align:center">接收不同表现形式的信息，如文字流、图像、声音等</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">会话层</td>
+<td style="text-align:center">负责建立和断开通讯，以及<strong>数据的分割</strong>等数据传输相关的管理</td>
+<td style="text-align:center">何时建立连接，何时断开连接以及保持多久的连接？</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">传输层</td>
+<td style="text-align:center">只在通信双方的节点上进行处理，而无需再路由器上处理，起着可靠传输的作用。</td>
+<td style="text-align:center"><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/76951531-file_1491280215483_aa6e.png" alt=""></td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">网络层</td>
+<td style="text-align:center">将数据传输到目标地址，目标地址可以是多个网络通过路由器连接而成的某一个地址。这一层主要<strong>负责寻址</strong>和<strong>路由选择</strong>。</td>
+<td style="text-align:center"><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/17373754-file_1491280668058_18508.png" alt=""></td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">数据链路层</td>
+<td style="text-align:center">负责物理层面上的互联、节点之间的通信传输，将<code>0</code>、<code>1</code>序列划分为具有意义的数据帧传给对端</td>
+<td style="text-align:center"><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/4389953-file_1491281059377_14847.png" alt=""></td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">物理层</td>
+<td style="text-align:center">负责<code>0</code>、<code>1</code>比特流与电压高低、光的闪灭之间的互换</td>
+<td style="text-align:center"><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/80710941-file_1491281893820_70a6.png" alt=""></td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-一个请求的从发送到返回都经历了什么？"><a href="#2-一个请求的从发送到返回都经历了什么？" class="headerlink" title="2. 一个请求的从发送到返回都经历了什么？"></a>2. 一个请求的从发送到返回都经历了什么？</h4><p><code>HTTP请求「应用层」</code> → <code>DNS协议，域名映射IP</code> → <code>HTTP基于TCP/IP协议「传输层」</code> → <code>ARP协议获取接收端Mac地址 通过OSPF路由协议找到目标主机「网络层」</code> → <code>传输数据帧「数据链路层」</code> → <code>将计算机二进制 0、1信号 转换为电压的高低电平「物理层」</code></p>
+<h4 id="3-ARP"><a href="#3-ARP" class="headerlink" title="3. ARP"></a>3. ARP</h4><p>只要确定<code>IP</code>地址，就可以向这个目标地址发送<code>IP</code>数据报，然后在<strong>数据链路层</strong>，进行实际通信时需要每个IP地址所对应的<code>MAC</code>地址。</p>
+<p><code>ARP</code>是一个解决地址问题的协议，以目标<code>IP</code>地址作为线索，用来定位下一个应该接收数据分包的网络对应的<code>MAC</code>地址。如果目标主机不在同一个链路上，可以<strong>通过代理ARP的路由器</strong>将<code>ARP</code>请求转发给相邻网段。「注：<code>ARP</code>包会被路由器隔离，<code>ARP</code>只适用于<code>IPv4</code>,<code>IPv6</code>用<code>ICMpv6</code>」</p>
+<p>举例：</p>
+<p><code>主机A</code>为了获取<code>主机B</code>的<code>Mac</code>地址，通过广播发送一个<code>ARP</code>请求包「请求中包含<code>主机B</code>的<code>IP</code>地址」，由于广播的包可以被同一个链路上所有的主机或路由器接收，如果<code>ARP</code>请求包中的目标<code>IP</code>与自己的<code>IP</code>地址一致，那么这个节点就将自己的<code>Mac</code>地址塞入<code>ARP</code>响应包返回给<code>主机A</code>。</p>
+<h4 id="4-RARP"><a href="#4-RARP" class="headerlink" title="4. RARP"></a>4. RARP</h4><p><code>RARP</code>是将<code>ARP</code>反过来，从<code>MAC</code>地址定位IP地址的一种协议。</p>
+<h4 id="5-IP地址"><a href="#5-IP地址" class="headerlink" title="5. IP地址"></a>5. IP地址</h4><p><code>IP地址</code>处于网络层， 用于在<strong>连接到网络中的所有主机识别出进行通信的目标地址；</strong> <code>IP地址</code>由32位正整数来表示，每8位为一组，分4组，每组以<code>.</code>隔开；<code>IP地址</code>由<strong>网络标识</strong>和<strong>主机标识</strong>两部分组成。相同网段内的主机必须有相同的网络标识，主机标识不允许在同一个网段内重复出现。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/15647844-file_1491288228515_fbc6.png" alt=""></p>
+<p>目前引入子网以后，一个IP地址有了两种识别码，一个是<code>IP</code>本身，另一个是<code>子网掩码</code>。子网掩码对应<code>IP网络标识</code>部分的位全部为<code>1</code>，对应<code>IP地址主机识别</code>的部分则全部为<code>0</code>。</p>
+<p>举例：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/84217771-file_1491288982288_790d.png" alt=""></p>
+<h4 id="6-MAC地址"><a href="#6-MAC地址" class="headerlink" title="6. MAC地址"></a>6. MAC地址</h4><p><code>Mac</code>地址用于识别数据链路中的互连的节点，<code>Mac</code>地址长48比特，每个<strong>网卡</strong>都有一个唯一的<code>Mac</code>地址。</p>
+<h4 id="7-OSPF"><a href="#7-OSPF" class="headerlink" title="7. OSPF"></a>7. OSPF</h4><p><code>OSPF</code>为链路状态型路由器，相邻路由器之间交换链路状态生成网络拓扑信息，然后在根据这个拓扑信息生成路由控制表。<code>OSPF</code>给每条链路赋予一个权重，并始终选择一个权重最小的路径作为最终路由。「注：连接到同一个链路的路由器称作相邻路由器」</p>
+<h4 id="8-硬件设备"><a href="#8-硬件设备" class="headerlink" title="8. 硬件设备"></a>8. 硬件设备</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">设备</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">网卡</td>
+<td style="text-align:center">使计算机连网的设备</td>
+</tr>
+<tr>
+<td style="text-align:center">中继器</td>
+<td style="text-align:center">从物理上延长网络的设备，由电缆传过来的电信号或光信号经由中继放大器的波形调整和放大再传给另外一个电缆。</td>
+</tr>
+<tr>
+<td style="text-align:center">网桥/2层交换机</td>
+<td style="text-align:center">从数据链路层上延长网络的设备，它能识别数据链路层中的数据帧，并将这些数据帧临时存储于内存中，在重新生成信号作为一个全新帧给相连的另一个网段。</td>
+</tr>
+<tr>
+<td style="text-align:center">路由器/3层交换机</td>
+<td style="text-align:center">通过网络层转发分组数据的设备，路由器用于连接不同的数据链路。</td>
+</tr>
+<tr>
+<td style="text-align:center">4~7层交换机</td>
+<td style="text-align:center">处理传输层以上各层网络传输的设备</td>
+</tr>
+<tr>
+<td style="text-align:center">网关</td>
+<td style="text-align:center">转换协议的设备，例子：电脑和手机之间设置了一道网关，是的电脑和手机间可以互发邮件。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>图解TCP/IP - 竹下隆史</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/04/Vim之常用快捷键/" rel="next" title="Vim之常用快捷键">
+                <i class="fa fa-chevron-left"></i> Vim之常用快捷键
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/05/Intellij-常用快捷键/" rel="prev" title="Intellij 常用快捷键">
+                Intellij 常用快捷键 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/04/TCP之网络基础知识/"
+           data-title="TCP之网络基础知识" data-url="http://jianwl.com/2017/04/04/TCP之网络基础知识/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/45643127-file_1491302803857_12baa.png"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">203</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理论"><span class="nav-number">2.</span> <span class="nav-text">理论</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-OSI-7层协议-amp-各层的作用"><span class="nav-number">2.1.</span> <span class="nav-text">1. OSI 7层协议 & 各层的作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-一个请求的从发送到返回都经历了什么？"><span class="nav-number">2.2.</span> <span class="nav-text">2. 一个请求的从发送到返回都经历了什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-ARP"><span class="nav-number">2.3.</span> <span class="nav-text">3. ARP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-RARP"><span class="nav-number">2.4.</span> <span class="nav-text">4. RARP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-IP地址"><span class="nav-number">2.5.</span> <span class="nav-text">5. IP地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-MAC地址"><span class="nav-number">2.6.</span> <span class="nav-text">6. MAC地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-OSPF"><span class="nav-number">2.7.</span> <span class="nav-text">7. OSPF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-硬件设备"><span class="nav-number">2.8.</span> <span class="nav-text">8. 硬件设备</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jianwl"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

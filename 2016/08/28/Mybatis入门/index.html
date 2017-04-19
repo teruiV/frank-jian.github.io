@@ -1,0 +1,753 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="MYSQL," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言MyBatis是一个Java持久化框架，它通过XML描述符或注解把对象与存储过程或SQL语句关联起来。与JDBC相比，Mybatis简化了相关代码：SQL语句在一行代码就能执行，MyBatis提供了一个映射引擎，声明式的把SQL语句执行结果与对象数映射起来。
+样例pom.xml
+123456789101112131415161718192021222324&amp;lt;dependencies&amp;gt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis入门">
+<meta property="og:url" content="http://jianwl.com/2016/08/28/Mybatis入门/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="前言MyBatis是一个Java持久化框架，它通过XML描述符或注解把对象与存储过程或SQL语句关联起来。与JDBC相比，Mybatis简化了相关代码：SQL语句在一行代码就能执行，MyBatis提供了一个映射引擎，声明式的把SQL语句执行结果与对象数映射起来。
+样例pom.xml
+123456789101112131415161718192021222324&amp;lt;dependencies&amp;gt">
+<meta property="og:updated_time" content="2016-10-01T13:10:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mybatis入门">
+<meta name="twitter:description" content="前言MyBatis是一个Java持久化框架，它通过XML描述符或注解把对象与存储过程或SQL语句关联起来。与JDBC相比，Mybatis简化了相关代码：SQL语句在一行代码就能执行，MyBatis提供了一个映射引擎，声明式的把SQL语句执行结果与对象数映射起来。
+样例pom.xml
+123456789101112131415161718192021222324&amp;lt;dependencies&amp;gt">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> Mybatis入门 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2016/08/28/Mybatis入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/45643127-file_1491302803857_12baa.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Mybatis入门
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-28T00:50:09+08:00">
+                2016-08-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MYSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MYSQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/28/Mybatis入门/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/28/Mybatis入门/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>MyBatis</code>是一个<code>Java</code>持久化框架，它通过XML描述符或注解把对象与存储过程或SQL语句关联起来。与<code>JDBC</code>相比，<code>Mybatis</code>简化了相关代码：<code>SQL</code>语句在一行代码就能执行，<code>MyBatis</code>提供了一个映射引擎，声明式的把<code>SQL</code>语句执行结果与对象数映射起来。</p>
+<h3 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h3><p><code>pom.xml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;dependencies&gt;</div><div class="line">     &lt;!--mybatis--&gt;</div><div class="line">     &lt;dependency&gt;</div><div class="line">         &lt;groupId&gt;org.mybatis&lt;/groupId&gt;</div><div class="line">         &lt;artifactId&gt;mybatis&lt;/artifactId&gt;</div><div class="line">         &lt;version&gt;3.4.1&lt;/version&gt;</div><div class="line">     &lt;/dependency&gt;</div><div class="line">     &lt;dependency&gt;</div><div class="line">         &lt;groupId&gt;mysql&lt;/groupId&gt;</div><div class="line">         &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</div><div class="line">         &lt;version&gt;6.0.3&lt;/version&gt;</div><div class="line">     &lt;/dependency&gt;</div><div class="line">     &lt;dependency&gt;</div><div class="line">         &lt;groupId&gt;junit&lt;/groupId&gt;</div><div class="line">         &lt;artifactId&gt;junit&lt;/artifactId&gt;</div><div class="line">         &lt;version&gt;4.12&lt;/version&gt;</div><div class="line">     &lt;/dependency&gt;</div><div class="line">     &lt;!--Gson--&gt;</div><div class="line">     &lt;dependency&gt;</div><div class="line">         &lt;groupId&gt;com.google.code.gson&lt;/groupId&gt;</div><div class="line">         &lt;artifactId&gt;gson&lt;/artifactId&gt;</div><div class="line">         &lt;version&gt;2.7&lt;/version&gt;</div><div class="line">     &lt;/dependency&gt;</div><div class="line"> &lt;/dependencies&gt;</div></pre></td></tr></table></figure>
+<p><code>数据模型：Admin.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Admin &#123;            </div><div class="line">    private Integer id;         </div><div class="line">    private String username;    </div><div class="line">    private String password;    </div><div class="line">    private Date createdTime;   </div><div class="line">    private Date updatedTime; </div><div class="line">    </div><div class="line">    // 此处省略Getter &amp; Setter方法</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>接口：AdminDao.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface AdminDao &#123;</div><div class="line">    Admin getAdminById(SqlSession sqlSession,Integer id);</div><div class="line">    Integer saveAdmin(SqlSession sqlSession,Admin admin);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>映射类：AdminMapper.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface AdminMapper &#123;</div><div class="line">    Admin getAdminById(Integer id);</div><div class="line">    Integer saveAdmin(Admin admin);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>接口实现类:AdminDaoImpl.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class AdminDaoImpl implements AdminDao &#123;</div><div class="line">    @Override</div><div class="line">    public Admin getAdminById(SqlSession sqlSession, Integer id) &#123;</div><div class="line">        AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);</div><div class="line">        return mapper.getAdminById(id);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Integer saveAdmin(SqlSession sqlSession, Admin admin) &#123;</div><div class="line">        AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);</div><div class="line">        return mapper.saveAdmin(admin);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>生成sqlSessionFactory工具类:MybatisUtil.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public class MybatisUtil &#123;</div><div class="line">    private static SqlSessionFactory sqlSessionFactory = null;</div><div class="line">    private final static String LOCAL_JDBC = &quot;jdbc/mybatis-conf.xml&quot;;</div><div class="line">    static &#123;</div><div class="line">        System.out.println(&quot;====INIT Mybatis BEGIN ====&quot;);</div><div class="line">        Reader rdr;</div><div class="line">        try &#123;</div><div class="line">            rdr = Resources.getResourceAsReader(LOCAL_JDBC);</div><div class="line">            sqlSessionFactory = new SqlSessionFactoryBuilder().build(rdr);</div><div class="line">            rdr.close();</div><div class="line">        &#125; catch (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        System.out.println(&quot;====INIT Mybatis END ====&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static SqlSessionFactory getSqlSessionFactory()&#123;</div><div class="line">        return sqlSessionFactory;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>MyBatis核心配置：jdbc/mybatis-conf.xml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</div><div class="line">&lt;!DOCTYPE configuration</div><div class="line">        PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;</div><div class="line">        &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;</div><div class="line"></div><div class="line">&lt;configuration&gt;</div><div class="line">    &lt;properties resource=&quot;mysql/config.properties&quot;&gt;&lt;/properties&gt;</div><div class="line"></div><div class="line">    &lt;!--别名--&gt;</div><div class="line">    &lt;typeAliases&gt;</div><div class="line">        &lt;typeAlias type=&quot;domain.Admin&quot; alias=&quot;Admin&quot;/&gt;</div><div class="line">    &lt;/typeAliases&gt;</div><div class="line"></div><div class="line">    &lt;!--3套配置环境,具体使用那一套可由参数设置--&gt;</div><div class="line">    &lt;environments default=&quot;$&#123;environment&#125;&quot;&gt;</div><div class="line">        &lt;environment id=&quot;local&quot;&gt;</div><div class="line">            &lt;transactionManager type=&quot;$&#123;transactionManager_type&#125;&quot;/&gt;</div><div class="line">            &lt;dataSource type=&quot;$&#123;datasource_type&#125;&quot;&gt;</div><div class="line">                &lt;property name=&quot;driver&quot; value=&quot;$&#123;driver&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;url&quot; value=&quot;$&#123;hermes-url&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;username&quot; value=&quot;$&#123;hermes-username&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;password&quot; value=&quot;$&#123;hermes-password&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolMaximumIdleConnections&quot; value=&quot;$&#123;jdbc.minPoolSize&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolMaximumActiveConnections&quot; value=&quot;$&#123;jdbc.maxPoolSize&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolTimeToWait&quot; value=&quot;$&#123;jdbc.maxIdleTime&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolPingQuery&quot; value=&quot;SELECT NOW()&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolPingEnabled&quot; value=&quot;true&quot; /&gt;</div><div class="line">            &lt;/dataSource&gt;</div><div class="line">        &lt;/environment&gt;</div><div class="line">        &lt;environment id=&quot;development&quot;&gt;</div><div class="line">            &lt;transactionManager type=&quot;$&#123;transactionManager_type&#125;&quot;/&gt;</div><div class="line">            &lt;dataSource type=&quot;$&#123;datasource_type&#125;&quot;&gt;</div><div class="line">                &lt;property name=&quot;driver&quot; value=&quot;$&#123;driver&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;url&quot; value=&quot;$&#123;interact-url&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;username&quot; value=&quot;$&#123;hermes-username&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;password&quot; value=&quot;$&#123;hermes-password&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolMaximumIdleConnections&quot; value=&quot;$&#123;jdbc.minPoolSize&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolMaximumActiveConnections&quot; value=&quot;$&#123;jdbc.maxPoolSize&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolTimeToWait&quot; value=&quot;$&#123;jdbc.maxIdleTime&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolPingQuery&quot; value=&quot;SELECT NOW()&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolPingEnabled&quot; value=&quot;true&quot; /&gt;</div><div class="line">            &lt;/dataSource&gt;</div><div class="line">        &lt;/environment&gt;</div><div class="line">        &lt;environment id=&quot;production&quot;&gt;</div><div class="line">            &lt;transactionManager type=&quot;$&#123;transactionManager_type&#125;&quot;/&gt;</div><div class="line">            &lt;dataSource type=&quot;$&#123;datasource_type&#125;&quot;&gt;</div><div class="line">                &lt;property name=&quot;driver&quot; value=&quot;$&#123;driver&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;url&quot; value=&quot;$&#123;hermes-url&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;username&quot; value=&quot;$&#123;hermes-username&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;password&quot; value=&quot;$&#123;hermes-password&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolMaximumIdleConnections&quot; value=&quot;$&#123;jdbc.minPoolSize&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolMaximumActiveConnections&quot; value=&quot;$&#123;jdbc.maxPoolSize&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolTimeToWait&quot; value=&quot;$&#123;jdbc.maxIdleTime&#125;&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolPingQuery&quot; value=&quot;SELECT NOW()&quot; /&gt;</div><div class="line">                &lt;property name=&quot;poolPingEnabled&quot; value=&quot;true&quot; /&gt;</div><div class="line">            &lt;/dataSource&gt;</div><div class="line">        &lt;/environment&gt;</div><div class="line">    &lt;/environments&gt;</div><div class="line"></div><div class="line">    &lt;!--映射表--&gt;</div><div class="line">    &lt;mappers&gt;</div><div class="line">        &lt;mapper resource=&quot;mapper/AdminMapper.xml&quot;/&gt;</div><div class="line">    &lt;/mappers&gt;</div><div class="line"></div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<p><code>数据库参数值：mysql/config.properties</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">environment=local</div><div class="line">transactionManager_type=JDBC</div><div class="line">datasource_type=POOLED</div><div class="line">driver=com.mysql.jdbc.Driver</div><div class="line"></div><div class="line">jdbc.initialPoolSize=1</div><div class="line">jdbc.minPoolSize=1</div><div class="line">jdbc.maxPoolSize=5</div><div class="line">jdbc.acquireIncrement=1</div><div class="line">jdbc.maxIdleTime=200</div><div class="line">jdbc.checkoutTimeout=3000</div><div class="line"></div><div class="line">hermes-url=jdbc:mysql://localhost/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull</div><div class="line">hermes-username=root</div><div class="line">hermes-password=</div></pre></td></tr></table></figure>
+<p><code>XML映射文件:mapper/AdminMapper.xml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</div><div class="line">        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</div><div class="line">&lt;mapper namespace=&quot;mapper.AdminMapper&quot;&gt;</div><div class="line">    &lt;resultMap type=&quot;Admin&quot; id=&quot;admin&quot;&gt;</div><div class="line">        &lt;id property=&quot;id&quot; column=&quot;id&quot; /&gt;</div><div class="line">        &lt;result property=&quot;username&quot; column=&quot;username&quot;/&gt;</div><div class="line">        &lt;result property=&quot;password&quot; column=&quot;password&quot;/&gt;</div><div class="line">        &lt;result property=&quot;createdTime&quot; column=&quot;created_time&quot;/&gt;</div><div class="line">        &lt;result property=&quot;updatedTime&quot; column=&quot;updated_time&quot;/&gt;</div><div class="line">    &lt;/resultMap&gt;</div><div class="line"></div><div class="line">    &lt;select id=&quot;getAdminById&quot; parameterType=&quot;integer&quot; resultMap=&quot;admin&quot;&gt;</div><div class="line">        SELECT *</div><div class="line">        FROM admin</div><div class="line">        WHERE id = #&#123;id&#125;</div><div class="line">    &lt;/select&gt;</div><div class="line"></div><div class="line">    &lt;insert id=&quot;saveAdmin&quot; parameterType=&quot;domain.Admin&quot;&gt;</div><div class="line">        INSERT INTO ADMIN(username)</div><div class="line">        VALUES (#&#123;username&#125;)</div><div class="line">    &lt;/insert&gt;</div><div class="line">&lt;/mapper&gt;</div></pre></td></tr></table></figure>
+<p><code>数据库创建表</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE `admin` (</div><div class="line">  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,</div><div class="line">  `username` varchar(20) DEFAULT &apos;&apos;,</div><div class="line">  `password` varchar(20) DEFAULT &apos;&apos;,</div><div class="line">  `created_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,</div><div class="line">  `updated_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (`id`)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8;</div></pre></td></tr></table></figure>
+<p><code>Test测试样例</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">public class AdminTest &#123;</div><div class="line">   private static final SqlSessionFactory sqlSessionFactory = MybatisUtil.getSqlSessionFactory();</div><div class="line">   AdminDao adminDao = new AdminDaoImpl();</div><div class="line"></div><div class="line">   @Test</div><div class="line">   public void saveAdmin()&#123;</div><div class="line">      Admin admin = new Admin();</div><div class="line">      admin.setUsername(&quot;吴芳&quot;);</div><div class="line">      admin.setPassword(&quot;123456&quot;);</div><div class="line">      SqlSession sqlSession = sqlSessionFactory.openSession();</div><div class="line">      adminDao.saveAdmin(sqlSession,admin);</div><div class="line">      sqlSession.commit();</div><div class="line">      sqlSession.close();</div><div class="line">      System.out.println(&quot;INSERT ADMIN&quot;);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   @Test</div><div class="line">   public void getAdminById()&#123;</div><div class="line">      Integer id = 1;</div><div class="line">      SqlSession sqlSession = sqlSessionFactory.openSession();</div><div class="line">      Admin admin = adminDao.getAdminById(sqlSession,id);</div><div class="line">      System.out.println(new Gson().toJson(admin));</div><div class="line">      sqlSession.close();</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>按照以上步骤，我们已经把Mybatis的运行环境搭建起来了，后续将研究MyBatis的特性。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="https://zh.wikipedia.org/wiki/MyBatis" target="_blank" rel="external">Mybatis维基百科</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MYSQL/" rel="tag"># MYSQL</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/27/Mybatis之动态SQL/" rel="next" title="Mybatis之动态SQL">
+                <i class="fa fa-chevron-left"></i> Mybatis之动态SQL
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/28/MYSQL之索引/" rel="prev" title="MYSQL之索引">
+                MYSQL之索引 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/28/Mybatis入门/"
+           data-title="Mybatis入门" data-url="http://jianwl.com/2016/08/28/Mybatis入门/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/45643127-file_1491302803857_12baa.png"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">203</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样例"><span class="nav-number">2.</span> <span class="nav-text">样例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jianwl"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
