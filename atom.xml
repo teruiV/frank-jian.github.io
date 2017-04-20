@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-04-20T11:04:54.000Z</updated>
+  <updated>2017-04-20T12:06:57.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://jianwl.com/2017/04/20/JS%E4%B9%8B%E6%98%93%E9%94%99%E7%82%B9/"/>
     <id>http://jianwl.com/2017/04/20/JS之易错点/</id>
     <published>2017-04-19T23:37:56.000Z</published>
-    <updated>2017-04-20T11:04:54.000Z</updated>
+    <updated>2017-04-20T12:06:57.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>刚接触JS语法，有许多易出错的点，将这些点记录下来，备忘。</p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-var变量声明提升"><a href="#1-var变量声明提升" class="headerlink" title="1. var变量声明提升"></a>1. var变量声明提升</h4><p>声明变量有三种方式：</p>
@@ -45,7 +45,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// 返回文字表达式时应当用圆括号将其包起来：</div><div class="line">params =&gt; (&#123;foo: bar&#125;)</div><div class="line"></div><div class="line">// 支持 Rest parameters 和 default parameters</div><div class="line">(param1, param2, ...rest) =&gt; &#123; statements &#125;</div><div class="line">(param1 = defaultValue1, param2, ...,paramN = defaultValueN ) =&gt; &#123; statements &#125;</div><div class="line"></div><div class="line">// 支持参数列表中的解构赋值</div><div class="line">var f = ([a,b] = [1,2],&#123;x: c&#125; = &#123;x: a+b&#125;) =&gt; a + b + c;</div></pre></td></tr></table></figure>
 <p><code>案例1</code></p>
 <p><img src="http://i1.piimg.com/567571/30e0246c31be8206.png" alt=""></p>
-<p><code>案例2</code></p>
 <h4 id="5-解构"><a href="#5-解构" class="headerlink" title="5. 解构"></a>5. 解构</h4><p><img src="http://i2.muimg.com/567571/b29447a502915ebf.png" alt=""></p>
 <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Grammar_and_types#变量声明提升(Variable_hoisting" target="_blank" rel="external">MSDN之JS基础教程</a>)</li>
