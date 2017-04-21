@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-04-20T12:06:57.000Z</updated>
+  <updated>2017-04-21T08:01:06.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,92 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Redux入门教程(二)</title>
+    <link href="http://jianwl.com/2017/04/21/Redux%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-%E4%BA%8C/"/>
+    <id>http://jianwl.com/2017/04/21/Redux入门教程-二/</id>
+    <published>2017-04-21T02:11:40.000Z</published>
+    <updated>2017-04-21T08:01:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上一篇文章<a href="http://jianwl.com/2017/04/19/Redux%E5%85%A5%E9%97%A8/#more">Redux入门</a>，主要偏于实战，这一节主要介绍Redux的基本概念 &amp; API &amp; Reducer拆分。</p>
+<h3 id="设计思想"><a href="#设计思想" class="headerlink" title="设计思想"></a>设计思想</h3><p><code>Redux</code>的设计思想很简单，就两句话。</p>
+<blockquote>
+<p>(1) Web 应用是一个状态机，视图与状态是一一对应的。</p>
+<p>(2) 所有的状态，保存在一个对象里面。</p>
+</blockquote>
+<h3 id="基本概念-amp-API"><a href="#基本概念-amp-API" class="headerlink" title="基本概念 &amp; API"></a>基本概念 &amp; API</h3><h4 id="1、Store"><a href="#1、Store" class="headerlink" title="1、Store"></a>1、Store</h4><p><code>Store</code>就是保存数据的地方，你可以把它看成一个容器，整个应用只能有一个<code>Store</code>。<code>Redux</code>提供<code>createStore</code>这个函数，用来生成<code>Store</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import &#123; createStore &#125; from &apos;redux&apos;;</div><div class="line">const store = createStore(fn);</div></pre></td></tr></table></figure>
+<p>上面代码中，<code>createStore</code>函数接受另一个函数作为参数，返回新生成的<code>Store</code>对象。</p>
+<h4 id="2、State"><a href="#2、State" class="headerlink" title="2、State"></a>2、State</h4><p><code>Store</code>对象包含所有数据，如果想得到某个时点的数据，就要对Store生成快照。这种时点的数据集合，就叫<code>State</code>。当前时刻的<code>State</code>，可以通过<code>store.getState()</code>拿到。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import &#123; createStore &#125; from &apos;redux&apos;</div><div class="line">const store = createStore(fn);</div><div class="line">const state = store.getState();</div></pre></td></tr></table></figure>
+<p><code>Redux</code>规定，一个<code>State</code>对应一个<code>View</code>，只要<code>State</code>相同，<code>View</code>就相同，你知道<code>State</code>，就知道<code>View</code>是什么样。</p>
+<h4 id="3、Action"><a href="#3、Action" class="headerlink" title="3、Action"></a>3、Action</h4><p><code>State</code>的变化，会导致<code>View</code>的变化，但是，用户接触不到<code>State</code>，只能接触到<code>View</code>，所以<code>State</code>变化必须是<code>View</code>导致的，<code>Action</code>就是<code>View</code>发出的通知，表示<code>State</code>应该要发送变化了。</p>
+<p><code>Action</code>是一个对象，其中<code>type</code>属性是必须的，表示<code>Action</code>的名称，其他属性可以自由设置，社区有一个<a href="https://github.com/acdlite/flux-standard-action" target="_blank" rel="external">规范</a>可以参考。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">const action = &#123;</div><div class="line">	type: &apos;ADD_TODO&apos;,</div><div class="line">	payload: &apos;Learn Redux&apos;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>上面代码中，<code>Action</code>的名称是<code>ADD_TODO</code>，它携带的信息是字符串<code>Learn Redux</code>。可以这样理解，<code>Action</code>描述当前发生的事情，改变<code>State</code>的唯一方法，就是使用<code>Action</code>，它会运送数据到<code>Store</code>。</p>
+<h4 id="4、Action-Creator"><a href="#4、Action-Creator" class="headerlink" title="4、Action Creator"></a>4、Action Creator</h4><p><code>View</code>要发送多少信息，就会有多少种<code>Action</code>，如果都手写，会很麻烦，可以定义一个函数来生成<code>Action</code>，这个函数就叫<code>Action Creator</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">const ADD_TODO = &apos;添加 TODO&apos;；</div><div class="line"></div><div class="line">function addTodo(text) &#123;</div><div class="line">	return &#123;</div><div class="line">		type: ADD_TODO,</div><div class="line">		text</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">const action = addTodo(&apos;Learn Redux&apos;);</div></pre></td></tr></table></figure>
+<p>上面代码中,<code>addTodo</code>函数就是一个<code>Action Creator</code>。</p>
+<h4 id="5、store-dispatch"><a href="#5、store-dispatch" class="headerlink" title="5、store.dispatch()"></a>5、store.dispatch()</h4><p><code>store.dispatch()</code>是View发出Action的唯一方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import &#123; createStore &#125; from &apos;redux&apos;;</div><div class="line">const store = createStore(fn);</div><div class="line"></div><div class="line">store.dispatch(&#123;</div><div class="line">	type: &apos;ADD_TODO&apos;,</div><div class="line">	payload: &apos;Learn Redux&apos;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上面代码中，<code>store.dispatch</code>接受一个Action对象作为参数，将他发送出去。<br>结合 <code>Action Creator</code>，这段代码可以改写如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">store.dispatch(addTodo(‘Learn Redux’));</div></pre></td></tr></table></figure>
+<h4 id="6、Reducer"><a href="#6、Reducer" class="headerlink" title="6、Reducer"></a>6、Reducer</h4><p><code>Store</code>收到<code>Action</code>以后，必须给出一个新的<code>State</code>，这样<code>View</code>才会发生变化，这种<code>State</code>的计算过程就叫做<code>Reducer</code>。<code>Reducer</code>是一个函数，它接受<code>Action</code>和当前<code>State</code>作为参数，返回一个新的<code>State</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">const reducer = function(state,action) &#123;</div><div class="line">	// ...</div><div class="line">	return new_state;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>整个应用的状态，可以作为State的默认值，下面是一个实际例子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">const defaultState = 0;</div><div class="line">const reducer = (state = defaultState,action) =&gt; &#123;</div><div class="line">	switch (action.type) &#123;</div><div class="line">		case &apos;ADD&apos;:</div><div class="line">			return state + action.payload;</div><div class="line">		default:</div><div class="line">			return state;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">const state = reducer(1,&#123;</div><div class="line">	type: &apos;ADD&apos;,</div><div class="line"> 	payload: 2</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上面代码中，<code>reducer</code>函数收到名为<code>ADD</code>的<code>Action</code>以后，就返回一个新的<code>State</code>,作为加法的计算结果，其他计算的逻辑（比如减法)，也可以根据<code>Action</code>的不同来实现。</p>
+<p>实际应用中，<code>reducer</code>函数不用像上面这样手动调用，<code>store.dispatch</code>方法会触发<code>Reducer</code>的自动执行。为此，<code>Store</code>需要知道<code>Reducer</code>函数，做法就是在生成Store的时候，将<code>Reducer</code>传入<code>createStore</code>方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import &#123; createStore &#125; from &apos;redux&apos;</div><div class="line">const store = createStore(reducer);</div></pre></td></tr></table></figure>
+<p>上面代码中，<code>createStore</code>接受<code>Reducer</code>作为参数，生成一个新的Store，以后每当<code>store.dispatch</code>发送过来一个新的<code>Action</code>，就会自动调用<code>Reducer</code>，得到<code>State</code>。</p>
+<p>为什么这个函数叫做<code>Reducer</code>呢？因为它可以作为数据的<code>reduce</code>方法的函数，请看下面的例子，一系列<code>Action</code>对象按照排序作为一个数组。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">const actions = &#123;</div><div class="line">	&#123; type: &apos;ADD&apos;, payload: 0&#125;,</div><div class="line">	&#123; type: &apos;ADD&apos;, payload: 1&#125;,</div><div class="line">	&#123; type: &apos;ADD&apos;, payload: 2&#125;</div><div class="line">&#125;</div><div class="line">const total = actions.reduce(reducer,0); //3</div></pre></td></tr></table></figure>
+<p>上面代码中，数组<code>actions</code>表示依次有三个<code>Action</code>，分别是加<code>0</code>、加<code>1</code>和加<code>2</code>。数组的<code>reduce</code>方法接受<code>Reducer</code>函数作为参数，就可以直接得到最终的状态<code>3</code>。</p>
+<h4 id="7、纯函数"><a href="#7、纯函数" class="headerlink" title="7、纯函数"></a>7、纯函数</h4><p><code>Reducer</code>函数最重要的特征是，它是一个纯函数，也就是说，只要是同样的输入，必定得到同样的输出。纯函数是函数式编程的概念，必须遵守以下规则。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">不得改写参数</div><div class="line">不能调用系统I/O的API</div><div class="line">不能调用Date.now()或者Math.random()等不纯的方法，因为每次会得到不一样的结果</div></pre></td></tr></table></figure>
+<p>由于<code>Reducer</code>是纯函数，就可以保证同样的<code>State</code>，必定得到同样的<code>View</code>，但也正因为这一点，<code>Reducer</code>函数里不能改变<code>State</code>，必须返回一个全新的对象。参考下面的写法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// State 是一个对象</div><div class="line">function reducer(state, action) &#123;</div><div class="line">	return Object.assign(&#123;&#125;,state,&#123;thingToChange&#125;);</div><div class="line">	// 或者</div><div class="line">	return &#123; ...state,...newState &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// State 是一个数组</div><div class="line">function reducer(state, action) &#123;</div><div class="line">	return [ ...state, newItem ];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最好把<code>State</code>对象设成只读，你没法改变它，要得到新的<code>State</code>,唯一办法就是生成一个新对象，这样的好处是，任何时候，与某个View对应的<code>State</code>总是一个不变的对象。</p>
+<h4 id="store-subscribe"><a href="#store-subscribe" class="headerlink" title="store.subscribe()"></a>store.subscribe()</h4><p><code>Store</code>允许使用<code>store.subscribe</code>方法设置监听函数，一旦<code>State</code>发生变化，就自动执行这个函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">import &#123; createStore &#125; from &apos;redux&apos;;</div><div class="line">const store = createStore(reducer);</div><div class="line"></div><div class="line">store.subscribe(listener);</div></pre></td></tr></table></figure>
+<p>显然，只要把<code>View</code>的更新函数（对于React项目，就是组件的render方法或setState方法）放入<code>listen</code>，就会实现<code>View</code>的自动渲染。</p>
+<p><code>store.subscribe</code>方法返回一个函数，调用这个函数就可以解除监听。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let unsubscribe = store.subscribe(() =&gt; </div><div class="line">	console.log(store.getState())</div><div class="line">);</div></pre></td></tr></table></figure>
+<h3 id="Reducer拆分"><a href="#Reducer拆分" class="headerlink" title="Reducer拆分"></a>Reducer拆分</h3><p><code>Reducer</code>函数负责生成<code>State</code>，由于整个应用只有一个<code>State</code>对象，包含所有数据，对于大型应用来说，这个<code>State</code>必然十分庞大，导致<code>Reducer</code>函数也十分庞大。<br>请看下面的例子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">const chatReducer = (state = defaultState, action = &#123;&#125;) =&gt; &#123;</div><div class="line">	const &#123; type, payload &#125; = action;</div><div class="line">	switch (type) &#123;</div><div class="line">		case ADD_CHAT:</div><div class="line">			return Object.assign(&#123;&#125;,state,&#123;</div><div class="line">				chatLog: state.chatLog.concat(payload)</div><div class="line">			&#125;);</div><div class="line">		case CHANNGE_STATUS:</div><div class="line">			return Object.assign(&#123;&#125;, state, &#123;</div><div class="line">				statusMessage: payload</div><div class="line">			&#125;);</div><div class="line">		case CHANGE_USERNAME:</div><div class="line">			return Object.assign(&#123;&#125;,state, &#123;</div><div class="line">				userName: payload</div><div class="line">			&#125;);</div><div class="line">		default: return state;</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>上面代码中，三种<code>Action</code>分别改变<code>State</code>的三个属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ADD_CHAT: chatLog属性</div><div class="line">CHANGE_STATUS: statusMessage属性</div><div class="line">CHANGE_USERNAME: userName属性</div></pre></td></tr></table></figure>
+<p>这三个属性之前没有联系，这提示我们可以把<code>Reducer</code>函数拆分，不同的函数负责处理不同属性，最终把它们合并成一个大的<code>Reducer</code>即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">const chatReducer = (state = defaultState, action = &#123;&#125;) =&gt; &#123;</div><div class="line">	return &#123;</div><div class="line">		chatLog: chatLog(state.chatLog,action),</div><div class="line">		statusMessage: statusMessage(state.statusMessage,action),</div><div class="line">		userName: userName(state.userName, action)</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>上面代码中，<code>Reducer</code>函数被拆分成了三个小函数，每一个负责生产对应的属性。</p>
+<p>这样一拆，<code>Reducer</code>就容易读写多了，而且，这种拆分与<code>React</code>应用的结构相吻合： 一个<code>React</code>跟组件由许多子组件构成这就是说子组件与子Reducer完全可以对应。</p>
+<p>Redux提供了一个<code>combineReducers</code>方法，用于Reducer的拆分，你只要定义各个子<code>Reducer</code>函数，然后用这个方法，将它们合成一个大的<code>Reducer</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">import &#123; combineReducers &#125; from &apos;redux&apos;</div><div class="line"></div><div class="line">const chatReducer = combineReducers(&#123;</div><div class="line">	chatLog,</div><div class="line">	statusMessage,</div><div class="line">	userName</div><div class="line">&#125;)</div><div class="line"></div><div class="line">export default todoApp;</div></pre></td></tr></table></figure>
+<p>这种写法有一个前提，<code>State</code>的属性名必须与子<code>Redecer</code>同名，如果不同名，就要采用下面的写法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">const reducer = combineReducers(&#123;</div><div class="line">	a: doSomethingWithA,</div><div class="line">	b: processB,</div><div class="line">	c: c</div><div class="line">&#125;)</div><div class="line"></div><div class="line">// 等同于</div><div class="line">function reducer(state = &#123;&#125;, action) &#123;</div><div class="line">	return &#123;</div><div class="line">		a: doSomethingWithA(state.a,action),</div><div class="line">		b: processB(state.b,action),</div><div class="line">		c: c(state.c,action)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总之，<code>combineReducers()</code>做的就是产生一个整体的<code>Reducer</code>函数，该函数根据<code>State</code>的key去执行相应的子<code>Reducer</code>，并将返回结果合并成一个大的<code>State</code>对象。</p>
+<p>下面是<code>combineReducer</code>的简单实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">const combineReducers = reducers =&gt; &#123;</div><div class="line">	return (state = &#123;&#125;, action) =&gt; &#123;</div><div class="line">		return Object.keys(reducers).reduce(</div><div class="line">			(nextState,key) =&gt; &#123;</div><div class="line">				nextState[key] = reducers[key](state[key],action);</div><div class="line">				return nextState;	</div><div class="line">			&#125;,</div><div class="line">			&#123;&#125;</div><div class="line">		);</div><div class="line">	&#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>你可以把所有字<code>Reducer</code>放在一个文件里面，然后统一引入。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import &#123; combineReducers &#125; from &apos;redux&apos;</div><div class="line">import * as reducers from &apos;./reducers&apos;</div><div class="line">const reducer = combineReducers(reducers)</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html" target="_blank" rel="external">Redux 入门教程（一) by 阮一峰</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;上一篇文章&lt;a href=&quot;http://jianwl.com/2017/04/19/Redux%E5%85%A5%E9%97%A8/#mo
+    
+    </summary>
+    
+      <category term="React" scheme="http://jianwl.com/categories/React/"/>
+    
+    
+      <category term="React" scheme="http://jianwl.com/tags/React/"/>
+    
+  </entry>
   
   <entry>
     <title>JS之易错点</title>
@@ -1139,47 +1225,6 @@
     
     
       <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于刻意练习的思考</title>
-    <link href="http://jianwl.com/2017/03/26/%E5%85%B3%E4%BA%8E%E5%88%BB%E6%84%8F%E7%BB%83%E4%B9%A0%E7%9A%84%E6%80%9D%E8%80%83/"/>
-    <id>http://jianwl.com/2017/03/26/关于刻意练习的思考/</id>
-    <published>2017-03-26T03:01:26.000Z</published>
-    <updated>2017-03-26T04:09:59.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
-<p>没有充分的练习，你不可能精通任何脑力活</p>
-</blockquote>
-<p>如果带球的同时还要思考踢球的角度和速度，你不太可能成为一个优秀的足球选手。像这样的<strong>低层次过程必须不假思索，才能给更高层次的过程，比如战术策略提供足够的空间。</strong> 这一节主要来解释为何<code>刻意练习</code>如此重要、哪些内容值得练习、怎么安排练习可以增加练习的趣味性。</p>
-<h3 id="为什么要刻意练习"><a href="#为什么要刻意练习" class="headerlink" title="为什么要刻意练习"></a>为什么要刻意练习</h3><p>一个职业网球选手每次都能将球打到对方的场地上，但他还是不停练习以求提高球的速度和落点的准确度，通过不断地<code>刻意练习</code>可以加强基础技能，为学习更先进的技能做准备，防止遗忘和改善迁移。</p>
-<h3 id="练习是为了日后更好地学习"><a href="#练习是为了日后更好地学习" class="headerlink" title="练习是为了日后更好地学习"></a>练习是为了日后更好地学习</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-26/93014436-file_1490498430054_180b8.png" alt=""></p>
-<p>如图显示工作记忆是思考的空间，思考在你重新组合信息时产生，这一信息可能来自于环境，也可能来自于长期记忆，或者两者都有。</p>
-<p>工作记忆的一个显著特点是它的空间有限，如果你同时放入太多东西或者他们的太多方面，你会失去正在思考的线索。比如我问: 蝴蝶、蜻蜓、筷子、药盒和稻草人有什么共同点，那么要同时比较的东西太多了，当你在思考药盒和筷子的关系时，你已经忘记其他物品是什么了。</p>
-<p>据我们所知，工作记忆的大小是固定不变的 – 得到多少就是多少，练习不会改变它。但还是有窍门的，可以通过<strong>压缩信息</strong>来维持工作记忆中更多的信息，通过<strong>合并，你将几个独立的事物看做一个单元。</strong></p>
-<h3 id="刻意练习的优点"><a href="#刻意练习的优点" class="headerlink" title="刻意练习的优点"></a>刻意练习的优点</h3><p>1️⃣ 形成最基本的本领(比如青少年用手动档练习开车，直到完全掌握为止) 2️⃣ 达到精通(比如高尔夫选手挥杆以提高准确性) 3️⃣ 让思考过程变得省力 4️⃣ 让记忆更持久 5️⃣ 增加知识迁移的几率</p>
-<h3 id="该练习什么"><a href="#该练习什么" class="headerlink" title="该练习什么"></a>该练习什么</h3><p>不是每件事都需要无限度地练习的，首先没有这么多时间给你练习，更重要的是，不是每件事情都需要练习，我所说的练习的好处是能够给我们一些选择上的提示。如果练习可以让思考过程变得更加省力，我们就要问，哪些过程需要自动化？从记忆中取出关于数字的要点和字母的发音就可以入选。科学课的教师一般还会要求学生熟练掌握化学元素的基本特征，总的来说就是，需要自动化的过程往往是自动化后效益能达到最大值的技能的基础。所谓基础也就是人在某一个领域一遍又一遍重复的事情，它们为日后更高级的工作奠定了基础。</p>
-<h3 id="分散练习时间"><a href="#分散练习时间" class="headerlink" title="分散练习时间"></a>分散练习时间</h3><p>没有必要把关于一个概念的所有练习集中在很短的一段时间里完成。分散练习后记忆会更持久，持续不断地练习同一项技能是很无聊的事，最好能有点变化。还有就是有更多的时间思考如何将所学到的东西加以应用。</p>
-<h3 id="在进阶环境中练习"><a href="#在进阶环境中练习" class="headerlink" title="在进阶环境中练习"></a>在进阶环境中练习</h3><p>基本技能是需要练习直到熟练掌握的，但这不代表不能够在更高阶的环境中练习它，比如需要练习找到字母相对应的发音，在条件允许的情况下，为什么不将这一练习与有趣的阅读相结合呢？会玩桥牌的人要先算手里的牌点才能叫牌，如果我是桥牌教练，我会让学生一直数点数，直到他们能脱口而出为止。自动化需要很多练习，聪明的办法是<strong>既分散练习的时间，又分散练习的环境。</strong>尽量多设计有创意的方法来练习最关键的技巧，同时能够在更高阶的环境中学到基本技能。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li>为什么学生不喜欢上学？ </li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;没有充分的练习，你不可能精通任何脑力活&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;如果带球的同时还要思考踢球的角度
-    
-    </summary>
-    
-      <category term="思绪" scheme="http://jianwl.com/categories/%E6%80%9D%E7%BB%AA/"/>
-    
-    
-      <category term="思绪" scheme="http://jianwl.com/tags/%E6%80%9D%E7%BB%AA/"/>
     
   </entry>
   
