@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-04-21T10:14:56.000Z</updated>
+  <updated>2017-04-21T16:04:18.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,205 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux学习笔记</title>
+    <link href="http://jianwl.com/2017/04/21/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://jianwl.com/2017/04/21/Linux学习笔记/</id>
+    <published>2017-04-21T10:40:00.000Z</published>
+    <updated>2017-04-21T16:04:18.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-快速改变当前工作目录的有效方法："><a href="#1-快速改变当前工作目录的有效方法：" class="headerlink" title="1. 快速改变当前工作目录的有效方法："></a>1. 快速改变当前工作目录的有效方法：</h4><table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>运行结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cd</td>
+<td>更改工作目录到你的家目录</td>
+</tr>
+<tr>
+<td>cd -</td>
+<td>更改工作目录到先前的工作目录</td>
+</tr>
+<tr>
+<td>cd ~user_name</td>
+<td>更改工作目录到用户家目录</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-Linux目录结构"><a href="#2-Linux目录结构" class="headerlink" title="2. Linux目录结构"></a>2. Linux目录结构</h4><table>
+<thead>
+<tr>
+<th>目录</th>
+<th>评论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/</td>
+<td>根目录，万物起源</td>
+</tr>
+<tr>
+<td>/bin</td>
+<td>包含系统启动和运行所必须的二进制程序</td>
+</tr>
+<tr>
+<td>/boot</td>
+<td>包含Linux内核，最初的RMA磁盘映像</td>
+</tr>
+<tr>
+<td>/dev</td>
+<td>这是一个包含设备结点的特殊目录。 “一切都是文件”，也适用于设备，在这个目录里，内核维护着它支持的设备</td>
+</tr>
+<tr>
+<td>/etc</td>
+<td>这个目录包含所有系统层面的配置文件。它也包含一系列的shell脚本，在系统启动时，这些脚本会运行每个系统服务。这个目录中的任何文件都是可读的文本文件。<code>/etc/crontab</code>，定义自动运行的任务；<code>/etc/fstab</code>，包含存储设备的列表，以及与他们相关的挂载点;<code>/etc/passwd</code>，包含用户账号列表;</td>
+</tr>
+<tr>
+<td>/home</td>
+<td>在通常的配置环境下，系统会在/home下，给每个用户分配一个目录，普通智能在他们的目录下创建文件。这个限制保护系统免受错误的用户活动破坏。</td>
+</tr>
+<tr>
+<td>/lib</td>
+<td>包含核心程序所需的库文件，这些文件与windows中的动态链接库相似</td>
+</tr>
+<tr>
+<td>/lost+found</td>
+<td>每个使用Linux文件系统的格式化分区或设备</td>
+</tr>
+<tr>
+<td>/media</td>
+<td>可移除媒体设备的挂载点，例如USB驱动器、CD-ROMS等</td>
+</tr>
+<tr>
+<td>/mnt</td>
+<td>可移除设备的挂载点</td>
+</tr>
+<tr>
+<td>/opt</td>
+<td>安装可选的软件</td>
+</tr>
+<tr>
+<td>/proc</td>
+<td>它是一个由Linux内核维护的虚拟文件系统，它所包含的文件时内核的窥视孔</td>
+</tr>
+<tr>
+<td>/root</td>
+<td>root账户的家目录</td>
+</tr>
+<tr>
+<td>/sbin</td>
+<td>这个目录包含“系统”二进制文件</td>
+</tr>
+<tr>
+<td>/tmp</td>
+<td>存储各种程序创建的临时文件的地方</td>
+</tr>
+<tr>
+<td>/usr</td>
+<td>包含普通用户所需要的所有程序和文件</td>
+</tr>
+<tr>
+<td>/usr/bin</td>
+<td>系统安装的可执行程序</td>
+</tr>
+<tr>
+<td>/usr/lib</td>
+<td>程序所用的共享库</td>
+</tr>
+<tr>
+<td>/usr/local</td>
+<td>由源码编译的程序会安装在/usr/local/bin目录下</td>
+</tr>
+<tr>
+<td>/usr/sbin</td>
+<td>许多系统管理程序</td>
+</tr>
+<tr>
+<td>/usr/share</td>
+<td>由/usr/bin目录中的程序使用的共享数据</td>
+</tr>
+<tr>
+<td>/var</td>
+<td>各种数据库，假脱机文件、用户邮件等都在这</td>
+</tr>
+<tr>
+<td>/var/log</td>
+<td>系统日志</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-硬链接-VS-符号链接"><a href="#3-硬链接-VS-符号链接" class="headerlink" title="3. 硬链接 VS 符号链接"></a>3. 硬链接 VS 符号链接</h4><p><code>硬链接</code></p>
+<p><img src="http://i2.muimg.com/567571/c80b86ffcc0477bf.png" alt=""></p>
+<p>source.txt与copy.txt共用同一份资源，任何一个文件改动，另外一个文件会跟着变化。</p>
+<p><code>符号链接</code></p>
+<p><img src="http://i2.muimg.com/567571/aae479ac8ce6f170.png" alt=""></p>
+<p>source.txt与sign_copy.txt共用同一份资源，任何一个文件改动，另外一个文件会跟着变化。</p>
+<p><code>硬链接 VS 符号链接区别 ？</code></p>
+<p>硬链接不能跨越物理设备，硬链接不能关联目录，只能关联文件；符号链接就是为了解决这两个问题，创建符号链接的过程与硬链接相似；</p>
+<h4 id="4-which-显示可执行文件的位置"><a href="#4-which-显示可执行文件的位置" class="headerlink" title="4. which 显示可执行文件的位置"></a>4. which 显示可执行文件的位置</h4><p><img src="http://i1.piimg.com/567571/224ff92365521577.png" alt=""></p>
+<h4 id="5-重定向"><a href="#5-重定向" class="headerlink" title="5. 重定向"></a>5. 重定向</h4><h5 id="1-重定向标准输出，从头开始写文件"><a href="#1-重定向标准输出，从头开始写文件" class="headerlink" title="1) 重定向标准输出，从头开始写文件"></a>1) 重定向标准输出，从头开始写文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 将标准输出重定向到 ls-output.txt 文件</div><div class="line">ls -l /usr/bin &gt; ls-output.txt</div></pre></td></tr></table></figure>
+<p>重复定向测试，这次我们把目录换成一个不存在的目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 屏幕上显示 ls: /usr/bins: No such file or directory</div><div class="line">ls -l /usr/bins &gt; ls-output.txt</div></pre></td></tr></table></figure>
+<p>为什么错误信息没有被重定向到ls-output.txt文件呢？反而直接抛出在屏幕上，因为我们只定义了标准输出，而没有定向标准错误输出。</p>
+<h4 id="2）重定向标准输出，追加文件"><a href="#2）重定向标准输出，追加文件" class="headerlink" title="2）重定向标准输出，追加文件"></a>2）重定向标准输出，追加文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 将内容追加到ls-output.txt</div><div class="line">ls -l /usr/bin &gt;&gt; ls-output.txt</div></pre></td></tr></table></figure>
+<h4 id="3-重定向标准错误"><a href="#3-重定向标准错误" class="headerlink" title="3) 重定向标准错误"></a>3) 重定向标准错误</h4><p><img src="http://i2.muimg.com/567571/b024d5f76e8db1a7.png" alt=""></p>
+<p>文件描述符2，紧挨着重定向符之前，用来重定向标准错误输出到文件。</p>
+<h4 id="4）重定向标准输出和错误到同一个文件"><a href="#4）重定向标准输出和错误到同一个文件" class="headerlink" title="4）重定向标准输出和错误到同一个文件"></a>4）重定向标准输出和错误到同一个文件</h4><p><img src="http://i1.piimg.com/567571/a1958525fdae5dfd.png" alt=""></p>
+<p><code>2&gt;&amp;1</code>表示重定向文件描述符<code>2</code>「标准错误」到文件描述符<code>1</code>「标准输出」，注意重定向的顺序非常重要，标准错误的重定向必须总是在标准输出重定向之后，要不然它就不起作用；</p>
+<h4 id="5-处理不需要的输出"><a href="#5-处理不需要的输出" class="headerlink" title="5) 处理不需要的输出"></a>5) 处理不需要的输出</h4><p>有时候我们不想要一个命令的输出结果，只想把他们直接扔掉，我们可以将其重定向到一个特殊的叫做<code>/dev/null</code>的文件，它接受输入，并且对输入不做任何处理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ls -l /usr/bins 2&gt; /dev/null</div></pre></td></tr></table></figure>
+<h3 id="快速移动光标快捷键"><a href="#快速移动光标快捷键" class="headerlink" title="快速移动光标快捷键"></a>快速移动光标快捷键</h3><table>
+<thead>
+<tr>
+<th>按键</th>
+<th>行动</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ctrl-a</td>
+<td>光标移到行首</td>
+</tr>
+<tr>
+<td>Ctrl-e</td>
+<td>光标移到行尾</td>
+</tr>
+<tr>
+<td>Ctrl-f</td>
+<td>光标前移一个字符</td>
+</tr>
+<tr>
+<td>Ctrl-b</td>
+<td>光标后移一个字符</td>
+</tr>
+<tr>
+<td>Ctrl-l</td>
+<td>清空屏幕</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>快乐的Linux命令行</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; class=&quot;headerlink&quot; title=&quot;实战&quot;&gt;&lt;/a&gt;实战&lt;/h3&gt;&lt;h4 id=&quot;1-快速改变当前工作目录的有效方法：&quot;&gt;&lt;a href=&quot;#1-快速改变当前工作目录的有效方法：&quot; class=&quot;headerli
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://jianwl.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://jianwl.com/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>Redux入门教程(三)</title>
@@ -1196,32 +1395,6 @@
     
     
       <category term="Python" scheme="http://jianwl.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Maven设置JDK版本</title>
-    <link href="http://jianwl.com/2017/03/29/Maven%E8%AE%BE%E7%BD%AEJDK%E7%89%88%E6%9C%AC/"/>
-    <id>http://jianwl.com/2017/03/29/Maven设置JDK版本/</id>
-    <published>2017-03-29T07:29:14.000Z</published>
-    <updated>2017-03-29T07:30:59.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>pom</code>文件中设置<code>JDK</code>的版本号，一个很常用的配置。记录下来，备忘。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><code>pom.xml</code>文件配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;build&gt;  </div><div class="line">    &lt;plugins&gt;  </div><div class="line">        &lt;plugin&gt;  </div><div class="line">            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;  </div><div class="line">            &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;  </div><div class="line">            &lt;configuration&gt;  </div><div class="line">                &lt;source&gt;1.8&lt;/source&gt;  </div><div class="line">                &lt;target&gt;1.8&lt;/target&gt;  </div><div class="line">            &lt;/configuration&gt;  </div><div class="line">        &lt;/plugin&gt;  </div><div class="line">    &lt;/plugins&gt;  </div><div class="line">&lt;/build&gt;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;code&gt;pom&lt;/code&gt;文件中设置&lt;code&gt;JDK&lt;/code&gt;的版本号，一个很常用的配置。记录下来，备忘。&lt;/p&gt;
-&lt;h3 id
-    
-    </summary>
-    
-      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
-    
-    
-      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
     
   </entry>
   
