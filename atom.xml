@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-04-25T00:46:23.000Z</updated>
+  <updated>2017-04-25T00:46:35.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -17,10 +17,10 @@
   
   <entry>
     <title>算法基础学习笔记</title>
-    <link href="http://jianwl.com/2017/04/24/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>http://jianwl.com/2017/04/24/算法基础学习笔记/</id>
-    <published>2017-04-24T09:35:06.000Z</published>
-    <updated>2017-04-25T00:46:23.000Z</updated>
+    <link href="http://jianwl.com/2017/04/25/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://jianwl.com/2017/04/25/算法基础学习笔记/</id>
+    <published>2017-04-25T00:35:06.000Z</published>
+    <updated>2017-04-25T00:46:35.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>算法一篇空白，大学所学忘的差不多了，接下来几周会侧重学习算法基础。</p>
 <h3 id="1-排序"><a href="#1-排序" class="headerlink" title="1. 排序"></a>1. 排序</h3><h4 id="1-领居好说话-–-冒泡算法"><a href="#1-领居好说话-–-冒泡算法" class="headerlink" title="1) 领居好说话 – 冒泡算法"></a>1) 领居好说话 – 冒泡算法</h4><p><code>基本思想：</code> 每次比较两个相邻的元素，如果他们的顺序错误就把他们交换过来；每一趟只能确定将一个数归位。如<code>12 35 99 18 76</code>这5个数，第一趟确定最大的数排在第1位，第二趟确定第二大的数排在第二位，5个数字，只需要5趟，就能够排好序。</p>

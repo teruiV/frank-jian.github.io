@@ -1,0 +1,821 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言Python包含6种内建的序列：列表、元组、字符串、Unicode字符串、buffer对象、xrange对象，这节主要来学习列表和元组。列表和元组的区别在于，列表可以修改，元组不可以。
+通用序列操作所有序列类型都可以进行这些操作：索引、分片、加、乘、以及检查某个元素是否属于该序列的成员、序列长度、找出最大元素、最小元素。
+1) 索引
+2) 分片
+获取最后三个元素：
+
+更大步长：
+
+3) 加
+4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python之列表和元组">
+<meta property="og:url" content="http://jianwl.com/2017/03/11/Python之列表和元组/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="前言Python包含6种内建的序列：列表、元组、字符串、Unicode字符串、buffer对象、xrange对象，这节主要来学习列表和元组。列表和元组的区别在于，列表可以修改，元组不可以。
+通用序列操作所有序列类型都可以进行这些操作：索引、分片、加、乘、以及检查某个元素是否属于该序列的成员、序列长度、找出最大元素、最小元素。
+1) 索引
+2) 分片
+获取最后三个元素：
+
+更大步长：
+
+3) 加
+4">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/14523041-file_1489217087380_3e78.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/86520910-file_1489217253044_6475.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/2981895-file_1489217362541_2232.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/81377151-file_1489217450167_8f65.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/55587129-file_1489217507183_666e.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/63363847-file_1489217608021_1294.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/65898019-file_1489217734808_186c.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/39445538-file_1489218070573_559e.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/83266752-file_1489218148529_12224.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/68678272-file_1489218225510_75a7.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/63479534-file_1489218330479_b5b6.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/33437808-file_1489218501030_e517.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/81047607-file_1489218616823_b8c0.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/87902781-file_1489218827874_12817.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/87119013-file_1489218933650_15ae9.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/94076650-file_1489219047630_175f8.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/46157796-file_1489219161800_1183d.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/97781689-file_1489219230515_13a99.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/32829610-file_1489219789896_8d71.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/99489690-file_1489219907483_ef90.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/66845723-file_1489220816664_686a.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/79464689-file_1489220865683_34a9.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/24763301-file_1489220747488_f833.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/85051282-file_1489220996689_13c72.png">
+<meta property="og:updated_time" content="2017-03-11T09:37:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python之列表和元组">
+<meta name="twitter:description" content="前言Python包含6种内建的序列：列表、元组、字符串、Unicode字符串、buffer对象、xrange对象，这节主要来学习列表和元组。列表和元组的区别在于，列表可以修改，元组不可以。
+通用序列操作所有序列类型都可以进行这些操作：索引、分片、加、乘、以及检查某个元素是否属于该序列的成员、序列长度、找出最大元素、最小元素。
+1) 索引
+2) 分片
+获取最后三个元素：
+
+更大步长：
+
+3) 加
+4">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/14523041-file_1489217087380_3e78.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> Python之列表和元组 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/03/11/Python之列表和元组/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/45643127-file_1491302803857_12baa.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python之列表和元组
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-11T17:36:43+08:00">
+                2017-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/11/Python之列表和元组/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/11/Python之列表和元组/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Python包含6种内建的序列：列表、元组、字符串、Unicode字符串、buffer对象、xrange对象，这节主要来学习列表和元组。<strong>列表和元组的区别在于，列表可以修改，元组不可以。</strong></p>
+<h3 id="通用序列操作"><a href="#通用序列操作" class="headerlink" title="通用序列操作"></a>通用序列操作</h3><p>所有序列类型都可以进行这些操作：索引、分片、加、乘、以及检查某个元素是否属于该序列的成员、序列长度、找出最大元素、最小元素。</p>
+<h4 id="1-索引"><a href="#1-索引" class="headerlink" title="1) 索引"></a>1) 索引</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/14523041-file_1489217087380_3e78.png" alt=""></p>
+<h4 id="2-分片"><a href="#2-分片" class="headerlink" title="2) 分片"></a>2) 分片</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/86520910-file_1489217253044_6475.png" alt=""></p>
+<p>获取最后三个元素：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/2981895-file_1489217362541_2232.png" alt=""></p>
+<p>更大步长：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/81377151-file_1489217450167_8f65.png" alt=""></p>
+<h4 id="3-加"><a href="#3-加" class="headerlink" title="3) 加"></a>3) 加</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/55587129-file_1489217507183_666e.png" alt=""></p>
+<h4 id="4-乘"><a href="#4-乘" class="headerlink" title="4) 乘"></a>4) 乘</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/63363847-file_1489217608021_1294.png" alt=""></p>
+<h4 id="5-长度、最大值、最小值"><a href="#5-长度、最大值、最小值" class="headerlink" title="5) 长度、最大值、最小值"></a>5) 长度、最大值、最小值</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/65898019-file_1489217734808_186c.png" alt=""></p>
+<h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><p>列表除了适用序列的标准操作方法，本节还会介绍一些可以改变列表的方法：元素赋值、元素删除、分片赋值、以及列表方法</p>
+<h4 id="1）改变列表元素"><a href="#1）改变列表元素" class="headerlink" title="1）改变列表元素"></a>1）改变列表元素</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/39445538-file_1489218070573_559e.png" alt=""></p>
+<h4 id="2-删除元素"><a href="#2-删除元素" class="headerlink" title="2) 删除元素"></a>2) 删除元素</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/83266752-file_1489218148529_12224.png" alt=""></p>
+<h4 id="3-分片赋值"><a href="#3-分片赋值" class="headerlink" title="3) 分片赋值"></a>3) 分片赋值</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/68678272-file_1489218225510_75a7.png" alt=""></p>
+<h4 id="4-列表方法"><a href="#4-列表方法" class="headerlink" title="4) 列表方法"></a>4) 列表方法</h4><p>4.1) <code>append</code> 列表末尾追加元素</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/63479534-file_1489218330479_b5b6.png" alt=""></p>
+<p>4.2) <code>count</code> 统计某个元素在列表中出现的次数</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/33437808-file_1489218501030_e517.png" alt=""></p>
+<p>4.3) <code>extend</code> 在列表后，一次性追加新的一个列表</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/81047607-file_1489218616823_b8c0.png" alt=""></p>
+<p>4.4) <code>index</code> 从列表中找出某个值，第一个匹配项的索引位置</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/87902781-file_1489218827874_12817.png" alt=""></p>
+<p>4.5) <code>insert</code> 将对象插入列表</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/87119013-file_1489218933650_15ae9.png" alt=""></p>
+<p>4.6) <code>pop</code> 默认移除最后一个元素，并返回该元素的值</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/94076650-file_1489219047630_175f8.png" alt=""></p>
+<p>4.7) <code>reverse</code> 将列表中的元素反向存放</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/46157796-file_1489219161800_1183d.png" alt=""></p>
+<p>4.8) <code>sort</code> 对列表元素排序</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/97781689-file_1489219230515_13a99.png" alt=""></p>
+<p>4.9) 高级排序</p>
+<p>sort方法有两个可选的参数–key和reverse</p>
+<p>a) <code>key</code> 根据函数，为每个元素创建一个键，然后根据键来排序；</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/32829610-file_1489219789896_8d71.png" alt=""></p>
+<p>b）<code>reverse</code>，指明列表是否需要进行反序</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/99489690-file_1489219907483_ef90.png" alt=""></p>
+<h3 id="元组：不可变序列"><a href="#元组：不可变序列" class="headerlink" title="元组：不可变序列"></a>元组：不可变序列</h3><p>元组与列表一样，也是一种序列，不同的是元组不能修改。</p>
+<p>1）空元组</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/66845723-file_1489220816664_686a.png" alt=""></p>
+<p>2) 单元素元组，—必须加个逗号</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/79464689-file_1489220865683_34a9.png" alt=""></p>
+<p>3) 创建多元素元组</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/24763301-file_1489220747488_f833.png" alt=""></p>
+<p>4) <code>tuple</code> 将一个序列转化为元组</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-11/85051282-file_1489220996689_13c72.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>Python基础教程</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/26/React技术栈介绍/" rel="next" title="React技术栈介绍">
+                <i class="fa fa-chevron-left"></i> React技术栈介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/11/Python之字典/" rel="prev" title="Python之字典">
+                Python之字典 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/11/Python之列表和元组/"
+           data-title="Python之列表和元组" data-url="http://jianwl.com/2017/03/11/Python之列表和元组/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-4-4/45643127-file_1491302803857_12baa.png"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">208</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通用序列操作"><span class="nav-number">2.</span> <span class="nav-text">通用序列操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-索引"><span class="nav-number">2.1.</span> <span class="nav-text">1) 索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-分片"><span class="nav-number">2.2.</span> <span class="nav-text">2) 分片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-加"><span class="nav-number">2.3.</span> <span class="nav-text">3) 加</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-乘"><span class="nav-number">2.4.</span> <span class="nav-text">4) 乘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-长度、最大值、最小值"><span class="nav-number">2.5.</span> <span class="nav-text">5) 长度、最大值、最小值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列表"><span class="nav-number">3.</span> <span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1）改变列表元素"><span class="nav-number">3.1.</span> <span class="nav-text">1）改变列表元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-删除元素"><span class="nav-number">3.2.</span> <span class="nav-text">2) 删除元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-分片赋值"><span class="nav-number">3.3.</span> <span class="nav-text">3) 分片赋值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-列表方法"><span class="nav-number">3.4.</span> <span class="nav-text">4) 列表方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元组：不可变序列"><span class="nav-number">4.</span> <span class="nav-text">元组：不可变序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jianwl"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
