@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-04-26T14:11:05.000Z</updated>
+  <updated>2017-04-29T07:48:47.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -16,11 +16,171 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>CSS入门</title>
+    <link href="http://jianwl.com/2017/04/29/CSS%E5%85%A5%E9%97%A8/"/>
+    <id>http://jianwl.com/2017/04/29/CSS入门/</id>
+    <published>2017-04-29T02:05:00.000Z</published>
+    <updated>2017-04-29T07:48:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-什么是CSS"><a href="#1-什么是CSS" class="headerlink" title="1. 什么是CSS"></a>1. 什么是CSS</h3><p><code>CSS</code>是一门指定文档该如何呈现给用户的语言。当你的浏览器请求页面时，服务器会查询数据库生成文档，将散落在众多文件中的文档碎片搜集起来。 </p>
+<p><code>创建一个文档范例：</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">	&lt;head&gt;</div><div class="line">	&lt;meta charset=&quot;UTF-8&quot;&gt;</div><div class="line">	&lt;title&gt;Sample document&lt;/title&gt;</div><div class="line">	&lt;/head&gt;</div><div class="line">	&lt;body&gt;</div><div class="line">		&lt;strong&gt;c&lt;/strong&gt;</div><div class="line">	&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<h3 id="2-为何使用CSS？"><a href="#2-为何使用CSS？" class="headerlink" title="2.为何使用CSS？"></a>2.为何使用CSS？</h3><p>CSS将文档信息的内容和如何展示它的细节相分离，使得避免重复、更容易维护，同时实现为了不同的目的，使用不同的样式而内容相同。</p>
+<h4 id="1-连接文档-amp-样式表"><a href="#1-连接文档-amp-样式表" class="headerlink" title="1) 连接文档&amp;样式表"></a>1) 连接文档&amp;样式表</h4><p><code>在style1.css文件中保存如下行：</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">strong &#123;color:red;&#125;</div></pre></td></tr></table></figure>
+<p><code>修改HTML文档</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">	&lt;head&gt;</div><div class="line">	&lt;meta charset=&quot;UTF-8&quot;&gt;</div><div class="line">	&lt;title&gt;Sample document&lt;/title&gt;</div><div class="line">	&lt;link rel=&quot;stylesheet&quot; href=&quot;style1.css&quot;&gt;</div><div class="line">	&lt;/head&gt;</div><div class="line">	&lt;body&gt;</div><div class="line">		&lt;strong&gt;c&lt;/strong&gt;</div><div class="line">	&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<h3 id="3-CSS基础知识"><a href="#3-CSS基础知识" class="headerlink" title="3. CSS基础知识"></a>3. CSS基础知识</h3><h4 id="1-盒模型"><a href="#1-盒模型" class="headerlink" title="1) 盒模型"></a>1) 盒模型</h4><p>文档的每个元素被构造成文档布局内的一个矩形盒子，盒子每层的大小都可以使用一些特定的CSS属性调整。</p>
+<p><img src="http://i2.muimg.com/567571/867bf24d7d50d14b.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> width</td>
+<td>内容盒的宽度</td>
+</tr>
+<tr>
+<td> height</td>
+<td>内容盒的高度</td>
+</tr>
+<tr>
+<td> padding</td>
+<td>内边距，内容盒的外边缘与边框的内边缘之间</td>
+</tr>
+<tr>
+<td> border</td>
+<td>位于内边距的外边缘以及外边距的内边缘之间</td>
+</tr>
+<tr>
+<td> margin</td>
+<td>外边距</td>
+</tr>
+</tbody>
+</table>
+<p> <code>实战</code></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"> &lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">	&lt;style type=&quot;text/css&quot;&gt;</div><div class="line">	body &#123;</div><div class="line">	  margin: 0;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	#wrapper * &#123;</div><div class="line">	  padding: 20px;</div><div class="line">	  font-size: 20px;</div><div class="line">	  border: 20px solid rgba(0,0,0,0.5);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	/* specific boxes */</div><div class="line"></div><div class="line">	#wrapper header, #wrapper footer &#123;</div><div class="line">	  background-color: blue;</div><div class="line">	  color: white;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	#wrapper main &#123;</div><div class="line">	  background-color: yellow;</div><div class="line">	&#125;</div><div class="line">	&lt;/style&gt;</div><div class="line"></div><div class="line">	&lt;body&gt;</div><div class="line">		&lt;div id=&quot;wrapper&quot;&gt;</div><div class="line">		  &lt;header&gt;Header&lt;/header&gt;</div><div class="line">		  &lt;main&gt;Main content&lt;/main&gt;</div><div class="line">		  &lt;footer&gt;Footer&lt;/footer&gt;</div><div class="line">		&lt;/div&gt;</div><div class="line">	&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><code>运行结果：</code></p>
+<p><img src="http://i1.piimg.com/567571/f29c0ef1d9e3a821.png" alt=""></p>
+<p><code>要点：</code></p>
+<ul>
+<li>当内容的宽度<strong>大于</strong>盒模型的<strong>总宽度</strong>时，<strong>溢出内容如何处理？</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># overflow属性，三种属性值</div><div class="line">auto: 溢出内容会自动隐藏，单行显示，变滚轮显示，让用户可以看到所有内容。</div><div class="line">hidden: 溢出内容自动隐藏</div><div class="line">visible: 溢出内容展示在盒模型之外，这个配置是默认的；</div></pre></td></tr></table></figure>
+<ul>
+<li>只有块级元素，才能设置宽度，长度等属性，CSS设置为块级元素，用<code>display</code>属性。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># display有三个属性值</div><div class="line">block 「块盒」：整个盒模型是基于块盒之上的，块盒内可以设置自己的长、宽。</div><div class="line">inline 「行内盒」：在行内盒中设置长、宽无效，border、padding是基于text的。</div><div class="line">inline-block「行内块状盒」：结合了block与inline两种属性</div></pre></td></tr></table></figure>
+<p><code>实战</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">	&lt;style type=&quot;text/css&quot;&gt;</div><div class="line">		p &#123;</div><div class="line">		  padding : 1em;</div><div class="line">		  border  : 1px solid black;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		span &#123;</div><div class="line">		  padding : 0.5em;</div><div class="line">		  border  : 1px solid green;</div><div class="line">		  height: 50px;</div><div class="line">		  /* That makes the box visible, regardless of its type */</div><div class="line">		  background-color: yellow;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.inline       &#123; display: inline;       &#125;</div><div class="line">		.block        &#123; display: block;        &#125;</div><div class="line">	.inline-block &#123; display: inline-block; &#125;</div><div class="line">	&lt;/style&gt;</div><div class="line"></div><div class="line">	&lt;body&gt;</div><div class="line">		&lt;p&gt;</div><div class="line">		   Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div><div class="line">		   &lt;span class=&quot;inline&quot;&gt;Mauris tempus turpis id ante mollis dignissim.&lt;/span&gt;</div><div class="line">		   Nam sed dolor non tortor lacinia lobortis id dapibus nunc.</div><div class="line">		&lt;/p&gt;</div><div class="line"></div><div class="line">		&lt;p&gt;</div><div class="line">		  Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div><div class="line">		  &lt;span class=&quot;block&quot;&gt;Mauris tempus turpis id ante mollis dignissim.&lt;/span&gt;</div><div class="line">		  Nam sed dolor non tortor lacinia lobortis id dapibus nunc.</div><div class="line">		&lt;/p&gt;</div><div class="line"></div><div class="line">		&lt;p&gt;</div><div class="line">		  Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div><div class="line">		  &lt;span class=&quot;inline-block&quot;&gt;Mauris tempus turpis id ante mollis dignissim.&lt;/span&gt;</div><div class="line">		  Nam sed dolor non tortor lacinia lobortis id dapibus nunc.</div><div class="line">		&lt;/p&gt;</div><div class="line">	&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>演示效果：</p>
+<p><img src="http://i4.buimg.com/567571/f6bf997532ac0d5e.png" alt=""></p>
+<h4 id="2）文本对齐"><a href="#2）文本对齐" class="headerlink" title="2）文本对齐"></a>2）文本对齐</h4><p><code>text-align</code>属性终于控制文本对齐，它有以下4个属性值；</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">left: 文本左对齐</div><div class="line">right: 文本右对齐</div><div class="line">center: 文本居中对齐</div><div class="line">justify: 文本扩展使得所有行的文本宽度一致</div></pre></td></tr></table></figure>
+<p> <code>实战:</code></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"> &lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">	&lt;style type=&quot;text/css&quot;&gt;</div><div class="line">		p &#123;</div><div class="line">		  padding : 1em;</div><div class="line">		  border  : 1px solid black;</div><div class="line">		&#125;</div><div class="line">		.right  &#123; text-align: right; &#125;</div><div class="line">		.center &#123; text-align: center;        &#125;</div><div class="line">		.left &#123; text-align: left; &#125;</div><div class="line">		.justify&#123; text-align: justify; &#125;</div><div class="line">		strong &#123;color: red;&#125;</div><div class="line">	&lt;/style&gt;</div><div class="line"></div><div class="line">	&lt;body&gt;</div><div class="line">		&lt;p class=&quot;center&quot;&gt;&lt;strong&gt;Learn CSS&lt;/strong&gt;&lt;/p&gt;</div><div class="line">		&lt;p class=&quot;left&quot;&gt;Learn CSS&lt;/p&gt;</div><div class="line">		&lt;p class=&quot;right&quot;&gt;Learn CSS&lt;/p&gt;</div><div class="line">		&lt;p class=&quot;justify&quot;&gt;Learn CSS&lt;/p&gt;</div><div class="line">	&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p> <code>运行结果:</code></p>
+<p><img src="http://i4.buimg.com/567571/bd335169ff70189e.png" alt=""></p>
+<h4 id="3-链接样式"><a href="#3-链接样式" class="headerlink" title="3) 链接样式"></a>3) 链接样式</h4><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a:link</code></td>
+<td>未访问时的样式</td>
+</tr>
+<tr>
+<td> <code>a:visited</code></td>
+<td>已经访问过的样式</td>
+</tr>
+<tr>
+<td><code>a:hover</code></td>
+<td>浮于链接上的样式</td>
+</tr>
+<tr>
+<td> <code>a:focus</code></td>
+<td>通过<code>tab</code>选中该链接时的样式</td>
+</tr>
+<tr>
+<td> <code>a:active</code></td>
+<td>链接被触发时的样式</td>
+</tr>
+</tbody>
+</table>
+<p> <code>实战：</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">	&lt;style type=&quot;text/css&quot;&gt;</div><div class="line">		body &#123;</div><div class="line">		  width: 300px;</div><div class="line">		  margin: 0 auto;</div><div class="line">		  font-size: 1.2rem;</div><div class="line">		  font-family: sans-serif;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		p &#123;</div><div class="line">		  line-height: 1.4;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		a &#123;</div><div class="line">		  outline: none;</div><div class="line">		  text-decoration: none;</div><div class="line">		  padding: 2px 1px 0;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		a:link &#123;</div><div class="line">		  color: #265301;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		a:visited &#123;</div><div class="line">		  color: #437A16;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		a:focus &#123;</div><div class="line">		  border-bottom: 1px solid;</div><div class="line">		  background: #BAE498;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		a:hover &#123;</div><div class="line">		  border-bottom: 1px solid;     </div><div class="line">		  background: #CDFEAA;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		a:active &#123;</div><div class="line">		  background: #265301;</div><div class="line">		  color: #CDFEAA;</div><div class="line">		&#125;</div><div class="line">	&lt;/style&gt;</div><div class="line"></div><div class="line">	&lt;body&gt;</div><div class="line">		&lt;p&gt;There are several browsers available, such as </div><div class="line">			&lt;a href=&quot;https://www.mozilla.org/en-US/firefox/&quot;&gt;MozillaFirefox&lt;/a&gt;, </div><div class="line">			&lt;a href=&quot;https://www.google.com/chrome/index.html&quot;&gt;Google Chrome&lt;/a&gt;, and</div><div class="line">			&lt;a href=&quot;https://www.microsoft.com/en-us/windows/microsoft-edge&quot;&gt;Microsoft Edge&lt;/a&gt;.</div><div class="line">		&lt;/p&gt;</div><div class="line">	&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><code>运行结果：</code></p>
+<p>通过<code>TAB键选中：即a:focus效果：</code></p>
+<p><img src="http://i4.buimg.com/567571/e32e85f5430f6c0e.png" alt=""></p>
+<h4 id="4-CSS布局"><a href="#4-CSS布局" class="headerlink" title="4) CSS布局"></a>4) CSS布局</h4><h5 id="1-浮动"><a href="#1-浮动" class="headerlink" title="1 浮动"></a>1 浮动</h5><p>浮动技术允许元素浮动到另外一个元素的左侧或右侧。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># float属性有4个属性值:</div><div class="line">left: 将元素浮动到左侧</div><div class="line">right: 将元素浮动到右侧</div><div class="line">none: 默认值，不浮动</div><div class="line">inherit: 继承父元素的浮动元素</div></pre></td></tr></table></figure>
+<p><code>实战：</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">	&lt;style type=&quot;text/css&quot;&gt;</div><div class="line">		.blockA &#123;</div><div class="line">			height: 100px;</div><div class="line">			width: 100px;</div><div class="line">			text-align: center;</div><div class="line">			border: 5px solid;</div><div class="line">			float:left;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.blockB &#123;</div><div class="line">			height: 100px;</div><div class="line">			width: 100px;</div><div class="line">			text-align: center;</div><div class="line">			border: 5px solid red;</div><div class="line">			float: left;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.blockC &#123;</div><div class="line">			height: 100px;</div><div class="line">			width: 100px;</div><div class="line">			text-align: center;</div><div class="line">			border: 5px solid blue;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.blockD &#123;</div><div class="line">			height: 100px;</div><div class="line">			width: 100px;</div><div class="line">			text-align: center;</div><div class="line">			border: 5px solid green;</div><div class="line">		&#125;</div><div class="line">	&lt;/style&gt;</div><div class="line">		</div><div class="line">	&lt;body&gt;</div><div class="line">		</div><div class="line">		&lt;div&gt;</div><div class="line">			&lt;div class=&quot;blockC&quot;&gt;C&lt;/div&gt;</div><div class="line">			&lt;div class=&quot;blockD&quot;&gt;D&lt;/div&gt;	</div><div class="line">		&lt;/div&gt;</div><div class="line">		</div><div class="line">		&lt;div&gt;			</div><div class="line">			&lt;div class=&quot;blockA&quot;&gt;A&lt;/div&gt;</div><div class="line">			&lt;div class=&quot;blockB&quot;&gt;B&lt;/div&gt;</div><div class="line">		&lt;/div&gt;		</div><div class="line">	&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><code>运行结果：</code></p>
+<p><img src="http://i2.muimg.com/567571/894f4e1cd0702d00.png" alt=""></p>
+<h5 id="2-定位技术"><a href="#2-定位技术" class="headerlink" title="2 定位技术"></a>2 定位技术</h5><p>定位技术允许我们将一个元素从它在页面的原始位置准确移动到另一个位置。</p>
+<p>有4中主要的定位类型：</p>
+<ul>
+<li>静态定位(static)是每个元素默认的属性</li>
+<li>相对定位(relative): 以元素自身作比较，进行移动;</li>
+<li>绝对定位(absolute): 以第一个为<code>absolute</code>元素做参考，进行移动,且绝对定位是脱离文档流的； </li>
+<li>固定定位(fixed)与绝对定位非常类似，除了它是将一个元素相对浏览器视口固定。</li>
+</ul>
+<p><code>实战：</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">	&lt;style type=&quot;text/css&quot;&gt;</div><div class="line">		body &#123;</div><div class="line">		  width: 500px;</div><div class="line">		  margin: 0 auto;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		p &#123;</div><div class="line">		  background: aqua;</div><div class="line">		  border: 3px solid blue;</div><div class="line">		  padding: 10px;</div><div class="line">		  margin: 10px;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.positioned &#123;</div><div class="line">		  position: relative;</div><div class="line">		  background: yellow;</div><div class="line">		  top: 30px;</div><div class="line">		  left: 30px;</div><div class="line">		&#125;</div><div class="line"></div><div class="line"></div><div class="line">		.absolute-test&#123;</div><div class="line">			position: absolute;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.abosolute_div&#123;</div><div class="line">			position: absolute;</div><div class="line">			background: red;</div><div class="line">			text-align: center;</div><div class="line">			height: 50px;</div><div class="line">			width: 50px;</div><div class="line">			top: 0px;</div><div class="line">			left: 0px;</div><div class="line">		&#125;</div><div class="line">	&lt;/style&gt;</div><div class="line">		</div><div class="line">	&lt;body&gt;</div><div class="line">		&lt;p&gt;I am a basic block level element.&lt;/p&gt;</div><div class="line">		&lt;p class=&quot;positioned&quot;&gt;I am a basic block level element.&lt;/p&gt;</div><div class="line">		&lt;p class=&quot;absolute-test&quot;&gt;I am a basic block level element.&lt;/p&gt;	</div><div class="line">		&lt;p class=&quot;abosolute_div&quot;&gt;小哈&lt;/p&gt;</div><div class="line">	&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><code>运行结果：</code></p>
+<p><img src="http://i1.piimg.com/567571/2f91f17c3c6ceb5a.png" alt=""></p>
+<h5 id="3-z-index"><a href="#3-z-index" class="headerlink" title="3 z-index"></a>3 z-index</h5><p>当元素开始重叠，什么时候决定哪些元素出现在其他元素的顶部。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">z-index:1</div></pre></td></tr></table></figure>
+<h4 id="4-优先级"><a href="#4-优先级" class="headerlink" title="4) 优先级"></a>4) 优先级</h4><p>优先级就是分配指定的CSS声明的一个权重，它由匹配的选择器中的每一种选择器类型的数值决定。而当优先级与多个CSS声明中任意一个声明的优先级相等的时候，CSS中最后的那个声明将会被应用到元素上。</p>
+<p><code>1. !important</code> 规则例外</p>
+<p>当在一个样式上使用<code>!important</code>规则时，该样式会覆盖CSS中任何其他的声明。</p>
+<p>经验法则：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">永远不要在全站范围的css上使用!important</div><div class="line">只在需要覆盖全站或外展css的特定页面中使用!important</div><div class="line">永远不要在你的插件中使用!important</div><div class="line">要优化考虑使用样式规则的优先级来解决问题而不是!important</div></pre></td></tr></table></figure>
+<h4 id="5-CSS简写属性"><a href="#5-CSS简写属性" class="headerlink" title="5) CSS简写属性"></a>5) CSS简写属性</h4><h5 id="1-background有以下属性"><a href="#1-background有以下属性" class="headerlink" title="1. background有以下属性"></a>1. background有以下属性</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">background-color: #000;</div><div class="line">background-image: url(images/bg.gif);</div><div class="line">background-repeat: no-repeat;</div><div class="line">background-position: top right;</div></pre></td></tr></table></figure>
+<p>简写为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">background: #000 url(images/bg.gif) no-repeat top right;</div></pre></td></tr></table></figure>
+<h5 id="2-Font属性"><a href="#2-Font属性" class="headerlink" title="2. Font属性"></a>2. Font属性</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">font-style: italic;</div><div class="line">font-weight: bold;</div><div class="line">font-size: .8em;</div><div class="line">line-height: 1.2;</div><div class="line">font-family: Arial, sans-serif;</div></pre></td></tr></table></figure>
+<p>简写为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">font: italic bold .8em/1.2 Arial, sans-serif;</div></pre></td></tr></table></figure>
+<h5 id="3-Border属性"><a href="#3-Border属性" class="headerlink" title="3. Border属性"></a>3. Border属性</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">border-width: 1px;</div><div class="line">border-style: solid;</div><div class="line">border-color: #000;</div></pre></td></tr></table></figure>
+<p>简写为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">border: 1px solid #000;</div></pre></td></tr></table></figure>
+<h5 id="4-Margin和Padding属性"><a href="#4-Margin和Padding属性" class="headerlink" title="4. Margin和Padding属性"></a>4. Margin和Padding属性</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">margin-top: 10px;</div><div class="line">margin-right: 5px;</div><div class="line">margin-bottom: 10px;</div><div class="line">margin-left: 5px;</div></pre></td></tr></table></figure>
+<p>简写为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">margin: 10px 5px 10px 5px;</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Shorthand_properties" target="_blank" rel="external">CSS教程 by MND</a> </li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;1-什么是CSS&quot;&gt;&lt;a href=&quot;#1-什么是CSS&quot; class=&quot;headerlink&quot; title=&quot;1. 什么是CSS&quot;&gt;&lt;/a&gt;1. 什么是CSS&lt;/h3&gt;&lt;p&gt;&lt;code&gt;CSS&lt;/code&gt;是一门指定文档该如何呈现给用户的语言。当你的浏览器请求页
+    
+    </summary>
+    
+      <category term="CSS" scheme="http://jianwl.com/categories/CSS/"/>
+    
+    
+      <category term="CSS" scheme="http://jianwl.com/tags/CSS/"/>
+    
+  </entry>
+  
+  <entry>
     <title>缓存使用规范</title>
     <link href="http://jianwl.com/2017/04/26/%E7%BC%93%E5%AD%98%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/"/>
     <id>http://jianwl.com/2017/04/26/缓存使用规范/</id>
     <published>2017-04-26T14:01:18.000Z</published>
-    <updated>2017-04-26T14:11:05.000Z</updated>
+    <updated>2017-04-27T07:42:14.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-使用规则"><a href="#1-使用规则" class="headerlink" title="1. 使用规则"></a>1. 使用规则</h3><ul>
 <li>尽量不要强依赖缓存「除非有特殊需求」，参考下面的缓存使用基本方法</li>
@@ -56,6 +216,7 @@
 <li><a href="http://www.tuicool.com/articles/7jMZFzj" target="_blank" rel="external">缓存穿透与缓存雪崩</a></li>
 <li><a href="http://www.tuicool.com/articles/Y36vaib" target="_blank" rel="external">再谈缓存穿透、缓存并发、热点缓存之最佳招式</a></li>
 </ol>
+<p><a href="http://bdms.hylin.dev.imdada.cn/" target="_blank" rel="external">http://bdms.hylin.dev.imdada.cn/</a></p>
 ]]></content>
     
     <summary type="html">
@@ -1615,151 +1776,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;http://jianwl.com/2017/04/01/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%B
-    
-    </summary>
-    
-      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
-    
-    
-      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>正则表达式入门</title>
-    <link href="http://jianwl.com/2017/04/01/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%85%A5%E9%97%A8/"/>
-    <id>http://jianwl.com/2017/04/01/正则表达式入门/</id>
-    <published>2017-04-01T15:00:58.000Z</published>
-    <updated>2017-04-02T03:42:44.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>正则表达式是文本处理&amp;数据爬取的神器，但由于语法难记且在日常工作中用到的机会较少，所以对这一神器知之甚少，这节来学习正则表达式的简单用法。</p>
-<h3 id="egrep用法"><a href="#egrep用法" class="headerlink" title="egrep用法"></a>egrep用法</h3><p>文本检索是正则表达式最简单的应用之一 – Mac系统下<code>egrep</code>提供了文本正则表达式的检索功能。举个简单的例子:</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-1/87069959-file_1491061667712_8d09.png" alt=""></p>
-<h3 id="正则表达式语法"><a href="#正则表达式语法" class="headerlink" title="正则表达式语法"></a>正则表达式语法</h3><h4 id="1-行的开始和结束"><a href="#1-行的开始和结束" class="headerlink" title="1. 行的开始和结束"></a>1. 行的开始和结束</h4><p><code>^</code>代表一行的开始，<code>$</code>代表结束</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-1/71581110-file_1491061994393_b0fa.png" alt=""></p>
-<h4 id="2-字符组"><a href="#2-字符组" class="headerlink" title="2. 字符组"></a>2. 字符组</h4><h5 id="1-范围型字符组"><a href="#1-范围型字符组" class="headerlink" title="1) 范围型字符组"></a>1) 范围型字符组</h5><p>匹配若干字符之一，可以使用结构体<code>[...]</code>,在字符组内部，<strong>字符组元字符</strong><code>-</code>表示一个范围比如<code>[0-9]</code>。特别注意：<strong>连字符</strong><code>-</code>只有在字符组内部才能表示范围，否则就是普通字符。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/54684166-file_1491062598112_9911.png" alt=""></p>
-<h5 id="2）排除型字符组"><a href="#2）排除型字符组" class="headerlink" title="2）排除型字符组"></a>2）排除型字符组</h5><p>字符组会匹配任何未列出的字符，可以用结构体<code>[^...]</code>表示，<code>^</code>在字符组的开头表示排除。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/72090159-file_1491095085321_162c1.png" alt=""></p>
-<h4 id="3-用点号匹配任意字符"><a href="#3-用点号匹配任意字符" class="headerlink" title="3. 用点号匹配任意字符"></a>3. 用点号匹配任意字符</h4><p>元字符<code>.</code>是用来匹配任意字符的字符组。例如我们要搜索<code>92/06/02</code>、<code>92-06-02</code>、<code>92.06.02</code>。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/77946479-file_1491096549681_13890.png" alt=""></p>
-<h4 id="4-匹配任意子表达式"><a href="#4-匹配任意子表达式" class="headerlink" title="4. 匹配任意子表达式"></a>4. 匹配任意子表达式</h4><p><code>|</code>表示或，能够匹配多个子表达式。比如<code>First</code>和<code>1st</code>是两个表达式，用正则表达式匹配<code>(Fir|1)st</code>,括号是必须的。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/9589231-file_1491097579389_ae64.png" alt=""></p>
-<h4 id="5-egrep-忽略大小写"><a href="#5-egrep-忽略大小写" class="headerlink" title="5. egrep 忽略大小写"></a>5. egrep 忽略大小写</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/76759955-file_1491097883322_b1d9.png" alt=""></p>
-<h4 id="6-可选元素"><a href="#6-可选元素" class="headerlink" title="6. 可选元素"></a>6. 可选元素</h4><p><code>?</code>代表可选项，把它加在一个字符的后面，就表示此处容许出现这个字符。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/34841121-file_1491098454865_70b6.png" alt=""></p>
-<h4 id="7-重复元素"><a href="#7-重复元素" class="headerlink" title="7. 重复元素"></a>7. 重复元素</h4><table>
-<thead>
-<tr>
-<th>符号</th>
-<th>次数下限</th>
-<th>次数上限</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>？</code></td>
-<td>无</td>
-<td>1</td>
-<td><strong>在<code>?</code>之前的元素</strong>可以不出现，也可以只出现一次</td>
-</tr>
-<tr>
-<td><code>*</code></td>
-<td>无</td>
-<td>无</td>
-<td><strong>在<code>*</code>之前出现的元素</strong>可以出现无数次，也可以不出现</td>
-</tr>
-<tr>
-<td><code>+</code></td>
-<td>1</td>
-<td>无</td>
-<td><strong>在<code>+</code>之前出现的元素</strong>可以出现无数次，但至少要出现一次</td>
-</tr>
-</tbody>
-</table>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/93512234-file_1491099677438_125b8.png" alt=""></p>
-<p>规定重复出现的次数<code>{min,max}</code> </p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/58020717-file_1491101398884_a930.png" alt=""></p>
-<h4 id="8-神奇的转义字符"><a href="#8-神奇的转义字符" class="headerlink" title="8. 神奇的转义字符\"></a>8. 神奇的转义字符<code>\</code></h4><p>使用转义符<code>\</code>，元字符就会失去特殊含义，比如匹配<code>90.06.02</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/35875132-file_1491101901364_14a1a.png" alt=""></p>
-<h4 id="小练习"><a href="#小练习" class="headerlink" title="小练习"></a>小练习</h4><p>匹配24小时制<code>HH:MM</code>,特别注意以2开头的时间如 <code>21:59</code></p>
-<p>实战：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-2/1904614-file_1491103167597_9411.png" alt=""></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><table>
-<thead>
-<tr>
-<th>符号</th>
-<th>元字符</th>
-<th>匹配对象</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>  <code>.</code></td>
-<td>点号</td>
-<td>匹配单个任意字符</td>
-</tr>
-<tr>
-<td>  <code>[...]</code></td>
-<td>字符组</td>
-<td>匹配单个列出的字符</td>
-</tr>
-<tr>
-<td><code>[^...]</code></td>
-<td>排除型字符组</td>
-<td>匹配单个未列出的字符</td>
-</tr>
-<tr>
-<td><code>\char</code></td>
-<td>转义字符</td>
-<td>若char是元字符，匹配char对应的普通字符</td>
-</tr>
-<tr>
-<td><code>?</code></td>
-<td>问号</td>
-<td>容许匹配一次，但非必需</td>
-</tr>
-<tr>
-<td><code>*</code></td>
-<td>星号</td>
-<td>容许匹配多次，但也可不匹配</td>
-</tr>
-<tr>
-<td><code>+</code></td>
-<td>加号</td>
-<td>至少匹配一次，至多可以任意次</td>
-</tr>
-<tr>
-<td><code>{min,max}</code></td>
-<td>区间量词</td>
-<td>至少需要min次，至多可能任意次「不是所有egrep版本都支持」</td>
-</tr>
-<tr>
-<td><code>^</code></td>
-<td>脱字符</td>
-<td>匹配一行的开头位置</td>
-</tr>
-<tr>
-<td><code>$</code></td>
-<td>美元符</td>
-<td>匹配一行的结束位置</td>
-</tr>
-<tr>
-<td><code>(...)</code></td>
-<td>括号</td>
-<td>限定多选结构的范围</td>
-</tr>
-</tbody>
-</table>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="http://item.jd.com/11070361.html" target="_blank" rel="external">精通正则表达式- 余晟</a> </li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;正则表达式是文本处理&amp;amp;数据爬取的神器，但由于语法难记且在日常工作中用到的机会较少，所以对这一神器知之甚少，这节来学习正则表达式的简单
     
     </summary>
     
