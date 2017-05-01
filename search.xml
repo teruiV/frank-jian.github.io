@@ -4,6 +4,90 @@
   
     
     <entry>
+      <title><![CDATA[Flex布局入门(一)]]></title>
+      <url>http://jianwl.com/2017/05/01/Flex%E5%B8%83%E5%B1%80%E5%85%A5%E9%97%A8-%E4%B8%80/</url>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>网页布局(layout)是<code>CSS</code>的一个重点应用</p>
+<p><img src="http://i2.muimg.com/567571/93944116677e563b.png" alt=""></p>
+<p>布局的传统解决方案，基于盒状模型，依赖<code>display</code>属性 + <code>position</code>属性 + <code>float</code>属性。它对于那些特殊布局非常不方便。比如，垂直居中就不容易实现。</p>
+<p>2009年，W3C提出一种新的方案 – Flex布局，可以简便、完整、响应式地实现各种页面布局。目前，它已经得到了所有浏览器的支持，这意味着，现在就能很安全地使用这项功能。</p>
+<p>Flex布局将成为未来布局的首选方案，本文介绍它的语法，下一篇文章给出常见布局的<code>Flex</code>写法。</p>
+<h3 id="Flex布局是什么？"><a href="#Flex布局是什么？" class="headerlink" title="Flex布局是什么？"></a>Flex布局是什么？</h3><p><code>Flex</code>是<code>Flexible Box</code>，意为“弹性布局”，用来为盒状模型提供最大的灵活性。</p>
+<p>任何一个容器都可以指定为Flex布局。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">	display: flex;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>行内元素也可以使用Flex布局</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">	display: inline-flex;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Webkit内核浏览器，必须加上<code>-webkit</code>前缀。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">	display: -webkit-flex; /* Safari */</div><div class="line">	display: flex;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意，设为Flex布局以后，子元素的float、clear和vertical-align属性都将失效。</p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>采用Flex布局的元素，称为Flex容器(flex container)，简称“容器”。它的所有子元素自动称为容器成员，称为Flex项目(flex item)，简称“项目”。</p>
+<p><img src="http://i2.muimg.com/567571/288f8307e2da445e.png" alt=""></p>
+<p>容器默认存在两根轴：水平的主轴(main axis)和垂直的交叉轴(crow axis)。主轴的开始位置(与边框的交叉点)叫做<code>main start</code>，结束位置叫做<code>main end</code>；交叉轴的开始位置叫做<code>cross start</code>，结束位置叫做<code>cross end</code>。</p>
+<p>项目默认延主轴排序，单个项目占据的主轴空间叫做<code>main size</code>，占据的交叉轴空间叫做<code>cross size</code>。</p>
+<h3 id="容器的属性"><a href="#容器的属性" class="headerlink" title="容器的属性"></a>容器的属性</h3><p>以下6个属性值设置在容器上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">flex-direction</div><div class="line">flex-wrap</div><div class="line">flex-flow</div><div class="line">jusitify-content</div><div class="line">align-items</div><div class="line">align-content</div></pre></td></tr></table></figure>
+<h4 id="1-flex-direction属性"><a href="#1-flex-direction属性" class="headerlink" title="1) flex-direction属性"></a>1) flex-direction属性</h4><p><code>flex-direction</code>属性决定主轴的方向(即项目的排列方向)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">	flex-direction: row | row-reverse | column | column-reverse;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://i2.muimg.com/567571/3ea0e291bfd8a635.png" alt=""></p>
+<p>它可能有4个值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">row(默认值)： 主轴的水平方向，起点在左端。</div><div class="line"></div><div class="line">row-reverse: 主轴的水平方向，起点在右端。</div><div class="line"></div><div class="line">column: 主轴为垂直方向，起点在上沿</div><div class="line"></div><div class="line">column-reverse: 主轴为垂直方向，起点在下沿。</div></pre></td></tr></table></figure>
+<h4 id="2）flex-wrap属性"><a href="#2）flex-wrap属性" class="headerlink" title="2）flex-wrap属性"></a>2）flex-wrap属性</h4><p>默认情况下，项目都排在一条线(又称为“轴线”)上，<code>flex-wrap</code>属性定义，如果一条轴线排不下，如何换行。</p>
+<p><img src="http://i4.buimg.com/567571/8572c78874a5c6b3.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">	flex-wrap: nowrap | wrap | wrap-reverse;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>它可能取三个值:</p>
+<p>(1) <code>nowrap</code>(默认)：不换行。</p>
+<p><img src="http://i4.buimg.com/567571/afd3df650ad2b30d.png" alt=""></p>
+<p>(2) <code>wrap</code>：换行，第一行在上方</p>
+<p><img src="http://i1.piimg.com/567571/f99a004cf748aaaf.png" alt=""></p>
+<p>(3) <code>wrap-reverse</code>: 换行，第一行在下方。</p>
+<p><img src="http://i4.buimg.com/567571/c748e0c92c0a3fa5.png" alt=""></p>
+<h4 id="3-flex-flow"><a href="#3-flex-flow" class="headerlink" title="3) flex-flow"></a>3) flex-flow</h4><p><code>flex-flow</code>属性是<code>flex-direction</code>属性和<code>flex-wrap</code>属性的简写形式，默认值为<code>row nowrap</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">	flex-flow: &lt;flex-direction&gt; || &lt;flex-wrap&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-justify-content属性"><a href="#4-justify-content属性" class="headerlink" title="4) justify-content属性"></a>4) justify-content属性</h4><p><code>justify-content</code>属性定义了项目在主轴上的对齐方式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">	justify-content: flex-start | flex-end | center | space-between | space-around;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://i4.buimg.com/567571/75861f2b490af1a7.png" alt=""></p>
+<p>它可能取5个值，具体对齐方式与轴的方向有关，下面假设主轴为从左到右。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">flex-start(默认值)： 左对齐</div><div class="line"></div><div class="line">flex-end: 右对齐</div><div class="line"></div><div class="line">center: 居中</div><div class="line"></div><div class="line">space-between: 两端对齐，项目之间的间隔都相等</div><div class="line"></div><div class="line">space-around: 每个项目两侧的间隔相等，所以项目之间的间隔比项目与边框的间隔大一倍。</div></pre></td></tr></table></figure>
+<h4 id="5-align-items属性"><a href="#5-align-items属性" class="headerlink" title="5) align-items属性"></a>5) align-items属性</h4><p><code>align-items</code>属性定义项目在交叉轴上如何对齐。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">	align-items: flex-start | flex-end | center | baseline | stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://i2.muimg.com/567571/6d0bc32cb1eb12fc.png" alt=""></p>
+<p>它可能取5个值，具体的对齐方式与交叉轴的方向有关，下面假设交叉轴从上到下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">flex-start: 交叉轴的起点对齐。</div><div class="line">flex-end: 交叉轴的终点对齐。</div><div class="line">center: 交叉轴的中点对齐。</div><div class="line">baseline: 项目的第一行文字的基线对齐。</div><div class="line">stretch(默认值): 如果项目未设置高度或设为auto，将占满整个容器的高度。</div></pre></td></tr></table></figure>
+<h4 id="6）align-content属性"><a href="#6）align-content属性" class="headerlink" title="6）align-content属性"></a>6）align-content属性</h4><p><code>align-content</code>属性定义了多跟轴线的对齐方式，如果项目只有一个轴线，该属性不起作用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">	align-content: flex-start | flex-end | center | space-between | space-around | stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://i1.piimg.com/567571/f8e7c4d69794f23a.png" alt=""></p>
+<p>该属性值可能取6个值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">flex-start: 与交叉轴的起点对齐。</div><div class="line">flex-end: 与交叉轴的终点对齐。</div><div class="line">center: 与交叉轴的中点对齐。</div><div class="line">space-between:与交叉轴两端对齐，轴线之间的间隔平均分布</div><div class="line">space-around:每根轴线两侧的间隔都相等，所以，轴线之间的间隔比轴线与边框的间隔大一倍。</div><div class="line">stretch(默认值): 轴线占满整个交叉轴。</div></pre></td></tr></table></figure>
+<h3 id="项目的属性"><a href="#项目的属性" class="headerlink" title="项目的属性"></a>项目的属性</h3><p>以下6个属性设置在项目上.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">order</div><div class="line"></div><div class="line">flex-grow</div><div class="line"></div><div class="line">flex-shrink</div><div class="line"></div><div class="line">flex-basis</div><div class="line"></div><div class="line">flex</div><div class="line"></div><div class="line">align-self</div></pre></td></tr></table></figure>
+<h4 id="1-order属性"><a href="#1-order属性" class="headerlink" title="1) order属性"></a>1) order属性</h4><p><code>order</code>属性定义项目的排列顺序，数值越小，排列越靠前，默认为0。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.item &#123;</div><div class="line"> order: &lt;integer&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://i4.buimg.com/567571/7f587ff9c90bbb53.png" alt=""></p>
+<h4 id="2-flex-grow属性"><a href="#2-flex-grow属性" class="headerlink" title="2) flex-grow属性"></a>2) flex-grow属性</h4><p><code>flex-grow</code>属性定义项目的放大比例，默认为<code>0</code>，即如果存在剩余空间，也不放大。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.item &#123;</div><div class="line">	flex-grow: &lt;number&gt;; /* default */</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://i4.buimg.com/567571/1970f38cd94a26f5.png" alt=""></p>
+<p>如果所有项目的<code>flex-grow</code>属性都为1，则它们将等分剩余空间(如果有的话)，如果一个项目的<code>flex-grow</code>属性为2，其他属性都为1，则牵着占据的剩余空间将比其他项多一倍。</p>
+<h4 id="3）flex-shrink属性"><a href="#3）flex-shrink属性" class="headerlink" title="3）flex-shrink属性"></a>3）flex-shrink属性</h4><p><code>flex-shrink</code>属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.item &#123;</div><div class="line">	flex-shrink: &lt;number&gt;; /* default 1*/</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://i4.buimg.com/567571/359ac6d037d1a438.png" alt=""></p>
+<p>如果所有项目的<code>flex-shrink</code>属性都为1，当空间不足时，都将等比例缩小，如果一个项目的<code>flex-shrink</code>属性为0，其他项都为1，则空间不足时，前者会不断缩小。负值对该属性无效。</p>
+<h4 id="4）flex-basis属性"><a href="#4）flex-basis属性" class="headerlink" title="4）flex-basis属性"></a>4）flex-basis属性</h4><p><code>flex-basis</code>属性定义了在分配多余空间之前，项目占据的主轴空间(main size)。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为<code>auto</code>,即项目的本来大小。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.item &#123;</div><div class="line">	flex-basis: &lt;length&gt; | auto; /* default auto */</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>它可以设为跟<code>width</code>或<code>height</code>属性一样的值(比如350px)，则项目将占据固定空间。</p>
+<h4 id="5）flex属性"><a href="#5）flex属性" class="headerlink" title="5）flex属性"></a>5）flex属性</h4><p><code>flex</code>属性是<code>flex-grow</code>，<code>flex-shrink</code>和<code>flex-basis</code>的简写，默认值为<code>0 1 auto</code>，后两个属性可选。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.item &#123;</div><div class="line">	flex: none | [&lt;&apos;flex-grow&apos;&gt; &lt;&apos;flex-shrink&apos;&gt;? || &lt;&apos;flex-basis&apos;&gt; ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>该属性有两个快捷键：<code>auto</code>(<code>1 1 auto</code>)和none(<code>0 0  auto</code>)。</p>
+<p>建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。</p>
+<h4 id="6-align-self-属性"><a href="#6-align-self-属性" class="headerlink" title="6) align-self 属性"></a>6) align-self 属性</h4><p><code>align-self</code>属性允许单个项目有与其他项目不一样的对齐方式，可覆盖<code>align-items</code>属性，默认值为<code>auto</code>，表示继承父元素的<code>align-items</code>属性，如果没有父元素，则等同于<code>stretch</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.item &#123;</div><div class="line">	align-self: auto | flex-start | flex-end | center | baseline | stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://i1.piimg.com/567571/ace048e9e73b8add.png" alt=""></p>
+<p>该属性可能取6个值，除了auto，其他都与align-items属性完全一致。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" target="_blank" rel="external">Flex 布局教程 by 阮一峰</a></li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[CSS入门]]></title>
       <url>http://jianwl.com/2017/04/29/CSS%E5%85%A5%E9%97%A8/</url>
       <content type="html"><![CDATA[<h3 id="1-什么是CSS"><a href="#1-什么是CSS" class="headerlink" title="1. 什么是CSS"></a>1. 什么是CSS</h3><p><code>CSS</code>是一门指定文档该如何呈现给用户的语言。当你的浏览器请求页面时，服务器会查询数据库生成文档，将散落在众多文件中的文档碎片搜集起来。 </p>
@@ -8838,6 +8922,23 @@ tee – the output of write (:w) command is redirected using tee
     </entry>
     
     <entry>
+      <title><![CDATA[MYSQL存储引擎]]></title>
+      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
+      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[MYSQL存储引擎优化]]></title>
       <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</url>
       <content type="html"><![CDATA[<h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
@@ -8862,23 +8963,6 @@ tee – the output of write (:w) command is redirected using tee
 <h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
 <h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
 <h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
-]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[MYSQL存储引擎]]></title>
-      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
-      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 ]]></content>
     </entry>
     
