@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-05-03T16:47:20.000Z</updated>
+  <updated>2017-05-04T15:15:50.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>多线程间的通信</title>
+    <link href="http://jianwl.com/2017/05/04/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1/"/>
+    <id>http://jianwl.com/2017/05/04/多线程间的通信/</id>
+    <published>2017-05-04T14:21:01.000Z</published>
+    <updated>2017-05-04T15:15:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>线程是操作系统中独立的个体，但这些个体如果不经过特殊的处理就不能成为一个整体。本文将会来学习使用<code>wait/notify</code>实现线程间的通信。</p>
+<h3 id="1-wait-notify机制的实现"><a href="#1-wait-notify机制的实现" class="headerlink" title="1. wait/notify机制的实现"></a>1. <code>wait/notify</code>机制的实现</h3><p>方法<code>wait</code>的作用是使当前执行代码的线程进行等待，<code>wait</code>方法是<code>Object</code>类的方法，该方法用来将当前线程置入“预执行队列”中，并且在<code>wait()</code>所在的代码行处停止执行，直到接到通知或被中断为止。在调用<code>wait()</code>之前，<strong>线程必须获取该对象的对象级别的锁，即只能在synchronized方法或同步块中调用wait()方法。</strong> 在执行<code>wait()</code>方法后，当前线程释放锁，在从<code>wait()</code>放回前，线程与其他线程竞争重新获得锁。<strong>如果调用wait()时，没有持有适当的锁，则抛出illegalMonitorStateException，它是RuntimeException的子类，因此不需要try-catch语句进行捕捉。</strong></p>
+<p><code>notify()</code>方法也要在<strong>synchronized或同步块中调用</strong>，即在调用前，线程也必须获得该对象的对象级别锁。如果调用<code>notify()</code>时没有持有适当的锁，也会抛出<code>illegalMonitorStateException</code>。该方法用来通知那些可能等待该对象的对象锁的其他线程，如果有多个线程等待，则由线程规划器随机挑选出其中一个呈wait状态的线程，对其发出通知notify，并使它等待获取该对象的对象锁。需要说明的是，<strong>在执行notify()方法后，当前线程不会马上释放该对象锁，呈wait状态的线程也并不能马上获取该对象锁，要等到执行notify()方法的线程将程序执行完，也就是退出synchronized代码块后，当前线程才会释放锁，而呈wait状态所在的线程才可以获取对象锁。</strong> 当第一个获得该对象锁的wait线程执行完毕之后，它会释放该对象锁，如果此时该对象没有再次使用notify语句，则即便该对象已经空闲，其他wait状态等待的线程由于没有该对象的通知，还会继续阻塞在wait状态，直到这个对象发出一个<code>notify或notifyAll</code>。</p>
+<p>用一句话来总结wait和notify: wait是线程停止运行，而notify是停止的线程继续运行。</p>
+<h3 id="2-实战"><a href="#2-实战" class="headerlink" title="2. 实战"></a>2. 实战</h3><h4 id="1）不在同步方法内执行wait，报错"><a href="#1）不在同步方法内执行wait，报错" class="headerlink" title="1）不在同步方法内执行wait，报错"></a>1）不在同步方法内执行<code>wait</code>，报错</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-4/59950818-file_1493909988683_133c4.png" alt=""></p>
+<h4 id="2）暂停线程wait"><a href="#2）暂停线程wait" class="headerlink" title="2）暂停线程wait"></a>2）暂停线程<code>wait</code></h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-4/39178586-file_1493910208703_13eb9.png" alt=""></p>
+<h4 id="3-notify-wait"><a href="#3-notify-wait" class="headerlink" title="3) notify/wait"></a>3) <code>notify/wait</code></h4><p>线程A</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public class ThreadA extends Thread &#123;</div><div class="line">    private Object object;</div><div class="line">    public ThreadA(Object object)&#123;</div><div class="line">        super();</div><div class="line">        this.object = object;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        try&#123;</div><div class="line">            synchronized (object)&#123;</div><div class="line">                System.out.println(&quot;start wait time =&gt; &quot; + System.currentTimeMillis());</div><div class="line">                object.wait();</div><div class="line">                System.out.println(&quot;end wait time =&gt; &quot; + System.currentTimeMillis());</div><div class="line">            &#125;</div><div class="line">        &#125;catch (InterruptedException e)&#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>线程B</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class ThreadB extends Thread&#123;</div><div class="line">    private Object object;</div><div class="line">    public ThreadB(Object object)&#123;</div><div class="line">        super();</div><div class="line">        this.object = object;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        synchronized (object)&#123;</div><div class="line">            System.out.println(&quot;start notify time =&gt; &quot; + System.currentTimeMillis());</div><div class="line">            object.notify();</div><div class="line">            System.out.println(&quot;end notify time =&gt; &quot; + System.currentTimeMillis());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>主函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class Run &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        try&#123;</div><div class="line">            Object object = new Object();</div><div class="line">            ThreadA t1 = new ThreadA(object);</div><div class="line">            t1.start();</div><div class="line">            Thread.sleep(3000);</div><div class="line">            ThreadB t2 = new ThreadB(object);</div><div class="line">            t2.start();</div><div class="line">        &#125;catch (InterruptedException e)&#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// 结果</div><div class="line">// start wait time =&gt; 1493910683445</div><div class="line">// start notify time =&gt; 1493910686449</div><div class="line">// end notify time =&gt; 1493910686449</div><div class="line">// end wait time =&gt; 1493910686449</div></pre></td></tr></table></figure>
+<p>特别注意一点，执行notify方法时，需要等待执行notify的线程，退出synchronized方法，抛出对象锁，wait获取对象锁，才能唤醒被wait的线程。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>java多线程核心技术 by 高洪岩</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;线程是操作系统中独立的个体，但这些个体如果不经过特殊的处理就不能成为一个整体。本文将会来学习使用&lt;code&gt;wait/notify&lt;/cod
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
+    
+    
+      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
+    
+  </entry>
   
   <entry>
     <title>对象及变量的并发访问</title>
@@ -1728,74 +1766,6 @@
     
     
       <category term="React" scheme="http://jianwl.com/tags/React/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Intellij 常用快捷键</title>
-    <link href="http://jianwl.com/2017/04/05/Intellij-%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
-    <id>http://jianwl.com/2017/04/05/Intellij-常用快捷键/</id>
-    <published>2017-04-05T14:15:36.000Z</published>
-    <updated>2017-04-06T00:24:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>IntelliJ在业界被公认为最好的java开发工具之一,了解其常用快捷键对于工作效率会有一定提升。</p>
-<h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p><strong>查询最近的文件</strong></p>
-<p>应用场景：可以快速跳转到之前刚刚查看过的文件。</p>
-<p>快捷键：<code>command + E</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/51543212.jpg" alt=""></p>
-<p><strong>查看最近编辑的文件</strong></p>
-<p>应用场景：可以快速跳转到之前刚刚编辑过的文件。</p>
-<p>快捷键：<code>command + shift +  E</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/51543212.jpg" alt=""></p>
-<p><strong>快速定位到大括号的开头或结尾</strong></p>
-<p>快捷键：<code>command + ]</code> 或 <code>command + [</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/97015680.jpg" alt=""></p>
-<p><strong>快速查找类</strong></p>
-<p>快捷键：<code>command + N</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/42335832.jpg" alt=""></p>
-<p><strong>格式化代码</strong></p>
-<p>快捷键：<code>command + alt + L</code></p>
-<p><strong>文本替换</strong></p>
-<p>快捷键：<code>command + R</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/60502414.jpg" alt=""></p>
-<p><strong>全局查找</strong></p>
-<p>快捷键： <code>control + shift + F</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/85182590.jpg" alt=""></p>
-<p><strong>删除行</strong></p>
-<p>快捷键：<code>command + X</code></p>
-<p><strong>复制行</strong></p>
-<p>快捷键：<code>command + D</code></p>
-<p><strong>跳到方法实现处</strong></p>
-<p>使用场景：通常我们会声明一个接口，然后让一个类实现这个接口。那么怎么从接口，跳到方法实现处呢？可以用这个快捷键</p>
-<p>快捷键： <code>command + alt + B</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/41820209.jpg" alt=""></p>
-<p><strong>隐藏工具窗口</strong></p>
-<p>快捷键： <code>shift + esc</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/75772825.jpg" alt=""></p>
-<p><strong>定位到具体某一行</strong></p>
-<p>快捷键：<code>command + G</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/99125758.jpg" alt=""></p>
-<p><strong>复制当前文件的路径</strong></p>
-<p>快捷键：<code>command + shift + C</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/26431733.jpg" alt=""></p>
-<p><strong>重命名</strong></p>
-<p>快捷键：<code>shift + fn + F6</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-11/88468445.jpg" alt=""></p>
-<p><strong>根据接口或抽象类找到实现/继承类</strong></p>
-<p>快捷键：<code>alt + command + B</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-6/32445215-file_1491438185245_a538.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;IntelliJ在业界被公认为最好的java开发工具之一,了解其常用快捷键对于工作效率会有一定提升。&lt;/p&gt;
-&lt;h3 id=&quot;场景&quot;&gt;&lt;a 
-    
-    </summary>
-    
-      <category term="Intellij IDEA" scheme="http://jianwl.com/categories/Intellij-IDEA/"/>
-    
-    
-      <category term="Intellij IDEA" scheme="http://jianwl.com/tags/Intellij-IDEA/"/>
     
   </entry>
   
