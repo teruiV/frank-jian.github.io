@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-05-06T08:31:47.000Z</updated>
+  <updated>2017-05-06T13:40:45.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,83 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JVM之类加载机制</title>
+    <link href="http://jianwl.com/2017/05/06/JVM%E4%B9%8B%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/"/>
+    <id>http://jianwl.com/2017/05/06/JVM之类加载机制/</id>
+    <published>2017-05-06T12:05:52.000Z</published>
+    <updated>2017-05-06T13:40:45.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>JVM的类加载机制是之前面试中被问到频率比较高的问题之一了，这一节我们来详细了解它的实现机制。</p>
+<h3 id="1-JVM类加载"><a href="#1-JVM类加载" class="headerlink" title="1. JVM类加载"></a>1. JVM类加载</h3><p>JAVA虚拟机中类加载的全过程，也就是加载、验证、准备、解析和初始化这5个阶段，接下来将会详细介绍每个阶段所执行的具体动作。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-6/1958164-file_1494072982627_39b3.png" alt=""></p>
+<h4 id="1）加载"><a href="#1）加载" class="headerlink" title="1）加载"></a>1）加载</h4><p>在加载阶段，虚拟机将会完成以下3件事情：</p>
+<p>1）通过一个类的全限定名来获取定义此类的二进制字节流</p>
+<p>2）将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构</p>
+<p>3) 在内存中生成一个代表这个类的<code>java.lang.Class</code>对象，作为方法区这个类的各种数据的访问入口。</p>
+<h4 id="2-验证"><a href="#2-验证" class="headerlink" title="2) 验证"></a>2) 验证</h4><p>验证是连接阶段的第一步，这一阶段的目的是为了确保Class文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害虚拟机自身的安全。</p>
+<p>验证阶段大致会完成下面4个阶段检验动作：文件格式验证、元数据验证、字节码验证、符号引用验证。</p>
+<h5 id="2-1-文件格式验证"><a href="#2-1-文件格式验证" class="headerlink" title="2.1 文件格式验证"></a>2.1 文件格式验证</h5><ul>
+<li>是否以魔数0xCAFEBABE开头</li>
+<li>主、次版本号是否在当前虚拟机处理范围之内</li>
+<li>常量池的常量中是否有不被支持的常量类型</li>
+</ul>
+<p>…</p>
+<p>这阶段的是基于二进制字节流进行的，只有通过这个验证后，字节流才会进入内存的方法区进行存储，后面的3个验证全都是基于方法区的存储结构进行的。</p>
+<h5 id="2-2-元数据验证"><a href="#2-2-元数据验证" class="headerlink" title="2.2 元数据验证"></a>2.2 元数据验证</h5><p>第二阶段是对字节码描述的信息进行语义分析，以保证其描述的信息符合Java信息规范的要求。这个阶段主要验证：</p>
+<ul>
+<li>这个类是否有父类</li>
+<li>这个类的父类是否集成了不允许继承的类</li>
+<li>如果这个类不是抽象类，是否实现了父类或接口之中要求实现的所有方法</li>
+<li>类中的字段、方法是否与父类产生矛盾</li>
+</ul>
+<h5 id="2-3-字节码验证"><a href="#2-3-字节码验证" class="headerlink" title="2.3 字节码验证"></a>2.3 字节码验证</h5><p>第三个阶段是整个验证中最复杂的一个阶段，主要目的是通过数据流和控制流分析确定程序语义是合法的，符合逻辑的。</p>
+<ul>
+<li>保证任意时刻操作数据栈的数据类型与指令代码序列都能配合工作，例如不会出现类似的情况：在操作栈放置一个int类型的数据，使用时却按long类型来加载本地变量表。</li>
+<li>保证跳转执行不会跳转到方法体以外的字节码指令上</li>
+<li>保证方法体中的类型转换是有效的。例如可以把一个子类对象赋值给父类数据类型。</li>
+</ul>
+<h5 id="2-4-符号引用验证"><a href="#2-4-符号引用验证" class="headerlink" title="2.4 符号引用验证"></a>2.4 符号引用验证</h5><p>最后一个阶段的验证发生在虚拟机将符号引用转化为直接引用的时候，这个转化动作将在连接的第三阶段 – 解析阶段中发生。符号引用验证可以看做是对类自身以外的信息进行匹配性校验。</p>
+<ul>
+<li>符号引用中通过字符串描述的全限定名是否能找到对应的类</li>
+<li>在指定类中是否存在符号方法的字段描述符以及简单名称所描述的方法和字段。</li>
+<li>符号引用中的类、字段、方法的访问性(private、protect、public、default)是否可被当前类访问</li>
+</ul>
+<h4 id="3）准备"><a href="#3）准备" class="headerlink" title="3）准备"></a>3）准备</h4><p>准备阶段是为类变量分配内存并设置类变量初始值的阶段，这些变量所使用的内存都将在方法区中进行分配。这个阶段有两个特别容易混淆的概念需要强调一下，首先，这个时候进行内存分配的仅包含类变量(被static修饰的变量)，而不包括实例变量，实例变量将在对象实例化时随着对象一起分配在java堆中。其次，这里所说的初始值“通常情况”下是数据类型的零值。假设定义一个类变量定义为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">public static int value = 123;</div></pre></td></tr></table></figure>
+<p>那变量value在准备阶段过后的初始值为0而不是123，因为这时候尚未开始执行Java方法，而把value赋值为123的pubstatic指令是程序被编译后，存放在类构造器<clinit>()方法之中，所以把value赋值为123的动作将在初始化阶段才会执行。</clinit></p>
+<h4 id="4-解析"><a href="#4-解析" class="headerlink" title="4) 解析"></a>4) 解析</h4><p>解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程，先来了解下解析阶段中直接引用与符号引用有什么关联？</p>
+<ul>
+<li>符号引用：符号引用以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能无歧义定位到目标即可。</li>
+<li>直接引用：直接引用是可以直接指向目标的指针、相对偏移量或是一个能间接定位到目标的句柄。</li>
+</ul>
+<p>解析动作主要针对类或接口、字段、类方法、接口方法、方法类型、方法局冰河调用点限定符7类符号引用进行</p>
+<h5 id="5-初始化"><a href="#5-初始化" class="headerlink" title="5) 初始化"></a>5) 初始化</h5><p>类初始化是类加载过程的最后一步，前面的类加载过程中，除了在加载阶段用户应用程序可以通过自定义类加载器参与外，其余动作完全由虚拟机主导和控制。到了初始化阶段，才真正开始执行类中定义的JAVA程序代码。</p>
+<h3 id="2-类加载器"><a href="#2-类加载器" class="headerlink" title="2. 类加载器"></a>2. 类加载器</h3><h4 id="1-类加载器的分类"><a href="#1-类加载器的分类" class="headerlink" title="1) 类加载器的分类"></a>1) 类加载器的分类</h4><p>JAVA提供3中类加载器，启动类加载器、扩展类加载器、应用程序类加载器。</p>
+<h5 id="1-1-启动类加载器"><a href="#1-1-启动类加载器" class="headerlink" title="1.1 启动类加载器"></a>1.1 启动类加载器</h5><p>这个类加载器将存放在<code>&lt;JAVA_HOME&gt;\lib</code>目录中的，或被<code>-Xbootclasspath</code>参数所指定的路径中的，并且是虚拟机识别的类库加载到虚拟机聂村中。启动类加载器无法被Java程序直接引用，用户在编写自定义加载器时，如果需要将加载器请求委派给引导类加载器，那直接使用null代替即可。</p>
+<h5 id="1-2-扩展类加载器"><a href="#1-2-扩展类加载器" class="headerlink" title="1.2 扩展类加载器"></a>1.2 扩展类加载器</h5><p>这个加载器由<code>sun.misc.Lanchuer$ExtClassLoader</code>实现，它负责加载<code>&lt;JAVA_HOME&gt;\lib\ext</code>目录中的，或者被<code>java.ext.dirs</code>系统变量所指定的路径中的所有类库，开发者可以直接使用扩展类加载器。</p>
+<h5 id="1-3-应用程序类加载器"><a href="#1-3-应用程序类加载器" class="headerlink" title="1.3 应用程序类加载器"></a>1.3 应用程序类加载器</h5><p>它负责加载用户类路径(ClassPath)上所指定的类库，开发者直接使用这个类加载器，如果应用程序中没有自定义过自己的类加载器，一般情况下就是程序中默认的类加载器。</p>
+<h4 id="2-类加载器之间的关系-–-双亲委派模型"><a href="#2-类加载器之间的关系-–-双亲委派模型" class="headerlink" title="2)类加载器之间的关系 – 双亲委派模型"></a>2)类加载器之间的关系 – 双亲委派模型</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-6/80453965-file_1494077656090_6545.png" alt=""></p>
+<p>双亲委派模型的工作过程是：如果一个类加载器收到类加载的请求，它首先不会自家去尝试加载这个类，而是把这个请求委派给父类加载器去完成，没一个层次的类加载器都是如此，因此所有的加载请求最终都应该传送到顶层的启动类加载器中，只有当父加载器反馈自己无法完成这个加载请求(它的搜索范围中没有找到所需的类)时，子加载器才会尝试自己去加载。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>深入理解java虚拟机 by 周志明</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;JVM的类加载机制是之前面试中被问到频率比较高的问题之一了，这一节我们来详细了解它的实现机制。&lt;/p&gt;
+&lt;h3 id=&quot;1-JVM类加载&quot;&gt;
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
+    
+    
+      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
+    
+  </entry>
   
   <entry>
     <title>Fork/Join框架</title>
@@ -1752,42 +1829,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;code&gt;JavaScript&lt;/code&gt;是一种弱类型语言，意味着你不用提前声明变量的类型，在程序运行的过程中，类型会被自动确定。例如：
-    
-    </summary>
-    
-      <category term="JavaScript" scheme="http://jianwl.com/categories/JavaScript/"/>
-    
-    
-      <category term="JavaScript" scheme="http://jianwl.com/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JS之运算符</title>
-    <link href="http://jianwl.com/2017/04/19/JS%E4%B9%8B%E8%BF%90%E7%AE%97%E7%AC%A6/"/>
-    <id>http://jianwl.com/2017/04/19/JS之运算符/</id>
-    <published>2017-04-19T14:18:37.000Z</published>
-    <updated>2017-04-19T15:03:34.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本节主要来学习<code>JS</code>常用的一些运算符，如<code>Spread运算符</code>、<code>typeof运算符</code>、<code>instanceof运算符</code>。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1、Spread运算符「…」"><a href="#1、Spread运算符「…」" class="headerlink" title="1、Spread运算符「…」"></a>1、Spread运算符「…」</h4><p><code>场景：</code> 用于赋值数组的部分</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-19/45847198-file_1492611937925_105b8.png" alt=""></p>
-<h4 id="2、typeof运算符"><a href="#2、typeof运算符" class="headerlink" title="2、typeof运算符"></a>2、typeof运算符</h4><p><code>场景：</code>返回一个用于标识表达式的数据类型的字符串,<code>typeof</code> 返回六种可能的值：“数字”、“字符串”、“布尔值”、“对象”、“函数”和“未定义”</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-19/46037312-file_1492612991793_11991.png" alt=""></p>
-<h4 id="3、三元运算符「-」"><a href="#3、三元运算符「-」" class="headerlink" title="3、三元运算符「?:」"></a>3、三元运算符「?:」</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-19/48353265-file_1492613129543_743e.png" alt=""></p>
-<h4 id="4、IN运算符"><a href="#4、IN运算符" class="headerlink" title="4、IN运算符"></a>4、<code>IN</code>运算符</h4><p><code>场景：</code>测试一个对象中是否存在一种属性。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-19/92241650-file_1492613451214_106bc.png" alt=""></p>
-<h4 id="5、instanceof运算符"><a href="#5、instanceof运算符" class="headerlink" title="5、instanceof运算符"></a>5、<code>instanceof</code>运算符</h4><p><code>场景：</code>返回一个布尔值，该值指示一个对象是否为特定类的一个实例。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-19/74839833-file_1492613994605_12dec.png" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://msdn.microsoft.com/zh-cn/library/dn919259(v=vs.94" target="_blank" rel="external">MSDN之运算符</a>.aspx)</li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Data_structures" target="_blank" rel="external">MSDN之JS数据结构</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;本节主要来学习&lt;code&gt;JS&lt;/code&gt;常用的一些运算符，如&lt;code&gt;Spread运算符&lt;/code&gt;、&lt;code&gt;typeof运算符
     
     </summary>
     
