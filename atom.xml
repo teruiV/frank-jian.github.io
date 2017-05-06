@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-05-06T05:33:59.000Z</updated>
+  <updated>2017-05-06T07:32:46.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,75 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JAVA之线程池</title>
+    <link href="http://jianwl.com/2017/05/06/JAVA%E4%B9%8B%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
+    <id>http://jianwl.com/2017/05/06/JAVA之线程池/</id>
+    <published>2017-05-06T05:45:11.000Z</published>
+    <updated>2017-05-06T07:32:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>之前面试问到最多的问题就是线程池的实现原理，这一节我们将会来学习线程池实现原理及线程池的用法。</p>
+<h3 id="1-线程池的优点"><a href="#1-线程池的优点" class="headerlink" title="1. 线程池的优点"></a>1. 线程池的优点</h3><p>Java中线程池是运用场景最多的并发框架，几乎所有需要异步或并发执行任务的程序都可以使用线程池，在开发过程中，合理地使用线程池能够带来3个好处。</p>
+<ol>
+<li>降低资源消耗，通过重复利用已创建的线程降低线程创建和销毁造成的消耗；</li>
+<li>提高响应速度，当任务达到时，任务可以不需要等到线程创建就能立即执行。</li>
+<li>提高线程的可管理性，线程是稀缺资源，如果无限制地创建、不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一分配、调优和监控。但是，要做到合理利用线程池，必须对其原理了如指掌。</li>
+</ol>
+<h3 id="2-线程池的实现原理"><a href="#2-线程池的实现原理" class="headerlink" title="2. 线程池的实现原理"></a>2. 线程池的实现原理</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-6/30502602-file_1494052172147_1313c.png" alt=""></p>
+<p>当提交一个新任务到线程池，处理流程如下：</p>
+<p>1）线程池判断核心线程池里的线程是否都在执行任务，如果不是，则创建一个新的工作线程来执行任务，如果核心线程池里的线程都在执行任务，则进入下一个流程。</p>
+<p>2）线程池判断工作队列是否已满，如果工作队列已满，则将新提交的任务存储在这个工作队列里如果工作队列满了，则进入下一个流程。</p>
+<p>3) 线程池判断线程池的线程是否都处于工作状态，如果没有，则创建一个新的工作线程来执行任务，如果满了，则交给饱和策略来处理这个任务。</p>
+<p>ThreadPoolExecutor执行的<code>execute()</code>方法的示意图：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-6/10523759-file_1494053473005_d83a.png" alt=""></p>
+<p>1） 如果当前运行的线程少于coorPoolSize,则创建新线程来执行任务「执行这一步骤要获取全局锁」</p>
+<p>2) 如果运行的线程等于或多余corePoolSize,则将任务加入BlockingQueue；</p>
+<p>3）如果无法将任务加入BlockingQueue(队列已满)，则创建新的线程来处理任务「执行这一步骤需要获取全局锁」</p>
+<p>4) 如果创建新线程将使当前运行的线程超过maxPool的数量，任务将被拒绝，并调用<code>RejectedExecutionHandle.rejectedExecution()</code>方法。</p>
+<h3 id="3-线程池的使用"><a href="#3-线程池的使用" class="headerlink" title="3. 线程池的使用"></a>3. 线程池的使用</h3><h4 id="1-线程池的创建"><a href="#1-线程池的创建" class="headerlink" title="1) 线程池的创建"></a>1) 线程池的创建</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">new ThreadPoolExecutor(corePoolSize,maximumPoolSize,keepAliveTime,milliseconds,runnableTaskQueue,handler);</div></pre></td></tr></table></figure>
+<p>1) corePoolSize(线程池的基本大小)：当提交一个任务到线程池时，线程池会创建一个新的线程来执行任务。等到需要执行的任务数大于线程池基本大小时就不再创建。</p>
+<p>2）runnableTaskQueue(任务队列): 用于保存等待执行的任务的阻塞队列,有以下几个可供选择：</p>
+<ul>
+<li>ArrayBlockingQueue: 一个基于数组结构的<strong>有界</strong>阻塞队列，此队列按FIFO对元素进行排序；</li>
+<li>LinkedBlockingQueue: 一个基于链表结构的阻塞队列，此队列按FIFO排序元素；</li>
+<li>SynchronousQueue: 一个不存储元素的阻塞队列，每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于阻塞状态</li>
+<li>PriorityBlockingQueue: 一个具有优先级的<strong>无限</strong>阻塞队列</li>
+</ul>
+<p>3）maximumPoolSize(线程池最大数量)：线程池允许创建的最大线程数。如果队列满了，并且已经创建的线程数小于最大线程数，则线程池会再创建新的线程执行任务。<strong>如果使用无界的任务，这个参数没效果。</strong></p>
+<p>4）ThreadFactory: 用于设置创建线程工厂，可以通过线程工厂给每个创建出来的线程设置更有意义的名字。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># guava提供的ThreadFactoryBuilder</div><div class="line">new ThreadFactoryBuilder().setNameFormat(&quot;XX-task-%d&quot;).build();</div></pre></td></tr></table></figure>
+<p>5）RejectedExecutionHandle(饱和策略)：当队列和线程池都满了，说明线程池处于饱和状态，那么必须采取一种策略处理提交的新任务。</p>
+<ul>
+<li>AbortPolicy: 直接抛出异常(默认处理方式）</li>
+<li>CallerRunsPolicy: 只用调用者所在线程来执行任务</li>
+<li>DiscardOldestPolicy: 丢弃队列里的最近一个任务，并执行当前任务；</li>
+<li>DiscardPolicy: 不处理，丢弃掉</li>
+</ul>
+<p>6）keepAliveTime(线程活动保持时间)：线程池的工作线程空闲后，保持存活的时间。如果任务多，单个任务执行时间短，可以调大时间，提高线程的利用率。</p>
+<h4 id="2-实战"><a href="#2-实战" class="headerlink" title="2) 实战"></a>2) 实战</h4><h5 id="创建线程池-amp-提交任务"><a href="#创建线程池-amp-提交任务" class="headerlink" title="创建线程池 &amp; 提交任务"></a>创建线程池 &amp; 提交任务</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class Run &#123;</div><div class="line">    private static final int CORE_POOL_SIZE = 1;</div><div class="line">    private static final int MAXI_MUM_POOL_SIZE = 1;</div><div class="line">    private static final long KEEP_ALIVE_TIME = 1;</div><div class="line">    private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;</div><div class="line">    private static BlockingQueue&lt;Runnable&gt; workQueue = new ArrayBlockingQueue(1);</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ThreadPoolExecutor threadPools = new ThreadPoolExecutor(CORE_POOL_SIZE,MAXI_MUM_POOL_SIZE,KEEP_ALIVE_TIME,TIME_UNIT,workQueue);</div><div class="line">        threadPools.execute(() -&gt; &#123;</div><div class="line">            System.out.println(&quot;ThreadName:&quot; + Thread.currentThread().getName() + &quot; currentTime =&gt; &quot; + System.currentTimeMillis());</div><div class="line">        &#125;);</div><div class="line">        // 关闭线程池</div><div class="line">        threadPools.shutdown();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// 结果</div><div class="line">// ThreadName:pool-1-thread-1 currentTime =&gt; 1494055661705</div></pre></td></tr></table></figure>
+<p>提交任务过多，触发饱和策略，默认执行<code>AbortPolicy</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public class Run &#123;</div><div class="line">    private static final int CORE_POOL_SIZE = 1;</div><div class="line">    private static final int MAXI_MUM_POOL_SIZE = 1;</div><div class="line">    private static final long KEEP_ALIVE_TIME = 1;</div><div class="line">    private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;</div><div class="line">    private static BlockingQueue&lt;Runnable&gt; workQueue = new ArrayBlockingQueue(1);</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ThreadPoolExecutor threadPools = new ThreadPoolExecutor(CORE_POOL_SIZE,MAXI_MUM_POOL_SIZE,KEEP_ALIVE_TIME,TIME_UNIT,workQueue);</div><div class="line"></div><div class="line">        for (int i=0; i&lt;10000; i++) &#123;</div><div class="line">            threadPools.execute(() -&gt; &#123;</div><div class="line">                System.out.println(&quot;ThreadName:&quot; + Thread.currentThread().getName() + &quot; currentTime =&gt; &quot; + System.currentTimeMillis());</div><div class="line">                try &#123;</div><div class="line">                    Thread.sleep(1000);</div><div class="line">                &#125; catch (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        // 关闭线程池</div><div class="line">        threadPools.shutdown();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-6/77334009-file_1494055810091_46b3.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>java并发编程的艺术 by 方腾飞</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;之前面试问到最多的问题就是线程池的实现原理，这一节我们将会来学习线程池实现原理及线程池的用法。&lt;/p&gt;
+&lt;h3 id=&quot;1-线程池的优点&quot;&gt;
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
+    
+    
+      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
+    
+  </entry>
   
   <entry>
     <title>Lock的使用</title>
@@ -1757,44 +1826,6 @@
     
     
       <category term="React" scheme="http://jianwl.com/tags/React/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java8之不常用却很有用的知识点</title>
-    <link href="http://jianwl.com/2017/04/17/Java8%E4%B9%8B%E4%B8%8D%E5%B8%B8%E7%94%A8%E5%8D%B4%E5%BE%88%E6%9C%89%E7%94%A8%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
-    <id>http://jianwl.com/2017/04/17/Java8之不常用却很有用的知识点/</id>
-    <published>2017-04-17T06:07:13.000Z</published>
-    <updated>2017-04-17T10:42:15.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><h4 id="1-forEach-VS-forEachOrdered"><a href="#1-forEach-VS-forEachOrdered" class="headerlink" title="1. forEach VS forEachOrdered"></a>1. forEach VS forEachOrdered</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_005()&#123;</div><div class="line">    List&lt;String&gt; strs = Arrays.asList(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;);</div><div class="line">    strs.stream().parallel().forEach(str -&gt; System.out.println(&quot;forEach =&gt; &quot; + str));</div><div class="line">    strs.stream().parallel().forEachOrdered(str -&gt; System.out.println(&quot;forEachOrdered =&gt; &quot; + str));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-12-11/96792814-file_1481436578266_14fcc.png" alt=""></p>
-<p><code>分析</code></p>
-<p>并行处理数据时，<code>forEach</code>处理的数据是无序的，而<code>forEachOrdered</code>处理数据是按照输入流的顺序处理的。</p>
-<h4 id="2-合并Map"><a href="#2-合并Map" class="headerlink" title="2. 合并Map"></a>2. 合并Map</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">@RunWith(JUnit4.class)</div><div class="line">public class BasicTest &#123;</div><div class="line">    /**</div><div class="line">     * 将sub合并至total,若在total中存在该键(key),则键值合并;</div><div class="line">     */</div><div class="line">    @Test</div><div class="line">    public void test_001()&#123;</div><div class="line">        Map&lt;String,List&lt;Integer&gt;&gt; total = Maps.newHashMap();</div><div class="line">        Map&lt;String,List&lt;Integer&gt;&gt; sub = Maps.newHashMap();</div><div class="line"></div><div class="line">        total.put(&quot;num1&quot;, Arrays.asList(1,2,3,4,11));</div><div class="line">        total.put(&quot;num2&quot;,Arrays.asList(1,2,3,4));</div><div class="line">        total.put(&quot;num3&quot;,Arrays.asList(1,2,3,4));</div><div class="line">        total.put(&quot;num4&quot;,Arrays.asList(1,2,3,4));</div><div class="line"></div><div class="line">        sub.put(&quot;num1&quot;,Arrays.asList(1,2,3,4,5,6,7));</div><div class="line">        sub.put(&quot;num2&quot;,Arrays.asList(1,2,3,4,4,5,6,7));</div><div class="line"></div><div class="line">        sub.keySet().forEach(key -&gt; total.merge(key,sub.get(key),(v1,v2) -&gt; Arrays.asList(v1,v2).stream().flatMap(Collection::stream).distinct().collect(Collectors.toList())));</div><div class="line"></div><div class="line">        System.out.println(&quot;total =&gt; &quot; + JSON.toJSONString(total));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>结果：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-2-21/83737621-file_1487691562243_10db7.png" alt=""></p>
-<h4 id="3-排序Map"><a href="#3-排序Map" class="headerlink" title="3. 排序Map"></a>3. 排序Map</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_033() &#123;</div><div class="line">    Map&lt;String,Integer&gt; map = Maps.newHashMap();</div><div class="line">    map.put(&quot;key1&quot;,9);</div><div class="line">    map.put(&quot;key2&quot;,1);</div><div class="line">    map.put(&quot;key3&quot;,3);</div><div class="line">    map.put(&quot;key4&quot;,2);</div><div class="line">    LinkedHashMap&lt;String,Integer&gt; linkedHashMap = map.entrySet().stream().sorted(Map.Entry.comparingByValue((v1,v2) -&gt; v2.compareTo(v1))).collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue,(e1,e2) -&gt; e1,LinkedHashMap::new));</div><div class="line">    System.out.println(linkedHashMap);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-17/80305570-file_1492423465236_f04f.png" alt=""></p>
-<h4 id="4-Collections-toMap重复key的处理方式"><a href="#4-Collections-toMap重复key的处理方式" class="headerlink" title="4. Collections.toMap重复key的处理方式"></a>4. <code>Collections.toMap</code>重复key的处理方式</h4><p><code>声明User对象</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">public class User&#123;</div><div class="line">    private Integer id;</div><div class="line">    private String name;</div><div class="line"></div><div class="line">    public User(Integer id, String name) &#123;</div><div class="line">        this.id = id;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Integer getId() &#123;</div><div class="line">        return id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setId(Integer id) &#123;</div><div class="line">        this.id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>测试类：</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">  public void test_034() &#123;</div><div class="line">      User u1 = new User(1,&quot;张三&quot;);</div><div class="line">      User u2 = new User(1,&quot;王武&quot;);</div><div class="line">      User u3 = new User(2,&quot;李四&quot;);</div><div class="line">      Map&lt;Integer,String&gt; map = Arrays.asList(u1,u2,u3).stream().collect(Collectors.toMap(User::getId, User::getName,(v1,v2) -&gt; v1,HashMap::new));</div><div class="line">      System.out.println(map);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<p><code>运行结果：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-17/80087753-file_1492425664414_3370.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;知识点&quot;&gt;&lt;a href=&quot;#知识点&quot; class=&quot;headerlink&quot; title=&quot;知识点&quot;&gt;&lt;/a&gt;知识点&lt;/h3&gt;&lt;h4 id=&quot;1-forEach-VS-forEachOrdered&quot;&gt;&lt;a href=&quot;#1-forEach-VS-forEachOr
-    
-    </summary>
-    
-      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
-    
-    
-      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
     
   </entry>
   
