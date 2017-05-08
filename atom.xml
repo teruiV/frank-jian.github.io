@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-05-06T13:44:31.000Z</updated>
+  <updated>2017-05-08T13:05:36.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,76 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用POI读取|创建Excel</title>
+    <link href="http://jianwl.com/2017/05/08/%E4%BD%BF%E7%94%A8POI%E8%AF%BB%E5%8F%96-%E5%88%9B%E5%BB%BAExcel/"/>
+    <id>http://jianwl.com/2017/05/08/使用POI读取-创建Excel/</id>
+    <published>2017-05-08T12:46:57.000Z</published>
+    <updated>2017-05-08T13:05:36.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>发现一个非常实用的工具，用于对EXCEL表的读取和创建。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-引入依赖"><a href="#1-引入依赖" class="headerlink" title="1) 引入依赖"></a>1) 引入依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.apache.poi&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;poi&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;3.13&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<h4 id="2-POI读取EXCEL表"><a href="#2-POI读取EXCEL表" class="headerlink" title="2) POI读取EXCEL表"></a>2) POI读取EXCEL表</h4><p>Excel表内容</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-8/14799072-file_1494248541870_6645.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public class POITest &#123;</div><div class="line"></div><div class="line">    public static void read() throws IOException, InvalidFormatException &#123;</div><div class="line">        InputStream inputStream = new FileInputStream(&quot;/Users/jianweilin/Desktop/bd_level.xlsx&quot;);</div><div class="line">        Workbook wb = WorkbookFactory.create(inputStream);</div><div class="line">        Sheet sheet = wb.getSheetAt(0);</div><div class="line">        sheet.forEach(row -&gt; &#123;</div><div class="line">            if(row.getRowNum() &lt;= 1) &#123;</div><div class="line">                System.out.println(&quot;skiped row nums =&gt; &quot; + row.getRowNum());</div><div class="line">                return;</div><div class="line">            &#125;</div><div class="line">            row.forEach(cell -&gt; System.out.print(cell.toString() + &quot; &quot;));</div><div class="line">            System.out.println();</div><div class="line">        &#125;);</div><div class="line">        inputStream.close();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public static void main(String[] args) throws IOException, InvalidFormatException &#123;</div><div class="line">        read();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 结果:</div><div class="line">// skiped row nums =&gt; 0</div><div class="line">// skiped row nums =&gt; 1</div><div class="line">// 1.0 413.0 411526199312042613 全职 杜辉 华北大区 北京城市站 到家+物流 BD专员 16-七月-2015 北京 物流BD 物流BDM 郑琦 </div><div class="line">// 2.0 542.0 220881199103101319 全职 刘洋 华北大区 北京城市站 到家+物流 BD专员 18-八月-2015 北京 物流BD 物流BDM 郑琦 </div><div class="line">// 3.0 1618.0 230605199102222623 全职 张莹 华北大区 北京城市站 到家+物流 BD专员 14-九月-2016 北京 物流BD 物流BDM 郑琦</div></pre></td></tr></table></figure>
+<h4 id="3-POI创建EXCEL表"><a href="#3-POI创建EXCEL表" class="headerlink" title="3) POI创建EXCEL表"></a>3) POI创建EXCEL表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">public class POITest &#123;</div><div class="line">    public static void write() throws IOException &#123;</div><div class="line">        // 创建excel工作簿</div><div class="line">        Workbook wb = new HSSFWorkbook();</div><div class="line"></div><div class="line">        // 创建第一个sheet（页），命名为 new sheet</div><div class="line">        Sheet sheet = wb.createSheet(&quot;城市经理&quot;);</div><div class="line"></div><div class="line">        // Row(行) 和 Cell(方格) 都是从0开始计数的</div><div class="line">        Row row1 = sheet.createRow((short) 0);</div><div class="line">        row1.createCell(0).setCellValue(&quot;城市经理编号&quot;);</div><div class="line">        row1.createCell(1).setCellValue(&quot;城市经理名字&quot;);</div><div class="line">        row1.createCell(2).setCellValue(&quot;城市ID&quot;);</div><div class="line">        row1.createCell(3).setCellValue(&quot;城市名称&quot;);</div><div class="line"></div><div class="line">        Row row2 = sheet.createRow((short) 1);</div><div class="line">        row2.createCell(0).setCellValue(&quot;1703&quot;);</div><div class="line">        row2.createCell(1).setCellValue(&quot;王伟鹏&quot;);</div><div class="line">        row2.createCell(2).setCellValue(&quot;1&quot;);</div><div class="line">        row2.createCell(3).setCellValue(&quot;上海&quot;);</div><div class="line"></div><div class="line">        FileOutputStream fileOut = new FileOutputStream(&quot;/Users/jianweilin/Desktop/city_manager.xlsx&quot;);</div><div class="line"></div><div class="line">        // 把上面创建的工作簿输出到文件中</div><div class="line">        wb.write(fileOut);</div><div class="line"></div><div class="line">        //关闭输出流</div><div class="line">        fileOut.close();</div><div class="line">    &#125;</div><div class="line">    public static void main(String[] args) throws IOException, InvalidFormatException &#123;</div><div class="line">        write();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-8/54636878-file_1494248703221_9bc.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;发现一个非常实用的工具，用于对EXCEL表的读取和创建。&lt;/p&gt;
+&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; class=&quot;head
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
+    
+    
+      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MYSQL数据库复制概论</title>
+    <link href="http://jianwl.com/2017/05/08/MYSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%8D%E5%88%B6%E6%A6%82%E8%AE%BA/"/>
+    <id>http://jianwl.com/2017/05/08/MYSQL数据库复制概论/</id>
+    <published>2017-05-08T04:48:02.000Z</published>
+    <updated>2017-05-08T05:20:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
+<p>每当我们讨论一项(新的)领域技术的时候，最好的方式通常是首先抛出一些问题，这些问题大致分为三类：这项技术又是什么玩意(Waht)？这项技术为什么会存在？我们已经有那么多解决方案(Method)了，我们为什么要用它(Why?)如果这项技术那么好且我们正好有场景可以用到这项技术，且能使我们的系统得到很乐观的优化，那么我们怎么用呢(How)?大概已经有人觉得这些问题很熟悉，是的，这就是黄金法则提出的三个问题，对于每种新鲜事物我们首先基于这三个问题去了解，更有利于弄清楚事情的本职，端正态度去了解，而不是因为新，因为大家都说好，才要去了解。</p>
+</blockquote>
+<p>接下来，我们带着黄金法则提出的三个问题去看看<code>MYSQL</code>数据库复制这项领域技术，然后再结合实际应用扩展一些问题。</p>
+<h3 id="1-WHAT"><a href="#1-WHAT" class="headerlink" title="1. WHAT?"></a>1. WHAT?</h3><p>MySQL复制使得一台MYSQL数据库服务器的数据被拷贝到其他一台或者多台数据库服务器，前者通常被叫做<code>Master</code>,后者通常被叫做<code>Slave</code>。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-8/18470249-file_1494220292824_ca12.png" alt="MySQL复制示意图"></p>
+<p>复制的结果是集群(Cluster)中的所有数据库服务器得到的数据理论上都是一样的，都是同一份数据，只是有多个copy。MYSQL默认内建的复制策略是异步的，基于不同的配置，<code>Slave</code>不一定要一直和<code>Master</code>保持连接不管的复制或等待复制，我们指定复制所有的数据库，一部分数据库、甚至是某个数据库的某部分的表。</p>
+<p>MYSQL复制支持多种不同的复制策略，包括同步、半同步、异步和延迟策略等。</p>
+<p>1) 同步策略：Master要等待所有Slave应答之后才会提交(MYSQL对DB操作的提交通常是先对操作事件进行二进制文件写入然后再进行提交)。</p>
+<p>2) 半同步策略：Master等待至少一个Slave应答就可以提交。</p>
+<p>3) 异步策略：Master不要等待Slave应答就可以提交</p>
+<p>4) 延迟策略：Slave要至少落后Master指定的时间</p>
+<p>MySQL复制同时支持多种不同的复制模式：</p>
+<p>1）基于语句的复制，<code>Statement Based Replication(SBR)</code></p>
+<p>2) 基于行的复制，<code>Row Based Replication(RBR)</code></p>
+<p>3) 混合复制, <code>Mixed</code></p>
+<h3 id="2-WHY"><a href="#2-WHY" class="headerlink" title="2. WHY?"></a>2. WHY?</h3>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;每当我们讨论一项(新的)领域技术的时候，最好的方式通常是首先抛出一些问题，这些问题大致分为三类：这项技术又是什么玩
+    
+    </summary>
+    
+      <category term="MYSQL" scheme="http://jianwl.com/categories/MYSQL/"/>
+    
+    
+      <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
+    
+  </entry>
   
   <entry>
     <title>JVM之类加载机制</title>
@@ -1076,7 +1146,7 @@
     <link href="http://jianwl.com/2017/04/25/Shell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98/"/>
     <id>http://jianwl.com/2017/04/25/Shell常用命令备忘/</id>
     <published>2017-04-25T05:01:52.000Z</published>
-    <updated>2017-04-25T09:27:48.000Z</updated>
+    <updated>2017-05-06T14:33:13.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-ls命令"><a href="#1-ls命令" class="headerlink" title="1. ls命令"></a>1. ls命令</h3><h4 id="1-显示长格式的输出"><a href="#1-显示长格式的输出" class="headerlink" title="1) 显示长格式的输出"></a>1) 显示长格式的输出</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">### -R 递归显示</div><div class="line">### -A almost-all，类似「-a」，不含「.」、「..」 目录</div><div class="line">### -h --human-readable</div><div class="line">### -r --reverse</div><div class="line"></div><div class="line">$ ls -l</div><div class="line">total 48</div><div class="line">-rw-r--r--    1 jianweilin  staff      0 10  1  2016 README.md</div><div class="line">-rw-r--r--    1 jianweilin  staff   1960  4  4 18:50 _config.yml</div><div class="line">-rw-r--r--    1 jianweilin  staff    174  4 25 13:01 db.json</div><div class="line">-rw-r--r--    1 jianweilin  staff     35  4  2 08:59 except.txt</div><div class="line">-rwxr-xr-x    1 jianweilin  staff     67 10  1  2016 github-backup.sh</div><div class="line">-rwxr-xr-x    1 jianweilin  staff     49 10  1  2016 hexo-deploy.sh</div><div class="line">drwxr-xr-x  298 jianweilin  staff  10132  3 11 21:15 node_modules</div><div class="line">-rw-r--r--    1 jianweilin  staff    759  3 11 21:15 package.json</div><div class="line">drwxr-xr-x   21 jianweilin  staff    714  4 25 12:57 public</div><div class="line">drwxr-xr-x    5 jianweilin  staff    170 10  8  2016 scaffolds</div><div class="line">drwxr-xr-x   11 jianweilin  staff    374 10 30 10:38 source</div><div class="line">drwxr-xr-x    7 jianweilin  staff    238  3 11 21:10 themes</div></pre></td></tr></table></figure>
 <h4 id="2-显示最后访问时间"><a href="#2-显示最后访问时间" class="headerlink" title="2) 显示最后访问时间"></a>2) 显示最后访问时间</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">$ ls -lu</div><div class="line">total 48</div><div class="line">-rw-r--r--    1 jianweilin  staff      0  3 12 23:34 README.md</div><div class="line">-rw-r--r--    1 jianweilin  staff   1960  4 25 13:01 _config.yml</div><div class="line">-rw-r--r--    1 jianweilin  staff    174  4 25 12:57 db.json</div><div class="line">-rw-r--r--    1 jianweilin  staff     35  4  2 08:59 except.txt</div><div class="line">-rwxr-xr-x    1 jianweilin  staff     67  3 12 10:02 github-backup.sh</div><div class="line">-rwxr-xr-x    1 jianweilin  staff     49  4 25 12:57 hexo-deploy.sh</div><div class="line">drwxr-xr-x  298 jianweilin  staff  10132  4 22 09:54 node_modules</div><div class="line">-rw-r--r--    1 jianweilin  staff    759  4 25 13:01 package.json</div><div class="line">drwxr-xr-x   21 jianweilin  staff    714  4 25 12:57 public</div><div class="line">drwxr-xr-x    5 jianweilin  staff    170  4 25 13:02 scaffolds</div><div class="line">drwxr-xr-x   11 jianweilin  staff    374  4 25 13:02 source</div><div class="line">drwxr-xr-x    7 jianweilin  staff    238  4 25 13:02 themes</div></pre></td></tr></table></figure>
@@ -1092,7 +1162,8 @@
 <h4 id="3-查看tar归档文件内容"><a href="#3-查看tar归档文件内容" class="headerlink" title="3) 查看tar归档文件内容"></a>3) 查看tar归档文件内容</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ tar -tf test.tgz</div><div class="line">test/</div><div class="line">test/1.txt</div><div class="line">test/2.txt</div></pre></td></tr></table></figure>
 <h4 id="4-解压"><a href="#4-解压" class="headerlink" title="4) 解压"></a>4) 解压</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ tar -xvzf test.tgz</div><div class="line">x test/</div><div class="line">x test/1.txt</div><div class="line">x test/2.txt</div></pre></td></tr></table></figure>
 <h3 id="5-实用命令"><a href="#5-实用命令" class="headerlink" title="5. 实用命令"></a>5. 实用命令</h3><h4 id="1-列出当前目录-文件夹并按大小排序"><a href="#1-列出当前目录-文件夹并按大小排序" class="headerlink" title="1) 列出当前目录|文件夹并按大小排序"></a>1) 列出当前目录|文件夹并按大小排序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">$ du -sh * | sort -nr</div><div class="line"> 53M	node_modules</div><div class="line"> 24M	themes</div><div class="line"> 17M	public</div><div class="line"> 12K	scaffolds</div><div class="line">5.0M	source</div><div class="line">4.0K	package.json</div><div class="line">4.0K	hexo-deploy.sh</div><div class="line">4.0K	github-backup.sh</div><div class="line">4.0K	except.txt</div><div class="line">4.0K	db.json</div><div class="line">4.0K	_config.yml</div><div class="line">  0B	README.md</div></pre></td></tr></table></figure>
-<h3 id="6-参考资料"><a href="#6-参考资料" class="headerlink" title="6. 参考资料"></a>6. 参考资料</h3><ol>
+<h3 id="6-查看端口是否被占用"><a href="#6-查看端口是否被占用" class="headerlink" title="6 查看端口是否被占用"></a>6 查看端口是否被占用</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-6/71012196-file_1494081173977_16732.png" alt=""> </p>
+<h3 id="7-参考资料"><a href="#7-参考资料" class="headerlink" title="7. 参考资料"></a>7. 参考资料</h3><ol>
 <li><a href="http://fqk.io/shell-some-command/" target="_blank" rel="external">Shell常用命令备忘 by fang</a></li>
 </ol>
 ]]></content>
@@ -1753,89 +1824,6 @@
     
     
       <category term="React" scheme="http://jianwl.com/tags/React/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JS之易错点</title>
-    <link href="http://jianwl.com/2017/04/20/JS%E4%B9%8B%E6%98%93%E9%94%99%E7%82%B9/"/>
-    <id>http://jianwl.com/2017/04/20/JS之易错点/</id>
-    <published>2017-04-19T23:37:56.000Z</published>
-    <updated>2017-04-20T12:06:57.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>刚接触JS语法，有许多易出错的点，将这些点记录下来，备忘。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-var变量声明提升"><a href="#1-var变量声明提升" class="headerlink" title="1. var变量声明提升"></a>1. var变量声明提升</h4><p>声明变量有三种方式：</p>
-<p><code>var</code> 声明一个变量，可以选择将其初始化为一个值</p>
-<p><code>let</code> 声明一个块作用域的局部变量，可选择将其初始化为一个值</p>
-<p><code>const</code> 声明一个只读的常量</p>
-<p><code>案例1：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-20/54570265-file_1492646127490_12e36.png" alt=""></p>
-<p><code>案例2：</code> 变量提升后的变量将返回<code>undefined</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-20/90885158-file_1492646887623_17d65.png" alt=""></p>
-<h4 id="2-字符串字面量"><a href="#2-字符串字面量" class="headerlink" title="2. 字符串字面量"></a>2. 字符串字面量</h4><p>模板字符串提供一些语法糖来构造字符串，例如：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-20/43060038-file_1492647130780_4999.png" alt=""></p>
-<h4 id="3-JS闭包"><a href="#3-JS闭包" class="headerlink" title="3. JS闭包"></a>3. JS闭包</h4><p>当内部函数以某一种方式被任何一个外部函数作用域访问时，就产生闭包了。JS中内部函数可以访问定义在外部函数中的所有变量和函数，但是外部函数却不能访问定义在函数内部的变量和函数。如果需要访问，则可以使用闭包。</p>
-<p><code>案例1：</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-4-20/94058572-file_1492653762314_14c1b.png" alt=""></p>
-<p><code>案例2：</code></p>
-<p><img src="http://i1.piimg.com/567571/cdb2b25d28952ef4.png" alt=""></p>
-<h4 id="4-箭头函数"><a href="#4-箭头函数" class="headerlink" title="4. 箭头函数"></a>4. 箭头函数</h4><p>箭头函数不绑定自己的<code>this</code>、<code>arguments</code>、<code>super</code>或<code>new.target</code>，此外箭头函数最好在非方法函数中使用，且不能用作构造函数。</p>
-<p><code>1、 基础语法</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// 多参数</div><div class="line">(param1, param2,..., paramN) =&gt; &#123; statements &#125;</div><div class="line">(param1, param2,..., paramN) =&gt; expression</div><div class="line">// 等价于: =&gt; &#123; return expression &#125;</div><div class="line"></div><div class="line">// 一个参数，圆括号可选</div><div class="line">(singleParam) =&gt; &#123;statements&#125;</div><div class="line">singleParam =&gt; &#123;statements&#125;</div><div class="line"></div><div class="line">// 无参的函数需要使用圆括号</div><div class="line">() =&gt; &#123; statements &#125;</div></pre></td></tr></table></figure>
-<p><code>2、高级语法</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// 返回文字表达式时应当用圆括号将其包起来：</div><div class="line">params =&gt; (&#123;foo: bar&#125;)</div><div class="line"></div><div class="line">// 支持 Rest parameters 和 default parameters</div><div class="line">(param1, param2, ...rest) =&gt; &#123; statements &#125;</div><div class="line">(param1 = defaultValue1, param2, ...,paramN = defaultValueN ) =&gt; &#123; statements &#125;</div><div class="line"></div><div class="line">// 支持参数列表中的解构赋值</div><div class="line">var f = ([a,b] = [1,2],&#123;x: c&#125; = &#123;x: a+b&#125;) =&gt; a + b + c;</div></pre></td></tr></table></figure>
-<p><code>案例1</code></p>
-<p><img src="http://i1.piimg.com/567571/30e0246c31be8206.png" alt=""></p>
-<h4 id="5-解构"><a href="#5-解构" class="headerlink" title="5. 解构"></a>5. 解构</h4><p><img src="http://i2.muimg.com/567571/b29447a502915ebf.png" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Grammar_and_types#变量声明提升(Variable_hoisting" target="_blank" rel="external">MSDN之JS基础教程</a>)</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;刚接触JS语法，有许多易出错的点，将这些点记录下来，备忘。&lt;/p&gt;
-&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; class=&quot;hea
-    
-    </summary>
-    
-      <category term="JavaScript" scheme="http://jianwl.com/categories/JavaScript/"/>
-    
-    
-      <category term="JavaScript" scheme="http://jianwl.com/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JS之基本数据结构</title>
-    <link href="http://jianwl.com/2017/04/19/JS%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    <id>http://jianwl.com/2017/04/19/JS之基本数据结构/</id>
-    <published>2017-04-19T15:12:50.000Z</published>
-    <updated>2017-04-19T15:37:10.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>JavaScript</code>是一种弱类型语言，意味着你不用提前声明变量的类型，在程序运行的过程中，类型会被自动确定。例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var foo = 42; // foo is a Number now</div><div class="line">var foo = &quot;bar&quot;; // foo is a String now</div><div class="line">var foo = true; // foo is a Boolean now</div></pre></td></tr></table></figure>
-<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><p>最新的<code>ECMASCRIPT</code>标准定义了7种数据结构分别为<code>Boolean</code>、<code>Null</code>、<code>Undefined</code>、<code>Number</code>、<code>String</code>、<code>Symbol</code>、<code>Object</code>。 </p>
-<h4 id="1-布尔类型"><a href="#1-布尔类型" class="headerlink" title="1. 布尔类型"></a>1. 布尔类型</h4><p>布尔表示一个逻辑实体，可以有两个值：<code>true</code>和<code>false</code></p>
-<h4 id="2-Null-类型"><a href="#2-Null-类型" class="headerlink" title="2. Null 类型"></a>2. Null 类型</h4><p>Null类型只有一个值: null</p>
-<h4 id="3-Undefined-类型"><a href="#3-Undefined-类型" class="headerlink" title="3. Undefined 类型"></a>3. Undefined 类型</h4><p>一个没有被赋值的变量会有个默认值<code>undefined</code></p>
-<h4 id="4-数字类型"><a href="#4-数字类型" class="headerlink" title="4. 数字类型"></a>4. 数字类型</h4><h4 id="5-字符串类型"><a href="#5-字符串类型" class="headerlink" title="5. 字符串类型"></a>5. 字符串类型</h4><h4 id="6-符号类型"><a href="#6-符号类型" class="headerlink" title="6. 符号类型"></a>6. 符号类型</h4><p>符号「Symbols」是<code>ECMASCRIPT</code>第六版定义的，符号类型是唯一的并且是不可修改的，并且也可以作为Object的key的值。</p>
-<h4 id="7-对象"><a href="#7-对象" class="headerlink" title="7. 对象"></a>7. 对象</h4><p>在<code>JavaScript</code>里，对象可以被看作是一组属性的组合。用对象字面量语法来定义对象时，会自动初始化一组属性。 </p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Data_structures" target="_blank" rel="external">MSDN之JS数据结构</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;code&gt;JavaScript&lt;/code&gt;是一种弱类型语言，意味着你不用提前声明变量的类型，在程序运行的过程中，类型会被自动确定。例如：
-    
-    </summary>
-    
-      <category term="JavaScript" scheme="http://jianwl.com/categories/JavaScript/"/>
-    
-    
-      <category term="JavaScript" scheme="http://jianwl.com/tags/JavaScript/"/>
     
   </entry>
   
