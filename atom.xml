@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-05-14T04:55:18.000Z</updated>
+  <updated>2017-05-14T07:56:40.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux学习笔记(二)</title>
+    <link href="http://jianwl.com/2017/05/14/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C/"/>
+    <id>http://jianwl.com/2017/05/14/Linux学习笔记-二/</id>
+    <published>2017-05-14T07:15:23.000Z</published>
+    <updated>2017-05-14T07:56:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-查询已启动的网络监听服务"><a href="#1-查询已启动的网络监听服务" class="headerlink" title="1. 查询已启动的网络监听服务"></a>1. 查询已启动的网络监听服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">netstat 参数解释：</div><div class="line"></div><div class="line">-t tcp协议</div><div class="line">-u udp协议</div><div class="line">-n numeric</div><div class="line">-l listen状态</div><div class="line">-p program</div></pre></td></tr></table></figure>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-14/26146003-file_1494746273274_17eb1.png" alt=""></p>
+<h4 id="2-查询系统中是否安装了某软件"><a href="#2-查询系统中是否安装了某软件" class="headerlink" title="2. 查询系统中是否安装了某软件"></a>2. 查询系统中是否安装了某软件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">rpm 参数详解：</div><div class="line"></div><div class="line">-q query 查询操作</div><div class="line">-a all 所有软件</div></pre></td></tr></table></figure>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-14/81383025-file_1494746859638_3b28.png" alt=""></p>
+<h4 id="3-host检测主机名与IP的对应关系"><a href="#3-host检测主机名与IP的对应关系" class="headerlink" title="3. host检测主机名与IP的对应关系"></a>3. host检测主机名与IP的对应关系</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-14/15833663-file_1494748081467_e93c.png" alt=""></p>
+<h4 id="4-telnet远程连接检测端口是否启动"><a href="#4-telnet远程连接检测端口是否启动" class="headerlink" title="4. telnet远程连接检测端口是否启动"></a>4. telnet远程连接检测端口是否启动</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-14/35985253-file_1494748318696_110f5.png" alt=""></p>
+<h4 id="5-wget网页数据的获取"><a href="#5-wget网页数据的获取" class="headerlink" title="5. wget网页数据的获取"></a>5. wget网页数据的获取</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-14/75884486-file_1494748586137_7e4b.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; class=&quot;headerlink&quot; title=&quot;实战&quot;&gt;&lt;/a&gt;实战&lt;/h3&gt;&lt;h4 id=&quot;1-查询已启动的网络监听服务&quot;&gt;&lt;a href=&quot;#1-查询已启动的网络监听服务&quot; class=&quot;headerlink&quot; titl
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://jianwl.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://jianwl.com/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>JAVA之封装实战(一)</title>
@@ -1759,59 +1788,6 @@
     
     
       <category term="Linux" scheme="http://jianwl.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redux入门教程(三)</title>
-    <link href="http://jianwl.com/2017/04/21/Redux%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-%E4%B8%89/"/>
-    <id>http://jianwl.com/2017/04/21/Redux入门教程-三/</id>
-    <published>2017-04-21T09:00:53.000Z</published>
-    <updated>2017-04-21T10:14:56.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><a href="http://jianwl.com/2017/04/21/Redux%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-%E4%BA%8C/#more">上一篇文章</a>，介绍了Redux的基本做法：用户发出Action,Reducer函数算出新的State，View重新渲染。但是一个关键的问题没有解决：异步操作怎么办？Action发出以后，Reducer立即算出State，这叫做同步；Action发出以后，过一段时间在执行Reducer，这就是异步。</p>
-<p>怎么才能Reducer在异步操作结束后自动执行呢？这就要用到新的工具：中间件(middleware)。</p>
-<h3 id="中间件的概念"><a href="#中间件的概念" class="headerlink" title="中间件的概念"></a>中间件的概念</h3><p>为了理解中间件，让我们站在框架作者的角度思考问题：如果要添加功能，你会在哪个环节添加？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Reducer: 纯函数，只能承担计算 State 的功能，不适合承担其他功能，也承担不了，因为理论上，纯函数不能进行读写操作。</div><div class="line"></div><div class="line">View：与 State 一一对应，可以看做 State 的视觉层，也不适合承担其他功能。</div><div class="line"></div><div class="line">Action: 存放数据的对象，即消息的载体， 只能被别人操作，自己不能进行任何操作。</div></pre></td></tr></table></figure>
-<p>想来想去，只有发送 Action 的这个步骤，即<code>store.dispatch()</code>方法，可以添加功能，距离来说，添加日志功能，把 Action 和 State 打印出来， 可以对<code>store.dispatch</code>进行如下改造。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">let next = store.dispatch;</div><div class="line">store.dispatch = function dispatchAndLog(action) &#123;</div><div class="line">	consle.log(&quot;dispatching&quot;,action);</div><div class="line">	next(action);</div><div class="line">	console.log(&apos;next state&apos;, store.getState());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面代码中，对<code>store.dispatch</code>进行了重定义，在发送<code>Action</code>前后添加了打印功能，这就是中间件的雏形。中间件就是一个函数，对<code>store.dispatch</code>方法进行了改造，在发出Action 和执行 Reducer 这两步之间，添加了其他功能。</p>
-<h3 id="中间件的用法"><a href="#中间件的用法" class="headerlink" title="中间件的用法"></a>中间件的用法</h3><p>上节的日志中间件，是有现成的模块的<a href="http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_two_async_operations.html" target="_blank" rel="external">redux-logger</a>，这里将介绍如何使用它们。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import &#123; applyMiddleware, createStore &#125; from &apos;redux&apos;;</div><div class="line">import createLogger from &apos;redux-logger&apos;;</div><div class="line">const logger = createStore(</div><div class="line">	reducer,</div><div class="line">	applyMiddleware(logger)</div><div class="line">);</div></pre></td></tr></table></figure>
-<p>上面代码中，<code>redux-logger</code>提供一个生成器<code>createLogger</code>,可以生成日志中间件<code>logger</code>,然后，将他放在<code>appleMiddleware</code>方法之中，传入<code>createStore</code>方法，就完成了<code>store.dispatch()</code>的功能增强。</p>
-<p>这里有两点需要注意：</p>
-<p>（1）<code>createStore</code> 方法可以接受整个应用的初始化状态作为参数，那样的话，<code>applyMiddleware</code>就是第三个参数了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">const store = createStore(</div><div class="line">	reducer,</div><div class="line">	initial_state,</div><div class="line">	applyMiddleware(logger)</div><div class="line">);</div></pre></td></tr></table></figure>
-<p>(2) 中间件的次序有讲究</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">const store = createStore(</div><div class="line">	reducer,</div><div class="line">	applyMiddleware(thunk, promise, logger)</div><div class="line">);</div></pre></td></tr></table></figure>
-<p>上面代码中，<code>applyMiddleware</code>方法的三个参数，就是三个中间件，有的中间件有次序要求，使用前要查下文档，比如，<code>logger</code>就一定要放在最后，否则输出结果就不对。</p>
-<h3 id="applyMiddlewares"><a href="#applyMiddlewares" class="headerlink" title="applyMiddlewares()"></a>applyMiddlewares()</h3><p>看到这里，你可能会问，<code>applyMiddlewares</code>这个方法到底是干什么用的？<br>它是<code>Redux</code>的原生方法，作用是将所有中间件组成一个数组，依次执行，下面是它的源码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">export default function applyMiddleware(...middlewares) &#123;</div><div class="line">	return (createStore) =&gt; (reducer, preloadedState, enhancer) =&gt; &#123;</div><div class="line">		var dispatch = store.dispatch;</div><div class="line">		var chain = [];</div><div class="line">		</div><div class="line">		var middlewareAPI = &#123;</div><div class="line">			getState: store.getState,</div><div class="line">			dispatch: (action) =&gt; dispatch(action)</div><div class="line">		&#125;;</div><div class="line">		chain = middlewares.map(middleware =&gt; middleware(middlewareAPI));</div><div class="line">		dispatch = compose(...chain)(store.dispatch);</div><div class="line">		</div><div class="line">		return &#123;...store,dispatch&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面代码中，所有中间件被放进一个数组<code>chain</code>，然后进行嵌套执行，最后执行<code>store.dispatch</code>，可以看到，中间件内部（middlewareAPI）可以拿到<code>getState</code> 和 <code>dispatch</code> 这两个方法。</p>
-<h3 id="异步操作的思路"><a href="#异步操作的思路" class="headerlink" title="异步操作的思路"></a>异步操作的思路</h3><p>理解中间件以后，就可以处理异步操作了。</p>
-<p>同步操作只需要发出一种Action即可，异步操作的差别是它要发出三种Action。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">操作发起的Action</div><div class="line">操作成功时的Action</div><div class="line">操作失败时的Action</div></pre></td></tr></table></figure>
-<p>以向服务器取出数据为例，三种Action可以有两种不同的写法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// 写法一：名称相同，参数不同</div><div class="line">&#123; type: &apos;FETCH_POSTS&apos; &#125;</div><div class="line">&#123; type: &apos;FETCH_POSTS&apos;, status: &apos;error&apos;, error: &apos;Oops&apos; &#125;</div><div class="line">&#123; type: &apos;FETCH_POSTS&apos;, status: &apos;success&apos;, response: &#123; ... &#125; &#125;</div><div class="line"></div><div class="line">// 写法二：名称不同</div><div class="line">&#123; type: &apos;FETCH_POSTS_REQUEST&apos; &#125;</div><div class="line">&#123; type: &apos;FETCH_POSTS_FAILURE&apos;, error: &apos;Oops&apos; &#125;</div><div class="line">&#123; type: &apos;FETCH_POSTS_SUCCESS&apos;, response: &#123; ... &#125; &#125;</div></pre></td></tr></table></figure>
-<p>除了 Action 种类不同，异步操作的 State 也要进行改造，反映不同的操作状态。下面是 State 的一个例子。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let state = &#123;</div><div class="line">	isFetching: true,</div><div class="line">	didInvalidate: true,</div><div class="line">	lastUpdated: &apos;xxxxx&apos;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>上面代码中， State的属性<code>isFetching</code>表示是否在抓取数据。<code>didInvalidate</code>表示数据是否过时，<code>lastUpdated</code>表示上一次更新时间。</p>
-<p>现在整个异步操作的思路就很清楚了:操作开始时，送出一个 Action，触发 State 更新为”正在操作”状态，View 重新渲染;操作结束后，再送出一个 Action，触发 State 更新为”操作结束”状态，View 再一次重新渲染</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_two_async_operations.html" target="_blank" rel="external">Redux入门教程二 by 阮一峰</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;http://jianwl.com/2017/04/21/Redux%E5%85%A5%E9%97%A8%E6%95%99
-    
-    </summary>
-    
-      <category term="React" scheme="http://jianwl.com/categories/React/"/>
-    
-    
-      <category term="React" scheme="http://jianwl.com/tags/React/"/>
     
   </entry>
   
