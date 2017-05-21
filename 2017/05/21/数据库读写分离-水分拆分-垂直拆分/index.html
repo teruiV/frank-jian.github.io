@@ -45,7 +45,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Python," />
+  <meta name="keywords" content="JAVA," />
 
 
 
@@ -63,16 +63,26 @@
 
 
 
-<meta name="description" content="前言本节主要是用来练习Python基本功，参考这篇文章Python基础教程，另外根据教程，写了些小练习在这个项目中的chapter_02。">
+<meta name="description" content="1. 数据库读写分离随着业务的发展，我们的数据量和访问量都在增长，对于大型网站来说，有不少业务是读多写少的，这个状况也会直接反应到数据库上，那么对于这样的情况，我们可以考虑使用读写分离的方式。
+
+通过读库来分担主库上读的压力，数据库提供了数据复制的功能，我们可以直接使用数据库系统自身的功能，但对于数据复制，我们还需要考虑数据复制时延问题，以及复制过程中数据的源和目标之间的映射关系及过滤条件的支持问">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python之基础教程&实战">
-<meta property="og:url" content="http://jianwl.com/2017/03/23/Python之基础教程-实战/index.html">
+<meta property="og:title" content="数据库读写分离&水分拆分&垂直拆分">
+<meta property="og:url" content="http://jianwl.com/2017/05/21/数据库读写分离-水分拆分-垂直拆分/index.html">
 <meta property="og:site_name" content="记录点滴成长">
-<meta property="og:description" content="前言本节主要是用来练习Python基本功，参考这篇文章Python基础教程，另外根据教程，写了些小练习在这个项目中的chapter_02。">
-<meta property="og:updated_time" content="2017-03-23T12:59:52.000Z">
+<meta property="og:description" content="1. 数据库读写分离随着业务的发展，我们的数据量和访问量都在增长，对于大型网站来说，有不少业务是读多写少的，这个状况也会直接反应到数据库上，那么对于这样的情况，我们可以考虑使用读写分离的方式。
+
+通过读库来分担主库上读的压力，数据库提供了数据复制的功能，我们可以直接使用数据库系统自身的功能，但对于数据复制，我们还需要考虑数据复制时延问题，以及复制过程中数据的源和目标之间的映射关系及过滤条件的支持问">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-5-21/96626968-file_1495352158645_1675c.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-5-21/73834200-file_1495353291315_4f78.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-5-21/29829023-file_1495358662307_17eca.png">
+<meta property="og:updated_time" content="2017-05-21T09:28:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python之基础教程&实战">
-<meta name="twitter:description" content="前言本节主要是用来练习Python基本功，参考这篇文章Python基础教程，另外根据教程，写了些小练习在这个项目中的chapter_02。">
+<meta name="twitter:title" content="数据库读写分离&水分拆分&垂直拆分">
+<meta name="twitter:description" content="1. 数据库读写分离随着业务的发展，我们的数据量和访问量都在增长，对于大型网站来说，有不少业务是读多写少的，这个状况也会直接反应到数据库上，那么对于这样的情况，我们可以考虑使用读写分离的方式。
+
+通过读库来分担主库上读的压力，数据库提供了数据复制的功能，我们可以直接使用数据库系统自身的功能，但对于数据复制，我们还需要考虑数据复制时延问题，以及复制过程中数据的源和目标之间的映射关系及过滤条件的支持问">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-5-21/96626968-file_1495352158645_1675c.png">
 
 
 
@@ -104,7 +114,7 @@
 
 
 
-  <title> Python之基础教程&实战 | 记录点滴成长 </title>
+  <title> 数据库读写分离&水分拆分&垂直拆分 | 记录点滴成长 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -253,7 +263,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/03/23/Python之基础教程-实战/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/05/21/数据库读写分离-水分拆分-垂直拆分/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -274,7 +284,7 @@
             
             
               
-                Python之基础教程&实战
+                数据库读写分离&水分拆分&垂直拆分
               
             
           </h1>
@@ -289,8 +299,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-23T20:56:47+08:00">
-                2017-03-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-21T15:14:15+08:00">
+                2017-05-21
               </time>
             
 
@@ -312,8 +322,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
                   </a>
                 </span>
 
@@ -330,8 +340,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/03/23/Python之基础教程-实战/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/23/Python之基础教程-实战/" itemprop="commentCount"></span>
+                <a href="/2017/05/21/数据库读写分离-水分拆分-垂直拆分/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/21/数据库读写分离-水分拆分-垂直拆分/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -357,7 +367,27 @@
       
 
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本节主要是用来练习Python基本功，参考这篇文章<a href="http://www.runoob.com/python/python-tutorial.html" target="_blank" rel="external">Python基础教程</a>，另外根据教程，写了些小练习<a href="http://git.oschina.net/shuangziliuyun/Python_Basic" target="_blank" rel="external">在这个项目中的chapter_02</a>。</p>
+        <h3 id="1-数据库读写分离"><a href="#1-数据库读写分离" class="headerlink" title="1. 数据库读写分离"></a>1. 数据库读写分离</h3><p>随着业务的发展，我们的数据量和访问量都在增长，对于大型网站来说，有不少业务是读多写少的，这个状况也会直接反应到数据库上，那么对于这样的情况，我们可以考虑使用读写分离的方式。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-21/96626968-file_1495352158645_1675c.png" alt=""></p>
+<p>通过读库来分担主库上读的压力，数据库提供了数据复制的功能，我们可以直接使用数据库系统自身的功能，但对于数据复制，我们还需要考虑数据复制时延问题，以及复制过程中数据的源和目标之间的映射关系及过滤条件的支持问题。<strong>数据复制延迟带来的就是短期的数据不一致。</strong>例如我们修改了用户信息，在这个信息还没有复制到读库时(因为延时)，我们从读库上读出来的信息就不是最新的，如果把这个信息给进行修改的人看，就会让他觉得没有修改成功。</p>
+<h3 id="2-专库专用，数据库垂直拆分"><a href="#2-专库专用，数据库垂直拆分" class="headerlink" title="2. 专库专用，数据库垂直拆分"></a>2. 专库专用，数据库垂直拆分</h3><p>读写分离能够降低主库的压力，解决读的问题，但却无法解决主库写的问题。随着业务的发展，我们的主库也会遇到瓶颈，因此需要解决这个问题，有数据垂直拆分和水平拆分两种选择。</p>
+<p>垂直拆分的意思是把数据库中不同的业务数据拆分到不同的数据库中。结合现在的例子，就是把交易、商品、用户的数据分开。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-21/73834200-file_1495353291315_4f78.png" alt=""></p>
+<h4 id="影响"><a href="#影响" class="headerlink" title="影响"></a>影响</h4><p>这样的变化给我们带来的影响是什么呢？应用需要配置多个数据源，这就增加了所需的配置，不过带来的是每个数据库连接池的隔离。不同业务的数据，从原来一个数据库拆分到了多个数据库中，那么就需要<strong>考虑如何处理原来单机中跨业务的事务</strong>。一种办法是使用分布式事务，其性能要明显低于之前的单机事务；而另一种办法就是去掉事务或者不去追求强事务支持，则原来在单裤中可以使用的表关联的查询也就需要改变实现了。</p>
+<p>对数据垂直拆分之后，解决了把所有业务数据放在一个数据库中的压力问题。并且也可以根据不同业务的特定进行更多优化。</p>
+<h3 id="3-垂直拆分后的单机遇到瓶颈，数据库水平拆分"><a href="#3-垂直拆分后的单机遇到瓶颈，数据库水平拆分" class="headerlink" title="3. 垂直拆分后的单机遇到瓶颈，数据库水平拆分"></a>3. 垂直拆分后的单机遇到瓶颈，数据库水平拆分</h3><p>数据库水平拆分就是把同一个表的数据拆分到两个数据库中。产生数据水平拆分的原因是某个业务的数据表的数据量或者更新量达到了单个数据库的瓶颈，这时就可以把这个表拆分到两个或者多个数据库中。</p>
+<p><strong>数据水平拆分</strong>与<strong>读写分离</strong>的区别是，读写分离解决的是读压力大的问题，对于数据库量大或者更新量的情况并不起作用。</p>
+<p><strong>数据水平拆分与数据垂直拆分</strong>的区别是，垂直拆分是把不同的表拆分到不同的数据库中，而水平拆分是把一个表拆到不同的数据库中。</p>
+<p>例如，经过垂直拆分后，用户表与交易表、商品表不在一个数据库中了，如果数据量或者更新量太大，我们可以进一步把用户表拆分到两个数据库中，他们拥有结构一模一样的用户表，而且每个库中的用户表都只涵盖了一部分的用户，两个数据库的用户合在一起就相当于没有拆分之前的用户表。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-21/29829023-file_1495358662307_17eca.png" alt=""></p>
+<h4 id="水平拆分给业务应用带来的影响"><a href="#水平拆分给业务应用带来的影响" class="headerlink" title="水平拆分给业务应用带来的影响"></a>水平拆分给业务应用带来的影响</h4><ol>
+<li>访问用户信息的应用系统应该解决SQL路由的问题，因为现在用户信息分在两个数据库中，需要在进行数据库操作时了解需要操作的数据在哪里。</li>
+<li>主键的处理也会变得不同。原来依赖单个数据库的一些机制需要变化。例如原来使用MYSQL表上的自增字段，现在不能简单地继续使用了，并且在不同的数据库中也不能直接使用一些数据库的限制来保证主键不重复。</li>
+<li>由于同一个业务的数据被拆分到了不同的数据库中，因此一些查询需要从两个数据库中取数据，如果数据量太大而需要分页，就比较难处理了。</li>
+</ol>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>大型网站与Java中间件实践 by 曾宪杰</li>
+</ol>
 
       
     </div>
@@ -381,7 +411,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Python/" rel="tag"># Python</a>
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
           
         </div>
       
@@ -394,8 +424,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/20/Python之变量类型/" rel="next" title="Python之变量类型">
-                <i class="fa fa-chevron-left"></i> Python之变量类型
+              <a href="/2017/05/21/应用服务器变为集群后的Session问题/" rel="next" title="应用服务器变为集群后的Session问题">
+                <i class="fa fa-chevron-left"></i> 应用服务器变为集群后的Session问题
               </a>
             
           </div>
@@ -403,10 +433,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/23/install-mysql-on-centos7/" rel="prev" title="install mysql on centos7">
-                install mysql on centos7 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -432,8 +458,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/03/23/Python之基础教程-实战/"
-           data-title="Python之基础教程&实战" data-url="http://jianwl.com/2017/03/23/Python之基础教程-实战/">
+      <div class="ds-thread" data-thread-key="2017/05/21/数据库读写分离-水分拆分-垂直拆分/"
+           data-title="数据库读写分离&水分拆分&垂直拆分" data-url="http://jianwl.com/2017/05/21/数据库读写分离-水分拆分-垂直拆分/">
       </div>
     
   </div>
@@ -546,7 +572,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库读写分离"><span class="nav-text">1. 数据库读写分离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-专库专用，数据库垂直拆分"><span class="nav-text">2. 专库专用，数据库垂直拆分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#影响"><span class="nav-text">影响</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-垂直拆分后的单机遇到瓶颈，数据库水平拆分"><span class="nav-text">3. 垂直拆分后的单机遇到瓶颈，数据库水平拆分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#水平拆分给业务应用带来的影响"><span class="nav-text">水平拆分给业务应用带来的影响</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
