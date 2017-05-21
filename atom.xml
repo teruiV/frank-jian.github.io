@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-05-21T05:51:12.000Z</updated>
+  <updated>2017-05-21T07:13:22.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -20,12 +20,12 @@
     <link href="http://jianwl.com/2017/05/21/%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%98%E4%B8%BA%E9%9B%86%E7%BE%A4%E5%90%8E%E7%9A%84Session%E9%97%AE%E9%A2%98/"/>
     <id>http://jianwl.com/2017/05/21/应用服务器变为集群后的Session问题/</id>
     <published>2017-05-21T04:17:24.000Z</published>
-    <updated>2017-05-21T05:51:12.000Z</updated>
+    <updated>2017-05-21T07:13:22.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="什么是session"><a href="#什么是session" class="headerlink" title="什么是session"></a>什么是session</h3><p>用户使用网站的服务，基本上需要浏览器与Web服务器的多次交互，HTTP协议本身是无状态的，需要基于HTTP协议支持会话状态(Session State)机制。而这样的机制应该可以使Web服务器从多次单独的HTTP请求中看到”会话”，也就是知道哪些请求是来自哪个会话。具体实现方式为：在会话开始时，分配一个唯一的会话标识(SessionId),通过Cookie把这个标识告诉浏览器，以后每次请求的时候，浏览器都会带上这个会话标识来告诉Web服务器请求是属于哪个会话的。在Web服务器上，各个会话有独立的存储，保存不同会话的信息。如果遇到禁用Cookie的情况，一般的做法就是把这个会话标识放到URL的参数中。</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-21/73320721-file_1495340830067_51c1.png" alt=""></p>
-<p>当我们的应用服务器从一台变成两台后，如同图2-7中的结构，我们会遇到Session的问题，具体是指什么问题？</p>
-<p>当一个带有会话标识的HTTP请求到了Web服务器后，需要在HTTP请求的处理过程中找到对应的会话数据(Session)。而问题就在于，会话数据是需要保存在单机上的。如果我第一次访问网站时请求到了A服务器，那么我的Session就创建在A服务器上，如果我们不做处理，就不能保证接下来的请求每次都落在同一边的服务器上了，这就是Session问题。以下提供几种解决方案。</p>
+<p>当我们的应用服务器从一台变成两台后，我们会遇到Session的问题，具体是指什么问题？</p>
+<p>当一个带有会话标识的HTTP请求到了Web服务器后，需要在HTTP请求的处理过程中找到对应的会话数据(Session)。而问题就在于，会话数据是需要保存在单机上的。如果我第一次访问网站时请求到了A服务器，那么我的Session就创建在A服务器上，如果我们不做处理，就不能保证接下来的请求每次都落在A服务器上了，这就是Session问题。以下提供几种解决方案。</p>
 <h3 id="1-Session-Sticky"><a href="#1-Session-Sticky" class="headerlink" title="1. Session Sticky"></a>1. Session Sticky</h3><p>在单机的情况下，会话保存在单机上，请求也都是由这个机器处理，所以不会有问题。Web服务器变成多台后，如果保证同一个会话的请求都在同一个Web服务器上处理，那么对这个会话的个体来说，与之前的单机情况是一样的。</p>
 <p>如果要做到这样，就需要负责均衡器能够根据每次请求的会话标识来进行请求转发，如图所示：</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-21/57581734-file_1495341619642_c22b.png" alt=""></p>
