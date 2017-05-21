@@ -74,7 +74,7 @@
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-5-21/38549929-file_1495343662631_181a9.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-5-21/2688929-file_1495344473634_f8d1.png">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-5-21/66593639-file_1495345259153_114b5.png">
-<meta property="og:updated_time" content="2017-05-21T05:48:12.000Z">
+<meta property="og:updated_time" content="2017-05-21T05:51:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="应用服务器变为集群后的Session问题">
 <meta name="twitter:description" content="什么是session用户使用网站的服务，基本上需要浏览器与Web服务器的多次交互，HTTP协议本身是无状态的，需要基于HTTP协议支持会话状态(Session State)机制。而这样的机制应该可以使Web服务器从多次单独的HTTP请求中看到”会话”，也就是知道哪些请求是来自哪个会话。具体实现方式为：在会话开始时，分配一个唯一的会话标识(SessionId),通过Cookie把这个标识告诉浏览器，">
@@ -390,7 +390,7 @@
 <li>如果集中存储Session机制或者集群出现问题，会影响应用。</li>
 </ol>
 <p>当Web服务器数据量比较大，Session数比较多的时候，这个集中存储方案的优势非常明显。</p>
-<h3 id="4-Cookie-Based"><a href="#4-Cookie-Based" class="headerlink" title="4. Cookie Based"></a>4. Cookie Based</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-21/66593639-file_1495345259153_114b5.png" alt="">åå</p>
+<h3 id="4-Cookie-Based"><a href="#4-Cookie-Based" class="headerlink" title="4. Cookie Based"></a>4. Cookie Based</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-21/66593639-file_1495345259153_114b5.png" alt=""></p>
 <p>相对于前面的方案，这个方案不会依赖外部的一个存储系统，也不存在从外部系统获取，写入Session数据的网络时延，不稳定性了。但这个方案依然有不足。</p>
 <h4 id="缺点-3"><a href="#缺点-3" class="headerlink" title="缺点"></a>缺点</h4><ol>
 <li>Cookie长度的限制，我们知道Cookie是有长度限制的，而这也会限制Session数据的长度。</li>
