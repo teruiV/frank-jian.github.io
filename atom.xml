@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-05-21T09:28:11.000Z</updated>
+  <updated>2017-06-03T02:57:29.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,55 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java之ClassLoader</title>
+    <link href="http://jianwl.com/2017/06/03/Java%E4%B9%8BClassLoader/"/>
+    <id>http://jianwl.com/2017/06/03/Java之ClassLoader/</id>
+    <published>2017-06-03T01:44:51.000Z</published>
+    <updated>2017-06-03T02:57:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-ClassLoader基本概念"><a href="#1-ClassLoader基本概念" class="headerlink" title="1. ClassLoader基本概念"></a>1. ClassLoader基本概念</h3><p>Java程序是由许多独立的类文件组成的，每一个文件对应一个Java类。此外，<strong>这些类文件并非全部装入内存，而是根据程序需要逐渐载入。</strong> </p>
+<p>ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(启动类加载器), ClassLoader在JVM运行的时候加载Java核心的API，以满足Java程序最基本的需求，其中就包括用户定义的ClassLoader: <strong>一个是ExtClassLoader，它的作用是用来加载Java的扩展API，也就是/lib/ext中的类；第二个是AppClassLoader,它是用来加载用户机器上CLASSPATH设置目录中的Class的，通常在没有指定ClassLoader的情况下，自定义的类就由该ClassLoader进行加载。</strong></p>
+<h3 id="2-ClassLoader加载流程"><a href="#2-ClassLoader加载流程" class="headerlink" title="2. ClassLoader加载流程"></a>2. ClassLoader加载流程</h3><p>当运行一个程序的时候，JVM启动，运行bootstrap classloader，该ClassLoader加载Java核心API(ExtClassLoader和AppClassLoader也在此时被加载)，然后调用ExtClassLoader加载扩展API，最后AppClassLoader加载CLASSPATH目录下定义的Class，这就是一个程序最基本的加载流程。</p>
+<p>核心代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">protected Class&lt;?&gt; loadClass(String name, boolean resolve)</div><div class="line">    throws ClassNotFoundException</div><div class="line">&#123;</div><div class="line">    synchronized (getClassLoadingLock(name)) &#123;</div><div class="line">        // 首先检查该name指定的class是否被加载</div><div class="line">        Class&lt;?&gt; c = findLoadedClass(name);</div><div class="line">        if (c == null) &#123;</div><div class="line">            long t0 = System.nanoTime();</div><div class="line">            try &#123;</div><div class="line">                if (parent != null) &#123;</div><div class="line">                // 如果parent不为null，则调用parent的loadclass进行加载</div><div class="line">                    c = parent.loadClass(name, false);</div><div class="line">                &#125; else &#123;</div><div class="line">                // parent为null，则调用BootstrapClassLoader进行加载</div><div class="line">                    c = findBootstrapClassOrNull(name);</div><div class="line">                &#125;</div><div class="line">            &#125; catch (ClassNotFoundException e) &#123;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if (c == null) &#123;</div><div class="line">                long t1 = System.nanoTime();</div><div class="line">                // 如果仍然无法加载成功，则调用自身的findClass进行加载；</div><div class="line">                c = findClass(name);</div><div class="line">                sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);</div><div class="line">                sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);</div><div class="line">                sun.misc.PerfCounter.getFindClasses().increment();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (resolve) &#123;</div><div class="line">            resolveClass(c);</div><div class="line">        &#125;</div><div class="line">        return c;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从上述代码中可以看出，<strong>一个类加载的过程使用了一种父类委托模式。</strong>为什么要使用这种模式？</p>
+<ol>
+<li>可以避免重复加载，当父类已经加载了该类的时候，就没有必要子ClassLoader再加载一次。</li>
+<li>考虑到安全因素，如果不使用这种委托模式，那么可以随时使用自定义的String来动态替换Java核心API中定义的类型，这样会存在非常大的安全隐患，而父类委托的方式可以避免这种情况，因为String已经在启动时被加载，所以，用户自定义类无法加载一个自定义的ClassLoader</li>
+</ol>
+<h3 id="3-JVM加载类的流程"><a href="#3-JVM加载类的流程" class="headerlink" title="3. JVM加载类的流程"></a>3. JVM加载类的流程</h3><p>JVM加载类的时候，需要经过三个步骤：装载、连接、初始化。装载就是找到相应的class文件，读入JVM；初始化就是class文件初始化，这里详述一下连接，连接分为三步：</p>
+<ol>
+<li>验证class是否符合规范</li>
+<li>准备，为类变量分配内存的同时设置默认初始值</li>
+<li>解释，这步可选，根据loadClass中的是否需要解析的参数。解释指: 根据类中的符号引用查找相应的实体，再把符号引用替换成一个直接引用的过程。</li>
+</ol>
+<h3 id="4-一些重要的方法"><a href="#4-一些重要的方法" class="headerlink" title="4. 一些重要的方法"></a>4. 一些重要的方法</h3><h4 id="1-loadClass"><a href="#1-loadClass" class="headerlink" title="1) loadClass"></a>1) loadClass</h4><p>ClassLoader.loadClass()ClassLoader的入口点，定义如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Class loadClass( String name, boolean resolve );</div></pre></td></tr></table></figure>
+<p>name是JVM需要的类名称，如java.lang.Object。resolve参数告诉方法是否需要解析类。如果JVM只需要知道该类是否存在或找出该类的超类，那么就不需要解析；</p>
+<h4 id="2-defineClass"><a href="#2-defineClass" class="headerlink" title="2) defineClass"></a>2) defineClass</h4><p>defineClass方法接受由原始字节组成的数组，并把它转换成Class对象。</p>
+<h4 id="3-findSystemClass"><a href="#3-findSystemClass" class="headerlink" title="3) findSystemClass"></a>3) findSystemClass</h4><p>findSystemClass方法从本地文件系统装入文件。</p>
+<h4 id="4）resolveClass"><a href="#4）resolveClass" class="headerlink" title="4）resolveClass"></a>4）resolveClass</h4><p>当我们编写自己的loadClass时，可以调用 resolveClass,这取决于 loadClass的resolve参数的值。</p>
+<h4 id="5-findLoadedClass"><a href="#5-findLoadedClass" class="headerlink" title="5) findLoadedClass"></a>5) findLoadedClass</h4><p>findLoadedClass充当一个缓存，当请求loadClass装入类时，它调用该方法来查看ClassLoader是否已装入这个类，这样可以避免重新装入已存在类所造成的麻烦。</p>
+<h4 id="6-findClass"><a href="#6-findClass" class="headerlink" title="6) findClass"></a>6) findClass</h4><p>findClass可以从本地文件系统使用实现的类装载器装载一个类。</p>
+<h3 id="5-参考资料"><a href="#5-参考资料" class="headerlink" title="5 参考资料"></a>5 参考资料</h3><ol>
+<li>Java面试宝典 by 欧立奇 朱梅等</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;1-ClassLoader基本概念&quot;&gt;&lt;a href=&quot;#1-ClassLoader基本概念&quot; class=&quot;headerlink&quot; title=&quot;1. ClassLoader基本概念&quot;&gt;&lt;/a&gt;1. ClassLoader基本概念&lt;/h3&gt;&lt;p&gt;Java程序是由
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
+    
+    
+      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
+    
+  </entry>
   
   <entry>
     <title>数据库读写分离&amp;水分拆分&amp;垂直拆分</title>
@@ -1367,212 +1416,6 @@
     
     
       <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数据库开发规范</title>
-    <link href="http://jianwl.com/2017/04/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/"/>
-    <id>http://jianwl.com/2017/04/26/数据库开发规范/</id>
-    <published>2017-04-26T12:57:17.000Z</published>
-    <updated>2017-04-26T13:58:32.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="1-命名规范"><a href="#1-命名规范" class="headerlink" title="1. 命名规范"></a>1. 命名规范</h3><h4 id="1）表名、字段名、索引名使用小写字母、数字，名称偏长的采用下划线分割"><a href="#1）表名、字段名、索引名使用小写字母、数字，名称偏长的采用下划线分割" class="headerlink" title="1）表名、字段名、索引名使用小写字母、数字，名称偏长的采用下划线分割"></a>1）表名、字段名、索引名使用小写字母、数字，名称偏长的采用下划线分割</h4><ul>
-<li>MYSQL有配置参数lower_case_table_names,不可动态更改，linux默认为0，即库表名以实际情况存储，大小写敏感。如果是1，以小写存储，大小写不敏感。如果是2，以实际情况存储，但以小写比较；</li>
-<li>如果大小写混用使用，可能存在abc，Abc，ABC等多个表共存，容易导致混乱。</li>
-<li>字段名显式区分大小写，但实际使用不区分，即不可以建立两个名字一样但大小写不一样的字段。</li>
-<li>为了统一规范，库名、表名、字段名使用小写字母。</li>
-</ul>
-<h4 id="2）表名、字段名不超过32个字符"><a href="#2）表名、字段名不超过32个字符" class="headerlink" title="2）表名、字段名不超过32个字符"></a>2）表名、字段名不超过32个字符</h4><ul>
-<li>库名、表名、字段名支持最多64个字符，但为了统一规范，易于辨识以及减少传输量，禁止超过32个字符</li>
-</ul>
-<h4 id="3）库名、表名、字段名必须见名知意。命名与业务、产品等相关联。"><a href="#3）库名、表名、字段名必须见名知意。命名与业务、产品等相关联。" class="headerlink" title="3）库名、表名、字段名必须见名知意。命名与业务、产品等相关联。"></a>3）库名、表名、字段名必须见名知意。命名与业务、产品等相关联。</h4><h4 id="4-索引名称采用idx-前缀，之后顺序跟随索引的字段名，字段名直接以下划线分割。"><a href="#4-索引名称采用idx-前缀，之后顺序跟随索引的字段名，字段名直接以下划线分割。" class="headerlink" title="4) 索引名称采用idx_前缀，之后顺序跟随索引的字段名，字段名直接以下划线分割。"></a>4) 索引名称采用<code>idx_</code>前缀，之后顺序跟随索引的字段名，字段名直接以下划线分割。</h4><ul>
-<li>基于这些规范的正确实例：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE IF NOT EXISTS `mall_coupon_order_map` (</div><div class="line">  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT &apos;id&apos;,</div><div class="line">  `coupon_id` bigint(20) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;优惠券编号&apos;,</div><div class="line">  `order_unit_id` bigint(20) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;订单号&apos;,</div><div class="line">  `bill_id` bigint(20) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;账单号&apos;,</div><div class="line">  `is_del` smallint(6) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;删除状态：0-正常，1-已删除&apos;,</div><div class="line">  `create_time` int(11) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;创建时间&apos;,</div><div class="line">  `last_update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT &apos;最后更新时间&apos;,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">  KEY `idx_coupon_bill` (`coupon_id`, `bill_id`)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT=&apos;商城-使用优惠券与订单映射表&apos;;</div></pre></td></tr></table></figure>
-<h4 id="5-不适用保留字，关键字-很重要！"><a href="#5-不适用保留字，关键字-很重要！" class="headerlink" title="5) 不适用保留字，关键字(很重要！)"></a>5) 不适用保留字，关键字(很重要！)</h4><ul>
-<li>参考网址：<a href="http://dev.mysql.com/doc/refman/5.6/en/keywords.html" target="_blank" rel="external">http://dev.mysql.com/doc/refman/5.6/en/keywords.html</a></li>
-<li>当库名、表名、字段名等属性含有保留字时，SQL语句必须用<strong>反引用</strong>属性名称，这将是的SQL语句书写、SHELL脚本中变量的转义等变得非常复杂。</li>
-</ul>
-<h4 id="6-对临时表、备份表的命名规则"><a href="#6-对临时表、备份表的命名规则" class="headerlink" title="6) 对临时表、备份表的命名规则"></a>6) 对临时表、备份表的命名规则</h4><ul>
-<li>临时库、表必须以tmp为前缀，并已日期为后缀。例如：tmp_test01_20160704</li>
-<li>备份库、表必须以bak为前缀，并以日期为后缀。例如：bak_test01_20160704</li>
-</ul>
-<h4 id="7-保留字使用全大写；SQL语句中，字符串使用单引号「’’」"><a href="#7-保留字使用全大写；SQL语句中，字符串使用单引号「’’」" class="headerlink" title="7) 保留字使用全大写；SQL语句中，字符串使用单引号「’’」"></a>7) 保留字使用全大写；SQL语句中，字符串使用单引号「’’」</h4><ul>
-<li>典例</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">-- 正确</div><div class="line"> SELECT id, title FROM xiaoqu WHERE id = 1 </div><div class="line"> SELECT id, title FROM xiaoqu WHERE areacode = &apos;000100010001&apos;</div><div class="line">-- 错误</div><div class="line">select ID, title from XiaoQu where id = 1</div><div class="line">SELECT id, title FROM xiaoqu WHERE areacode = &quot;000100010001&quot;</div></pre></td></tr></table></figure>
-<h4 id="8-存储实体数据的表，名称使用名词，单数"><a href="#8-存储实体数据的表，名称使用名词，单数" class="headerlink" title="8) 存储实体数据的表，名称使用名词，单数"></a>8) 存储实体数据的表，名称使用名词，单数</h4><h4 id="9-存储实体表多对多对应关系的表，名称建议采用noun-verb-noun这样的模式。例如：member-like-property、property-has-tag。"><a href="#9-存储实体表多对多对应关系的表，名称建议采用noun-verb-noun这样的模式。例如：member-like-property、property-has-tag。" class="headerlink" title="9) 存储实体表多对多对应关系的表，名称建议采用noun_verb_noun这样的模式。例如：member_like_property、property_has_tag。"></a>9) 存储实体表多对多对应关系的表，名称建议采用<code>noun_verb_noun</code>这样的模式。例如：<code>member_like_property</code>、<code>property_has_tag</code>。</h4><h3 id="表设计规范"><a href="#表设计规范" class="headerlink" title="表设计规范"></a>表设计规范</h3><h4 id="1-MYSQL存储引用使用InnoDB"><a href="#1-MYSQL存储引用使用InnoDB" class="headerlink" title="1) MYSQL存储引用使用InnoDB"></a>1) MYSQL存储引用使用InnoDB</h4><ul>
-<li>不用纠结，没有特殊原因的情况下，作为在线交易系统「OLTP」的MYSQL使用InnoDB引擎</li>
-<li>InnoDB有支持事务、行级锁、还有更好的数据恢复能力，更好的并发性能，同时对多核、大内存、SSD等硬件支持更好，支持数据热备份等。</li>
-</ul>
-<h4 id="2）表字符集使用UTF-8字符集，后续会用UTF8MB4"><a href="#2）表字符集使用UTF-8字符集，后续会用UTF8MB4" class="headerlink" title="2）表字符集使用UTF-8字符集，后续会用UTF8MB4"></a>2）表字符集使用UTF-8字符集，后续会用UTF8MB4</h4><h4 id="3）正确使用时间类型"><a href="#3）正确使用时间类型" class="headerlink" title="3）正确使用时间类型"></a>3）正确使用时间类型</h4><ul>
-<li>精确到秒的时间采用<code>TIMESTAMP</code>,自动更新时间</li>
-<li>精确到日期使用<code>DATE</code> </li>
-<li>一般不使用<code>DATETIME</code>类型</li>
-<li>不允许使用字符串类型存储时间</li>
-<li>如果想对时间列建索引，还是用int类型，节省空间，效率高，适合需要大量时间范围的数据表</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">`create_time` bigint(20) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;创建时间&apos;,</div><div class="line">  `update_time` bigint(20) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;更新时间&apos;,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">  KEY `idx_settle_order_id` (`settle_order_id`),</div><div class="line">  KEY `idx_plateform_user_type_user_id` (`plateform`,`user_type`,`user_id`),</div><div class="line">  KEY `idx_create_time` (`create_time`)</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=195 DEFAULT CHARSET=utf8 COMMENT=&apos;退款结算表&apos;;</div></pre></td></tr></table></figure>
-<h4 id="4-字段定义为NOT-NULL，同时设置DEFAULT值。"><a href="#4-字段定义为NOT-NULL，同时设置DEFAULT值。" class="headerlink" title="4) 字段定义为NOT NULL，同时设置DEFAULT值。"></a>4) 字段定义为NOT NULL，同时设置DEFAULT值。</h4><ul>
-<li>不是必须要设置NULL，就将字段设置NOT NULL</li>
-<li>设置为<code>NOT NULL</code>的字段，需要设置一个缺省值</li>
-<li>B树索引不会存储<code>NULL</code>值，所以如果索引字段可以为NULL，索引效率会下降。</li>
-<li>建议用0、特殊值或空串代替NULL值</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE `user_feedback` (</div><div class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</div><div class="line">  `uid` int(11) NOT NULL COMMENT &apos;用户id&apos;,</div><div class="line">  `phone` varchar(20) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;手机号&apos;,</div><div class="line">  `feedback_status` int(11) NOT NULL DEFAULT &apos;10&apos; COMMENT &apos;反馈处理状态&apos;,</div><div class="line">  `feedback_type` varchar(50) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;反馈类型&apos;,</div><div class="line">  `supp_info` varchar(800) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;补充内容&apos;,</div><div class="line">  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT &apos;创建时间&apos;,</div><div class="line">  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT &apos;更新时间&apos;,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">  KEY `idx_phone` (`phone`)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT=&apos;意见反馈&apos;;</div></pre></td></tr></table></figure>
-<h4 id="5-字段个数不超过32个"><a href="#5-字段个数不超过32个" class="headerlink" title="5) 字段个数不超过32个"></a>5) 字段个数不超过32个</h4><ul>
-<li>一个表有很多很多字段，不仅占用空间，而且不方便，请在认真考虑设计是否正确</li>
-</ul>
-<h4 id="6）不适用浮点类型-FLOAT、DOUBLE"><a href="#6）不适用浮点类型-FLOAT、DOUBLE" class="headerlink" title="6）不适用浮点类型(FLOAT、DOUBLE)"></a>6）不适用浮点类型(FLOAT、DOUBLE)</h4><ul>
-<li>没有充分的理由，不要使用浮点数</li>
-<li>例如金额可以用分为单位，然后采用<code>INT</code>，如果依然要以元为单位，可以采用<code>DECIMAL</code></li>
-</ul>
-<h4 id="7-不直接存储图片、音频、视频等大容量内容"><a href="#7-不直接存储图片、音频、视频等大容量内容" class="headerlink" title="7) 不直接存储图片、音频、视频等大容量内容"></a>7) 不直接存储图片、音频、视频等大容量内容</h4><ul>
-<li>请使用分布式文件系统来存储图片、音频、视频等内容，数据库内只存储文件位置</li>
-</ul>
-<h4 id="8）使用INT-UNSIGNED来存储Ipv4地址"><a href="#8）使用INT-UNSIGNED来存储Ipv4地址" class="headerlink" title="8）使用INT UNSIGNED来存储Ipv4地址"></a>8）使用INT UNSIGNED来存储Ipv4地址</h4><ul>
-<li>使用 <code>INET_ATON</code> 将 IP 地址的字符串形式转换成数字形式；使用<code>INET_NTOA</code> 将 IP 地址数字形式转换成字符串形式，以便查看。</li>
-<li>当程序使用自带的函数进行 IP 地址的字符串形式与数字形式之间的转换时，需要注意数字的存储类型至少应为 32 位的无符号整型（如 <code>uint32_t</code>)，并注意字节数。</li>
-<li>当要查询某段的 IP 时，请参考以下示例：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SELECT user_id FROM user_ip</div><div class="line">WHERE ip &gt; INET_ATON(&apos;192.168.0.0&apos;) AND ip &lt; INET_ATON(&apos;192.168.255.255&apos;)</div></pre></td></tr></table></figure>
-<h4 id="9-所有表都需要添加注释，每张表数据量建议控制在5000W以内"><a href="#9-所有表都需要添加注释，每张表数据量建议控制在5000W以内" class="headerlink" title="9) 所有表都需要添加注释，每张表数据量建议控制在5000W以内"></a>9) 所有表都需要添加注释，每张表数据量建议控制在5000W以内</h4><ul>
-<li>除主键外的其他字段都需要增加注释</li>
-<li>推荐采用英文标点，避免出现乱码</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">--错误：</div><div class="line">CREATE TABLE `push_stat_key` (</div><div class="line">  `id` bigint(20) NOT NULL AUTO_INCREMENT,</div><div class="line">  `stat_key` varchar(32) NOT NULL DEFAULT &apos;0&apos;,</div><div class="line">  `description` varchar(256) NOT NULL DEFAULT &apos;&apos;,</div><div class="line">  `owner_mail` varchar(64) NOT NULL DEFAULT &apos;&apos;,</div><div class="line">  `owner_phone` varchar(64) NOT NULL DEFAULT &apos;&apos;,</div><div class="line">  `del_flag` tinyint(4) NOT NULL DEFAULT &apos;0&apos;,</div><div class="line">  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,</div><div class="line">  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">  KEY `idx_stat_key` (`stat_key`)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8;</div><div class="line">--正确：</div><div class="line">CREATE TABLE IF NOT EXISTS `mall_coupon_order_map` (</div><div class="line">  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT &apos;id&apos;,</div><div class="line">  `coupon_id` bigint(20) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;优惠券编号&apos;,</div><div class="line">  `order_unit_id` bigint(20) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;订单号&apos;,</div><div class="line">  `bill_id` bigint(20) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;账单号&apos;,</div><div class="line">  `is_del` smallint(6) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;删除状态：0-正常，1-已删除&apos;,</div><div class="line">  `create_time` int(11) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;创建时间&apos;,</div><div class="line">  `last_update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT &apos;最后更新时间&apos;,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">  KEY `idx_coupon_bill` (`coupon_id`, `bill_id`)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT=&apos;商城-使用优惠券与订单映射表&apos;;</div></pre></td></tr></table></figure>
-<h4 id="10-禁止使用分区表"><a href="#10-禁止使用分区表" class="headerlink" title="10) 禁止使用分区表"></a>10) 禁止使用分区表</h4><ul>
-<li>分区表对分区键有严格要求</li>
-<li>分区表在表变大后，执行DDL、SHARDING、单表恢复等都变得更加困难</li>
-<li>因此禁止使用分区表，并建议业务端手动SHARDING。</li>
-</ul>
-<h4 id="11）采用合适的分库分表策略，例如千库十表、十库表表等"><a href="#11）采用合适的分库分表策略，例如千库十表、十库表表等" class="headerlink" title="11）采用合适的分库分表策略，例如千库十表、十库表表等"></a>11）采用合适的分库分表策略，例如千库十表、十库表表等</h4><ul>
-<li>采用合适的分库分表策略，有利于后期快速对数据库进行水平拆分</li>
-<li>同时分库可以有效利用MYSQL的多线程复制特性</li>
-</ul>
-<h4 id="12-将大字段、访问频率低的字段拆分到单独的表中存储，分离冷热数据"><a href="#12-将大字段、访问频率低的字段拆分到单独的表中存储，分离冷热数据" class="headerlink" title="12) 将大字段、访问频率低的字段拆分到单独的表中存储，分离冷热数据"></a>12) 将大字段、访问频率低的字段拆分到单独的表中存储，分离冷热数据</h4><ul>
-<li>分离冷热数据，有效利用缓存，防止读入无用的冷数据，较少磁盘IO</li>
-<li>同时保证热数据常驻内存提高缓存命中率</li>
-</ul>
-<h4 id="13-强烈建议使用TINYINT来代替ENUM类型"><a href="#13-强烈建议使用TINYINT来代替ENUM类型" class="headerlink" title="13) 强烈建议使用TINYINT来代替ENUM类型"></a>13) 强烈建议使用TINYINT来代替ENUM类型</h4><ul>
-<li>ENUM类型在需要修改或增加枚举值时，需要在线DDL，成本较大</li>
-<li>ENUM列值如果含有数字类型，可能会引起默认值混淆</li>
-</ul>
-<h4 id="14-尽可能不适用TEXT、BLOB类型；使用varchar类型尽可能小的，VARCHAR-N-中的N表示字符数而非字节数"><a href="#14-尽可能不适用TEXT、BLOB类型；使用varchar类型尽可能小的，VARCHAR-N-中的N表示字符数而非字节数" class="headerlink" title="14) 尽可能不适用TEXT、BLOB类型；使用varchar类型尽可能小的，VARCHAR(N)中的N表示字符数而非字节数"></a>14) 尽可能不适用TEXT、BLOB类型；使用varchar类型尽可能小的，VARCHAR(N)中的N表示字符数而非字节数</h4><ul>
-<li>没有特殊情况一般不用</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">create table dj_trade_request_0</div><div class="line">(</div><div class="line">id bigint not null auto_increment comment &apos;自增id&apos;,</div><div class="line">order_type tinyInt not null comment &apos;订单类型:交易;取消交易&apos;,</div><div class="line">order_id bigint not null comment &apos;订单id&apos;,</div><div class="line">controller_scene_id int not null comment &apos;场景id&apos;,</div><div class="line">tradeIdentity bigint not null comment &apos;交易识别id&apos;,</div><div class="line">tradeIdentity_type int not null comment &apos;交易识别type&apos;,</div><div class="line">content text not null comment &apos;请求内容&apos;,</div><div class="line">status tinyInt not null comment &apos;状态&apos;,</div><div class="line">request_times int not null comment &apos;请求次数&apos;,</div><div class="line">execute_times int not null comment &apos;执行次数&apos;,</div><div class="line">identity_success_ids varchar(1024) not null comment &apos;处理成功ids&apos;,</div><div class="line">identity_fail_ids varchar(1024) not null comment &apos;处理失败ids&apos;,</div><div class="line">create_time bigint not null comment &apos;创建时间&apos;,</div><div class="line">update_time bigint not null comment &apos;更新时间&apos;,</div><div class="line">version int not null comment &apos;版本控制&apos;,</div><div class="line">primary key (id)</div><div class="line">)auto_increment = 1 ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;</div></pre></td></tr></table></figure>
-<h4 id="15-区分使用TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT数据类型。例如取值范围0-80时，使用TINY-UNSIGNED"><a href="#15-区分使用TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT数据类型。例如取值范围0-80时，使用TINY-UNSIGNED" class="headerlink" title="15) 区分使用TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT数据类型。例如取值范围0-80时，使用TINY UNSIGNED"></a>15) 区分使用TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT数据类型。例如取值范围0-80时，使用TINY UNSIGNED</h4><ul>
-<li>对某一列只有一两个值，例如要么是0，要么是1，可以使用tinyint</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alter table `supplier_contact` add column `addr_type` tinyint(4) not null default &apos;10&apos; comment &apos;地址类型，10 - 达达商家，20 - 达达快送&apos;;</div></pre></td></tr></table></figure>
-<h4 id="16-使用VARBINARY存储大小写敏感的变长字符串或二进制内容"><a href="#16-使用VARBINARY存储大小写敏感的变长字符串或二进制内容" class="headerlink" title="16) 使用VARBINARY存储大小写敏感的变长字符串或二进制内容"></a>16) 使用VARBINARY存储大小写敏感的变长字符串或二进制内容</h4><ul>
-<li>VARBINARY默认区分大小写,没有字符集概念,速度快</li>
-</ul>
-<h4 id="17-建议使用UNSIGNED存储非负数值"><a href="#17-建议使用UNSIGNED存储非负数值" class="headerlink" title="17) 建议使用UNSIGNED存储非负数值"></a>17) 建议使用UNSIGNED存储非负数值</h4><h3 id="索引规范"><a href="#索引规范" class="headerlink" title="索引规范"></a>索引规范</h3><h4 id="1-使用数字主键，不使用联合主键"><a href="#1-使用数字主键，不使用联合主键" class="headerlink" title="1) 使用数字主键，不使用联合主键"></a>1) 使用数字主键，不使用联合主键</h4><ul>
-<li>存储实体数据的表，其主键应该是数字类型。</li>
-<li>存储实体数据的表，不使用联合主键。</li>
-<li>存储实体表间多对多对应关系的表（仅有两个字段）允许例外。</li>
-</ul>
-<h4 id="2-不使用外键"><a href="#2-不使用外键" class="headerlink" title="2) 不使用外键"></a>2) 不使用外键</h4><ul>
-<li>所有的表不建立外键约束。</li>
-</ul>
-<h4 id="3-表必须有主键-推荐使用UNSIGNED自增列作为主键"><a href="#3-表必须有主键-推荐使用UNSIGNED自增列作为主键" class="headerlink" title="3) 表必须有主键,推荐使用UNSIGNED自增列作为主键"></a>3) 表必须有主键,推荐使用UNSIGNED自增列作为主键</h4><h4 id="4-联合索引字段数不超过-5-个（单个索引中的字段数不超过5个）"><a href="#4-联合索引字段数不超过-5-个（单个索引中的字段数不超过5个）" class="headerlink" title="4) 联合索引字段数不超过 5 个（单个索引中的字段数不超过5个）"></a>4) 联合索引字段数不超过 5 个（单个索引中的字段数不超过5个）</h4><ul>
-<li>一个联合索引的字段数太多，很可能是设计得不好，还很难符合命名的规范。</li>
-</ul>
-<h4 id="5-前缀索引长度不超过-8-个字符，单张表中索引数量最好不超过5个"><a href="#5-前缀索引长度不超过-8-个字符，单张表中索引数量最好不超过5个" class="headerlink" title="5) 前缀索引长度不超过 8 个字符，单张表中索引数量最好不超过5个"></a>5) 前缀索引长度不超过 8 个字符，单张表中索引数量最好不超过5个</h4><ul>
-<li>对字符串类型的字段建立索引，采用前缀索引，且长度不超过 8 个字符。</li>
-</ul>
-<h4 id="6-索引的命名规则"><a href="#6-索引的命名规则" class="headerlink" title="6) 索引的命名规则"></a>6) 索引的命名规则</h4><ul>
-<li>非唯一索引按照“idx<em>字段名称[</em>字段名称]”进用行命名。例如idx_age_name</li>
-<li>唯一索引按照“uniq<em>字段名称[</em>字段名称]”进用行命名。例如uniq_age_name</li>
-<li>组合索引建议包含所有字段名,过长的字段名可以采用缩写形式。例如idx_age_name_add</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">--错误：</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">  KEY `training_id_index` (`training_id`),</div><div class="line">  KEY `site_id_index` (`training_id`,`site_id`),</div><div class="line">  KEY `training_site_id_index` (`is_valid`,`training_id`,`site_id`)</div><div class="line"> </div><div class="line">--正确：</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">  KEY `idx_settle_order_id` (`settle_order_id`),</div><div class="line">  KEY `idx_plateform_user_type_user_id` (`plateform`,`user_type`,`user_id`),</div><div class="line">  KEY `idx_create_time` (`create_time`)</div></pre></td></tr></table></figure>
-<h4 id="7-禁止冗余索引"><a href="#7-禁止冗余索引" class="headerlink" title="7) 禁止冗余索引"></a>7) 禁止冗余索引</h4><ul>
-<li>索引是把双刃剑,会增加维护负担,增大IO压力。(a,b,c)、(a,b),后者为冗余索引</li>
-<li>可以利用前缀索引来达到加速目的,减轻维护负担</li>
-</ul>
-<h4 id="8-禁止重复索引"><a href="#8-禁止重复索引" class="headerlink" title="8) 禁止重复索引"></a>8) 禁止重复索引</h4><ul>
-<li>例如：primary key a;uniq index a</li>
-<li>重复索引增加维护负担、占用磁盘空间,同时没有任何益处</li>
-</ul>
-<h4 id="9-不在低基数列上建立索引-例如“性别”"><a href="#9-不在低基数列上建立索引-例如“性别”" class="headerlink" title="9) 不在低基数列上建立索引,例如“性别”"></a>9) 不在低基数列上建立索引,例如“性别”</h4><ul>
-<li>大部分场景下,低基数列上建立索引的精确查找,相对于不建立索引的全表扫描没有任何优势,而且增大了IO负担</li>
-</ul>
-<h4 id="10-选择区分度大的列建立索引。组合索引中-区分度大的字段放在最前"><a href="#10-选择区分度大的列建立索引。组合索引中-区分度大的字段放在最前" class="headerlink" title="10) 选择区分度大的列建立索引。组合索引中,区分度大的字段放在最前"></a>10) 选择区分度大的列建立索引。组合索引中,区分度大的字段放在最前</h4><h4 id="11-不对过长的VARCHAR字段建立索引。建议优先考虑前缀索引-或添加CRC32或MD5伪列并建立索引"><a href="#11-不对过长的VARCHAR字段建立索引。建议优先考虑前缀索引-或添加CRC32或MD5伪列并建立索引" class="headerlink" title="11) 不对过长的VARCHAR字段建立索引。建议优先考虑前缀索引,或添加CRC32或MD5伪列并建立索引"></a>11) 不对过长的VARCHAR字段建立索引。建议优先考虑前缀索引,或添加CRC32或MD5伪列并建立索引</h4><h4 id="12-合理创建联合索引，合理使用覆盖索引减少IO-避免排序"><a href="#12-合理创建联合索引，合理使用覆盖索引减少IO-避免排序" class="headerlink" title="12) 合理创建联合索引，合理使用覆盖索引减少IO,避免排序"></a>12) 合理创建联合索引，合理使用覆盖索引减少IO,避免排序</h4><ul>
-<li>例如：(a,b,c) 相当于 (a) 、(a,b) 、(a,b,c)</li>
-<li>覆盖索引能从索引中获取需要的所有字段,从而避免回表进行二次查找,节省IO</li>
-</ul>
-<h3 id="SQL语句规范"><a href="#SQL语句规范" class="headerlink" title="SQL语句规范"></a>SQL语句规范</h3><h4 id="1-禁止在查询条件中对字段进行数学运算、函数调用"><a href="#1-禁止在查询条件中对字段进行数学运算、函数调用" class="headerlink" title="1) 禁止在查询条件中对字段进行数学运算、函数调用"></a>1) 禁止在查询条件中对字段进行数学运算、函数调用</h4><ul>
-<li>这类查询语句在使用索引时将非常困难。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">-- 禁止</div><div class="line">SELECT id FROM property WHERE NOW() - update_time &lt; 3600</div><div class="line">SELECT id FROM property WHERE update_time + 3600 &gt; NOW()</div><div class="line"> </div><div class="line">-- 改为</div><div class="line">SELECT id FROM property WHERE update_time &gt; NOW() - 3600</div><div class="line">-- 禁止</div><div class="line">SELECT id FROM property WHERE CHAR_LENGTH(title) &gt; 20</div><div class="line"> </div><div class="line">-- 假设字段 property.status 的类型为 TINYINT</div><div class="line">-- 禁止</div><div class="line">SELECT id FROM property WHERE status = &apos;1&apos;</div><div class="line"> </div><div class="line">-- 改为</div><div class="line">SELECT id FROM property WHERE status = 1</div></pre></td></tr></table></figure>
-<h4 id="2-禁止隐式类型转换，不仅在查询条件中禁止隐示类型转换，INSERT，UPDATE-也不允许隐式类型转换。"><a href="#2-禁止隐式类型转换，不仅在查询条件中禁止隐示类型转换，INSERT，UPDATE-也不允许隐式类型转换。" class="headerlink" title="2) 禁止隐式类型转换，不仅在查询条件中禁止隐示类型转换，INSERT，UPDATE 也不允许隐式类型转换。"></a>2) 禁止隐式类型转换，不仅在查询条件中禁止隐示类型转换，<code>INSERT</code>，<code>UPDATE</code> 也不允许隐式类型转换。</h4><ul>
-<li>典例</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-- 假设字段 property.status 的类型为 TINYINT</div><div class="line">-- 禁止</div><div class="line">INSERT INTO property (..., status) VALUES (..., &apos;1&apos;)</div><div class="line">UPDATE property SET status = &apos;1&apos; WHERE id = &apos;43&apos;</div><div class="line"> </div><div class="line">-- 改为</div><div class="line">INSERT INTO property (..., status) VALUES (..., 1)</div><div class="line">UPDATE property SET status = 1 WHERE id = 43</div></pre></td></tr></table></figure>
-<h4 id="3-禁止使用-前导查询"><a href="#3-禁止使用-前导查询" class="headerlink" title="3) 禁止使用 % 前导查询"></a>3) 禁止使用 % 前导查询</h4><ul>
-<li>尽量不要使用like查询，不得不用的情况下也禁止使用%前导查询</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-- 禁止</div><div class="line">SELECT id FROM property WHERE title LIKE &apos;%最%&apos;</div></pre></td></tr></table></figure>
-<h4 id="4-不使用联表查询，不使用子查询，不使用负向查询"><a href="#4-不使用联表查询，不使用子查询，不使用负向查询" class="headerlink" title="4) 不使用联表查询，不使用子查询，不使用负向查询"></a>4) 不使用联表查询，不使用子查询，不使用负向查询</h4><ul>
-<li>OLTP 不使用 <code>JOIN</code> 联合查询。</li>
-<li>没有特别好的理由，OLTP 不允许使用子查询。必要时用join代替子查询</li>
-<li>负向查询是指，如果查询条件描述的是不要什么数据，其余的都要。例如 <code>!=</code>、<code>&lt;&gt;</code>、<code>NOT EXISTS</code>、<code>NOT IN</code> 以及 <code>NOT LIKE</code> 等就是负向查询，它们利用索引将会很辛苦。</li>
-</ul>
-<h4 id="5-LIMIT-m-n，其中-m-应当小于-500"><a href="#5-LIMIT-m-n，其中-m-应当小于-500" class="headerlink" title="5) LIMIT m, n，其中 m 应当小于 500"></a>5) LIMIT m, n，其中 m 应当小于 500</h4><ul>
-<li>使用 <code>SELECT ... LIMIT offset, row_count</code> 或者 <code>SELECT ... LIMIT row_count OFFSET offset</code> 时，当 offset 小于 500 时，允许使用。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-- 允许</div><div class="line">SELECT ... FROM property WHERE broker_id=? ORDER BY update_time LIMIT 40, 20</div><div class="line">-- 不允许</div><div class="line">SELECT ... FROM property WHERE areacode=? ORDER BY update_time LIMIT 4000, 20</div></pre></td></tr></table></figure>
-<ul>
-<li>能够不使用 offset 的情况应当避免，如下面的例子（其中 id 是主键）</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-- 建议</div><div class="line">SELECT ... FROM property WHERE broker_id=? AND id&gt;? ORDER BY id LIMIT 20</div><div class="line">-- 避免</div><div class="line">SELECT ... FROM property WHERE broker_id=? ORDER BY id LIMIT 40, 20</div></pre></td></tr></table></figure>
-<h4 id="6-避免使用-COUNT-函数，其他聚合函数，例如-SUM-、AVG-、MAX-等，同样适用。"><a href="#6-避免使用-COUNT-函数，其他聚合函数，例如-SUM-、AVG-、MAX-等，同样适用。" class="headerlink" title="6) 避免使用 COUNT() 函数，其他聚合函数，例如 SUM()、AVG()、MAX() 等，同样适用。"></a>6) 避免使用 COUNT() 函数，其他聚合函数，例如 <code>SUM()</code>、<code>AVG()</code>、<code>MAX()</code> 等，同样适用。</h4><ul>
-<li>能不使用就不使用，尽量用其他方式来解决</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-- 避免</div><div class="line">SELECT COUNT(*) FROM propertys WHERE broker_id=?</div><div class="line">-- 正确</div><div class="line">SELECT 1 FROM propertys WHERE broker_id=? LIMIT 1</div></pre></td></tr></table></figure>
-<h4 id="7-使用prepared-statement-可以提升性能并避免SQL注入"><a href="#7-使用prepared-statement-可以提升性能并避免SQL注入" class="headerlink" title="7) 使用prepared statement,可以提升性能并避免SQL注入"></a>7) 使用prepared statement,可以提升性能并避免SQL注入</h4><h4 id="8-使用IN代替OR。SQL语句中IN包含的值不应过多"><a href="#8-使用IN代替OR。SQL语句中IN包含的值不应过多" class="headerlink" title="8) 使用IN代替OR。SQL语句中IN包含的值不应过多"></a>8) 使用IN代替OR。SQL语句中IN包含的值不应过多</h4><ul>
-<li>IN是范围查找,MySQL内部会对IN的列表值进行排序后查找,比OR效率更高</li>
-</ul>
-<h4 id="9-减少与数据库交互次数-尽量采用批量SQL语句"><a href="#9-减少与数据库交互次数-尽量采用批量SQL语句" class="headerlink" title="9) 减少与数据库交互次数,尽量采用批量SQL语句"></a>9) 减少与数据库交互次数,尽量采用批量SQL语句</h4><ul>
-<li>修改同一张表的多条语句，可改为一条语句；多用于修改表结构</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">--错误</div><div class="line">alter table target_config modify column target_value decimal(12,4) DEFAULT &apos;0.0000&apos;;</div><div class="line">alter table target_config modify column real_value decimal(12,4) DEFAULT &apos;0.0000&apos;;</div><div class="line"> </div><div class="line">--正确</div><div class="line">alter table target_config modify column target_value decimal(12,4) DEFAULT &apos;0.0000&apos;,modify column real_value decimal(12,4) DEFAULT &apos;0.0000&apos;;</div></pre></td></tr></table></figure>
-<h4 id="10-拆分复杂SQL为多个小SQL-避免大事务"><a href="#10-拆分复杂SQL为多个小SQL-避免大事务" class="headerlink" title="10) 拆分复杂SQL为多个小SQL,避免大事务"></a>10) 拆分复杂SQL为多个小SQL,避免大事务</h4><ul>
-<li>转化为小SQL，并进行主键的更新</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">--错误</div><div class="line">update test.tmp_qos set feedback=1 where transport_id&lt;=24769887;</div><div class="line"> </div><div class="line">--正确</div><div class="line">update test.tmp_qos set feedback=1 where id=1;</div><div class="line">update test.tmp_qos set feedback=1 where id=2;</div><div class="line">update test.tmp_qos set feedback=1 where id=3;</div><div class="line">update test.tmp_qos set feedback=1 where id=4;</div><div class="line">...</div></pre></td></tr></table></figure>
-<h4 id="11-使用UNION-ALL代替UNION"><a href="#11-使用UNION-ALL代替UNION" class="headerlink" title="11)  使用UNION ALL代替UNION"></a>11)  使用UNION ALL代替UNION</h4><ul>
-<li>UNION ALL不需要对结果集再进行排序</li>
-</ul>
-<h4 id="12-SELECT只获取必要的字段-禁止使用SELECT"><a href="#12-SELECT只获取必要的字段-禁止使用SELECT" class="headerlink" title="12 ) SELECT只获取必要的字段,禁止使用SELECT *"></a>12 ) SELECT只获取必要的字段,禁止使用SELECT <code>*</code></h4><ul>
-<li>减少网络带宽消耗</li>
-<li>能有效利用覆盖索引</li>
-<li>表结构变更对程序基本无影响</li>
-</ul>
-<h4 id="13-SQL中避免出现now-、rand-、sysdate-、current-user-等不确定结果的函数"><a href="#13-SQL中避免出现now-、rand-、sysdate-、current-user-等不确定结果的函数" class="headerlink" title="13) SQL中避免出现now()、rand()、sysdate()、current_user()等不确定结果的函数"></a>13) SQL中避免出现now()、rand()、sysdate()、current_user()等不确定结果的函数</h4><ul>
-<li>语句级复制场景下,引起主从数据不一致</li>
-<li>不确定值的函数,产生的SQL语句无法利用QUERY CACHE</li>
-</ul>
-<h4 id="14-禁止使用order-by-rand"><a href="#14-禁止使用order-by-rand" class="headerlink" title="14) 禁止使用order by rand()"></a>14) 禁止使用order by rand()</h4><ul>
-<li>order by rand()会为表增加一个伪列,然后用rand()函数为每一行数据计算出rand()值,然后基于该行排序, 这通常都会生成磁盘上的临时表,因此效率非常低。</li>
-<li>建议先使用rand()函数获得随机的主键值,然后通过主键获取数据</li>
-</ul>
-<h4 id="15-禁止单条SQL语句同时更新多个表"><a href="#15-禁止单条SQL语句同时更新多个表" class="headerlink" title="15)  禁止单条SQL语句同时更新多个表"></a>15)  禁止单条SQL语句同时更新多个表</h4><h4 id="16-建议使用合理的分页方式以提高分页效率"><a href="#16-建议使用合理的分页方式以提高分页效率" class="headerlink" title="16) 建议使用合理的分页方式以提高分页效率"></a>16) 建议使用合理的分页方式以提高分页效率</h4><h4 id="17-禁止在从库上执行后台管理和统计类功能的QUERY-必要时申请统计类从库"><a href="#17-禁止在从库上执行后台管理和统计类功能的QUERY-必要时申请统计类从库" class="headerlink" title="17) 禁止在从库上执行后台管理和统计类功能的QUERY,必要时申请统计类从库"></a>17) 禁止在从库上执行后台管理和统计类功能的QUERY,必要时申请统计类从库</h4><h4 id="18-程序应有捕获SQL异常的处理机制-必要时通过rollback显式回滚"><a href="#18-程序应有捕获SQL异常的处理机制-必要时通过rollback显式回滚" class="headerlink" title="18) 程序应有捕获SQL异常的处理机制,必要时通过rollback显式回滚"></a>18) 程序应有捕获SQL异常的处理机制,必要时通过rollback显式回滚</h4><h4 id="19-重要SQL必须被索引-update、delete的where条件列、order-by、group-by、distinct字段、多表join字段"><a href="#19-重要SQL必须被索引-update、delete的where条件列、order-by、group-by、distinct字段、多表join字段" class="headerlink" title="19)  重要SQL必须被索引:update、delete的where条件列、order by、group by、distinct字段、多表join字段"></a>19)  重要SQL必须被索引:update、delete的where条件列、order by、group by、distinct字段、多表join字段</h4><h4 id="20）使用EXPLAIN判断SQL语句是否合理使用索引-尽量避免extra列出现-Using-File-Sort、Using-Temporary"><a href="#20）使用EXPLAIN判断SQL语句是否合理使用索引-尽量避免extra列出现-Using-File-Sort、Using-Temporary" class="headerlink" title="20）使用EXPLAIN判断SQL语句是否合理使用索引,尽量避免extra列出现:Using File Sort、Using Temporary"></a>20）使用EXPLAIN判断SQL语句是否合理使用索引,尽量避免extra列出现:Using File Sort、Using Temporary</h4>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;1-命名规范&quot;&gt;&lt;a href=&quot;#1-命名规范&quot; class=&quot;headerlink&quot; title=&quot;1. 命名规范&quot;&gt;&lt;/a&gt;1. 命名规范&lt;/h3&gt;&lt;h4 id=&quot;1）表名、字段名、索引名使用小写字母、数字，名称偏长的采用下划线分割&quot;&gt;&lt;a href=&quot;#1
-    
-    </summary>
-    
-      <category term="MYSQL" scheme="http://jianwl.com/categories/MYSQL/"/>
-    
-    
-      <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
     
   </entry>
   
