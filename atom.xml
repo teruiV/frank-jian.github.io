@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-06-08T14:37:16.000Z</updated>
+  <updated>2017-06-08T14:40:55.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://jianwl.com/2017/06/08/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%80%A7%E8%83%BD%E6%AF%94%E8%BE%83/"/>
     <id>http://jianwl.com/2017/06/08/单例模式之性能比较/</id>
     <published>2017-06-08T14:00:55.000Z</published>
-    <updated>2017-06-08T14:37:16.000Z</updated>
+    <updated>2017-06-08T14:40:55.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>设计模式是前人工作的总结和提炼，通常，被人们广泛流传的设计模式都是对某一特定问题的成熟解决方案。如果能合理地使用设计模式，不仅能使系统更容易被他人理解，同时也能使系统拥有更加合理的结构。本节将对单例模式多种实现进行性能分析。</p>
 <h3 id="2-单例模式的好处"><a href="#2-单例模式的好处" class="headerlink" title="2. 单例模式的好处"></a>2. 单例模式的好处</h3><ol>
@@ -48,7 +48,7 @@ public static void createString(){
 public static void main(String[] args) {
     LazySingleton.createString()
 }
-</code></pre><p>}<br>// 结果<br>// createString in Singleton<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">为了解决`例1`中的问题，引入延迟加载机制，但这种延迟加载有一致命的缺点，因为引入了同步关键字，在多线程环境时耗**远远大于**第一种单例模式。</div><div class="line"></div><div class="line">#### 3）改进</div></pre></td></tr></table></figure></p>
+</code></pre><p>}<br>// 结果<br>// createString in Singleton<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">为了解决例1中的问题，引入延迟加载机制，但这种延迟加载有一致命的缺点，因为引入了同步关键字，在多线程环境时耗远远大于第一种单例模式。</div><div class="line"></div><div class="line">#### 3）改进</div></pre></td></tr></table></figure></p>
 <p>public class StaticSingleton {<br>    private StaticSingleton(){<br>        System.out.println(“StaticSingleton is create”);<br>    }</p>
 <pre><code>private static class SingletonHolder {
     private static StaticSingleton instance = new StaticSingleton();
@@ -57,7 +57,7 @@ public static void main(String[] args) {
 public static StaticSingleton getInstance(){
     return SingletonHolder.instance;
 }
-</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">`例2`为了使用延迟加载引入同步关键字降低了性能，为了解决这个问题，引入`例3`。当StaticSingleton被加载时，**内部类不会被初始化**。</div><div class="line"></div><div class="line">#### 4）三种模式性能比较</div></pre></td></tr></table></figure></p>
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">例2为了使用延迟加载引入同步关键字降低了性能，为了解决这个问题，引入例3。当StaticSingleton被加载时，内部类不会被初始化。</div><div class="line"></div><div class="line">#### 4）三种模式性能比较</div></pre></td></tr></table></figure></p>
 <p>// 实现1<br>public class Singleton {<br>    private static Singleton instance = new Singleton();</p>
 <pre><code>public static Singleton getInstance(){
     return instance;

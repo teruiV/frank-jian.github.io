@@ -32,7 +32,7 @@ public static void createString(){
 public static void main(String[] args) {
     LazySingleton.createString()
 }
-</code></pre><p>}<br>// 结果<br>// createString in Singleton<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">为了解决`例1`中的问题，引入延迟加载机制，但这种延迟加载有一致命的缺点，因为引入了同步关键字，在多线程环境时耗**远远大于**第一种单例模式。</div><div class="line"></div><div class="line">#### 3）改进</div></pre></td></tr></table></figure></p>
+</code></pre><p>}<br>// 结果<br>// createString in Singleton<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">为了解决例1中的问题，引入延迟加载机制，但这种延迟加载有一致命的缺点，因为引入了同步关键字，在多线程环境时耗远远大于第一种单例模式。</div><div class="line"></div><div class="line">#### 3）改进</div></pre></td></tr></table></figure></p>
 <p>public class StaticSingleton {<br>    private StaticSingleton(){<br>        System.out.println(“StaticSingleton is create”);<br>    }</p>
 <pre><code>private static class SingletonHolder {
     private static StaticSingleton instance = new StaticSingleton();
@@ -41,7 +41,7 @@ public static void main(String[] args) {
 public static StaticSingleton getInstance(){
     return SingletonHolder.instance;
 }
-</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">`例2`为了使用延迟加载引入同步关键字降低了性能，为了解决这个问题，引入`例3`。当StaticSingleton被加载时，**内部类不会被初始化**。</div><div class="line"></div><div class="line">#### 4）三种模式性能比较</div></pre></td></tr></table></figure></p>
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">例2为了使用延迟加载引入同步关键字降低了性能，为了解决这个问题，引入例3。当StaticSingleton被加载时，内部类不会被初始化。</div><div class="line"></div><div class="line">#### 4）三种模式性能比较</div></pre></td></tr></table></figure></p>
 <p>// 实现1<br>public class Singleton {<br>    private static Singleton instance = new Singleton();</p>
 <pre><code>public static Singleton getInstance(){
     return instance;
