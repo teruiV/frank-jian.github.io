@@ -4,6 +4,49 @@
   
     
     <entry>
+      <title><![CDATA[JAVA观察者模式]]></title>
+      <url>http://jianwl.com/2017/06/18/JAVA%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
+      <content type="html"><![CDATA[<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>观察者模式是非常常用的一种设计模式，在软件系统中，当一个对象的行为依赖另一个对象的状态时，观察者模式相当有用。若不使用观察者模式提供的通用结构，而需要实现其类似的功能，则只能在另一个线程中不停监听对象所依赖的状态。在一个复杂系统中，可能会因此开启很多线程来实现这一功能，这将使系统的性能产生额外的负担。</p>
+<h3 id="2-观察者模式角色"><a href="#2-观察者模式角色" class="headerlink" title="2. 观察者模式角色"></a>2. 观察者模式角色</h3><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主题接口</td>
+<td>指被观察的对象，当其状态发生变化或者某事件发生时，它会将这个变化通知观察者。它维护了观察者所需要依赖的状态</td>
+</tr>
+<tr>
+<td>具体主题</td>
+<td>具体主题实现了主题接口中的方法，如新增观察者、删除观察者和通知观察者。其内部维护一个观察者列表</td>
+</tr>
+<tr>
+<td>观察者接口</td>
+<td>观察者接口定义了观察者的基本方法，当依赖状态发生改变时，主题接口就会调用观察者的update()方法</td>
+</tr>
+<tr>
+<td>具体观察者</td>
+<td>实现了观察者接口的update()，具体处理当被观察者状态改变或者某一事件发生时的业务逻辑</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-观察者模式类图"><a href="#3-观察者模式类图" class="headerlink" title="3. 观察者模式类图"></a>3. 观察者模式类图</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-6-18/26557541.jpg" alt=""></p>
+<h3 id="4-实战"><a href="#4-实战" class="headerlink" title="4. 实战"></a>4. 实战</h3><h4 id="主题接口ISubject"><a href="#主题接口ISubject" class="headerlink" title="主题接口ISubject"></a>主题接口<code>ISubject</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface ISubject &#123;</div><div class="line">    void attach(IObserver observer); // 添加观察者</div><div class="line">    void detach(IObserver observer); // 删除观察者</div><div class="line">    void inform(String msg); // 通知所有观察者</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="具体主题ConcreteSubject"><a href="#具体主题ConcreteSubject" class="headerlink" title="具体主题ConcreteSubject"></a>具体主题<code>ConcreteSubject</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public class ConcreteSubject implements ISubject &#123;</div><div class="line">    Vector&lt;IObserver&gt; observers = new Vector&lt;IObserver&gt;();</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void attach(IObserver observer) &#123;</div><div class="line">        observers.addElement(observer);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void detach(IObserver observer) &#123;</div><div class="line">        observers.removeElement(observer);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void inform(String msg) &#123;</div><div class="line">        for(IObserver ob:observers) &#123;</div><div class="line">            ob.update(msg);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="观察者接口"><a href="#观察者接口" class="headerlink" title="观察者接口"></a>观察者接口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface IObserver &#123;</div><div class="line">    void update(String msg); // 更新观察者</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="具体观察者"><a href="#具体观察者" class="headerlink" title="具体观察者"></a>具体观察者</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class ConcreteObserve implements IObserver &#123;</div><div class="line">    @Override</div><div class="line">    public void update(String msg) &#123;</div><div class="line">        System.out.println(&quot;observe receive information =&gt; &quot; + JSON.toJSONString(msg));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="入口Run"><a href="#入口Run" class="headerlink" title="入口Run"></a>入口<code>Run</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class Run &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ConcreteSubject subject = new ConcreteSubject();</div><div class="line">        ConcreteObserve observeA = new ConcreteObserve();</div><div class="line">        ConcreteObserve observeB = new ConcreteObserve();</div><div class="line">        subject.attach(observeA);</div><div class="line">        subject.attach(observeB);</div><div class="line">        subject.inform(&quot;notify-1&quot;);</div><div class="line">        subject.detach(observeB);</div><div class="line">        subject.inform(&quot;notify-2&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-6-18/64270257.jpg" alt=""></p>
+<h3 id="5-参考资料"><a href="#5-参考资料" class="headerlink" title="5. 参考资料"></a>5. 参考资料</h3><ol>
+<li>JAVA程序性能优化</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[JAVA之享元模式]]></title>
       <url>http://jianwl.com/2017/06/17/JAVA%E4%B9%8B%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>享元模式是设计模式中少数几个以提高系统性能为目的的模式之一；它的核心思想是：<strong>如果在一个系统中存在多个相同的对象，那么只需要共享一份对象的拷贝，而不必为每一次使用都创建新的对象。</strong></p>
