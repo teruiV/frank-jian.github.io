@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title><![CDATA[JAVA之Future模式]]></title>
+      <url>http://jianwl.com/2017/06/20/JAVA%E4%B9%8BFuture%E6%A8%A1%E5%BC%8F/</url>
+      <content type="html"><![CDATA[<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>Future模式有点类似商品订单，比如在进行网上购物时，当看中某一件商品时，就可以提交订单。当订单处理完毕后，便可在家里等待商品送货上门。卖家根据订单从仓库里取货，并配送到客户手上。在大部分情况下，商家对订单的处理并不那么快，而在这段时间内，客户完全不必傻傻地在家里等待，可以出门处理其他事物。</p>
+<h3 id="2-传统串行调用-VS-Future模式"><a href="#2-传统串行调用-VS-Future模式" class="headerlink" title="2. 传统串行调用 VS Future模式"></a>2. 传统串行调用 <code>VS</code> Future模式</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-6-20/29048455.jpg" alt=""></p>
+<p>图1所示，客户端发出call请求，这个请求需要相当长一段时间才能返回。客户端一直等待，直到数据返回，随后，在进行其他任务的处理。</p>
+<p>图2显示了一个广义Future模式的实现，从Data_Future对象可以看到，虽然call本身处理仍然需要很长一段时间来处理程序，但是服务程序不等数据处理完成便立即返回客户端一个伪造的数据，实现了Future模式的客户。</p>
+<h3 id="3-Future模式的主要参与者"><a href="#3-Future模式的主要参与者" class="headerlink" title="3. Future模式的主要参与者"></a>3. Future模式的主要参与者</h3><table>
+<thead>
+<tr>
+<th>参与者</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main</td>
+<td>系统启动，调用Client发出请求</td>
+</tr>
+<tr>
+<td>Client</td>
+<td>返回Data对象，立即返回FutureData，并开启ClientThread线程装配RealData</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>返回数据接口</td>
+</tr>
+<tr>
+<td>FutureData</td>
+<td>Future数据，构造很快，但是是一个虚拟的数据，需要装配RealData</td>
+</tr>
+<tr>
+<td>RealData</td>
+<td>真实数据，其构造是比较慢的</td>
+</tr>
+</tbody>
+</table>
+<h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-6-20/16429145.jpg" alt=""></p>
+<h3 id="4-实战"><a href="#4-实战" class="headerlink" title="4. 实战"></a>4. 实战</h3><h4 id="1-Data接口"><a href="#1-Data接口" class="headerlink" title="1) Data接口"></a>1) Data接口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface Data &#123;</div><div class="line">    String getResult();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-真实数据RealData"><a href="#2-真实数据RealData" class="headerlink" title="2) 真实数据RealData"></a>2) 真实数据<code>RealData</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public class RealData implements Data &#123;</div><div class="line">    protected final String result;</div><div class="line"></div><div class="line">    public RealData(String para) &#123;</div><div class="line">        StringBuffer sb = new StringBuffer();</div><div class="line">        for(int i = 0; i &lt; 10; i++) &#123;</div><div class="line">            sb.append(para);</div><div class="line">            try&#123;</div><div class="line">                Thread.sleep(100);</div><div class="line">            &#125;catch (InterruptedException e)&#123;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        result = sb.toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String getResult() &#123;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3）FutureData"><a href="#3）FutureData" class="headerlink" title="3）FutureData"></a>3）FutureData</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public class FutureData implements Data &#123;</div><div class="line">    protected RealData realData = null;</div><div class="line">    protected boolean isReady = false;</div><div class="line">    public synchronized void setRealData(RealData realData) &#123;</div><div class="line">        if (isReady) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        this.realData = realData;</div><div class="line">        isReady = true;</div><div class="line">        notifyAll();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public synchronized String getResult() &#123;</div><div class="line">        while (!isReady) &#123;</div><div class="line">            try &#123;</div><div class="line">                wait();</div><div class="line">            &#125;catch (InterruptedException e)&#123;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return realData.result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-客户端Client"><a href="#4-客户端Client" class="headerlink" title="4) 客户端Client"></a>4) 客户端<code>Client</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line">    public Data request(final String queryStr) &#123;</div><div class="line">        final FutureData future = new FutureData();</div><div class="line">        new Thread(() -&gt; &#123;</div><div class="line">            RealData realData = new RealData(queryStr);</div><div class="line">            future.setRealData(realData);</div><div class="line">        &#125;).start();</div><div class="line">        return future;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-入口Run"><a href="#5-入口Run" class="headerlink" title="5) 入口Run"></a>5) 入口<code>Run</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class Run &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Client client = new Client();</div><div class="line">        Data data = client.request(&quot;name&quot;);</div><div class="line">        System.out.println(&quot;请求完毕!&quot;);</div><div class="line">        try&#123;</div><div class="line">            Thread.sleep(100);</div><div class="line">        &#125;catch (InterruptedException e)&#123;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        System.out.println(&quot;数据 =&gt; &quot; + data.getResult());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="6-运行结果"><a href="#6-运行结果" class="headerlink" title="6) 运行结果"></a>6) 运行结果</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-6-20/38834317.jpg" alt=""></p>
+<h3 id="5-参考资料"><a href="#5-参考资料" class="headerlink" title="5. 参考资料"></a>5. 参考资料</h3><ol>
+<li>Java程序性能优化</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[JAVA观察者模式]]></title>
       <url>http://jianwl.com/2017/06/18/JAVA%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>观察者模式是非常常用的一种设计模式，在软件系统中，当一个对象的行为依赖另一个对象的状态时，观察者模式相当有用。若不使用观察者模式提供的通用结构，而需要实现其类似的功能，则只能在另一个线程中不停监听对象所依赖的状态。在一个复杂系统中，可能会因此开启很多线程来实现这一功能，这将使系统的性能产生额外的负担。</p>
@@ -9907,23 +9957,6 @@ tee – the output of write (:w) command is redirected using tee
     </entry>
     
     <entry>
-      <title><![CDATA[MYSQL存储引擎]]></title>
-      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
-      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
-]]></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[MYSQL存储引擎优化]]></title>
       <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</url>
       <content type="html"><![CDATA[<h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
@@ -9948,6 +9981,23 @@ tee – the output of write (:w) command is redirected using tee
 <h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
 <h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
 <h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[MYSQL存储引擎]]></title>
+      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
+      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 ]]></content>
     </entry>
     
