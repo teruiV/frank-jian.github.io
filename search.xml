@@ -4,6 +4,30 @@
   
     
     <entry>
+      <title><![CDATA[2017的小目标]]></title>
+      <url>http://jianwl.com/2017/07/19/2017%E7%9A%84%E5%B0%8F%E7%9B%AE%E6%A0%87/</url>
+      <content type="html"><![CDATA[<p>已经到年中了，给后半年设定一些小目标；</p>
+<h3 id="小目标制定"><a href="#小目标制定" class="headerlink" title="小目标制定"></a>小目标制定</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-7-19/17630389.jpg" alt=""></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-7-19/90166218.jpg" alt=""></p>
+<h3 id="7月份小目标"><a href="#7月份小目标" class="headerlink" title="7月份小目标"></a>7月份小目标</h3><p>7月份的学习主要以巩固基础为主，熟悉JVM参数配置 &amp; 泛读JVM官方文档</p>
+<p>【10h】泛读<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/" target="_blank" rel="external">The Java Virtual Machine Specification</a></p>
+<p>【20h】精读《深入理解JAVA虚拟机》并输出笔记</p>
+<h3 id="7月份进展"><a href="#7月份进展" class="headerlink" title="7月份进展"></a>7月份进展</h3><p>// 还没轮到我呢…</p>
+<h3 id="8月份小目标"><a href="#8月份小目标" class="headerlink" title="8月份小目标"></a>8月份小目标</h3><p>// 还没轮到我呢…</p>
+<h3 id="8月份进展"><a href="#8月份进展" class="headerlink" title="8月份进展"></a>8月份进展</h3><p>// 还没轮到我呢…</p>
+<h3 id="9月份小目标"><a href="#9月份小目标" class="headerlink" title="9月份小目标"></a>9月份小目标</h3><p>// 还没轮到我呢…</p>
+<h3 id="9月份进展"><a href="#9月份进展" class="headerlink" title="9月份进展"></a>9月份进展</h3><p>// 还没轮到我呢…</p>
+<h3 id="10月份小目标"><a href="#10月份小目标" class="headerlink" title="10月份小目标"></a>10月份小目标</h3><p>// 还没轮到我呢…</p>
+<h3 id="10月份进展"><a href="#10月份进展" class="headerlink" title="10月份进展"></a>10月份进展</h3><p>// 还没轮到我呢…</p>
+<h3 id="11月份小目标"><a href="#11月份小目标" class="headerlink" title="11月份小目标"></a>11月份小目标</h3><p>// 还没轮到我呢…</p>
+<h3 id="11月份进展"><a href="#11月份进展" class="headerlink" title="11月份进展"></a>11月份进展</h3><p>// 还没轮到我呢…</p>
+<h3 id="12月份小目标"><a href="#12月份小目标" class="headerlink" title="12月份小目标"></a>12月份小目标</h3><p>// 还没轮到我呢…</p>
+<h3 id="12月份进展"><a href="#12月份进展" class="headerlink" title="12月份进展"></a>12月份进展</h3><p>// 还没轮到我呢…</p>
+<h3 id="全年总结"><a href="#全年总结" class="headerlink" title="全年总结"></a>全年总结</h3><p>// 还没轮到我呢…</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[JAVA之生产者-消费者模式]]></title>
       <url>http://jianwl.com/2017/06/21/JAVA%E4%B9%8B%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>生产者-消费者模式是一个经典的多线程设计模式，它为多线程的协作提供了良好的解决方案。在生产者与消费者模式中，通常有两类线程，即若干个生产者线程和若干个消费者线程。<strong>生产者线程负责提交用户请求，消费者线程负责具体处理生产者提交的任务</strong>；</p>
