@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-07-19T15:45:50.000Z</updated>
+  <updated>2017-07-20T13:54:26.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Flask-SQLAlchemy: Can&#39;t reconnect until invalid transaction is rolled back</title>
+    <link href="http://jianwl.com/2017/07/20/Flask-SQLAlchemy-Can-t-reconnect-until-invalid-transaction-is-rolled-back/"/>
+    <id>http://jianwl.com/2017/07/20/Flask-SQLAlchemy-Can-t-reconnect-until-invalid-transaction-is-rolled-back/</id>
+    <published>2017-07-20T13:17:45.000Z</published>
+    <updated>2017-07-20T13:54:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>近来在做些Python的重构工作，今日屡次出现这个错误；</p>
+<p> <img src="http://oc5a5l0a0.bkt.clouddn.com/17-7-20/81011645.jpg" alt=""></p>
+<p>由日志可知，在查询<code>bd_charge_info</code>这张表时，由于存在没有提交的事务，导致了查询失败；于是查了MYSQL数据库的事务状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SHOW ENGINE INNODB STATUS</div></pre></td></tr></table></figure>
+<p>查询结果：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-7-20/50146776.jpg" alt=""></p>
+<p>至此确认了问题所在。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://imysql.com/2015/03/25/mysql-faq-how-to-fetch-latest-trxid.shtml" target="_blank" rel="external">如何查看当前最新事务ID</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;近来在做些Python的重构工作，今日屡次出现这个错误；&lt;/p&gt;
+&lt;p&gt; &lt;img src=&quot;http://oc5a5l0a0.bkt.cl
+    
+    </summary>
+    
+      <category term="Python" scheme="http://jianwl.com/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="http://jianwl.com/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>2017的小目标</title>
@@ -1109,74 +1142,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;1-什么是Fork-Join框架&quot;&gt;&lt;a href=&quot;#1-什么是Fork-Join框架&quot; class=&quot;headerlink&quot; title=&quot;1. 什么是Fork/Join框架&quot;&gt;&lt;/a&gt;1. 什么是Fork/Join框架&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Fork/J
-    
-    </summary>
-    
-      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
-    
-    
-      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JAVA之线程池</title>
-    <link href="http://jianwl.com/2017/05/06/JAVA%E4%B9%8B%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
-    <id>http://jianwl.com/2017/05/06/JAVA之线程池/</id>
-    <published>2017-05-06T05:45:11.000Z</published>
-    <updated>2017-05-06T07:42:46.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>之前面试问到最多的问题就是线程池的实现原理，这一节我们将会来学习线程池实现原理及线程池的用法。</p>
-<h3 id="1-线程池的优点"><a href="#1-线程池的优点" class="headerlink" title="1. 线程池的优点"></a>1. 线程池的优点</h3><p>Java中线程池是运用场景最多的并发框架，几乎所有需要异步或并发执行任务的程序都可以使用线程池，在开发过程中，合理地使用线程池能够带来3个好处。</p>
-<ol>
-<li>降低资源消耗，通过重复利用已创建的线程降低线程创建和销毁造成的消耗；</li>
-<li>提高响应速度，当任务达到时，任务可以不需要等到线程创建就能立即执行。</li>
-<li>提高线程的可管理性，线程是稀缺资源，如果无限制地创建、不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一分配、调优和监控。但是，要做到合理利用线程池，必须对其原理了如指掌。</li>
-</ol>
-<h3 id="2-线程池的实现原理"><a href="#2-线程池的实现原理" class="headerlink" title="2. 线程池的实现原理"></a>2. 线程池的实现原理</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-6/30502602-file_1494052172147_1313c.png" alt=""></p>
-<p>当提交一个新任务到线程池，处理流程如下：</p>
-<p>1）线程池判断核心线程池里的线程是否都在执行任务，如果不是，则创建一个新的工作线程来执行任务，如果核心线程池里的线程都在执行任务，则进入下一个流程。</p>
-<p>2）线程池判断工作队列是否已满，如果工作队列已满，则将新提交的任务存储在这个工作队列里如果工作队列满了，则进入下一个流程。</p>
-<p>3) 线程池判断线程池的线程是否都处于工作状态，如果没有，则创建一个新的工作线程来执行任务，如果满了，则交给饱和策略来处理这个任务。</p>
-<p>ThreadPoolExecutor执行的<code>execute()</code>方法的示意图：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-6/10523759-file_1494053473005_d83a.png" alt=""></p>
-<p>1） 如果当前运行的线程少于coorPoolSize,则创建新线程来执行任务「执行这一步骤要获取全局锁」</p>
-<p>2) 如果运行的线程等于或多余corePoolSize,则将任务加入BlockingQueue；</p>
-<p>3）如果无法将任务加入BlockingQueue(队列已满)，则创建新的线程来处理任务「执行这一步骤需要获取全局锁」</p>
-<p>4) 如果创建新线程将使当前运行的线程超过maxPool的数量，任务将被拒绝，并调用<code>RejectedExecutionHandle.rejectedExecution()</code>方法。</p>
-<h3 id="3-线程池的使用"><a href="#3-线程池的使用" class="headerlink" title="3. 线程池的使用"></a>3. 线程池的使用</h3><h4 id="1-线程池的创建"><a href="#1-线程池的创建" class="headerlink" title="1) 线程池的创建"></a>1) 线程池的创建</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">new ThreadPoolExecutor(corePoolSize,maximumPoolSize,keepAliveTime,milliseconds,runnableTaskQueue,handler);</div></pre></td></tr></table></figure>
-<p>1) corePoolSize(线程池的基本大小)：当提交一个任务到线程池时，线程池会创建一个新的线程来执行任务。等到需要执行的任务数大于线程池基本大小时就不再创建。</p>
-<p>2）runnableTaskQueue(任务队列): 用于保存等待执行的任务的阻塞队列,有以下几个可供选择：</p>
-<ul>
-<li>ArrayBlockingQueue: 一个基于数组结构的<strong>有界</strong>阻塞队列，此队列按FIFO对元素进行排序；</li>
-<li>LinkedBlockingQueue: 一个基于链表结构的阻塞队列，此队列按FIFO排序元素；</li>
-<li>SynchronousQueue: 一个不存储元素的阻塞队列，每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于阻塞状态</li>
-<li>PriorityBlockingQueue: 一个具有优先级的<strong>无限</strong>阻塞队列</li>
-</ul>
-<p>3）maximumPoolSize(线程池最大数量)：线程池允许创建的最大线程数。如果队列满了，并且已经创建的线程数小于最大线程数，则线程池会再创建新的线程执行任务。<strong>如果使用无界的任务，这个参数没效果。</strong></p>
-<p>4）ThreadFactory: 用于设置创建线程工厂，可以通过线程工厂给每个创建出来的线程设置更有意义的名字。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># guava提供的ThreadFactoryBuilder</div><div class="line">new ThreadFactoryBuilder().setNameFormat(&quot;XX-task-%d&quot;).build();</div></pre></td></tr></table></figure>
-<p>5）RejectedExecutionHandle(饱和策略)：当队列和线程池都满了，说明线程池处于饱和状态，那么必须采取一种策略处理提交的新任务。</p>
-<ul>
-<li>AbortPolicy: 直接抛出异常(默认处理方式）</li>
-<li>CallerRunsPolicy: 只用调用者所在线程来执行任务</li>
-<li>DiscardOldestPolicy: 丢弃队列里的最近一个任务，并执行当前任务；</li>
-<li>DiscardPolicy: 不处理，丢弃掉</li>
-</ul>
-<p>6）keepAliveTime(线程活动保持时间)：线程池的工作线程空闲后，保持存活的时间。如果任务多，单个任务执行时间短，可以调大时间，提高线程的利用率。</p>
-<h4 id="2-实战"><a href="#2-实战" class="headerlink" title="2) 实战"></a>2) 实战</h4><h5 id="创建线程池-amp-提交任务"><a href="#创建线程池-amp-提交任务" class="headerlink" title="创建线程池 &amp; 提交任务"></a>创建线程池 &amp; 提交任务</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class Run &#123;</div><div class="line">    private static final int CORE_POOL_SIZE = 1;</div><div class="line">    private static final int MAXI_MUM_POOL_SIZE = 1;</div><div class="line">    private static final long KEEP_ALIVE_TIME = 1;</div><div class="line">    private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;</div><div class="line">    private static BlockingQueue&lt;Runnable&gt; workQueue = new ArrayBlockingQueue(1);</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ThreadPoolExecutor threadPools = new ThreadPoolExecutor(CORE_POOL_SIZE,MAXI_MUM_POOL_SIZE,KEEP_ALIVE_TIME,TIME_UNIT,workQueue);</div><div class="line">        threadPools.execute(() -&gt; &#123;</div><div class="line">            System.out.println(&quot;ThreadName:&quot; + Thread.currentThread().getName() + &quot; currentTime =&gt; &quot; + System.currentTimeMillis());</div><div class="line">        &#125;);</div><div class="line">        // 关闭线程池</div><div class="line">        threadPools.shutdown();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// 结果</div><div class="line">// ThreadName:pool-1-thread-1 currentTime =&gt; 1494055661705</div></pre></td></tr></table></figure>
-<h5 id="提交任务过多，触发饱和策略，默认执行AbortPolicy"><a href="#提交任务过多，触发饱和策略，默认执行AbortPolicy" class="headerlink" title="提交任务过多，触发饱和策略，默认执行AbortPolicy"></a>提交任务过多，触发饱和策略，默认执行<code>AbortPolicy</code></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public class Run &#123;</div><div class="line">    private static final int CORE_POOL_SIZE = 1;</div><div class="line">    private static final int MAXI_MUM_POOL_SIZE = 1;</div><div class="line">    private static final long KEEP_ALIVE_TIME = 1;</div><div class="line">    private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;</div><div class="line">    private static BlockingQueue&lt;Runnable&gt; workQueue = new ArrayBlockingQueue(1);</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ThreadPoolExecutor threadPools = new ThreadPoolExecutor(CORE_POOL_SIZE,MAXI_MUM_POOL_SIZE,KEEP_ALIVE_TIME,TIME_UNIT,workQueue);</div><div class="line"></div><div class="line">        for (int i=0; i&lt;10000; i++) &#123;</div><div class="line">            threadPools.execute(() -&gt; &#123;</div><div class="line">                System.out.println(&quot;ThreadName:&quot; + Thread.currentThread().getName() + &quot; currentTime =&gt; &quot; + System.currentTimeMillis());</div><div class="line">                try &#123;</div><div class="line">                    Thread.sleep(1000);</div><div class="line">                &#125; catch (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        // 关闭线程池</div><div class="line">        threadPools.shutdown();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-6/77334009-file_1494055810091_46b3.png" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li>java并发编程的艺术 by 方腾飞</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;之前面试问到最多的问题就是线程池的实现原理，这一节我们将会来学习线程池实现原理及线程池的用法。&lt;/p&gt;
-&lt;h3 id=&quot;1-线程池的优点&quot;&gt;
     
     </summary>
     
