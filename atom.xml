@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-08-16T03:57:05.000Z</updated>
+  <updated>2017-08-22T15:07:56.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,73 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>高效实用Python字典的清单</title>
+    <link href="http://jianwl.com/2017/08/22/%E9%AB%98%E6%95%88%E5%AE%9E%E7%94%A8Python%E5%AD%97%E5%85%B8%E7%9A%84%E6%B8%85%E5%8D%95/"/>
+    <id>http://jianwl.com/2017/08/22/高效实用Python字典的清单/</id>
+    <published>2017-08-22T14:22:12.000Z</published>
+    <updated>2017-08-22T15:07:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>字典(dict)对象是Python最常用的数据结构，这里整理了几个关于高效实用字典的清单，希望Python开发者可以在日常应用开发中合理利用，让代码更加Pythonic。</p>
+<h3 id="1、用in关键字检查key是否存在"><a href="#1、用in关键字检查key是否存在" class="headerlink" title="1、用in关键字检查key是否存在"></a>1、用in关键字检查key是否存在</h3><p>Python之禅中有一句开发哲学是:</p>
+<blockquote>
+<p>There should be one – and perferably only one –obvious way to do it.</p>
+</blockquote>
+<p>尽量找一种，最好是唯一一种显而易见的解决方案。Python2中判断某个key是否存在字典中可使用<code>has_key</code>方法，另外一种方式是使用<code>in</code>关键字。但强烈推荐后者，因为in的处理速度更快，另外一个原因是<code>has_key</code>这个方法在Python3被移除了。</p>
+<p>bad</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">info = dict(name=&apos;zhangsan&apos;,age=23)</div><div class="line">if info.has_key(&apos;name&apos;):</div><div class="line">   pass</div></pre></td></tr></table></figure>
+<p>good</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">info = dict(name=&apos;zhangsan&apos;,age=23)</div><div class="line">if &apos;name&apos; in info:</div><div class="line">   pass</div></pre></td></tr></table></figure>
+<h3 id="2、用get获取字典中的值"><a href="#2、用get获取字典中的值" class="headerlink" title="2、用get获取字典中的值"></a>2、用get获取字典中的值</h3><p>关于获取字典的值，一种简单的方式就是用d[x]访问元素，但是这种情况在key不存在的情况下会报KeyError错误，当然你可以先用in操作检查key是否在字典中在获取，不过这种方式不符合Python之禅中说的：</p>
+<blockquote>
+<p>Simple is better then complex<br>Flat is better than nested.</p>
+</blockquote>
+<p>好的代码应该是简单易懂的，扁平的代码结构更加可读。所以我们可以使用get方法来替代if … else.</p>
+<p>bad</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">d = dict(name=&apos;python&apos;)</div><div class="line">if &apos;name&apos; in d:</div><div class="line">    print d[&apos;hello&apos;]</div><div class="line">else:</div><div class="line">	 print &apos;default&apos;</div></pre></td></tr></table></figure>
+<p>good</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">print d.get(&apos;name&apos;,&apos;default&apos;)</div></pre></td></tr></table></figure>
+<h3 id="3、用setdefault为字典中不存在的key设置缺省值"><a href="#3、用setdefault为字典中不存在的key设置缺省值" class="headerlink" title="3、用setdefault为字典中不存在的key设置缺省值"></a>3、用setdefault为字典中不存在的key设置缺省值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">data = [(&apos;animal&apos;,&apos;bear&apos;),(&apos;animal,&apos;duck&apos;),(&apos;plant&apos;,&apos;catus&apos;),(&apos;vehicle&apos;,&apos;speed boat&apos;),(&apos;vehicle&apos;,&apos;school bus&apos;)]</div></pre></td></tr></table></figure>
+<p>在做分类统计时，希望把同一类型的数据归到字典中的某种类型中，比如上面代码，把相同类型的事物用列表形式重新组装，得到新字典。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">data = dict(animal=[&apos;bear&apos;,&apos;duck&apos;],plant=[&apos;cacuts&apos;],vehicle=[&apos;speed boat&apos;,&apos;school bus&apos;])</div></pre></td></tr></table></figure>
+<p>普通的方式就是先判断key是否存在，如果不存在则要先用列表对象进行初始化，在执行后续操作。而更好的方式就是使用字典中的setdefault方法。</p>
+<p>bad</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">groups = &#123;&#125;</div><div class="line">for (key,value) in data:</div><div class="line">    if key in groups:</div><div class="line">       groups[key].append(value)</div><div class="line">    else:</div><div class="line">       groups[key] = [value]</div></pre></td></tr></table></figure>
+<p>good</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">groups = &#123;&#125;</div><div class="line">for (key,value) in data:</div><div class="line">    groups.setdefault(key,[]).append(value)</div></pre></td></tr></table></figure>
+<p><code>setdefault</code>的作用是：</p>
+<ol>
+<li>如果key存在与字典中，那么直接返回对应的值，等效于get</li>
+<li>如果key不存在字典中，则会用setdefault中的第二个参数作为该key的值，在返回该值。</li>
+</ol>
+<h3 id="4、用字典实现swith-…-case语句"><a href="#4、用字典实现swith-…-case语句" class="headerlink" title="4、用字典实现swith … case语句"></a>4、用字典实现swith … case语句</h3><p>Python中没有switch…case语句，这个问题Python之父龟叔表示这个语法过去没有，现在没有，以后也不会有。因为Python简洁的语法完全可以用if…elif实现。如果有太多的分支判断，还可以使用字典来代替。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">if arg == 0:</div><div class="line">  return &apos;zero&apos;</div><div class="line">elif arg == 1:</div><div class="line">  return &apos;one&apos;</div><div class="line">elif arg == 2:</div><div class="line">  return &apos;two&apos;</div><div class="line">elif arg == 3:</div><div class="line">  return &apos;three&apos;</div><div class="line">else:</div><div class="line">  return &apos;nothing&apos;</div></pre></td></tr></table></figure>
+<p>good</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">data = dict(0=&apos;zero&apos;,1=&apos;one&apos;,2=&apos;two&apos;,3=&apos;three&apos;)</div><div class="line">data.get(arg,&quot;nothing&quot;)</div></pre></td></tr></table></figure>
+<h3 id="5、使用items迭代字典中的元素"><a href="#5、使用items迭代字典中的元素" class="headerlink" title="5、使用items迭代字典中的元素"></a>5、使用items迭代字典中的元素</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">data = dict(0=&apos;zero&apos;,1=&apos;one&apos;,2=&apos;two&apos;,3=&apos;three&apos;)</div><div class="line">for k,v in data.items():</div><div class="line">  print k,v</div></pre></td></tr></table></figure>
+<h3 id="6、使用字典推导式"><a href="#6、使用字典推导式" class="headerlink" title="6、使用字典推导式"></a>6、使用字典推导式</h3><p>推导式是个绝妙的东西，列表推导式一出，map、filter等函数黯然失色，至python2.7以后的版本，此特性扩展到了字典和集合身上，构建字典对象无需调用dict方法。</p>
+<p>bad</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">numbers = [1,2,3]</div><div class="line">d = dict([(number,number*2) for number in numbers])</div></pre></td></tr></table></figure>
+<p>good</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">numbers = [1,2,3]</div><div class="line">d = &#123;number: number * 2 for number in numbers&#125;</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://juejin.im/post/599c03e751882511264e7428" target="_blank" rel="external">高效使用Python字典</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;字典(dict)对象是Python最常用的数据结构，这里整理了几个关于高效实用字典的清单，希望Python开发者可以在日常应用开发中合理利用
+    
+    </summary>
+    
+      <category term="Python" scheme="http://jianwl.com/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="http://jianwl.com/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>cp -r without hidden files</title>
@@ -1043,37 +1110,6 @@
     
       &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近在看Spring框架的源码，发现一些好用的封装技巧，记录下来，以便模仿与提升。&lt;/p&gt;
 &lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战
-    
-    </summary>
-    
-      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
-    
-    
-      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用POI读取|创建Excel</title>
-    <link href="http://jianwl.com/2017/05/08/%E4%BD%BF%E7%94%A8POI%E8%AF%BB%E5%8F%96-%E5%88%9B%E5%BB%BAExcel/"/>
-    <id>http://jianwl.com/2017/05/08/使用POI读取-创建Excel/</id>
-    <published>2017-05-08T12:46:57.000Z</published>
-    <updated>2017-05-08T13:05:36.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>发现一个非常实用的工具，用于对EXCEL表的读取和创建。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-引入依赖"><a href="#1-引入依赖" class="headerlink" title="1) 引入依赖"></a>1) 引入依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.apache.poi&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;poi&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;3.13&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<h4 id="2-POI读取EXCEL表"><a href="#2-POI读取EXCEL表" class="headerlink" title="2) POI读取EXCEL表"></a>2) POI读取EXCEL表</h4><p>Excel表内容</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-8/14799072-file_1494248541870_6645.png" alt=""></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public class POITest &#123;</div><div class="line"></div><div class="line">    public static void read() throws IOException, InvalidFormatException &#123;</div><div class="line">        InputStream inputStream = new FileInputStream(&quot;/Users/jianweilin/Desktop/bd_level.xlsx&quot;);</div><div class="line">        Workbook wb = WorkbookFactory.create(inputStream);</div><div class="line">        Sheet sheet = wb.getSheetAt(0);</div><div class="line">        sheet.forEach(row -&gt; &#123;</div><div class="line">            if(row.getRowNum() &lt;= 1) &#123;</div><div class="line">                System.out.println(&quot;skiped row nums =&gt; &quot; + row.getRowNum());</div><div class="line">                return;</div><div class="line">            &#125;</div><div class="line">            row.forEach(cell -&gt; System.out.print(cell.toString() + &quot; &quot;));</div><div class="line">            System.out.println();</div><div class="line">        &#125;);</div><div class="line">        inputStream.close();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public static void main(String[] args) throws IOException, InvalidFormatException &#123;</div><div class="line">        read();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 结果:</div><div class="line">// skiped row nums =&gt; 0</div><div class="line">// skiped row nums =&gt; 1</div><div class="line">// 1.0 413.0 411526199312042613 全职 杜辉 华北大区 北京城市站 到家+物流 BD专员 16-七月-2015 北京 物流BD 物流BDM 郑琦 </div><div class="line">// 2.0 542.0 220881199103101319 全职 刘洋 华北大区 北京城市站 到家+物流 BD专员 18-八月-2015 北京 物流BD 物流BDM 郑琦 </div><div class="line">// 3.0 1618.0 230605199102222623 全职 张莹 华北大区 北京城市站 到家+物流 BD专员 14-九月-2016 北京 物流BD 物流BDM 郑琦</div></pre></td></tr></table></figure>
-<h4 id="3-POI创建EXCEL表"><a href="#3-POI创建EXCEL表" class="headerlink" title="3) POI创建EXCEL表"></a>3) POI创建EXCEL表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">public class POITest &#123;</div><div class="line">    public static void write() throws IOException &#123;</div><div class="line">        // 创建excel工作簿</div><div class="line">        Workbook wb = new HSSFWorkbook();</div><div class="line"></div><div class="line">        // 创建第一个sheet（页），命名为 new sheet</div><div class="line">        Sheet sheet = wb.createSheet(&quot;城市经理&quot;);</div><div class="line"></div><div class="line">        // Row(行) 和 Cell(方格) 都是从0开始计数的</div><div class="line">        Row row1 = sheet.createRow((short) 0);</div><div class="line">        row1.createCell(0).setCellValue(&quot;城市经理编号&quot;);</div><div class="line">        row1.createCell(1).setCellValue(&quot;城市经理名字&quot;);</div><div class="line">        row1.createCell(2).setCellValue(&quot;城市ID&quot;);</div><div class="line">        row1.createCell(3).setCellValue(&quot;城市名称&quot;);</div><div class="line"></div><div class="line">        Row row2 = sheet.createRow((short) 1);</div><div class="line">        row2.createCell(0).setCellValue(&quot;1703&quot;);</div><div class="line">        row2.createCell(1).setCellValue(&quot;王伟鹏&quot;);</div><div class="line">        row2.createCell(2).setCellValue(&quot;1&quot;);</div><div class="line">        row2.createCell(3).setCellValue(&quot;上海&quot;);</div><div class="line"></div><div class="line">        FileOutputStream fileOut = new FileOutputStream(&quot;/Users/jianweilin/Desktop/city_manager.xlsx&quot;);</div><div class="line"></div><div class="line">        // 把上面创建的工作簿输出到文件中</div><div class="line">        wb.write(fileOut);</div><div class="line"></div><div class="line">        //关闭输出流</div><div class="line">        fileOut.close();</div><div class="line">    &#125;</div><div class="line">    public static void main(String[] args) throws IOException, InvalidFormatException &#123;</div><div class="line">        write();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>结果：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-5-8/54636878-file_1494248703221_9bc.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;发现一个非常实用的工具，用于对EXCEL表的读取和创建。&lt;/p&gt;
-&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; class=&quot;head
     
     </summary>
     
