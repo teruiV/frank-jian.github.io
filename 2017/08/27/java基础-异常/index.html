@@ -63,19 +63,39 @@
 
 
 
-<meta name="description" content="flatMap的作用1234Stream&amp;lt;String[]&amp;gt;   	  -&amp;gt; flatMap  -&amp;gt;   Stream&amp;lt;String&amp;gt;Stream&amp;lt;Set&amp;lt;String&amp;gt;&amp;gt;   -&amp;gt; flatMap  -&amp;gt;   Stream&amp;lt;String&amp;gt;Stream&amp;lt;List&amp;lt;String&amp;gt;&amp;gt;  -&amp;gt">
+<meta name="description" content="1. 异常类图
+2. 受检异常 VS 非受检异常
+受检异常：继承Exception的子类，需要明确去处理异常；
+非受检异常：继承RuntimeException的子类，不需要明确去处理异常；
+
+非受检异常：继承RuntimeException的子类
+123456789101112public class UncheckedException extends RuntimeException &amp;#1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java8之FlatMap用法">
-<meta property="og:url" content="http://jianwl.com/2016/12/10/Java8之FlatMap用法/index.html">
+<meta property="og:title" content="java基础-异常">
+<meta property="og:url" content="http://jianwl.com/2017/08/27/java基础-异常/index.html">
 <meta property="og:site_name" content="记录点滴成长">
-<meta property="og:description" content="flatMap的作用1234Stream&amp;lt;String[]&amp;gt;   	  -&amp;gt; flatMap  -&amp;gt;   Stream&amp;lt;String&amp;gt;Stream&amp;lt;Set&amp;lt;String&amp;gt;&amp;gt;   -&amp;gt; flatMap  -&amp;gt;   Stream&amp;lt;String&amp;gt;Stream&amp;lt;List&amp;lt;String&amp;gt;&amp;gt;  -&amp;gt">
-<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-12-10/90787855-file_1481380649544_134aa.png">
-<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-12-10/33004085-file_1481381376033_c47b.png">
-<meta property="og:updated_time" content="2016-12-10T14:50:32.000Z">
+<meta property="og:description" content="1. 异常类图
+2. 受检异常 VS 非受检异常
+受检异常：继承Exception的子类，需要明确去处理异常；
+非受检异常：继承RuntimeException的子类，不需要明确去处理异常；
+
+非受检异常：继承RuntimeException的子类
+123456789101112public class UncheckedException extends RuntimeException &amp;#1">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/72172724.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/70188955.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/23183251.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/80401561.jpg">
+<meta property="og:updated_time" content="2017-08-27T15:29:35.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java8之FlatMap用法">
-<meta name="twitter:description" content="flatMap的作用1234Stream&amp;lt;String[]&amp;gt;   	  -&amp;gt; flatMap  -&amp;gt;   Stream&amp;lt;String&amp;gt;Stream&amp;lt;Set&amp;lt;String&amp;gt;&amp;gt;   -&amp;gt; flatMap  -&amp;gt;   Stream&amp;lt;String&amp;gt;Stream&amp;lt;List&amp;lt;String&amp;gt;&amp;gt;  -&amp;gt">
-<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-12-10/90787855-file_1481380649544_134aa.png">
+<meta name="twitter:title" content="java基础-异常">
+<meta name="twitter:description" content="1. 异常类图
+2. 受检异常 VS 非受检异常
+受检异常：继承Exception的子类，需要明确去处理异常；
+非受检异常：继承RuntimeException的子类，不需要明确去处理异常；
+
+非受检异常：继承RuntimeException的子类
+123456789101112public class UncheckedException extends RuntimeException &amp;#1">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/72172724.jpg">
 
 
 
@@ -107,7 +127,7 @@
 
 
 
-  <title> Java8之FlatMap用法 | 记录点滴成长 </title>
+  <title> java基础-异常 | 记录点滴成长 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -256,7 +276,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2016/12/10/Java8之FlatMap用法/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/08/27/java基础-异常/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -277,7 +297,7 @@
             
             
               
-                Java8之FlatMap用法
+                java基础-异常
               
             
           </h1>
@@ -292,8 +312,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-10T22:13:17+08:00">
-                2016-12-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-27T22:12:18+08:00">
+                2017-08-27
               </time>
             
 
@@ -333,8 +353,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/12/10/Java8之FlatMap用法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/10/Java8之FlatMap用法/" itemprop="commentCount"></span>
+                <a href="/2017/08/27/java基础-异常/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/27/java基础-异常/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -360,16 +380,29 @@
       
 
       
-        <h3 id="flatMap的作用"><a href="#flatMap的作用" class="headerlink" title="flatMap的作用"></a>flatMap的作用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Stream&lt;String[]&gt;   	  -&gt; flatMap  -&gt;   Stream&lt;String&gt;</div><div class="line">Stream&lt;Set&lt;String&gt;&gt;   -&gt; flatMap  -&gt;   Stream&lt;String&gt;</div><div class="line">Stream&lt;List&lt;String&gt;&gt;  -&gt; flatMap  -&gt;   Stream&lt;String&gt;</div><div class="line">Stream&lt;List&lt;Object&gt;&gt;  -&gt; flatMap  -&gt;   Stream&lt;Object&gt;</div></pre></td></tr></table></figure>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><code>范例1</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">@RunWith(JUnit4.class)</div><div class="line">public class StreamTest &#123;</div><div class="line">    public static class Tech&#123;</div><div class="line">        private String name;</div><div class="line">        private List&lt;String&gt; hobies;</div><div class="line"></div><div class="line">        public static Tech initTech()&#123;</div><div class="line">            Random random = new Random();</div><div class="line">            List&lt;String&gt; names = Arrays.asList(&quot;张三&quot;,&quot;李四&quot;,&quot;刘二麻子&quot;,&quot;李爱武&quot;);</div><div class="line">            List&lt;String&gt; hobies = Arrays.asList(&quot;溜溜球&quot;,&quot;集邮&quot;,&quot;羽毛球&quot;,&quot;足球&quot;);</div><div class="line">            Tech tech = new Tech();</div><div class="line">            tech.setName(names.get(random.nextInt(4)));</div><div class="line">            tech.setHobies(Arrays.asList(hobies.get(random.nextInt(3)),hobies.get(random.nextInt(3))));</div><div class="line">            return tech;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public String getName() &#123;</div><div class="line">            return name;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void setName(String name) &#123;</div><div class="line">            this.name = name;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public List&lt;String&gt; getHobies() &#123;</div><div class="line">            return hobies;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void setHobies(List&lt;String&gt; hobies) &#123;</div><div class="line">            this.hobies = hobies;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void test_001()&#123;</div><div class="line">        List&lt;Tech&gt; techList = Arrays.asList(Tech.initTech(),Tech.initTech(),Tech.initTech(),Tech.initTech());</div><div class="line">        List&lt;String&gt; allHobies = techList.stream().map(tech -&gt; tech.getHobies()).flatMap(hobies -&gt; hobies.stream()).map(hoby -&gt; hoby.concat(&quot; - modify&quot;)).collect(Collectors.toList());</div><div class="line">        System.out.println(JSON.toJSONString(allHobies));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>结果1</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-12-10/90787855-file_1481380649544_134aa.png" alt=""></p>
-<p><code>范例2</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_002()&#123;</div><div class="line">        List&lt;String&gt; strs = Arrays.asList(&quot;我,在,学&quot;,&quot;Java8,的&quot;,&quot;新,特,性&quot;);</div><div class="line">        List&lt;String[]&gt; strArray = strs.stream().map(str -&gt; str.split(&quot;,&quot;)).collect(Collectors.toList());</div><div class="line">        List&lt;String&gt; strList = strs.stream().map(str -&gt; str.split(&quot;,&quot;)).flatMap(Arrays::stream).collect(Collectors.toList());</div><div class="line"></div><div class="line">        System.out.println(&quot;strArray =&gt; &quot; + JSON.toJSONString(strArray));</div><div class="line">        System.out.println(&quot;strList =&gt; &quot; + JSON.toJSONString(strList));</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p><code>结果2</code></p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-12-10/33004085-file_1481381376033_c47b.png" alt=""></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Java8中的Stream流可以处理通过<code>map</code>方法处理基本类型及(String)，但却无法对数组和列表进行操作，<code>flatMap</code>方法弥补了这一不足。</p>
+        <h3 id="1-异常类图"><a href="#1-异常类图" class="headerlink" title="1. 异常类图"></a>1. 异常类图</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/72172724.jpg" alt=""></p>
+<h3 id="2-受检异常-VS-非受检异常"><a href="#2-受检异常-VS-非受检异常" class="headerlink" title="2. 受检异常 VS 非受检异常"></a>2. 受检异常 VS 非受检异常</h3><blockquote>
+<p>受检异常：继承Exception的子类，需要明确去处理异常；</p>
+<p>非受检异常：继承RuntimeException的子类，不需要明确去处理异常；</p>
+</blockquote>
+<p>非受检异常：继承RuntimeException的子类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class UncheckedException extends RuntimeException &#123;</div><div class="line">    public UncheckedException() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public UncheckedException(String message) &#123;</div><div class="line">        super(message);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public UncheckedException(String message, Throwable cause) &#123;</div><div class="line">        super(message, cause);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>受检异常：继承Exception的子类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class CheckedException extends Exception&#123;</div><div class="line">    public CheckedException() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public CheckedException(String message) &#123;</div><div class="line">        super(message);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public CheckedException(String message, Throwable cause) &#123;</div><div class="line">        super(message, cause);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>举个例子：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/70188955.jpg" alt=""></p>
+<p>如图可知，受检异常必须要处理，否则会报错；非受检异常，可以不处理；</p>
+<h3 id="3-StackOverFlowError-VS-OutOfMemoryError"><a href="#3-StackOverFlowError-VS-OutOfMemoryError" class="headerlink" title="3. StackOverFlowError VS OutOfMemoryError"></a>3. StackOverFlowError VS OutOfMemoryError</h3><blockquote>
+<p>stackOverFlowError: 与栈相关，所有本地变量和方法调用都存于栈，每次方法的调用都会创建栈空间，一旦方法执行完毕栈空间将回收；</p>
+<p>outOfMemoryError:与堆相关，创建的对象引用存于堆中，当JVM尝试给新对象分配内存时，没有足够的堆内存，将抛出OOM。</p>
+</blockquote>
+<p>stackOverFlowError举例：无限递归方法</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/23183251.jpg" alt=""></p>
+<p>outOfMemoryError举例：创建超大对象</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/80401561.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://stackoverflow.com/questions/11435613/whats-the-difference-between-stackoverflowerror-and-outofmemoryerror" target="_blank" rel="external">What’s the difference between StackOverflowError and OutOfMemoryError</a></li>
+</ol>
 
       
     </div>
@@ -406,8 +439,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/17/Nginx入门篇/" rel="next" title="Nginx入门篇">
-                <i class="fa fa-chevron-left"></i> Nginx入门篇
+              <a href="/2017/08/27/java基础-集合梳理/" rel="next" title="java基础-集合梳理">
+                <i class="fa fa-chevron-left"></i> java基础-集合梳理
               </a>
             
           </div>
@@ -415,10 +448,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/11/JAVA8之Stream特性总结/" rel="prev" title="JAVA8之Stream特性总结">
-                JAVA8之Stream特性总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -444,8 +473,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/10/Java8之FlatMap用法/"
-           data-title="Java8之FlatMap用法" data-url="http://jianwl.com/2016/12/10/Java8之FlatMap用法/">
+      <div class="ds-thread" data-thread-key="2017/08/27/java基础-异常/"
+           data-title="java基础-异常" data-url="http://jianwl.com/2017/08/27/java基础-异常/">
       </div>
     
   </div>
@@ -558,7 +587,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#flatMap的作用"><span class="nav-text">flatMap的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-text">实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-异常类图"><span class="nav-text">1. 异常类图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-受检异常-VS-非受检异常"><span class="nav-text">2. 受检异常 VS 非受检异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-StackOverFlowError-VS-OutOfMemoryError"><span class="nav-text">3. StackOverFlowError VS OutOfMemoryError</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
