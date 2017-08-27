@@ -45,7 +45,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Intellij IDEA," />
+  <meta name="keywords" content="JAVA," />
 
 
 
@@ -63,36 +63,30 @@
 
 
 
-<meta name="description" content="1. 自动import包在工程维护中，代码改动常常会产生一些无用的import或者需要import新的包，Intellij中提供自动import或移除无用包的功能；
-
-Optimize import on the fly 主动移除无用的import
-Add unambiguous imports on the fly  主动导入所需的包
-
-
-未完待续…">
+<meta name="description" content="1. Map类图(不包含java.util.concurrent包的类)
+2. List类图(整理部分常用)
+3. Set类图整理(不包含java.util.concurrent包的类)
+4. 集合类图整理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Intellij IDEA常用技巧">
-<meta property="og:url" content="http://jianwl.com/2016/08/07/Intellij-IDEA常用技巧/index.html">
+<meta property="og:title" content="java基础-集合梳理">
+<meta property="og:url" content="http://jianwl.com/2017/08/27/java基础-集合梳理/index.html">
 <meta property="og:site_name" content="记录点滴成长">
-<meta property="og:description" content="1. 自动import包在工程维护中，代码改动常常会产生一些无用的import或者需要import新的包，Intellij中提供自动import或移除无用包的功能；
-
-Optimize import on the fly 主动移除无用的import
-Add unambiguous imports on the fly  主动导入所需的包
-
-
-未完待续…">
-<meta property="og:image" content="http://jianwl.com/../images/IDEA技巧.png">
-<meta property="og:updated_time" content="2016-10-01T13:10:01.000Z">
+<meta property="og:description" content="1. Map类图(不包含java.util.concurrent包的类)
+2. List类图(整理部分常用)
+3. Set类图整理(不包含java.util.concurrent包的类)
+4. 集合类图整理">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/68139131.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/83565321.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/89594162.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/57993384.jpg">
+<meta property="og:updated_time" content="2017-08-27T08:48:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Intellij IDEA常用技巧">
-<meta name="twitter:description" content="1. 自动import包在工程维护中，代码改动常常会产生一些无用的import或者需要import新的包，Intellij中提供自动import或移除无用包的功能；
-
-Optimize import on the fly 主动移除无用的import
-Add unambiguous imports on the fly  主动导入所需的包
-
-
-未完待续…">
-<meta name="twitter:image" content="http://jianwl.com/../images/IDEA技巧.png">
+<meta name="twitter:title" content="java基础-集合梳理">
+<meta name="twitter:description" content="1. Map类图(不包含java.util.concurrent包的类)
+2. List类图(整理部分常用)
+3. Set类图整理(不包含java.util.concurrent包的类)
+4. 集合类图整理">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/68139131.jpg">
 
 
 
@@ -124,7 +118,7 @@ Add unambiguous imports on the fly  主动导入所需的包
 
 
 
-  <title> Intellij IDEA常用技巧 | 记录点滴成长 </title>
+  <title> java基础-集合梳理 | 记录点滴成长 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -273,7 +267,7 @@ Add unambiguous imports on the fly  主动导入所需的包
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2016/08/07/Intellij-IDEA常用技巧/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/08/27/java基础-集合梳理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -294,7 +288,7 @@ Add unambiguous imports on the fly  主动导入所需的包
             
             
               
-                Intellij IDEA常用技巧
+                java基础-集合梳理
               
             
           </h1>
@@ -309,8 +303,8 @@ Add unambiguous imports on the fly  主动导入所需的包
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-07T21:22:41+08:00">
-                2016-08-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-27T14:58:37+08:00">
+                2017-08-27
               </time>
             
 
@@ -332,8 +326,8 @@ Add unambiguous imports on the fly  主动导入所需的包
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Intellij-IDEA/" itemprop="url" rel="index">
-                    <span itemprop="name">Intellij IDEA</span>
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
                   </a>
                 </span>
 
@@ -350,8 +344,8 @@ Add unambiguous imports on the fly  主动导入所需的包
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/08/07/Intellij-IDEA常用技巧/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/07/Intellij-IDEA常用技巧/" itemprop="commentCount"></span>
+                <a href="/2017/08/27/java基础-集合梳理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/27/java基础-集合梳理/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -377,13 +371,11 @@ Add unambiguous imports on the fly  主动导入所需的包
       
 
       
-        <h3 id="1-自动import包"><a href="#1-自动import包" class="headerlink" title="1. 自动import包"></a>1. 自动import包</h3><p>在工程维护中，代码改动常常会产生一些无用的import或者需要import新的包，Intellij中提供自动import或移除无用包的功能；</p>
-<ul>
-<li>Optimize import on the fly 主动移除无用的import</li>
-<li>Add unambiguous imports on the fly  主动导入所需的包</li>
-</ul>
-<p><img src="../images/IDEA技巧.png" alt=""></p>
-<h3 id="未完待续…"><a href="#未完待续…" class="headerlink" title="未完待续…"></a>未完待续…</h3>
+        <h3 id="1-Map类图-不包含java-util-concurrent包的类"><a href="#1-Map类图-不包含java-util-concurrent包的类" class="headerlink" title="1. Map类图(不包含java.util.concurrent包的类)"></a>1. Map类图(不包含java.util.concurrent包的类)</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/68139131.jpg" alt=""></p>
+<h3 id="2-List类图-整理部分常用"><a href="#2-List类图-整理部分常用" class="headerlink" title="2. List类图(整理部分常用)"></a>2. List类图(整理部分常用)</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/83565321.jpg" alt=""></p>
+<h3 id="3-Set类图整理-不包含java-util-concurrent包的类"><a href="#3-Set类图整理-不包含java-util-concurrent包的类" class="headerlink" title="3. Set类图整理(不包含java.util.concurrent包的类)"></a>3. Set类图整理(不包含java.util.concurrent包的类)</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/89594162.jpg" alt=""></p>
+<h3 id="4-集合类图整理"><a href="#4-集合类图整理" class="headerlink" title="4. 集合类图整理"></a>4. 集合类图整理</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-8-27/57993384.jpg" alt=""></p>
+
       
     </div>
 
@@ -406,7 +398,7 @@ Add unambiguous imports on the fly  主动导入所需的包
       
         <div class="post-tags">
           
-            <a href="/tags/Intellij-IDEA/" rel="tag"># Intellij IDEA</a>
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
           
         </div>
       
@@ -419,8 +411,8 @@ Add unambiguous imports on the fly  主动导入所需的包
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/24/retrofit2入门篇/" rel="next" title="retrofit2入门篇">
-                <i class="fa fa-chevron-left"></i> retrofit2入门篇
+              <a href="/2017/08/27/泛型中extends和super的区别/" rel="next" title="泛型中extends和super的区别?">
+                <i class="fa fa-chevron-left"></i> 泛型中extends和super的区别?
               </a>
             
           </div>
@@ -428,10 +420,6 @@ Add unambiguous imports on the fly  主动导入所需的包
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/07/Spring-Test单元测试/" rel="prev" title="Spring Test单元测试">
-                Spring Test单元测试 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -457,8 +445,8 @@ Add unambiguous imports on the fly  主动导入所需的包
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/08/07/Intellij-IDEA常用技巧/"
-           data-title="Intellij IDEA常用技巧" data-url="http://jianwl.com/2016/08/07/Intellij-IDEA常用技巧/">
+      <div class="ds-thread" data-thread-key="2017/08/27/java基础-集合梳理/"
+           data-title="java基础-集合梳理" data-url="http://jianwl.com/2017/08/27/java基础-集合梳理/">
       </div>
     
   </div>
@@ -571,7 +559,7 @@ Add unambiguous imports on the fly  主动导入所需的包
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-自动import包"><span class="nav-text">1. 自动import包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#未完待续…"><span class="nav-text">未完待续…</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Map类图-不包含java-util-concurrent包的类"><span class="nav-text">1. Map类图(不包含java.util.concurrent包的类)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-List类图-整理部分常用"><span class="nav-text">2. List类图(整理部分常用)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Set类图整理-不包含java-util-concurrent包的类"><span class="nav-text">3. Set类图整理(不包含java.util.concurrent包的类)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-集合类图整理"><span class="nav-text">4. 集合类图整理</span></a></li></ol></div>
             
 
           </div>
