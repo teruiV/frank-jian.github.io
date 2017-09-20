@@ -1,0 +1,766 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="引言在长期排查线上问题的过程中，总结了一些工具的用法和排查问题的思路，首先讲讲工具，JVM自带的一些工具是必须掌握的，例如jstack、jmap、jstat等，它可以帮我们去深入了解JVM正在做的事情，主要的使用领取有这些：
+1、jstack
+jstack可以告诉你当前所有JVM线程正在做什么，包括用户线程和虚拟机线程，你可以用它来查看线程，并且结合Lock信息来检测是否发生了死锁和死锁的线程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java问题排查工具箱">
+<meta property="og:url" content="http://jianwl.com/2017/09/21/Java问题排查工具箱/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="引言在长期排查线上问题的过程中，总结了一些工具的用法和排查问题的思路，首先讲讲工具，JVM自带的一些工具是必须掌握的，例如jstack、jmap、jstat等，它可以帮我们去深入了解JVM正在做的事情，主要的使用领取有这些：
+1、jstack
+jstack可以告诉你当前所有JVM线程正在做什么，包括用户线程和虚拟机线程，你可以用它来查看线程，并且结合Lock信息来检测是否发生了死锁和死锁的线程。">
+<meta property="og:updated_time" content="2017-09-20T17:16:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java问题排查工具箱">
+<meta name="twitter:description" content="引言在长期排查线上问题的过程中，总结了一些工具的用法和排查问题的思路，首先讲讲工具，JVM自带的一些工具是必须掌握的，例如jstack、jmap、jstat等，它可以帮我们去深入了解JVM正在做的事情，主要的使用领取有这些：
+1、jstack
+jstack可以告诉你当前所有JVM线程正在做什么，包括用户线程和虚拟机线程，你可以用它来查看线程，并且结合Lock信息来检测是否发生了死锁和死锁的线程。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> Java问题排查工具箱 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/09/21/Java问题排查工具箱/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java问题排查工具箱
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-21T00:44:29+08:00">
+                2017-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/21/Java问题排查工具箱/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/21/Java问题排查工具箱/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>在长期排查线上问题的过程中，总结了一些工具的用法和排查问题的思路，首先讲讲工具，JVM自带的一些工具是必须掌握的，例如jstack、jmap、jstat等，它可以帮我们去深入了解JVM正在做的事情，主要的使用领取有这些：</p>
+<h3 id="1、jstack"><a href="#1、jstack" class="headerlink" title="1、jstack"></a>1、jstack</h3><blockquote>
+<p>jstack可以告诉你当前所有JVM线程正在做什么，包括用户线程和虚拟机线程，你可以用它来查看线程，并且结合Lock信息来检测是否发生了死锁和死锁的线程。</p>
+<p> 没事jstack一下，知道你的小伙伴正在做什么</p>
+<p>另外在用top -H看到CPU非常高的pid时，可以转换成16进制后再在jstack dump出来的文件中搜索，看看到底是什么线程占用了CPU；</p>
+</blockquote>
+<h3 id="2、jstat"><a href="#2、jstat" class="headerlink" title="2、jstat"></a>2、jstat</h3><blockquote>
+<p>stat,顾明思义就是提供一些统计信息，它可以告诉你当前的GC情况，包括GC次数、时间、具体的GC还可以结合gc.log文件去分析。</p>
+<p>一般来说，我们用jstat去查看GC情况，判断是否存在YGC或FGC频繁的情况，再去看gc.log和jamp dump内存，MAT分析来定位问题(后面会有一个case针对这种场景)</p>
+<p>常用的用法是jstat -gcutil pid time_interval</p>
+</blockquote>
+<h3 id="3、jmap"><a href="#3、jmap" class="headerlink" title="3、jmap"></a>3、jmap</h3><blockquote>
+<p>排查GC问题必然会用到的工具，jmap可以告诉你当前JVM内存堆中的对象分布及其关系，当你dump堆之后可以用MAT分析，看看有哪些大对象，或者哪些类的实例特别多。</p>
+<p>常用用法：</p>
+<p>强制FGC: -histo:live</p>
+<p>dump堆:-dump:[live],format=b,file=dump.bin</p>
+<p>查看各代内存占用情况: -heap</p>
+</blockquote>
+<p>然后我们来介绍一些开源的工具，来增强JVM工具本身的作用：</p>
+<h3 id="1、MAT-Eclipse-Memory-Analyzer"><a href="#1、MAT-Eclipse-Memory-Analyzer" class="headerlink" title="1、MAT(Eclipse Memory Analyzer)"></a>1、MAT(Eclipse Memory Analyzer)</h3><blockquote>
+<p>GC必备分析，用于分析jmap或OOM时dump出来的内存快照，可以看到对象和引用关系；</p>
+<p>官方地址：<a href="http://www.eclipse.org/mat" target="_blank" rel="external">http://www.eclipse.org/mat</a></p>
+</blockquote>
+<h3 id="2、top"><a href="#2、top" class="headerlink" title="2、top"></a>2、top</h3><blockquote>
+<p>这个是Linux自带的命令，查看系统资源消耗情况，可以看到CPU、内存、SWAP、I/O的消耗情况，需要特别注意有几个值：</p>
+<p>ni,这个值如果特别高说明线程上下文切换开销较大，看看是不是开了太多的线程导致的</p>
+<p>res，这个代表了进程实际占用的内存</p>
+<p>swap，内存不足就是占用swap空间，这个时候一般应用的性能会急剧下降，需要特别关注；</p>
+</blockquote>
+<h3 id="3、HouseMD"><a href="#3、HouseMD" class="headerlink" title="3、HouseMD"></a>3、HouseMD</h3><blockquote>
+<p>一个类似于BTrace的小工具，用于对JVM运行时的状态进行追踪和诊断，作者是中间件团队的聚石。</p>
+<p>通常我们排查问题很多时候都在代码中加个日志，看看方法的参数、返回值是不是我们期望的，然后编译打包部署重启应用，十几分钟过去了。HouseMD可以直接让你可以追踪到方法的返回值和参数，以及调用次数、调用平均rt、调用栈，甚至是类的成员变量的值、Class加载的路径、对应的ClassLoader都可以用一行命令给你展现出来，堪称神器。</p>
+</blockquote>
+<h3 id="4、TBJMap"><a href="#4、TBJMap" class="headerlink" title="4、TBJMap"></a>4、TBJMap</h3><blockquote>
+<p>通过jmap和MAT我们可以知道整个JVM堆的对象分布情况，但是有时候我们需要知道young/old/perm区分别有哪些对象的时候，就要用到TBJMap这个神器了。</p>
+<p>它可以告诉你各个分代区各个Class的实例数、占用的空间、以及DirectMemory占用的空间等。</p>
+</blockquote>
+<h3 id="5、tsar"><a href="#5、tsar" class="headerlink" title="5、tsar"></a>5、tsar</h3><blockquote>
+<p>sar是淘宝的采集工具，主要用来收集服务器的系统信息（如cpu，io，mem，tcp等）以及应用数据（如squid haproxy nginx等），tsar支持t实时查看和历史查看，方便了解应用和服务器的信息。</p>
+</blockquote>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://hellojava.info/?p=517" target="_blank" rel="external">Java问题排查工具箱 - 毕玄</a></li>
+<li><a href="http://colobu.com/2016/08/10/Java-Flame-Graphs/" target="_blank" rel="external">火焰图</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/20/MySQL中文乱码排查/" rel="next" title="MySQL中文乱码排查">
+                <i class="fa fa-chevron-left"></i> MySQL中文乱码排查
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/09/21/Java问题排查工具箱/"
+           data-title="Java问题排查工具箱" data-url="http://jianwl.com/2017/09/21/Java问题排查工具箱/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">250</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、jstack"><span class="nav-text">1、jstack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、jstat"><span class="nav-text">2、jstat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、jmap"><span class="nav-text">3、jmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、MAT-Eclipse-Memory-Analyzer"><span class="nav-text">1、MAT(Eclipse Memory Analyzer)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、top"><span class="nav-text">2、top</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、HouseMD"><span class="nav-text">3、HouseMD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、TBJMap"><span class="nav-text">4、TBJMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、tsar"><span class="nav-text">5、tsar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jianwl"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

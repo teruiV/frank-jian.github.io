@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-09-20T07:00:32.000Z</updated>
+  <updated>2017-09-20T17:16:09.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,72 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java问题排查工具箱</title>
+    <link href="http://jianwl.com/2017/09/21/Java%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E5%B7%A5%E5%85%B7%E7%AE%B1/"/>
+    <id>http://jianwl.com/2017/09/21/Java问题排查工具箱/</id>
+    <published>2017-09-20T16:44:29.000Z</published>
+    <updated>2017-09-20T17:16:09.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>在长期排查线上问题的过程中，总结了一些工具的用法和排查问题的思路，首先讲讲工具，JVM自带的一些工具是必须掌握的，例如jstack、jmap、jstat等，它可以帮我们去深入了解JVM正在做的事情，主要的使用领取有这些：</p>
+<h3 id="1、jstack"><a href="#1、jstack" class="headerlink" title="1、jstack"></a>1、jstack</h3><blockquote>
+<p>jstack可以告诉你当前所有JVM线程正在做什么，包括用户线程和虚拟机线程，你可以用它来查看线程，并且结合Lock信息来检测是否发生了死锁和死锁的线程。</p>
+<p> 没事jstack一下，知道你的小伙伴正在做什么</p>
+<p>另外在用top -H看到CPU非常高的pid时，可以转换成16进制后再在jstack dump出来的文件中搜索，看看到底是什么线程占用了CPU；</p>
+</blockquote>
+<h3 id="2、jstat"><a href="#2、jstat" class="headerlink" title="2、jstat"></a>2、jstat</h3><blockquote>
+<p>stat,顾明思义就是提供一些统计信息，它可以告诉你当前的GC情况，包括GC次数、时间、具体的GC还可以结合gc.log文件去分析。</p>
+<p>一般来说，我们用jstat去查看GC情况，判断是否存在YGC或FGC频繁的情况，再去看gc.log和jamp dump内存，MAT分析来定位问题(后面会有一个case针对这种场景)</p>
+<p>常用的用法是jstat -gcutil pid time_interval</p>
+</blockquote>
+<h3 id="3、jmap"><a href="#3、jmap" class="headerlink" title="3、jmap"></a>3、jmap</h3><blockquote>
+<p>排查GC问题必然会用到的工具，jmap可以告诉你当前JVM内存堆中的对象分布及其关系，当你dump堆之后可以用MAT分析，看看有哪些大对象，或者哪些类的实例特别多。</p>
+<p>常用用法：</p>
+<p>强制FGC: -histo:live</p>
+<p>dump堆:-dump:[live],format=b,file=dump.bin</p>
+<p>查看各代内存占用情况: -heap</p>
+</blockquote>
+<p>然后我们来介绍一些开源的工具，来增强JVM工具本身的作用：</p>
+<h3 id="1、MAT-Eclipse-Memory-Analyzer"><a href="#1、MAT-Eclipse-Memory-Analyzer" class="headerlink" title="1、MAT(Eclipse Memory Analyzer)"></a>1、MAT(Eclipse Memory Analyzer)</h3><blockquote>
+<p>GC必备分析，用于分析jmap或OOM时dump出来的内存快照，可以看到对象和引用关系；</p>
+<p>官方地址：<a href="http://www.eclipse.org/mat" target="_blank" rel="external">http://www.eclipse.org/mat</a></p>
+</blockquote>
+<h3 id="2、top"><a href="#2、top" class="headerlink" title="2、top"></a>2、top</h3><blockquote>
+<p>这个是Linux自带的命令，查看系统资源消耗情况，可以看到CPU、内存、SWAP、I/O的消耗情况，需要特别注意有几个值：</p>
+<p>ni,这个值如果特别高说明线程上下文切换开销较大，看看是不是开了太多的线程导致的</p>
+<p>res，这个代表了进程实际占用的内存</p>
+<p>swap，内存不足就是占用swap空间，这个时候一般应用的性能会急剧下降，需要特别关注；</p>
+</blockquote>
+<h3 id="3、HouseMD"><a href="#3、HouseMD" class="headerlink" title="3、HouseMD"></a>3、HouseMD</h3><blockquote>
+<p>一个类似于BTrace的小工具，用于对JVM运行时的状态进行追踪和诊断，作者是中间件团队的聚石。</p>
+<p>通常我们排查问题很多时候都在代码中加个日志，看看方法的参数、返回值是不是我们期望的，然后编译打包部署重启应用，十几分钟过去了。HouseMD可以直接让你可以追踪到方法的返回值和参数，以及调用次数、调用平均rt、调用栈，甚至是类的成员变量的值、Class加载的路径、对应的ClassLoader都可以用一行命令给你展现出来，堪称神器。</p>
+</blockquote>
+<h3 id="4、TBJMap"><a href="#4、TBJMap" class="headerlink" title="4、TBJMap"></a>4、TBJMap</h3><blockquote>
+<p>通过jmap和MAT我们可以知道整个JVM堆的对象分布情况，但是有时候我们需要知道young/old/perm区分别有哪些对象的时候，就要用到TBJMap这个神器了。</p>
+<p>它可以告诉你各个分代区各个Class的实例数、占用的空间、以及DirectMemory占用的空间等。</p>
+</blockquote>
+<h3 id="5、tsar"><a href="#5、tsar" class="headerlink" title="5、tsar"></a>5、tsar</h3><blockquote>
+<p>sar是淘宝的采集工具，主要用来收集服务器的系统信息（如cpu，io，mem，tcp等）以及应用数据（如squid haproxy nginx等），tsar支持t实时查看和历史查看，方便了解应用和服务器的信息。</p>
+</blockquote>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://hellojava.info/?p=517" target="_blank" rel="external">Java问题排查工具箱 - 毕玄</a></li>
+<li><a href="http://colobu.com/2016/08/10/Java-Flame-Graphs/" target="_blank" rel="external">火焰图</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;在长期排查线上问题的过程中，总结了一些工具的用法和排查问题的思路，首先讲讲工具，JVM自带的一些工具是必须掌握的，例如jstack、jmap
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
+    
+    
+      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
+    
+  </entry>
   
   <entry>
     <title>MySQL中文乱码排查</title>
@@ -906,55 +972,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;1-基本概念&quot;&gt;&lt;a href=&quot;#1-基本概念&quot; class=&quot;headerlink&quot; title=&quot;1. 基本概念&quot;&gt;&lt;/a&gt;1. 基本概念&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://oc5a5l0a0.bkt.clouddn.com/17-6-4/26
-    
-    </summary>
-    
-      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
-    
-    
-      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java之ClassLoader</title>
-    <link href="http://jianwl.com/2017/06/03/Java%E4%B9%8BClassLoader/"/>
-    <id>http://jianwl.com/2017/06/03/Java之ClassLoader/</id>
-    <published>2017-06-03T01:44:51.000Z</published>
-    <updated>2017-06-04T05:09:22.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="1-ClassLoader基本概念"><a href="#1-ClassLoader基本概念" class="headerlink" title="1. ClassLoader基本概念"></a>1. ClassLoader基本概念</h3><p>Java程序是由许多独立的类文件组成的，每一个文件对应一个Java类。此外，<strong>这些类文件并非全部装入内存，而是根据程序需要逐渐载入。</strong> </p>
-<p>ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(启动类加载器), ClassLoader在JVM运行的时候加载Java核心的API，以满足Java程序最基本的需求，其中就包括用户定义的ClassLoader: <strong>一个是ExtClassLoader，它的作用是用来加载Java的扩展API，也就是/lib/ext中的类；第二个是AppClassLoader,它是用来加载用户机器上CLASSPATH设置目录中的Class的，通常在没有指定ClassLoader的情况下，自定义的类就由该ClassLoader进行加载。</strong></p>
-<h3 id="2-ClassLoader加载流程"><a href="#2-ClassLoader加载流程" class="headerlink" title="2. ClassLoader加载流程"></a>2. ClassLoader加载流程</h3><p>当运行一个程序的时候，JVM启动，运行bootstrap classloader，该ClassLoader加载Java核心API(ExtClassLoader和AppClassLoader也在此时被加载)，然后调用ExtClassLoader加载扩展API，最后AppClassLoader加载CLASSPATH目录下定义的Class，这就是一个程序最基本的加载流程。</p>
-<p>核心代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">protected Class&lt;?&gt; loadClass(String name, boolean resolve)</div><div class="line">    throws ClassNotFoundException</div><div class="line">&#123;</div><div class="line">    synchronized (getClassLoadingLock(name)) &#123;</div><div class="line">        // 首先检查该name指定的class是否被加载</div><div class="line">        Class&lt;?&gt; c = findLoadedClass(name);</div><div class="line">        if (c == null) &#123;</div><div class="line">            long t0 = System.nanoTime();</div><div class="line">            try &#123;</div><div class="line">                if (parent != null) &#123;</div><div class="line">                // 如果parent不为null，则调用parent的loadclass进行加载</div><div class="line">                    c = parent.loadClass(name, false);</div><div class="line">                &#125; else &#123;</div><div class="line">                // parent为null，则调用BootstrapClassLoader进行加载</div><div class="line">                    c = findBootstrapClassOrNull(name);</div><div class="line">                &#125;</div><div class="line">            &#125; catch (ClassNotFoundException e) &#123;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if (c == null) &#123;</div><div class="line">                long t1 = System.nanoTime();</div><div class="line">                // 如果仍然无法加载成功，则调用自身的findClass进行加载；</div><div class="line">                c = findClass(name);</div><div class="line">                sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);</div><div class="line">                sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);</div><div class="line">                sun.misc.PerfCounter.getFindClasses().increment();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (resolve) &#123;</div><div class="line">            resolveClass(c);</div><div class="line">        &#125;</div><div class="line">        return c;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>从上述代码中可以看出，<strong>一个类加载的过程使用了一种父类委托模式。</strong>为什么要使用这种模式？</p>
-<ol>
-<li>可以避免重复加载，当父类已经加载了该类的时候，就没有必要子ClassLoader再加载一次。</li>
-<li>考虑到安全因素，如果不使用这种委托模式，那么可以随时使用自定义的String来动态替换Java核心API中定义的类型，这样会存在非常大的安全隐患，而父类委托的方式可以避免这种情况，因为String已经在启动时被加载，所以，用户自定义类无法加载一个自定义的ClassLoader</li>
-</ol>
-<h3 id="3-JVM加载类的流程"><a href="#3-JVM加载类的流程" class="headerlink" title="3. JVM加载类的流程"></a>3. JVM加载类的流程</h3><p>JVM加载类的时候，需要经过三个步骤：装载、连接、初始化。装载就是找到相应的class文件，读入JVM；初始化就是class文件初始化，这里详述一下连接，连接分为三步：</p>
-<ol>
-<li>验证class是否符合规范</li>
-<li>准备，为类变量分配内存的同时设置默认初始值</li>
-<li>解释，这步可选，根据loadClass中的是否需要解析的参数。解释指: 根据类中的符号引用查找相应的实体，再把符号引用替换成一个直接引用的过程。</li>
-</ol>
-<h3 id="4-一些重要的方法"><a href="#4-一些重要的方法" class="headerlink" title="4. 一些重要的方法"></a>4. 一些重要的方法</h3><h4 id="1-loadClass"><a href="#1-loadClass" class="headerlink" title="1) loadClass"></a>1) loadClass</h4><p>ClassLoader.loadClass()ClassLoader的入口点，定义如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Class loadClass( String name, boolean resolve );</div></pre></td></tr></table></figure>
-<p>name是JVM需要的类名称，如java.lang.Object。resolve参数告诉方法是否需要解析类。如果JVM只需要知道该类是否存在或找出该类的超类，那么就不需要解析；</p>
-<h4 id="2-defineClass"><a href="#2-defineClass" class="headerlink" title="2) defineClass"></a>2) defineClass</h4><p>defineClass方法接受由原始字节组成的数组，并把它转换成Class对象。</p>
-<h4 id="3-findSystemClass"><a href="#3-findSystemClass" class="headerlink" title="3) findSystemClass"></a>3) findSystemClass</h4><p>findSystemClass方法从本地文件系统装入文件。</p>
-<h4 id="4）resolveClass"><a href="#4）resolveClass" class="headerlink" title="4）resolveClass"></a>4）resolveClass</h4><p>当我们编写自己的loadClass时，可以调用 resolveClass,这取决于 loadClass的resolve参数的值。</p>
-<h4 id="5-findLoadedClass"><a href="#5-findLoadedClass" class="headerlink" title="5) findLoadedClass"></a>5) findLoadedClass</h4><p>findLoadedClass充当一个缓存，当请求loadClass装入类时，它调用该方法来查看ClassLoader是否已装入这个类，这样可以避免重新装入已存在类所造成的麻烦。</p>
-<h4 id="6-findClass"><a href="#6-findClass" class="headerlink" title="6) findClass"></a>6) findClass</h4><p>findClass可以从本地文件系统使用实现的类装载器装载一个类。</p>
-<h3 id="5-参考资料"><a href="#5-参考资料" class="headerlink" title="5 参考资料"></a>5 参考资料</h3><ol>
-<li>Java面试宝典 by 欧立奇 朱梅等</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;1-ClassLoader基本概念&quot;&gt;&lt;a href=&quot;#1-ClassLoader基本概念&quot; class=&quot;headerlink&quot; title=&quot;1. ClassLoader基本概念&quot;&gt;&lt;/a&gt;1. ClassLoader基本概念&lt;/h3&gt;&lt;p&gt;Java程序是由
     
     </summary>
     
