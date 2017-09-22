@@ -78,6 +78,8 @@
 <p>2、修改数据库my.cnf配置文件加个配置：</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-9-20/68228133.jpg" alt=""></p>
 <p>3、重启MYSQL服务器</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>临时改变编码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">set character_set_server = utf8</div></pre></td></tr></table></figure>
 <h3 id="中文乱码Fixed"><a href="#中文乱码Fixed" class="headerlink" title="中文乱码Fixed"></a>中文乱码Fixed</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-9-20/6735572.jpg" alt=""></p>
 ]]></content>
     </entry>
