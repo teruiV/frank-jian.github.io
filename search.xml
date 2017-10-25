@@ -6,8 +6,8 @@
     <entry>
       <title><![CDATA[SpringBoot整合Elasticsearch]]></title>
       <url>http://jianwl.com/2017/10/25/SpringBoot%E6%95%B4%E5%90%88Elasticsearch/</url>
-      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>一年以前曾接触过ES，但后续因为没有相关的业务需求，荒废了这一块的进修；近期因朋友问到相关问题，故重新拾起。之前所学基本忘的差不读了，索性从头学起；这一节，主要来学习如何通过SpringBoot来整合ES，从环境的搭建、到源码的实战来学习ES；</p>
-<h3 id="1、本地ES搭建"><a href="#1、本地ES搭建" class="headerlink" title="1、本地ES搭建"></a>1、本地ES搭建</h3><p>1）、<a href="https://www.elastic.co/downloads/past-releases/elasticsearch-2-4-4" target="_blank" rel="external">官方ES 2.4.4 版本</a></p>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>一年以前曾接触过ES，但后续因为没有相关的业务需求，荒废了这一块的进修；近期因朋友问到相关问题，故重新拾起。之前学的基本忘的差不多了，索性从头学起；这一节，主要来学习如何通过SpringBoot来整合ES，从环境的搭建、到源码的实战来学习ES；</p>
+<h3 id="1、本地ES搭建"><a href="#1、本地ES搭建" class="headerlink" title="1、本地ES搭建"></a>1、本地ES搭建</h3><p>1）<a href="https://www.elastic.co/downloads/past-releases/elasticsearch-2-4-4" target="_blank" rel="external">官方ES 2.4.4 版本</a></p>
 <p>为什么不用最新版版本呢？因为Spring Data Elasticsearch的版本目前只支持5.00以下的版本，详情可以看这<a href="https://github.com/spring-projects/spring-data-elasticsearch/wiki/Spring-Data-Elasticsearch---Spring-Boot---version-matrix" target="_blank" rel="external">版本对应关系</a>。</p>
 <p>2）解压 具体可以看<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html" target="_blank" rel="external">ES安装官方文档</a>。</p>
 <p>3）修改 ${ES_HOME}/config/elasticsearch.yml文件,设置cluster.name;</p>
