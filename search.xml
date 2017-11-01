@@ -4,6 +4,65 @@
   
     
     <entry>
+      <title><![CDATA[Elastic-Job源码分析---为什么阅读Elastic-Job源码]]></title>
+      <url>http://jianwl.com/2017/11/01/Elastic-Job%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%98%85%E8%AF%BBElastic-Job%E6%BA%90%E7%A0%81/</url>
+      <content type="html"><![CDATA[<h3 id="为什么阅读源码Elastic-Job源码"><a href="#为什么阅读源码Elastic-Job源码" class="headerlink" title="为什么阅读源码Elastic-Job源码"></a>为什么阅读源码Elastic-Job源码</h3><ol>
+<li>Quartz多节点通过数据库锁实现任务抢占，Elastic-Job基于什么策略实现任务调度与分配</li>
+<li>任务分片如何实现</li>
+<li><code>Elastic-Job-Cloud</code>如何实现任务动态扩容和缩容</li>
+<li>任务超时如何处理？任务假死怎么判断？</li>
+</ol>
+<h3 id="步骤-功能"><a href="#步骤-功能" class="headerlink" title="步骤/功能"></a>步骤/功能</h3><ul>
+<li>【】分布式调度协调</li>
+<li>【】弹性扩容缩容</li>
+<li>【】失效转移</li>
+<li>【】错过执行作业重触发</li>
+<li>【】作业分片策略</li>
+<li>【】作业唯一节点执行</li>
+<li>【】自诊断并修复分布式不稳定造成的问题</li>
+<li>【】支持并行调度</li>
+<li>【】支持作业生命周期操作</li>
+<li>【】丰富的作业类型</li>
+<li>【】Spring整合以及命名空间提供</li>
+<li>【】运维平台</li>
+<li>【】事件追踪</li>
+<li>【】DUMP作业运行信息</li>
+<li>【】作业监听器</li>
+<li>【】基于Docker的进程隔离（TBD）</li>
+<li>【】高可用</li>
+</ul>
+<h3 id="XXL-JOB"><a href="#XXL-JOB" class="headerlink" title="XXL-JOB"></a>XXL-JOB</h3><p>基于V1.8，会逐步和Elastic-Job功能做对比</p>
+<ul>
+<li>【】简单：支持通过Web页面对任务进行CRUD操作，操作简单，一分钟上手</li>
+<li>【】动态：支持动态修改任务状态、暂停/恢复任务、以及终止运行中任务，即时生效；</li>
+<li>【】调度中心HA（中心式）：调度采用中心式设计，调度中心基于集群Quartz实现可保证调度中心HA</li>
+<li>【】执行器HA（分布式）：任务分布式执行，任务执行器支持集群部署，可保证任务执行HA</li>
+<li>【】任务Failover:执行器集群部署时，任务路由策略选择故障转移情况下，调度失败时将会平滑切换执行器进行Failover；</li>
+<li>【】一致性：调度中心通过DB锁保证集群分布式调度的一致性，一次任务调度只会触发一次执行；</li>
+<li>【】自定义任务参数：支持在线配置调度任务入参，即时生效；</li>
+<li>【】调度线程池：调度系统多线程触发调度运行，确保调度精确执行，不被阻塞；</li>
+<li>【】弹性扩容缩容：一旦有新执行器机器上线或下线，下次调度时将会重新分配任务</li>
+<li>【】邮件报警：任务失败时支持邮件报警，支持配置多邮件群发报警邮件</li>
+<li>【】状态监控：支持实时监控任务进度</li>
+<li>【】Rolling执行日志：支持在线查看调度结果，并且支持以Rolling方式实时查看执行器输出的完整的执行日志</li>
+<li>【】GLUE：提供Web IDE,支持在线开发任务逻辑代码，动态发布，实时编译生效，省略部署上线的过程，支持30个版本的历史版本回溯</li>
+<li>【】数据加密：调度中心和执行器之间的通讯进行数据加密，提升调度信息安全性</li>
+<li>【】任务依赖：支持配置子任务依赖，当父任务执行结束且执行成功后将会触发一次子任务的执行，多个子任务用逗号分隔；</li>
+<li>【】推送maven中央库：将会把最新稳定版本推送到maven中央库，方便用户接入和使用；</li>
+<li>【】任务注册：执行器会周期性自动注册任务，调度中心将会自动发现注册的任务并触发执行，同时也支持手动录入执行器地址；</li>
+<li>【】路由策略：执行器集群部署时提供丰富的路由策略，包括第一个、最后一个、轮询、随机、一致性HASH、最不经常使用、最近未使用、故障转移、忙碌转移等；</li>
+<li>【】运行报表：支持实时查看运行数据，如任务数量、调度次数、执行器次数等、以及调度报表，如调度日期分布图、调度成功分布图等；</li>
+<li>【】脚本任务：支持以GLUE模式开发和运行脚本任务，包括shell、python等类型脚本；</li>
+<li>【】阻塞处理策略：调度过于密集执行器来不及处理时的处理策略，策略包括：单机串行（默认）、丢弃后续调度、覆盖之前调度、</li>
+<li>【】处理失败策略：调度失败时的处理策略，策略包括：失败告警（默认）、失败重试</li>
+<li>【】分片广播任务：执行器集群部署时，任务路由策略选择分片广播情况下，一次任务调度将会广播触发对应集群中所有执行器执行一次任务、同时传递分片参数、可根据分片参数分片开发任务；</li>
+<li>【】动态分片：分片广播任务以执行器为维度进行分片，支持动态扩容执行器集群从而动态增加分片数量，协同进行业务处理，在进行大数量业务操作是，可显著提升任务处理能力和速度。</li>
+<li>【】事件触发：除了Cron方法和任务依赖方式触发任务执行之外，支持基于事件的触发任务方式，调度中心提供触发任务单次执行的API服务，可根据业务事件灵活触发。</li>
+</ul>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[ElasticJob入门实战]]></title>
       <url>http://jianwl.com/2017/11/01/ElasticJob%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<h3 id="1、引言"><a href="#1、引言" class="headerlink" title="1、引言"></a>1、引言</h3><p><code>ElasticJob</code>是一个分布式调度解决方案，由两个互相独立的子项目<code>Elastic-Job-Lite</code>和<code>Elastic-Job-Cloud</code>组成。<code>Elastic-Job-Lite</code>定位为轻量级无中心化解决方案，使用jar包形式提供分布式的协调服务。这一节我们将会介绍SpringBoot整合ElasticJob。</p>
@@ -10985,6 +11044,23 @@ tee – the output of write (:w) command is redirected using tee
     </entry>
     
     <entry>
+      <title><![CDATA[MYSQL存储引擎]]></title>
+      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
+      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[MYSQL存储引擎优化]]></title>
       <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</url>
       <content type="html"><![CDATA[<h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
@@ -11009,23 +11085,6 @@ tee – the output of write (:w) command is redirected using tee
 <h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
 <h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
 <h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
-]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[MYSQL存储引擎]]></title>
-      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
-      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 ]]></content>
     </entry>
     

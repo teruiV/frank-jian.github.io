@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-11-01T04:42:48.000Z</updated>
+  <updated>2017-11-01T08:07:45.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,81 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Elastic-Job源码分析---为什么阅读Elastic-Job源码</title>
+    <link href="http://jianwl.com/2017/11/01/Elastic-Job%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%98%85%E8%AF%BBElastic-Job%E6%BA%90%E7%A0%81/"/>
+    <id>http://jianwl.com/2017/11/01/Elastic-Job源码分析-为什么阅读Elastic-Job源码/</id>
+    <published>2017-11-01T07:25:05.000Z</published>
+    <updated>2017-11-01T08:07:45.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="为什么阅读源码Elastic-Job源码"><a href="#为什么阅读源码Elastic-Job源码" class="headerlink" title="为什么阅读源码Elastic-Job源码"></a>为什么阅读源码Elastic-Job源码</h3><ol>
+<li>Quartz多节点通过数据库锁实现任务抢占，Elastic-Job基于什么策略实现任务调度与分配</li>
+<li>任务分片如何实现</li>
+<li><code>Elastic-Job-Cloud</code>如何实现任务动态扩容和缩容</li>
+<li>任务超时如何处理？任务假死怎么判断？</li>
+</ol>
+<h3 id="步骤-功能"><a href="#步骤-功能" class="headerlink" title="步骤/功能"></a>步骤/功能</h3><ul>
+<li>【】分布式调度协调</li>
+<li>【】弹性扩容缩容</li>
+<li>【】失效转移</li>
+<li>【】错过执行作业重触发</li>
+<li>【】作业分片策略</li>
+<li>【】作业唯一节点执行</li>
+<li>【】自诊断并修复分布式不稳定造成的问题</li>
+<li>【】支持并行调度</li>
+<li>【】支持作业生命周期操作</li>
+<li>【】丰富的作业类型</li>
+<li>【】Spring整合以及命名空间提供</li>
+<li>【】运维平台</li>
+<li>【】事件追踪</li>
+<li>【】DUMP作业运行信息</li>
+<li>【】作业监听器</li>
+<li>【】基于Docker的进程隔离（TBD）</li>
+<li>【】高可用</li>
+</ul>
+<h3 id="XXL-JOB"><a href="#XXL-JOB" class="headerlink" title="XXL-JOB"></a>XXL-JOB</h3><p>基于V1.8，会逐步和Elastic-Job功能做对比</p>
+<ul>
+<li>【】简单：支持通过Web页面对任务进行CRUD操作，操作简单，一分钟上手</li>
+<li>【】动态：支持动态修改任务状态、暂停/恢复任务、以及终止运行中任务，即时生效；</li>
+<li>【】调度中心HA（中心式）：调度采用中心式设计，调度中心基于集群Quartz实现可保证调度中心HA</li>
+<li>【】执行器HA（分布式）：任务分布式执行，任务执行器支持集群部署，可保证任务执行HA</li>
+<li>【】任务Failover:执行器集群部署时，任务路由策略选择故障转移情况下，调度失败时将会平滑切换执行器进行Failover；</li>
+<li>【】一致性：调度中心通过DB锁保证集群分布式调度的一致性，一次任务调度只会触发一次执行；</li>
+<li>【】自定义任务参数：支持在线配置调度任务入参，即时生效；</li>
+<li>【】调度线程池：调度系统多线程触发调度运行，确保调度精确执行，不被阻塞；</li>
+<li>【】弹性扩容缩容：一旦有新执行器机器上线或下线，下次调度时将会重新分配任务</li>
+<li>【】邮件报警：任务失败时支持邮件报警，支持配置多邮件群发报警邮件</li>
+<li>【】状态监控：支持实时监控任务进度</li>
+<li>【】Rolling执行日志：支持在线查看调度结果，并且支持以Rolling方式实时查看执行器输出的完整的执行日志</li>
+<li>【】GLUE：提供Web IDE,支持在线开发任务逻辑代码，动态发布，实时编译生效，省略部署上线的过程，支持30个版本的历史版本回溯</li>
+<li>【】数据加密：调度中心和执行器之间的通讯进行数据加密，提升调度信息安全性</li>
+<li>【】任务依赖：支持配置子任务依赖，当父任务执行结束且执行成功后将会触发一次子任务的执行，多个子任务用逗号分隔；</li>
+<li>【】推送maven中央库：将会把最新稳定版本推送到maven中央库，方便用户接入和使用；</li>
+<li>【】任务注册：执行器会周期性自动注册任务，调度中心将会自动发现注册的任务并触发执行，同时也支持手动录入执行器地址；</li>
+<li>【】路由策略：执行器集群部署时提供丰富的路由策略，包括第一个、最后一个、轮询、随机、一致性HASH、最不经常使用、最近未使用、故障转移、忙碌转移等；</li>
+<li>【】运行报表：支持实时查看运行数据，如任务数量、调度次数、执行器次数等、以及调度报表，如调度日期分布图、调度成功分布图等；</li>
+<li>【】脚本任务：支持以GLUE模式开发和运行脚本任务，包括shell、python等类型脚本；</li>
+<li>【】阻塞处理策略：调度过于密集执行器来不及处理时的处理策略，策略包括：单机串行（默认）、丢弃后续调度、覆盖之前调度、</li>
+<li>【】处理失败策略：调度失败时的处理策略，策略包括：失败告警（默认）、失败重试</li>
+<li>【】分片广播任务：执行器集群部署时，任务路由策略选择分片广播情况下，一次任务调度将会广播触发对应集群中所有执行器执行一次任务、同时传递分片参数、可根据分片参数分片开发任务；</li>
+<li>【】动态分片：分片广播任务以执行器为维度进行分片，支持动态扩容执行器集群从而动态增加分片数量，协同进行业务处理，在进行大数量业务操作是，可显著提升任务处理能力和速度。</li>
+<li>【】事件触发：除了Cron方法和任务依赖方式触发任务执行之外，支持基于事件的触发任务方式，调度中心提供触发任务单次执行的API服务，可根据业务事件灵活触发。</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;为什么阅读源码Elastic-Job源码&quot;&gt;&lt;a href=&quot;#为什么阅读源码Elastic-Job源码&quot; class=&quot;headerlink&quot; title=&quot;为什么阅读源码Elastic-Job源码&quot;&gt;&lt;/a&gt;为什么阅读源码Elastic-Job源码&lt;/h3&gt;&lt;
+    
+    </summary>
+    
+      <category term="ElasticJob" scheme="http://jianwl.com/categories/ElasticJob/"/>
+    
+    
+      <category term="ElasticJob" scheme="http://jianwl.com/tags/ElasticJob/"/>
+    
+  </entry>
   
   <entry>
     <title>ElasticJob入门实战</title>
@@ -1260,39 +1335,6 @@
     
     
       <category term="Linux" scheme="http://jianwl.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Flask-SQLAlchemy: Can&#39;t reconnect until invalid transaction is rolled back</title>
-    <link href="http://jianwl.com/2017/07/20/Flask-SQLAlchemy-Can-t-reconnect-until-invalid-transaction-is-rolled-back/"/>
-    <id>http://jianwl.com/2017/07/20/Flask-SQLAlchemy-Can-t-reconnect-until-invalid-transaction-is-rolled-back/</id>
-    <published>2017-07-20T13:17:45.000Z</published>
-    <updated>2017-07-20T13:54:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>近来在做些Python的重构工作，今日屡次出现这个错误；</p>
-<p> <img src="http://oc5a5l0a0.bkt.clouddn.com/17-7-20/81011645.jpg" alt=""></p>
-<p>由日志可知，在查询<code>bd_charge_info</code>这张表时，由于存在没有提交的事务，导致了查询失败；于是查了MYSQL数据库的事务状态：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SHOW ENGINE INNODB STATUS</div></pre></td></tr></table></figure>
-<p>查询结果：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-7-20/50146776.jpg" alt=""></p>
-<p>至此确认了问题所在。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="http://imysql.com/2015/03/25/mysql-faq-how-to-fetch-latest-trxid.shtml" target="_blank" rel="external">如何查看当前最新事务ID</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;近来在做些Python的重构工作，今日屡次出现这个错误；&lt;/p&gt;
-&lt;p&gt; &lt;img src=&quot;http://oc5a5l0a0.bkt.cl
-    
-    </summary>
-    
-      <category term="Python" scheme="http://jianwl.com/categories/Python/"/>
-    
-    
-      <category term="Python" scheme="http://jianwl.com/tags/Python/"/>
     
   </entry>
   
