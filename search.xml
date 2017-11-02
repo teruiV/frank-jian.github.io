@@ -166,6 +166,18 @@
 <ul>
 <li><code>Elastic-Job-Lite</code>作业触发时依赖本机时间，相同集群使用注册中心为基准，校验本机与注册中心的时间误差是否在允许范围内<code>LiteJobConfiguration.maxTimeDiffSeconds</code></li>
 </ul>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>这篇文章写作思路是参考别人的，通过这篇文章我提炼出，阅读源码几点技巧：</p>
+<ul>
+<li>从一个点切入，找到这个点的入口；</li>
+<li>按照作者的编码的思路去思考，抓住主线，一个个类去梳理</li>
+<li>擅加利用IDEA的查看接口实现类的功能；如下展示：</li>
+</ul>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-11-2/35421199.jpg" alt=""></p>
+<ul>
+<li>从官方文档上，了解到项目有哪些功能，带着问题去看源码；列出你想要了解的功能，一个个去学习；</li>
+<li>以类图来梳理整个功能的逻辑，了解每个类，每个属性的含义，而又不会深入到每个方法的具体实现细节。</li>
+<li>一次只讨论一个点，每次学习都有一个重心；</li>
+</ul>
 ]]></content>
     </entry>
     
