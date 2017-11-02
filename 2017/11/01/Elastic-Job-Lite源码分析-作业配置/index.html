@@ -54,9 +54,9 @@
 
 
 
-<meta name="description" content="1、概述涉及到主要类的类图如下：
+<meta name="description" content="1 概述涉及到主要类的类图如下：
 
-2、作业配置一个作业(ElasticJob)的调度，需要配置独有的一个作业调度器(JobScheduler),两者是1:1的关系，这点大家要注意下，当然下文看代码也会看到。
+2 作业配置一个作业(ElasticJob)的调度，需要配置独有的一个作业调度器(JobScheduler),两者是1:1的关系，这点大家要注意下，当然下文看代码也会看到。
 作业调度器的创建可以配置四个参数：
 
 注册中心(CoordinatorRegistryCenter): 用于协调分布式服务，必填；
@@ -65,20 +65,20 @@ Lite作业配置(LiteJobConfiguration">
 <meta property="og:title" content="Elastic-Job-Lite源码分析---作业配置">
 <meta property="og:url" content="http://jianwl.com/2017/11/01/Elastic-Job-Lite源码分析-作业配置/index.html">
 <meta property="og:site_name" content="记录点滴成长">
-<meta property="og:description" content="1、概述涉及到主要类的类图如下：
+<meta property="og:description" content="1 概述涉及到主要类的类图如下：
 
-2、作业配置一个作业(ElasticJob)的调度，需要配置独有的一个作业调度器(JobScheduler),两者是1:1的关系，这点大家要注意下，当然下文看代码也会看到。
+2 作业配置一个作业(ElasticJob)的调度，需要配置独有的一个作业调度器(JobScheduler),两者是1:1的关系，这点大家要注意下，当然下文看代码也会看到。
 作业调度器的创建可以配置四个参数：
 
 注册中心(CoordinatorRegistryCenter): 用于协调分布式服务，必填；
 Lite作业配置(LiteJobConfiguration">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-11-1/79872342.jpg">
-<meta property="og:updated_time" content="2017-11-02T08:21:29.000Z">
+<meta property="og:updated_time" content="2017-11-02T08:22:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elastic-Job-Lite源码分析---作业配置">
-<meta name="twitter:description" content="1、概述涉及到主要类的类图如下：
+<meta name="twitter:description" content="1 概述涉及到主要类的类图如下：
 
-2、作业配置一个作业(ElasticJob)的调度，需要配置独有的一个作业调度器(JobScheduler),两者是1:1的关系，这点大家要注意下，当然下文看代码也会看到。
+2 作业配置一个作业(ElasticJob)的调度，需要配置独有的一个作业调度器(JobScheduler),两者是1:1的关系，这点大家要注意下，当然下文看代码也会看到。
 作业调度器的创建可以配置四个参数：
 
 注册中心(CoordinatorRegistryCenter): 用于协调分布式服务，必填；
@@ -368,9 +368,9 @@ Lite作业配置(LiteJobConfiguration">
       
 
       
-        <h3 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h3><p>涉及到主要类的类图如下：</p>
+        <h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h3><p>涉及到主要类的类图如下：</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-11-1/79872342.jpg" alt=""></p>
-<h3 id="2、作业配置"><a href="#2、作业配置" class="headerlink" title="2、作业配置"></a>2、作业配置</h3><p>一个作业(ElasticJob)的调度，需要配置独有的一个作业调度器(JobScheduler),两者是1:1的关系，这点大家要注意下，当然下文看代码也会看到。</p>
+<h3 id="2-作业配置"><a href="#2-作业配置" class="headerlink" title="2 作业配置"></a>2 作业配置</h3><p>一个作业(ElasticJob)的调度，需要配置独有的一个作业调度器(JobScheduler),两者是1:1的关系，这点大家要注意下，当然下文看代码也会看到。</p>
 <p>作业调度器的创建可以配置四个参数：</p>
 <ol>
 <li>注册中心(CoordinatorRegistryCenter): 用于协调分布式服务，必填；</li>
@@ -378,10 +378,10 @@ Lite作业配置(LiteJobConfiguration">
 <li>作业事件总线(JobEventBus): 对作业事件异步监听。选填</li>
 <li>作业监听器(ElasticJobListener): 对作业执行前，执行后进行同步监听。选填</li>
 </ol>
-<h3 id="2-1、注册中心配置"><a href="#2-1、注册中心配置" class="headerlink" title="2.1、注册中心配置"></a>2.1、注册中心配置</h3><p>Elastic-Job抽象了注册中心接口(RegistryCenter),并提供了基于Zookeeper的注册中心实现(ZookeeperRegistryCenter)。</p>
+<h3 id="2-1-注册中心配置"><a href="#2-1-注册中心配置" class="headerlink" title="2.1 注册中心配置"></a>2.1 注册中心配置</h3><p>Elastic-Job抽象了注册中心接口(RegistryCenter),并提供了基于Zookeeper的注册中心实现(ZookeeperRegistryCenter)。</p>
 <p>ZookeeperRegistryCenter对应配置类为ZookeeperConfiguration，该类注释很完整，这里我们重点说下<code>namespace</code>属性。如果你有多个不同Elastic-Job集群时，使用相同Zookeeper，可以配置不同的<code>namespace</code>进行隔离。</p>
 <p>注册中心的初始化，我们会在后文<code>Elastic-Job-Lite源码解析---注册中心</code>详细分享。</p>
-<h3 id="2-2、Lite作业配置"><a href="#2-2、Lite作业配置" class="headerlink" title="2.2、Lite作业配置"></a>2.2、Lite作业配置</h3><p><code>LiteJobConfiguration</code>继承自接口<code>JobRootConfiguration</code>，作为<code>Elastic-Job-Lite</code>里的作业(LiteJob)配置。</p>
+<h3 id="2-2-Lite作业配置"><a href="#2-2-Lite作业配置" class="headerlink" title="2.2 Lite作业配置"></a>2.2 Lite作业配置</h3><p><code>LiteJobConfiguration</code>继承自接口<code>JobRootConfiguration</code>，作为<code>Elastic-Job-Lite</code>里的作业(LiteJob)配置。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public final class LiteJobConfiguration implements JobRootConfiguration &#123;</div><div class="line">    private final JobTypeConfiguration typeConfig;</div><div class="line">    private final boolean monitorExecution;</div><div class="line">    private final int maxTimeDiffSeconds;</div><div class="line">    private final int monitorPort;</div><div class="line">    private final String jobShardingStrategyClass;</div><div class="line">    private final int reconcileIntervalMinutes;</div><div class="line">    private final boolean disabled;</div><div class="line">    private final boolean overwrite;</div><div class="line">    </div><div class="line">    // ... 省略部分get方法</div><div class="line">    public static class Builder &#123;</div><div class="line">	    // ... 省略部分属性</div><div class="line">	    public final LiteJobConfiguration build() &#123;</div><div class="line">	            return new LiteJobConfiguration(jobConfig, monitorExecution, maxTimeDiffSeconds, monitorPort, jobShardingStrategyClass, reconcileIntervalMinutes, disabled, overwrite);</div><div class="line">	        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li><code>typeConfig</code>:作业类型配置，必填</li>
@@ -400,7 +400,7 @@ Lite作业配置(LiteJobConfiguration">
 <li><code>overwrite</code>: 设置使用本地配置覆盖注册中心的作业配置。默认为false，选填。建议使用运维平台console配置作业配置，统一管理。</li>
 <li>Builder类：使用该类配置LiteJobConfiguration属性，调用<code>#build()</code>方法最终生成作业配置。</li>
 </ul>
-<h3 id="2-2-1、作业类型配置"><a href="#2-2-1、作业类型配置" class="headerlink" title="2.2.1、作业类型配置"></a>2.2.1、作业类型配置</h3><p>作业类型配置接口(JobTypeConfiguration)有三种配置实现，针对三种作业类型：</p>
+<h3 id="2-2-1-作业类型配置"><a href="#2-2-1-作业类型配置" class="headerlink" title="2.2.1 作业类型配置"></a>2.2.1 作业类型配置</h3><p>作业类型配置接口(JobTypeConfiguration)有三种配置实现，针对三种作业类型：</p>
 <table>
 <thead>
 <tr>
@@ -476,7 +476,7 @@ Lite作业配置(LiteJobConfiguration">
 </tr>
 </tbody>
 </table>
-<h3 id="2-2-2、作业核心配置"><a href="#2-2-2、作业核心配置" class="headerlink" title="2.2.2、作业核心配置"></a>2.2.2、作业核心配置</h3><p>作业核心配置(JobCoreConfiguration),我们可以看到在每种作业类型配置都有该属性(<code>coreConfig</code>)</p>
+<h3 id="2-2-2-作业核心配置"><a href="#2-2-2-作业核心配置" class="headerlink" title="2.2.2 作业核心配置"></a>2.2.2 作业核心配置</h3><p>作业核心配置(JobCoreConfiguration),我们可以看到在每种作业类型配置都有该属性(<code>coreConfig</code>)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public final class JobCoreConfiguration &#123;</div><div class="line">    private final String jobName;</div><div class="line">    private final String cron;</div><div class="line">    private final int shardingTotalCount;</div><div class="line">    private final String shardingItemParameters;</div><div class="line">    private final String jobParameter;</div><div class="line">    private final boolean failover;</div><div class="line">    private final boolean misfire;</div><div class="line">    private final String description;</div><div class="line">    private final JobProperties jobProperties;</div><div class="line">    </div><div class="line">    // ... 省略Getter方法</div><div class="line">    public static class Builder &#123;</div><div class="line">    </div><div class="line">	    // ... 省略部分属性</div><div class="line">	    public final JobCoreConfiguration build() &#123;</div><div class="line">	            Preconditions.checkArgument(!Strings.isNullOrEmpty(jobName), &quot;jobName can not be empty.&quot;);</div><div class="line">	            Preconditions.checkArgument(!Strings.isNullOrEmpty(cron), &quot;cron can not be empty.&quot;);</div><div class="line">	            Preconditions.checkArgument(shardingTotalCount &gt; 0, &quot;shardingTotalCount should larger than zero.&quot;);</div><div class="line">	            return new JobCoreConfiguration(jobName, cron, shardingTotalCount, shardingItemParameters, jobParameter, failover, misfire, description, jobProperties);</div><div class="line">	        &#125;</div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
 <ul>
 <li><code>jobName</code>: 作业名称。必填</li>
@@ -712,7 +712,7 @@ Lite作业配置(LiteJobConfiguration">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、概述"><span class="nav-text">1、概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、作业配置"><span class="nav-text">2、作业配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、注册中心配置"><span class="nav-text">2.1、注册中心配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、Lite作业配置"><span class="nav-text">2.2、Lite作业配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1、作业类型配置"><span class="nav-text">2.2.1、作业类型配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2、作业核心配置"><span class="nav-text">2.2.2、作业核心配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-作业事件配置"><span class="nav-text">2.3 作业事件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-作业监听器"><span class="nav-text">2.4 作业监听器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-作业配置服务"><span class="nav-text">3 作业配置服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-读取作业配置"><span class="nav-text">3.1 读取作业配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-持久化作业配置"><span class="nav-text">3.2 持久化作业配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-校验本机时间是否合法"><span class="nav-text">3.3 校验本机时间是否合法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-概述"><span class="nav-text">1 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-作业配置"><span class="nav-text">2 作业配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-注册中心配置"><span class="nav-text">2.1 注册中心配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Lite作业配置"><span class="nav-text">2.2 Lite作业配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-作业类型配置"><span class="nav-text">2.2.1 作业类型配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-作业核心配置"><span class="nav-text">2.2.2 作业核心配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-作业事件配置"><span class="nav-text">2.3 作业事件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-作业监听器"><span class="nav-text">2.4 作业监听器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-作业配置服务"><span class="nav-text">3 作业配置服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-读取作业配置"><span class="nav-text">3.1 读取作业配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-持久化作业配置"><span class="nav-text">3.2 持久化作业配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-校验本机时间是否合法"><span class="nav-text">3.3 校验本机时间是否合法</span></a></li></ol></div>
             
 
           </div>
