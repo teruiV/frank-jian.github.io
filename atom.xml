@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2017-11-01T08:07:45.000Z</updated>
+  <updated>2017-11-02T08:13:11.000Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,189 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Elastic-Job-Lite源码分析---作业配置</title>
+    <link href="http://jianwl.com/2017/11/01/Elastic-Job-Lite%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%BD%9C%E4%B8%9A%E9%85%8D%E7%BD%AE/"/>
+    <id>http://jianwl.com/2017/11/01/Elastic-Job-Lite源码分析-作业配置/</id>
+    <published>2017-11-01T08:30:37.000Z</published>
+    <updated>2017-11-02T08:13:11.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h3><p>涉及到主要类的类图如下：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-11-1/79872342.jpg" alt=""></p>
+<h3 id="2、作业配置"><a href="#2、作业配置" class="headerlink" title="2、作业配置"></a>2、作业配置</h3><p>一个作业(ElasticJob)的调度，需要配置独有的一个作业调度器(JobScheduler),两者是1:1的关系，这点大家要注意下，当然下文看代码也会看到。</p>
+<p>作业调度器的创建可以配置四个参数：</p>
+<ol>
+<li>注册中心(CoordinatorRegistryCenter): 用于协调分布式服务，必填；</li>
+<li>Lite作业配置(LiteJobConfiguration): 必填</li>
+<li>作业事件总线(JobEventBus): 对作业事件异步监听。选填</li>
+<li>作业监听器(ElasticJobListener): 对作业执行前，执行后进行同步监听。选填</li>
+</ol>
+<h3 id="2-1、注册中心配置"><a href="#2-1、注册中心配置" class="headerlink" title="2.1、注册中心配置"></a>2.1、注册中心配置</h3><p>Elastic-Job抽象了注册中心接口(RegistryCenter),并提供了基于Zookeeper的注册中心实现(ZookeeperRegistryCenter)。</p>
+<p>ZookeeperRegistryCenter对应配置类为ZookeeperConfiguration，该类注释很完整，这里我们重点说下<code>namespace</code>属性。如果你有多个不同Elastic-Job集群时，使用相同Zookeeper，可以配置不同的<code>namespace</code>进行隔离。</p>
+<p>注册中心的初始化，我们会在后文<code>Elastic-Job-Lite源码解析---注册中心</code>详细分享。</p>
+<h3 id="2-2、Lite作业配置"><a href="#2-2、Lite作业配置" class="headerlink" title="2.2、Lite作业配置"></a>2.2、Lite作业配置</h3><p><code>LiteJobConfiguration</code>继承自接口<code>JobRootConfiguration</code>，作为<code>Elastic-Job-Lite</code>里的作业(LiteJob)配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public final class LiteJobConfiguration implements JobRootConfiguration &#123;</div><div class="line">    private final JobTypeConfiguration typeConfig;</div><div class="line">    private final boolean monitorExecution;</div><div class="line">    private final int maxTimeDiffSeconds;</div><div class="line">    private final int monitorPort;</div><div class="line">    private final String jobShardingStrategyClass;</div><div class="line">    private final int reconcileIntervalMinutes;</div><div class="line">    private final boolean disabled;</div><div class="line">    private final boolean overwrite;</div><div class="line">    </div><div class="line">    // ... 省略部分get方法</div><div class="line">    public static class Builder &#123;</div><div class="line">	    // ... 省略部分属性</div><div class="line">	    public final LiteJobConfiguration build() &#123;</div><div class="line">	            return new LiteJobConfiguration(jobConfig, monitorExecution, maxTimeDiffSeconds, monitorPort, jobShardingStrategyClass, reconcileIntervalMinutes, disabled, overwrite);</div><div class="line">	        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>typeConfig</code>:作业类型配置，必填</li>
+<li><code>monitorExecution</code>: 监控作业运行时状态，默认为<code>false</code>，选填。</li>
+</ul>
+<blockquote>
+<p>每次作业执行时间和间隔时间均非常短的情况, 建议不监控作业运行时状态以提升效率, 因为是瞬时状态, 所以无必要监控. 请用户自行增加数据堆积监控. 并且不能保证数据重复选取, 应在作业中实现幂等性. 也无法实现作业失效转移.</p>
+<p> 每次作业执行时间和间隔时间均较长短的情况, 建议监控作业运行时状态, 可保证数据不会重复选取.每次作业执行时间和间隔均较长的情况，建议监控作业运行时状态，可保证数据不会重复选取。</p>
+</blockquote>
+<ul>
+<li><code>maxTimeDiffSeconds</code>: 设置最大容忍的本机与注册中心的时间误差秒数。默认为-1，不检查时间误差。选填</li>
+<li><code>monitorPort</code>: 作业监控端口，默认为-1，不开启作业监控端口。选填</li>
+<li><code>jobShardingStrategyClass</code>：作业分片策略实现类全路径，默认为使用分配侧路。</li>
+<li><code>reconcileIntervalMinutes</code>：修复作业服务器不一致状态服务调度间隔时间，配置为小于1的任意值，默认为10.</li>
+<li><code>disabled</code>: 作业是否禁用执行。默认为false，选填。</li>
+<li><code>overwrite</code>: 设置使用本地配置覆盖注册中心的作业配置。默认为false，选填。建议使用运维平台console配置作业配置，统一管理。</li>
+<li>Builder类：使用该类配置LiteJobConfiguration属性，调用<code>#build()</code>方法最终生成作业配置。</li>
+</ul>
+<h3 id="2-2-1、作业类型配置"><a href="#2-2-1、作业类型配置" class="headerlink" title="2.2.1、作业类型配置"></a>2.2.1、作业类型配置</h3><p>作业类型配置接口(JobTypeConfiguration)有三种配置实现，针对三种作业类型：</p>
+<table>
+<thead>
+<tr>
+<th>配置实现</th>
+<th>作业</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SimpleJobConfiguration</td>
+<td>SimpleJob</td>
+<td>简单作业。例如：订单过期作业</td>
+</tr>
+<tr>
+<td>DataflowJobConfiguration</td>
+<td>DataflowJob</td>
+<td>数据流作业。TODO:暂未了解流式处理数据</td>
+</tr>
+<tr>
+<td>ScriptJobConfiguration</td>
+<td>ScriptJob</td>
+<td>脚本作业。例如：调用shell脚本备份数据库作业</td>
+</tr>
+</tbody>
+</table>
+<p>三种配置类属性对比如：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性</th>
+<th style="text-align:center">SimpleJob</th>
+<th style="text-align:center">DataflowJob</th>
+<th style="text-align:center">ScriptJob</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">coreConfig</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">作业核心配置</td>
+</tr>
+<tr>
+<td style="text-align:center">jobType</td>
+<td style="text-align:center">JobType.SIMPLE</td>
+<td style="text-align:center">JobType.DATAFLOW</td>
+<td style="text-align:center">JobType.SCRIPT</td>
+<td style="text-align:center">作业类型</td>
+</tr>
+<tr>
+<td style="text-align:center">jobClass</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√(默认：ScriptJob.class)</td>
+<td style="text-align:center">作业实现类全路径</td>
+</tr>
+<tr>
+<td style="text-align:center">streamingProcess</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">√</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">是否流式处理数据</td>
+</tr>
+<tr>
+<td style="text-align:center">scriptCommandLine</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">脚本型作业执行命令行</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-2-2、作业核心配置"><a href="#2-2-2、作业核心配置" class="headerlink" title="2.2.2、作业核心配置"></a>2.2.2、作业核心配置</h3><p>作业核心配置(JobCoreConfiguration),我们可以看到在每种作业类型配置都有该属性(<code>coreConfig</code>)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public final class JobCoreConfiguration &#123;</div><div class="line">    private final String jobName;</div><div class="line">    private final String cron;</div><div class="line">    private final int shardingTotalCount;</div><div class="line">    private final String shardingItemParameters;</div><div class="line">    private final String jobParameter;</div><div class="line">    private final boolean failover;</div><div class="line">    private final boolean misfire;</div><div class="line">    private final String description;</div><div class="line">    private final JobProperties jobProperties;</div><div class="line">    </div><div class="line">    // ... 省略Getter方法</div><div class="line">    public static class Builder &#123;</div><div class="line">    </div><div class="line">	    // ... 省略部分属性</div><div class="line">	    public final JobCoreConfiguration build() &#123;</div><div class="line">	            Preconditions.checkArgument(!Strings.isNullOrEmpty(jobName), &quot;jobName can not be empty.&quot;);</div><div class="line">	            Preconditions.checkArgument(!Strings.isNullOrEmpty(cron), &quot;cron can not be empty.&quot;);</div><div class="line">	            Preconditions.checkArgument(shardingTotalCount &gt; 0, &quot;shardingTotalCount should larger than zero.&quot;);</div><div class="line">	            return new JobCoreConfiguration(jobName, cron, shardingTotalCount, shardingItemParameters, jobParameter, failover, misfire, description, jobProperties);</div><div class="line">	        &#125;</div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>jobName</code>: 作业名称。必填</li>
+<li><code>cron</code>: cron表达式，用于控制作业触发时间。必填</li>
+<li><code>shardingTotalCount</code>: 作业分片总数，如果一个作业启动超过作业分片总数的节点，只有<code>shardingTotalCount</code>会执行作业。必填</li>
+<li><code>shardingItemParameters</code>: 分片序列号和参数</li>
+</ul>
+<blockquote>
+<p>分片序列号和参数用等号分隔，多个键值对用逗号分隔<br>分片序列号从0开始，不可大于或等于分片总数<br>如: 0=a,1=b,2=c</p>
+</blockquote>
+<ul>
+<li><code>jobParameter</code>: 作业自定义参数，选填</li>
+</ul>
+<blockquote>
+<p>作业自定义参数，可通过传递该参数为作业调度的业务方法传参，用于实现带参数的作业</p>
+<p>例: 每次获取的数据量、作业实例从数据库读取的主键</p>
+</blockquote>
+<ul>
+<li><code>failover</code>: 是否开启作业执行失效转移，开启表示如果作业在一次作业执行中途宕机，允许将该次未完成的作业在另一作业节点上补偿执行。默认为false。选填</li>
+<li><code>misfire</code>: 是否开启错误作业重新执行，默认为true.选填</li>
+<li><code>description</code>: 作业描述，选填。</li>
+<li><code>jobProperties</code>: 作业属性配置，选填。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public final class JobProperties &#123;</div><div class="line">    </div><div class="line">    private EnumMap&lt;JobPropertiesEnum, String&gt; map = new EnumMap&lt;&gt;(JobPropertiesEnum.class);</div><div class="line"></div><div class="line">	public enum JobPropertiesEnum &#123;</div><div class="line">	        </div><div class="line">	        /**</div><div class="line">	         * 作业异常处理器.</div><div class="line">	         */</div><div class="line">	        JOB_EXCEPTION_HANDLER(&quot;job_exception_handler&quot;, JobExceptionHandler.class, DefaultJobExceptionHandler.class.getCanonicalName()),</div><div class="line">	        </div><div class="line">	        /**</div><div class="line">	         * 线程池服务处理器.</div><div class="line">	         */</div><div class="line">	        EXECUTOR_SERVICE_HANDLER(&quot;executor_service_handler&quot;, ExecutorServiceHandler.class, DefaultExecutorServiceHandler.class.getCanonicalName());</div><div class="line">	        </div><div class="line">	        private final String key;</div><div class="line">	    </div><div class="line">	        private final Class&lt;?&gt; classType;</div><div class="line">	        </div><div class="line">	        private final String defaultValue;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>JOB_EXCEPTION_HANDLER</code>: 用于扩展异常处理类</li>
+<li><code>EXECUTOR_SERVICE_HANDLER</code>: 用于扩展作业处理线程池类</li>
+<li>通过这个属性，我们可以自定义每个作业的异常处理和线程池服务</li>
+</ul>
+<h3 id="2-3-作业事件配置"><a href="#2-3-作业事件配置" class="headerlink" title="2.3 作业事件配置"></a>2.3 作业事件配置</h3><p>通过作业事件配置（<code>JobEventConfiguration</code>）,实现对作业事件的异步监听、处理。在<code>Elastic-Job-Lite源码解析 --- 作业事件追踪</code> 详细分享</p>
+<h3 id="2-4-作业监听器"><a href="#2-4-作业监听器" class="headerlink" title="2.4 作业监听器"></a>2.4 作业监听器</h3><p>通过配置作业监听器（<code>ElasticJobListener</code>）,实现对作业执行的同步监听、处理。<code>Elastic-Job-Lite源码解析 --- 作业监听器</code>详细分享</p>
+<h3 id="3-作业配置服务"><a href="#3-作业配置服务" class="headerlink" title="3 作业配置服务"></a>3 作业配置服务</h3><p>多个Elastic-Job-Lite使用相同注册中心和相同<code>namespace</code>组成集群，实现高可用。集群中，使用作业配置服务（<code>ConfigurationService</code>）共享作业配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public final class ConfigurationService &#123;</div><div class="line">    </div><div class="line">    private final TimeService timeService;</div><div class="line">    </div><div class="line">    private final JobNodeStorage jobNodeStorage;</div><div class="line">    </div><div class="line">    public ConfigurationService(final CoordinatorRegistryCenter regCenter, final String jobName) &#123;</div><div class="line">        jobNodeStorage = new JobNodeStorage(regCenter, jobName);</div><div class="line">        timeService = new TimeService();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>timeService</code>: 时间服务，提供当前时间查询</li>
+<li><code>jobNodeStorage</code>: 封装注册中心，提供存储服务。<code>Elastic-Job-Lite源码解析 --- 作业数据存储</code>详细分享</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public final class TimeService &#123;</div><div class="line">    </div><div class="line">    /**</div><div class="line">     * 获取当前时间的毫秒数.</div><div class="line">     * </div><div class="line">     * @return 当前时间的毫秒数</div><div class="line">     */</div><div class="line">    public long getCurrentMillis() &#123;</div><div class="line">        return System.currentTimeMillis();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-1-读取作业配置"><a href="#3-1-读取作业配置" class="headerlink" title="3.1 读取作业配置"></a>3.1 读取作业配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">    * 读取作业配置.</div><div class="line">    * </div><div class="line">    * @param fromCache 是否从缓存中读取</div><div class="line">    * @return 作业配置</div><div class="line">    */</div><div class="line">   public LiteJobConfiguration load(final boolean fromCache) &#123;</div><div class="line">       String result;</div><div class="line">       if (fromCache) &#123;</div><div class="line">           result = jobNodeStorage.getJobNodeData(ConfigurationNode.ROOT);</div><div class="line">           if (null == result) &#123;</div><div class="line">               result = jobNodeStorage.getJobNodeDataDirectly(ConfigurationNode.ROOT);</div><div class="line">           &#125;</div><div class="line">       &#125; else &#123;</div><div class="line">           result = jobNodeStorage.getJobNodeDataDirectly(ConfigurationNode.ROOT);</div><div class="line">       &#125;</div><div class="line">       return LiteJobConfigurationGsonFactory.fromJson(result);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h3 id="3-2-持久化作业配置"><a href="#3-2-持久化作业配置" class="headerlink" title="3.2 持久化作业配置"></a>3.2 持久化作业配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">  * 持久化分布式作业配置信息.</div><div class="line">  * </div><div class="line">  * @param liteJobConfig 作业配置</div><div class="line">  */</div><div class="line"> public void persist(final LiteJobConfiguration liteJobConfig) &#123;</div><div class="line">     checkConflictJob(liteJobConfig);</div><div class="line">     if (!jobNodeStorage.isJobNodeExisted(ConfigurationNode.ROOT) || liteJobConfig.isOverwrite()) &#123;</div><div class="line">         jobNodeStorage.replaceJobNode(ConfigurationNode.ROOT, LiteJobConfigurationGsonFactory.toJson(liteJobConfig));</div><div class="line">     &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>调用 <code>#checkConflictJob(...)</code>方法校验注册中心存储的作业配置的作业实现类全路径（<code>jobClass</code>）和当前的是否相同，如果不同，则认为是冲突，不允许存储：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">private void checkConflictJob(final LiteJobConfiguration liteJobConfig) &#123;</div><div class="line">        Optional&lt;LiteJobConfiguration&gt; liteJobConfigFromZk = find();</div><div class="line">        if (liteJobConfigFromZk.isPresent() &amp;&amp; !liteJobConfigFromZk.get().getTypeConfig().getJobClass().equals(liteJobConfig.getTypeConfig().getJobClass())) &#123;</div><div class="line">            throw new JobConfigurationException(&quot;Job conflict with register center. The job &apos;%s&apos; in register center&apos;s class is &apos;%s&apos;, your job class is &apos;%s&apos;&quot;, </div><div class="line">                    liteJobConfig.getJobName(), liteJobConfigFromZk.get().getTypeConfig().getJobClass(), liteJobConfig.getTypeConfig().getJobClass());</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>当注册中心未存储该作业配置或者当前作业配置允许替换注册中心配置(<code>overwrite = true</code>)时，持久化作业配置。</li>
+</ul>
+<h3 id="3-3-校验本机时间是否合法"><a href="#3-3-校验本机时间是否合法" class="headerlink" title="3.3 校验本机时间是否合法"></a>3.3 校验本机时间是否合法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">     * 检查本机与注册中心的时间误差秒数是否在允许范围.</div><div class="line">     * </div><div class="line">     * @throws JobExecutionEnvironmentException 本机与注册中心的时间误差秒数不在允许范围所抛出的异常</div><div class="line">     */</div><div class="line">    public void checkMaxTimeDiffSecondsTolerable() throws JobExecutionEnvironmentException &#123;</div><div class="line">        int maxTimeDiffSeconds =  load(true).getMaxTimeDiffSeconds();</div><div class="line">        if (-1  == maxTimeDiffSeconds) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        long timeDiff = Math.abs(timeService.getCurrentMillis() - jobNodeStorage.getRegistryCenterTime());</div><div class="line">        if (timeDiff &gt; maxTimeDiffSeconds * 1000L) &#123;</div><div class="line">            throw new JobExecutionEnvironmentException(</div><div class="line">                    &quot;Time different between job server and register center exceed &apos;%s&apos; seconds, max time different is &apos;%s&apos; seconds.&quot;, timeDiff / 1000, maxTimeDiffSeconds);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>Elastic-Job-Lite</code>作业触发时依赖本机时间，相同集群使用注册中心为基准，校验本机与注册中心的时间误差是否在允许范围内<code>LiteJobConfiguration.maxTimeDiffSeconds</code></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;1、概述&quot;&gt;&lt;a href=&quot;#1、概述&quot; class=&quot;headerlink&quot; title=&quot;1、概述&quot;&gt;&lt;/a&gt;1、概述&lt;/h3&gt;&lt;p&gt;涉及到主要类的类图如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://oc5a5l0a0.bkt.clouddn.com
+    
+    </summary>
+    
+      <category term="ElasticJob" scheme="http://jianwl.com/categories/ElasticJob/"/>
+    
+    
+      <category term="ElasticJob" scheme="http://jianwl.com/tags/ElasticJob/"/>
+    
+  </entry>
   
   <entry>
     <title>Elastic-Job源码分析---为什么阅读Elastic-Job源码</title>
@@ -1271,70 +1454,6 @@
     
     
       <category term="Webpack" scheme="http://jianwl.com/tags/Webpack/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java服务化系统线上应急和技术攻关，你必须掌握的Linux命令</title>
-    <link href="http://jianwl.com/2017/07/22/Java%E6%9C%8D%E5%8A%A1%E5%8C%96%E7%B3%BB%E7%BB%9F%E7%BA%BF%E4%B8%8A%E5%BA%94%E6%80%A5%E5%92%8C%E6%8A%80%E6%9C%AF%E6%94%BB%E5%85%B3%EF%BC%8C%E4%BD%A0%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%E7%9A%84Linux%E5%91%BD%E4%BB%A4/"/>
-    <id>http://jianwl.com/2017/07/22/Java服务化系统线上应急和技术攻关，你必须掌握的Linux命令/</id>
-    <published>2017-07-22T12:51:16.000Z</published>
-    <updated>2017-07-23T03:32:30.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文并不是Linux命令的手册，而是侧重于命令在特定场景如何帮助应急人员和攻关人员定位问题并解决问题，因此，对于每个命令的介绍将直切主题，直接介绍命令的具体场景，而不是介绍命令的详细使用格式。</p>
-<h3 id="1-必不可少的基础命令和工具"><a href="#1-必不可少的基础命令和工具" class="headerlink" title="1. 必不可少的基础命令和工具"></a>1. 必不可少的基础命令和工具</h3><h4 id="1-1-grep"><a href="#1-1-grep" class="headerlink" title="1.1 grep"></a>1.1 grep</h4><p><code>grep</code>是<code>Linux</code>下通用的文本内容查找命令。</p>
-<p>也可以利用它打印匹配的上下几行，线上查找问题的时候，可以使用以下命令,查找关键字，显示关键字出现的后5行，并且给关键字着色。</p>
-<p>使用方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">grep -5 &apos;pattern&apos; INPUT_FILE # 打印匹配行的前后5行</div><div class="line"></div><div class="line">grep -C 5 &apos;pattern&apos; INPUT_FILE # 打印匹配行的前后5行</div><div class="line"></div><div class="line">grep -A 5 &apos;pattern&apos; INPUT_FILE # 打印匹配行的后5行</div><div class="line"></div><div class="line">grep -B 5 &apos;pattern&apos; INPUT_FILE # 打印匹配行的前5行</div></pre></td></tr></table></figure>
-<h4 id="1-2-find"><a href="#1-2-find" class="headerlink" title="1.2 find"></a>1.2 find</h4><p>通过文件名称查找文件的所在位置，名称查找支持模糊匹配</p>
-<p>使用方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find . -name FILE_NAME</div></pre></td></tr></table></figure>
-<p>命令输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@10-9-179-71 ~]# find . -name GifApiApplication.java</div><div class="line">./app/Gif-Api/src/main/java/com/budong/GifApiApplication.java</div></pre></td></tr></table></figure>
-<h4 id="1-3-uptime"><a href="#1-3-uptime" class="headerlink" title="1.3 uptime"></a>1.3 uptime</h4><p>查看机器的启动时间、登录用户、平均负载等情况，通常用在线上应急或者技术攻关的时候来确定操作系统的重启时间。</p>
-<p>使用方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">uptime</div></pre></td></tr></table></figure>
-<p>命令输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[jianweilin@login10-103-142 ~]$ uptime</div><div class="line"> 10:35:13 up 698 days, 19:30,  3 users,  load average: 0.20, 0.13, 0.04</div></pre></td></tr></table></figure>
-<p>从上面输出可以看到如下信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">1、 当前时间：10:35:13</div><div class="line"></div><div class="line">2、 系统已运行的时间：698天19个小时30分钟</div><div class="line"></div><div class="line">3、当前在线用户：3个用户</div><div class="line"></div><div class="line">4. 系统平均负载：0.20 、0.13 、 0.04，最近1分钟、5分钟、15分钟系统的负载情况</div></pre></td></tr></table></figure>
-<p>系统平均负载指在特定时间间隔内队列中运行的平均进程数，如果一个进程满足一下条件，它就会位于运行队列中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1、它没有在等待IO操作的结果</div><div class="line"></div><div class="line">2、它没有主动进入等待状态（也就是没有调用wait相关的系统API）</div><div class="line"></div><div class="line">3、没有被停止（例如：等待终止）</div></pre></td></tr></table></figure>
-<p>一般来说，每个CPU内核对应活动进程数不大于3，则系统运行良好，换句话说，也就是活动进程数小于CPU核数的3倍。</p>
-<p>举例说明，如果你的服务CPU有3个核心，那么只要uptime最后输出的一串字符数值小于9，即表示系统负载正常。但是，如果系统负载超过10，那就表示当前系统负载过重，需要定位系统执行任务负载超标的原因。</p>
-<h4 id="1-4-lsof"><a href="#1-4-lsof" class="headerlink" title="1.4 lsof"></a>1.4 lsof</h4><p>列出系统当前打开的文件句柄，在Linux文件系统中，任何资源都是以文件句柄的形式管理的。例如：硬件设备、文件、网络套接字等，系统内部为每一种资源分配一个句柄，应用程序只能用操作系统分配的句柄来引用资源，因此，文件句柄为应用程序与基础操作系统之间的交互提供了通用的操作接口。</p>
-<p>应用程序打开文件的描述列表包含大量的关于应用程序本身的运行信息，因此通过lsof工具查看这个文件句柄列表，对系统监控以及应急排错提供重要的帮助。</p>
-<p>查看某一个进程打开的文件句柄：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">[root@10-9-179-71 ~]# lsof -p 12988 | less</div><div class="line">COMMAND   PID USER   FD   TYPE             DEVICE SIZE/OFF     NODE NAME</div><div class="line">java    12988 root  cwd    DIR              252,1     4096   917916 /root/app/Gif-Api</div><div class="line">java    12988 root  rtd    DIR              252,1     4096        2 /</div><div class="line">java    12988 root  txt    REG              252,1     7718   400499 /usr/java/jdk1.7.0_80/bin/java</div><div class="line">java    12988 root  mem    REG              252,1 99170352   292284 /usr/lib/locale/locale-archive</div><div class="line">java    12988 root  mem    REG              252,1   111440   786852 /lib64/libresolv-2.12.so</div><div class="line">java    12988 root  mem    REG              252,1    27896   786492 /lib64/libnss_dns-2.12.so</div><div class="line">java    12988 root  mem    REG              252,1    90880   795901 /lib64/libgcc_s-4.4.7-20120601.</div><div class="line">so.1</div><div class="line">java    12988 root  mem    REG              252,1  1025172   663136 /usr/java/jdk1.7.0_80/jre/lib/e</div><div class="line">xt/localedata.jar</div><div class="line">java    12988 root  mem    REG              252,1   196468   663055 /usr/java/jdk1.7.0_80/jre/lib/e</div><div class="line">xt/sunjce_provider.jar</div></pre></td></tr></table></figure>
-<h4 id="1-5-ulimit"><a href="#1-5-ulimit" class="headerlink" title="1.5 ulimit"></a>1.5 ulimit</h4><p>Linux系统为每个登录用户，都限制其最大进程数和打开的最大文件句柄数。为提供性能，可以根据硬件资源的具体情况，设置各个用户的最大进程数和打开的最大文件句柄数。</p>
-<p>可以用<code>ulimit -a</code>来显示当前的各种系统对用户使用资源的限制：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">[root@10-9-179-71 ~]# ulimit -a</div><div class="line">core file size          (blocks, -c) unlimited</div><div class="line">data seg size           (kbytes, -d) unlimited</div><div class="line">scheduling priority             (-e) 0</div><div class="line">file size               (blocks, -f) unlimited</div><div class="line">pending signals                 (-i) 15356</div><div class="line">max locked memory       (kbytes, -l) 64</div><div class="line">max memory size         (kbytes, -m) unlimited</div><div class="line">open files                      (-n) 1000000</div><div class="line">pipe size            (512 bytes, -p) 8</div><div class="line">POSIX message queues     (bytes, -q) 819200</div><div class="line">real-time priority              (-r) 0</div><div class="line">stack size              (kbytes, -s) 10240</div><div class="line">cpu time               (seconds, -t) unlimited</div><div class="line">max user processes              (-u) 15356</div><div class="line">virtual memory          (kbytes, -v) unlimited</div><div class="line">file locks                      (-x) unlimited</div></pre></td></tr></table></figure>
-<p>设置用户的最大进程数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ulimit -u 10240</div></pre></td></tr></table></figure>
-<p>设置用户可以打开的最大文件句柄数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ulimit -n 10240</div></pre></td></tr></table></figure>
-<h4 id="1-6-curl"><a href="#1-6-curl" class="headerlink" title="1.6 curl"></a>1.6 curl</h4><p>程序开发后，会使用Junit、Testng以及Jmock、Mockito进行单元测试，单元测试后需要进行集成测试，由于当前的线上服务较多使用Restful风格，那么集成测试的时候就需要进行HTTP调用，查看返回的结果是否符合预期，curl命令是首选测试的方法。</p>
-<p>使用方式:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># 打印请求响应头信息</div><div class="line">[root@10-9-179-71 ~]# curl -i https://bdapi.imdada.cn/health/check</div><div class="line">HTTP/1.1 200 OK</div><div class="line">Server: openresty</div><div class="line">Date: Sun, 23 Jul 2017 03:15:09 GMT</div><div class="line">Content-Type: application/json;charset=UTF-8</div><div class="line">Transfer-Encoding: chunked</div><div class="line">Connection: keep-alive</div><div class="line">&#123;&quot;status&quot;:&quot;ok&quot;,&quot;content&quot;:&quot;ok&quot;&#125;</div><div class="line"></div><div class="line"># 打印HTTP响应码</div><div class="line">[root@10-9-179-71 ~]# curl -I https://bdapi.imdada.cn/health/check</div><div class="line">HTTP/1.1 200 OK</div><div class="line">Server: openresty</div><div class="line">Date: Sun, 23 Jul 2017 03:16:45 GMT</div><div class="line">Content-Type: application/json;charset=UTF-8</div><div class="line">Content-Length: 30</div><div class="line">Connection: keep-alive</div></pre></td></tr></table></figure>
-<h4 id="1-7-scp"><a href="#1-7-scp" class="headerlink" title="1.7 scp"></a>1.7 scp</h4><p>scp命令是Linux系统中功能强大的文件传输命令，可以实现从本地到远程以及远程到本地的双向文件传输，用起来非常的方便。常用来在线上定位问题时，将线上的一些文件下载到本地进行查看，或者将本地的修改上传到服务器上。</p>
-<p>使用方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">scp jianweilin@192.168.1.1:/home/jianweilin/test.txt</div><div class="line"></div><div class="line">scp ./test.txt jianweilin@192.168.1.1:/home/jianweilin/</div></pre></td></tr></table></figure></p>
-<h4 id="1-8-vi-amp-vim"><a href="#1-8-vi-amp-vim" class="headerlink" title="1.8 vi &amp; vim"></a>1.8 vi &amp; vim</h4><p>vi和vim是Linux中最常用的命令行文本编辑工具，vim是vi的升级版本，在某些Linux版本下，vi实际上通过软链接指向vim。</p>
-<p>常用vi/vim命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line">1、h: 左移一个字符</div><div class="line"></div><div class="line">2、l: 有移一个字符</div><div class="line"></div><div class="line">3、k: 上移一个字符</div><div class="line"></div><div class="line">4、j: 下移一个字符</div><div class="line"></div><div class="line">5、set number: 显示行号</div><div class="line"></div><div class="line">6、shift + g: 移动到最后一行</div><div class="line"></div><div class="line">7、1 + shift + g: 移动到第一行</div><div class="line"></div><div class="line">8、n + shift + g: 移动到第n行</div><div class="line"></div><div class="line">9、0: 移动到行首</div><div class="line"></div><div class="line">10、$: 移动到行尾</div><div class="line"></div><div class="line">11、 /text: 查到text，按n键查找下一个，按N查找前一个</div><div class="line"></div><div class="line">12、 ?text: 查找text，按n键查找下一个，按N查找前一个</div><div class="line"></div><div class="line">13、i: 在当前位置前插入</div><div class="line"></div><div class="line">14、I: 在当前行首插入</div><div class="line"></div><div class="line">15、a: 在当前位置后插入</div><div class="line"></div><div class="line">16、A: 在当前行尾插入</div><div class="line"></div><div class="line">17、o: 在当前行之后插入一行</div><div class="line"></div><div class="line">18、O: 在当前行之前插入一行</div><div class="line"></div><div class="line">19、%s/old/new/g：用old替换new，替换当前行的所有匹配</div><div class="line"></div><div class="line">20、ctrl + f：向下滚动一屏</div><div class="line"></div><div class="line">21、ctrl + b：向上滚动一屏</div><div class="line"></div><div class="line">22、u：撤销</div><div class="line"></div><div class="line">23、U：撤销对整行的操作</div><div class="line"></div><div class="line">24、Ctrl + r：重做，即撤销的撤销</div><div class="line"></div><div class="line">25、x：删除当前字符</div><div class="line"></div><div class="line">26、dd：删除当前行</div><div class="line"></div><div class="line">27、10d：删除当前行开始的10行</div><div class="line"></div><div class="line">28、yy：拷贝当前行</div><div class="line"></div><div class="line">29、p：在当前光标后粘贴,如果之前使用了yy命令来复制一行，那么就在当前行的下一行</div><div class="line">粘贴</div><div class="line"></div><div class="line">30、：wq：保存并退出</div><div class="line"></div><div class="line">31、：q!：强制退出并忽略所有更改</div></pre></td></tr></table></figure>
-<p>未完待续…</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="http://www.jianshu.com/p/6fc923ceb722" target="_blank" rel="external">Java服务化系统线上应急和技术攻关，你必须掌握的Linux命令</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;本文并不是Linux命令的手册，而是侧重于命令在特定场景如何帮助应急人员和攻关人员定位问题并解决问题，因此，对于每个命令的介绍将直切主题，直
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://jianwl.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="http://jianwl.com/tags/Linux/"/>
     
   </entry>
   

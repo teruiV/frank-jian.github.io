@@ -1,0 +1,858 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ElasticJob," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oc5a5l0a0.bkt.clouddn.com/17-9-15/12958638.jpg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1、概述涉及到主要类的类图如下：
+
+2、作业配置一个作业(ElasticJob)的调度，需要配置独有的一个作业调度器(JobScheduler),两者是1:1的关系，这点大家要注意下，当然下文看代码也会看到。
+作业调度器的创建可以配置四个参数：
+
+注册中心(CoordinatorRegistryCenter): 用于协调分布式服务，必填；
+Lite作业配置(LiteJobConfiguration">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elastic-Job-Lite源码分析---作业配置">
+<meta property="og:url" content="http://jianwl.com/2017/11/01/Elastic-Job-Lite源码分析-作业配置/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="1、概述涉及到主要类的类图如下：
+
+2、作业配置一个作业(ElasticJob)的调度，需要配置独有的一个作业调度器(JobScheduler),两者是1:1的关系，这点大家要注意下，当然下文看代码也会看到。
+作业调度器的创建可以配置四个参数：
+
+注册中心(CoordinatorRegistryCenter): 用于协调分布式服务，必填；
+Lite作业配置(LiteJobConfiguration">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-11-1/79872342.jpg">
+<meta property="og:updated_time" content="2017-11-02T08:13:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elastic-Job-Lite源码分析---作业配置">
+<meta name="twitter:description" content="1、概述涉及到主要类的类图如下：
+
+2、作业配置一个作业(ElasticJob)的调度，需要配置独有的一个作业调度器(JobScheduler),两者是1:1的关系，这点大家要注意下，当然下文看代码也会看到。
+作业调度器的创建可以配置四个参数：
+
+注册中心(CoordinatorRegistryCenter): 用于协调分布式服务，必填；
+Lite作业配置(LiteJobConfiguration">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-11-1/79872342.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> Elastic-Job-Lite源码分析---作业配置 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/11/01/Elastic-Job-Lite源码分析-作业配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Elastic-Job-Lite源码分析---作业配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-01T16:30:37+08:00">
+                2017-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ElasticJob/" itemprop="url" rel="index">
+                    <span itemprop="name">ElasticJob</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/01/Elastic-Job-Lite源码分析-作业配置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/01/Elastic-Job-Lite源码分析-作业配置/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h3><p>涉及到主要类的类图如下：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-11-1/79872342.jpg" alt=""></p>
+<h3 id="2、作业配置"><a href="#2、作业配置" class="headerlink" title="2、作业配置"></a>2、作业配置</h3><p>一个作业(ElasticJob)的调度，需要配置独有的一个作业调度器(JobScheduler),两者是1:1的关系，这点大家要注意下，当然下文看代码也会看到。</p>
+<p>作业调度器的创建可以配置四个参数：</p>
+<ol>
+<li>注册中心(CoordinatorRegistryCenter): 用于协调分布式服务，必填；</li>
+<li>Lite作业配置(LiteJobConfiguration): 必填</li>
+<li>作业事件总线(JobEventBus): 对作业事件异步监听。选填</li>
+<li>作业监听器(ElasticJobListener): 对作业执行前，执行后进行同步监听。选填</li>
+</ol>
+<h3 id="2-1、注册中心配置"><a href="#2-1、注册中心配置" class="headerlink" title="2.1、注册中心配置"></a>2.1、注册中心配置</h3><p>Elastic-Job抽象了注册中心接口(RegistryCenter),并提供了基于Zookeeper的注册中心实现(ZookeeperRegistryCenter)。</p>
+<p>ZookeeperRegistryCenter对应配置类为ZookeeperConfiguration，该类注释很完整，这里我们重点说下<code>namespace</code>属性。如果你有多个不同Elastic-Job集群时，使用相同Zookeeper，可以配置不同的<code>namespace</code>进行隔离。</p>
+<p>注册中心的初始化，我们会在后文<code>Elastic-Job-Lite源码解析---注册中心</code>详细分享。</p>
+<h3 id="2-2、Lite作业配置"><a href="#2-2、Lite作业配置" class="headerlink" title="2.2、Lite作业配置"></a>2.2、Lite作业配置</h3><p><code>LiteJobConfiguration</code>继承自接口<code>JobRootConfiguration</code>，作为<code>Elastic-Job-Lite</code>里的作业(LiteJob)配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public final class LiteJobConfiguration implements JobRootConfiguration &#123;</div><div class="line">    private final JobTypeConfiguration typeConfig;</div><div class="line">    private final boolean monitorExecution;</div><div class="line">    private final int maxTimeDiffSeconds;</div><div class="line">    private final int monitorPort;</div><div class="line">    private final String jobShardingStrategyClass;</div><div class="line">    private final int reconcileIntervalMinutes;</div><div class="line">    private final boolean disabled;</div><div class="line">    private final boolean overwrite;</div><div class="line">    </div><div class="line">    // ... 省略部分get方法</div><div class="line">    public static class Builder &#123;</div><div class="line">	    // ... 省略部分属性</div><div class="line">	    public final LiteJobConfiguration build() &#123;</div><div class="line">	            return new LiteJobConfiguration(jobConfig, monitorExecution, maxTimeDiffSeconds, monitorPort, jobShardingStrategyClass, reconcileIntervalMinutes, disabled, overwrite);</div><div class="line">	        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>typeConfig</code>:作业类型配置，必填</li>
+<li><code>monitorExecution</code>: 监控作业运行时状态，默认为<code>false</code>，选填。</li>
+</ul>
+<blockquote>
+<p>每次作业执行时间和间隔时间均非常短的情况, 建议不监控作业运行时状态以提升效率, 因为是瞬时状态, 所以无必要监控. 请用户自行增加数据堆积监控. 并且不能保证数据重复选取, 应在作业中实现幂等性. 也无法实现作业失效转移.</p>
+<p> 每次作业执行时间和间隔时间均较长短的情况, 建议监控作业运行时状态, 可保证数据不会重复选取.每次作业执行时间和间隔均较长的情况，建议监控作业运行时状态，可保证数据不会重复选取。</p>
+</blockquote>
+<ul>
+<li><code>maxTimeDiffSeconds</code>: 设置最大容忍的本机与注册中心的时间误差秒数。默认为-1，不检查时间误差。选填</li>
+<li><code>monitorPort</code>: 作业监控端口，默认为-1，不开启作业监控端口。选填</li>
+<li><code>jobShardingStrategyClass</code>：作业分片策略实现类全路径，默认为使用分配侧路。</li>
+<li><code>reconcileIntervalMinutes</code>：修复作业服务器不一致状态服务调度间隔时间，配置为小于1的任意值，默认为10.</li>
+<li><code>disabled</code>: 作业是否禁用执行。默认为false，选填。</li>
+<li><code>overwrite</code>: 设置使用本地配置覆盖注册中心的作业配置。默认为false，选填。建议使用运维平台console配置作业配置，统一管理。</li>
+<li>Builder类：使用该类配置LiteJobConfiguration属性，调用<code>#build()</code>方法最终生成作业配置。</li>
+</ul>
+<h3 id="2-2-1、作业类型配置"><a href="#2-2-1、作业类型配置" class="headerlink" title="2.2.1、作业类型配置"></a>2.2.1、作业类型配置</h3><p>作业类型配置接口(JobTypeConfiguration)有三种配置实现，针对三种作业类型：</p>
+<table>
+<thead>
+<tr>
+<th>配置实现</th>
+<th>作业</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SimpleJobConfiguration</td>
+<td>SimpleJob</td>
+<td>简单作业。例如：订单过期作业</td>
+</tr>
+<tr>
+<td>DataflowJobConfiguration</td>
+<td>DataflowJob</td>
+<td>数据流作业。TODO:暂未了解流式处理数据</td>
+</tr>
+<tr>
+<td>ScriptJobConfiguration</td>
+<td>ScriptJob</td>
+<td>脚本作业。例如：调用shell脚本备份数据库作业</td>
+</tr>
+</tbody>
+</table>
+<p>三种配置类属性对比如：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性</th>
+<th style="text-align:center">SimpleJob</th>
+<th style="text-align:center">DataflowJob</th>
+<th style="text-align:center">ScriptJob</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">coreConfig</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">作业核心配置</td>
+</tr>
+<tr>
+<td style="text-align:center">jobType</td>
+<td style="text-align:center">JobType.SIMPLE</td>
+<td style="text-align:center">JobType.DATAFLOW</td>
+<td style="text-align:center">JobType.SCRIPT</td>
+<td style="text-align:center">作业类型</td>
+</tr>
+<tr>
+<td style="text-align:center">jobClass</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√(默认：ScriptJob.class)</td>
+<td style="text-align:center">作业实现类全路径</td>
+</tr>
+<tr>
+<td style="text-align:center">streamingProcess</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">√</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">是否流式处理数据</td>
+</tr>
+<tr>
+<td style="text-align:center">scriptCommandLine</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">脚本型作业执行命令行</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-2-2、作业核心配置"><a href="#2-2-2、作业核心配置" class="headerlink" title="2.2.2、作业核心配置"></a>2.2.2、作业核心配置</h3><p>作业核心配置(JobCoreConfiguration),我们可以看到在每种作业类型配置都有该属性(<code>coreConfig</code>)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public final class JobCoreConfiguration &#123;</div><div class="line">    private final String jobName;</div><div class="line">    private final String cron;</div><div class="line">    private final int shardingTotalCount;</div><div class="line">    private final String shardingItemParameters;</div><div class="line">    private final String jobParameter;</div><div class="line">    private final boolean failover;</div><div class="line">    private final boolean misfire;</div><div class="line">    private final String description;</div><div class="line">    private final JobProperties jobProperties;</div><div class="line">    </div><div class="line">    // ... 省略Getter方法</div><div class="line">    public static class Builder &#123;</div><div class="line">    </div><div class="line">	    // ... 省略部分属性</div><div class="line">	    public final JobCoreConfiguration build() &#123;</div><div class="line">	            Preconditions.checkArgument(!Strings.isNullOrEmpty(jobName), &quot;jobName can not be empty.&quot;);</div><div class="line">	            Preconditions.checkArgument(!Strings.isNullOrEmpty(cron), &quot;cron can not be empty.&quot;);</div><div class="line">	            Preconditions.checkArgument(shardingTotalCount &gt; 0, &quot;shardingTotalCount should larger than zero.&quot;);</div><div class="line">	            return new JobCoreConfiguration(jobName, cron, shardingTotalCount, shardingItemParameters, jobParameter, failover, misfire, description, jobProperties);</div><div class="line">	        &#125;</div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>jobName</code>: 作业名称。必填</li>
+<li><code>cron</code>: cron表达式，用于控制作业触发时间。必填</li>
+<li><code>shardingTotalCount</code>: 作业分片总数，如果一个作业启动超过作业分片总数的节点，只有<code>shardingTotalCount</code>会执行作业。必填</li>
+<li><code>shardingItemParameters</code>: 分片序列号和参数</li>
+</ul>
+<blockquote>
+<p>分片序列号和参数用等号分隔，多个键值对用逗号分隔<br>分片序列号从0开始，不可大于或等于分片总数<br>如: 0=a,1=b,2=c</p>
+</blockquote>
+<ul>
+<li><code>jobParameter</code>: 作业自定义参数，选填</li>
+</ul>
+<blockquote>
+<p>作业自定义参数，可通过传递该参数为作业调度的业务方法传参，用于实现带参数的作业</p>
+<p>例: 每次获取的数据量、作业实例从数据库读取的主键</p>
+</blockquote>
+<ul>
+<li><code>failover</code>: 是否开启作业执行失效转移，开启表示如果作业在一次作业执行中途宕机，允许将该次未完成的作业在另一作业节点上补偿执行。默认为false。选填</li>
+<li><code>misfire</code>: 是否开启错误作业重新执行，默认为true.选填</li>
+<li><code>description</code>: 作业描述，选填。</li>
+<li><code>jobProperties</code>: 作业属性配置，选填。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public final class JobProperties &#123;</div><div class="line">    </div><div class="line">    private EnumMap&lt;JobPropertiesEnum, String&gt; map = new EnumMap&lt;&gt;(JobPropertiesEnum.class);</div><div class="line"></div><div class="line">	public enum JobPropertiesEnum &#123;</div><div class="line">	        </div><div class="line">	        /**</div><div class="line">	         * 作业异常处理器.</div><div class="line">	         */</div><div class="line">	        JOB_EXCEPTION_HANDLER(&quot;job_exception_handler&quot;, JobExceptionHandler.class, DefaultJobExceptionHandler.class.getCanonicalName()),</div><div class="line">	        </div><div class="line">	        /**</div><div class="line">	         * 线程池服务处理器.</div><div class="line">	         */</div><div class="line">	        EXECUTOR_SERVICE_HANDLER(&quot;executor_service_handler&quot;, ExecutorServiceHandler.class, DefaultExecutorServiceHandler.class.getCanonicalName());</div><div class="line">	        </div><div class="line">	        private final String key;</div><div class="line">	    </div><div class="line">	        private final Class&lt;?&gt; classType;</div><div class="line">	        </div><div class="line">	        private final String defaultValue;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>JOB_EXCEPTION_HANDLER</code>: 用于扩展异常处理类</li>
+<li><code>EXECUTOR_SERVICE_HANDLER</code>: 用于扩展作业处理线程池类</li>
+<li>通过这个属性，我们可以自定义每个作业的异常处理和线程池服务</li>
+</ul>
+<h3 id="2-3-作业事件配置"><a href="#2-3-作业事件配置" class="headerlink" title="2.3 作业事件配置"></a>2.3 作业事件配置</h3><p>通过作业事件配置（<code>JobEventConfiguration</code>）,实现对作业事件的异步监听、处理。在<code>Elastic-Job-Lite源码解析 --- 作业事件追踪</code> 详细分享</p>
+<h3 id="2-4-作业监听器"><a href="#2-4-作业监听器" class="headerlink" title="2.4 作业监听器"></a>2.4 作业监听器</h3><p>通过配置作业监听器（<code>ElasticJobListener</code>）,实现对作业执行的同步监听、处理。<code>Elastic-Job-Lite源码解析 --- 作业监听器</code>详细分享</p>
+<h3 id="3-作业配置服务"><a href="#3-作业配置服务" class="headerlink" title="3 作业配置服务"></a>3 作业配置服务</h3><p>多个Elastic-Job-Lite使用相同注册中心和相同<code>namespace</code>组成集群，实现高可用。集群中，使用作业配置服务（<code>ConfigurationService</code>）共享作业配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public final class ConfigurationService &#123;</div><div class="line">    </div><div class="line">    private final TimeService timeService;</div><div class="line">    </div><div class="line">    private final JobNodeStorage jobNodeStorage;</div><div class="line">    </div><div class="line">    public ConfigurationService(final CoordinatorRegistryCenter regCenter, final String jobName) &#123;</div><div class="line">        jobNodeStorage = new JobNodeStorage(regCenter, jobName);</div><div class="line">        timeService = new TimeService();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>timeService</code>: 时间服务，提供当前时间查询</li>
+<li><code>jobNodeStorage</code>: 封装注册中心，提供存储服务。<code>Elastic-Job-Lite源码解析 --- 作业数据存储</code>详细分享</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public final class TimeService &#123;</div><div class="line">    </div><div class="line">    /**</div><div class="line">     * 获取当前时间的毫秒数.</div><div class="line">     * </div><div class="line">     * @return 当前时间的毫秒数</div><div class="line">     */</div><div class="line">    public long getCurrentMillis() &#123;</div><div class="line">        return System.currentTimeMillis();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-1-读取作业配置"><a href="#3-1-读取作业配置" class="headerlink" title="3.1 读取作业配置"></a>3.1 读取作业配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">    * 读取作业配置.</div><div class="line">    * </div><div class="line">    * @param fromCache 是否从缓存中读取</div><div class="line">    * @return 作业配置</div><div class="line">    */</div><div class="line">   public LiteJobConfiguration load(final boolean fromCache) &#123;</div><div class="line">       String result;</div><div class="line">       if (fromCache) &#123;</div><div class="line">           result = jobNodeStorage.getJobNodeData(ConfigurationNode.ROOT);</div><div class="line">           if (null == result) &#123;</div><div class="line">               result = jobNodeStorage.getJobNodeDataDirectly(ConfigurationNode.ROOT);</div><div class="line">           &#125;</div><div class="line">       &#125; else &#123;</div><div class="line">           result = jobNodeStorage.getJobNodeDataDirectly(ConfigurationNode.ROOT);</div><div class="line">       &#125;</div><div class="line">       return LiteJobConfigurationGsonFactory.fromJson(result);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h3 id="3-2-持久化作业配置"><a href="#3-2-持久化作业配置" class="headerlink" title="3.2 持久化作业配置"></a>3.2 持久化作业配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">  * 持久化分布式作业配置信息.</div><div class="line">  * </div><div class="line">  * @param liteJobConfig 作业配置</div><div class="line">  */</div><div class="line"> public void persist(final LiteJobConfiguration liteJobConfig) &#123;</div><div class="line">     checkConflictJob(liteJobConfig);</div><div class="line">     if (!jobNodeStorage.isJobNodeExisted(ConfigurationNode.ROOT) || liteJobConfig.isOverwrite()) &#123;</div><div class="line">         jobNodeStorage.replaceJobNode(ConfigurationNode.ROOT, LiteJobConfigurationGsonFactory.toJson(liteJobConfig));</div><div class="line">     &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>调用 <code>#checkConflictJob(...)</code>方法校验注册中心存储的作业配置的作业实现类全路径（<code>jobClass</code>）和当前的是否相同，如果不同，则认为是冲突，不允许存储：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">private void checkConflictJob(final LiteJobConfiguration liteJobConfig) &#123;</div><div class="line">        Optional&lt;LiteJobConfiguration&gt; liteJobConfigFromZk = find();</div><div class="line">        if (liteJobConfigFromZk.isPresent() &amp;&amp; !liteJobConfigFromZk.get().getTypeConfig().getJobClass().equals(liteJobConfig.getTypeConfig().getJobClass())) &#123;</div><div class="line">            throw new JobConfigurationException(&quot;Job conflict with register center. The job &apos;%s&apos; in register center&apos;s class is &apos;%s&apos;, your job class is &apos;%s&apos;&quot;, </div><div class="line">                    liteJobConfig.getJobName(), liteJobConfigFromZk.get().getTypeConfig().getJobClass(), liteJobConfig.getTypeConfig().getJobClass());</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>当注册中心未存储该作业配置或者当前作业配置允许替换注册中心配置(<code>overwrite = true</code>)时，持久化作业配置。</li>
+</ul>
+<h3 id="3-3-校验本机时间是否合法"><a href="#3-3-校验本机时间是否合法" class="headerlink" title="3.3 校验本机时间是否合法"></a>3.3 校验本机时间是否合法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">     * 检查本机与注册中心的时间误差秒数是否在允许范围.</div><div class="line">     * </div><div class="line">     * @throws JobExecutionEnvironmentException 本机与注册中心的时间误差秒数不在允许范围所抛出的异常</div><div class="line">     */</div><div class="line">    public void checkMaxTimeDiffSecondsTolerable() throws JobExecutionEnvironmentException &#123;</div><div class="line">        int maxTimeDiffSeconds =  load(true).getMaxTimeDiffSeconds();</div><div class="line">        if (-1  == maxTimeDiffSeconds) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        long timeDiff = Math.abs(timeService.getCurrentMillis() - jobNodeStorage.getRegistryCenterTime());</div><div class="line">        if (timeDiff &gt; maxTimeDiffSeconds * 1000L) &#123;</div><div class="line">            throw new JobExecutionEnvironmentException(</div><div class="line">                    &quot;Time different between job server and register center exceed &apos;%s&apos; seconds, max time different is &apos;%s&apos; seconds.&quot;, timeDiff / 1000, maxTimeDiffSeconds);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>Elastic-Job-Lite</code>作业触发时依赖本机时间，相同集群使用注册中心为基准，校验本机与注册中心的时间误差是否在允许范围内<code>LiteJobConfiguration.maxTimeDiffSeconds</code></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ElasticJob/" rel="tag"># ElasticJob</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/01/Elastic-Job源码分析-为什么阅读Elastic-Job源码/" rel="next" title="Elastic-Job源码分析---为什么阅读Elastic-Job源码">
+                <i class="fa fa-chevron-left"></i> Elastic-Job源码分析---为什么阅读Elastic-Job源码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/11/01/Elastic-Job-Lite源码分析-作业配置/"
+           data-title="Elastic-Job-Lite源码分析---作业配置" data-url="http://jianwl.com/2017/11/01/Elastic-Job-Lite源码分析-作业配置/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">260</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、概述"><span class="nav-text">1、概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、作业配置"><span class="nav-text">2、作业配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、注册中心配置"><span class="nav-text">2.1、注册中心配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、Lite作业配置"><span class="nav-text">2.2、Lite作业配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1、作业类型配置"><span class="nav-text">2.2.1、作业类型配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2、作业核心配置"><span class="nav-text">2.2.2、作业核心配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-作业事件配置"><span class="nav-text">2.3 作业事件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-作业监听器"><span class="nav-text">2.4 作业监听器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-作业配置服务"><span class="nav-text">3 作业配置服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-读取作业配置"><span class="nav-text">3.1 读取作业配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-持久化作业配置"><span class="nav-text">3.2 持久化作业配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-校验本机时间是否合法"><span class="nav-text">3.3 校验本机时间是否合法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
