@@ -66,7 +66,7 @@
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-11-5/18364515.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-11-5/96019826.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-11-5/5428734.jpg">
-<meta property="og:updated_time" content="2017-11-05T03:23:16.000Z">
+<meta property="og:updated_time" content="2017-11-05T03:25:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用ELK搭建自己的日志分析系统">
 <meta name="twitter:description" content="1 前言不管用于记录、监控，日志对于任何系统来说都是一个极其重要的部分，但一般的日志的数据量会比较大，并且分散在各个地方，当管理的服务器比较少，我们还可以逐一登录到各个服务器去查看、分析。但如果服务器比较多，这种方法就显得力不从心了。基于这种场景，一些集中式的日志系统也就产生了。比较成熟Splunk、Facebook的Scribe、Apache的Chukwa、Cloudera的Fluentd和EL">
@@ -356,9 +356,9 @@
 <ul>
 <li>INPUTS，从各个服务器获取数据</li>
 <li>FILTERS，过滤处理获取到的数据</li>
-<li>OUTPUTS,将处理完的数据输出到指定地方</li>
+<li>OUTPUTS，将处理完的数据输出到指定地方</li>
 </ul>
-<h4 id="3）Kibana"><a href="#3）Kibana" class="headerlink" title="3）Kibana"></a>3）Kibana</h4><p>Kibana是一款基于Apache开源协议，使用Javascript语言编写，为Elasticsearch提供分析和可视化的Web平台。它可以在Elasticsearch的搜索中查找、交互数据，并生成各种纬度的表图。</p>
+<h4 id="3）Kibana"><a href="#3）Kibana" class="headerlink" title="3）Kibana"></a>3）Kibana</h4><p>Kibana是一款基于Apache开源协议，使用Javascript语言编写，为Elasticsearch提供分析和可视化的Web平台。它可以在Elasticsearch的搜索中查找、交互数据，并生成各种维度的表图。</p>
 <h3 id="3-ELK平台搭建-MacOS"><a href="#3-ELK平台搭建-MacOS" class="headerlink" title="3 ELK平台搭建(MacOS)"></a>3 ELK平台搭建(MacOS)</h3><h4 id="1-Elasticsearch搭建"><a href="#1-Elasticsearch搭建" class="headerlink" title="1) Elasticsearch搭建"></a>1) Elasticsearch搭建</h4><p>1 下载Elasticsearch &amp; 解压</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.3.zip</div><div class="line">unzip elasticsearch-5.6.3.zip</div></pre></td></tr></table></figure>
 <p>2 启动Elasticsearch</p>
@@ -376,7 +376,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget https://artifacts.elastic.co/downloads/logstash/logstash-5.6.3.zip</div><div class="line">unzip logstash-5.6.3.zip</div></pre></td></tr></table></figure>
 <p>2 Logstash管道测试</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd logstash-5.6.3</div><div class="line">bin/logstash -e &apos;input &#123; stdin &#123; &#125; &#125; output &#123; stdout &#123;&#125; &#125;&apos;</div></pre></td></tr></table></figure>
-<p><code>-e</code>表示能够在命令行中配置logstash的配置(一次性的),通过上述命令启动logstash，当你看到<code>Pipeline main started</code>，在命令行中输入<code>hello world</code></p>
+<p><code>-e</code>表示能够在命令行中配置logstash的配置(一次性的),通过上述命令启动logstash，当你看到<code>Pipeline main started</code>，在命令行中输入<code>hello world</code>，会得到一个输出</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hello world!</div><div class="line">2017-11-05T01:53:55.571Z jianweilindeMacBook-Pro.local hello world!</div></pre></td></tr></table></figure>
 <p>3 配置Filebeat发送日志到Logstash</p>
 <p>1) 下载Filebeat &amp; 解压</p>
