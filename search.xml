@@ -4,6 +4,75 @@
   
     
     <entry>
+      <title><![CDATA[JVM内存的那些事]]></title>
+      <url>http://jianwl.com/2018/03/04/JVM%E5%86%85%E5%AD%98%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/</url>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于C语言开发的程序员来说，在内存管理方面，必须负责每一个对象的生命周期，从有到无。对于Java程序员来说，在虚拟机内存管理的帮助下，不需要为每个new对象都匹配free操作，内存泄露和内存溢出等问题也不太容易出现，不过也正是把内存管理交给了虚拟机，一旦运行中的程序出现了内存泄露问题，给排查过程造成很大困难。所以只有理解了Java虚拟机的运行机制，才能够运筹帷幄于各种代码。本文以HotSpot为例说说虚拟机的那些事。</p>
+<p>Java虚拟机把管理的内存划分为几个不同的数据区。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-4/82705423.jpg" alt=""></p>
+<h3 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h3><p>Java堆是被所有线程共享的一块内存区域，主要用于存放对象实例，Java虚拟机规范中有这样一段描述：所有的对象实例和数据都要在堆上进行分配。为对象分配内存就是把一块大小确定的内存从堆内存中划分出来，通常有两种方法实现：</p>
+<h4 id="1、指针碰撞法"><a href="#1、指针碰撞法" class="headerlink" title="1、指针碰撞法"></a>1、指针碰撞法</h4><p>假设Java堆中内存是完整的，已分配的内存和空闲内存分别在不同的一侧，通过一个指针作为分界点，需要分配内存时，仅仅需要把指针往空闲的一端移动与对象大小相等的距离。</p>
+<h4 id="2、空闲列表法"><a href="#2、空闲列表法" class="headerlink" title="2、空闲列表法"></a>2、空闲列表法</h4><p>事实上，Java堆的内存并不是完整的，已分配的内存和空闲内存相互交错，JVM通过维护一个列表，记录可用的内存块信息，当分配操作发生时，从列表中找到一个足够大的内存块分配给对象实例，并更新列表上的记录。</p>
+<p>对象创建时一个非常频繁的行为，进行堆内存分配时还需要考虑多线程并发问题，可能出现正在给对象A分配内存，指针或记录还未更新，对象B又同时分配到原来的内存，解决这个问题有两种方案：</p>
+<p>1、采用CAS保证数据更新操作的原子性；</p>
+<p>2、把内存分配的行为按照线程进行划分，在不同的空间中进行，每个线程在Java堆中预先分配一个内存块，称为本地线程分配缓冲(Thread Local Allocation Buffer,TLAB);</p>
+<h3 id="Java栈"><a href="#Java栈" class="headerlink" title="Java栈"></a>Java栈</h3><p>Java栈是线程私有的，每个线程对应一个Java栈，每个线程在执行一个方法时会创建一个对应的栈帧(Stack Frame)，栈帧负责存储局部变量表、操作数栈、动态链接和方法返回地址等信息。每个方法的调用过程，相当于栈帧在Java栈的入栈和出栈的过程。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-4/89188723.jpg" alt=""></p>
+<h4 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h4><p>用于存放方法参数和方法内部定义的局部变量，其大小在代码编译期间已经确定，在方法运行期间不会改变。局部变量表以变量槽(Slot)为最小存储单位，每个Slot能够存放一个boolean、byte、char、short、int、float、reference和return address类型的32位数据，对于64位的数据类型long和double，虚拟机会以高位对齐的方式为其分配两个连续的Slot空间。</p>
+<p>在方法执行时，如果是实例方法，即非static方法，局部变量表中第0位Slot默认存放对象实例的引用，在方法中可以通过关键字this进行访问，方法参数按照参数列表顺序，从第1位Slot开始分配，方法内部变量则按照定义顺序进行分配其余的Slot。</p>
+<h4 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h4><p>方法区和Java堆一样，是所有线程共享的内存区域，用于存放已被虚拟机加载的类信息、常量、静态变量和即时编译器编译后的代码等数据。运行时常量池是方法区的一部分，用于存放编译期间产生的各种字面常量和符号引用。</p>
+<h4 id="指令计数器"><a href="#指令计数器" class="headerlink" title="指令计数器"></a>指令计数器</h4><p>指令计数器是线程私有的，每个线程都有独立的指令计数器，计数器记录着虚拟机正在执行的字节码指令的地址，分支、循环、跳转、异常处理和线程恢复等操作都依赖这个计数器完成。如果线程执行的是native方法，这个计数器则为空。</p>
+<h4 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h4><p>对象在内存中布局可以分成三块区域：对象头、实例数据和对齐填充。</p>
+<h5 id="1、对象头"><a href="#1、对象头" class="headerlink" title="1、对象头"></a>1、对象头</h5><p>对象头包括两部分信息：运行时数据和类型指针，如果对象是一个数组，还需要一块用于记录数组长度的数据。</p>
+<p>1.1、运行时数据包括哈希码（HashCode）、GC分代年龄、锁状态标志、线程持有的锁、偏向锁和偏向时间戳等，这部分数据在32位和64位虚拟机中的长度分别为32bit和64bit，官方称为“Mark Word”。Mark Word被设计成非固定的数据结构，以实现在有限空间内保存尽可能多的数据。</p>
+<p>32为虚拟机中，对象未被锁定的状态下，Mark Word的32bit中25bit存储对象的HashCode、4bit存储对象分代年龄、2bit存储锁标志位、1bit固定为0，具体如下：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-4/80147108.jpg" alt=""></p>
+<p>其他状态(轻量级锁定、重量级锁定、GC锁、可偏向锁)下Mark Word的存储内容如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">状态</th>
+<th style="text-align:center">存储内容</th>
+<th style="text-align:center">标志位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">轻量级锁定</td>
+<td style="text-align:center">指向锁记录的指针</td>
+<td style="text-align:center">00</td>
+</tr>
+<tr>
+<td style="text-align:center">重量级锁定</td>
+<td style="text-align:center">指向重量级的指针</td>
+<td style="text-align:center">10</td>
+</tr>
+<tr>
+<td style="text-align:center">GC标志</td>
+<td style="text-align:center">空</td>
+<td style="text-align:center">11</td>
+</tr>
+<tr>
+<td style="text-align:center">可偏向</td>
+<td style="text-align:center">偏向线程ID、时间戳、分代年龄</td>
+<td style="text-align:center">01</td>
+</tr>
+<tr>
+<td style="text-align:center">未锁定</td>
+<td style="text-align:center">对象哈希码、分代年龄</td>
+<td style="text-align:center">01</td>
+</tr>
+</tbody>
+</table>
+<p>1.2 、对象头的类型指针指向该对象的类元数据、虚拟机通过这个指针可以确定该对象是哪个类的实例。</p>
+<h5 id="2、实例数据"><a href="#2、实例数据" class="headerlink" title="2、实例数据"></a>2、实例数据</h5><p>实例数据就是在程序代码中所定义的各种类型的字段，包括从父类继承的，这部分的存储顺序会受到虚拟机分配策略和字段在源码中定义顺序的影响。</p>
+<h5 id="3、对齐填充"><a href="#3、对齐填充" class="headerlink" title="3、对齐填充"></a>3、对齐填充</h5><p>由于HotSpot的自动内存管理要求对象的起始地址必须是8字节的整数倍，即对象的大小必须是8字节的整数倍，对象头的数据正好是8的整数倍，所以当实例数据不够8字节整数倍时，需要通过对齐填充进行补全。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>深入理解Java虚拟机</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[用ELK搭建自己的日志分析系统]]></title>
       <url>http://jianwl.com/2017/11/05/%E7%94%A8ELK%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E7%B3%BB%E7%BB%9F/</url>
       <content type="html"><![CDATA[<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h3><p>不管用于记录、监控，日志对于任何系统来说都是一个极其重要的部分，但一般的日志的数据量会比较大，并且分散在各个地方，当管理的服务器比较少，我们还可以逐一登录到各个服务器去查看、分析。但如果服务器比较多，这种方法就显得力不从心了。基于这种场景，一些集中式的日志系统也就产生了。比较成熟<a href="https://www.splunk.com/zh-hans_cn" target="_blank" rel="external">Splunk</a>、Facebook的Scribe、Apache的Chukwa、Cloudera的Fluentd和ELK等。</p>
@@ -11319,6 +11388,23 @@ tee – the output of write (:w) command is redirected using tee
     </entry>
     
     <entry>
+      <title><![CDATA[MYSQL存储引擎]]></title>
+      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
+      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[MYSQL存储引擎优化]]></title>
       <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</url>
       <content type="html"><![CDATA[<h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
@@ -11343,23 +11429,6 @@ tee – the output of write (:w) command is redirected using tee
 <h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
 <h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
 <h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
-]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[MYSQL存储引擎]]></title>
-      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
-      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 ]]></content>
     </entry>
     
