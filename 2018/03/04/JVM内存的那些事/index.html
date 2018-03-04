@@ -63,7 +63,7 @@
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-3-4/82705423.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-3-4/89188723.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-3-4/80147108.jpg">
-<meta property="og:updated_time" content="2018-03-04T11:00:25.273Z">
+<meta property="og:updated_time" content="2018-03-04T11:33:55.329Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM内存的那些事">
 <meta name="twitter:description" content="前言对于C语言开发的程序员来说，在内存管理方面，必须负责每一个对象的生命周期，从有到无。对于Java程序员来说，在虚拟机内存管理的帮助下，不需要为每个new对象都匹配free操作，内存泄露和内存溢出等问题也不太容易出现，不过也正是把内存管理交给了虚拟机，一旦运行中的程序出现了内存泄露问题，给排查过程造成很大困难。所以只有理解了Java虚拟机的运行机制，才能够运筹帷幄于各种代码。本文以HotSpot">
@@ -365,9 +365,9 @@
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-4/89188723.jpg" alt=""></p>
 <h4 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h4><p>用于存放方法参数和方法内部定义的局部变量，其大小在代码编译期间已经确定，在方法运行期间不会改变。局部变量表以变量槽(Slot)为最小存储单位，每个Slot能够存放一个boolean、byte、char、short、int、float、reference和return address类型的32位数据，对于64位的数据类型long和double，虚拟机会以高位对齐的方式为其分配两个连续的Slot空间。</p>
 <p>在方法执行时，如果是实例方法，即非static方法，局部变量表中第0位Slot默认存放对象实例的引用，在方法中可以通过关键字this进行访问，方法参数按照参数列表顺序，从第1位Slot开始分配，方法内部变量则按照定义顺序进行分配其余的Slot。</p>
-<h4 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h4><p>方法区和Java堆一样，是所有线程共享的内存区域，用于存放已被虚拟机加载的类信息、常量、静态变量和即时编译器编译后的代码等数据。运行时常量池是方法区的一部分，用于存放编译期间产生的各种字面常量和符号引用。</p>
-<h4 id="指令计数器"><a href="#指令计数器" class="headerlink" title="指令计数器"></a>指令计数器</h4><p>指令计数器是线程私有的，每个线程都有独立的指令计数器，计数器记录着虚拟机正在执行的字节码指令的地址，分支、循环、跳转、异常处理和线程恢复等操作都依赖这个计数器完成。如果线程执行的是native方法，这个计数器则为空。</p>
-<h4 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h4><p>对象在内存中布局可以分成三块区域：对象头、实例数据和对齐填充。</p>
+<h3 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h3><p>方法区和Java堆一样，是所有线程共享的内存区域，用于存放已被虚拟机加载的类信息、常量、静态变量和即时编译器编译后的代码等数据。运行时常量池是方法区的一部分，用于存放编译期间产生的各种字面常量和符号引用。</p>
+<h3 id="指令计数器"><a href="#指令计数器" class="headerlink" title="指令计数器"></a>指令计数器</h3><p>指令计数器是线程私有的，每个线程都有独立的指令计数器，计数器记录着虚拟机正在执行的字节码指令的地址，分支、循环、跳转、异常处理和线程恢复等操作都依赖这个计数器完成。如果线程执行的是native方法，这个计数器则为空。</p>
+<h3 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h3><p>对象在内存中布局可以分成三块区域：对象头、实例数据和对齐填充。</p>
 <h5 id="1、对象头"><a href="#1、对象头" class="headerlink" title="1、对象头"></a>1、对象头</h5><p>对象头包括两部分信息：运行时数据和类型指针，如果对象是一个数组，还需要一块用于记录数组长度的数据。</p>
 <p>1.1、运行时数据包括哈希码（HashCode）、GC分代年龄、锁状态标志、线程持有的锁、偏向锁和偏向时间戳等，这部分数据在32位和64位虚拟机中的长度分别为32bit和64bit，官方称为“Mark Word”。Mark Word被设计成非固定的数据结构，以实现在有限空间内保存尽可能多的数据。</p>
 <p>32为虚拟机中，对象未被锁定的状态下，Mark Word的32bit中25bit存储对象的HashCode、4bit存储对象分代年龄、2bit存储锁标志位、1bit固定为0，具体如下：</p>
@@ -599,7 +599,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java堆"><span class="nav-text">Java堆</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、指针碰撞法"><span class="nav-text">1、指针碰撞法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、空闲列表法"><span class="nav-text">2、空闲列表法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java栈"><span class="nav-text">Java栈</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#局部变量表"><span class="nav-text">局部变量表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法区"><span class="nav-text">方法区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指令计数器"><span class="nav-text">指令计数器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对象的内存布局"><span class="nav-text">对象的内存布局</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、对象头"><span class="nav-text">1、对象头</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、实例数据"><span class="nav-text">2、实例数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、对齐填充"><span class="nav-text">3、对齐填充</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java堆"><span class="nav-text">Java堆</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、指针碰撞法"><span class="nav-text">1、指针碰撞法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、空闲列表法"><span class="nav-text">2、空闲列表法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java栈"><span class="nav-text">Java栈</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#局部变量表"><span class="nav-text">局部变量表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法区"><span class="nav-text">方法区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令计数器"><span class="nav-text">指令计数器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的内存布局"><span class="nav-text">对象的内存布局</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、对象头"><span class="nav-text">1、对象头</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、实例数据"><span class="nav-text">2、实例数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、对齐填充"><span class="nav-text">3、对齐填充</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
