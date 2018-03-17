@@ -72,7 +72,7 @@ add(index,E)如何实现在指定位置插入元素，指定位置之后的元�
 clear(), 避免内存溢出">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-3-15/41421167.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-3-17/23285668.jpg">
-<meta property="og:updated_time" content="2018-03-17T03:34:59.496Z">
+<meta property="og:updated_time" content="2018-03-17T03:44:38.604Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArrayList源码学习">
 <meta name="twitter:description" content="1. 常用方法 &amp;amp; 字段梳理
@@ -377,10 +377,10 @@ clear(), 避免内存溢出">
 <p>第3 ~ 4行：新增一个元素之前，需要先确保元素加进去之后，容量是否会溢出;如果容量够用，则往数组中插入数据；</p>
 <p>第9 ~ 11行：如果是一个空列表，当前最小的容量(size + 1)为默认值10；</p>
 <p>第 20 ~ 21行：如果新增元素后，元素的数量(size + 1) <strong>大于</strong> 数组的长度(elementData.length),则扩容；</p>
-<p>第26 ~ 33行：扩容的逻辑，将列表的容量扩大为原来的3倍即(3 <em> elementData.length),如果扩容后的容量 <em>*仍旧小于</em></em> 元素的数量(size + 1),则将列表容量设置为(size + 1)，之后，判断扩容后的容量是否大于「最大的整数 - 8」，如果大于，则等于最大整数；最后将原来的数组迁移到扩容后的数组；</p>
-<p>第37 ~ 38行：为了防止当容量大于整数最大值即(大于Integer.MAX_VALUE)，此时会出现整型数据溢出，为负值。</p>
+<p>第26 ~ 33行：扩容的逻辑，将列表的容量扩大为原来的3倍即(3 elementData.length),如果扩容后的容量 <strong>仍旧小于</strong> 元素的数量(size + 1),则将列表容量设置为(size + 1)，之后判断扩容后的容量是否大于「最大的整数 - 8」，如果大于，则等于最大整数；最后将原来的数组迁移到扩容后的数组；</p>
+<p>第37 ~ 38行：为了防止当容量大于整数最大值即(大于Integer.MAX_VALUE)，此时会出现整型数据溢出，为负值，此时报内存溢出异常。</p>
 <h4 id="2-指定位置新增元素"><a href="#2-指定位置新增元素" class="headerlink" title="2) 指定位置新增元素"></a>2) 指定位置新增元素</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public void add(int index, E element) &#123;</div><div class="line">    rangeCheckForAdd(index);</div><div class="line"></div><div class="line">    ensureCapacityInternal(size + 1);  // Increments modCount!!</div><div class="line">    System.arraycopy(elementData, index, elementData, index + 1,</div><div class="line">                     size - index);</div><div class="line">    elementData[index] = element;</div><div class="line">    size++;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private void rangeCheckForAdd(int index) &#123;</div><div class="line">    if (index &gt; size || index &lt; 0)</div><div class="line">        throw new IndexOutOfBoundsException(outOfBoundsMsg(index));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>第12 ~ 13行：判断索引位置不会越界即(大于数组大小和小于0)；</p>
+<p>第12 ~ 13行：判断索引位置会不会越界即(大于数组大小和小于0)；</p>
 <p>第 4 行：新增元素前，进行容量预估，容量不足时则扩容。上一个模块已描述，这里就不赘述了；</p>
 <p>第 5 行：用图示的方式来说明，如果往元素2的位置插入元素，需要将元素2及之后的元素均向后挪动一位，这行代码就是执行这样的功能。</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-17/23285668.jpg" alt=""></p>
