@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title><![CDATA[ArrayList源码学习]]></title>
+      <url>http://jianwl.com/2018/03/15/ArrayList%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</url>
+      <content type="html"><![CDATA[<h3 id="1-常用方法-amp-字段梳理"><a href="#1-常用方法-amp-字段梳理" class="headerlink" title="1. 常用方法 &amp; 字段梳理"></a>1. 常用方法 &amp; 字段梳理</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-15/41421167.jpg" alt=""></p>
+<p>ArrayList底层的数据结构是数组，往列表中插入数据时，首先会检查列表的容量是否充足，当容量不够时，会自动扩容为当前容量的3倍，本节我们会带着问题，学习ArrayList的实现原理。</p>
+<h3 id="2-提出问题"><a href="#2-提出问题" class="headerlink" title="2. 提出问题"></a>2. 提出问题</h3><ol>
+<li>add(E)，新增元素时，如何实现自动扩容；</li>
+<li>add(index,E)如何实现在指定位置插入元素，指定位置之后的元素如何处理？</li>
+<li>clear(), 避免内存溢出，在移除元素时，我们应该注意些什么？</li>
+</ol>
+<h4 id="1）新增元素"><a href="#1）新增元素" class="headerlink" title="1）新增元素"></a>1）新增元素</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"># 新增元素入口</div><div class="line">   public boolean add(E e) &#123;</div><div class="line">       ensureCapacityInternal(size + 1);  // Increments modCount!!</div><div class="line">       elementData[size++] = e;</div><div class="line">       return true;</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   private void ensureCapacityInternal(int minCapacity) &#123;</div><div class="line">       if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;</div><div class="line">           minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       ensureExplicitCapacity(minCapacity);</div><div class="line">   &#125;</div><div class="line">       </div><div class="line">   private void ensureExplicitCapacity(int minCapacity) &#123;</div><div class="line">       modCount++;</div><div class="line"></div><div class="line">       // overflow-conscious code</div><div class="line">       if (minCapacity - elementData.length &gt; 0)</div><div class="line">           grow(minCapacity);</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   private void grow(int minCapacity) &#123;</div><div class="line">       // overflow-conscious code</div><div class="line">       int oldCapacity = elementData.length;</div><div class="line">       int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1); // 为原来的3倍；</div><div class="line">       if (newCapacity - minCapacity &lt; 0)</div><div class="line">           newCapacity = minCapacity;</div><div class="line">       if (newCapacity - MAX_ARRAY_SIZE &gt; 0)</div><div class="line">           newCapacity = hugeCapacity(minCapacity);</div><div class="line">       // minCapacity is usually close to size, so this is a win:</div><div class="line">       elementData = Arrays.copyOf(elementData, newCapacity);</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   private static int hugeCapacity(int minCapacity) &#123;</div><div class="line">       if (minCapacity &lt; 0) // overflow</div><div class="line">           throw new OutOfMemoryError();</div><div class="line">       return (minCapacity &gt; MAX_ARRAY_SIZE) ?</div><div class="line">           Integer.MAX_VALUE :</div><div class="line">           MAX_ARRAY_SIZE;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>第3 ~ 4行：新增一个元素之前，需要先确保元素加进去之后，容量是否会溢出;如果容量够用，则往数组中插入数据；</p>
+<p>第9 ~ 11行：如果是一个空列表，当前最小的容量(size + 1)为默认值10；</p>
+<p>第 20 ~ 21行：如果新增元素后，元素的数量(size + 1) <strong>大于</strong> 数组的长度(elementData.length),则扩容；</p>
+<p>第26 ~ 33行：扩容的逻辑，将列表的容量扩大为原来的3倍即(3 <em> elementData.length),如果扩容后的容量 <em>*仍旧小于</em></em> 元素的数量(size + 1),则将列表容量设置为(size + 1)，之后，判断扩容后的容量是否大于「最大的整数 - 8」，如果大于，则等于最大整数；最后将原来的数组迁移到扩容后的数组；</p>
+<p>第37 ~ 38行：为了防止当容量大于整数最大值即(大于Integer.MAX_VALUE)，此时会出现整型数据溢出，为负值。</p>
+<h4 id="2-指定位置新增元素"><a href="#2-指定位置新增元素" class="headerlink" title="2) 指定位置新增元素"></a>2) 指定位置新增元素</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public void add(int index, E element) &#123;</div><div class="line">    rangeCheckForAdd(index);</div><div class="line"></div><div class="line">    ensureCapacityInternal(size + 1);  // Increments modCount!!</div><div class="line">    System.arraycopy(elementData, index, elementData, index + 1,</div><div class="line">                     size - index);</div><div class="line">    elementData[index] = element;</div><div class="line">    size++;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private void rangeCheckForAdd(int index) &#123;</div><div class="line">    if (index &gt; size || index &lt; 0)</div><div class="line">        throw new IndexOutOfBoundsException(outOfBoundsMsg(index));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第12 ~ 13行：判断索引位置不会越界即(大于数组大小和小于0)；</p>
+<p>第 4 行：新增元素前，进行容量预估，容量不足时则扩容。上一个模块已描述，这里就不赘述了；</p>
+<p>第 5 行：用图示的方式来说明，如果往元素2的位置插入元素，需要将元素2及之后的元素均向后挪动一位，这行代码就是执行这样的功能。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-17/23285668.jpg" alt=""></p>
+<p>第7 ~ 8行：把元素放到数组中的指定位置，同时将列表的长度加1。</p>
+<h4 id="3）清空数组"><a href="#3）清空数组" class="headerlink" title="3）清空数组"></a>3）清空数组</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public void clear() &#123;</div><div class="line">    modCount++;</div><div class="line"></div><div class="line">    // clear to let GC do its work</div><div class="line">    for (int i = 0; i &lt; size; i++)</div><div class="line">        elementData[i] = null;</div><div class="line"></div><div class="line">    size = 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第5 ~ 6行：遍历数组中的每一个元素，将其设置为null，方便后续GC回收内存。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[如何定位消耗CPU最多的线程]]></title>
       <url>http://jianwl.com/2018/03/15/%E5%A6%82%E4%BD%95%E5%AE%9A%E4%BD%8D%E6%B6%88%E8%80%97CPU%E6%9C%80%E5%A4%9A%E7%9A%84%E7%BA%BF%E7%A8%8B/</url>
       <content type="html"><![CDATA[<p>话不多说，先上代码。</p>
@@ -11482,6 +11509,23 @@ tee – the output of write (:w) command is redirected using tee
     </entry>
     
     <entry>
+      <title><![CDATA[MYSQL存储引擎]]></title>
+      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
+      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[MYSQL存储引擎优化]]></title>
       <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</url>
       <content type="html"><![CDATA[<h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
@@ -11506,23 +11550,6 @@ tee – the output of write (:w) command is redirected using tee
 <h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
 <h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
 <h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
-]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[MYSQL存储引擎]]></title>
-      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
-      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 ]]></content>
     </entry>
     
