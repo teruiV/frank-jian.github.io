@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-03-17T03:44:38.604Z</updated>
+  <updated>2018-03-18T05:22:34.592Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,57 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LinkedList源码学习</title>
+    <link href="http://jianwl.com/2018/03/17/LinkedList%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://jianwl.com/2018/03/17/LinkedList源码学习/</id>
+    <published>2018-03-17T04:36:38.000Z</published>
+    <updated>2018-03-18T05:22:34.592Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="常用方法-amp-字段梳理"><a href="#常用方法-amp-字段梳理" class="headerlink" title="常用方法 &amp; 字段梳理"></a>常用方法 &amp; 字段梳理</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-17/8479145.jpg" alt=""></p>
+<p>LinkedList的底层数据结构是链表，链表是由许多个节点连接而成，每个节点包含三个部分,如图所示：<img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-18/30835149.jpg" alt=""></p>
+<p>pre、next分别存放上一个节点的地址和下一个节点的地址，data存放该节点的数据。</p>
+<h3 id="提问"><a href="#提问" class="headerlink" title="提问"></a>提问</h3><ol>
+<li>如何新增数据, add(E e)</li>
+<li>如何在指定位置新增数据,add(int index,E e)</li>
+<li>如何获取指定元素的位置，indexOf(Object o)</li>
+<li>如何清空整个链表，clear()</li>
+</ol>
+<h4 id="1-如何新增数据"><a href="#1-如何新增数据" class="headerlink" title="1) 如何新增数据"></a>1) 如何新增数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public boolean add(E e) &#123;</div><div class="line">    linkLast(e);</div><div class="line">    return true;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void linkLast(E e) &#123;</div><div class="line">    final Node&lt;E&gt; l = last;</div><div class="line">    final Node&lt;E&gt; newNode = new Node&lt;&gt;(l, e, null);</div><div class="line">    last = newNode;</div><div class="line">    if (l == null)</div><div class="line">        first = newNode;</div><div class="line">    else</div><div class="line">        l.next = newNode;</div><div class="line">    size++;</div><div class="line">    modCount++;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private static class Node&lt;E&gt; &#123;</div><div class="line">    E item;</div><div class="line">    Node&lt;E&gt; next;</div><div class="line">    Node&lt;E&gt; prev;</div><div class="line"></div><div class="line">    Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;</div><div class="line">        this.item = element;</div><div class="line">        this.next = next;</div><div class="line">        this.prev = prev;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第7行：首先获取链表当前的尾节点l；</p>
+<p>第8行：初始化新增节点newNode，包含上一个节点位置、节点数据、下一个节点位置；</p>
+<p>第9行：设置新的尾节点为新增节点,last = newNode</p>
+<p>第10 ~ 13行：尾节点l为空，那么设置首节点为新节点；反之，设置尾节点l的下一个节点位置为newNode; </p>
+<p>第7行 ~ 第13行描述用图示表示：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-18/1333450.jpg" alt=""></p>
+<p>第18 ~ 27行：一个节点包括三部分：当前节点数据、上一个节点地址、下一个节点地址</p>
+<h4 id="2-如何在指定位置新增数据"><a href="#2-如何在指定位置新增数据" class="headerlink" title="2) 如何在指定位置新增数据"></a>2) 如何在指定位置新增数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">public void add(int index, E element) &#123;</div><div class="line">    checkPositionIndex(index);</div><div class="line"></div><div class="line">    if (index == size)</div><div class="line">        linkLast(element);</div><div class="line">    else</div><div class="line">        linkBefore(element, node(index));</div><div class="line">&#125;</div><div class="line"></div><div class="line">void linkLast(E e) &#123;</div><div class="line">    final Node&lt;E&gt; l = last;</div><div class="line">    final Node&lt;E&gt; newNode = new Node&lt;&gt;(l, e, null);</div><div class="line">    last = newNode;</div><div class="line">    if (l == null)</div><div class="line">        first = newNode;</div><div class="line">    else</div><div class="line">        l.next = newNode;</div><div class="line">    size++;</div><div class="line">    modCount++;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Node&lt;E&gt; node(int index) &#123;</div><div class="line">    // assert isElementIndex(index);</div><div class="line"></div><div class="line">    if (index &lt; (size &gt;&gt; 1)) &#123;</div><div class="line">        Node&lt;E&gt; x = first;</div><div class="line">        for (int i = 0; i &lt; index; i++)</div><div class="line">            x = x.next;</div><div class="line">        return x;</div><div class="line">    &#125; else &#123;</div><div class="line">        Node&lt;E&gt; x = last;</div><div class="line">        for (int i = size - 1; i &gt; index; i--)</div><div class="line">            x = x.prev;</div><div class="line">        return x;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void linkBefore(E e, Node&lt;E&gt; succ) &#123;</div><div class="line">    // assert succ != null;</div><div class="line">    final Node&lt;E&gt; pred = succ.prev;</div><div class="line">    final Node&lt;E&gt; newNode = new Node&lt;&gt;(pred, e, succ);</div><div class="line">    succ.prev = newNode;</div><div class="line">    if (pred == null)</div><div class="line">        first = newNode;</div><div class="line">    else</div><div class="line">        pred.next = newNode;</div><div class="line">    size++;</div><div class="line">    modCount++;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第2行：检查新增的位置是否越界了(位置范围是：[0,size])</p>
+<p>第4 ~ 5行：新增的位置为链表长度(size),链表尾节点所在位置为：(size -1)，所以在该位置(size位置)新增节点，类似在尾节点新增节点。上一个功能点已描述，这里就不赘述了。</p>
+<p>第22 ~ 36行：二分法，判断新增位置处于size的左部分([0,size/2])还是右部分((size/2,size -1])，左部分，从首节点，头往后找；右部分，从尾节点，从后往前找。</p>
+<p>第38 ~ 48行：新增位置的原来节点为：succ;如果succ的上一个节点为null，则说明新增位置为首节点；反之，新增位置为中间节点。首节点位置新增时，初始化新增节点，并将原首节点位置的上个节点地址设置为新增节点；中间节点位置新增时，初始化新增节点，并将上一个节点的下一个节点位置，设置为新增节点。</p>
+<p>第38 ~ 48行图示如下：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-18/17702167.jpg" alt=""></p>
+<h4 id="3-如何获取指定元素的位置"><a href="#3-如何获取指定元素的位置" class="headerlink" title="3) 如何获取指定元素的位置"></a>3) 如何获取指定元素的位置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public int indexOf(Object o) &#123;</div><div class="line">    int index = 0;</div><div class="line">    if (o == null) &#123;</div><div class="line">        for (Node&lt;E&gt; x = first; x != null; x = x.next) &#123;</div><div class="line">            if (x.item == null)</div><div class="line">                return index;</div><div class="line">            index++;</div><div class="line">        &#125;</div><div class="line">    &#125; else &#123;</div><div class="line">        for (Node&lt;E&gt; x = first; x != null; x = x.next) &#123;</div><div class="line">            if (o.equals(x.item))</div><div class="line">                return index;</div><div class="line">            index++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return -1;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从首节点开始遍历，寻找的对象分两种：空对象和非空对象；若节点值等于寻找的对象，返回游标值；</p>
+<h4 id="4）如何清空整个链表"><a href="#4）如何清空整个链表" class="headerlink" title="4）如何清空整个链表"></a>4）如何清空整个链表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public void clear() &#123;</div><div class="line">    // Clearing all of the links between nodes is &quot;unnecessary&quot;, but:</div><div class="line">    // - helps a generational GC if the discarded nodes inhabit</div><div class="line">    //   more than one generation</div><div class="line">    // - is sure to free memory even if there is a reachable Iterator</div><div class="line">    for (Node&lt;E&gt; x = first; x != null; ) &#123;</div><div class="line">        Node&lt;E&gt; next = x.next;</div><div class="line">        x.item = null;</div><div class="line">        x.next = null;</div><div class="line">        x.prev = null;</div><div class="line">        x = next;</div><div class="line">    &#125;</div><div class="line">    first = last = null;</div><div class="line">    size = 0;</div><div class="line">    modCount++;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>遍历链表，将每一个节点的数据清空，最后将头结点和尾节点的数据清空，链表长度设置为0；</p>
+<p>刚开始有个疑问，清空整个链表了，首、尾两节点已经为空了，为什么在第13行代码还需要再次清空呢？其实呢，首节点和尾节点单独存到变量里，所以在清空链表的时候，first、last节点都是有数据的，所以还需要单独清空。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;常用方法-amp-字段梳理&quot;&gt;&lt;a href=&quot;#常用方法-amp-字段梳理&quot; class=&quot;headerlink&quot; title=&quot;常用方法 &amp;amp; 字段梳理&quot;&gt;&lt;/a&gt;常用方法 &amp;amp; 字段梳理&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://oc5a5
+    
+    </summary>
+    
+      <category term="JDK源码学习专题" scheme="http://jianwl.com/categories/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
+    
+    
+      <category term="JDK源码学习专题" scheme="http://jianwl.com/tags/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title>ArrayList源码学习</title>
@@ -1618,68 +1669,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://oc5a5l0a0.bkt.clouddn.com/17-9-20/5113112.jpg&quot; alt=&quot;&quot;
-    
-    </summary>
-    
-      <category term="JAVA" scheme="http://jianwl.com/categories/JAVA/"/>
-    
-    
-      <category term="JAVA" scheme="http://jianwl.com/tags/JAVA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java8之HashMap源码学习</title>
-    <link href="http://jianwl.com/2017/09/01/Java8%E4%B9%8BHashMap%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://jianwl.com/2017/09/01/Java8之HashMap源码学习/</id>
-    <published>2017-09-01T07:20:01.000Z</published>
-    <updated>2017-09-01T13:50:37.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>随着JDK的更新，JDK1.8对HashMap底层的实现进行了优化，本文想深入探讨HashMap的结构实现和功能原理。</p>
-<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-9-1/39063824.jpg" alt=""></p>
-<p>Java为数据结构中的映射定义了一个接口java.util.Map，此接口有四个常用的实现类，分别为HashMap、LinkedHashMap和TreeMap，类继承关系如图；以下针对各个实现类的特定做了一些说明；</p>
-<p>(1) HashMap: 它根据键的hashCode值存储数据，大多数情况可以直接定位到它的值，因而具有很快的访问速度，但遍历速度却是不确定的。HashMap最多只允许一条记录键为null，允许多条记录的值为null。HashMap非线程安全，即任一时刻多个线程同时写HashMap，可能会导致数据的不一致，如果要满足线程安全可以用Collections的synchronizedMap方法使HashMap具有线程安全的能力，或使用ConcurrentHashMap。</p>
-<p>(2) Hashtable: Hashtable是遗留类，不同的是它承自Dictionary类，并且是线程安全的，任一时间只有一个线程能写Hashtable,并发性不如ConcurrentHashMap,因为ConcurrentHashMap引入了分段锁。Hashtable不允许键或值为null；</p>
-<p>(3) LinkedHashMap: LinkedHashMap是HashMap的一个子类，保存了记录的插入顺序;</p>
-<p>(4) TreeMap: TreeMap实现了SortedMap接口，能够把它的记录根据键排序，默认按键值的升序排序，也可以指定排序的比较器；</p>
-<p>上述四种Map类型的类，要求映射的key是<strong>不可变类</strong>，不可变类是该对象在创建后它的哈希值不会被改变。如果对象的哈希值改变了，Map对象很可能就定位不到映射的位置了。</p>
-<h3 id="存储结构-字段"><a href="#存储结构-字段" class="headerlink" title="存储结构 - 字段"></a>存储结构 - 字段</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-9-1/44470980.jpg" alt=""></p>
-<p>这里需要讲明白两个问题，数据底层具体存储的是什么？这样的存储方式有什么优点？</p>
-<p>1、什么是Node?</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">static class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; &#123;</div><div class="line">        final int hash; // 定位数组的索引位置</div><div class="line">        final K key;</div><div class="line">        V value;</div><div class="line">        Node&lt;K,V&gt; next; // 链表的下一个Node</div><div class="line"></div><div class="line">        Node(int hash, K key, V value, Node&lt;K,V&gt; next) &#123; ... &#125;</div><div class="line"></div><div class="line">        public final K getKey()        &#123; ... &#125;</div><div class="line">        public final V getValue()      &#123; ... &#125;</div><div class="line">        public final String toString() &#123; ... &#125;</div><div class="line"></div><div class="line">        public final int hashCode() &#123; ... &#125;</div><div class="line"></div><div class="line">        public final V setValue(V newValue) &#123; ... &#125;</div><div class="line"></div><div class="line">        public final boolean equals(Object o) &#123; ... &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>Node是HashMap的内部类，实现了Map.Entry接口，本质上Node是一个链表；</p>
-<p>2、如何确认哈希桶索引位置?</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">方法一：</div><div class="line">static final int hash(Object key) &#123;   //jdk1.8 &amp; jdk1.7</div><div class="line">     int h;</div><div class="line">     // h = key.hashCode() 为第一步 取hashCode值</div><div class="line">     // h ^ (h &gt;&gt;&gt; 16)  为第二步 高位参与运算</div><div class="line">     return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</div><div class="line">&#125;</div><div class="line">方法二：</div><div class="line">static int indexFor(int h, int length) &#123;  //jdk1.7的源码，jdk1.8没有这个方法，但是实现原理一样的</div><div class="line">     return h &amp; (length-1);  //第三步 取模运算</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里的Hash算法本质上就三步：取key的hashCode值、高位运算、取模运算；举例说明：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-9-1/79939676.jpg" alt=""></p>
-<p>这样就可以通过key来定位数组的索引位置了；</p>
-<p>3、如何解决哈希冲突？</p>
-<p>采用链地址法，简单来说就是数组加链表的结合，在每个数组元素上都是一个链表结构，当数据Hash后，得到数组下标，都把数据放在对应下标元素的链表上。</p>
-<p>4、关于哈希冲突的调优？</p>
-<p>两个Key定位到相同的位置，表示发生了哈希冲突。通过什么方式可来控制Map是的哈希碰撞概率小，哈希桶数组占用空间又小呢？有几个参数需要重点注意：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">int threshold // 扩容的阈值 -- 数组length * loadFactor</div><div class="line">final float loadFactor; // 负载因子 -- 默认0.75</div><div class="line">int modCount;</div><div class="line">int size;</div></pre></td></tr></table></figure>
-<p>默认的负载因子0.75是对空间和时间效率的一个平衡选择，建议大家不要修改，除非在时间和空间比较特殊的情况下，如果内存空间很多而又对时间效率要求很高，可以降低负载因子Load factor的值；相反，如果内存空间紧张而对时间效率要求不高，可以增加负载因子loadFactor的值，这个值可以大于1。</p>
-<h3 id="分析HashMap的put方法"><a href="#分析HashMap的put方法" class="headerlink" title="分析HashMap的put方法"></a>分析HashMap的put方法</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-9-1/13730914.jpg" alt=""></p>
-<h3 id="JDK1-8-VS-JDK1-7-性能测试"><a href="#JDK1-8-VS-JDK1-7-性能测试" class="headerlink" title="JDK1.8 VS JDK1.7 性能测试"></a>JDK1.8 VS JDK1.7 性能测试</h3><p>1、哈希较均匀的情况</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">public class Keys &#123;</div><div class="line">    public static final int MAX_KEY = 1_000_000;</div><div class="line">    private static final Key[] KEYS_CACHE = new Key[MAX_KEY];</div><div class="line"></div><div class="line">    static &#123;</div><div class="line">        for (int i = 0; i &lt; MAX_KEY; ++i) &#123;</div><div class="line">            KEYS_CACHE[i] = new Key(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static Key of(int value) &#123;</div><div class="line">        return KEYS_CACHE[value];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    static void test(int mapSize) &#123;</div><div class="line">        HashMap&lt;Key, Integer&gt; map = new HashMap&lt;Key, Integer&gt;(mapSize);</div><div class="line">        for (int i = 0; i &lt; mapSize; i++) &#123;</div><div class="line">            map.put(Keys.of(i), i);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        long beginTime = System.nanoTime();</div><div class="line">        for (int i = 0; i &lt; mapSize; i++) &#123;</div><div class="line">            map.get(Keys.of(i));</div><div class="line">        &#125;</div><div class="line">        long endTime = System.nanoTime();</div><div class="line">        System.out.println(&quot;mapSize =&gt; &quot; + mapSize + &quot; time =&gt; &quot; + (endTime - beginTime));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        for (int i = 10; i &lt;= MAX_KEY; i *= 10) &#123;</div><div class="line">            test(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Key implements Comparable&lt;Key&gt; &#123;</div><div class="line">    private final int value;</div><div class="line"></div><div class="line">    public Key(int value) &#123;</div><div class="line">        this.value = value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int compareTo(Key o) &#123;</div><div class="line">        return Integer.compare(this.value, o.value);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean equals(Object o) &#123;</div><div class="line">        if (this == o) return true;</div><div class="line">        if (o == null || getClass() != o.getClass())</div><div class="line">            return false;</div><div class="line">        Key key = (Key) o;</div><div class="line">        return value == key.value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int hashCode() &#123;</div><div class="line">        return value; </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-9-1/1545958.jpg" alt=""></p>
-<p>从图上可看到JDK1.8的效率远远高于JDK1.7</p>
-<p>2、哈希不均匀测试</p>
-<p>修改了HashCode的值，其余不变；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">class Key implements Comparable&lt;Key&gt; &#123;</div><div class="line">    </div><div class="line">    ....</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int hashCode() &#123;</div><div class="line">        return 1;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-9-1/48441366.jpg" alt=""></p>
-<p>由图中结果可知，随着size的变大，JDK1.7花费时间是增长的趋势，而JDK1.8是明显的降低趋势，并呈现对数增长稳定，当一个链表太长是，HashMap会动态将它替换为红黑树，这将时间复杂度从O(N)将为O(logn)。hash算法均匀和不均匀所花费的时间明显也不相同。</p>
-<p>3、JDK1.8 哈希均匀 VS 哈希不均匀</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-9-1/40579970.jpg" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://tech.meituan.com/java-hashmap.html" target="_blank" rel="external">Java 8系列之重新认识HashMap</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h3&gt;&lt;p&gt;随着JDK的更新，JDK1.8对HashMap底层的实现进行了优化，本文想深入探讨HashMap的结构实现和功能原理。&lt;/p&gt;
-&lt;h3 id
     
     </summary>
     
