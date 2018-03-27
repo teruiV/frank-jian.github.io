@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-03-27T00:37:00.024Z</updated>
+  <updated>2018-03-27T00:39:08.880Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://jianwl.com/2018/03/22/HashMap%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/"/>
     <id>http://jianwl.com/2018/03/22/HashMap源码学习/</id>
     <published>2018-03-22T12:39:33.000Z</published>
-    <updated>2018-03-27T00:37:00.024Z</updated>
+    <updated>2018-03-27T00:39:08.880Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-常用方法-amp-字段"><a href="#1-常用方法-amp-字段" class="headerlink" title="1. 常用方法 &amp; 字段"></a>1. 常用方法 &amp; 字段</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-22/24207782.jpg" alt=""></p>
 <p>JDK1.8之前，HashMap是一个数组 + 链表的数据结构；通过key的hash值与数组的长度取余，得到该键值对应该放置的位置。如果该位置上，没有其他元素，则直接放进去；如果该位置上已经有数据了(不同的key值，hash值可能一样)，则通过链表的方式，将元素放到前一个元素的后面。如下图所示：</p>
@@ -97,6 +97,7 @@
 <p>具体实现流程图如下：</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-27/49558429.jpg" alt=""></p>
 <h4 id="4）HashMap为什么是线程不安全的"><a href="#4）HashMap为什么是线程不安全的" class="headerlink" title="4）HashMap为什么是线程不安全的"></a>4）HashMap为什么是线程不安全的</h4><p>JDK1.7在并发情况下，在扩容时会造成环链问题，导致死循环，在JDK1.8版本中已经不存在了；但HashMap依旧不适用于多线程，HashMap的设计目标是简洁高效，没有采取任何措施保障put、remove操作的多线程安全；且在并发环境下，无法保障内存的可见性; </p>
+<p>目前这个解释的比较含糊，后续给出具体实例，说明其线程不安全的情况；</p>
 ]]></content>
     
     <summary type="html">
