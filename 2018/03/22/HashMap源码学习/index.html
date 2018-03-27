@@ -55,27 +55,27 @@
 
 
 <meta name="description" content="1. 常用方法 &amp;amp; 字段
-JDK1.8之前，HashMap是一个数组 + 链表的数据结构；通过key的hash值与数组的长度取余，得到该键值对应该放置的位置。如果该位置上，没有其他元素，则直接放进去；如果该位置上已经有数据了(不同的key值，hash值可能一样)，则通过链表的方式，将元素放到前一个元素的后面。如下图所示：
+JDK1.8之前，HashMap是一个数组 + 链表的数据结构；通过key的hash值与数组的长度取余，得到该键值对在数组中的索引位。如果该位置上，没有其他元素，就直接放进去；如果该位置上已经有数据了(不同的key值，hash值可能一样)，则通过链表的方式，将元素放到前一个元素的后面。如下图所示：
 
-JDK1.8，引入了红黑树，当链表的长度大于等于8时，会将链表转化">
+JDK1.8，引入了红黑树，当链表的长度大于等于8时，会将链表转">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HashMap源码学习">
 <meta property="og:url" content="http://jianwl.com/2018/03/22/HashMap源码学习/index.html">
 <meta property="og:site_name" content="记录点滴成长">
 <meta property="og:description" content="1. 常用方法 &amp;amp; 字段
-JDK1.8之前，HashMap是一个数组 + 链表的数据结构；通过key的hash值与数组的长度取余，得到该键值对应该放置的位置。如果该位置上，没有其他元素，则直接放进去；如果该位置上已经有数据了(不同的key值，hash值可能一样)，则通过链表的方式，将元素放到前一个元素的后面。如下图所示：
+JDK1.8之前，HashMap是一个数组 + 链表的数据结构；通过key的hash值与数组的长度取余，得到该键值对在数组中的索引位。如果该位置上，没有其他元素，就直接放进去；如果该位置上已经有数据了(不同的key值，hash值可能一样)，则通过链表的方式，将元素放到前一个元素的后面。如下图所示：
 
-JDK1.8，引入了红黑树，当链表的长度大于等于8时，会将链表转化">
+JDK1.8，引入了红黑树，当链表的长度大于等于8时，会将链表转">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-3-22/24207782.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-3-22/22584621.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-3-27/49558429.jpg">
-<meta property="og:updated_time" content="2018-03-27T00:39:08.880Z">
+<meta property="og:updated_time" content="2018-03-27T00:41:39.498Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HashMap源码学习">
 <meta name="twitter:description" content="1. 常用方法 &amp;amp; 字段
-JDK1.8之前，HashMap是一个数组 + 链表的数据结构；通过key的hash值与数组的长度取余，得到该键值对应该放置的位置。如果该位置上，没有其他元素，则直接放进去；如果该位置上已经有数据了(不同的key值，hash值可能一样)，则通过链表的方式，将元素放到前一个元素的后面。如下图所示：
+JDK1.8之前，HashMap是一个数组 + 链表的数据结构；通过key的hash值与数组的长度取余，得到该键值对在数组中的索引位。如果该位置上，没有其他元素，就直接放进去；如果该位置上已经有数据了(不同的key值，hash值可能一样)，则通过链表的方式，将元素放到前一个元素的后面。如下图所示：
 
-JDK1.8，引入了红黑树，当链表的长度大于等于8时，会将链表转化">
+JDK1.8，引入了红黑树，当链表的长度大于等于8时，会将链表转">
 <meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-3-22/24207782.jpg">
 
 
@@ -362,7 +362,7 @@ JDK1.8，引入了红黑树，当链表的长度大于等于8时，会将链表�
 
       
         <h3 id="1-常用方法-amp-字段"><a href="#1-常用方法-amp-字段" class="headerlink" title="1. 常用方法 &amp; 字段"></a>1. 常用方法 &amp; 字段</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-22/24207782.jpg" alt=""></p>
-<p>JDK1.8之前，HashMap是一个数组 + 链表的数据结构；通过key的hash值与数组的长度取余，得到该键值对应该放置的位置。如果该位置上，没有其他元素，则直接放进去；如果该位置上已经有数据了(不同的key值，hash值可能一样)，则通过链表的方式，将元素放到前一个元素的后面。如下图所示：</p>
+<p>JDK1.8之前，HashMap是一个数组 + 链表的数据结构；通过key的hash值与数组的长度取余，得到该键值对在数组中的索引位。如果该位置上，没有其他元素，就直接放进去；如果该位置上已经有数据了(不同的key值，hash值可能一样)，则通过链表的方式，将元素放到前一个元素的后面。如下图所示：</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-22/22584621.jpg" alt="图1-1"></p>
 <p>JDK1.8，引入了红黑树，当链表的长度大于等于8时，会将链表转化为红黑树，红黑树的查找时间复杂度是o(lgn)，极大加快了查询的效率。</p>
 <h3 id="2-提问"><a href="#2-提问" class="headerlink" title="2. 提问"></a>2. 提问</h3><ol>
