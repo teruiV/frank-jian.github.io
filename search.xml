@@ -4,6 +4,87 @@
   
     
     <entry>
+      <title><![CDATA[HashMap源码学习]]></title>
+      <url>http://jianwl.com/2018/03/22/HashMap%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</url>
+      <content type="html"><![CDATA[<h3 id="1-常用方法-amp-字段"><a href="#1-常用方法-amp-字段" class="headerlink" title="1. 常用方法 &amp; 字段"></a>1. 常用方法 &amp; 字段</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-22/24207782.jpg" alt=""></p>
+<p>JDK1.8之前，HashMap是一个数组 + 链表的数据结构；通过key的hash值与数组的长度取余，得到该键值对应该放置的位置。如果该位置上，没有其他元素，则直接放进去；如果该位置上已经有数据了(不同的key值，hash值可能一样)，则通过链表的方式，将元素放到前一个元素的后面。如下图所示：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-22/22584621.jpg" alt="图1-1"></p>
+<p>JDK1.8，引入了红黑树，当链表的长度大于等于8时，会将链表转化为红黑树，红黑树的查找时间复杂度是o(lgn)，极大加快了查询的效率。</p>
+<h3 id="2-提问"><a href="#2-提问" class="headerlink" title="2. 提问"></a>2. 提问</h3><ol>
+<li>HashMap是如何实现扩容的，resize();</li>
+<li>为什么HashMap的容量要保持为2的幂次方;</li>
+<li>HashMap如何实现新增一个键值对,put(K,V);</li>
+<li>HashMap为什么是线程不安全的？</li>
+</ol>
+<h4 id="1）HashMap是如何实现扩容的"><a href="#1）HashMap是如何实现扩容的" class="headerlink" title="1）HashMap是如何实现扩容的"></a>1）HashMap是如何实现扩容的</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">final Node&lt;K,V&gt;[] resize() &#123;</div><div class="line">    Node&lt;K,V&gt;[] oldTab = table;</div><div class="line">    int oldCap = (oldTab == null) ? 0 : oldTab.length;</div><div class="line">    int oldThr = threshold;</div><div class="line">    int newCap, newThr = 0;</div><div class="line">    if (oldCap &gt; 0) &#123;</div><div class="line">        if (oldCap &gt;= MAXIMUM_CAPACITY) &#123; // 超过最大值不再扩容，随它碰撞去了;</div><div class="line">            threshold = Integer.MAX_VALUE;</div><div class="line">            return oldTab;</div><div class="line">        &#125;</div><div class="line">        else if ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACITY &amp;&amp;</div><div class="line">                 oldCap &gt;= DEFAULT_INITIAL_CAPACITY) // 如果当前容量大于16，且扩容2倍之后小于最大整数，则将阈值扩大2倍；</div><div class="line">            newThr = oldThr &lt;&lt; 1; // double threshold</div><div class="line">    &#125;</div><div class="line">    else if (oldThr &gt; 0) // initial capacity was placed in threshold 如果当前阈值大于0，则新的容量为当前阈值；</div><div class="line">        newCap = oldThr;</div><div class="line">    else &#123;               // zero initial threshold signifies using defaults</div><div class="line">        newCap = DEFAULT_INITIAL_CAPACITY;</div><div class="line">        newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);</div><div class="line">    &#125;</div><div class="line">    if (newThr == 0) &#123;</div><div class="line">        float ft = (float)newCap * loadFactor;</div><div class="line">        newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (float)MAXIMUM_CAPACITY ?</div><div class="line">                  (int)ft : Integer.MAX_VALUE);</div><div class="line">    &#125;</div><div class="line">    threshold = newThr;</div><div class="line">    @SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</div><div class="line">        Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];</div><div class="line">    table = newTab;</div><div class="line">    if (oldTab != null) &#123;</div><div class="line">        for (int j = 0; j &lt; oldCap; ++j) &#123;</div><div class="line">            Node&lt;K,V&gt; e;</div><div class="line">            if ((e = oldTab[j]) != null) &#123;</div><div class="line">                oldTab[j] = null;</div><div class="line">                if (e.next == null)</div><div class="line">                    newTab[e.hash &amp; (newCap - 1)] = e;</div><div class="line">                else if (e instanceof TreeNode)</div><div class="line">                    ((TreeNode&lt;K,V&gt;)e).split(this, newTab, j, oldCap);</div><div class="line">                else &#123; // preserve order</div><div class="line">                    Node&lt;K,V&gt; loHead = null, loTail = null;</div><div class="line">                    Node&lt;K,V&gt; hiHead = null, hiTail = null;</div><div class="line">                    Node&lt;K,V&gt; next;</div><div class="line">                    do &#123;</div><div class="line">                        next = e.next;</div><div class="line">                        if ((e.hash &amp; oldCap) == 0) &#123; // 原索引</div><div class="line">                            if (loTail == null)</div><div class="line">                                loHead = e;</div><div class="line">                            else</div><div class="line">                                loTail.next = e;</div><div class="line">                            loTail = e;</div><div class="line">                        &#125;</div><div class="line">                        else &#123; // 原索引 + oldCap</div><div class="line">                            if (hiTail == null)</div><div class="line">                                hiHead = e;</div><div class="line">                            else</div><div class="line">                                hiTail.next = e;</div><div class="line">                            hiTail = e;</div><div class="line">                        &#125;</div><div class="line">                    &#125; while ((e = next) != null);</div><div class="line">                    if (loTail != null) &#123;</div><div class="line">                        loTail.next = null;</div><div class="line">                        newTab[j] = loHead;</div><div class="line">                    &#125;</div><div class="line">                    if (hiTail != null) &#123;</div><div class="line">                        hiTail.next = null;</div><div class="line">                        newTab[j + oldCap] = hiHead;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return newTab;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第2 ~ 25行：这十几行代码将的是扩容时，如何确定新的容量和阈值；</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">当前容量oldCap</th>
+<th style="text-align:center">扩容后容量newCap</th>
+<th style="text-align:center">扩容后阈值newThre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">oldCap <code>&gt;=</code> Integer.MAX_VALUE</td>
+<td style="text-align:center">oldCap</td>
+<td style="text-align:center">Integer.MAX_VALUE</td>
+</tr>
+<tr>
+<td style="text-align:center">16 <code>&lt;</code> oldCap <code>&lt;</code> Integer.MAX_VALUE / 2</td>
+<td style="text-align:center">oldCap <code>*</code> 2</td>
+<td style="text-align:center">oldThre <code>*</code> 2</td>
+</tr>
+<tr>
+<td style="text-align:center">0 <code>&lt;</code> oldCap <code>&lt;=</code>16</td>
+<td style="text-align:center">oldThre</td>
+<td style="text-align:center">oldThre <code>*</code> 0.75</td>
+</tr>
+<tr>
+<td style="text-align:center">oldCap == 0</td>
+<td style="text-align:center">16</td>
+<td style="text-align:center">16 <code>*</code> 0.75 = 12</td>
+</tr>
+</tbody>
+</table>
+<p>扩容时有4种场景，① 当前容量大于最大整数时，此时不再扩容，随他进行碰撞；② 当前容量大于16且扩容后的容量小于最大整数时，新的容量和阈值都扩大2倍；③ 当容量小于等于16时，这种场景出现在：指定HashMap的初始容量，此时新容量等于当前阈值，新阈值等于新容量 <code>*</code> 加载因子。④ 当前容量为0时，默认初始化容量为16，阈值为12；</p>
+<p>第28 ~ 72行：扩容之后，需要将原有的数据迁移到扩容后的结构中；分为三种场景：① 同一个哈希槽位上，只有一个元素；② 同一个哈希槽位上，不止一个元素但小于8个元素(这几个元素，已链表的结构存在)；③ 同一个哈希槽位上，超过8个元素，(此时为这些元素，已红黑树的结构存在)；这里我们重点分析前两种情况，对于红黑树，等后续研究透了，再来分析；</p>
+<p>场景①分析：</p>
+<p>对应代码为35 ~ 36行：很简单，如果当前哈希槽位只有一个元素，那么将当前元素的哈希值 取余 新数组容量，获取新数组中的索引位置即可；<code>e.hash &amp; (newcap - 1)</code> 等价于 <code>e.hash % newcap</code></p>
+<p>场景②分析：</p>
+<p>对应代码为39 ~ 68行：同一个哈希槽位上存在多个元素(小于8)，这些元素可分为两种情况：1、 元素的哈希值 &amp; oldCap == 0，其索引位置为原索引；2、元素的哈希值 &amp; oldCap != 0,其索引位置为原索引 + oldCap；可以举个例子说明下：oldCap = 8, newCap = 16;那么哈希值为15的，其在新数组中的位置为：7 + 8 = 15；哈希值为7的，在新数组中的位置为7跟原来的位置一样。；</p>
+<h4 id="2-HashMap的容量如何做到保持为2的幂次方"><a href="#2-HashMap的容量如何做到保持为2的幂次方" class="headerlink" title="2) HashMap的容量如何做到保持为2的幂次方"></a>2) HashMap的容量如何做到保持为2的幂次方</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">public HashMap(int initialCapacity, float loadFactor) &#123;</div><div class="line">    if (initialCapacity &lt; 0)</div><div class="line">        throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +</div><div class="line">                                           initialCapacity);</div><div class="line">    if (initialCapacity &gt; MAXIMUM_CAPACITY)</div><div class="line">        initialCapacity = MAXIMUM_CAPACITY;</div><div class="line">    if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))</div><div class="line">        throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +</div><div class="line">                                           loadFactor);</div><div class="line">    this.loadFactor = loadFactor;</div><div class="line">    this.threshold = tableSizeFor(initialCapacity);</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 返回大于等于当前值，最接近2的n次方的数据；</div><div class="line"> * Returns a power of two size for the given target capacity.</div><div class="line"> */</div><div class="line">static final int tableSizeFor(int cap) &#123;</div><div class="line">    int n = cap - 1; // 为了避免刚好是2的n次方的情况，这样会返回 2 的n+1次方，跟预期不符合；</div><div class="line">    n |= n &gt;&gt;&gt; 1; // 前2位都是1；</div><div class="line">    n |= n &gt;&gt;&gt; 2; // 前4位都是1；</div><div class="line">    n |= n &gt;&gt;&gt; 4; // 前8位都是1</div><div class="line">    n |= n &gt;&gt;&gt; 8; // 前16位都是1；</div><div class="line">    n |= n &gt;&gt;&gt; 16;// 前32位都是1；</div><div class="line">    return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>初始化容量有两种方式：① newcap = 默认值16，loadfactor = 默认值0.75f; newthreshold = newcap <code>*</code> loadfactor; ② threshold = 最接近2的幂次方的初始化容量；之后在扩容阶段得到：newcap = threshold; newthreshold = loadfactor <code>*</code> newcap;</p>
+<p>这里我们重点分析场景2：</p>
+<p>核心代码为18 ~ 25行，初始化容量n，将 n - 1后的值进行移位或操作，可以保证从(n - 1)的二进制值，从高位1开始之后的二进制数都是1。这里举个例子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">若初始化容量为6：</div><div class="line">n - 1 = 5 // 101</div><div class="line">n |= n &gt;&gt;&gt; 1 // 101 | 011 = 111 (保证1 ~ 2位，位移数都是1)</div><div class="line">n |= n &gt;&gt;&gt; 2 // 111 | 001 = 111 (保证3 ~ 4位，位移数都是1)</div><div class="line">n |= n &gt;&gt;&gt; 4 // 111 | 000 = 111 (保证5 ~ 8位，位移数都是1)</div><div class="line">n |= n &gt;&gt;&gt; 8 // 111 | 000 = 111 (保证9 ~ 16位，位移数都是1)</div><div class="line">n |= n &gt;&gt;&gt; 16 // 111 | 000 = 111 (保证17 ~ 32位，位移数都是1)</div><div class="line">最后将1加回去：</div><div class="line">n = n + 1 // 8,得到大于6，的最小2的幂次方的数值为2的3次方；</div></pre></td></tr></table></figure>
+<h5 id="容量保持2的幂次方，有什么好处呢"><a href="#容量保持2的幂次方，有什么好处呢" class="headerlink" title="容量保持2的幂次方，有什么好处呢?"></a>容量保持2的幂次方，有什么好处呢?</h5><p>主要是跟HashMap的存储方式有关；这里简单介绍下：</p>
+<p>1、hash(key)，得到插入元素的Key的哈希值;</p>
+<p>2、hash(key) &amp; (n -1) , 得到元素在数组中的索引值；</p>
+<p>这里重点说下步骤2，hash(key) &amp; (n -1)等价于 hash(key) % n,这个等价是有条件的，n必须是为n的幂次方。否则条件不成立；这里举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// n非2的幂次方</div><div class="line">hash(key): 11, n: 6</div><div class="line"></div><div class="line">hash(key) &amp; (n - 1) // 1011 &amp; 101 = 0001 明显不等于 11 % 6 = 5</div><div class="line"></div><div class="line">// n为2的幂次方</div><div class="line">hash(key): 11, n: 8</div><div class="line"></div><div class="line">hash(key) &amp; (n -1) // 1011 &amp; 111 = 0011 等于 11 % 8 = 3</div></pre></td></tr></table></figure>
+<p>这就是为什么要保持容量为2的幂次方的原因。那么有人要问了，为什么要通过与操作进行求余，为什么不通过%操作符操作呢？因为与操作的执行效率高；</p>
+<h4 id="3）HashMap如何实现新增一个键值对"><a href="#3）HashMap如何实现新增一个键值对" class="headerlink" title="3）HashMap如何实现新增一个键值对"></a>3）HashMap如何实现新增一个键值对</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">public V put(K key, V value) &#123;</div><div class="line">    return putVal(hash(key), key, value, false, true);</div><div class="line">&#125;</div><div class="line"></div><div class="line">final V putVal(int hash, K key, V value, boolean onlyIfAbsent,</div><div class="line">               boolean evict) &#123;</div><div class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;</div><div class="line">    if ((tab = table) == null || (n = tab.length) == 0)</div><div class="line">        n = (tab = resize()).length; // tab为空，初始化tab；</div><div class="line">    if ((p = tab[i = (n - 1) &amp; hash]) == null) // 没有hash冲突</div><div class="line">        tab[i] = newNode(hash, key, value, null); // 在指定哈希槽插入元素；</div><div class="line">    else &#123;</div><div class="line">        Node&lt;K,V&gt; e; K k;</div><div class="line">        if (p.hash == hash &amp;&amp;</div><div class="line">            ((k = p.key) == key || (key != null &amp;&amp; key.equals(k)))) // hash一直；key一致；覆盖元素；</div><div class="line">            e = p;</div><div class="line">        else if (p instanceof TreeNode) // 在指定hash位取出的元素是红黑树，往红黑树中插入元素；</div><div class="line">            e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value); // 红黑树插入元素</div><div class="line">        else &#123;</div><div class="line">            for (int binCount = 0; ; ++binCount) &#123;</div><div class="line">                if ((e = p.next) == null) &#123; // 首节点后 + 数据</div><div class="line">                    p.next = newNode(hash, key, value, null);</div><div class="line">                    if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st // 链表长度大于等于8</div><div class="line">                        treeifyBin(tab, hash); // 转化为红黑树</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line">                if (e.hash == hash &amp;&amp;</div><div class="line">                    ((k = e.key) == key || (key != null &amp;&amp; key.equals(k)))) // 如果key值相当直接退出循环;</div><div class="line">                    break;</div><div class="line">                p = e;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (e != null) &#123; // existing mapping for key</div><div class="line">            V oldValue = e.value;</div><div class="line">            if (!onlyIfAbsent || oldValue == null)</div><div class="line">                e.value = value;</div><div class="line">            afterNodeAccess(e);</div><div class="line">            return oldValue;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    ++modCount;</div><div class="line">    if (++size &gt; threshold)</div><div class="line">        resize(); // 扩容</div><div class="line">    afterNodeInsertion(evict);</div><div class="line">    return null;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第8 ~ 9行：当table的容量为空时，进行扩容；</p>
+<p>第10 ~ 11行：获取新增元素在数组中的索引位置，若该位置上没有其他元素，则插入元素；</p>
+<p>第12 ~ 40行: 这里着重解释，当存在hash冲突时(即新增元素的在数组中的索引存在其他元素)，如何解决； </p>
+<p>第14 ~ 16行：当前元素与新增元素，key完全一样时，获取当前元素值；</p>
+<p>第17 ~ 18行：当新增元素索引位，元素结构为红黑树时，往红黑树中插入元素；</p>
+<p>第19 ~ 40行: 这里描述的是新增元素索引位，元素的结构为链表；</p>
+<p>第20 ~ 26行：死循环，如果找到链表的尾部节点，则在链表后新增元素；判断链表长度 <code>&gt;=</code> 8，若是，则将链表转为红黑树；</p>
+<p>第27 ~ 29行：若key与新增元素key相同，则直接退出死循环；</p>
+<p>第30行：节点往后移动一位；</p>
+<p>第33 ~ 38行：如何存在key相同的元素，是否需要覆盖键值；</p>
+<p>第42 ~ 43行：如果元素长度大于扩容阈值，则进行扩容；</p>
+<p>具体实现流程图如下：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-27/49558429.jpg" alt=""></p>
+<h4 id="4）HashMap为什么是线程不安全的"><a href="#4）HashMap为什么是线程不安全的" class="headerlink" title="4）HashMap为什么是线程不安全的"></a>4）HashMap为什么是线程不安全的</h4><p>JDK1.7在并发情况下，在扩容时会造成环链问题，导致死循环，在JDK1.8版本中已经不存在了；但HashMap依旧不适用于多线程，HashMap的设计目标是简洁高效，没有采取任何措施保障put、remove操作的多线程安全；且在并发环境下，无法保障内存的可见性; </p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[LinkedList源码学习]]></title>
       <url>http://jianwl.com/2018/03/17/LinkedList%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</url>
       <content type="html"><![CDATA[<h3 id="常用方法-amp-字段梳理"><a href="#常用方法-amp-字段梳理" class="headerlink" title="常用方法 &amp; 字段梳理"></a>常用方法 &amp; 字段梳理</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-17/8479145.jpg" alt=""></p>
@@ -11596,23 +11677,6 @@ tee – the output of write (:w) command is redirected using tee
     </entry>
     
     <entry>
-      <title><![CDATA[MYSQL存储引擎]]></title>
-      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
-      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
-]]></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[MYSQL存储引擎优化]]></title>
       <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</url>
       <content type="html"><![CDATA[<h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
@@ -11637,6 +11701,23 @@ tee – the output of write (:w) command is redirected using tee
 <h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
 <h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
 <h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[MYSQL存储引擎]]></title>
+      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
+      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 ]]></content>
     </entry>
     
