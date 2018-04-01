@@ -64,7 +64,7 @@
 <meta property="og:description" content="引言从一段代码说起
 12345public static void stringTest()&amp;#123;    String str1 = &amp;quot;a&amp;quot; + &amp;quot;b&amp;quot; + 1;    String str2 = &amp;quot;ab1&amp;quot;;    System.out.println(str1 == str2);&amp;#125;
 大家猜猜结果如何？如果你的结论是tr">
-<meta property="og:updated_time" content="2018-04-01T05:54:52.884Z">
+<meta property="og:updated_time" content="2018-04-01T05:59:09.136Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="String源码学习">
 <meta name="twitter:description" content="引言从一段代码说起
@@ -361,7 +361,7 @@
 <p>结果如何呢？正确答案是false。</p>
 <p>让我们看看经过编译器编译后的代码如何：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">// 第一段代码</div><div class="line">    public static void stringTest()&#123;</div><div class="line">        String str1 = &quot;ab1&quot;;</div><div class="line">        String str2 = &quot;ab1&quot;;</div><div class="line">        System.out.println(str1 == str2);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">// 第二段代码  </div><div class="line">    public static void stringTest2()&#123;</div><div class="line">        String str1 = new String(&quot;ab1&quot;);</div><div class="line">        String str2 = &quot;ab1&quot;;</div><div class="line">        System.out.println(str1 == str2);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>也就是说第一段代码经过了编译器优化，原因是编译器发现”a”+”b”+1和”ab1”的效果一样，都是不可变类组成，但是为什么他们的内存地址会相同呢？如果你对此还有兴趣，那就一起来看看String类源码；</p>
+<p>也就是说第一段代码经过了编译器优化，原因是编译器发现”a”+”b”+1和”ab1”的效果一样，都是不可变量组成，但是为什么他们的内存地址会相同呢？如果你对此还有兴趣，那就一起来看看String类源码；</p>
 <h3 id="1-String类"><a href="#1-String类" class="headerlink" title="1 String类"></a>1 String类</h3><p>String类被<code>final</code>所修饰，也就是说String对象是不可变类。String类实现了<code>Serializable</code>、<code>Comparable&lt;String&gt;</code>、<code>CharSequence</code>接口。</p>
 <p>Comparable接口有compareTo(String s)方法，CharSequence接口有lengh()、chatAt(int index)、subSequence(int start,int end)方法。</p>
 <h3 id="2-String属性"><a href="#2-String属性" class="headerlink" title="2 String属性"></a>2 String属性</h3><p>String类中包含一个不可变的char数组来存放字符串，一个int型的变量hash用来存放计算后的哈希值。</p>
