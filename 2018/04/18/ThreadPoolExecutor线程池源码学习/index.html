@@ -70,7 +70,7 @@
 2. 线程池的工作原理首先我们看下当一个新的任务提交">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-4-12/20324843.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-4-12/82099386.jpg">
-<meta property="og:updated_time" content="2018-04-18T00:58:32.794Z">
+<meta property="og:updated_time" content="2018-04-18T01:10:06.649Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ThreadPoolExecutor线程池源码学习">
 <meta name="twitter:description" content="1. 使用线程池的好处合理利用线程池能够带来三个好处。
@@ -423,7 +423,7 @@
 <h5 id="6）keepAliveTime（线程活动保持时间）"><a href="#6）keepAliveTime（线程活动保持时间）" class="headerlink" title="6）keepAliveTime（线程活动保持时间）"></a>6）keepAliveTime（线程活动保持时间）</h5><p>大于corePool(线程池基本大小)的空闲工作线程，保持存活的时间<strong>(在存活时间内，如果没有接受新任务，就会被销毁)</strong>。如果任务很多，每个任务执行的时间比较短，可以调整这个时间，提高线程的利用率；</p>
 <h5 id="7）TimeUnit（线程活动保持时间的单位）"><a href="#7）TimeUnit（线程活动保持时间的单位）" class="headerlink" title="7）TimeUnit（线程活动保持时间的单位）"></a>7）TimeUnit（线程活动保持时间的单位）</h5><p>可选单位有天(DAYS)、小时(HOURS)、分钟(MINUTES)、毫秒(MILLISECONDS)、微秒(MICROSECONDS)</p>
 <h3 id="5-源码分析"><a href="#5-源码分析" class="headerlink" title="5. 源码分析"></a>5. 源码分析</h3><h4 id="1）提问"><a href="#1）提问" class="headerlink" title="1）提问"></a>1）提问</h4><p>1、线程池新增任务的流程；execute(Runnable command)</p>
-<p>2、线程池如何实现，在RUNING状态下，接受新任务，且处理队列里的任务；在SHUTDOWN状态下，不接受新任务，但处理新任务的 ;以及在STOP和TERMINATE状态下的处理方式；</p>
+<p>2、线程池如何实现，在RUNING状态下，接受新任务，且处理队列里的任务；在SHUTDOWN状态下，不接受新任务，但处理新任务的 ;以及在STOP、TIDYING和TERMINATE状态下的处理方式；</p>
 <p>3、线程池如何处理新增任务时，出现异常的；addWorkerFailed(Worker w)</p>
 <p>4、线程池如何实现关闭的；</p>
 <h5 id="1-1-execute-Runnable-command"><a href="#1-1-execute-Runnable-command" class="headerlink" title="1-1) execute(Runnable command)"></a>1-1) execute(Runnable command)</h5><p><code>execute</code>方法三个主要步骤：① 活动线程小于<code>corePoolSize</code>的时候创建新的线程；②活动线程大于<code>corePoolSize</code>先加入到任务队列当中；③ 任务队列满了再去启动新的线程，如果线程数达到最大值就拒绝任务。</p>
