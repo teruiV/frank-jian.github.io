@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-04-18T01:10:06.649Z</updated>
+  <updated>2018-04-22T22:57:59.850Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,70 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ThreadLocal源码学习</title>
+    <link href="http://jianwl.com/2018/04/19/ThreadLocal%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://jianwl.com/2018/04/19/ThreadLocal源码学习/</id>
+    <published>2018-04-18T22:44:09.000Z</published>
+    <updated>2018-04-22T22:57:59.850Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="常用方法-amp-字段"><a href="#常用方法-amp-字段" class="headerlink" title="常用方法 &amp; 字段"></a>常用方法 &amp; 字段</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-4-19/34870755.jpg" alt=""></p>
+<h3 id="1、使用ThreadLocal的好处"><a href="#1、使用ThreadLocal的好处" class="headerlink" title="1、使用ThreadLocal的好处"></a>1、使用ThreadLocal的好处</h3><p>可以实现多线程，变量间互不干扰；举个例子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class ThreadLocalDemo &#123;</div><div class="line">    public static class MyTask implements Runnable&#123;</div><div class="line">        private ThreadLocal&lt;Double&gt; threadLocal = new ThreadLocal&lt;&gt;();</div><div class="line">        @Override</div><div class="line">        public void run() &#123;</div><div class="line">            threadLocal.set(Math.random());</div><div class="line">            System.out.println(String.format(&quot;thread name : %s, threadlocal: %.2f&quot;,Thread.currentThread().getName(), threadLocal.get()));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        MyTask task = new MyTask();</div><div class="line">        new Thread(task,&quot;测试线程1&quot;).start();</div><div class="line">        new Thread(task,&quot;测试线程2&quot;).start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">thread name : 测试线程2, threadlocal: 0.38</div><div class="line">thread name : 测试线程1, threadlocal: 0.85</div></pre></td></tr></table></figure>
+<p>由结果可以看出，每个线程的变量是独立互不干扰的，如果把<code>ThreadLocal</code>换成Double等其他对象，每个线程的变量结果应该是一样的。</p>
+<h3 id="提出问题"><a href="#提出问题" class="headerlink" title="提出问题"></a>提出问题</h3><ol>
+<li>ThreadLocal为多线程共享变量，如何实现变量在多线程中互不干扰的？set()，get()</li>
+<li>每个线程变量的存储方式，ThreadLocalMap</li>
+<li>ThreadLocalMap是如何解决Hash冲突的；</li>
+<li>ThreadLocal放置在Entry数组的索引位置，如何确定；</li>
+<li>什么场景下会发生内存泄露，如何防止内存泄露；</li>
+<li>为什么ThreadLocalMap是一个Entry数组的数据结构？明明一个threadlocal在一个线程中只能存入一个值；</li>
+</ol>
+<h4 id="1）如何实现变量在多线程中互不干扰的"><a href="#1）如何实现变量在多线程中互不干扰的" class="headerlink" title="1）如何实现变量在多线程中互不干扰的"></a>1）如何实现变量在多线程中互不干扰的</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">public void set(T value) &#123;</div><div class="line">    Thread t = Thread.currentThread(); // 获取当前线程</div><div class="line">    ThreadLocalMap map = getMap(t);</div><div class="line">    if (map != null)</div><div class="line">        map.set(this, value); </div><div class="line">    else</div><div class="line">        createMap(t, value);</div><div class="line">&#125;</div><div class="line"></div><div class="line">ThreadLocalMap getMap(Thread t) &#123;</div><div class="line">    return t.threadLocals;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public T get() &#123;</div><div class="line">    Thread t = Thread.currentThread();</div><div class="line">    ThreadLocalMap map = getMap(t);</div><div class="line">    if (map != null) &#123;</div><div class="line">        ThreadLocalMap.Entry e = map.getEntry(this);</div><div class="line">        if (e != null) &#123;</div><div class="line">            @SuppressWarnings(&quot;unchecked&quot;)</div><div class="line">            T result = (T)e.value;</div><div class="line">            return result;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return setInitialValue();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以发现，每个线程中都有一个<code>ThreadLocalMap</code>数据结构，当执行set方法时，其值是保存在当前线程的<code>threadLocals</code>变量中，当执行get方法时，是从当前线程的<code>threadLocals</code>变量获取的，所以线程1中set的值，对线程2来说是拿不到的，而且在线程2中重新set的话，也不会影响到线程1中的值，保证了线程之间不会相互干扰；</p>
+<p>那每个线程中的<code>ThreadLocalMap</code>究竟是什么？</p>
+<h4 id="2）-每个线程变量的存储方式，ThreadLocalMap"><a href="#2）-每个线程变量的存储方式，ThreadLocalMap" class="headerlink" title="2） 每个线程变量的存储方式，ThreadLocalMap"></a>2） 每个线程变量的存储方式，ThreadLocalMap</h4><p>从名字上看，可以猜到它也是一个类似<code>HashMap</code>的数据结构，但是在ThreadLocal中，并没实现Map接口。</p>
+<p>在ThreadLocalMap中，也是初始化一个大小16的Entry数组，Entry对象用来保存每一个key-value键值对，只不过这里的key永远都是ThreadLocal对象，通过ThreadLocal的set方法，结果把ThreadLocal对象自己当做key，放进了ThreadLocalMap中。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-4-23/56990974.jpg" alt=""></p>
+<p>这里需要注意的是，ThreadLocalMap的Entry继承WeakReference和HashMap很大的区别是，Entry中没有next字段，所以就不存在链表的情况；</p>
+<h4 id="3）Hash冲突"><a href="#3）Hash冲突" class="headerlink" title="3）Hash冲突"></a>3）Hash冲突</h4><p>没有链表结构，那发生Hash冲突了怎么办？</p>
+<p>先看看ThreadLocalMap中插入一个key-value的实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">private void set(ThreadLocal&lt;?&gt; key, Object value) &#123;</div><div class="line">   Entry[] tab = table;</div><div class="line">   int len = tab.length;</div><div class="line">   int i = key.threadLocalHashCode &amp; (len-1);</div><div class="line"></div><div class="line">   for (Entry e = tab[i];</div><div class="line">         e != null;</div><div class="line">         e = tab[i = nextIndex(i, len)]) &#123;</div><div class="line">         ThreadLocal&lt;?&gt; k = e.get();</div><div class="line"></div><div class="line">         if (k == key) &#123;</div><div class="line">             e.value = value;</div><div class="line">             return;</div><div class="line">          &#125;</div><div class="line"></div><div class="line">          if (k == null) &#123;</div><div class="line">              replaceStaleEntry(key, value, i);</div><div class="line">              return;</div><div class="line">          &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    tab[i] = new Entry(key, value);</div><div class="line">    int sz = ++size;</div><div class="line">    if (!cleanSomeSlots(i, sz) &amp;&amp; sz &gt;= threshold)</div><div class="line">          rehash();</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>每个ThreadLocal对象都有一个hash值<code>threadLocalHashCode</code>, <strong>每初始化一个ThreadLocal对象，hash值就增加一个固定的大小0x61c88647</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">private final int threadLocalHashCode = nextHashCode();</div><div class="line"></div><div class="line">private static AtomicInteger nextHashCode =</div><div class="line">    new AtomicInteger();</div><div class="line">    </div><div class="line">private static final int HASH_INCREMENT = 0x61c88647;</div><div class="line"></div><div class="line">private static int nextHashCode() &#123;</div><div class="line">    return nextHashCode.getAndAdd(HASH_INCREMENT);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-ThreadLocal如何定位到Entry数组的索引位的"><a href="#4-ThreadLocal如何定位到Entry数组的索引位的" class="headerlink" title="4) ThreadLocal如何定位到Entry数组的索引位的"></a>4) ThreadLocal如何定位到Entry数组的索引位的</h4><p>在插入过程中，根据ThreadLocal对象的Hash值，定位到table中的位置i，过程如下：</p>
+<p>1、如果当前位置是空的，那么正好，就初始化一个Entry对象放置位置i上，位置i通过threadlocal的hashcode与table的长度的取余得到；</p>
+<p>2、不巧，位置i已经有Entry对象了，如果这个Entry对象的key正好是即将设置的key，那么重新设置Entry中的value；</p>
+<p>3、很不巧，位置i的Entry对象和即将设置的key没有关系，那么只能找到下一个空位置；</p>
+<p>这样的话，在get的时候，也会根据ThreadLocal对象的hash值，定位table中的位置，然后判断位置Entry中的key是否和get的key一致，如果不一致，就判断下一个位置。</p>
+<p>可以发现，set和get如果冲突严重的话，效率很低，因为ThreadLocalMap是Thread的一个属性，所以即使在自己的代码中控制了设置的元素个数，但还是不能控制其代码的行为；</p>
+<h4 id="5）内存泄露"><a href="#5）内存泄露" class="headerlink" title="5）内存泄露"></a>5）内存泄露</h4><p>ThreadLocal可能导致内存泄露，为什么？</p>
+<p>先看看Entry的实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">static class Entry extends WeakReference&lt;ThreadLocal&lt;?&gt;&gt; &#123;     Object value;</div><div class="line">     Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</div><div class="line">         super(k);</div><div class="line">         value = v;</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过之前的分析已经知道，当使用ThreadLocal保存一个value时，会在ThreadLocalMap中的数组插入一个Entry对象，按理说key-value都应该以强引用保存在Entry对象中，但在ThreadLocalMap的实现中，key被保存到了WeakReference对象中。</p>
+<p>这就导致了一个问题，ThreadLocal在没有外部强引用是，发生GC时会被回收，如果创建ThreadLocal的线程一直持续运行，那么这个Entry对象中的value就有可能一直得不到回收，发生内存泄露；</p>
+<h5 id="如何避免内存泄露"><a href="#如何避免内存泄露" class="headerlink" title="如何避免内存泄露"></a>如何避免内存泄露</h5><p>既然已经发现有内存泄露的隐患，自然有应对的策略，在调用ThreadLocal的get()、set()可能会清楚ThreadLocalMap中key为null的Entry对象，这样对应的value就没有GC Roots可达了，下次GC的时候就可以被回收，当然如果调用remove方法，肯定会删除对应的Entry对象；</p>
+<p>如果使用ThreadLocal的set方法之后，没有显示的调用remove方法，就有可能发生内存泄露，所以养成良好的编程习惯十分重要，使用完ThreadLocal之后，记得调用remove方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void test_002()&#123;</div><div class="line">    ThreadLocal&lt;String&gt; hello = new ThreadLocal&lt;&gt;();</div><div class="line">    try &#123;</div><div class="line">        hello.set(&quot;Hello World!&quot;);</div><div class="line">    &#125;finally &#123;</div><div class="line">        hello.remove();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="6-为什么ThreadLocalMap是一个Entry数组的数据结构？"><a href="#6-为什么ThreadLocalMap是一个Entry数组的数据结构？" class="headerlink" title="6. 为什么ThreadLocalMap是一个Entry数组的数据结构？"></a>6. 为什么ThreadLocalMap是一个Entry数组的数据结构？</h4><p>我们知道，每个线程都有一个ThreadLocalMap；之前一直困扰为什么它的数据结构是Entry数组，而不是Entry对象呢？</p>
+<p>因为同一个线程中，可以设置多个ThreadLocal，每个threadLocal都会存入到线程的ThreadLocalMap对象中，所以是Entry数组的数据结构；</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;常用方法-amp-字段&quot;&gt;&lt;a href=&quot;#常用方法-amp-字段&quot; class=&quot;headerlink&quot; title=&quot;常用方法 &amp;amp; 字段&quot;&gt;&lt;/a&gt;常用方法 &amp;amp; 字段&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://oc5a5l0a0.bkt
+    
+    </summary>
+    
+      <category term="JDK源码学习专题" scheme="http://jianwl.com/categories/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
+    
+    
+      <category term="JDK源码学习专题" scheme="http://jianwl.com/tags/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title>ThreadPoolExecutor线程池源码学习</title>
@@ -1705,42 +1769,6 @@
     
     
       <category term="Elasticsearch" scheme="http://jianwl.com/tags/Elasticsearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ShadowsocksX在配置文件设置server列表</title>
-    <link href="http://jianwl.com/2017/10/21/ShadowsocksX%E5%9C%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AEserver%E5%88%97%E8%A1%A8/"/>
-    <id>http://jianwl.com/2017/10/21/ShadowsocksX在配置文件设置server列表/</id>
-    <published>2017-10-21T08:44:56.000Z</published>
-    <updated>2017-10-21T09:02:28.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在Mac上使用ShadowsocksX客户端，之前都是一台一台服务器手动添加的，但是服务器太多就想能不能通过配置文件来设置。接下来我们来演示下，在Mac下如何通过配置文件来设置服务列表。</p>
-<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><h4 id="1、-Shadowsocks客户端在Mac下的配置文件的位置"><a href="#1、-Shadowsocks客户端在Mac下的配置文件的位置" class="headerlink" title="1、 Shadowsocks客户端在Mac下的配置文件的位置"></a>1、 Shadowsocks客户端在Mac下的配置文件的位置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">~/Library/Preferences/clowwindy.ShadowsocksX.plist</div></pre></td></tr></table></figure>
-<h4 id="2、plist文件是什么"><a href="#2、plist文件是什么" class="headerlink" title="2、plist文件是什么?"></a>2、plist文件是什么?</h4><blockquote>
-<p>在OS X的Cocoa，NeXTSTEP和GNUstep编程框架中，属性列表（Property List）文件是一种用来存储序列化后的对象的文件。属性列表文件的文件扩展名为.plist，因此通常被称为plist文件。Plist文件通常用于储存用户设置，也可以用于存储捆绑的信息。——Wikipedia</p>
-</blockquote>
-<h4 id="3、将plist转成可读的xml"><a href="#3、将plist转成可读的xml" class="headerlink" title="3、将plist转成可读的xml"></a>3、将plist转成可读的xml</h4><p><strong>注意：</strong> 在修改plist <strong>前请务必备份</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plutil -convert xml1 ~/Library/Preferences/clowwindy.ShadowsocksX.plist -o xxx.xml</div></pre></td></tr></table></figure>
-<p>在<key>config</key>字段下的<data>字段就是保存了现有服务器信息的字段，整个复制出来，base63解码(OSX的base64工具在从stdin读入数据的时候有长度限制，建议先保存到文件再读入)</data></p>
-<h4 id="4、base64解码服务列表信息"><a href="#4、base64解码服务列表信息" class="headerlink" title="4、base64解码服务列表信息"></a>4、base64解码服务列表信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">base64 -D -i /path/to/file -o -</div></pre></td></tr></table></figure>
-<p>-D 表示解码，-i 表示读入的文件路径，-o – 表示输出解码结果到 stdout，也可以保存到新文件方便编辑。</p>
-<p>修改后base64编码填回xml(不加-D选项即是编码)</p>
-<h4 id="5、将xml转回plist"><a href="#5、将xml转回plist" class="headerlink" title="5、将xml转回plist"></a>5、将xml转回plist</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plutil -convert binary1 xxx.xml -o yyy.plist</div></pre></td></tr></table></figure>
-<h4 id="6、重新载入plist"><a href="#6、重新载入plist" class="headerlink" title="6、重新载入plist"></a>6、重新载入plist</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">defaults import clowwindy.ShadowsocksX /path/to/yyy.plist</div></pre></td></tr></table></figure>
-<h4 id="7、重启shadowsocksX客户端，即可看到新配置已经载入"><a href="#7、重启shadowsocksX客户端，即可看到新配置已经载入" class="headerlink" title="7、重启shadowsocksX客户端，即可看到新配置已经载入"></a>7、重启shadowsocksX客户端，即可看到新配置已经载入</h4><h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1、<a href="https://www.starduster.me/2016/04/02/mac-shadowsocksx-config-file-to-os-x-user-default-plist/" target="_blank" rel="external">从 ShadowsocksX 客户端配置文件说到 OS X user default plist</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;在Mac上使用ShadowsocksX客户端，之前都是一台一台服务器手动添加的，但是服务器太多就想能不能通过配置文件来设置。接下来我们来演示
-    
-    </summary>
-    
-      <category term="Mac" scheme="http://jianwl.com/categories/Mac/"/>
-    
-    
-      <category term="Mac" scheme="http://jianwl.com/tags/Mac/"/>
     
   </entry>
   
