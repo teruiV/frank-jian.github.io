@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-04-22T22:57:59.850Z</updated>
+  <updated>2018-04-22T23:00:00.471Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://jianwl.com/2018/04/19/ThreadLocal%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/"/>
     <id>http://jianwl.com/2018/04/19/ThreadLocal源码学习/</id>
     <published>2018-04-18T22:44:09.000Z</published>
-    <updated>2018-04-22T22:57:59.850Z</updated>
+    <updated>2018-04-22T23:00:00.471Z</updated>
     
     <content type="html"><![CDATA[<h3 id="常用方法-amp-字段"><a href="#常用方法-amp-字段" class="headerlink" title="常用方法 &amp; 字段"></a>常用方法 &amp; 字段</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-4-19/34870755.jpg" alt=""></p>
 <h3 id="1、使用ThreadLocal的好处"><a href="#1、使用ThreadLocal的好处" class="headerlink" title="1、使用ThreadLocal的好处"></a>1、使用ThreadLocal的好处</h3><p>可以实现多线程，变量间互不干扰；举个例子:</p>
@@ -28,7 +28,7 @@
 <p>输出结果：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">thread name : 测试线程2, threadlocal: 0.38</div><div class="line">thread name : 测试线程1, threadlocal: 0.85</div></pre></td></tr></table></figure>
 <p>由结果可以看出，每个线程的变量是独立互不干扰的，如果把<code>ThreadLocal</code>换成Double等其他对象，每个线程的变量结果应该是一样的。</p>
-<h3 id="提出问题"><a href="#提出问题" class="headerlink" title="提出问题"></a>提出问题</h3><ol>
+<h3 id="2、提出问题"><a href="#2、提出问题" class="headerlink" title="2、提出问题"></a>2、提出问题</h3><ol>
 <li>ThreadLocal为多线程共享变量，如何实现变量在多线程中互不干扰的？set()，get()</li>
 <li>每个线程变量的存储方式，ThreadLocalMap</li>
 <li>ThreadLocalMap是如何解决Hash冲突的；</li>

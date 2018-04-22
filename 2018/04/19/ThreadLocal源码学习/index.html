@@ -66,7 +66,7 @@
 12345678910111213141516public class ThreadLocalDemo &amp;#123;    public static class MyTask implements Runnable&amp;#123;        private ThreadLocal&amp;lt;D">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-4-19/34870755.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-4-23/56990974.jpg">
-<meta property="og:updated_time" content="2018-04-22T22:57:59.850Z">
+<meta property="og:updated_time" content="2018-04-22T23:00:00.471Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ThreadLocal源码学习">
 <meta name="twitter:description" content="常用方法 &amp;amp; 字段
@@ -363,7 +363,7 @@
 <p>输出结果：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">thread name : 测试线程2, threadlocal: 0.38</div><div class="line">thread name : 测试线程1, threadlocal: 0.85</div></pre></td></tr></table></figure>
 <p>由结果可以看出，每个线程的变量是独立互不干扰的，如果把<code>ThreadLocal</code>换成Double等其他对象，每个线程的变量结果应该是一样的。</p>
-<h3 id="提出问题"><a href="#提出问题" class="headerlink" title="提出问题"></a>提出问题</h3><ol>
+<h3 id="2、提出问题"><a href="#2、提出问题" class="headerlink" title="2、提出问题"></a>2、提出问题</h3><ol>
 <li>ThreadLocal为多线程共享变量，如何实现变量在多线程中互不干扰的？set()，get()</li>
 <li>每个线程变量的存储方式，ThreadLocalMap</li>
 <li>ThreadLocalMap是如何解决Hash冲突的；</li>
@@ -583,7 +583,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用方法-amp-字段"><span class="nav-text">常用方法 & 字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、使用ThreadLocal的好处"><span class="nav-text">1、使用ThreadLocal的好处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提出问题"><span class="nav-text">提出问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1）如何实现变量在多线程中互不干扰的"><span class="nav-text">1）如何实现变量在多线程中互不干扰的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2）-每个线程变量的存储方式，ThreadLocalMap"><span class="nav-text">2） 每个线程变量的存储方式，ThreadLocalMap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3）Hash冲突"><span class="nav-text">3）Hash冲突</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-ThreadLocal如何定位到Entry数组的索引位的"><span class="nav-text">4) ThreadLocal如何定位到Entry数组的索引位的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5）内存泄露"><span class="nav-text">5）内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如何避免内存泄露"><span class="nav-text">如何避免内存泄露</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-为什么ThreadLocalMap是一个Entry数组的数据结构？"><span class="nav-text">6. 为什么ThreadLocalMap是一个Entry数组的数据结构？</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用方法-amp-字段"><span class="nav-text">常用方法 & 字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、使用ThreadLocal的好处"><span class="nav-text">1、使用ThreadLocal的好处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、提出问题"><span class="nav-text">2、提出问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1）如何实现变量在多线程中互不干扰的"><span class="nav-text">1）如何实现变量在多线程中互不干扰的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2）-每个线程变量的存储方式，ThreadLocalMap"><span class="nav-text">2） 每个线程变量的存储方式，ThreadLocalMap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3）Hash冲突"><span class="nav-text">3）Hash冲突</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-ThreadLocal如何定位到Entry数组的索引位的"><span class="nav-text">4) ThreadLocal如何定位到Entry数组的索引位的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5）内存泄露"><span class="nav-text">5）内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如何避免内存泄露"><span class="nav-text">如何避免内存泄露</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-为什么ThreadLocalMap是一个Entry数组的数据结构？"><span class="nav-text">6. 为什么ThreadLocalMap是一个Entry数组的数据结构？</span></a></li></ol></li></ol></div>
             
 
           </div>
