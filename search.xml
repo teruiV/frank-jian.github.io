@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title><![CDATA[MYSQL索引原理]]></title>
+      <url>http://jianwl.com/2018/04/24/MYSQL%E7%B4%A2%E5%BC%95%E5%8E%9F%E7%90%86/</url>
+      <content type="html"><![CDATA[<h3 id="1-索引目的"><a href="#1-索引目的" class="headerlink" title="1. 索引目的"></a>1. 索引目的</h3><p>索引的目的在于提高查询效率，可以类比字典，如果要查<code>mysql</code>这个单词，我们肯定需要定位到m字母，然后从往下找到y字母，再找到剩下的sql。如果没有索引，那么你很可能需要把所有单词看一遍才能找到你想要的，如果我想找到m开头的单词呢？或者ze开头的单词呢？是不是觉得如果没有索引，这个事情根本无法完成？</p>
+<h3 id="2-索引原理"><a href="#2-索引原理" class="headerlink" title="2. 索引原理"></a>2. 索引原理</h3><p>除了字典，生活中随处可见索引的例子，如火车站的车次表，图书的目录等，他们的原理都是一样的，通过不断的缩小想要获得的范围来筛选出最终想要的结果，同时把随机事件变成顺序的时间，也就是我们总是通过同一种查找方式来锁定数据。</p>
+<p>数据库也是一样，但显然要复杂许多，因为不仅面临这等值查询、还有范围查询(<code>&gt;</code>、<code>&lt;</code>、<code>between</code>、<code>in</code>)、模糊查询(like)、并集查询(or)等。数据库应该选择怎么样的方式来应对所有问题呢？我们回想字典的例子，能不能把数据分成段，然后分段查询呢？最简单的如果1000条数据，1到100分成第一段，101到200分成第二段、201到300分成第三段…这样查第250条数据，只要找第三段就可以了，一下子去除了90%的无效数据。但是如果是1千万的记录呢，分成几段比较好？稍有算法基础的同学会想到搜索树，其平均复杂度是lgN,具有不错的查询性能。但这里我们忽略一个关键的问题，复杂度模型是基于每次相同的操作成本来考虑的，数据库实现比较复杂，数据保存在磁盘上，而为了提高性能，每次又可以把部分数据读入内存来计算，因为我们知道访问磁盘的成本大概是访问内存的十万倍左右，所以简单的搜索树难以满足复杂的应用场景。</p>
+<h3 id="3-磁盘IO和预读"><a href="#3-磁盘IO和预读" class="headerlink" title="3. 磁盘IO和预读"></a>3. 磁盘IO和预读</h3><p>前面提高了访问磁盘，那么这里先简单介绍一些磁盘IO和预读，磁盘读取数据靠的是机械运动，每次读取数据花费的时间可以分为寻道时间、旋转延迟、传输时间三个部分、寻道时间指的是磁臂移动到指定磁道所需要的时间，主流磁盘一般在5ms以下；旋转延迟就是我们常说的磁盘转速，比如一个磁盘7200转，表示每分钟能转7200次，也就是1秒转120次，旋转延迟就是1/120/2 = 4.17ms；传输时间指从磁盘读出或将数据写入磁盘的时间，一般在零点几毫秒，相对于前两个时间可以忽略不计。那么访问一次磁盘的时间，即一次磁盘IO的时间约等于5+4.17 = 9ms左右，听起来还挺不错，但要知道一台500 - MIPS的机器每秒可以执行5亿条指令，因为指令依靠的是电的性质，换句话说执行一次IO的时间可以执行40万条指令，数据库动辄十万百万乃至千万数据，每次9毫秒的时间，显然是个灾难。下图是计算机硬件延迟的对比图，供大家参考；</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-4-24/44660032.jpg" alt=""></p>
+<p>考虑到磁盘IO是非常高昂的操作计算机操作系统做了一些优化，当一次IO是，不光把当前磁盘地址的数据，而是把相邻的数据也都读取到内存缓冲区内，因为局部预读性原理告诉我们，当计算机访问一个地址的数据的时候，与其相邻的数据也会很快被访问到。每次IO读取的数据我们称之为一页(page)。具体一页有多大数据跟操作系统有关，一般为4k或8k，也就是我们读取一页内的数据时候，实际上发生了一次IO，这个理论对于索引的数据结构设计非常有帮助。</p>
+<h3 id="4-索引的数据结构"><a href="#4-索引的数据结构" class="headerlink" title="4. 索引的数据结构"></a>4. 索引的数据结构</h3><p>前面讲了生活中索引的例子，索引的基本原理，数据库的复杂性，又讲了操作系统的相关知识，目的就是让大家了解，任何一种数据结构都不是凭空产生的，一定会有他的背景和使用场景，我们现在总结一下，我们需要这种数据结构能够做些什么，其实很简单，就是：每次查找数据时把磁盘IO次数控制在一个很小的数量级，最好是常数数量级。那么我们就想到如果一个高度可控的多路搜索树是否能满足要求呢？就这样，b+树应运而生。</p>
+<h3 id="5-详解B-树"><a href="#5-详解B-树" class="headerlink" title="5. 详解B+树"></a>5. 详解B+树</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-4-24/6850674.jpg" alt=""></p>
+<p>如上图，是一颗B+树，这里只说一些重点，浅蓝色的块我们称之为磁盘块，可以看到每个磁盘块包含几个数据项(深蓝色所示)和指针(黄色所示)，如磁盘块1包含数据项17和35，包含指针P1、P2、P3，P1表示小于17的磁盘块，P2表示17和35之间的磁盘块，P3表示大于35的磁盘块，真实的数据存于<strong>叶子节点</strong>即 3、5、9、10、13、15、28、29、36<br>60、75、79、90、99。非叶子节点只存储真实的数据，只存储指引搜索方向的数据项，如17、35并不真实存在于数据表中。</p>
+<h4 id="B-树的查找过程"><a href="#B-树的查找过程" class="headerlink" title="B+树的查找过程"></a>B+树的查找过程</h4><p>如图所示，如果要查找数据项是29，那么首先会把磁盘块1由磁盘加载到内存，此时发生一次IO，在内存中用二分法查找确定29在17和35之间，锁定磁盘块1的P2指针，内存时间因为非常短(相比磁盘的IO)可以忽略不计，通过磁盘块1的P2指针的磁盘地址把磁盘块3由磁盘块8加载到内存，发生第二次IO，29在26和30之间，锁定磁盘块3的P2指针，通过指针加载磁盘块8到内存，发生第三次IO，同时内存中做二分查找找到29，结束查询，总计三次IO。真实的情况是，3层的B+树可以表示上百万的数据，如果上百万的数据查找只需要三次IO，性能将是巨大的，如果没有索引，每个数据项都要发生一次IO，那么总计共需要百万次IO，显然成本非常高。</p>
+<h4 id="B-树性质"><a href="#B-树性质" class="headerlink" title="B+树性质"></a>B+树性质</h4><ol>
+<li>通过上面的分析，我们知道IO次数取决于B+数的高度H，假设当前数据表的数据为N，每个磁盘块的数据项的数据是m，则有h=log(m+1)N,当数据量N一定的情况下，m越大，h越小；而m = 磁盘块的大小 / 数据项的大小，磁盘块的大小也就是一个数据页的大小，是固定的，如果数据项占的空间越小，数据项的数量越多，树的高度越低。这就是为什么每个数据项，即索引字段尽量要小，比如int占4字节，要比bigint8字节少一半，这也是为什么B+树要求吧真实的数据放到叶子节点而不是内层节点，一旦放到内层节点，磁盘块的数据项会大幅度下降，导致树增高。当数据项等于1时，会将退化成线性表。</li>
+<li>当B+树的数据项是符合的数据，比如(name,age,sex)的时候，b+树是按照从左到右的顺序来建立搜索树的，比如当(张三，20，F)这样的数据来检索的时候，B+树会优先比较name来确定下一步的搜索方向，如果name相同再一次比较age和sex，最后得到检索的数据；但当(20,F)这样的没有name的数据来的时候，B+树就不知道下一步该查哪个节点，因为建立搜索树的时候name就是第一个比较因子，必须要先根据name来搜索才知道下一步去哪里查询。比如当(张三，F)这样的数据来检索时，b+树可以用name来指定搜索方向，但下一个字段age的缺失，所以只能把名字等于张三的数据都找到，然后在匹配性别F的数据了，这个是非常重要的性质，即索引最左匹配特性。</li>
+</ol>
+<h3 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h3><ol>
+<li>最左前缀匹配原则，非常重要的原则，mysql会一直向右匹配直到遇到范围查询(&gt;、&lt;、between、like)就停止匹配，比如a = 1 and b = 2 and c &gt; 3 and d = 4 如果建立(a、b、c、d)顺序的索引，d是用不到索引的，如果建立(a,b,d,c)的索引则都可以用到，a,b,d的顺序可以任意调整。</li>
+<li>= 和 in 可以乱序，比如 a = 1 and b = 2 and c = 3 建立(a,b,c)索引可以任意顺序，mysql的查询优化器会帮你优化成索引可以识别的形式。</li>
+<li>尽量寻找区分度高的列作为索引，区分度的公式是count(distinct col)/count(*)，表示字段不重复的比例，比例越大我们扫描的记录越少，唯一键的区分度是1，而一些状态，性别字段可能在大数据面前区分度就是0，一般需要join的字段我们要求是0.1以上，平均1条扫描10条记录</li>
+<li>索引项不能参与计算，保持干净列，比如 from_unixtime(create_time) = ‘2018-04-20’就不能使用索引，原因很简单，b+树中存的都是数据表中的字段值，但进行检索时，需要把所有元素都应用函数才能比较，显然成本太大。所以语句应该写成create_time = unix_timestamp(‘2018-04-20’)</li>
+<li>尽量的扩展索引，不要新建索引，比如表中已经有a的索引，现在要加(a,b)索引，那么只需要修改原来的索引即可。</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[ThreadLocal源码学习]]></title>
       <url>http://jianwl.com/2018/04/19/ThreadLocal%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</url>
       <content type="html"><![CDATA[<h3 id="常用方法-amp-字段"><a href="#常用方法-amp-字段" class="headerlink" title="常用方法 &amp; 字段"></a>常用方法 &amp; 字段</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-4-19/34870755.jpg" alt=""></p>
@@ -450,7 +477,7 @@
 </ul>
 <h4 id="3-多线程-amp-线程池"><a href="#3-多线程-amp-线程池" class="headerlink" title="3) 多线程 &amp; 线程池"></a>3) 多线程 &amp; 线程池</h4><ul>
 <li>Thread</li>
-<li>ThreadLocal</li>
+<li><a href="http://jianwl.com/2018/04/19/ThreadLocal%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/#more">ThreadLocal</a>「√」</li>
 <li>ConcurrentHashMap</li>
 <li><a href="http://jianwl.com/2018/04/18/ThreadPoolExecutor%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/#more">ThreadPoolExecutor</a>「√」</li>
 </ul>
@@ -11935,6 +11962,23 @@ tee – the output of write (:w) command is redirected using tee
     </entry>
     
     <entry>
+      <title><![CDATA[MYSQL存储引擎]]></title>
+      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
+      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[MYSQL存储引擎优化]]></title>
       <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</url>
       <content type="html"><![CDATA[<h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
@@ -11959,23 +12003,6 @@ tee – the output of write (:w) command is redirected using tee
 <h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
 <h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
 <h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
-]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[MYSQL存储引擎]]></title>
-      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
-      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 ]]></content>
     </entry>
     
