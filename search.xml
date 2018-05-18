@@ -19,6 +19,7 @@
 <p>一个ConcurrentHashMap实例中包含由若干个Segment对象组成的数组。</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-5-16/36278984.jpg" alt=""></p>
 <h3 id="JDK1-8-分析"><a href="#JDK1-8-分析" class="headerlink" title="JDK1.8 分析"></a>JDK1.8 分析</h3><p>1.8的实现已经抛弃了Segment分段锁机制，利用CAS + Synchronized来保证并发更新的安全，底层采用数组 + 链表 + 红黑树的存储结构。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-5-18/3990408.jpg" alt=""></p>
 <h4 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h4><p>在开始之前，有些重要的概念需要介绍一下：</p>
 <p>1、 <code>table</code>: 默认为null,初始化发生在第一次插入操作，默认大小为16的数组，用来存储Node节点数据，扩容时大小总是2的幂次方。</p>
 <p>2、<code>nextTable</code>: 默认为null,扩容时新生成的数组，其大小为原数组的两倍。</p>
@@ -661,7 +662,7 @@
 <h4 id="3-多线程-amp-线程池"><a href="#3-多线程-amp-线程池" class="headerlink" title="3) 多线程 &amp; 线程池"></a>3) 多线程 &amp; 线程池</h4><ul>
 <li><a href="http://jianwl.com/2018/05/04/Thread%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/#more">Thread</a>「√」</li>
 <li><a href="http://jianwl.com/2018/04/19/ThreadLocal%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/#more">ThreadLocal</a>「√」</li>
-<li>ConcurrentHashMap</li>
+<li><a href="http://jianwl.com/2018/05/16/ConcurrentHashMap%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/#more">ConcurrentHashMap</a>「√」</li>
 <li><a href="http://jianwl.com/2018/04/18/ThreadPoolExecutor%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/#more">ThreadPoolExecutor</a>「√」</li>
 </ul>
 <h4 id="4-原子操作"><a href="#4-原子操作" class="headerlink" title="4) 原子操作"></a>4) 原子操作</h4><ul>
