@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-05-20T10:49:27.533Z</updated>
+  <updated>2018-05-20T11:01:21.079Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -20,10 +20,9 @@
     <link href="http://jianwl.com/2018/05/20/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B9%8Bhappens-before/"/>
     <id>http://jianwl.com/2018/05/20/Java内存模型之happens-before/</id>
     <published>2018-05-20T10:31:08.000Z</published>
-    <updated>2018-05-20T10:49:27.533Z</updated>
+    <updated>2018-05-20T11:01:21.079Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Java语言中有一个“先行发生”的原则，它是判断数据是否存在竞争、线程是否安全的主要依据。</p>
-<p>下面是Java内存模型一些“天然”先行发生关系，这些先行发生关系无须任何同步器协助就已经存在，可以在编码中直接使用。如果两个操作之间的关系不在此列，并且无法从下列规则推导出来的话，它们就没有顺序性保障，虚拟机可以对它们随意地进行重排序。</p>
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Java语言中有一个“先行发生”的原则，它是判断数据是否存在竞争、线程是否安全的主要依据。下面是Java内存模型一些“天然”先行发生关系，这些先行发生关系无须任何同步器协助就已经存在，可以在编码中直接使用。如果两个操作之间的关系不在此列，并且无法从下列规则推导出来的话，它们就没有顺序性保障，虚拟机可以对它们随意地进行重排序。</p>
 <h3 id="happens-before规则"><a href="#happens-before规则" class="headerlink" title="happens-before规则"></a>happens-before规则</h3><h4 id="1-程序次序规则"><a href="#1-程序次序规则" class="headerlink" title="1) 程序次序规则"></a>1) 程序次序规则</h4><p>在一个线程内，按照程序代码顺序，书写在前面的操作先行发生于书写在后面的操作。准确地说，应该是控制流顺序而不是程序代码顺序，因为要考虑分支、循环等结构。</p>
 <h4 id="2）管程锁定规则"><a href="#2）管程锁定规则" class="headerlink" title="2）管程锁定规则"></a>2）管程锁定规则</h4><p>一个unlock操作先行发生于后面的对同一个锁的lock操作。这里必须强调是同一个锁，而“后面”同样是指时间上的先后顺序。</p>
 <h4 id="3）volatile变量规则"><a href="#3）volatile变量规则" class="headerlink" title="3）volatile变量规则"></a>3）volatile变量规则</h4><p>对一个volatile变量的写操作先行发生于后面对这个变量的读操作，这里的“后面”同样是指时间上的先后顺序。</p>
@@ -39,8 +38,7 @@
     
     <summary type="html">
     
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;Java语言中有一个“先行发生”的原则，它是判断数据是否存在竞争、线程是否安全的主要依据。&lt;/p&gt;
-&lt;p&gt;下面是Java内存模型一些“天然”
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;Java语言中有一个“先行发生”的原则，它是判断数据是否存在竞争、线程是否安全的主要依据。下面是Java内存模型一些“天然”先行发生关系，这
     
     </summary>
     
