@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-05-20T10:10:15.617Z</updated>
+  <updated>2018-05-20T10:49:27.533Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java内存模型之happens-before</title>
+    <link href="http://jianwl.com/2018/05/20/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B9%8Bhappens-before/"/>
+    <id>http://jianwl.com/2018/05/20/Java内存模型之happens-before/</id>
+    <published>2018-05-20T10:31:08.000Z</published>
+    <updated>2018-05-20T10:49:27.533Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Java语言中有一个“先行发生”的原则，它是判断数据是否存在竞争、线程是否安全的主要依据。</p>
+<p>下面是Java内存模型一些“天然”先行发生关系，这些先行发生关系无须任何同步器协助就已经存在，可以在编码中直接使用。如果两个操作之间的关系不在此列，并且无法从下列规则推导出来的话，它们就没有顺序性保障，虚拟机可以对它们随意地进行重排序。</p>
+<h3 id="happens-before规则"><a href="#happens-before规则" class="headerlink" title="happens-before规则"></a>happens-before规则</h3><h4 id="1-程序次序规则"><a href="#1-程序次序规则" class="headerlink" title="1) 程序次序规则"></a>1) 程序次序规则</h4><p>在一个线程内，按照程序代码顺序，书写在前面的操作先行发生于书写在后面的操作。准确地说，应该是控制流顺序而不是程序代码顺序，因为要考虑分支、循环等结构。</p>
+<h4 id="2）管程锁定规则"><a href="#2）管程锁定规则" class="headerlink" title="2）管程锁定规则"></a>2）管程锁定规则</h4><p>一个unlock操作先行发生于后面的对同一个锁的lock操作。这里必须强调是同一个锁，而“后面”同样是指时间上的先后顺序。</p>
+<h4 id="3）volatile变量规则"><a href="#3）volatile变量规则" class="headerlink" title="3）volatile变量规则"></a>3）volatile变量规则</h4><p>对一个volatile变量的写操作先行发生于后面对这个变量的读操作，这里的“后面”同样是指时间上的先后顺序。</p>
+<h4 id="4-线程启动规则"><a href="#4-线程启动规则" class="headerlink" title="4) 线程启动规则"></a>4) 线程启动规则</h4><p>Thread对象的start()方法先行发生于此线程的每一个动作。</p>
+<h4 id="5）线程终止规则"><a href="#5）线程终止规则" class="headerlink" title="5）线程终止规则"></a>5）线程终止规则</h4><p>线程中的所有操作都先行发生于对此线程的终止检测，我们可以通过Thread.join()方法结束、Thread.isAlive()的返回值等手段检测到线程已经终止执行了。</p>
+<h4 id="6）线程中断规则"><a href="#6）线程中断规则" class="headerlink" title="6）线程中断规则"></a>6）线程中断规则</h4><p>对于线程interrupt()方法的调用先行发生于被中断线程的代码检测到中断时间的发生，可以通过Thread.interrupted方法检测到是否有中断发生。</p>
+<h4 id="7）对象终结规则"><a href="#7）对象终结规则" class="headerlink" title="7）对象终结规则"></a>7）对象终结规则</h4><p>一个对象的初始化完成(构造函数执行结束)先行发生于它的finilize()方法的开始。</p>
+<h4 id="8）传递性"><a href="#8）传递性" class="headerlink" title="8）传递性"></a>8）传递性</h4><p>如果操作A先行发生于操作B，操作B先行发生于操作C，那么就可以得出操作A先行发生于操作C。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>深入理解Java虚拟机 - P376</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;Java语言中有一个“先行发生”的原则，它是判断数据是否存在竞争、线程是否安全的主要依据。&lt;/p&gt;
+&lt;p&gt;下面是Java内存模型一些“天然”
+    
+    </summary>
+    
+      <category term="Java进阶" scheme="http://jianwl.com/categories/Java%E8%BF%9B%E9%98%B6/"/>
+    
+    
+      <category term="Java进阶" scheme="http://jianwl.com/tags/Java%E8%BF%9B%E9%98%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>Java内存模型</title>
@@ -1226,117 +1262,6 @@
     
     
       <category term="JVM专题" scheme="http://jianwl.com/tags/JVM%E4%B8%93%E9%A2%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>用ELK搭建自己的日志分析系统</title>
-    <link href="http://jianwl.com/2017/11/05/%E7%94%A8ELK%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E7%B3%BB%E7%BB%9F/"/>
-    <id>http://jianwl.com/2017/11/05/用ELK搭建自己的日志分析系统/</id>
-    <published>2017-11-05T00:25:09.000Z</published>
-    <updated>2017-11-05T03:50:14.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h3><p>不管用于记录、监控，日志对于任何系统来说都是一个极其重要的部分，但一般的日志的数据量会比较大，并且分散在各个地方，当管理的服务器比较少，我们还可以逐一登录到各个服务器去查看、分析。但如果服务器比较多，这种方法就显得力不从心了。基于这种场景，一些集中式的日志系统也就产生了。比较成熟<a href="https://www.splunk.com/zh-hans_cn" target="_blank" rel="external">Splunk</a>、Facebook的Scribe、Apache的Chukwa、Cloudera的Fluentd和ELK等。</p>
-<h3 id="2-概述"><a href="#2-概述" class="headerlink" title="2 概述"></a>2 概述</h3><p>ELK不是一款软件，是三个软件产品的首字母缩写：ElasticSearc、Logstash和Kibana，这三款都是开源的，目前归于<code>Elastic.co</code>公司。三者之间的关系如图所示：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-11-5/58949300.jpg" alt=""></p>
-<h4 id="1）Elasticsearch"><a href="#1）Elasticsearch" class="headerlink" title="1）Elasticsearch"></a>1）Elasticsearch</h4><p>Elasticsearch是一个实时的分布式搜索和分析引擎，它可以用于全文搜索、结构化搜索以及分析，它是基于Apache Lucence基础上开发搜索引擎，使用Java语言编写。作为ELK协议栈的核心，它用于集中存储数据。</p>
-<p>特点：</p>
-<ul>
-<li>实时</li>
-<li>分布式</li>
-<li>面向文档</li>
-<li>高可用性、易扩展、支持集群、分片、复制</li>
-<li>接口友好，RestFUL接口风格；</li>
-</ul>
-<h4 id="2）Logstash"><a href="#2）Logstash" class="headerlink" title="2）Logstash"></a>2）Logstash</h4><p>Logstash是一个具有实时渠道能力的数据收集引擎，是用JRuby语言编写，其作者是世界上著名的运维工程师乔丹西塞。</p>
-<p>特点：</p>
-<ul>
-<li>几乎可以访问任何数据</li>
-<li>可以和多种外部应用结合</li>
-<li>支持弹性扩展</li>
-</ul>
-<p>组成部分</p>
-<ul>
-<li>INPUTS，从各个服务器获取数据</li>
-<li>FILTERS，过滤处理获取到的数据</li>
-<li>OUTPUTS，将处理完的数据输出到指定地方</li>
-</ul>
-<h4 id="3）Kibana"><a href="#3）Kibana" class="headerlink" title="3）Kibana"></a>3）Kibana</h4><p>Kibana是一款基于Apache开源协议，使用Javascript语言编写，为Elasticsearch提供分析和可视化的Web平台。它可以在Elasticsearch的搜索中查找、交互数据，并生成各种维度的表图。</p>
-<h3 id="3-ELK平台搭建-MacOS"><a href="#3-ELK平台搭建-MacOS" class="headerlink" title="3 ELK平台搭建(MacOS)"></a>3 ELK平台搭建(MacOS)</h3><h4 id="1-Elasticsearch搭建"><a href="#1-Elasticsearch搭建" class="headerlink" title="1) Elasticsearch搭建"></a>1) Elasticsearch搭建</h4><p>1 下载Elasticsearch &amp; 解压</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.3.zip</div><div class="line">unzip elasticsearch-5.6.3.zip</div></pre></td></tr></table></figure>
-<p>2 启动Elasticsearch</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./$&#123;ES_HOME&#125;/bin/elasticsearch</div></pre></td></tr></table></figure>
-<p>3 检查是否启动成功</p>
-<p>健康值绿色: 所有主、复制分片都是正常的；</p>
-<p>健康值黄色: 所有主分片正常，部分或全部复制分片数有问题；</p>
-<p>健康值红色: 部分或全部主分片有问题 </p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-11-5/55815051.jpg" alt=""></p>
-<p>4 安装elastic-head</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git clone git://github.com/mobz/elasticsearch-head.git</div><div class="line">cd elasticsearch-head</div><div class="line">npm install</div><div class="line">npm run start</div></pre></td></tr></table></figure>
-<p>通过elastic-head查看elasticsearch的数据：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-11-5/4570828.jpg" alt=""></p>
-<h4 id="2）Logstash搭建"><a href="#2）Logstash搭建" class="headerlink" title="2）Logstash搭建"></a>2）Logstash搭建</h4><p>1 下载Logstash &amp; 解压</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget https://artifacts.elastic.co/downloads/logstash/logstash-5.6.3.zip</div><div class="line">unzip logstash-5.6.3.zip</div></pre></td></tr></table></figure>
-<p>2 Logstash管道测试</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd logstash-5.6.3</div><div class="line">bin/logstash -e &apos;input &#123; stdin &#123; &#125; &#125; output &#123; stdout &#123;&#125; &#125;&apos;</div></pre></td></tr></table></figure>
-<p><code>-e</code>表示能够在命令行中配置logstash的配置(一次性的),通过上述命令启动logstash，当你看到<code>Pipeline main started</code>，在命令行中输入<code>hello world</code>，会得到一个输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hello world!</div><div class="line">2017-11-05T01:53:55.571Z jianweilindeMacBook-Pro.local hello world!</div></pre></td></tr></table></figure>
-<p>3 配置Filebeat发送日志到Logstash</p>
-<p>1) 下载Filebeat &amp; 解压</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.6.3-darwin-x86_64.tar.gz</div><div class="line">tar zxvf filebeat-5.6.3-darwin-x86_64.tar.gz</div></pre></td></tr></table></figure>
-<p>2) 配置filebeat.yml</p>
-<ul>
-<li><p>下载<a href="http://oc5a5l0a0.bkt.clouddn.com/logstash-tutorial.log" target="_blank" rel="external">logstash-tutorial.log</a></p>
-</li>
-<li><p>配置filebeat.yml</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">filebeat.prospectors:</div><div class="line">- input_type: log</div><div class="line">  paths:</div><div class="line">    - /Users/jianweilin/Downloads/logstash-tutorial.log</div><div class="line">    - /var/log/*.log</div><div class="line">output.logstash:</div><div class="line">  hosts: [&quot;localhost:5043&quot;]</div></pre></td></tr></table></figure>
-<p>特别注意：logstash-tutorial.log的路径是刚刚下载的文件，在你本地的路径。</p>
-<p>3）配置Logstash配置文件</p>
-<p>在${LOGSTASH_HOME}目录下创建一个配置文件<code>first-pipeline.conf</code>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">input &#123;</div><div class="line">    beats &#123;</div><div class="line">        port =&gt; &quot;5043&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">output &#123;</div><div class="line">    elasticsearch &#123;</div><div class="line">        hosts =&gt; [ &quot;localhost:9200&quot; ]</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上述配置的意思是：从filebeat中接收数据，之后发送到elasticsearch中</p>
-<p>4) 启动logstash</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/logstash -f first-pipeline.conf --config.reload.automatic</div></pre></td></tr></table></figure>
-<p><code>--config.reload.automatic</code>表示之后如果first-pipeline.conf配置文件更新规则，会自动更新生效，不需要重启logstash；</p>
-<p>5) 启动filebeat将日志发送到logstash</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./filebeat -e -c filebeat.yml -d &quot;publish&quot;</div></pre></td></tr></table></figure>
-<p>6) 在elastic-head中查看数据</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-11-5/18364515.jpg" alt=""></p>
-<p>elasticsearch健康值为黄色，是因为只有一个主分片，没有复制分片；</p>
-<h4 id="3-Kibana搭建"><a href="#3-Kibana搭建" class="headerlink" title="3) Kibana搭建"></a>3) Kibana搭建</h4><p>1 Kibana下载 &amp; 解压</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget https://artifacts.elastic.co/downloads/kibana/kibana-5.6.3-darwin-x86_64.tar.gz</div><div class="line">tar zxvf kibana-5.6.3-darwin-x86_64.tar.gz</div></pre></td></tr></table></figure>
-<p>2 启动Kibana</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$&#123;KIBANA_HOME&#125;/bin/kibana</div></pre></td></tr></table></figure>
-<p>3 使用Kibana连接Elasticsearch</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-11-5/96019826.jpg" alt=""></p>
-<ul>
-<li>访问<code>localhost:5601</code>进入Kibana的UI界面</li>
-<li>在Kibana中配置Elasticsearch中索引的配置规则，符合配置规则的索引才会在Kibana中搜索到</li>
-<li>在Kibana中配置，数据以什么维度进行展示，通常来说设置为时间维度；</li>
-<li>在Kibana中点击create按钮创建索引匹配规则；</li>
-</ul>
-<p>4 在Kibana中搜索日志</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-11-5/5428734.jpg" alt=""></p>
-<p>至此ELK平台搭建完毕。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html" target="_blank" rel="external">Elasticsearch官方文档</a></li>
-<li><a href="https://www.elastic.co/guide/en/logstash/5.6/index.html" target="_blank" rel="external">Logstash官方文档</a></li>
-<li><a href="https://www.elastic.co/guide/en/kibana/5.6/install.html" target="_blank" rel="external">Kibana官方文档</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;1-前言&quot;&gt;&lt;a href=&quot;#1-前言&quot; class=&quot;headerlink&quot; title=&quot;1 前言&quot;&gt;&lt;/a&gt;1 前言&lt;/h3&gt;&lt;p&gt;不管用于记录、监控，日志对于任何系统来说都是一个极其重要的部分，但一般的日志的数据量会比较大，并且分散在各个地方，当管理的服
-    
-    </summary>
-    
-      <category term="Elasticsearch" scheme="http://jianwl.com/categories/Elasticsearch/"/>
-    
-    
-      <category term="Elasticsearch" scheme="http://jianwl.com/tags/Elasticsearch/"/>
     
   </entry>
   
