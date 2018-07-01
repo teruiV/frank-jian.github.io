@@ -1,0 +1,695 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Go," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oc5a5l0a0.bkt.clouddn.com/17-9-15/12958638.jpg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言因为之前已经有编程基础了，所以在接触新语言时，会预先概览语言的语法，而后在针对每个语法深入学习。本节会描述Go常用的语法规则。
+实战1. 编程第一个Go程序12345678package mainimport &amp;quot;fmt&amp;quot;// 输出Hello world!func main() &amp;#123;	fmt.Println(&amp;quot;hello world!&amp;quot;)&amp;#125">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go语法概述">
+<meta property="og:url" content="http://jianwl.com/2018/07/01/Go语法概述/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="前言因为之前已经有编程基础了，所以在接触新语言时，会预先概览语言的语法，而后在针对每个语法深入学习。本节会描述Go常用的语法规则。
+实战1. 编程第一个Go程序12345678package mainimport &amp;quot;fmt&amp;quot;// 输出Hello world!func main() &amp;#123;	fmt.Println(&amp;quot;hello world!&amp;quot;)&amp;#125">
+<meta property="og:updated_time" content="2018-07-01T01:34:34.663Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go语法概述">
+<meta name="twitter:description" content="前言因为之前已经有编程基础了，所以在接触新语言时，会预先概览语言的语法，而后在针对每个语法深入学习。本节会描述Go常用的语法规则。
+实战1. 编程第一个Go程序12345678package mainimport &amp;quot;fmt&amp;quot;// 输出Hello world!func main() &amp;#123;	fmt.Println(&amp;quot;hello world!&amp;quot;)&amp;#125">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> Go语法概述 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/07/01/Go语法概述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Go语法概述
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-01T09:19:24+08:00">
+                2018-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/01/Go语法概述/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/01/Go语法概述/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>因为之前已经有编程基础了，所以在接触新语言时，会预先概览语言的语法，而后在针对每个语法深入学习。本节会描述Go常用的语法规则。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-编程第一个Go程序"><a href="#1-编程第一个Go程序" class="headerlink" title="1. 编程第一个Go程序"></a>1. 编程第一个Go程序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import &quot;fmt&quot;</div><div class="line"></div><div class="line">// 输出Hello world!</div><div class="line">func main() &#123;</div><div class="line">	fmt.Println(&quot;hello world!&quot;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-声明变量"><a href="#2-声明变量" class="headerlink" title="2. 声明变量"></a>2. 声明变量</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">// 方式1</div><div class="line">func defineVar1()&#123;</div><div class="line">	var x int32</div><div class="line">	var s = &quot;hello world&quot;</div><div class="line">	println(x,s)</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 方式2</div><div class="line">func defineVar2()&#123;</div><div class="line">	x := 100</div><div class="line">	println(x)</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 定义变量</div><div class="line">func main() &#123;</div><div class="line">	defineVar1()</div><div class="line">	defineVar2()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-1-表达式if"><a href="#3-1-表达式if" class="headerlink" title="3.1 表达式if"></a>3.1 表达式if</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">// 表达式</div><div class="line">func main() &#123;</div><div class="line">	x := 100</div><div class="line"></div><div class="line">	if x &gt; 0 &#123;</div><div class="line">		println(&quot;x&quot;)</div><div class="line">	&#125;else if x &lt; 0 &#123;</div><div class="line">		println(&quot;-x&quot;)</div><div class="line">	&#125;else&#123;</div><div class="line">		println(&quot;0&quot;)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-2-表达式switch"><a href="#3-2-表达式switch" class="headerlink" title="3.2 表达式switch"></a>3.2 表达式switch</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">// switch</div><div class="line">func main() &#123;</div><div class="line">	x := 100</div><div class="line"></div><div class="line">	switch &#123;</div><div class="line">	case x &gt; 0:</div><div class="line">		println(&quot;x&quot;)</div><div class="line">	case x &lt; 0:</div><div class="line">		println(&quot;-x&quot;)</div><div class="line">	default:</div><div class="line">		println(&quot;0&quot;)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-3-表达式for"><a href="#3-3-表达式for" class="headerlink" title="3.3 表达式for"></a>3.3 表达式for</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">func for01()&#123;</div><div class="line">	println(&quot;&gt;&gt;&gt;&gt; for01 &gt;&gt;&gt;&gt;&gt;&quot;)</div><div class="line">	for i:=0; i&lt;5;i++&#123;</div><div class="line">		println(i)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	for i := 4; i&gt;=0;i--&#123;</div><div class="line">		println(i)</div><div class="line">	&#125;</div><div class="line">	println(&quot;&gt;&gt;&gt;&gt; for01 &gt;&gt;&gt;&gt;&gt;\n&quot;)</div><div class="line">&#125;</div><div class="line"></div><div class="line">func for02()&#123;</div><div class="line">	println(&quot;&gt;&gt;&gt;&gt; for02 &gt;&gt;&gt;&gt;&gt;&quot;)</div><div class="line">	x := 0</div><div class="line"></div><div class="line">	for x &lt; 5&#123;</div><div class="line">		println(x)</div><div class="line">		x++</div><div class="line">	&#125;</div><div class="line">	println(&quot;&gt;&gt;&gt;&gt; for02 &gt;&gt;&gt;&gt;&gt;\n&quot;)</div><div class="line">&#125;</div><div class="line"></div><div class="line">func for03()&#123;</div><div class="line">	println(&quot;&gt;&gt;&gt;&gt; for03 &gt;&gt;&gt;&gt;&gt;&quot;)</div><div class="line">	x := 4</div><div class="line"></div><div class="line">	for &#123;</div><div class="line">		println(x)</div><div class="line">		x--</div><div class="line"></div><div class="line">		if x&lt;0&#123;</div><div class="line">			break</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	println(&quot;&gt;&gt;&gt;&gt; for03 &gt;&gt;&gt;&gt;&gt;\n&quot;)</div><div class="line">&#125;</div><div class="line"></div><div class="line">func for04()&#123;</div><div class="line">	println(&quot;&gt;&gt;&gt;&gt; for04 &gt;&gt;&gt;&gt;&gt;&quot;)</div><div class="line"></div><div class="line">	x := []int&#123;100,101,102&#125;</div><div class="line"></div><div class="line">	for i,n :=range x&#123;</div><div class="line">		println(i,&quot;:&quot;,n)</div><div class="line">	&#125;</div><div class="line">	println(&quot;&gt;&gt;&gt;&gt; for04 &gt;&gt;&gt;&gt;&gt;\n&quot;)</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 多种循环</div><div class="line">func main() &#123;</div><div class="line">	for01()</div><div class="line">	for02()</div><div class="line">	for03()</div><div class="line">	for04()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-函数"><a href="#4-函数" class="headerlink" title="4. 函数"></a>4. 函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import (</div><div class="line">	&quot;errors&quot;</div><div class="line">	&quot;fmt&quot;</div><div class="line">)</div><div class="line"></div><div class="line">// 函数: 可定义多个返回值</div><div class="line">func div(a,b int) (int,error)&#123;</div><div class="line">	if b==0&#123;</div><div class="line">		return 0,errors.New(&quot;division by zero&quot;)</div><div class="line">	&#125;</div><div class="line">	return a/b, nil</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 函数是第一类型，可作为参数或返回值</div><div class="line">func print01(x int) func()&#123;</div><div class="line">	return func()&#123;</div><div class="line">		println(x)</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// defer定义延迟调用，无论函数是否出错，它都确保结束前被调用</div><div class="line">func defer01(a,b int)&#123;</div><div class="line">	defer println(&quot;dispace ...&quot;)</div><div class="line"></div><div class="line">	println(a/b)</div><div class="line">&#125;</div><div class="line"></div><div class="line">func main() &#123;</div><div class="line">	a,b := 10,2</div><div class="line">	c,err := div(a,b)</div><div class="line"></div><div class="line">	fmt.Println(c,err)</div><div class="line"></div><div class="line">	x := 100</div><div class="line"></div><div class="line">	f := print01(x)</div><div class="line">	f()</div><div class="line"></div><div class="line">	defer01(10,2)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-切片"><a href="#5-切片" class="headerlink" title="5. 切片"></a>5. 切片</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import &quot;fmt&quot;</div><div class="line"></div><div class="line">// 切片(slice)可实现类似动态数组的功能</div><div class="line">func main() &#123;</div><div class="line">	x := make([]int, 0,5) // 创建容量为5的切片</div><div class="line"></div><div class="line">	for i:=0; i&lt;8;i++&#123;</div><div class="line">		x = append(x,i) // 追加数据，当容量超出，自动分配更大的存储空间</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	fmt.Println(x)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="6-字典"><a href="#6-字典" class="headerlink" title="6. 字典"></a>6. 字典</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import &quot;fmt&quot;</div><div class="line"></div><div class="line">// 将字典(map)类型内置，可直接从运行时层面获得性能优化</div><div class="line">func main() &#123;</div><div class="line">	m := make(map[string]int) // 创建字典对象</div><div class="line"></div><div class="line">	m[&quot;a&quot;] = 1 // 添加</div><div class="line"></div><div class="line">	x,ok := m[&quot;b&quot;] // 可知道key/value 是否存在</div><div class="line"></div><div class="line">	fmt.Println(x,ok)</div><div class="line">	delete(m,&quot;a&quot;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="7-结构体"><a href="#7-结构体" class="headerlink" title="7. 结构体"></a>7. 结构体</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import &quot;fmt&quot;</div><div class="line"></div><div class="line">type user struct &#123; // 结构体</div><div class="line">	name string</div><div class="line">	age byte</div><div class="line">&#125;</div><div class="line"></div><div class="line">type manager struct &#123;</div><div class="line">	user // 匿名嵌入其他类型</div><div class="line">	title string</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 结构体：可匿名嵌入其他类型</div><div class="line">func main() &#123;</div><div class="line">	var m manager</div><div class="line"></div><div class="line">	m.name = &quot;Tom&quot;</div><div class="line">	m.age = 29</div><div class="line">	m.title = &quot;cto&quot;</div><div class="line"></div><div class="line">	fmt.Println(m)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="8-方法"><a href="#8-方法" class="headerlink" title="8. 方法"></a>8. 方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">type X int</div><div class="line"></div><div class="line">func (x *X) inc()&#123; // 名称前的参数称作receiver，作用类似python self</div><div class="line">	*x++</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 方法，可以为当前包内的任意类型定义方法</div><div class="line">func main() &#123;</div><div class="line">	var x X</div><div class="line">	x.inc()</div><div class="line">	println(x)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="9-接口"><a href="#9-接口" class="headerlink" title="9. 接口"></a>9. 接口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import &quot;fmt&quot;</div><div class="line"></div><div class="line">type role struct &#123;</div><div class="line">	name string</div><div class="line">	parentId int</div><div class="line">&#125;</div><div class="line"></div><div class="line">func (r role) Print()&#123;</div><div class="line">	fmt.Printf(&quot;%+v\n&quot;,r)</div><div class="line">&#125;</div><div class="line"></div><div class="line">type Printer interface &#123;</div><div class="line">	Print()</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 接口采用了duck type方式，也就是说无须在实现类型上添加显式声明。</div><div class="line">// 另有空接口类型interface&#123;&#125;,用途类似OOP里的system.Object,可接受任意类型对象</div><div class="line">func main() &#123;</div><div class="line">	var r role</div><div class="line">	r.name = &quot;admin&quot;</div><div class="line">	r.parentId = 29</div><div class="line"></div><div class="line">	var p Printer = r</div><div class="line">	p.Print()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="10-并发"><a href="#10-并发" class="headerlink" title="10. 并发"></a>10. 并发</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import (</div><div class="line">	&quot;fmt&quot;</div><div class="line">	&quot;time&quot;</div><div class="line">)</div><div class="line"></div><div class="line">func task(id int)&#123;</div><div class="line">	for i:=0; i&lt;5;i++&#123;</div><div class="line">		fmt.Printf(&quot;%d:%d\n&quot;,id,i)</div><div class="line">		time.Sleep(time.Second)</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 整体运行时完全并发设计，凡你能看到的，几乎都在以goroutine方式运行，这是一种比普通协程或线程更加高效的并发设计，能够</div><div class="line">// 轻松创建和运行成千上万的并发任务</div><div class="line">func main() &#123;</div><div class="line">	go task(1)  // 创建goroutine</div><div class="line">	go task(2)</div><div class="line"></div><div class="line">	time.Sleep(time.Second*6)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="11-通道-channel-与-goroutine搭配"><a href="#11-通道-channel-与-goroutine搭配" class="headerlink" title="11. 通道(channel) 与 goroutine搭配"></a>11. 通道(channel) 与 goroutine搭配</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">// 消费者</div><div class="line">func consumer(data chan int, done chan bool)&#123;</div><div class="line">	for x:=range data&#123;</div><div class="line">		println(&quot;recv:&quot;,x)  // 接受数据，直到通道被关闭</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	done &lt;- true // 通知main，消费结束</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 生产者</div><div class="line">func producer(data chan int)&#123;</div><div class="line">	for i :=0; i&lt;4; i++&#123;</div><div class="line">		data &lt;- i         // 发送数据</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	close(data) // 生产结束，关闭通道</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 通道(channel) 与 goroutine搭配，实现用通信替代内存共享的CSP模型</div><div class="line">func main() &#123;</div><div class="line">	done := make(chan bool) // 用于接收消费结束信息</div><div class="line">	data := make(chan int)  // 数据管道</div><div class="line"></div><div class="line">	go consumer(data, done) // 启动消费者</div><div class="line">	go producer(data) // 启动生产者</div><div class="line"></div><div class="line">	&lt;-done // 阻塞，直到消费者发回结束信息</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Go/" rel="tag"># Go</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/20/Git的各种撤销技巧/" rel="next" title="Git的各种撤销技巧">
+                <i class="fa fa-chevron-left"></i> Git的各种撤销技巧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/07/01/Go语法概述/"
+           data-title="Go语法概述" data-url="http://jianwl.com/2018/07/01/Go语法概述/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">285</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-text">实战</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-编程第一个Go程序"><span class="nav-text">1. 编程第一个Go程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-声明变量"><span class="nav-text">2. 声明变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-表达式if"><span class="nav-text">3.1 表达式if</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-表达式switch"><span class="nav-text">3.2 表达式switch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-表达式for"><span class="nav-text">3.3 表达式for</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-函数"><span class="nav-text">4. 函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-切片"><span class="nav-text">5. 切片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-字典"><span class="nav-text">6. 字典</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-结构体"><span class="nav-text">7. 结构体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-方法"><span class="nav-text">8. 方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-接口"><span class="nav-text">9. 接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-并发"><span class="nav-text">10. 并发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-通道-channel-与-goroutine搭配"><span class="nav-text">11. 通道(channel) 与 goroutine搭配</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
