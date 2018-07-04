@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-07-01T01:34:34.663Z</updated>
+  <updated>2018-07-04T15:53:51.041Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,63 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用vagrant搭建consul集群</title>
+    <link href="http://jianwl.com/2018/07/04/%E4%BD%BF%E7%94%A8vagrant%E6%90%AD%E5%BB%BAconsul%E9%9B%86%E7%BE%A4/"/>
+    <id>http://jianwl.com/2018/07/04/使用vagrant搭建consul集群/</id>
+    <published>2018-07-04T14:58:44.000Z</published>
+    <updated>2018-07-04T15:53:51.041Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-软件下载"><a href="#1-软件下载" class="headerlink" title="1. 软件下载"></a>1. 软件下载</h3><ol>
+<li><a href="https://www.vagrantup.com/downloads.html" target="_blank" rel="external">vagrant下载</a></li>
+<li><a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="external">virtualbox下载</a></li>
+</ol>
+<p>Vagrant是Hashi Corp公司的产品，用于创建和部署虚拟化开发环境，支持创建的操作系统。在部署虚拟开发环境需要用到virtualbox虚拟机，所以以上两个软件需要提前下载好。</p>
+<h3 id="2-用vagrant创建虚拟机"><a href="#2-用vagrant创建虚拟机" class="headerlink" title="2. 用vagrant创建虚拟机"></a>2. 用vagrant创建虚拟机</h3><p>在安装好，virtualBox和vagrant的前提下，我们创建文件夹consul_cluster,在consul_cluster文件夹下创建一个文件<code>VagrantFile</code>,内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"># -*- mode: ruby -*-</div><div class="line"># vi: set ft=ruby :</div><div class="line"></div><div class="line">$script = &lt;&lt;SCRIPT</div><div class="line">echo &quot;Installing dependencies ...&quot;</div><div class="line"># 使用阿里云镜像</div><div class="line">sudo sed -i &apos;s/archive.ubuntu.com/mirrors.aliyun.com/g&apos; /etc/apt/sources.list</div><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install -y unzip curl jq</div><div class="line">SCRIPT</div><div class="line"></div><div class="line"># Specify a custom Vagrant box for the demo</div><div class="line">DEMO_BOX_NAME = &quot;ubuntu/xenial64&quot;</div><div class="line"></div><div class="line"># Vagrantfile API/syntax version.</div><div class="line"># NB: Don&apos;t touch unless you know what you&apos;re doing!</div><div class="line">VAGRANTFILE_API_VERSION = &quot;2&quot;</div><div class="line"></div><div class="line">Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|</div><div class="line">  config.vm.box = DEMO_BOX_NAME</div><div class="line"></div><div class="line">  config.vm.provision &quot;shell&quot;,</div><div class="line">                          inline: $script</div><div class="line"></div><div class="line">  config.vm.define &quot;n1&quot; do |n1|</div><div class="line">      n1.vm.hostname = &quot;n1&quot;</div><div class="line">      n1.vm.network &quot;private_network&quot;, ip: &quot;172.20.20.10&quot;</div><div class="line">  end</div><div class="line"></div><div class="line">  config.vm.define &quot;n2&quot; do |n2|</div><div class="line">      n2.vm.hostname = &quot;n2&quot;</div><div class="line">      n2.vm.network &quot;private_network&quot;, ip: &quot;172.20.20.11&quot;</div><div class="line">  end</div><div class="line"></div><div class="line">  config.vm.define &quot;n3&quot; do |n3|</div><div class="line">      n3.vm.hostname = &quot;n3&quot;</div><div class="line">      n3.vm.network &quot;private_network&quot;, ip: &quot;172.20.20.12&quot;</div><div class="line">  end</div><div class="line">end</div></pre></td></tr></table></figure>
+<p>这里我们创建了三个虚拟机，hostname为 n1，n2，n3；ip分别为 172.20.20.10，172.20.20.11，172.20.20.10，使用镜像 ubuntu/xenial64，并且将镜像更新为了阿里云，安装了一些必须的软件。</p>
+<p>编辑好文件，在consul_cluster文件夹的路径下执行<code>vagrant up</code>,会下载ubuntu操作系统，并启动三台虚拟机，这个过程耗时比较长，我用了5个小时。</p>
+<h3 id="3-登录3台虚拟机"><a href="#3-登录3台虚拟机" class="headerlink" title="3. 登录3台虚拟机"></a>3. 登录3台虚拟机</h3><p>在使用<code>vagrant up</code>命令初始化完成之后，在consul_cluster文件夹路径下，使用以下命令分别登录n1、n2、n3虚拟机:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 登录n1虚拟机</div><div class="line">vagrant ssh n1</div><div class="line"></div><div class="line"># 登录n2虚拟机</div><div class="line">vagrant ssh n2</div><div class="line"></div><div class="line"># 登录n3虚拟机</div><div class="line">vagrant ssh n3</div></pre></td></tr></table></figure>
+<h3 id="4-搭建consul环境-三台虚拟机都需要执行一遍以下操作"><a href="#4-搭建consul环境-三台虚拟机都需要执行一遍以下操作" class="headerlink" title="4. 搭建consul环境(三台虚拟机都需要执行一遍以下操作)"></a>4. 搭建consul环境(三台虚拟机都需要执行一遍以下操作)</h3><h4 id="1-下载consul"><a href="#1-下载consul" class="headerlink" title="1. 下载consul"></a>1. 下载consul</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 下载consul</div><div class="line">wget https://releases.hashicorp.com/consul/1.2.0/consul_1.2.0_linux_amd64.zip</div><div class="line"></div><div class="line"># 解压</div><div class="line">unzip consul_1.2.0_linux_amd64.zip</div></pre></td></tr></table></figure>
+<h4 id="2-创建以下两个文件夹"><a href="#2-创建以下两个文件夹" class="headerlink" title="2. 创建以下两个文件夹"></a>2. 创建以下两个文件夹</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /tmp/consul</div><div class="line"></div><div class="line">sudo mkdir /etc/consul.d</div></pre></td></tr></table></figure>
+<h3 id="5-consul集群搭建"><a href="#5-consul集群搭建" class="headerlink" title="5. consul集群搭建"></a>5. consul集群搭建</h3><h4 id="1-虚拟机n1，启动consul服务"><a href="#1-虚拟机n1，启动consul服务" class="headerlink" title="1. 虚拟机n1，启动consul服务;"></a>1. 虚拟机n1，启动consul服务;</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul agent -server -bootstrap-expect=1 -data-dir=/tmp/consul -node=agent-one -bind=当前虚拟机IP -enable-script-checks=true -config-dir=/etc/consul.d</div></pre></td></tr></table></figure>
+<h4 id="2-虚拟机n2，启动consul服务"><a href="#2-虚拟机n2，启动consul服务" class="headerlink" title="2. 虚拟机n2，启动consul服务;"></a>2. 虚拟机n2，启动consul服务;</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul agent -data-dir=/tmp/consul -node=agent-two -bind=当前虚拟机IP -enable-script-checks=true -config-dir=/etc/consul.d</div></pre></td></tr></table></figure>
+<h4 id="3-在n1虚拟机的consul服务中，添加n2节点。"><a href="#3-在n1虚拟机的consul服务中，添加n2节点。" class="headerlink" title="3. 在n1虚拟机的consul服务中，添加n2节点。"></a>3. 在n1虚拟机的consul服务中，添加n2节点。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul join 虚拟机n2的IP</div></pre></td></tr></table></figure>
+<h4 id="4-虚拟机n3，启动consul服务"><a href="#4-虚拟机n3，启动consul服务" class="headerlink" title="4. 虚拟机n3，启动consul服务;"></a>4. 虚拟机n3，启动consul服务;</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul agent -data-dir=/tmp/consul -node=agent-three -bind=当前虚拟机IP -enable-script-checks=true -config-dir=/etc/consul.d</div></pre></td></tr></table></figure>
+<h4 id="5-在n1虚拟机的consul服务中，添加n3节点。"><a href="#5-在n1虚拟机的consul服务中，添加n3节点。" class="headerlink" title="5. 在n1虚拟机的consul服务中，添加n3节点。"></a>5. 在n1虚拟机的consul服务中，添加n3节点。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul join 虚拟机n3的IP</div></pre></td></tr></table></figure>
+<h3 id="6-consul集群搭建实战"><a href="#6-consul集群搭建实战" class="headerlink" title="6. consul集群搭建实战"></a>6. consul集群搭建实战</h3><h3 id="1-登录n1虚拟机"><a href="#1-登录n1虚拟机" class="headerlink" title="1. 登录n1虚拟机"></a>1. 登录n1虚拟机</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/42241770.jpg" alt=""></p>
+<h3 id="2-启动consul服务"><a href="#2-启动consul服务" class="headerlink" title="2. 启动consul服务"></a>2. 启动consul服务</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/50184269.jpg" alt=""></p>
+<h3 id="3-查看n1集群状态"><a href="#3-查看n1集群状态" class="headerlink" title="3. 查看n1集群状态"></a>3. 查看n1集群状态</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/36062811.jpg" alt=""></p>
+<h3 id="4-登录n2虚拟机"><a href="#4-登录n2虚拟机" class="headerlink" title="4. 登录n2虚拟机"></a>4. 登录n2虚拟机</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/68487932.jpg" alt=""></p>
+<h3 id="5-启动consul服务"><a href="#5-启动consul服务" class="headerlink" title="5. 启动consul服务"></a>5. 启动consul服务</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/89679832.jpg" alt=""></p>
+<h3 id="6-查看n2集群状态"><a href="#6-查看n2集群状态" class="headerlink" title="6. 查看n2集群状态"></a>6. 查看n2集群状态</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/70512094.jpg" alt=""></p>
+<p>通过步骤3和步骤6的对比，我们发现，n1和n2两个节点并没有直接的关联。</p>
+<h3 id="7-在n1节点中，加入节点2，节点间实现互相通信"><a href="#7-在n1节点中，加入节点2，节点间实现互相通信" class="headerlink" title="7. 在n1节点中，加入节点2，节点间实现互相通信"></a>7. 在n1节点中，加入节点2，节点间实现互相通信</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/86438059.jpg" alt=""></p>
+<h3 id="8-查看集群状态"><a href="#8-查看集群状态" class="headerlink" title="8. 查看集群状态"></a>8. 查看集群状态</h3><p>n1节点查看集群状态</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/28819181.jpg" alt=""></p>
+<p>n2节点查看集群状态</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/9956699.jpg" alt=""></p>
+<p>由此看出n1节点和n2节点已经互相通信。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://www.consul.io/intro/getting-started/join.html" target="_blank" rel="external">Consul Cluster官方文档</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;1-软件下载&quot;&gt;&lt;a href=&quot;#1-软件下载&quot; class=&quot;headerlink&quot; title=&quot;1. 软件下载&quot;&gt;&lt;/a&gt;1. 软件下载&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.vagrantup.com/downloads.h
+    
+    </summary>
+    
+      <category term="consul" scheme="http://jianwl.com/categories/consul/"/>
+    
+    
+      <category term="consul" scheme="http://jianwl.com/tags/consul/"/>
+    
+  </entry>
   
   <entry>
     <title>Go语法概述</title>
@@ -1058,49 +1115,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;常用方法-amp-字段梳理&quot;&gt;&lt;a href=&quot;#常用方法-amp-字段梳理&quot; class=&quot;headerlink&quot; title=&quot;常用方法 &amp;amp; 字段梳理&quot;&gt;&lt;/a&gt;常用方法 &amp;amp; 字段梳理&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://oc5a5
-    
-    </summary>
-    
-      <category term="JDK源码学习专题" scheme="http://jianwl.com/categories/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
-    
-    
-      <category term="JDK源码学习专题" scheme="http://jianwl.com/tags/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ArrayList源码学习</title>
-    <link href="http://jianwl.com/2018/03/15/ArrayList%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://jianwl.com/2018/03/15/ArrayList源码学习/</id>
-    <published>2018-03-15T15:05:33.000Z</published>
-    <updated>2018-03-17T03:44:38.604Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="1-常用方法-amp-字段梳理"><a href="#1-常用方法-amp-字段梳理" class="headerlink" title="1. 常用方法 &amp; 字段梳理"></a>1. 常用方法 &amp; 字段梳理</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-15/41421167.jpg" alt=""></p>
-<p>ArrayList底层的数据结构是数组，往列表中插入数据时，首先会检查列表的容量是否充足，当容量不够时，会自动扩容为当前容量的3倍，本节我们会带着问题，学习ArrayList的实现原理。</p>
-<h3 id="2-提出问题"><a href="#2-提出问题" class="headerlink" title="2. 提出问题"></a>2. 提出问题</h3><ol>
-<li>add(E)，新增元素时，如何实现自动扩容；</li>
-<li>add(index,E)如何实现在指定位置插入元素，指定位置之后的元素如何处理？</li>
-<li>clear(), 避免内存溢出，在移除元素时，我们应该注意些什么？</li>
-</ol>
-<h4 id="1）新增元素"><a href="#1）新增元素" class="headerlink" title="1）新增元素"></a>1）新增元素</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"># 新增元素入口</div><div class="line">   public boolean add(E e) &#123;</div><div class="line">       ensureCapacityInternal(size + 1);  // Increments modCount!!</div><div class="line">       elementData[size++] = e;</div><div class="line">       return true;</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   private void ensureCapacityInternal(int minCapacity) &#123;</div><div class="line">       if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;</div><div class="line">           minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       ensureExplicitCapacity(minCapacity);</div><div class="line">   &#125;</div><div class="line">       </div><div class="line">   private void ensureExplicitCapacity(int minCapacity) &#123;</div><div class="line">       modCount++;</div><div class="line"></div><div class="line">       // overflow-conscious code</div><div class="line">       if (minCapacity - elementData.length &gt; 0)</div><div class="line">           grow(minCapacity);</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   private void grow(int minCapacity) &#123;</div><div class="line">       // overflow-conscious code</div><div class="line">       int oldCapacity = elementData.length;</div><div class="line">       int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1); // 为原来的3倍；</div><div class="line">       if (newCapacity - minCapacity &lt; 0)</div><div class="line">           newCapacity = minCapacity;</div><div class="line">       if (newCapacity - MAX_ARRAY_SIZE &gt; 0)</div><div class="line">           newCapacity = hugeCapacity(minCapacity);</div><div class="line">       // minCapacity is usually close to size, so this is a win:</div><div class="line">       elementData = Arrays.copyOf(elementData, newCapacity);</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   private static int hugeCapacity(int minCapacity) &#123;</div><div class="line">       if (minCapacity &lt; 0) // overflow</div><div class="line">           throw new OutOfMemoryError();</div><div class="line">       return (minCapacity &gt; MAX_ARRAY_SIZE) ?</div><div class="line">           Integer.MAX_VALUE :</div><div class="line">           MAX_ARRAY_SIZE;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>第3 ~ 4行：新增一个元素之前，需要先确保元素加进去之后，容量是否会溢出;如果容量够用，则往数组中插入数据；</p>
-<p>第9 ~ 11行：如果是一个空列表，当前最小的容量(size + 1)为默认值10；</p>
-<p>第 20 ~ 21行：如果新增元素后，元素的数量(size + 1) <strong>大于</strong> 数组的长度(elementData.length),则扩容；</p>
-<p>第26 ~ 33行：扩容的逻辑，将列表的容量扩大为原来的3倍即(3 elementData.length),如果扩容后的容量 <strong>仍旧小于</strong> 元素的数量(size + 1),则将列表容量设置为(size + 1)，之后判断扩容后的容量是否大于「最大的整数 - 8」，如果大于，则等于最大整数；最后将原来的数组迁移到扩容后的数组；</p>
-<p>第37 ~ 38行：为了防止当容量大于整数最大值即(大于Integer.MAX_VALUE)，此时会出现整型数据溢出，为负值，此时报内存溢出异常。</p>
-<h4 id="2-指定位置新增元素"><a href="#2-指定位置新增元素" class="headerlink" title="2) 指定位置新增元素"></a>2) 指定位置新增元素</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public void add(int index, E element) &#123;</div><div class="line">    rangeCheckForAdd(index);</div><div class="line"></div><div class="line">    ensureCapacityInternal(size + 1);  // Increments modCount!!</div><div class="line">    System.arraycopy(elementData, index, elementData, index + 1,</div><div class="line">                     size - index);</div><div class="line">    elementData[index] = element;</div><div class="line">    size++;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private void rangeCheckForAdd(int index) &#123;</div><div class="line">    if (index &gt; size || index &lt; 0)</div><div class="line">        throw new IndexOutOfBoundsException(outOfBoundsMsg(index));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>第12 ~ 13行：判断索引位置会不会越界即(大于数组大小和小于0)；</p>
-<p>第 4 行：新增元素前，进行容量预估，容量不足时则扩容。上一个模块已描述，这里就不赘述了；</p>
-<p>第 5 行：用图示的方式来说明，如果往元素2的位置插入元素，需要将元素2及之后的元素均向后挪动一位，这行代码就是执行这样的功能。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-17/23285668.jpg" alt=""></p>
-<p>第7 ~ 8行：把元素放到数组中的指定位置，同时将列表的长度加1。</p>
-<h4 id="3）清空数组"><a href="#3）清空数组" class="headerlink" title="3）清空数组"></a>3）清空数组</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public void clear() &#123;</div><div class="line">    modCount++;</div><div class="line"></div><div class="line">    // clear to let GC do its work</div><div class="line">    for (int i = 0; i &lt; size; i++)</div><div class="line">        elementData[i] = null;</div><div class="line"></div><div class="line">    size = 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>第5 ~ 6行：遍历数组中的每一个元素，将其设置为null，方便后续GC回收内存。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;1-常用方法-amp-字段梳理&quot;&gt;&lt;a href=&quot;#1-常用方法-amp-字段梳理&quot; class=&quot;headerlink&quot; title=&quot;1. 常用方法 &amp;amp; 字段梳理&quot;&gt;&lt;/a&gt;1. 常用方法 &amp;amp; 字段梳理&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;ht
     
     </summary>
     
