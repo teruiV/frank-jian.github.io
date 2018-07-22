@@ -4,12 +4,52 @@
   
     
     <entry>
+      <title><![CDATA[设计模式专题训练]]></title>
+      <url>http://jianwl.com/2018/07/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83/</url>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>设计模式有四境界：</p>
+<ol>
+<li>没学前一点不懂，根本想不到用设计模式，设计的代码很糟糕。</li>
+<li>学了几个设计模式后，很开心，于是导出想着要用自己学过的模式，于是时常造成误用模式而不自知。</li>
+<li>学完全部设计模式时，感觉诸多模式极其相似，无法分清模式之间的差异，有困惑，但深知误用之害，应用之时有所犹豫。</li>
+<li>灵活应用模式，甚至不应用具体的某种模式也能设计出优秀的代码，以达到无剑胜有剑的境界。</li>
+</ol>
+<p>通过学习设计模式，让你找到封装变化、对象间松散耦合、针对接口编程的感觉，从而设计出易维护、易扩展、易复用、灵活性好的程序。</p>
+<h3 id="学习计划"><a href="#学习计划" class="headerlink" title="学习计划"></a>学习计划</h3><ol>
+<li>简单工厂模式</li>
+<li>策略模式</li>
+<li>装饰模式</li>
+<li>代理模式</li>
+<li>工厂方法模式</li>
+<li>原型模式</li>
+<li>模板方法模式</li>
+<li>外观模式</li>
+<li>建造者模式</li>
+<li>观察者模式</li>
+<li>抽象工厂模式</li>
+<li>状态模式</li>
+<li>适配器模式</li>
+<li>备忘录模式</li>
+<li>组合模式</li>
+<li>迭代器模式</li>
+<li>单例模式</li>
+<li>桥接模式</li>
+<li>命令模式</li>
+<li>责任链模式</li>
+<li>中介者模式</li>
+<li>享元模式</li>
+<li>解释器模式</li>
+<li>访问者模式</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[consul实现服务注册与发现]]></title>
       <url>http://jianwl.com/2018/07/22/consul%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/</url>
       <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这个章节旨在梳理consul服务注册与发现的实战细节。</p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-启动consul-agent"><a href="#1-启动consul-agent" class="headerlink" title="1. 启动consul agent"></a>1. 启动consul agent</h4><p>如果没有安装consul，请移步<a href="https://www.consul.io/downloads.html" target="_blank" rel="external">consul install</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir /etc/consul.d</div><div class="line">consul agent -dev -config-dir=/etc/consul.d</div></pre></td></tr></table></figure>
-<p>在另外一个控制台输入：</p>
+<p>启动consul后，在另外一个控制台输入：</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-22/83511450.jpg" alt=""></p>
 <p>可以看到consul agent已经正常启动了。</p>
 <h4 id="2-注册一个服务"><a href="#2-注册一个服务" class="headerlink" title="2. 注册一个服务"></a>2. 注册一个服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl --request PUT --data @payload.json &quot;http://localhost:8500/v1/agent/service/register&quot;</div></pre></td></tr></table></figure>

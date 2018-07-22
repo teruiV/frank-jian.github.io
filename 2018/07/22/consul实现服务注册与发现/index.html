@@ -57,10 +57,10 @@
 <meta name="description" content="前言这个章节旨在梳理consul服务注册与发现的实战细节。
 实战1. 启动consul agent如果没有安装consul，请移步consul install
 12mkdir /etc/consul.dconsul agent -dev -config-dir=/etc/consul.d
-在另外一个控制台输入：
+启动consul后，在另外一个控制台输入：
 
 可以看到consul agent已经正常启动了。
-2. 注册一个服务1curl --">
+2. 注册一个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="consul实现服务注册与发现">
 <meta property="og:url" content="http://jianwl.com/2018/07/22/consul实现服务注册与发现/index.html">
@@ -68,22 +68,22 @@
 <meta property="og:description" content="前言这个章节旨在梳理consul服务注册与发现的实战细节。
 实战1. 启动consul agent如果没有安装consul，请移步consul install
 12mkdir /etc/consul.dconsul agent -dev -config-dir=/etc/consul.d
-在另外一个控制台输入：
+启动consul后，在另外一个控制台输入：
 
 可以看到consul agent已经正常启动了。
-2. 注册一个服务1curl --">
+2. 注册一个">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-7-22/83511450.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-7-22/66291532.jpg">
-<meta property="og:updated_time" content="2018-07-22T07:36:59.460Z">
+<meta property="og:updated_time" content="2018-07-22T07:37:43.508Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="consul实现服务注册与发现">
 <meta name="twitter:description" content="前言这个章节旨在梳理consul服务注册与发现的实战细节。
 实战1. 启动consul agent如果没有安装consul，请移步consul install
 12mkdir /etc/consul.dconsul agent -dev -config-dir=/etc/consul.d
-在另外一个控制台输入：
+启动consul后，在另外一个控制台输入：
 
 可以看到consul agent已经正常启动了。
-2. 注册一个服务1curl --">
+2. 注册一个">
 <meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-7-22/83511450.jpg">
 
 
@@ -372,7 +372,7 @@
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这个章节旨在梳理consul服务注册与发现的实战细节。</p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-启动consul-agent"><a href="#1-启动consul-agent" class="headerlink" title="1. 启动consul agent"></a>1. 启动consul agent</h4><p>如果没有安装consul，请移步<a href="https://www.consul.io/downloads.html" target="_blank" rel="external">consul install</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir /etc/consul.d</div><div class="line">consul agent -dev -config-dir=/etc/consul.d</div></pre></td></tr></table></figure>
-<p>在另外一个控制台输入：</p>
+<p>启动consul后，在另外一个控制台输入：</p>
 <p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-22/83511450.jpg" alt=""></p>
 <p>可以看到consul agent已经正常启动了。</p>
 <h4 id="2-注册一个服务"><a href="#2-注册一个服务" class="headerlink" title="2. 注册一个服务"></a>2. 注册一个服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl --request PUT --data @payload.json &quot;http://localhost:8500/v1/agent/service/register&quot;</div></pre></td></tr></table></figure>
@@ -442,6 +442,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/22/设计模式专题训练/" rel="prev" title="设计模式专题训练">
+                设计模式专题训练 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -517,7 +521,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">289</span>
+                <span class="site-state-item-count">290</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -528,7 +532,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -539,7 +543,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-count">47</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
