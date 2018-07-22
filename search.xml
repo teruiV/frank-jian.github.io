@@ -6,7 +6,7 @@
     <entry>
       <title><![CDATA[consul实现服务注册与发现]]></title>
       <url>http://jianwl.com/2018/07/22/consul%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/</url>
-      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这个章节主要用于实战consul服务注册与发现。</p>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这个章节旨在梳理consul服务注册与发现的实战细节。</p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-启动consul-agent"><a href="#1-启动consul-agent" class="headerlink" title="1. 启动consul agent"></a>1. 启动consul agent</h4><p>如果没有安装consul，请移步<a href="https://www.consul.io/downloads.html" target="_blank" rel="external">consul install</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir /etc/consul.d</div><div class="line">consul agent -dev -config-dir=/etc/consul.d</div></pre></td></tr></table></figure>
 <p>在另外一个控制台输入：</p>
