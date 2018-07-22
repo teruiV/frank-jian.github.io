@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-07-22T06:57:21.325Z</updated>
+  <updated>2018-07-22T07:02:33.447Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -20,13 +20,13 @@
     <link href="http://jianwl.com/2018/07/22/consul%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E6%A2%B3%E7%90%86/"/>
     <id>http://jianwl.com/2018/07/22/consul核心概念梳理/</id>
     <published>2018-07-22T06:00:30.000Z</published>
-    <updated>2018-07-22T06:57:21.325Z</updated>
+    <updated>2018-07-22T07:02:33.447Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="1-什么是consul"><a href="#1-什么是consul" class="headerlink" title="1. 什么是consul"></a>1. 什么是consul</h3><p>Consul是一种服务网格(service mesh)解决方案，提供<strong>服务发现</strong>、配置和分段功能的全功能控制平面。每个功能可以单独使用，也可以一起使用以构建全服务网格。consul附带一个简答的内建代理，所以可以开箱即用，也支持使用你第三方代理如Envoy。以下是consul的关键特性：</p>
-<h3 id="2-consul的核心特性"><a href="#2-consul的核心特性" class="headerlink" title="2. consul的核心特性"></a>2. consul的核心特性</h3><h4 id="1-服务发现"><a href="#1-服务发现" class="headerlink" title="1) 服务发现"></a>1) 服务发现</h4><p>consul客户端注册一个服务，如api或mysql，其他客户端可以使用consul发现给定的服务提供者。使用DNS或HTTP，应用可以很简单的找到它们依赖的服务。</p>
-<h4 id="2）健康检查"><a href="#2）健康检查" class="headerlink" title="2）健康检查"></a>2）健康检查</h4><p>consul客户端提供任意数量的健康检查，这些运行检查可以与给定服务相关联(如服务健康检查)，也可以与本地节点相关联(如内存利用率低于90%)。使用方可以使用此信息来监控集群运行状态，服务发现组件使用此信息将流量路由远离不健康的主机。</p>
+    <content type="html"><![CDATA[<h3 id="1-什么是consul"><a href="#1-什么是consul" class="headerlink" title="1. 什么是consul"></a>1. 什么是consul</h3><p>Consul是一种服务网格(service mesh)解决方案，提供<strong>服务发现、配置和分段功能</strong>的全功能控制平面。每个功能可以单独使用，也可以一起使用以构建全服务网格。consul附带一个简单的内建代理，所以可以开箱即用，也支持第三方代理如Envoy。</p>
+<h3 id="2-consul的核心特性"><a href="#2-consul的核心特性" class="headerlink" title="2. consul的核心特性"></a>2. consul的核心特性</h3><h4 id="1-服务发现"><a href="#1-服务发现" class="headerlink" title="1) 服务发现"></a>1) 服务发现</h4><p>consul客户端注册一个服务，如api或mysql，其他客户端可以使用consul发现服务提供者。使用DNS或HTTP可以很简单的找到它们依赖的服务。</p>
+<h4 id="2）健康检查"><a href="#2）健康检查" class="headerlink" title="2）健康检查"></a>2）健康检查</h4><p>consul客户端提供任意数量的健康检查，这些运行检查可以与服务相关联(如服务健康检查)，也可以与本地节点相关联(如内存利用率低于90%)。使用方可以使用此信息来监控集群运行状态，服务发现组件使用此信息将流量路由远离不健康的主机。</p>
 <h4 id="3-KV存储"><a href="#3-KV存储" class="headerlink" title="3) KV存储"></a>3) KV存储</h4><p>应用程序可以将consul的分层<strong>键/值存储</strong>用于任何用途，包括动态配置，功能标记，协调、领导者选举等。简单的HTTP API 使其易于使用。</p>
-<h4 id="4）安全的服务通信"><a href="#4）安全的服务通信" class="headerlink" title="4）安全的服务通信"></a>4）安全的服务通信</h4><p>consul可以为服务生成和分发TLS证书，以建立互相的TLS连接。可以使用<strong>intentions</strong>来定义允许哪些服务进行通信。可以使用可以实时更改的<strong>intentions</strong>轻松管理服务分段，而不是使用复杂的网络拓扑和静态防火墙规则。</p>
+<h4 id="4）安全的服务通信"><a href="#4）安全的服务通信" class="headerlink" title="4）安全的服务通信"></a>4）安全的服务通信</h4><p>consul可以为服务生成和分发TLS证书，以建立互相的TLS连接。可以使用<strong>intentions</strong>来定义允许哪些服务进行通信。可以实时更改的<strong>intentions</strong>轻松管理服务分段，而不是使用复杂的网络拓扑和静态防火墙规则。</p>
 <h4 id="5）多数据中心"><a href="#5）多数据中心" class="headerlink" title="5）多数据中心"></a>5）多数据中心</h4><p>consul支持开箱即用的多个数据中心，这意味着consul用户不必担心构建额外的抽象层以扩展到多个区域。</p>
 <h3 id="3-consul的常用术语"><a href="#3-consul的常用术语" class="headerlink" title="3. consul的常用术语"></a>3. consul的常用术语</h3><h4 id="1）Agent"><a href="#1）Agent" class="headerlink" title="1）Agent"></a>1）Agent</h4><p>代理是consul集群的每个成员的长时间运行的守护进程，它是通过运行<code>consul agent</code>来启动的，代理能够以客户端或服务器模式运行，由于所有节点都必须运行代理，因此将节点成为客户端或服务器更简单，但代理的其他实例也是如此。所有代理都可以运行DNS或HTTP接口，并负责<strong>运行检查并保持服务同步</strong></p>
 <h4 id="2）Client"><a href="#2）Client" class="headerlink" title="2）Client"></a>2）Client</h4><p>客户端是将所有RPC请求转发到服务器的代理，客户端是无状态的，客户端执行的唯一后台活动是参与局域gossip，这个活动的资源开销非常小，并且仅消耗少量的网络带宽。</p>
