@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-07-22T07:02:33.447Z</updated>
+  <updated>2018-07-22T07:33:20.242Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,57 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>consul实现服务注册与发现</title>
+    <link href="http://jianwl.com/2018/07/22/consul%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/"/>
+    <id>http://jianwl.com/2018/07/22/consul实现服务注册与发现/</id>
+    <published>2018-07-22T07:06:08.000Z</published>
+    <updated>2018-07-22T07:33:20.242Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这个章节主要用于实战consul服务注册与发现。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-启动consul-agent"><a href="#1-启动consul-agent" class="headerlink" title="1. 启动consul agent"></a>1. 启动consul agent</h4><p>如果没有安装consul，请移步<a href="https://www.consul.io/downloads.html" target="_blank" rel="external">consul install</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir /etc/consul.d</div><div class="line">consul agent -dev -config-dir=/etc/consul.d</div></pre></td></tr></table></figure>
+<p>在另外一个控制台输入：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-22/83511450.jpg" alt=""></p>
+<p>可以看到consul agent已经正常启动了。</p>
+<h4 id="2-注册一个服务"><a href="#2-注册一个服务" class="headerlink" title="2. 注册一个服务"></a>2. 注册一个服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl --request PUT --data @payload.json &quot;http://localhost:8500/v1/agent/service/register&quot;</div></pre></td></tr></table></figure>
+<p>payload.json文件内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;ID&quot;: &quot;spring-learning&quot;,</div><div class="line">  &quot;Name&quot;: &quot;springLearning&quot;,</div><div class="line">  &quot;Tags&quot;: [</div><div class="line">    &quot;primary&quot;,</div><div class="line">    &quot;v1&quot;</div><div class="line">  ],</div><div class="line">  &quot;Address&quot;: &quot;127.0.0.1&quot;,</div><div class="line">  &quot;Port&quot;: 1111,</div><div class="line">  &quot;Meta&quot;: &#123;</div><div class="line">    &quot;spring-learning&quot;: &quot;1.0.0&quot;</div><div class="line">  &#125;,</div><div class="line">  &quot;EnableTagOverride&quot;: false,</div><div class="line">  &quot;Check&quot;: &#123;</div><div class="line">    &quot;HTTP&quot;: &quot;http://localhost:1111/health&quot;,</div><div class="line">    &quot;Interval&quot;: &quot;10s&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注册一个服务，包含这些参数(服务名、服务标签、IP、端口、健康检查)；IP为<code>127.0.0.1</code>，端口<code>1111</code>，这个服务是本地写的一个服务，可以根据自己的情况，去注册服务。</p>
+<h4 id="3-查看所有服务列表"><a href="#3-查看所有服务列表" class="headerlink" title="3. 查看所有服务列表"></a>3. 查看所有服务列表</h4><p>请求：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl &quot;localhost:8500/v1/catalog/services&quot;</div></pre></td></tr></table></figure>
+<p>响应：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;consul&quot;: [],</div><div class="line">    &quot;springLearning&quot;: [</div><div class="line">        &quot;primary&quot;,</div><div class="line">        &quot;v1&quot;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-查看某个服务信息"><a href="#4-查看某个服务信息" class="headerlink" title="4. 查看某个服务信息"></a>4. 查看某个服务信息</h4><p>请求:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl &quot;localhost:8500/v1/catalog/service/springLearning&quot;</div></pre></td></tr></table></figure>
+<p>响应：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">    &#123;</div><div class="line">        &quot;ID&quot;: &quot;a6db682e-fb44-2af6-63f8-83c43cb7824c&quot;,</div><div class="line">        &quot;Node&quot;: &quot;jianweilindeMacBook-Pro.local&quot;,</div><div class="line">        &quot;Address&quot;: &quot;127.0.0.1&quot;,</div><div class="line">        &quot;Datacenter&quot;: &quot;dc1&quot;,</div><div class="line">        &quot;TaggedAddresses&quot;: &#123;</div><div class="line">            &quot;lan&quot;: &quot;127.0.0.1&quot;,</div><div class="line">            &quot;wan&quot;: &quot;127.0.0.1&quot;</div><div class="line">        &#125;,</div><div class="line">        &quot;NodeMeta&quot;: &#123;</div><div class="line">            &quot;consul-network-segment&quot;: &quot;&quot;</div><div class="line">        &#125;,</div><div class="line">        &quot;ServiceID&quot;: &quot;spring-learning&quot;,</div><div class="line">        &quot;ServiceName&quot;: &quot;springLearning&quot;,</div><div class="line">        &quot;ServiceTags&quot;: [</div><div class="line">            &quot;primary&quot;,</div><div class="line">            &quot;v1&quot;</div><div class="line">        ],</div><div class="line">        &quot;ServiceAddress&quot;: &quot;127.0.0.1&quot;,</div><div class="line">        &quot;ServiceMeta&quot;: &#123;</div><div class="line">            &quot;spring-learning&quot;: &quot;1.0.0&quot;</div><div class="line">        &#125;,</div><div class="line">        &quot;ServicePort&quot;: 1111,</div><div class="line">        &quot;ServiceEnableTagOverride&quot;: false,</div><div class="line">        &quot;CreateIndex&quot;: 40,</div><div class="line">        &quot;ModifyIndex&quot;: 40</div><div class="line">    &#125;</div><div class="line">]</div></pre></td></tr></table></figure>
+<h4 id="5-获取健康的服务节点列表"><a href="#5-获取健康的服务节点列表" class="headerlink" title="5. 获取健康的服务节点列表"></a>5. 获取健康的服务节点列表</h4><p>请求：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl &quot;localhost:8500/v1/health/service/springLearning?passing&quot;</div></pre></td></tr></table></figure>
+<p>响应：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">    &#123;</div><div class="line">        &quot;Node&quot;: &#123;</div><div class="line">            &quot;ID&quot;: &quot;a6db682e-fb44-2af6-63f8-83c43cb7824c&quot;,</div><div class="line">            &quot;Node&quot;: &quot;jianweilindeMacBook-Pro.local&quot;,</div><div class="line">            &quot;Address&quot;: &quot;127.0.0.1&quot;,</div><div class="line">            &quot;Datacenter&quot;: &quot;dc1&quot;,</div><div class="line">            &quot;TaggedAddresses&quot;: &#123;</div><div class="line">                &quot;lan&quot;: &quot;127.0.0.1&quot;,</div><div class="line">                &quot;wan&quot;: &quot;127.0.0.1&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;Meta&quot;: &#123;</div><div class="line">                &quot;consul-network-segment&quot;: &quot;&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;CreateIndex&quot;: 5,</div><div class="line">            &quot;ModifyIndex&quot;: 6</div><div class="line">        &#125;,</div><div class="line">        &quot;Service&quot;: &#123;</div><div class="line">            &quot;ID&quot;: &quot;spring-learning&quot;,</div><div class="line">            &quot;Service&quot;: &quot;springLearning&quot;,</div><div class="line">            &quot;Tags&quot;: [</div><div class="line">                &quot;primary&quot;,</div><div class="line">                &quot;v1&quot;</div><div class="line">            ],</div><div class="line">            &quot;Address&quot;: &quot;127.0.0.1&quot;,</div><div class="line">            &quot;Meta&quot;: &#123;</div><div class="line">                &quot;spring-learning&quot;: &quot;1.0.0&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;Port&quot;: 1111,</div><div class="line">            &quot;EnableTagOverride&quot;: false,</div><div class="line">            &quot;CreateIndex&quot;: 40,</div><div class="line">            &quot;ModifyIndex&quot;: 40</div><div class="line">        &#125;,</div><div class="line">        &quot;Checks&quot;: [</div><div class="line">            &#123;</div><div class="line">                &quot;Node&quot;: &quot;jianweilindeMacBook-Pro.local&quot;,</div><div class="line">                &quot;CheckID&quot;: &quot;serfHealth&quot;,</div><div class="line">                &quot;Name&quot;: &quot;Serf Health Status&quot;,</div><div class="line">                &quot;Status&quot;: &quot;passing&quot;,</div><div class="line">                &quot;Notes&quot;: &quot;&quot;,</div><div class="line">                &quot;Output&quot;: &quot;Agent alive and reachable&quot;,</div><div class="line">                &quot;ServiceID&quot;: &quot;&quot;,</div><div class="line">                &quot;ServiceName&quot;: &quot;&quot;,</div><div class="line">                &quot;ServiceTags&quot;: [],</div><div class="line">                &quot;Definition&quot;: &#123;&#125;,</div><div class="line">                &quot;CreateIndex&quot;: 5,</div><div class="line">                &quot;ModifyIndex&quot;: 5</div><div class="line">            &#125;,</div><div class="line">            &#123;</div><div class="line">                &quot;Node&quot;: &quot;jianweilindeMacBook-Pro.local&quot;,</div><div class="line">                &quot;CheckID&quot;: &quot;service:spring-learning&quot;,</div><div class="line">                &quot;Name&quot;: &quot;Service &apos;springLearning&apos; check&quot;,</div><div class="line">                &quot;Status&quot;: &quot;passing&quot;,</div><div class="line">                &quot;Notes&quot;: &quot;&quot;,</div><div class="line">                &quot;Output&quot;: &quot;HTTP GET http://localhost:1111/health: 200  Output: services is healthy!&quot;,</div><div class="line">                &quot;ServiceID&quot;: &quot;spring-learning&quot;,</div><div class="line">                &quot;ServiceName&quot;: &quot;springLearning&quot;,</div><div class="line">                &quot;ServiceTags&quot;: [</div><div class="line">                    &quot;primary&quot;,</div><div class="line">                    &quot;v1&quot;</div><div class="line">                ],</div><div class="line">                &quot;Definition&quot;: &#123;&#125;,</div><div class="line">                &quot;CreateIndex&quot;: 40,</div><div class="line">                &quot;ModifyIndex&quot;: 42</div><div class="line">            &#125;</div><div class="line">        ]</div><div class="line">    &#125;</div><div class="line">]</div></pre></td></tr></table></figure>
+<h4 id="5-注销服务"><a href="#5-注销服务" class="headerlink" title="5. 注销服务"></a>5. 注销服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl --request PUT &quot;localhost:8500/v1/agent/service/deregister/spring-learning</div></pre></td></tr></table></figure>
+<p>查看服务列表，可知服务已经被注销了。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-22/66291532.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://www.consul.io/api/agent/service.html" target="_blank" rel="external">Agent HTTP API</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;这个章节主要用于实战consul服务注册与发现。&lt;/p&gt;
+&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; class=&quot;headerli
+    
+    </summary>
+    
+      <category term="consul" scheme="http://jianwl.com/categories/consul/"/>
+    
+    
+      <category term="consul" scheme="http://jianwl.com/tags/consul/"/>
+    
+  </entry>
   
   <entry>
     <title>consul核心概念梳理</title>
@@ -1035,35 +1086,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;常用方法-amp-字段&quot;&gt;&lt;a href=&quot;#常用方法-amp-字段&quot; class=&quot;headerlink&quot; title=&quot;常用方法 &amp;amp; 字段&quot;&gt;&lt;/a&gt;常用方法 &amp;amp; 字段&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://oc5a5l0a0.bkt
-    
-    </summary>
-    
-      <category term="JDK源码学习专题" scheme="http://jianwl.com/categories/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
-    
-    
-      <category term="JDK源码学习专题" scheme="http://jianwl.com/tags/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HashSet源码学习</title>
-    <link href="http://jianwl.com/2018/03/27/HashSet%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://jianwl.com/2018/03/27/HashSet源码学习/</id>
-    <published>2018-03-27T00:52:55.000Z</published>
-    <updated>2018-03-28T22:51:10.347Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-3-29/4636358.jpg" alt=""></p>
-<p>HashSet是以HashMap为基础类封装的对象，在新增元素E时，往HashMap中插入(E,Object)的键值对，因为在HashMap中Key是不存在重复的，所以保证了HashSet的唯一性。</p>
-<h3 id="提问"><a href="#提问" class="headerlink" title="提问"></a>提问</h3><ol>
-<li>如何保证唯一性；</li>
-</ol>
-<h4 id="如何保证唯一性"><a href="#如何保证唯一性" class="headerlink" title="如何保证唯一性"></a>如何保证唯一性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public HashSet() &#123;</div><div class="line">    map = new HashMap&lt;&gt;();</div><div class="line">&#125;</div><div class="line"></div><div class="line">public boolean add(E e) &#123;</div><div class="line">    return map.put(e, PRESENT)==null;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>初始化HashSet时，会初始化HashMap对象；新增元素时，通过HashMap新增(E,Object)的键值对，从而保证了Key的唯一性；</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;常用方法&quot;&gt;&lt;a href=&quot;#常用方法&quot; class=&quot;headerlink&quot; title=&quot;常用方法&quot;&gt;&lt;/a&gt;常用方法&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://oc5a5l0a0.bkt.clouddn.com/18-3-29/4636358.jpg
     
     </summary>
     
