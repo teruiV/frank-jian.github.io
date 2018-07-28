@@ -1,0 +1,707 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="思绪," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oc5a5l0a0.bkt.clouddn.com/17-9-15/12958638.jpg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言作为一个工程师，你的价值如何体现？不是掌握了多少知识，而是体现在创造出的系统，否则空有满腹经纶，最后也只是纸上谈兵。学习编写优秀代码的最佳方式，就是阅读高品质的代码，学习别人的高明之处。这一节我们将来学习阅读优秀源码的技巧。
+阅读代码1. 为什么阅读代码经常花时间阅读别人编写的高质量代码，就像阅读高品质的散文能够丰富词汇，激发想象力，扩展思维一样，分析设计良好的软件系统的内部结构可以学到新的架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于代码阅读的思考">
+<meta property="og:url" content="http://jianwl.com/2017/04/01/关于代码阅读的思考/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="前言作为一个工程师，你的价值如何体现？不是掌握了多少知识，而是体现在创造出的系统，否则空有满腹经纶，最后也只是纸上谈兵。学习编写优秀代码的最佳方式，就是阅读高品质的代码，学习别人的高明之处。这一节我们将来学习阅读优秀源码的技巧。
+阅读代码1. 为什么阅读代码经常花时间阅读别人编写的高质量代码，就像阅读高品质的散文能够丰富词汇，激发想象力，扩展思维一样，分析设计良好的软件系统的内部结构可以学到新的架">
+<meta property="og:updated_time" content="2017-04-02T00:47:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于代码阅读的思考">
+<meta name="twitter:description" content="前言作为一个工程师，你的价值如何体现？不是掌握了多少知识，而是体现在创造出的系统，否则空有满腹经纶，最后也只是纸上谈兵。学习编写优秀代码的最佳方式，就是阅读高品质的代码，学习别人的高明之处。这一节我们将来学习阅读优秀源码的技巧。
+阅读代码1. 为什么阅读代码经常花时间阅读别人编写的高质量代码，就像阅读高品质的散文能够丰富词汇，激发想象力，扩展思维一样，分析设计良好的软件系统的内部结构可以学到新的架">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> 关于代码阅读的思考 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/04/01/关于代码阅读的思考/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                关于代码阅读的思考
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-01T14:04:49+08:00">
+                2017-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/思绪/" itemprop="url" rel="index">
+                    <span itemprop="name">思绪</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/01/关于代码阅读的思考/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/01/关于代码阅读的思考/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>作为一个工程师，你的价值如何体现？不是掌握了多少知识，而是体现在创造出的系统，否则空有满腹经纶，最后也只是纸上谈兵。学习编写优秀代码的最佳方式，就是阅读高品质的代码，学习别人的高明之处。这一节我们将来学习阅读优秀源码的技巧。</p>
+<h3 id="阅读代码"><a href="#阅读代码" class="headerlink" title="阅读代码"></a>阅读代码</h3><h4 id="1-为什么阅读代码"><a href="#1-为什么阅读代码" class="headerlink" title="1. 为什么阅读代码"></a>1. 为什么阅读代码</h4><p>经常花时间阅读别人编写的高质量代码，就像阅读高品质的散文能够丰富词汇，激发想象力，扩展思维一样，分析设计良好的软件系统的内部结构可以学到<code>新的架构模式</code>、<code>数据结构</code>、<code>编码方法</code>、<code>算法</code>、<code>风格</code>和<code>文档规范</code>、<code>应用程序编程接口(API)</code>，同时可以提高编写代码的水准。</p>
+<p>阅读代码的过程中，不可避免地会遇到一些在实践中应该尽量避免的代码，能够快速地从坏代码中区分出好代码是一项有价值的技能；接触一些编码的反面例子有助于提高这种能力，通过下面这些征兆，可以很容易识别出低品质的代码：1️⃣ 编码风格不一致 2️⃣ 结构不必要地复杂或难以理解 3️⃣ 明显的逻辑错误或疏忽 4️⃣ 过度使用不可移植的构造 5️⃣ 缺乏维护</p>
+<p>大型、有组织体制之下的项目都会采纳一套编码规范、指导原则或约定，代码规范提供风格上的指导，目标是增强代码的可靠性、易读性和可维护性。关注优秀源码的<code>类命名</code>、<code>变量命名</code>、<code>代码缩进</code>、<code>代码编排</code>、<code>命名约定</code>、<code>文档</code>；</p>
+<p>通过阅读优秀源码，我们可以学习到<code>分层架构的设计</code>、<code>更加合理的抽象面向对象的结构</code>、<code>如何更加合理的拆分模块</code>、<code>代码重用</code></p>
+<h4 id="2-如何阅读代码"><a href="#2-如何阅读代码" class="headerlink" title="2. 如何阅读代码"></a>2. 如何阅读代码</h4><p>有选择地阅读代码，同时还有<code>有自己的目标</code>。想学习新的模式、编码风格还是满足某些需求的方法？或者只是浏览代码，获取其中的某些亮点。</p>
+<p>从小型的程序开始阅读，不要立即陷入对大型系统的研究中，编译研究的程序并运行他们，这样可以得到即时的反馈，了解代码预想的工作方式，同时可以获得成就感。</p>
+<p>积极介入现实的代码，能够快速从中了解到一些情况，当觉得已经掌握了他们之后，再采取更有组织的方式来学习，比如：阅读相关书籍、文档、手册、参加培训课程。</p>
+<h4 id="3-实战"><a href="#3-实战" class="headerlink" title="3. 实战"></a>3. 实战</h4><p>比如：想要了解一个特定的功能是如何实现的。首先使用该系统，得到他的外部接口，根据外部接口，定位目标代码，针对它进行研究分析，忽略不相关的部分。如果觉得在原来的上下文中，理解代码有困难，就将他复制到一个历史文件中，删除所有不相关的部分。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>1、养成一个习惯，经常花时间阅读别人编写的高品质代码</p>
+<p>2、要有选择地阅读代码，同时还要有自己的目标，想学习新的模式、编码风格、还是满足某些需求的方法</p>
+<p>3、对于那些大型且组织良好的系统，只需要最低限度地了解它的全部功能，就能够对它做出修改。</p>
+<p>4、向系统中增加新功能时，首先的任务就是找到类似特性的代码，将它作为待实现功能的模板。</p>
+<p>5、阅读代码寻找重构机会时，先从系统的架构开始，然后逐步细化，能够获得最大的效益。</p>
+<p>6、不需要为了效率，牺牲代码的可读性</p>
+<p>7、通过浏览项目的源代码树 – 包含项目源代码的层次目录结构，来分析一个项目的组织方式，源码树常常能够反映出项目在架构和软件过程上的结构。</p>
+<p>8、<strong>阅读代码时，应该尽可能利用任何能够得到的文档。</strong></p>
+<p>9、<strong>阅读一个小时代码所得到的信息只不过相当于阅读一分钟文档</strong></p>
+<p>10、可以将系统的设计规格说明作为认知代码结构的路线图，阅读具体代码的指引</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>代码阅读方法与实践</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/思绪/" rel="tag"># 思绪</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/31/Python之易出错语法/" rel="next" title="Python之易出错语法">
+                <i class="fa fa-chevron-left"></i> Python之易出错语法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/01/Mac下效率神器之autojump/" rel="prev" title="Mac下效率神器之autojump">
+                Mac下效率神器之autojump <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/01/关于代码阅读的思考/"
+           data-title="关于代码阅读的思考" data-url="http://jianwl.com/2017/04/01/关于代码阅读的思考/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">292</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阅读代码"><span class="nav-text">阅读代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-为什么阅读代码"><span class="nav-text">1. 为什么阅读代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-如何阅读代码"><span class="nav-text">2. 如何阅读代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-实战"><span class="nav-text">3. 实战</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

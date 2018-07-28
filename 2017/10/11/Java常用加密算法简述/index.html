@@ -1,0 +1,744 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oc5a5l0a0.bkt.clouddn.com/17-9-15/12958638.jpg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言在开发应用过程中，客户端与服务端经常需要进行数据传输，涉及到重要隐私安全信息时，开发者自然会想到对其进行加密，即使传输过程中被”有心人”截取，也不会将信息泄露。对于加密算法，相信很多开发者都有了解，比如MD5加密、BASE64加密，SHA-1加密、DES加密、AES加密、RSA加密等等。在这里主要总结一下常用的加密算法。
+1. MD5加密1.1 概述MD5的全称是Message-Digest">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java常用加密算法简述">
+<meta property="og:url" content="http://jianwl.com/2017/10/11/Java常用加密算法简述/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="前言在开发应用过程中，客户端与服务端经常需要进行数据传输，涉及到重要隐私安全信息时，开发者自然会想到对其进行加密，即使传输过程中被”有心人”截取，也不会将信息泄露。对于加密算法，相信很多开发者都有了解，比如MD5加密、BASE64加密，SHA-1加密、DES加密、AES加密、RSA加密等等。在这里主要总结一下常用的加密算法。
+1. MD5加密1.1 概述MD5的全称是Message-Digest">
+<meta property="og:updated_time" content="2017-10-11T08:08:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java常用加密算法简述">
+<meta name="twitter:description" content="前言在开发应用过程中，客户端与服务端经常需要进行数据传输，涉及到重要隐私安全信息时，开发者自然会想到对其进行加密，即使传输过程中被”有心人”截取，也不会将信息泄露。对于加密算法，相信很多开发者都有了解，比如MD5加密、BASE64加密，SHA-1加密、DES加密、AES加密、RSA加密等等。在这里主要总结一下常用的加密算法。
+1. MD5加密1.1 概述MD5的全称是Message-Digest">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> Java常用加密算法简述 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/10/11/Java常用加密算法简述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java常用加密算法简述
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-11T10:02:24+08:00">
+                2017-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/11/Java常用加密算法简述/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/11/Java常用加密算法简述/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在开发应用过程中，客户端与服务端经常需要进行数据传输，涉及到重要隐私安全信息时，开发者自然会想到对其进行加密，即使传输过程中被”有心人”截取，也不会将信息泄露。对于加密算法，相信很多开发者都有了解，比如MD5加密、BASE64加密，SHA-1加密、DES加密、AES加密、RSA加密等等。在这里主要总结一下常用的加密算法。</p>
+<h3 id="1-MD5加密"><a href="#1-MD5加密" class="headerlink" title="1. MD5加密"></a>1. MD5加密</h3><h4 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h4><p>MD5的全称是<code>Message-Digest Algorithm 5</code>(信息-摘要算法)，在90年代初由<code>MIT Laboratory for Computer Science 和 RSA Data Security Inc</code>的<code>Ronald L.Riverst</code>开发出来，经MD2、MD3和MD4发展而来。</p>
+<p>MD5用于确保信息传输完整一致，是计算机广泛使用的杂凑算法之一,MD5的作用是让大容量信息在数字签名软件签署私人秘钥前被压缩成一种保密的格式(即把一个任意长度的字节串变成一定长的十六进制数字串)。</p>
+<h4 id="1-2-算法原理"><a href="#1-2-算法原理" class="headerlink" title="1.2 算法原理"></a>1.2 算法原理</h4><p>MD5以512位分组来处理输入信息，且每一分组又被划分为32位子分组，经过了一系列的处理后，算法的输出由4个32位分组组成，将4个32位分组级联后将生成一个128位散列值。</p>
+<h4 id="1-3-MD5的特点"><a href="#1-3-MD5的特点" class="headerlink" title="1.3 MD5的特点"></a>1.3 MD5的特点</h4><ol>
+<li>压缩性: 任意长度的数据，算出的MD5值长度都是固定的；</li>
+<li>容易计算: 从原数据计算出MD5很容易</li>
+<li>抗修改性: 对原始数据进行任何改动，哪怕只修改一个字节，所得到的MD5值都有很大的区别。</li>
+<li>弱抗碰撞: 已知原数据和其MD5值，想找到一个相同的MD5值的数据是非常困难的；</li>
+<li>强抗碰撞: 想找到两个不同的数据，使它们具有相同的MD5值是非常困难的。</li>
+</ol>
+<h4 id="1-4-JAVA中MD5的实现"><a href="#1-4-JAVA中MD5的实现" class="headerlink" title="1.4 JAVA中MD5的实现"></a>1.4 JAVA中MD5的实现</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">import java.io.UnsupportedEncodingException;</div><div class="line">import java.security.MessageDigest;</div><div class="line">import java.security.NoSuchAlgorithmException;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by jianweilin on 2017/10/11.</div><div class="line"> */</div><div class="line">public class MD5Utils &#123;</div><div class="line">    private static final String MD5_KEY = &quot;MD5&quot;;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * MD5加密 生成32位MD5码</div><div class="line">     * @param content 待加密字符串</div><div class="line">     * @return 返回32位MD5码</div><div class="line">     * @throws UnsupportedEncodingException</div><div class="line">     */</div><div class="line">    public static String md5Encode(String content) throws UnsupportedEncodingException &#123;</div><div class="line">        MessageDigest md5 = null;</div><div class="line">        try&#123;</div><div class="line">            md5 = MessageDigest.getInstance(MD5_KEY);</div><div class="line">        &#125; catch (NoSuchAlgorithmException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            return &quot;&quot;;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        byte[] byteArray = content.getBytes(&quot;UTF-8&quot;);</div><div class="line">        byte[] md5Bytes = md5.digest(byteArray);</div><div class="line">        StringBuffer hexValue = new StringBuffer();</div><div class="line">        for (int i = 0; i &lt; md5Bytes.length; i ++) &#123;</div><div class="line">            int val = ((int) md5Bytes[i]) &amp; 0xff;</div><div class="line">            if(val &lt; 16) &#123;</div><div class="line">                hexValue.append(0);</div><div class="line">            &#125;</div><div class="line">            hexValue.append(Integer.toHexString(val));</div><div class="line">        &#125;</div><div class="line">        return hexValue.toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws UnsupportedEncodingException &#123;</div><div class="line">        String content = &quot;This is a MD5 Test&quot;;</div><div class="line">        String hash = md5Encode(content);</div><div class="line">        System.out.println(&quot;original: &quot; + content);</div><div class="line">        System.out.println(&quot;md5 after: &quot; + hash + &quot; length =&gt; &quot; + hash.length());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-SHA加密"><a href="#2-SHA加密" class="headerlink" title="2. SHA加密"></a>2. SHA加密</h3><h4 id="2-1-概述"><a href="#2-1-概述" class="headerlink" title="2.1 概述"></a>2.1 概述</h4><p>SHA是一种数据加密算法，其算法思想是，接收一段明文，然后以一种不可逆的方式将它转换成一段密文，也可以简单的理解为取出一串输入码，并把他们转化为长度较短、位数固定的输出序列即散列值。</p>
+<h4 id="2-2-SHA-1和MD5的比较"><a href="#2-2-SHA-1和MD5的比较" class="headerlink" title="2.2 SHA-1和MD5的比较"></a>2.2 SHA-1和MD5的比较</h4><p>因为两者均由MD4导出，SHA-1和MD5彼此很相似，他们的强度和其他特性也相识，但有以下几点不同：</p>
+<ol>
+<li>对强行攻击的安全性: 最显著和最重要的区别是SHA-1摘要比MD5摘要长32位，使用强行技术，产生任何一个报文, 对MD5是2^128数据级的操作，对SHA-1是2^160数量级的操作，这样SHA-1对强行攻击有更大的强度。</li>
+<li>对密码分析的安全性：由于MD5的设计，易受密码分析的攻击，SHA-1显得不易受这样的攻击。</li>
+<li>速度: 在相同的硬件上，SHA-A的运行速度比MD慢。</li>
+</ol>
+<h4 id="2-3-JAVA中SHA实现"><a href="#2-3-JAVA中SHA实现" class="headerlink" title="2.3 JAVA中SHA实现"></a>2.3 JAVA中SHA实现</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">import java.io.UnsupportedEncodingException;</div><div class="line">import java.security.MessageDigest;</div><div class="line">import java.security.NoSuchAlgorithmException;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by jianweilin on 2017/10/11.</div><div class="line"> */</div><div class="line">public class SHAUtils &#123;</div><div class="line">    private static final String SHA_KEY = &quot;SHA&quot;;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * MD5加密 生成32位MD5码</div><div class="line">     * @param content 待加密字符串</div><div class="line">     * @return 返回32位MD5码</div><div class="line">     * @throws UnsupportedEncodingException</div><div class="line">     */</div><div class="line">    public static String shaEncode(String content) throws UnsupportedEncodingException &#123;</div><div class="line">        MessageDigest sha = null;</div><div class="line">        try&#123;</div><div class="line">            sha = MessageDigest.getInstance(SHA_KEY);</div><div class="line">        &#125; catch (NoSuchAlgorithmException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            return &quot;&quot;;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        byte[] byteArray = content.getBytes(&quot;UTF-8&quot;);</div><div class="line">        byte[] shaBytes = sha.digest(byteArray);</div><div class="line">        StringBuffer hexValue = new StringBuffer();</div><div class="line">        for (int i = 0; i &lt; shaBytes.length; i ++) &#123;</div><div class="line">            int val = ((int) shaBytes[i]) &amp; 0xff;</div><div class="line">            if(val &lt; 16) &#123;</div><div class="line">                hexValue.append(0);</div><div class="line">            &#125;</div><div class="line">            hexValue.append(Integer.toHexString(val));</div><div class="line">        &#125;</div><div class="line">        return hexValue.toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws UnsupportedEncodingException &#123;</div><div class="line">        String content = &quot;This is a SHA Test&quot;;</div><div class="line">        String hash = shaEncode(content);</div><div class="line">        System.out.println(&quot;original: &quot; + content);</div><div class="line">        System.out.println(&quot;sha after: &quot; + hash + &quot; length =&gt; &quot; + hash.length());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-对称加密与非对称加密"><a href="#3-对称加密与非对称加密" class="headerlink" title="3. 对称加密与非对称加密"></a>3. 对称加密与非对称加密</h3><h4 id="3-1-对称加密算法"><a href="#3-1-对称加密算法" class="headerlink" title="3.1 对称加密算法"></a>3.1 对称加密算法</h4><blockquote>
+<p>甲方选择某一种加密规则，对信息进行加密；</p>
+<p>乙方使用同一种规则，对信息进行解密。</p>
+</blockquote>
+<p>特点: 对称加密算法的特定是算法公开、计算量下、加密速度快、加密效率高。</p>
+<p>不足: 甲方必须把加密规则告诉乙方，否则无法解密。保存和传递秘钥，就成了最头疼的问题</p>
+<p>常见的对称加密算法: AES DES 3DES IDEA RC4 RC5 RC6 等</p>
+<h4 id="3-2-非对称加密算法"><a href="#3-2-非对称加密算法" class="headerlink" title="3.2 非对称加密算法"></a>3.2 非对称加密算法</h4><blockquote>
+<p>乙方生成两把密钥(公钥和私钥)，公钥是公开的，任何人都可以获得，私钥则是保密的。</p>
+<p>甲方获取乙方的公钥，然后用它对信息加密</p>
+<p>乙方得到加密后的信息，用私钥解密</p>
+</blockquote>
+<p>特点: 公钥和私钥是一对，如果公开密钥对数据进行加密，只有对应的私钥才能解密；如果用私钥进行加密，只有对应的公钥才能解密。因为加密和解密使用的是两个不同的密钥，所以这种算法叫非对称加密算法。</p>
+<h3 id="4-AES算法和RSA算法"><a href="#4-AES算法和RSA算法" class="headerlink" title="4. AES算法和RSA算法"></a>4. AES算法和RSA算法</h3><h4 id="4-1-AES算法"><a href="#4-1-AES算法" class="headerlink" title="4.1 AES算法"></a>4.1 AES算法</h4><p>高级加密标准(Advanced Encryption Standard,缩写:AES),在密码学中又称Rijndael加密法，是美国联邦政府采用的一种区块加密标准。</p>
+<h4 id="4-2-RSA算法"><a href="#4-2-RSA算法" class="headerlink" title="4.2 RSA算法"></a>4.2 RSA算法</h4><p>1977年，三位科学家<code>Rivest</code>、<code>Shamir</code>和<code>Adleman</code>设计了一种算法，可以实现非对称加密。这种算法用他们三个人的名字命名，加做RSA算法。RSA属于非对称加密算法。</p>
+<h4 id="4-3-两种算法使用的场景"><a href="#4-3-两种算法使用的场景" class="headerlink" title="4.3 两种算法使用的场景"></a>4.3 两种算法使用的场景</h4><ol>
+<li>客户端传输重要信息给服务端，服务端返回的信息不需加密的情况，如绑定银行卡的时候，需要传递用户的银行卡号、手机号等重要信息，客户端这边就需要对这些重要信息进行加密，使用RSA公钥加密、服务端使用RSA解密，然后返回一些普通信息，比如状态码code,提示信息msg等</li>
+<li>客户端传输重要的信息给服务端，服务端返回的信息需加密,如传递用户名和密码等资料，需要进行加密，服务端验证信息后，返回令牌token需要进行加密，客户端解密后保存。</li>
+</ol>
+<h4 id="4-4-JAVA中使用RSA加密和解密"><a href="#4-4-JAVA中使用RSA加密和解密" class="headerlink" title="4.4 JAVA中使用RSA加密和解密"></a>4.4 JAVA中使用RSA加密和解密</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div></pre></td><td class="code"><pre><div class="line">import org.apache.commons.codec.binary.Base64;</div><div class="line"></div><div class="line">import javax.crypto.BadPaddingException;</div><div class="line">import javax.crypto.Cipher;</div><div class="line">import javax.crypto.IllegalBlockSizeException;</div><div class="line">import javax.crypto.NoSuchPaddingException;</div><div class="line">import java.security.*;</div><div class="line">import java.security.interfaces.RSAPrivateKey;</div><div class="line">import java.security.interfaces.RSAPublicKey;</div><div class="line">import java.security.spec.InvalidKeySpecException;</div><div class="line">import java.security.spec.PKCS8EncodedKeySpec;</div><div class="line">import java.security.spec.X509EncodedKeySpec;</div><div class="line">import java.util.HashMap;</div><div class="line">import java.util.Map;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by jianweilin on 2017/10/11.</div><div class="line"> */</div><div class="line">public class RSAUtils &#123;</div><div class="line">    private static final String PUBLIC_KEY = &quot;RSAPublicKey&quot;;</div><div class="line">    private static final String PRIVATE_KEY = &quot;RSAPrivateKey&quot;;</div><div class="line">    private static final String KEY_ALGORITHM = &quot;RSA&quot;;</div><div class="line">    private static final String SIGNATHURE_ALGORITHM = &quot;MD5withRSA&quot;;</div><div class="line"></div><div class="line">    public static Map&lt;String,Object&gt; initKey() throws NoSuchAlgorithmException &#123;</div><div class="line">        // 1. 生成公钥和私钥对，基于RSA算法生成对象</div><div class="line">        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KEY_ALGORITHM);</div><div class="line"></div><div class="line">        // 2. 初始化密钥对生成器，密钥大小为1024位</div><div class="line">        keyPairGenerator.initialize(1024);</div><div class="line"></div><div class="line">        // 3. 生成一个密钥对，保存在keyPair中</div><div class="line">        KeyPair keyPair = keyPairGenerator.generateKeyPair();</div><div class="line"></div><div class="line">        // 4. 得到私钥和公钥</div><div class="line">        RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();</div><div class="line">        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();</div><div class="line"></div><div class="line">        Map&lt;String,Object&gt; keyMap = new HashMap&lt;&gt;();</div><div class="line">        keyMap.put(PUBLIC_KEY,publicKey);</div><div class="line">        keyMap.put(PRIVATE_KEY,privateKey);</div><div class="line">        return keyMap;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 获取私钥</div><div class="line">     */</div><div class="line">    public static String getPrivateKey(Map&lt;String,Object&gt; keyMap)&#123;</div><div class="line">        Key key = (Key) keyMap.get(PRIVATE_KEY);</div><div class="line">        return Base64.encodeBase64String(key.getEncoded());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 获取公钥</div><div class="line">     */</div><div class="line">    public static String getPublicKey(Map&lt;String,Object&gt; keyMap) &#123;</div><div class="line">        Key key = (Key) keyMap.get(PUBLIC_KEY);</div><div class="line">        return Base64.encodeBase64String(key.getEncoded());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 用公钥对数据加密</div><div class="line">     */</div><div class="line">    public static byte[] encryptByPublicKey(byte[] data,String key) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException &#123;</div><div class="line">        // 对公钥解密</div><div class="line">        byte[] keyBytes = Base64.decodeBase64(key);</div><div class="line"></div><div class="line">        // 取得公钥</div><div class="line">        X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(keyBytes);</div><div class="line">        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);</div><div class="line">        Key publicKey = keyFactory.generatePublic(x509EncodedKeySpec);</div><div class="line"></div><div class="line">        // 对数据加密</div><div class="line">        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());</div><div class="line">        cipher.init(Cipher.ENCRYPT_MODE,publicKey);</div><div class="line">        return cipher.doFinal(data);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 用私钥对数据解密</div><div class="line">     */</div><div class="line">    public static byte[] decrptByPrivateKey(byte[] data, String key) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException &#123;</div><div class="line">        // 对私钥解密</div><div class="line">        byte[] keyBytes = Base64.decodeBase64(key);</div><div class="line"></div><div class="line">        // 取得私钥</div><div class="line">        PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(keyBytes);</div><div class="line">        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);</div><div class="line">        Key privateKey = keyFactory.generatePrivate(pkcs8EncodedKeySpec);</div><div class="line"></div><div class="line">        // 对数据解密</div><div class="line">        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());</div><div class="line">        cipher.init(Cipher.DECRYPT_MODE,privateKey);</div><div class="line"></div><div class="line">        return cipher.doFinal(data);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws Exception &#123;</div><div class="line">        long start = System.currentTimeMillis();</div><div class="line">        String content = &quot;Hello World&quot;;</div><div class="line"></div><div class="line">        // 1. 初始化公钥 &amp; 私钥</div><div class="line">        Map&lt;String,Object&gt; pairKey = initKey();</div><div class="line"></div><div class="line">        // 2. 获取公钥</div><div class="line">        String publicKey = getPublicKey(pairKey);</div><div class="line"></div><div class="line">        // 3. 用公钥加密内容</div><div class="line">        byte[] encodeContent = encryptByPublicKey(content.getBytes(&quot;UTF-8&quot;),publicKey);</div><div class="line"></div><div class="line">        // 4. 获取私钥</div><div class="line">        String privateKey = getPrivateKey(pairKey);</div><div class="line"></div><div class="line">        // 5. 用私钥解密内容</div><div class="line">        byte[] decodeContent = decrptByPrivateKey(encodeContent,privateKey);</div><div class="line"></div><div class="line">        System.out.println(&quot;原文：&quot; + content);</div><div class="line">        System.out.print(&quot;密文：&quot;);</div><div class="line">        System.out.println(new String(encodeContent,&quot;UTF-8&quot;));</div><div class="line">        System.out.println(&quot;明文：&quot; + new String(decodeContent,&quot;UTF-8&quot;));</div><div class="line">        System.out.println(&quot;加密~解密历时: &quot; + (System.currentTimeMillis() - start)/1000 + &quot;秒&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-5-AES加密-amp-解密"><a href="#4-5-AES加密-amp-解密" class="headerlink" title="4.5 AES加密 &amp; 解密"></a>4.5 AES加密 &amp; 解密</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div></pre></td><td class="code"><pre><div class="line">import sun.misc.BASE64Decoder;</div><div class="line">import sun.misc.BASE64Encoder;</div><div class="line"></div><div class="line">import javax.crypto.Cipher;</div><div class="line">import javax.crypto.spec.IvParameterSpec;</div><div class="line">import javax.crypto.spec.SecretKeySpec;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by jianweilin on 2017/10/11.</div><div class="line"> */</div><div class="line">public class AESUtils &#123;</div><div class="line"></div><div class="line">    /**</div><div class="line">     *  加密</div><div class="line">     */</div><div class="line">    public static String encrypt(String sSrc, String sKey) throws Exception &#123;</div><div class="line">        if (sKey == null) &#123;</div><div class="line">            System.out.print(&quot;Key为空null&quot;);</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">        // 判断Key是否为16位</div><div class="line">        if (sKey.length() != 16) &#123;</div><div class="line">            System.out.print(&quot;Key长度不是16位&quot;);</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">        byte[] raw = sKey.getBytes();</div><div class="line">        SecretKeySpec skeySpec = new SecretKeySpec(raw, &quot;AES&quot;);</div><div class="line">        Cipher cipher = Cipher.getInstance(&quot;AES/CBC/PKCS5Padding&quot;);//&quot;算法/模式/补码方式&quot;</div><div class="line">        IvParameterSpec iv = new IvParameterSpec(&quot;0102030405060708&quot;.getBytes());//使用CBC模式，需要一个向量iv，可增加加密算法的强度</div><div class="line">        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);</div><div class="line">        byte[] encrypted = cipher.doFinal(sSrc.getBytes());</div><div class="line"></div><div class="line">        return new BASE64Encoder().encode(encrypted);//此处使用BASE64做转码功能，同时能起到2次加密的作用。</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     *  解密</div><div class="line">     */</div><div class="line">    public static String decrypt(String sSrc, String sKey) throws Exception &#123;</div><div class="line">        try &#123;</div><div class="line">            // 判断Key是否正确</div><div class="line">            if (sKey == null) &#123;</div><div class="line">                System.out.print(&quot;Key为空null&quot;);</div><div class="line">                return null;</div><div class="line">            &#125;</div><div class="line">            // 判断Key是否为16位</div><div class="line">            if (sKey.length() != 16) &#123;</div><div class="line">                System.out.print(&quot;Key长度不是16位&quot;);</div><div class="line">                return null;</div><div class="line">            &#125;</div><div class="line">            byte[] raw = sKey.getBytes(&quot;ASCII&quot;);</div><div class="line">            SecretKeySpec skeySpec = new SecretKeySpec(raw, &quot;AES&quot;);</div><div class="line">            Cipher cipher = Cipher.getInstance(&quot;AES/CBC/PKCS5Padding&quot;);</div><div class="line">            IvParameterSpec iv = new IvParameterSpec(&quot;0102030405060708&quot;</div><div class="line">                    .getBytes());</div><div class="line">            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);</div><div class="line">            byte[] encrypted1 = new BASE64Decoder().decodeBuffer(sSrc);//先用base64解密</div><div class="line">            try &#123;</div><div class="line">                byte[] original = cipher.doFinal(encrypted1);</div><div class="line">                String originalString = new String(original);</div><div class="line">                return originalString;</div><div class="line">            &#125; catch (Exception e) &#123;</div><div class="line">                System.out.println(e.toString());</div><div class="line">                return null;</div><div class="line">            &#125;</div><div class="line">        &#125; catch (Exception ex) &#123;</div><div class="line">            System.out.println(ex.toString());</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws Exception &#123;</div><div class="line">        String content = &quot;HelloWorld123456&quot;;</div><div class="line">        String password = &quot;1234567123456712&quot;;</div><div class="line"></div><div class="line">        // AES加密</div><div class="line">        String encodeContent = encrypt(content,password);</div><div class="line"></div><div class="line">        // AES解密</div><div class="line">        String decodeContent = decrypt(encodeContent,password);</div><div class="line"></div><div class="line">        System.out.println(&quot;原文：&quot; + content);</div><div class="line">        System.out.println(&quot;密文：&quot; + encodeContent);</div><div class="line">        System.out.println(&quot;明文：&quot; + decodeContent);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="5-Base64编码"><a href="#5-Base64编码" class="headerlink" title="5. Base64编码"></a>5. Base64编码</h3><h4 id="5-1-概述"><a href="#5-1-概述" class="headerlink" title="5.1 概述"></a>5.1 概述</h4><p>Base64内容传送编码是一种以任意8位字节序列组合的描述形式，这种形式不易被人直接识别。Base64是一种常见的编码规范，其作用是将二进制序列转换为人类可读的ASCLL字符序列，常用在需用通过文本协议(如HTTP和SMTP)来传输二进制数据下。Base64并不是加密解密算法，尽管我们有时也听到过使用Base64来加密解密的说法，但这里所有的加密和解密实际是编码和解码的过程，其变换是非常简单的，仅仅能够编码信息被直接识别。</p>
+<h4 id="5-2-原理"><a href="#5-2-原理" class="headerlink" title="5.2 原理"></a>5.2 原理</h4><p>Base64算法主要是将给定的字符以字符编码(如ASCLL码，UTF-8码)对应的十进制数为基准，做编码操作。</p>
+<blockquote>
+<p>1、将给定的字符串以字符为单位，转换为对应的字符编码。</p>
+<p>2、将获得字符编码转换为二进制</p>
+<p>3、对二进制做分组转换，每3个字节为一组，转换为每4个6位二进制位为1组(不足6位时，低位补0)这是一个分组变化的过程，3个8位二进制和4个6位二进制的长度都是24位</p>
+<p>4、对获得的4-6二进制码补位，向6位二进制码添加2位高位0，组成4个8位二进制码。</p>
+<p>5、对获得4-8二进制码转换为十进制码。</p>
+<p>6、将获得的十进制码转换为Base64字符表中的对应字符。</p>
+</blockquote>
+<h4 id="5-3-JAVA实现Base64编码和解码"><a href="#5-3-JAVA实现Base64编码和解码" class="headerlink" title="5.3 JAVA实现Base64编码和解码"></a>5.3 JAVA实现Base64编码和解码</h4><p>推荐使用<code>commons-codec</code>开源包，请在maven工程中添加依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;commons-codec&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;commons-codec&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.10&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<p>实战：Base64编码 &amp; 解码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import org.apache.commons.codec.binary.Base64;</div><div class="line"></div><div class="line">import java.io.UnsupportedEncodingException;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by jianweilin on 2017/10/11.</div><div class="line"> */</div><div class="line">public class Base64Utils &#123;</div><div class="line">    private static final String QUERY_URL = &quot;http://localhost:8080/hello?content=sayHello&quot;;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws UnsupportedEncodingException &#123;</div><div class="line">        byte[] encodeContent = Base64.encodeBase64URLSafe(QUERY_URL.getBytes(&quot;UTF-8&quot;));</div><div class="line">        byte[] decodeContent = Base64.decodeBase64(encodeContent);</div><div class="line"></div><div class="line">        System.out.println(&quot;原文：&quot; + QUERY_URL);</div><div class="line">        System.out.println(&quot;编码：&quot; + new String(encodeContent,&quot;UTF-8&quot;));</div><div class="line">        System.out.println(&quot;解码：&quot; + new String(decodeContent,&quot;UTF-8&quot;));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://www.jianshu.com/p/316ce9fa083e" target="_blank" rel="external">JAVA中常用加密算法简述</a></li>
+<li><a href="http://www.jianshu.com/p/d83f5be22181" target="_blank" rel="external">Java与加密解密</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/26/沉浸式学Git/" rel="next" title="沉浸式学Git">
+                <i class="fa fa-chevron-left"></i> 沉浸式学Git
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/14/iTerm2配置代理/" rel="prev" title="iTerm2配置代理">
+                iTerm2配置代理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/10/11/Java常用加密算法简述/"
+           data-title="Java常用加密算法简述" data-url="http://jianwl.com/2017/10/11/Java常用加密算法简述/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">292</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-MD5加密"><span class="nav-text">1. MD5加密</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-概述"><span class="nav-text">1.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-算法原理"><span class="nav-text">1.2 算法原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-MD5的特点"><span class="nav-text">1.3 MD5的特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-JAVA中MD5的实现"><span class="nav-text">1.4 JAVA中MD5的实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SHA加密"><span class="nav-text">2. SHA加密</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-概述"><span class="nav-text">2.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-SHA-1和MD5的比较"><span class="nav-text">2.2 SHA-1和MD5的比较</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-JAVA中SHA实现"><span class="nav-text">2.3 JAVA中SHA实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-对称加密与非对称加密"><span class="nav-text">3. 对称加密与非对称加密</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-对称加密算法"><span class="nav-text">3.1 对称加密算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-非对称加密算法"><span class="nav-text">3.2 非对称加密算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-AES算法和RSA算法"><span class="nav-text">4. AES算法和RSA算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-AES算法"><span class="nav-text">4.1 AES算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-RSA算法"><span class="nav-text">4.2 RSA算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-两种算法使用的场景"><span class="nav-text">4.3 两种算法使用的场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-JAVA中使用RSA加密和解密"><span class="nav-text">4.4 JAVA中使用RSA加密和解密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-AES加密-amp-解密"><span class="nav-text">4.5 AES加密 & 解密</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Base64编码"><span class="nav-text">5. Base64编码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-概述"><span class="nav-text">5.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-原理"><span class="nav-text">5.2 原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-JAVA实现Base64编码和解码"><span class="nav-text">5.3 JAVA实现Base64编码和解码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
