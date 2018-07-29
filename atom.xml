@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-07-29T03:49:12.102Z</updated>
+  <updated>2018-07-29T03:56:43.402Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://jianwl.com/2018/07/29/3-%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/"/>
     <id>http://jianwl.com/2018/07/29/3-装饰模式/</id>
     <published>2018-07-29T01:52:22.000Z</published>
-    <updated>2018-07-29T03:49:12.102Z</updated>
+    <updated>2018-07-29T03:56:43.402Z</updated>
     
     <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>写一个可以给人搭配不同的服饰的系统，比如类似QQ、网络游戏或论坛都有的Avatar系统，你会怎么开发？</p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-Person-concreteComponent"><a href="#1-Person-concreteComponent" class="headerlink" title="1. Person(concreteComponent)"></a>1. Person(concreteComponent)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class Person &#123;</div><div class="line">    private String name;</div><div class="line"></div><div class="line">    public Person() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Person(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void show()&#123;</div><div class="line">        System.out.println(&quot;light up the body,just wear clothes,please!&quot;);</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -30,7 +30,7 @@
 <h4 id="5-App-启动类"><a href="#5-App-启动类" class="headerlink" title="5. App(启动类)"></a>5. App(启动类)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class App &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Person component = new Person(&quot;William&quot;);</div><div class="line">        TShirts tShirts = new TShirts();</div><div class="line">        BigTrouser trouser = new BigTrouser();</div><div class="line"></div><div class="line">        tShirts.setComponent(component);</div><div class="line">        trouser.setComponent(tShirts);</div><div class="line">        trouser.show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="装饰模式"><a href="#装饰模式" class="headerlink" title="装饰模式"></a>装饰模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>动态给一个对象添加一些额外的职责，就增加功能来说，装饰模式比生成子类更为灵活。</p>
 <h4 id="2-适用场景"><a href="#2-适用场景" class="headerlink" title="2. 适用场景"></a>2. 适用场景</h4><p>当系统需要新功能的时候，是向旧的类中添加新的代码，这些新加的代码通常修饰了原有类的核心职责或主要行为，他们在主类中加入新的字段、新的方法和新的逻辑，从而增加了主类的复杂度，而这些新加入的东西仅仅是为了满足一些只在某种特定情况下才会执行的特殊行为的需要。装饰模式提供了一个很好的解决方案，它把每个要装饰的功能都放在单独的类中，并让这个类包装它所要修饰的类，因为当需要执行特殊行为时，客户代码就可以在运行时，根据需要有选择地、按顺序使用装饰功能包装对象。</p>
-<h3 id="3-优点"><a href="#3-优点" class="headerlink" title="3. 优点"></a>3. 优点</h3><p>有效地把核心职责和装饰功能去分开了，去除相关的重复修饰逻辑；</p>
+<h4 id="3-优点"><a href="#3-优点" class="headerlink" title="3. 优点"></a>3. 优点</h4><p>有效地把核心职责和装饰功能去分开了，去除相关的重复修饰逻辑；</p>
 <h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-29/12012511.jpg" alt=""></p>
 ]]></content>
     
