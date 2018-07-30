@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-07-30T15:39:45.057Z</updated>
+  <updated>2018-07-30T15:46:44.292Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="http://jianwl.com/2018/07/30/4-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"/>
     <id>http://jianwl.com/2018/07/30/4-代理模式/</id>
     <published>2018-07-30T15:13:25.000Z</published>
-    <updated>2018-07-30T15:39:45.057Z</updated>
+    <updated>2018-07-30T15:46:44.292Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>有个暗恋”李娇娇”女同学的男生雇佣快递员“威廉”，把礼物送给这个女生。</p>
+    <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>有个暗恋”李娇娇”同学的男生雇佣快递员“威廉”，把礼物送给这个女生。</p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-IGiveGift-Subject"><a href="#1-IGiveGift-Subject" class="headerlink" title="1. IGiveGift(Subject)"></a>1. IGiveGift(Subject)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface IGiveGift &#123;</div><div class="line">    void giveDolls();</div><div class="line">    void giveFlowers();</div><div class="line">    void giveChocolate();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="2-SchoolGirl"><a href="#2-SchoolGirl" class="headerlink" title="2. SchoolGirl"></a>2. SchoolGirl</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public class SchoolGirl &#123;</div><div class="line">    private String name;</div><div class="line"></div><div class="line">    public SchoolGirl(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="3-Pursuit-RealSubject"><a href="#3-Pursuit-RealSubject" class="headerlink" title="3. Pursuit(RealSubject)"></a>3. Pursuit(RealSubject)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class Pursuit implements IGiveGift &#123;</div><div class="line">    private SchoolGirl girl;</div><div class="line"></div><div class="line">    public Pursuit(SchoolGirl girl) &#123;</div><div class="line">        this.girl = girl;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveDolls() &#123;</div><div class="line">        System.out.println(girl.getName() + &quot;送你洋娃娃~&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveFlowers() &#123;</div><div class="line">        System.out.println(girl.getName() + &quot;送你花~&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveChocolate() &#123;</div><div class="line">        System.out.println(girl.getName() + &quot;送你巧克力~&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -31,15 +31,17 @@
 <h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>为其他对象提供一种代理以控制这个对象的访问</p>
 <h4 id="2-使用场景"><a href="#2-使用场景" class="headerlink" title="2. 使用场景"></a>2. 使用场景</h4><ol>
 <li>远程代理，即一个对象在不同的地址空间提供局部代表，这样可以隐藏一个对象存在于不同空间地址的事实。</li>
-<li>虚拟代理，是根据需要创建开销很大的对象。通过它来存放实例化需要很长时间的真实对象。</li>
+<li>虚拟代理，是根据需要创建开销很大的对象。通过它来存放实例化需要很长时间的真实对象。比如说打开一个很大的HTML网页时，里面可能需要很多的文字和图片，但是你还是可以很快打开它，此时你看到的是所有的文字，但图片还是一张一张地下载后才能看到。那些未打开的图片库，通过虚拟代理来替代真实的图片，此时代理存储了真实图片的路径和尺寸。</li>
+<li>安全代理，用来控制真实对象访问是的权限。</li>
+<li>智能指引，当调用真实对象时，代理处理另外一些事。</li>
 </ol>
 <h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-30/12731914.jpg" alt=""></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;有个暗恋”李娇娇”女同学的男生雇佣快递员“威廉”，把礼物送给这个女生。&lt;/p&gt;
-&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#
+      &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;有个暗恋”李娇娇”同学的男生雇佣快递员“威廉”，把礼物送给这个女生。&lt;/p&gt;
+&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实
     
     </summary>
     
