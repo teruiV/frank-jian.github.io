@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-07-30T15:46:44.292Z</updated>
+  <updated>2018-08-01T11:18:04.068Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -16,11 +16,66 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Spring自定义注解与AOP获取注解</title>
+    <link href="http://jianwl.com/2018/08/01/Spring%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E4%B8%8EAOP%E8%8E%B7%E5%8F%96%E6%B3%A8%E8%A7%A3/"/>
+    <id>http://jianwl.com/2018/08/01/Spring自定义注解与AOP获取注解/</id>
+    <published>2018-08-01T10:34:22.000Z</published>
+    <updated>2018-08-01T11:18:04.068Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>需要对consul的节点上下线的操作日志集中管理，且尽可能减少对业务代码的侵入性。</p>
+<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><ol>
+<li>通过AOP的方式，对指定的方法进行切面</li>
+<li>通过AOP的方式，对指定的注解进行切面</li>
+</ol>
+<p>两个方案对比，方案一，如果预先不知道这个AOP的存在，在写代码是，可能会出现一些suprise。而方案二，扫描自定义注解的方式，对于使用方会更友好一些。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-引入AOP需要引入核心依赖"><a href="#1-引入AOP需要引入核心依赖" class="headerlink" title="1. 引入AOP需要引入核心依赖"></a>1. 引入AOP需要引入核心依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<h4 id="2-CreateRouteLog-自定义注解"><a href="#2-CreateRouteLog-自定义注解" class="headerlink" title="2. CreateRouteLog(自定义注解)"></a>2. CreateRouteLog(自定义注解)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">package com.frank.springlearning.annotation;</div><div class="line"></div><div class="line">import java.lang.annotation.*;</div><div class="line"></div><div class="line">@Target(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</div><div class="line">@Retention(RetentionPolicy.RUNTIME)</div><div class="line">@Inherited</div><div class="line">@Documented</div><div class="line">public @interface CreateRouteLog &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-声明切面-OperateLogAspect"><a href="#3-声明切面-OperateLogAspect" class="headerlink" title="3. 声明切面(OperateLogAspect)"></a>3. 声明切面(OperateLogAspect)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">@Component</div><div class="line">@Aspect</div><div class="line">@Slf4j</div><div class="line">public class OperateLogAspect &#123;</div><div class="line">    @Pointcut(&quot;@annotation(com.frank.springlearning.annotation.CreateRouteLog)&quot;)</div><div class="line">    public void createRouteLog() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @AfterReturning(value = &quot;createRouteLog()&quot;, argNames = &quot;joinPoint,response&quot;, returning = &quot;response&quot;)</div><div class="line">    public void createRouteLog(JoinPoint joinPoint, Object response) &#123;</div><div class="line">        log.info(&quot;&gt;&gt;&gt;&gt; aspect create route log &gt;&gt;&gt;&gt;&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-LogService"><a href="#4-LogService" class="headerlink" title="4. LogService"></a>4. LogService</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Service</div><div class="line">@Slf4j</div><div class="line">public class LogService &#123;</div><div class="line">    @CreateRouteLog</div><div class="line">    public void createRoute(String content) &#123;</div><div class="line">        log.info(&quot;has a node create route! content: &#123;&#125;&quot;, content);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-LogController"><a href="#5-LogController" class="headerlink" title="5. LogController"></a>5. LogController</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@RestController</div><div class="line">@Slf4j</div><div class="line">public class LogController &#123;</div><div class="line">    @RequestMapping(&quot;/create/node&quot;)</div><div class="line">    public String createNode()&#123;</div><div class="line">        logService.createRoute(&quot;Hello World!&quot;);</div><div class="line">        return &quot;create node&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;需要对consul的节点上下线的操作日志集中管理，且尽可能减少对业务代码的侵入性。&lt;/p&gt;
+&lt;h3 id=&quot;方案&quot;&gt;&lt;a h
+    
+    </summary>
+    
+      <category term="Spring" scheme="http://jianwl.com/categories/Spring/"/>
+    
+    
+      <category term="Spring" scheme="http://jianwl.com/tags/Spring/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>5.工厂方法模式</title>
+    <link href="http://jianwl.com/2018/07/31/5-%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/07/31/5-工厂方法模式/</id>
+    <published>2018-07-31T14:53:21.000Z</published>
+    <updated>2018-07-31T14:54:12.018Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>4.代理模式</title>
     <link href="http://jianwl.com/2018/07/30/4-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"/>
     <id>http://jianwl.com/2018/07/30/4-代理模式/</id>
     <published>2018-07-30T15:13:25.000Z</published>
-    <updated>2018-07-30T15:46:44.292Z</updated>
+    <updated>2018-07-30T15:48:20.018Z</updated>
     
     <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>有个暗恋”李娇娇”同学的男生雇佣快递员“威廉”，把礼物送给这个女生。</p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-IGiveGift-Subject"><a href="#1-IGiveGift-Subject" class="headerlink" title="1. IGiveGift(Subject)"></a>1. IGiveGift(Subject)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface IGiveGift &#123;</div><div class="line">    void giveDolls();</div><div class="line">    void giveFlowers();</div><div class="line">    void giveChocolate();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -874,90 +929,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;部门技术分享，选了个数据库专题，做完KeyNote，顺便整理成文，方便后续查阅和补充；本次分享囊括数据库架构、存储引擎功能对比、常用Inno
-    
-    </summary>
-    
-      <category term="MYSQL" scheme="http://jianwl.com/categories/MYSQL/"/>
-    
-    
-      <category term="MYSQL" scheme="http://jianwl.com/tags/MYSQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Thread源码学习</title>
-    <link href="http://jianwl.com/2018/05/04/Thread%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://jianwl.com/2018/05/04/Thread源码学习/</id>
-    <published>2018-05-03T22:47:52.000Z</published>
-    <updated>2018-05-04T00:19:01.612Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="1、Thread内部有个State枚举，表示线程的状态"><a href="#1、Thread内部有个State枚举，表示线程的状态" class="headerlink" title="1、Thread内部有个State枚举，表示线程的状态"></a>1、Thread内部有个State枚举，表示线程的状态</h3><ul>
-<li>NEW, 新建未开始</li>
-<li>RUNNABLE，可执行，但他可能处于等待系统资源状态，因为CPU此时别其他线程占用；</li>
-<li>BLOCKED，阻塞状态，等待一个monitor lock，在调用wait方法后，进入synchronized同步块或方法</li>
-<li>WAITING, 等待状态，调用以下方法导致进入等待状态，object.wait()、Thread.join()、LockSupport.park()</li>
-<li>TIMED_WAITING, 带超时时间的等待，调用以下方法会处于这个状态 Thread.sleep()、Object.wait()、Thread.join()、LockSupport.parkNanos()、LockSupport.parkUntil()</li>
-<li>TERMINATED, 终止状态</li>
-</ul>
-<p>2、接着看下Thread的构造函数及其他几个相关的成员变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div></pre></td><td class="code"><pre><div class="line">/* 带目标run对象. */</div><div class="line">   private Runnable target;</div><div class="line"></div><div class="line">   /* 线程组 */</div><div class="line">   private ThreadGroup group;</div><div class="line">   </div><div class="line">   /* 此线程的类加载器 */</div><div class="line">   private ClassLoader contextClassLoader;</div><div class="line">   </div><div class="line">   /* 想要的栈大小，为0时此参数被忽略，且有VM不支持此参数 */</div><div class="line">    private long stackSize;</div><div class="line">    </div><div class="line">   /* 状态标识，0代表新建未开始*/</div><div class="line">   private volatile int threadStatus = 0;</div><div class="line">   </div><div class="line">   /* 静态native方法，返回当前线程*/</div><div class="line">   public static native Thread currentThread();</div><div class="line"></div><div class="line"></div><div class="line">   public Thread() &#123;</div><div class="line">       init(null, null, &quot;Thread-&quot; + nextThreadNum(), 0);</div><div class="line">   &#125;</div><div class="line">   public Thread(Runnable target) &#123;</div><div class="line">       init(null, target, &quot;Thread-&quot; + nextThreadNum(), 0);</div><div class="line">   &#125;</div><div class="line">    Thread(Runnable target, AccessControlContext acc) &#123;</div><div class="line">       init(null, target, &quot;Thread-&quot; + nextThreadNum(), 0, acc);</div><div class="line">   &#125;</div><div class="line">    public Thread(ThreadGroup group, Runnable target) &#123;</div><div class="line">       init(group, target, &quot;Thread-&quot; + nextThreadNum(), 0);</div><div class="line">   &#125;</div><div class="line">    public Thread(String name) &#123;</div><div class="line">       init(null, null, name, 0);</div><div class="line">   &#125;</div><div class="line">   public Thread(ThreadGroup group, String name) &#123;</div><div class="line">       init(group, null, name, 0);</div><div class="line">   &#125;</div><div class="line">   public Thread(Runnable target, String name) &#123;</div><div class="line">       init(null, target, name, 0);</div><div class="line">   &#125;</div><div class="line">   public Thread(ThreadGroup group, Runnable target, String name) &#123;</div><div class="line">       init(group, target, name, 0);</div><div class="line">   &#125;</div><div class="line"></div><div class="line"></div><div class="line">   /**</div><div class="line">    * Initializes a Thread.</div><div class="line">    *</div><div class="line">    * @param g 线程组</div><div class="line">    * @param target 要执行的带run的目标对象</div><div class="line">    * @param name 线程名</div><div class="line">    * @param stackSize 新线程的栈大小，等于0时可忽略此参数</div><div class="line">    * @param acc 接入控制上下文</div><div class="line">    */</div><div class="line">   private void init(ThreadGroup g, Runnable target, String name,</div><div class="line">                     long stackSize, AccessControlContext acc) &#123;</div><div class="line">       if (name == null) &#123;</div><div class="line">           throw new NullPointerException(&quot;name cannot be null&quot;);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       this.name = name;</div><div class="line"></div><div class="line">       Thread parent = currentThread();</div><div class="line">       SecurityManager security = System.getSecurityManager();</div><div class="line">       //获取线程组</div><div class="line">       if (g == null) &#123;</div><div class="line"></div><div class="line">           /* 从SecurityManager拿线程组  */</div><div class="line">           if (security != null) &#123;</div><div class="line">               g = security.getThreadGroup();</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           /* 如果还没拿到从当前线程拿*/</div><div class="line">           if (g == null) &#123;</div><div class="line">               g = parent.getThreadGroup();</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       /* 检查是否可获取 */</div><div class="line">       g.checkAccess();</div><div class="line"></div><div class="line">       /*</div><div class="line">        * 还是权限控制检查</div><div class="line">        */</div><div class="line">       if (security != null) &#123;</div><div class="line">           if (isCCLOverridden(getClass())) &#123;</div><div class="line">               security.checkPermission(SUBCLASS_IMPLEMENTATION_PERMISSION);</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       g.addUnstarted();</div><div class="line"></div><div class="line">       this.group = g;</div><div class="line">       this.daemon = parent.isDaemon();</div><div class="line">       this.priority = parent.getPriority();</div><div class="line">       if (security == null || isCCLOverridden(parent.getClass()))</div><div class="line">           this.contextClassLoader = parent.getContextClassLoader();</div><div class="line">       else</div><div class="line">           this.contextClassLoader = parent.contextClassLoader;</div><div class="line">       this.inheritedAccessControlContext =</div><div class="line">               acc != null ? acc : AccessController.getContext();</div><div class="line">       this.target = target;</div><div class="line">       setPriority(priority);</div><div class="line">       //从父线程继承可继承的ThreadLocal</div><div class="line">       if (parent.inheritableThreadLocals != null)</div><div class="line">           this.inheritableThreadLocals =</div><div class="line">               ThreadLocal.createInheritedMap(parent.inheritableThreadLocals);</div><div class="line">     </div><div class="line">       this.stackSize = stackSize;</div><div class="line"></div><div class="line">       /* 设置线程ID */</div><div class="line">       tid = nextThreadID();</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>不同的构造函数很多，最终都调init方法，init主要实现的就是把相应的参数放入成员变量里，线程ID为自增长方式；</p>
-<h3 id="3、调用线程执行的主方法start与run方法"><a href="#3、调用线程执行的主方法start与run方法" class="headerlink" title="3、调用线程执行的主方法start与run方法"></a>3、调用线程执行的主方法start与run方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">/* 线程启动方法 */</div><div class="line"> public synchronized void start() &#123;</div><div class="line">        /**</div><div class="line">         * 如果线程不是NEW状态，则抛异常</div><div class="line">         */</div><div class="line">        if (threadStatus != 0)</div><div class="line">            throw new IllegalThreadStateException();</div><div class="line"></div><div class="line">        /*</div><div class="line">        通知线程组此线程准备运行里，所以它可以加入到线程组列表中，线程组的未开始数量可以减少了 */</div><div class="line">        group.add(this);</div><div class="line"></div><div class="line">        boolean started = false;</div><div class="line">        try &#123;</div><div class="line">            start0();</div><div class="line">            started = true;</div><div class="line">        &#125; finally &#123;</div><div class="line">            try &#123;</div><div class="line">                if (!started) &#123;</div><div class="line">                    group.threadStartFailed(this);</div><div class="line">                &#125;</div><div class="line">            &#125; catch (Throwable ignore) &#123;</div><div class="line">                /*什么都不做，如果start0排除一个异常，它已经可以被调用栈知道 */</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private native void start0();</div></pre></td></tr></table></figure>
-<p>特别注意：start方法会创建一个新的线程，之后在执行run方法里的逻辑；而run方法只会在当前线程中执行逻辑；</p>
-<h3 id="4、join方法-等待线程挂掉的方法"><a href="#4、join方法-等待线程挂掉的方法" class="headerlink" title="4、join方法, 等待线程挂掉的方法"></a>4、join方法, 等待线程挂掉的方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">/*如果这个线程还活着就一直等待*/</div><div class="line"> public final void join() throws InterruptedException &#123;</div><div class="line">        join(0);</div><div class="line">    &#125;</div><div class="line">/*如果这个线程还活着就一直等待millis时间*/</div><div class="line">public final synchronized void join(long millis)</div><div class="line">    throws InterruptedException &#123;</div><div class="line">        long base = System.currentTimeMillis();</div><div class="line">        long now = 0;</div><div class="line"></div><div class="line">        if (millis &lt; 0) &#123;</div><div class="line">            throw new IllegalArgumentException(&quot;timeout value is negative&quot;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        if (millis == 0) &#123;</div><div class="line">            while (isAlive()) &#123;</div><div class="line">                wait(0);</div><div class="line">            &#125;</div><div class="line">        &#125; else &#123;</div><div class="line">            while (isAlive()) &#123;</div><div class="line">                long delay = millis - now;</div><div class="line">                if (delay &lt;= 0) &#123;</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line">                wait(delay);</div><div class="line">                now = System.currentTimeMillis() - base;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>通过自旋方法检验线程是否活着，如果活着，则wait释放锁；</p>
-<h3 id="5、sleep方法，native实现，会抛出InterruptedException"><a href="#5、sleep方法，native实现，会抛出InterruptedException" class="headerlink" title="5、sleep方法，native实现，会抛出InterruptedException"></a>5、sleep方法，native实现，会抛出InterruptedException</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/* 睡眠指定毫秒，并不释放monitor*/</div><div class="line">public static native void sleep(long millis) throws InterruptedException;</div></pre></td></tr></table></figure>
-<h3 id="6、yield方法"><a href="#6、yield方法" class="headerlink" title="6、yield方法"></a>6、yield方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/*使当前线程从执行状态（运行状态）变为可执行态（就绪状态）。cpu会从众多的可执行态里选择，也就是说，当前也就是刚刚的那个线程还是有可能会被再次执行到的，并不是说一定会执行其他线程而该线程在下一次中不会执行到了*/</div><div class="line">public static native void yield();</div></pre></td></tr></table></figure>
-<h3 id="7、interrupted-方法与isInterrupted方法的区别？"><a href="#7、interrupted-方法与isInterrupted方法的区别？" class="headerlink" title="7、interrupted()方法与isInterrupted方法的区别？"></a>7、interrupted()方法与isInterrupted方法的区别？</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public static boolean interrupted() &#123;</div><div class="line">    return currentThread().isInterrupted(true);</div><div class="line">&#125;</div><div class="line"></div><div class="line">public boolean isInterrupted() &#123;</div><div class="line">    return isInterrupted(false);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>从源码上看，这两个方法都是调用<code>isInterrupted(boolean ClearInterrupted)</code>,只不过一个带的参数是true，另一个带的参数是false;</p>
-<p>所以他们之间的区别是：</p>
-<p>1、<code>interrupted</code>方法会清除中断标识符，<code>isInterrupted</code>方法不会清除中断标识符；</p>
-<p>2、<code>interrupted</code>测试的是当前线程的中断状态，<code>isInterrupted</code>测试的是调用该方法对象所表示的线程。</p>
-<p>3、<code>interrupted</code>为静态方法，Thread对象调用，<code>isInterrupted</code>为普通方法，Thread实例化对象调用</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;1、Thread内部有个State枚举，表示线程的状态&quot;&gt;&lt;a href=&quot;#1、Thread内部有个State枚举，表示线程的状态&quot; class=&quot;headerlink&quot; title=&quot;1、Thread内部有个State枚举，表示线程的状态&quot;&gt;&lt;/a&gt;1、Thr
-    
-    </summary>
-    
-      <category term="JDK源码学习专题" scheme="http://jianwl.com/categories/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
-    
-    
-      <category term="JDK源码学习专题" scheme="http://jianwl.com/tags/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MYSQL索引原理</title>
-    <link href="http://jianwl.com/2018/04/24/MYSQL%E7%B4%A2%E5%BC%95%E5%8E%9F%E7%90%86/"/>
-    <id>http://jianwl.com/2018/04/24/MYSQL索引原理/</id>
-    <published>2018-04-24T09:51:23.000Z</published>
-    <updated>2018-04-24T15:27:55.613Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="1-索引目的"><a href="#1-索引目的" class="headerlink" title="1. 索引目的"></a>1. 索引目的</h3><p>索引的目的在于提高查询效率，可以类比字典，如果要查<code>mysql</code>这个单词，我们肯定需要定位到m字母，然后从往下找到y字母，再找到剩下的sql。如果没有索引，那么你很可能需要把所有单词看一遍才能找到你想要的，如果我想找到m开头的单词呢？或者ze开头的单词呢？是不是觉得如果没有索引，这个事情根本无法完成？</p>
-<h3 id="2-索引原理"><a href="#2-索引原理" class="headerlink" title="2. 索引原理"></a>2. 索引原理</h3><p>除了字典，生活中随处可见索引的例子，如火车站的车次表，图书的目录等，他们的原理都是一样的，通过不断的缩小想要获得的范围来筛选出最终想要的结果，同时把随机事件变成顺序的时间，也就是我们总是通过同一种查找方式来锁定数据。</p>
-<p>数据库也是一样，但显然要复杂许多，因为不仅面临这等值查询、还有范围查询(<code>&gt;</code>、<code>&lt;</code>、<code>between</code>、<code>in</code>)、模糊查询(like)、并集查询(or)等。数据库应该选择怎么样的方式来应对所有问题呢？我们回想字典的例子，能不能把数据分成段，然后分段查询呢？最简单的如果1000条数据，1到100分成第一段，101到200分成第二段、201到300分成第三段…这样查第250条数据，只要找第三段就可以了，一下子去除了90%的无效数据。但是如果是1千万的记录呢，分成几段比较好？稍有算法基础的同学会想到搜索树，其平均复杂度是lgN,具有不错的查询性能。但这里我们忽略一个关键的问题，复杂度模型是基于每次相同的操作成本来考虑的，数据库实现比较复杂，数据保存在磁盘上，而为了提高性能，每次又可以把部分数据读入内存来计算，因为我们知道访问磁盘的成本大概是访问内存的十万倍左右，所以简单的搜索树难以满足复杂的应用场景。</p>
-<h3 id="3-磁盘IO和预读"><a href="#3-磁盘IO和预读" class="headerlink" title="3. 磁盘IO和预读"></a>3. 磁盘IO和预读</h3><p>前面提高了访问磁盘，那么这里先简单介绍一些磁盘IO和预读，磁盘读取数据靠的是机械运动，每次读取数据花费的时间可以分为寻道时间、旋转延迟、传输时间三个部分、寻道时间指的是磁臂移动到指定磁道所需要的时间，主流磁盘一般在5ms以下；旋转延迟就是我们常说的磁盘转速，比如一个磁盘7200转，表示每分钟能转7200次，也就是1秒转120次，旋转延迟就是1/120/2 = 4.17ms；传输时间指从磁盘读出或将数据写入磁盘的时间，一般在零点几毫秒，相对于前两个时间可以忽略不计。那么访问一次磁盘的时间，即一次磁盘IO的时间约等于5+4.17 = 9ms左右，听起来还挺不错，但要知道一台500 - MIPS的机器每秒可以执行5亿条指令，因为指令依靠的是电的性质，换句话说执行一次IO的时间可以执行40万条指令，数据库动辄十万百万乃至千万数据，每次9毫秒的时间，显然是个灾难。下图是计算机硬件延迟的对比图，供大家参考；</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-4-24/44660032.jpg" alt=""></p>
-<p>考虑到磁盘IO是非常高昂的操作计算机操作系统做了一些优化，当一次IO是，不光把当前磁盘地址的数据，而是把相邻的数据也都读取到内存缓冲区内，因为局部预读性原理告诉我们，当计算机访问一个地址的数据的时候，与其相邻的数据也会很快被访问到。每次IO读取的数据我们称之为一页(page)。具体一页有多大数据跟操作系统有关，一般为4k或8k，也就是我们读取一页内的数据时候，实际上发生了一次IO，这个理论对于索引的数据结构设计非常有帮助。</p>
-<h3 id="4-索引的数据结构"><a href="#4-索引的数据结构" class="headerlink" title="4. 索引的数据结构"></a>4. 索引的数据结构</h3><p>前面讲了生活中索引的例子，索引的基本原理，数据库的复杂性，又讲了操作系统的相关知识，目的就是让大家了解，任何一种数据结构都不是凭空产生的，一定会有他的背景和使用场景，我们现在总结一下，我们需要这种数据结构能够做些什么，其实很简单，就是：每次查找数据时把磁盘IO次数控制在一个很小的数量级，最好是常数数量级。那么我们就想到如果一个高度可控的多路搜索树是否能满足要求呢？就这样，b+树应运而生。</p>
-<h3 id="5-详解B-树"><a href="#5-详解B-树" class="headerlink" title="5. 详解B+树"></a>5. 详解B+树</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-4-24/6850674.jpg" alt=""></p>
-<p>如上图，是一颗B+树，这里只说一些重点，浅蓝色的块我们称之为磁盘块，可以看到每个磁盘块包含几个数据项(深蓝色所示)和指针(黄色所示)，如磁盘块1包含数据项17和35，包含指针P1、P2、P3，P1表示小于17的磁盘块，P2表示17和35之间的磁盘块，P3表示大于35的磁盘块，真实的数据存于<strong>叶子节点</strong>即 3、5、9、10、13、15、28、29、36、60、75、79、90、99。非叶子节点只存储真实的数据，只存储指引搜索方向的数据项，如17、35并不真实存在于数据表中。</p>
-<h4 id="B-树的查找过程"><a href="#B-树的查找过程" class="headerlink" title="B+树的查找过程"></a>B+树的查找过程</h4><p>如图所示，如果要查找数据项是29，那么首先会把磁盘块1由磁盘加载到内存，此时发生一次IO，在内存中用二分法查找确定29在17和35之间，锁定磁盘块1的P2指针，内存时间因为非常短(相比磁盘的IO)可以忽略不计，通过磁盘块1的P2指针的磁盘地址把磁盘块3由磁盘块8加载到内存，发生第二次IO，29在26和30之间，锁定磁盘块3的P2指针，通过指针加载磁盘块8到内存，发生第三次IO，同时内存中做二分查找找到29，结束查询，总计三次IO。真实的情况是，3层的B+树可以表示上百万的数据，如果上百万的数据查找只需要三次IO，性能将是巨大的，如果没有索引，每个数据项都要发生一次IO，那么总计共需要百万次IO，显然成本非常高。</p>
-<h4 id="B-树性质"><a href="#B-树性质" class="headerlink" title="B+树性质"></a>B+树性质</h4><p>1、通过上面的分析，我们知道IO次数取决于B+数的高度H，假设当前数据表的数据为N，每个磁盘块的数据项的数据是m，则有h=log(m+1)N,当数据量N一定的情况下，m越大，h越小；而m = 磁盘块的大小 / 数据项的大小，磁盘块的大小也就是一个数据页的大小，是固定的，如果数据项占的空间越小，数据项的数量越多，树的高度越低。这就是为什么每个数据项，即索引字段尽量要小，比如int占4字节，要比bigint8字节少一半，这也是为什么B+树要求吧真实的数据放到叶子节点而不是内层节点，一旦放到内层节点，磁盘块的数据项会大幅度下降，导致树增高。当数据项等于1时，会将退化成线性表。</p>
-<p>2、 当B+树的数据项是符合的数据，比如(name,age,sex)的时候，b+树是按照从左到右的顺序来建立搜索树的，比如当(张三，20，F)这样的数据来检索的时候，B+树会优先比较name来确定下一步的搜索方向，如果name相同再一次比较age和sex，最后得到检索的数据；但当(20,F)这样的没有name的数据来的时候，B+树就不知道下一步该查哪个节点，因为建立搜索树的时候name就是第一个比较因子，必须要先根据name来搜索才知道下一步去哪里查询。比如当(张三，F)这样的数据来检索时，b+树可以用name来指定搜索方向，但下一个字段age的缺失，所以只能把名字等于张三的数据都找到，然后在匹配性别F的数据了，这个是非常重要的性质，即索引最左匹配特性。</p>
-<h3 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h3><p>1、 最左前缀匹配原则，非常重要的原则，mysql会一直向右匹配直到遇到范围查询(&gt;、&lt;、between、like)就停止匹配，比如a = 1 and b = 2 and c &gt; 3 and d = 4 如果建立(a、b、c、d)顺序的索引，d是用不到索引的，如果建立(a,b,d,c)的索引则都可以用到，a,b,d的顺序可以任意调整。</p>
-<p>2、 = 和 in 可以乱序，比如 a = 1 and b = 2 and c = 3 建立(a,b,c)索引可以任意顺序，mysql的查询优化器会帮你优化成索引可以识别的形式。</p>
-<p>3、 尽量寻找区分度高的列作为索引，区分度的公式是count(distinct col)/count(*)，表示字段不重复的比例，比例越大我们扫描的记录越少，唯一键的区分度是1，而一些状态，性别字段可能在大数据面前区分度就是0，一般需要join的字段我们要求是0.1以上，平均1条扫描10条记录</p>
-<p>4、 索引项不能参与计算，保持干净列，比如 from_unixtime(create_time) = ‘2018-04-20’就不能使用索引，原因很简单，b+树中存的都是数据表中的字段值，但进行检索时，需要把所有元素都应用函数才能比较，显然成本太大。所以语句应该写成create_time = unix_timestamp(‘2018-04-20’)</p>
-<p>5、 尽量的扩展索引，不要新建索引，比如表中已经有a的索引，现在要加(a,b)索引，那么只需要修改原来的索引即可。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;1-索引目的&quot;&gt;&lt;a href=&quot;#1-索引目的&quot; class=&quot;headerlink&quot; title=&quot;1. 索引目的&quot;&gt;&lt;/a&gt;1. 索引目的&lt;/h3&gt;&lt;p&gt;索引的目的在于提高查询效率，可以类比字典，如果要查&lt;code&gt;mysql&lt;/code&gt;这个单词，我们肯定
     
     </summary>
     
