@@ -1,0 +1,733 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oc5a5l0a0.bkt.clouddn.com/17-9-15/12958638.jpg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="实战1. ReentrantLock实现同步主函数
+1234567891011121314public class Run &amp;#123;    public static void main(String[] args) &amp;#123;        MyService myService = new MyService();        MyThread t1 = new MyThread(my">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lock的使用">
+<meta property="og:url" content="http://jianwl.com/2017/05/06/Lock的使用/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="实战1. ReentrantLock实现同步主函数
+1234567891011121314public class Run &amp;#123;    public static void main(String[] args) &amp;#123;        MyService myService = new MyService();        MyThread t1 = new MyThread(my">
+<meta property="og:updated_time" content="2017-05-06T05:33:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lock的使用">
+<meta name="twitter:description" content="实战1. ReentrantLock实现同步主函数
+1234567891011121314public class Run &amp;#123;    public static void main(String[] args) &amp;#123;        MyService myService = new MyService();        MyThread t1 = new MyThread(my">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> Lock的使用 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/05/06/Lock的使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Lock的使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-06T10:01:05+08:00">
+                2017-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/06/Lock的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/06/Lock的使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-ReentrantLock实现同步"><a href="#1-ReentrantLock实现同步" class="headerlink" title="1. ReentrantLock实现同步"></a>1. ReentrantLock实现同步</h4><p>主函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class Run &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        MyService myService = new MyService();</div><div class="line">        MyThread t1 = new MyThread(myService);</div><div class="line">        MyThread t2 = new MyThread(myService);</div><div class="line">        t1.start();</div><div class="line">        t2.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// 结果：</div><div class="line">// ThreadName = Thread-0(0)</div><div class="line">// ThreadName = Thread-0(1)</div><div class="line">// ThreadName = Thread-1(0)</div><div class="line">// ThreadName = Thread-1(1)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class MyService &#123;</div><div class="line">    private Lock lock = new ReentrantLock();</div><div class="line">    public void testMethod()&#123;</div><div class="line">        lock.lock();</div><div class="line">        for (int i=0;i &lt; 5; i++) &#123;</div><div class="line">            System.out.println(&quot;ThreadName = &quot; + Thread.currentThread().getName() + &quot;(&quot; + i + &quot;)&quot;);</div><div class="line">        &#125;</div><div class="line">        lock.unlock();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>线程MyThread</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class MyThread extends Thread &#123;</div><div class="line">    private MyService myService;</div><div class="line"></div><div class="line">    public MyThread(MyService myService) &#123;</div><div class="line">        this.myService = myService;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        myService.testMethod();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>描述</p>
+<p>当前线程打印完毕之后，将锁进行释放，其他线程才可以继续打印。线程打印的数据是分组打印，因为当前线程已持有锁，但线程之间打印的顺序是随机的。</p>
+<h4 id="2-使用Condition实现通知部分线程"><a href="#2-使用Condition实现通知部分线程" class="headerlink" title="2. 使用Condition实现通知部分线程"></a>2. 使用Condition实现通知部分线程</h4><p>主函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class Run &#123;</div><div class="line">    public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">        MyService myService = new MyService();</div><div class="line">        ThreadA t1 = new ThreadA(myService);</div><div class="line">        t1.setName(&quot;A&quot;);</div><div class="line">        t1.start();</div><div class="line">        ThreadB t2 = new ThreadB(myService);</div><div class="line">        t2.setName(&quot;B&quot;);</div><div class="line">        t2.start();</div><div class="line">        Thread.sleep(3000);</div><div class="line">        myService.siginalAll_A();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// 运行结果</div><div class="line">// begin awaitA 时间为 1494037693605 ThreadName = A</div><div class="line">// begin awaitB 时间为 1494037693606 ThreadName = B</div><div class="line">// singalAll_A 时间为 1494037696608 ThreadName = main</div><div class="line">// end awaitA 时间为 1494037696608 ThreadName = A</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">public class MyService &#123;</div><div class="line">    private Lock lock = new ReentrantLock();</div><div class="line">    public Condition conditionA = lock.newCondition();</div><div class="line">    public Condition conditionB = lock.newCondition();</div><div class="line"></div><div class="line">    public void awaitA() &#123;</div><div class="line">        try &#123;</div><div class="line">            lock.lock();</div><div class="line">            System.out.println(&quot;begin awaitA 时间为 &quot; + System.currentTimeMillis() + &quot; ThreadName = &quot; + Thread.currentThread().getName());</div><div class="line">            conditionA.await();</div><div class="line">            System.out.println(&quot;end awaitA 时间为 &quot; + System.currentTimeMillis() + &quot; ThreadName = &quot; + Thread.currentThread().getName());</div><div class="line">        &#125;catch (InterruptedException e)&#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;finally &#123;</div><div class="line">            lock.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void awaitB() &#123;</div><div class="line">        try &#123;</div><div class="line">            lock.lock();</div><div class="line">            System.out.println(&quot;begin awaitB 时间为 &quot; + System.currentTimeMillis() + &quot; ThreadName = &quot; + Thread.currentThread().getName());</div><div class="line">            conditionB.await();</div><div class="line">            System.out.println(&quot;end awaitB 时间为 &quot; + System.currentTimeMillis() + &quot; ThreadName = &quot; + Thread.currentThread().getName());</div><div class="line">        &#125;catch (InterruptedException e)&#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;finally &#123;</div><div class="line">            lock.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void siginalAll_A() &#123;</div><div class="line">        try &#123;</div><div class="line">            lock.lock();</div><div class="line">            System.out.println(&quot;singalAll_A 时间为 &quot; + System.currentTimeMillis() + &quot; ThreadName = &quot; + Thread.currentThread().getName());</div><div class="line">            conditionA.signalAll();</div><div class="line">        &#125;finally &#123;</div><div class="line">            lock.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void siginalAll_B() &#123;</div><div class="line">        try &#123;</div><div class="line">            lock.lock();</div><div class="line">            System.out.println(&quot;singalAll_B 时间为 &quot; + System.currentTimeMillis() + &quot; ThreadName = &quot; + Thread.currentThread().getName());</div><div class="line">            conditionB.signalAll();</div><div class="line">        &#125;finally &#123;</div><div class="line">            lock.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>线程A</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class ThreadA extends Thread &#123;</div><div class="line">    private MyService myService;</div><div class="line"></div><div class="line">    public ThreadA(MyService myService) &#123;</div><div class="line">        this.myService = myService;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        myService.awaitA();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>线程B</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class ThreadB extends Thread &#123;</div><div class="line">    private MyService myService;</div><div class="line"></div><div class="line">    public ThreadB(MyService myService) &#123;</div><div class="line">        this.myService = myService;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        myService.awaitB();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-实现生产者-消费者模式"><a href="#3-实现生产者-消费者模式" class="headerlink" title="3) 实现生产者/消费者模式"></a>3) 实现生产者/消费者模式</h4><p>主函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class Run &#123;</div><div class="line">        public static void main(String[] args) &#123;</div><div class="line">            MyService myService = new MyService();</div><div class="line">            ThreadA t1 = new ThreadA(myService);</div><div class="line">            t1.start();</div><div class="line">            ThreadB t2 = new ThreadB(myService);</div><div class="line">            t2.start();</div><div class="line">        &#125;</div><div class="line">&#125;</div><div class="line">// 结果</div><div class="line">// 打印❤</div><div class="line">// 打印❤❤❤❤❤❤</div><div class="line">// 打印❤</div><div class="line">// 打印❤❤❤❤❤❤</div><div class="line">// 打印❤</div><div class="line">// 打印❤❤❤❤❤❤</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">public class MyService &#123;</div><div class="line">    private ReentrantLock lock = new ReentrantLock();</div><div class="line">    private Condition condition = lock.newCondition();</div><div class="line">    private boolean hasValue = false;</div><div class="line"></div><div class="line">    public void set()&#123;</div><div class="line">        try &#123;</div><div class="line">            lock.lock();</div><div class="line">            while (hasValue == true) &#123;</div><div class="line">                condition.await();</div><div class="line">            &#125;</div><div class="line">            System.out.println(&quot;打印❤&quot;);</div><div class="line">            hasValue = true;</div><div class="line">            condition.signal();</div><div class="line">        &#125;catch (InterruptedException e)&#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;finally &#123;</div><div class="line">            lock.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void get()&#123;</div><div class="line">        try &#123;</div><div class="line">            lock.lock();</div><div class="line">            while (hasValue == false) &#123;</div><div class="line">                condition.await();</div><div class="line">            &#125;</div><div class="line">            System.out.println(&quot;打印❤❤❤❤❤❤&quot;);</div><div class="line">            hasValue = false;</div><div class="line">            condition.signal();</div><div class="line">        &#125;catch (InterruptedException e)&#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;finally &#123;</div><div class="line">            lock.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>线程A</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class ThreadA extends Thread &#123;</div><div class="line">    private MyService myService;</div><div class="line"></div><div class="line">    public ThreadA(MyService myService) &#123;</div><div class="line">        this.myService = myService;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        for (int i = 0; i &lt; 3; i++) &#123;</div><div class="line">            myService.set();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>线程B</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class ThreadB extends Thread &#123;</div><div class="line">    private MyService myService;</div><div class="line"></div><div class="line">    public ThreadB(MyService myService) &#123;</div><div class="line">        this.myService = myService;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        for (int i = 0; i &lt; 3; i++) &#123;</div><div class="line">            myService.get();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-使用Condition实现顺序执行"><a href="#4-使用Condition实现顺序执行" class="headerlink" title="4) 使用Condition实现顺序执行"></a>4) 使用Condition实现顺序执行</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line">public class Run &#123;</div><div class="line">    private static volatile int nextPrintWho = 1;</div><div class="line">    private static ReentrantLock lock = new ReentrantLock();</div><div class="line">    private static final Condition conditionA = lock.newCondition();</div><div class="line">    private static final Condition conditionB = lock.newCondition();</div><div class="line">    private static final Condition conditionC = lock.newCondition();</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line"></div><div class="line">        Thread t1  = new Thread(() -&gt; &#123;</div><div class="line">            try&#123;</div><div class="line">                lock.lock();</div><div class="line">                while (nextPrintWho != 1)&#123;</div><div class="line">                    conditionA.await();</div><div class="line">                &#125;</div><div class="line">                for (int i=0;i &lt; 3; i ++) &#123;</div><div class="line">                    System.out.println(&quot;ThreadA (&quot; + i + &quot;)&quot; );</div><div class="line">                &#125;</div><div class="line">                nextPrintWho = 2;</div><div class="line">                conditionB.signalAll();</div><div class="line">            &#125;catch (InterruptedException e)&#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;finally &#123;</div><div class="line">                lock.unlock();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        Thread t2  = new Thread(() -&gt; &#123;</div><div class="line">            try&#123;</div><div class="line">                lock.lock();</div><div class="line">                while (nextPrintWho != 2)&#123;</div><div class="line">                    conditionB.await();</div><div class="line">                &#125;</div><div class="line">                for (int i=0;i &lt; 3; i ++) &#123;</div><div class="line">                    System.out.println(&quot;ThreadB (&quot; + i + &quot;)&quot; );</div><div class="line">                &#125;</div><div class="line">                nextPrintWho = 3;</div><div class="line">                conditionC.signalAll();</div><div class="line">            &#125;catch (InterruptedException e)&#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;finally &#123;</div><div class="line">                lock.unlock();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        Thread t3  = new Thread(() -&gt; &#123;</div><div class="line">            try&#123;</div><div class="line">                lock.lock();</div><div class="line">                while (nextPrintWho != 3)&#123;</div><div class="line">                    conditionB.await();</div><div class="line">                &#125;</div><div class="line">                for (int i=0;i &lt; 3; i ++) &#123;</div><div class="line">                    System.out.println(&quot;ThreadC (&quot; + i + &quot;)&quot; );</div><div class="line">                &#125;</div><div class="line">                nextPrintWho = 1;</div><div class="line">                conditionA.signalAll();</div><div class="line">            &#125;catch (InterruptedException e)&#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;finally &#123;</div><div class="line">                lock.unlock();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        t1.start();</div><div class="line">        t2.start();</div><div class="line">        t3.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// 结果</div><div class="line">// ThreadA (0)</div><div class="line">// ThreadA (1)</div><div class="line">// ThreadA (2)</div><div class="line">// ThreadB (0)</div><div class="line">// ThreadB (1)</div><div class="line">// ThreadB (2)</div><div class="line">// ThreadC (0)</div><div class="line">// ThreadC (1)</div><div class="line">// ThreadC (2)</div></pre></td></tr></table></figure>
+<h4 id="5-ReentrantReadWriteLock"><a href="#5-ReentrantReadWriteLock" class="headerlink" title="5) ReentrantReadWriteLock"></a>5) ReentrantReadWriteLock</h4><p>ReetrantLock具有完全互斥排他的效果，即同一时间只有一个线程在执行<code>ReentrantLock.lock()</code>方法后面的任务，这样做虽然保证了实例变量的线程安全性，但效率却非常低下。在<code>JDK</code>中提供了一种读写锁<code>ReentrantReadWriteLock</code>类，使用它可以加快效率，在某些不需要操作实例变量的方法中，完全可以使用读写锁<code>ReentrantReadWriteLock</code>来提升该方法的代码运行速度。</p>
+<p>读写锁表示有两个锁，一个是读操作相关的锁，也成为共享锁；另一个是写操作相关的锁，也叫排他锁。也就是多个读取锁之间互不排斥，读锁与写锁互斥，写锁与写锁互斥。在没有线程进行写入操作时，进行读取操作的多个线程都可以获取读锁，而进行写入操作的线程只有在获取写锁后，才能进行写操作。即多个线程可以同时进行读取操作，但同一时刻只允许一个线程进行写入操作。</p>
+<h5 id="读读共享"><a href="#读读共享" class="headerlink" title="读读共享"></a>读读共享</h5><p>主函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class Run &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Service service = new Service();</div><div class="line">        ThreadA t1 = new ThreadA(service);</div><div class="line">        t1.setName(&quot;A&quot;);</div><div class="line">        ThreadB t2 = new ThreadB(service);</div><div class="line">        t2.setName(&quot;B&quot;);</div><div class="line">        t1.start();</div><div class="line">        t2.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// 结果: 同一时刻，两个线程分别都获取了读锁</div><div class="line">// 获取读锁A 1494047926771</div><div class="line">// 获取读锁B 1494047926771</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class Service &#123;</div><div class="line">    private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();</div><div class="line">    public void read() &#123;</div><div class="line">        try&#123;</div><div class="line">            try&#123;</div><div class="line">                lock.readLock().lock();</div><div class="line">                System.out.println(&quot;获取读锁&quot; + Thread.currentThread().getName() + &quot; &quot; + System.currentTimeMillis());</div><div class="line">                Thread.sleep(1000);</div><div class="line">            &#125;finally &#123;</div><div class="line">                lock.readLock().unlock();</div><div class="line">            &#125;</div><div class="line">        &#125;catch (InterruptedException e)&#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>线程A</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class ThreadA extends Thread &#123;</div><div class="line">    private Service service;</div><div class="line"></div><div class="line">    public ThreadA(Service service) &#123;</div><div class="line">        this.service = service;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        service.read();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>线程B</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class ThreadB extends Thread &#123;</div><div class="line">    private Service service;</div><div class="line"></div><div class="line">    public ThreadB(Service service) &#123;</div><div class="line">        this.service = service;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        service.read();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="写写互斥"><a href="#写写互斥" class="headerlink" title="写写互斥"></a>写写互斥</h5><p>主函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class Run &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Service service = new Service();</div><div class="line">        ThreadA t1 = new ThreadA(service);</div><div class="line">        t1.setName(&quot;A&quot;);</div><div class="line">        ThreadB t2 = new ThreadB(service);</div><div class="line">        t2.setName(&quot;B&quot;);</div><div class="line">        t1.start();</div><div class="line">        t2.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// 结果：线程A释放写锁后，线程B获取写锁，才能执行；</div><div class="line">// 获取写锁A 1494048231414</div><div class="line">// 获取写锁B 1494048241416</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class Service &#123;</div><div class="line">    private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();</div><div class="line">    public void write() &#123;</div><div class="line">        try&#123;</div><div class="line">            try&#123;</div><div class="line">                lock.writeLock().lock();</div><div class="line">                System.out.println(&quot;获取写锁&quot; + Thread.currentThread().getName() + &quot; &quot; + System.currentTimeMillis());</div><div class="line">                Thread.sleep(10000);</div><div class="line">            &#125;finally &#123;</div><div class="line">                lock.writeLock().unlock();</div><div class="line">            &#125;</div><div class="line">        &#125;catch (InterruptedException e)&#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>线程A</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class ThreadA extends Thread &#123;</div><div class="line">    private Service service;</div><div class="line"></div><div class="line">    public ThreadA(Service service) &#123;</div><div class="line">        this.service = service;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        service.write();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>线程B</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class ThreadB extends Thread &#123;</div><div class="line">    private Service service;</div><div class="line"></div><div class="line">    public ThreadB(Service service) &#123;</div><div class="line">        this.service = service;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        service.write();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="读写互斥"><a href="#读写互斥" class="headerlink" title="读写互斥"></a>读写互斥</h5><p>主函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class Run &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Service service = new Service();</div><div class="line">        ThreadA t1 = new ThreadA(service);</div><div class="line">        t1.setName(&quot;A&quot;);</div><div class="line">        ThreadB t2 = new ThreadB(service);</div><div class="line">        t2.setName(&quot;B&quot;);</div><div class="line">        t1.start();</div><div class="line">        t2.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// 结果：读锁释放后，获取写锁，才能进行写操作。</div><div class="line">// 获取读锁A 1494048498737</div><div class="line">// 获取写锁B 1494048508739</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">public class Service &#123;</div><div class="line">    private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();</div><div class="line"></div><div class="line">    public void read() &#123;</div><div class="line">        try&#123;</div><div class="line">            try&#123;</div><div class="line">                lock.readLock().lock();</div><div class="line">                System.out.println(&quot;获取读锁&quot; + Thread.currentThread().getName() + &quot; &quot; + System.currentTimeMillis());</div><div class="line">                Thread.sleep(10000);</div><div class="line">            &#125;finally &#123;</div><div class="line">                lock.readLock().unlock();</div><div class="line">            &#125;</div><div class="line">        &#125;catch (InterruptedException e)&#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void write() &#123;</div><div class="line">        try&#123;</div><div class="line">            try&#123;</div><div class="line">                lock.writeLock().lock();</div><div class="line">                System.out.println(&quot;获取写锁&quot; + Thread.currentThread().getName() + &quot; &quot; + System.currentTimeMillis());</div><div class="line">                Thread.sleep(10000);</div><div class="line">            &#125;finally &#123;</div><div class="line">                lock.writeLock().unlock();</div><div class="line">            &#125;</div><div class="line">        &#125;catch (InterruptedException e)&#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>线程A</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class ThreadA extends Thread &#123;</div><div class="line">    private Service service;</div><div class="line"></div><div class="line">    public ThreadA(Service service) &#123;</div><div class="line">        this.service = service;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        service.read();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>线程B</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class ThreadB extends Thread &#123;</div><div class="line">    private Service service;</div><div class="line"></div><div class="line">    public ThreadB(Service service) &#123;</div><div class="line">        this.service = service;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        service.write();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>java多线程编程核心技术 by 高洪岩</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/04/多线程间的通信/" rel="next" title="多线程间的通信">
+                <i class="fa fa-chevron-left"></i> 多线程间的通信
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/06/JAVA之线程池/" rel="prev" title="JAVA之线程池">
+                JAVA之线程池 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/06/Lock的使用/"
+           data-title="Lock的使用" data-url="http://jianwl.com/2017/05/06/Lock的使用/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">296</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-text">实战</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-ReentrantLock实现同步"><span class="nav-text">1. ReentrantLock实现同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-使用Condition实现通知部分线程"><span class="nav-text">2. 使用Condition实现通知部分线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-实现生产者-消费者模式"><span class="nav-text">3) 实现生产者/消费者模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-使用Condition实现顺序执行"><span class="nav-text">4) 使用Condition实现顺序执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-ReentrantReadWriteLock"><span class="nav-text">5) ReentrantReadWriteLock</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#读读共享"><span class="nav-text">读读共享</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#写写互斥"><span class="nav-text">写写互斥</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#读写互斥"><span class="nav-text">读写互斥</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JDK源码学习专题," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oc5a5l0a0.bkt.clouddn.com/17-9-15/12958638.jpg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="常用方法 &amp;amp; 字段
+StringBuilder常用于单线程字符串的拼接，可以减小堆内存的开销；
+StringBuilder继承AbstractStringBuilder抽象类，且实现了CharSequence、Serializable接口
+问题
+通过append方法拼接字符串，为什么能够减少内存的开销呢，append();
+StringBuffer和StringBuilder有什么区别？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="StringBuilder源码学习">
+<meta property="og:url" content="http://jianwl.com/2018/04/02/StringBuilder源码学习/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="常用方法 &amp;amp; 字段
+StringBuilder常用于单线程字符串的拼接，可以减小堆内存的开销；
+StringBuilder继承AbstractStringBuilder抽象类，且实现了CharSequence、Serializable接口
+问题
+通过append方法拼接字符串，为什么能够减少内存的开销呢，append();
+StringBuffer和StringBuilder有什么区别？">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-4-3/88149991.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-4-4/53045816.jpg">
+<meta property="og:updated_time" content="2018-04-04T00:39:36.400Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="StringBuilder源码学习">
+<meta name="twitter:description" content="常用方法 &amp;amp; 字段
+StringBuilder常用于单线程字符串的拼接，可以减小堆内存的开销；
+StringBuilder继承AbstractStringBuilder抽象类，且实现了CharSequence、Serializable接口
+问题
+通过append方法拼接字符串，为什么能够减少内存的开销呢，append();
+StringBuffer和StringBuilder有什么区别？">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-4-3/88149991.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> StringBuilder源码学习 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/04/02/StringBuilder源码学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                StringBuilder源码学习
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T22:06:55+08:00">
+                2018-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JDK源码学习专题/" itemprop="url" rel="index">
+                    <span itemprop="name">JDK源码学习专题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/02/StringBuilder源码学习/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/04/02/StringBuilder源码学习/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="常用方法-amp-字段"><a href="#常用方法-amp-字段" class="headerlink" title="常用方法 &amp; 字段"></a>常用方法 &amp; 字段</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-4-3/88149991.jpg" alt=""></p>
+<p>StringBuilder常用于单线程字符串的拼接，可以减小堆内存的开销；</p>
+<p>StringBuilder继承<code>AbstractStringBuilder</code>抽象类，且实现了<code>CharSequence</code>、<code>Serializable</code>接口</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ol>
+<li>通过append方法拼接字符串，为什么能够减少内存的开销呢，append();</li>
+<li>StringBuffer和StringBuilder有什么区别？</li>
+</ol>
+<h4 id="1-如何拼接字符串"><a href="#1-如何拼接字符串" class="headerlink" title="1) 如何拼接字符串"></a>1) 如何拼接字符串</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line">    @Override</div><div class="line">    public StringBuilder append(String str) &#123;</div><div class="line">        super.append(str);</div><div class="line">        return this;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">// AbstractStringBuilder类   </div><div class="line">    public AbstractStringBuilder append(String str) &#123;</div><div class="line">        if (str == null)</div><div class="line">            return appendNull();</div><div class="line">        int len = str.length();</div><div class="line">        ensureCapacityInternal(count + len);</div><div class="line">        str.getChars(0, len, value, count);</div><div class="line">        count += len;</div><div class="line">        return this;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private AbstractStringBuilder appendNull() &#123;</div><div class="line">        int c = count;</div><div class="line">        ensureCapacityInternal(c + 4);</div><div class="line">        final char[] value = this.value;</div><div class="line">        value[c++] = &apos;n&apos;;</div><div class="line">        value[c++] = &apos;u&apos;;</div><div class="line">        value[c++] = &apos;l&apos;;</div><div class="line">        value[c++] = &apos;l&apos;;</div><div class="line">        count = c;</div><div class="line">        return this;</div><div class="line">    &#125;</div><div class="line">      </div><div class="line">    private void ensureCapacityInternal(int minimumCapacity) &#123;</div><div class="line">        // overflow-conscious code</div><div class="line">        if (minimumCapacity - value.length &gt; 0)</div><div class="line">            expandCapacity(minimumCapacity);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    void expandCapacity(int minimumCapacity) &#123;</div><div class="line">        int newCapacity = value.length * 2 + 2;</div><div class="line">        if (newCapacity - minimumCapacity &lt; 0)</div><div class="line">            newCapacity = minimumCapacity;</div><div class="line">        if (newCapacity &lt; 0) &#123;</div><div class="line">            if (minimumCapacity &lt; 0) // overflow</div><div class="line">                throw new OutOfMemoryError();</div><div class="line">            newCapacity = Integer.MAX_VALUE;</div><div class="line">        &#125;</div><div class="line">        value = Arrays.copyOf(value, newCapacity);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">// Arrays类</div><div class="line">    public static char[] copyOf(char[] original, int newLength) &#123;</div><div class="line">        char[] copy = new char[newLength];</div><div class="line">        System.arraycopy(original, 0, copy, 0,</div><div class="line">                         Math.min(original.length, newLength));</div><div class="line">        return copy;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">// String类</div><div class="line">    public void getChars(int srcBegin, int srcEnd, char dst[], int dstBegin) &#123;</div><div class="line">        if (srcBegin &lt; 0) &#123;</div><div class="line">            throw new StringIndexOutOfBoundsException(srcBegin);</div><div class="line">        &#125;</div><div class="line">        if (srcEnd &gt; value.length) &#123;</div><div class="line">            throw new StringIndexOutOfBoundsException(srcEnd);</div><div class="line">        &#125;</div><div class="line">        if (srcBegin &gt; srcEnd) &#123;</div><div class="line">            throw new StringIndexOutOfBoundsException(srcEnd - srcBegin);</div><div class="line">        &#125;</div><div class="line">        System.arraycopy(value, srcBegin, dst, dstBegin, srcEnd - srcBegin);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="1、拼接元素为null"><a href="#1、拼接元素为null" class="headerlink" title="1、拼接元素为null"></a>1、拼接元素为null</h5><p>第 9 ~ 10 行：如果拼接字符串为<code>null值</code>，则拼接<code>null</code>字符串；</p>
+<p>第 20 行：确保当前字符数组数量加4，小于字符数组长度，否则扩容；</p>
+<p>第 36 ~ 45行: 执行扩容；新容量为当前字符数组长度的2倍 + 2；如果新容量仍然小于，实际字符数量，则新容量等于实际字符数量；如果新容量溢出，则新容量赋值为Integer.MAX_VALUE;将原字符数组，赋值到扩容后的数组中；</p>
+<p>第 49 ~ 53行：新建容量为扩容后的长度的字符数组，将原数组元素赋值到新数组中;</p>
+<h5 id="2-新增元素不为null"><a href="#2-新增元素不为null" class="headerlink" title="2 新增元素不为null"></a>2 新增元素不为null</h5><p>第 11 ~12行: 获取新增字符串的长度，确保当前字符数量 + 新增字符串长度，在字符数组容量范围内，否则执行扩容；</p>
+<p>第 13行: 将新增字符串转为字符数组，将其赋值到当前字符数组中实际元素的尾部，具体如图所示；</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-4-4/53045816.jpg" alt=""></p>
+<h5 id="3-为什么可以减少堆内存的开销？"><a href="#3-为什么可以减少堆内存的开销？" class="headerlink" title="3 为什么可以减少堆内存的开销？"></a>3 为什么可以减少堆内存的开销？</h5><p>因为字符串是不可变类，每次通过new的方式创建一个不同的字符串，都会在堆内存开辟一个空间；而通过StringBuilder的append方式拼接字符串，只会开辟一个字符数组内存空间，拼接的字符串将添加到字符数组中；从而减少了堆内存的开销；</p>
+<h4 id="2）StringBuffer和StringBuilder有什么区别"><a href="#2）StringBuffer和StringBuilder有什么区别" class="headerlink" title="2）StringBuffer和StringBuilder有什么区别"></a>2）StringBuffer和StringBuilder有什么区别</h4><p>StringBuffer是线程安全的，在拼接元素方法中添加了同步锁；其他实现方式与StringBuilder一致；这里就不再赘述了；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">    @Override</div><div class="line">    public synchronized StringBuffer append(String str) &#123;</div><div class="line">        toStringCache = null;</div><div class="line">        super.append(str);</div><div class="line">        return this;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">// AbstractStringBuilder类</div><div class="line">    public AbstractStringBuilder append(String str) &#123;</div><div class="line">        if (str == null)</div><div class="line">            return appendNull();</div><div class="line">        int len = str.length();</div><div class="line">        ensureCapacityInternal(count + len);</div><div class="line">        str.getChars(0, len, value, count);</div><div class="line">        count += len;</div><div class="line">        return this;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void ensureCapacityInternal(int minimumCapacity) &#123;</div><div class="line">        // overflow-conscious code</div><div class="line">        if (minimumCapacity - value.length &gt; 0)</div><div class="line">            expandCapacity(minimumCapacity);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    void expandCapacity(int minimumCapacity) &#123;</div><div class="line">        int newCapacity = value.length * 2 + 2;</div><div class="line">        if (newCapacity - minimumCapacity &lt; 0)</div><div class="line">            newCapacity = minimumCapacity;</div><div class="line">        if (newCapacity &lt; 0) &#123;</div><div class="line">            if (minimumCapacity &lt; 0) // overflow</div><div class="line">                throw new OutOfMemoryError();</div><div class="line">            newCapacity = Integer.MAX_VALUE;</div><div class="line">        &#125;</div><div class="line">        value = Arrays.copyOf(value, newCapacity);</div><div class="line">    &#125;</div><div class="line"> </div><div class="line"> // String类</div><div class="line">     public void getChars(int srcBegin, int srcEnd, char dst[], int dstBegin) &#123;</div><div class="line">        if (srcBegin &lt; 0) &#123;</div><div class="line">            throw new StringIndexOutOfBoundsException(srcBegin);</div><div class="line">        &#125;</div><div class="line">        if (srcEnd &gt; value.length) &#123;</div><div class="line">            throw new StringIndexOutOfBoundsException(srcEnd);</div><div class="line">        &#125;</div><div class="line">        if (srcBegin &gt; srcEnd) &#123;</div><div class="line">            throw new StringIndexOutOfBoundsException(srcEnd - srcBegin);</div><div class="line">        &#125;</div><div class="line">        System.arraycopy(value, srcBegin, dst, dstBegin, srcEnd - srcBegin);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JDK源码学习专题/" rel="tag"># JDK源码学习专题</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/01/String源码学习/" rel="next" title="String源码学习">
+                <i class="fa fa-chevron-left"></i> String源码学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/18/ThreadPoolExecutor线程池源码学习/" rel="prev" title="ThreadPoolExecutor线程池源码学习">
+                ThreadPoolExecutor线程池源码学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/04/02/StringBuilder源码学习/"
+           data-title="StringBuilder源码学习" data-url="http://jianwl.com/2018/04/02/StringBuilder源码学习/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">296</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用方法-amp-字段"><span class="nav-text">常用方法 & 字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-如何拼接字符串"><span class="nav-text">1) 如何拼接字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、拼接元素为null"><span class="nav-text">1、拼接元素为null</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-新增元素不为null"><span class="nav-text">2 新增元素不为null</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-为什么可以减少堆内存的开销？"><span class="nav-text">3 为什么可以减少堆内存的开销？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2）StringBuffer和StringBuilder有什么区别"><span class="nav-text">2）StringBuffer和StringBuilder有什么区别</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

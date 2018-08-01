@@ -1,0 +1,739 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Retrofit," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oc5a5l0a0.bkt.clouddn.com/17-9-15/12958638.jpg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Retrofit简介Retrofit是Square公司开发的一个类型安全的Java &amp;amp; Android的REST客户端库，这个库为网路认证、API请求以及用OkHttp发送网络请求提供了强大的框架。Retrofit库使得从Web API下载JSON 或者 XML数据变得非常简单直接，一旦数据下载完成即将其解析成普通的Java类(POJO).
+Retrofit使用的最核心的两个技术是：动态代">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Retrofit入门">
+<meta property="og:url" content="http://jianwl.com/2016/09/17/Retrofit入门/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="Retrofit简介Retrofit是Square公司开发的一个类型安全的Java &amp;amp; Android的REST客户端库，这个库为网路认证、API请求以及用OkHttp发送网络请求提供了强大的框架。Retrofit库使得从Web API下载JSON 或者 XML数据变得非常简单直接，一旦数据下载完成即将其解析成普通的Java类(POJO).
+Retrofit使用的最核心的两个技术是：动态代">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-9-17/72733150.jpg">
+<meta property="og:updated_time" content="2016-10-01T13:10:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Retrofit入门">
+<meta name="twitter:description" content="Retrofit简介Retrofit是Square公司开发的一个类型安全的Java &amp;amp; Android的REST客户端库，这个库为网路认证、API请求以及用OkHttp发送网络请求提供了强大的框架。Retrofit库使得从Web API下载JSON 或者 XML数据变得非常简单直接，一旦数据下载完成即将其解析成普通的Java类(POJO).
+Retrofit使用的最核心的两个技术是：动态代">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/16-9-17/72733150.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> Retrofit入门 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2016/09/17/Retrofit入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Retrofit入门
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-17T10:43:48+08:00">
+                2016-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Retrofit/" itemprop="url" rel="index">
+                    <span itemprop="name">Retrofit</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/17/Retrofit入门/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/17/Retrofit入门/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Retrofit简介"><a href="#Retrofit简介" class="headerlink" title="Retrofit简介"></a><code>Retrofit</code>简介</h3><p><code>Retrofit</code>是<code>Square</code>公司开发的一个类型安全的<code>Java</code> &amp; <code>Android</code>的<code>REST</code>客户端库，这个库为网路认证、API请求以及用<code>OkHttp</code>发送网络请求提供了强大的框架。<code>Retrofit</code>库使得从<code>Web API</code>下载<code>JSON</code> 或者 <code>XML</code>数据变得非常简单直接，一旦数据下载完成即将其解析成普通的<code>Java</code>类(<code>POJO</code>).</p>
+<p><code>Retrofit</code>使用的最核心的两个技术是：动态代理和<code>Java</code>反射。<code>Retrofit</code>非常巧妙的用注解来描述<code>HTTP</code>请求，将一个<code>HTTP</code>请求抽象成一个<code>Java</code>接口，然后用<code>Java</code>动态代理的方式，动态的将这个接口的注解“解释”成一个<code>HTTP</code>请求，最后在执行这个HTTP请求。</p>
+<p><code>Retrofit</code>无非是让用户创建接口，并在接口中指定网络访问路径、规则，把接口传入<code>Retrofit</code>；<code>Retrofit</code>进行解析，然后调用<code>OkHttp</code>完成实际的网络请求并将请求结果处理后返回给用户。</p>
+<p>另：<code>Retrofit</code>支持<code>Java 7</code>或<code>Android2.3</code>以上版本</p>
+<h3 id="Retrofit优势"><a href="#Retrofit优势" class="headerlink" title="Retrofit优势"></a><code>Retrofit</code>优势</h3><ol>
+<li>底层使用<code>OkHttp</code>进行网络传输，性能好、速度快</li>
+<li>拥有出色的<code>API</code>文档和社区支持</li>
+<li>自动将<code>REST API</code>返回的数据转化为<code>Java</code>对象，且支持多种数据格式转换(<code>JSON</code>、<code>XML</code>…) </li>
+<li>使用<code>Java</code>注解声明<code>HTTP</code>请求</li>
+<li>支持<code>Multipart</code>请求和文件上传</li>
+</ol>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>1.搭建本地测试服务,以<code>SpringBoot</code>框架为例</strong></p>
+<p><code>Controller层：AdminController.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@RestController</div><div class="line">@RequestMapping(value = &quot;/admin&quot;)</div><div class="line">public class AdminController &#123;</div><div class="line">    @RequestMapping(value = &quot;/get&quot;,method = RequestMethod.GET)</div><div class="line">    public JsonResult&lt;Admin&gt; get(@RequestParam String name, @RequestParam String password)&#123;</div><div class="line">        return JsonResult.ok(new Admin(name,password));</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><code>对象模型: Admin.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 注： @Data为lombok插件注解，表示Getter &amp; Setter 方法，声明为final类型的属性为构造方法属性，详情可以参考[lombok官网](https://projectlombok.org/) </div><div class="line"></div><div class="line">@Data</div><div class="line">public class Admin &#123;</div><div class="line">    private final String name;</div><div class="line">    private final String password;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>工具类:JsonResult.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">@Data</div><div class="line">public class JsonResult&lt;T&gt; &#123;</div><div class="line"></div><div class="line">    private boolean success;</div><div class="line"></div><div class="line">    @JsonInclude(JsonInclude.Include.NON_NULL)</div><div class="line">    private T data;</div><div class="line"></div><div class="line">    @JsonInclude(JsonInclude.Include.NON_NULL)</div><div class="line">    private Integer errorCode;</div><div class="line"></div><div class="line">    @JsonInclude(JsonInclude.Include.NON_NULL)</div><div class="line">    private String errorMessage;</div><div class="line"></div><div class="line">    public static &lt;T&gt; JsonResult&lt;T&gt; ok() &#123;</div><div class="line">        JsonResult&lt;T&gt; result = new JsonResult&lt;&gt;();</div><div class="line">        result.setSuccess(true);</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static &lt;T&gt; JsonResult&lt;T&gt; ok(T data) &#123;</div><div class="line">        JsonResult&lt;T&gt; result = new JsonResult&lt;&gt;();</div><div class="line">        result.setSuccess(true);</div><div class="line">        result.setData(data);</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static &lt;T&gt; JsonResult&lt;T&gt; error(Code code) &#123;</div><div class="line">        JsonResult&lt;T&gt; result = new JsonResult&lt;&gt;();</div><div class="line">        result.setErrorCode(code.getCode());</div><div class="line">        result.setErrorMessage(code.getMessage());</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static &lt;T&gt; JsonResult&lt;T&gt; error(String message) &#123;</div><div class="line">        JsonResult&lt;T&gt; result = new JsonResult&lt;&gt;();</div><div class="line">        result.setErrorCode(SERVER_ERROR.getCode());</div><div class="line">        result.setErrorMessage(message);</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static &lt;T&gt; JsonResult&lt;T&gt; error() &#123;</div><div class="line">        JsonResult&lt;T&gt; result = new JsonResult&lt;&gt;();</div><div class="line">        result.setErrorCode(SERVER_ERROR.getCode());</div><div class="line">        result.setErrorMessage(SERVER_ERROR.getMessage());</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static &lt;T&gt; JsonResult&lt;T&gt; error(Integer code ,String message) &#123;</div><div class="line">        JsonResult&lt;T&gt; result = new JsonResult&lt;&gt;();</div><div class="line">        result.setErrorCode(code);</div><div class="line">        result.setErrorMessage(message);</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>错误常量枚举：Code.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">// 注: @Getter 为lombok插件注解 功能与Getter方法等价</div><div class="line">@Getter</div><div class="line">public enum Code &#123;</div><div class="line">    // 基础响应码</div><div class="line">    SERVER_ERROR(1, &quot;服务异常&quot;),</div><div class="line">    BASE_NOT_FOUND(2, &quot;资源不存在&quot;),</div><div class="line">    BASE_UNAUTHORIZED(3, &quot;未授权&quot;),</div><div class="line">    BASE_FORBIDDEN(4, &quot;拒绝访问&quot;),</div><div class="line">    BASE_BAD_PARAMS(5, &quot;请求参数错误&quot;);</div><div class="line"></div><div class="line">    private int code;</div><div class="line">    private String message;</div><div class="line"></div><div class="line">    Code(int code, String message) &#123;</div><div class="line">        this.message = message;</div><div class="line">        this.code = code;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>2. Retrofit运用实例</strong></p>
+<p><code>将网络请求API转换为一个Java接口: UserApi.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface AdminApi &#123;</div><div class="line">    @GET(&quot;/admin/get&quot;)</div><div class="line">    Call&lt;JsonResult&lt;Admin&gt;&gt; get(@Query(&quot;name&quot;) String name, @Query(&quot;password&quot;) String password);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Retrofit生成UserApi接口实现 &amp; 创建同步远程请求:RetrofitBootStrap.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public class RetrofitBootStrap &#123;</div><div class="line">    private static final String LOCAL_HOST = &quot;http://127.0.0.1:8080&quot;;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Retrofit retrofit = new Retrofit.Builder().baseUrl(LOCAL_HOST)</div><div class="line">                .addConverterFactory(GsonConverterFactory.create())</div><div class="line">                .build();</div><div class="line"></div><div class="line">        // retrofit生成UserApi接口实现</div><div class="line">        UserApi service = retrofit.create(AdminApi.class);</div><div class="line"></div><div class="line">        Call&lt;JsonResult&lt;Admin&gt;&gt; postMsg = service.get(&quot;zhangsan&quot;, &quot;123456&quot;);</div><div class="line">        try &#123;</div><div class="line">            // 创建同步远程请求</div><div class="line">            System.out.println(JSON.toJSONString(postMsg.execute().body()));</div><div class="line">        &#125; catch (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>3.执行步骤</strong></p>
+<ol>
+<li>启动<code>SpringBoot</code>，将本地测试服务开启来；</li>
+<li>执行<code>RetrofitBootStrap.class</code>的<code>main</code>方法，请求本地测试服务的<code>/admin/get的请求路径接口</code>，得到相应结果为：<br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-17/72733150.jpg" alt=""></li>
+</ol>
+<h3 id="Retrofit知识点"><a href="#Retrofit知识点" class="headerlink" title="Retrofit知识点"></a>Retrofit知识点</h3><p><strong>注解</strong></p>
+<p><code>案例1：GET请求路径带路径参数</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@GET(&quot;group/&#123;id&#125;/users&quot;)</div><div class="line">Call&lt;List&lt;User&gt;&gt; groupList(@Path(&quot;id&quot;) Integer groupId);</div></pre></td></tr></table></figure>
+<p><code>案例2：GET请求，带查询参数；类似于Spring中的@RequestParam注解</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@GET(&quot;group/user&quot;)</div><div class="line">Call&lt;List&lt;User&gt;&gt; getUser(@Query(&quot;name&quot;) String name);</div></pre></td></tr></table></figure>
+<p><code>案例3: POST请求，参数是一个对象，类似于Spring中的@RequestBody注解</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@POST(&quot;/users/new&quot;)</div><div class="line">Call&lt;User&gt; createUser(@Body User user);</div></pre></td></tr></table></figure>
+<p><code>案例4: 请求内容类型为</code>form-encoded<code>格式</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//每一个key-value键值对用@Field表示 </div><div class="line">@FormUrlEncoded</div><div class="line">@POST(&quot;user/edit&quot;)</div><div class="line">Call&lt;User&gt; updateUser(@Field(&quot;firstName&quot;) String first,@Field(&quot;lastName&quot;) String last);</div></pre></td></tr></table></figure>
+<p><code>案例5：声明请求头参数</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">// 单个请求头参数</div><div class="line">@Headers(&quot;Cache-Control: max-age=640000&quot;)</div><div class="line">@GET(&quot;widget/list&quot;)</div><div class="line">Call&lt;List&lt;Widget&gt;&gt; widgetList();</div><div class="line"></div><div class="line">// 多个请求头参数</div><div class="line">@Headers(&#123;</div><div class="line">    &quot;Accept: application/vnd.github.v3.full+json&quot;,</div><div class="line">    &quot;User-Agent: Retrofit-Sample-App&quot;</div><div class="line">&#125;)</div><div class="line">@GET(&quot;users&quot;)</div><div class="line">Call&lt;User&gt; getUser();</div><div class="line"></div><div class="line">// 参数中带请求头</div><div class="line">@GET(&quot;user&quot;)</div><div class="line">Call&lt;User&gt; getUser(@Header(&quot;Authorization&quot;) String authorization)</div></pre></td></tr></table></figure>
+<p><strong>转化器</strong></p>
+<p>默认情况下，<code>Retrofit</code>只能反序列化<code>HTTP</code>的<code>Body</code>到<code>okhttp</code>的<code>ResponseBody</code>，并且<code>@Body</code>注解只能接收<code>RequestBody</code>的类型数据。</p>
+<p>转换器可以被添加来支持其它类型。下面是6个流行的序列化库来方便操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Gson: com.squareup.retrofit2:converter-gson</div><div class="line">Jackson: com.squareup.retrofit2:converter-jackson</div><div class="line">Moshi: com.squareup.retrofit2:converter-moshi</div><div class="line">Protobuf: com.squareup.retrofit2:converter-protobuf</div><div class="line">Wire: com.squareup.retrofit2:converter-wire</div><div class="line">Simple XML: com.squareup.retrofit2:converter-simplexml</div></pre></td></tr></table></figure>
+<p><code>案例：新增Gson转换器</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Retrofit retrofit = new Retrofit.Builder().baseUrl(LOCAL_HOST)</div><div class="line">                .addConverterFactory(GsonConverterFactory.create())</div><div class="line">                .build();</div></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://square.github.io/retrofit/" target="_blank" rel="external">retrofit官网</a></li>
+<li><a href="https://realm.io/cn/news/droidcon-jake-wharton-simple-http-retrofit-2/" target="_blank" rel="external">用Retrofit2简化HTTP请求</a></li>
+<li><a href="https://my.oschina.net/purplesense/blog/650123" target="_blank" rel="external">Retrofit介绍</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Retrofit/" rel="tag"># Retrofit</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/16/JAVA技能树/" rel="next" title="JAVA技能树">
+                <i class="fa fa-chevron-left"></i> JAVA技能树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/17/SpringBoot使用AOP统一处理Web请求日志/" rel="prev" title="SpringBoot使用AOP统一处理Web请求日志">
+                SpringBoot使用AOP统一处理Web请求日志 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/17/Retrofit入门/"
+           data-title="Retrofit入门" data-url="http://jianwl.com/2016/09/17/Retrofit入门/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">296</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Retrofit简介"><span class="nav-text">Retrofit简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Retrofit优势"><span class="nav-text">Retrofit优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-text">实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Retrofit知识点"><span class="nav-text">Retrofit知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

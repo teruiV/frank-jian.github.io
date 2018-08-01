@@ -1,0 +1,822 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oc5a5l0a0.bkt.clouddn.com/17-9-15/12958638.jpg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言字典是Python中唯一内建的映射类型，构造字典的目的是通过某个特定的键，轻松找到其对应的值。
+初始化字典123456a = dict(one=1, two=2, three=3)b = &amp;#123;&amp;apos;one&amp;apos;: 1, &amp;apos;two&amp;apos;: 2, &amp;apos;three&amp;apos;: 3&amp;#125;c = dict(zip([&amp;apos;one&amp;apos;, &amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python之字典">
+<meta property="og:url" content="http://jianwl.com/2017/03/11/Python之字典/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="前言字典是Python中唯一内建的映射类型，构造字典的目的是通过某个特定的键，轻松找到其对应的值。
+初始化字典123456a = dict(one=1, two=2, three=3)b = &amp;#123;&amp;apos;one&amp;apos;: 1, &amp;apos;two&amp;apos;: 2, &amp;apos;three&amp;apos;: 3&amp;#125;c = dict(zip([&amp;apos;one&amp;apos;, &amp;">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/51156140-file_1489285794306_25da.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/30802879-file_1489285860276_3fd1.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/62014407-file_1489285908551_1509c.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/62540962-file_1489285964580_1059.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/99042578-file_1489286045292_15b09.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/19340560-file_1489286089117_15e4f.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/1088979-file_1489286221891_a032.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/11813325-file_1489286328979_137e.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/62310043-file_1489286393838_46f1.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/29896375-file_1489286444406_54ba.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/67390503-file_1489286499089_aec8.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/10181597-file_1489286546021_4e01.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/57529412-file_1489286599806_163f5.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/26922130-file_1489286675036_b62b.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/96093454-file_1489286800270_298b.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/5491167-file_1489286924873_d5e3.png">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/5253501-file_1489286967576_e7bf.png">
+<meta property="og:updated_time" content="2017-03-12T03:24:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python之字典">
+<meta name="twitter:description" content="前言字典是Python中唯一内建的映射类型，构造字典的目的是通过某个特定的键，轻松找到其对应的值。
+初始化字典123456a = dict(one=1, two=2, three=3)b = &amp;#123;&amp;apos;one&amp;apos;: 1, &amp;apos;two&amp;apos;: 2, &amp;apos;three&amp;apos;: 3&amp;#125;c = dict(zip([&amp;apos;one&amp;apos;, &amp;">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/51156140-file_1489285794306_25da.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> Python之字典 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/03/11/Python之字典/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python之字典
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-11T18:20:08+08:00">
+                2017-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/11/Python之字典/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/11/Python之字典/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>字典是Python中唯一内建的映射类型，构造字典的目的是通过某个特定的键，轻松找到其对应的值。</p>
+<h3 id="初始化字典"><a href="#初始化字典" class="headerlink" title="初始化字典"></a>初始化字典</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">a = dict(one=1, two=2, three=3)</div><div class="line">b = &#123;&apos;one&apos;: 1, &apos;two&apos;: 2, &apos;three&apos;: 3&#125;</div><div class="line">c = dict(zip([&apos;one&apos;, &apos;two&apos;, &apos;three&apos;], [1, 2, 3]))</div><div class="line">d = dict([(&apos;two&apos;, 2), (&apos;one&apos;, 1), (&apos;three&apos;, 3)])</div><div class="line">e = dict(&#123;&apos;three&apos;: 3, &apos;one&apos;: 1, &apos;two&apos;: 2&#125;)</div><div class="line">a == b == c == d == e</div></pre></td></tr></table></figure>
+<h3 id="字典基本操作"><a href="#字典基本操作" class="headerlink" title="字典基本操作"></a>字典基本操作</h3><p>字典的基本操作包括：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">序号</th>
+<th style="text-align:center">字典常用方法</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">len(d)</td>
+<td style="text-align:center">返回d中键值对的数量</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">d[k]</td>
+<td style="text-align:center">返回关联到键k上的值</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">d[k] = v</td>
+<td style="text-align:center">将值v关联到键k上</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">del d[k]</td>
+<td style="text-align:center">删除键为k的项</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">k in d</td>
+<td style="text-align:center">检查d中是否有含有键为k的项</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:center">clear</td>
+<td style="text-align:center">清除字典中所有的项</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">copy</td>
+<td style="text-align:center">返回一个具有相同键值对的字典</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:center">fromkeys</td>
+<td style="text-align:center">使用给定的键建立新字典，每个键对应一个默认值None</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:center">get</td>
+<td style="text-align:center">获取字典项，若不存在该键，会出错</td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:center">has_key</td>
+<td style="text-align:center">检查字典中是否含有特定的键</td>
+</tr>
+<tr>
+<td style="text-align:center">11</td>
+<td style="text-align:center">items、iteritems</td>
+<td style="text-align:center">将字典所有项以列表方式返回</td>
+</tr>
+<tr>
+<td style="text-align:center">12</td>
+<td style="text-align:center">keys、iterkeys</td>
+<td style="text-align:center">将字典所有的键以列表方式返回</td>
+</tr>
+<tr>
+<td style="text-align:center">13</td>
+<td style="text-align:center">pop</td>
+<td style="text-align:center">获取给定键值，并建这个键值对从字典中删除</td>
+</tr>
+<tr>
+<td style="text-align:center">14</td>
+<td style="text-align:center">popitems</td>
+<td style="text-align:center">弹出<strong>随机</strong>的项</td>
+</tr>
+<tr>
+<td style="text-align:center">15</td>
+<td style="text-align:center">setdefault</td>
+<td style="text-align:center">设置键的值，若键存在，返回该键位的值，否则，为该键设置值</td>
+</tr>
+<tr>
+<td style="text-align:center">16</td>
+<td style="text-align:center">update</td>
+<td style="text-align:center">利用一个字典，更新另外一个字典</td>
+</tr>
+<tr>
+<td style="text-align:center">17</td>
+<td style="text-align:center">values、itervaues</td>
+<td style="text-align:center">将字典中所有的值以列表方式返回</td>
+</tr>
+</tbody>
+</table>
+<h4 id="1）len"><a href="#1）len" class="headerlink" title="1）len"></a>1）len</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/51156140-file_1489285794306_25da.png" alt=""></p>
+<h4 id="2-d-k"><a href="#2-d-k" class="headerlink" title="2) d[k]"></a>2) d[k]</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/30802879-file_1489285860276_3fd1.png" alt=""></p>
+<h4 id="3-d-k-v"><a href="#3-d-k-v" class="headerlink" title="3) d[k] = v"></a>3) d[k] = v</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/62014407-file_1489285908551_1509c.png" alt=""></p>
+<h4 id="4-del-d-k"><a href="#4-del-d-k" class="headerlink" title="4) del d[k]"></a>4) del d[k]</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/62540962-file_1489285964580_1059.png" alt=""></p>
+<h4 id="5-k-in-d"><a href="#5-k-in-d" class="headerlink" title="5) k in d"></a>5) k in d</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/99042578-file_1489286045292_15b09.png" alt=""></p>
+<h4 id="6-clear"><a href="#6-clear" class="headerlink" title="6) clear"></a>6) clear</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/19340560-file_1489286089117_15e4f.png" alt=""></p>
+<h4 id="7-copy"><a href="#7-copy" class="headerlink" title="7) copy"></a>7) copy</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/1088979-file_1489286221891_a032.png" alt=""></p>
+<h4 id="8-fromkeys"><a href="#8-fromkeys" class="headerlink" title="8) fromkeys"></a>8) fromkeys</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/11813325-file_1489286328979_137e.png" alt=""></p>
+<h4 id="9-get"><a href="#9-get" class="headerlink" title="9) get"></a>9) get</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/62310043-file_1489286393838_46f1.png" alt=""></p>
+<h4 id="10-has-key"><a href="#10-has-key" class="headerlink" title="10) has_key"></a>10) has_key</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/29896375-file_1489286444406_54ba.png" alt=""></p>
+<h4 id="11-items、iteritems"><a href="#11-items、iteritems" class="headerlink" title="11) items、iteritems"></a>11) items、iteritems</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/67390503-file_1489286499089_aec8.png" alt=""></p>
+<h4 id="12-keys、iterkeys"><a href="#12-keys、iterkeys" class="headerlink" title="12) keys、iterkeys"></a>12) keys、iterkeys</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/10181597-file_1489286546021_4e01.png" alt=""></p>
+<h4 id="13-pop"><a href="#13-pop" class="headerlink" title="13) pop"></a>13) pop</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/57529412-file_1489286599806_163f5.png" alt=""></p>
+<h4 id="14-popitems"><a href="#14-popitems" class="headerlink" title="14) popitems"></a>14) popitems</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/26922130-file_1489286675036_b62b.png" alt=""></p>
+<h4 id="15-setdefault"><a href="#15-setdefault" class="headerlink" title="15) setdefault"></a>15) setdefault</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/96093454-file_1489286800270_298b.png" alt=""></p>
+<h4 id="16）update"><a href="#16）update" class="headerlink" title="16）update"></a>16）update</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/5491167-file_1489286924873_d5e3.png" alt=""></p>
+<h4 id="17-values"><a href="#17-values" class="headerlink" title="17) values"></a>17) values</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/17-3-12/5253501-file_1489286967576_e7bf.png" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>Python基础教程</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/11/Python之列表和元组/" rel="next" title="Python之列表和元组">
+                <i class="fa fa-chevron-left"></i> Python之列表和元组
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/12/Python操作MYSQL数据库/" rel="prev" title="Python操作MYSQL数据库">
+                Python操作MYSQL数据库 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/11/Python之字典/"
+           data-title="Python之字典" data-url="http://jianwl.com/2017/03/11/Python之字典/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">296</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化字典"><span class="nav-text">初始化字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字典基本操作"><span class="nav-text">字典基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1）len"><span class="nav-text">1）len</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-d-k"><span class="nav-text">2) d[k]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-d-k-v"><span class="nav-text">3) d[k] = v</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-del-d-k"><span class="nav-text">4) del d[k]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-k-in-d"><span class="nav-text">5) k in d</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-clear"><span class="nav-text">6) clear</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-copy"><span class="nav-text">7) copy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-fromkeys"><span class="nav-text">8) fromkeys</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-get"><span class="nav-text">9) get</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-has-key"><span class="nav-text">10) has_key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-items、iteritems"><span class="nav-text">11) items、iteritems</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-keys、iterkeys"><span class="nav-text">12) keys、iterkeys</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-pop"><span class="nav-text">13) pop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-popitems"><span class="nav-text">14) popitems</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15-setdefault"><span class="nav-text">15) setdefault</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#16）update"><span class="nav-text">16）update</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-values"><span class="nav-text">17) values</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
