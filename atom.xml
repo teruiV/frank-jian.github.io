@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-08-04T03:48:35.861Z</updated>
+  <updated>2018-08-04T05:12:48.122Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>7.模板方法模式</title>
+    <link href="http://jianwl.com/2018/08/04/7-%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/08/04/7-模板方法模式/</id>
+    <published>2018-08-04T03:49:53.000Z</published>
+    <updated>2018-08-04T05:12:48.122Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>期末考，所有人拿到的考卷题目都是一样的，但是每个人答题的答案都不一样。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-TestPaper"><a href="#1-TestPaper" class="headerlink" title="1. TestPaper"></a>1. TestPaper</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">public abstract class TestPaper &#123;</div><div class="line">    private String studentName;</div><div class="line"></div><div class="line">    public TestPaper(String studentName) &#123;</div><div class="line">        this.studentName = studentName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void testQuestion1() &#123;</div><div class="line">        System.out.println(&quot;试题1：1+2=?&quot;);</div><div class="line">        System.out.println(&quot;试题1答案：&quot; + testAnswer1());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void testQuestion2() &#123;</div><div class="line">        System.out.println(&quot;试题2：3*4=？&quot;);</div><div class="line">        System.out.println(&quot;试题2答案：&quot; + testAnswer2());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void testQuestion3() &#123;</div><div class="line">        System.out.println(&quot;试题3：(5+1)*7=?&quot;);</div><div class="line">        System.out.println(&quot;试题3答案：&quot; + testAnswer3());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void dispaly() &#123;</div><div class="line">        System.out.println(String.format(&quot;学生%s的答卷情况:&quot;, this.studentName));</div><div class="line">        testQuestion1();</div><div class="line">        testQuestion2();</div><div class="line">        testQuestion3();</div><div class="line">        System.out.println(&quot;\n&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public abstract String testAnswer1();</div><div class="line"></div><div class="line">    public abstract String testAnswer2();</div><div class="line"></div><div class="line">    public abstract String testAnswer3();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-TestPaperA"><a href="#2-TestPaperA" class="headerlink" title="2. TestPaperA"></a>2. TestPaperA</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public class TestPaperA extends TestPaper &#123;</div><div class="line"></div><div class="line">    public TestPaperA(String studentName) &#123;</div><div class="line">        super(studentName);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String testAnswer1() &#123;</div><div class="line">        return &quot;3&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String testAnswer2() &#123;</div><div class="line">        return &quot;6&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String testAnswer3() &#123;</div><div class="line">        return &quot;7&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-TestPaperB"><a href="#3-TestPaperB" class="headerlink" title="3. TestPaperB"></a>3. TestPaperB</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class TestPaperB extends TestPaper &#123;</div><div class="line">    public TestPaperB(String studentName) &#123;</div><div class="line">        super(studentName);</div><div class="line">    &#125;</div><div class="line">    @Override</div><div class="line">    public String testAnswer1() &#123;</div><div class="line">        return &quot;5&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String testAnswer2() &#123;</div><div class="line">        return &quot;9&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String testAnswer3() &#123;</div><div class="line">        return &quot;1&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-App-启动类"><a href="#4-App-启动类" class="headerlink" title="4. App(启动类)"></a>4. App(启动类)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class App &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        TestPaperA a = new TestPaperA(&quot;刘鹏&quot;);</div><div class="line">        a.dispaly();</div><div class="line"></div><div class="line">        TestPaperB b= new TestPaperB(&quot;未央&quot;);</div><div class="line">        b.dispaly();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>模板方法模式，定义一个操作中的算法的骨架，而将一些步骤延迟到子类中，模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</p>
+<h4 id="2-UML"><a href="#2-UML" class="headerlink" title="2. UML"></a>2. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-4/82380842.jpg" alt=""></p>
+<h4 id="3-优点"><a href="#3-优点" class="headerlink" title="3. 优点"></a>3. 优点</h4><p>模板方法模式通过把不变行为搬到超类，去除子类中的重复代码来体现它的优势。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;期末考，所有人拿到的考卷题目都是一样的，但是每个人答题的答案都不一样。&lt;/p&gt;
+&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>6.原型模式</title>
@@ -109,7 +140,7 @@
     <link href="http://jianwl.com/2018/07/31/5-%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"/>
     <id>http://jianwl.com/2018/07/31/5-工厂方法模式/</id>
     <published>2018-07-31T14:53:21.000Z</published>
-    <updated>2018-08-04T02:57:32.890Z</updated>
+    <updated>2018-08-04T05:07:00.009Z</updated>
     
     <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>有两类铁匠师，精灵铁匠师和兽人铁匠师，精灵铁匠师专门做精灵类的武器，兽人铁匠师专门做兽人的武器。</p>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-Weapon-product"><a href="#1-Weapon-product" class="headerlink" title="1. Weapon(product)"></a>1. Weapon(product)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface Weapon &#123;</div><div class="line">    WeaponType getWeaponType();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -124,6 +155,7 @@
 <h4 id="2-UML"><a href="#2-UML" class="headerlink" title="2. UML"></a>2. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-4/35555791.jpg" alt=""></p>
 <h4 id="3-简单工厂-VS-工厂模式"><a href="#3-简单工厂-VS-工厂模式" class="headerlink" title="3. 简单工厂 VS 工厂模式"></a>3. 简单工厂 VS 工厂模式</h4><p>简单工厂模式的最大优点杂鱼工厂类中包含了必要的逻辑判断，根据客户端的条件选择动态实例化相关的类，对于客户端来说，去除了具体产品的依赖。但如果要新增一个产品，需要修改原有的工厂类，增加一个CASE用例。违背了开放-封闭模式。</p>
 <p>使用工厂模式，<strong>整个工厂和产品体系都没有修改的变化，只有扩展的变化符合了开放-封闭原则</strong>，客户端需要决定实例化哪一个工厂来实现运算类，即 工厂方法把简单工厂的内部逻辑判断移到了客户端进行。</p>
+<h4 id="4-缺点"><a href="#4-缺点" class="headerlink" title="4. 缺点"></a>4. 缺点</h4><p>每加一个产品，就需要加一个产品工厂的类，增加了额外的开发量。</p>
 ]]></content>
     
     <summary type="html">
@@ -286,7 +318,7 @@
     <link href="http://jianwl.com/2018/07/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83/"/>
     <id>http://jianwl.com/2018/07/22/设计模式专题训练/</id>
     <published>2018-07-22T13:52:33.000Z</published>
-    <updated>2018-08-04T03:48:59.190Z</updated>
+    <updated>2018-08-04T05:19:47.763Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>设计模式有四境界：</p>
 <ol>
@@ -303,7 +335,7 @@
 <li>代理模式「√」</li>
 <li>工厂方法模式「√」</li>
 <li>原型模式「√」</li>
-<li>模板方法模式</li>
+<li>模板方法模式「√」</li>
 <li>外观模式</li>
 <li>建造者模式</li>
 <li>观察者模式</li>
@@ -759,62 +791,6 @@
     
     
       <category term="Java进阶" scheme="http://jianwl.com/tags/Java%E8%BF%9B%E9%98%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入分析CAS</title>
-    <link href="http://jianwl.com/2018/05/19/%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90CAS/"/>
-    <id>http://jianwl.com/2018/05/19/深入分析CAS/</id>
-    <published>2018-05-19T15:17:12.000Z</published>
-    <updated>2018-05-20T05:19:14.727Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>CAS, Compare And Swap，即比较并交换。Doug lea大神在同步组价中大量使用CAS技术鬼斧神工地实现了Java多线程的并发操作。整个AQS同步组件、Atomic原子类操作等等都是以CAS实现的，甚至ConcurrentHashMap在1.8版本中也调整为CAS + Synchronized。可以说CAS是整个JUC的基石。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-5-20/58954764.jpg" alt=""></p>
-<h3 id="CAS分析"><a href="#CAS分析" class="headerlink" title="CAS分析"></a>CAS分析</h3><p>在CAS中有三个参数：内存值V、旧的预期值A，要更新的值B，当前仅当内存值V的值等于旧的预期值A时才会将内存值V的值修改为B，否则什么都不干。其伪代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">if(this.value == A)&#123;</div><div class="line">	this.value = B</div><div class="line">	return true;</div><div class="line">&#125;else&#123;</div><div class="line">	return false;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>JUC的atomic类都是通过CAS来实现的，下面就以AtomicInteger为例阐述CAS的实现。如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">private static final Unsafe unsafe = Unsafe.getUnsafe();</div><div class="line">private static final long valueOffset;</div><div class="line"></div><div class="line">static &#123;</div><div class="line">    try &#123;</div><div class="line">        valueOffset = unsafe.objectFieldOffset</div><div class="line">            (AtomicInteger.class.getDeclaredField(&quot;value&quot;));</div><div class="line">    &#125; catch (Exception ex) &#123; throw new Error(ex); &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private volatile int value;</div></pre></td></tr></table></figure>
-<p>Unsafe是CAS的核心类，Java无法直接访问底层操作系统，而是通过本地(native)方法来访问。不过尽管如此，JVM还是开了一个后门，Unsafe，它提供了<strong>硬件级别</strong>的原子操作。</p>
-<p><code>valueOffset</code>为变量值在内存中的偏移地址，unsafe就是通过偏移地址来得到数据的原值的。</p>
-<p><code>value</code>当前值，使用volatile修饰，保证多线程环境下看见的是同一个。</p>
-<p>我们就以AtomicInteger的addAndGet()方法来说明，先看源代码；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">   public final int addAndGet(int delta) &#123;</div><div class="line">       return unsafe.getAndAddInt(this, valueOffset, delta) + delta;</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   public final int getAndAddInt(Object var1, long var2, int var4) &#123;</div><div class="line">       int var5;</div><div class="line">       do &#123;</div><div class="line">           var5 = this.getIntVolatile(var1, var2);</div><div class="line">       &#125; while(!this.compareAndSwapInt(var1, var2, var5, var5 + var4));</div><div class="line">       return var5;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>内部调用unsafe的getAndAddInt方法，在getAndAddInt方法中主要看compareAndSwapInt方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">public final native boolean compareAndSwapInt(Object var1, long var2, int var4, int var5);</div></pre></td></tr></table></figure>
-<p>该方法为本地方法，有4个参数，分表代表：对象、对象的地址、预期值、修改值，该方法的实现这里就不做详细介绍了，有兴趣的伙伴可以看看<code>openjdk</code>的源码。</p>
-<p>CAS可以保证一次的读-写-改操作是原子操作，在单处理器上该操作容易实现，但是在多处理器上实现就有点复杂了。</p>
-<p>CPU提供了两种方法来实现多处理器的原子操作：总线加锁或缓存加锁。</p>
-<h4 id="总线加锁"><a href="#总线加锁" class="headerlink" title="总线加锁"></a>总线加锁</h4><p>总线加锁就是使用处理器提供一个LOCK#信号，当一个处理器在总线上输出此信号时，其他处理器的请求将被阻塞住，那么该处理器可以独占使用共享内存。但是这种处理方式显得有点霸道，它把CPU和内存之间的通信锁住了，在锁定期间，其他处理器都不能访问内存地址的数据，其开销有点大。所以就有了缓存加锁。</p>
-<h4 id="缓存加锁"><a href="#缓存加锁" class="headerlink" title="缓存加锁"></a>缓存加锁</h4><p>其实针对上面那种情况我们只需要保证在同一时刻对某个内存地址的操作是原子性的即可。缓存加锁就是缓存在内存区域的数据如果在加锁期间，当它执行操作写回内存时，处理器不在输出LOCK#信号，而是修改内存的内存地址，利用缓存一致性协议来保证原子性。缓存一致性机制可以保证同一个内存区域的数据仅能被一个处理器修改，也就是说当CPU1修改缓存行中的i时使用缓存锁定，那么CPU2就不能同时缓存了i的缓存行。</p>
-<h3 id="CAS缺陷"><a href="#CAS缺陷" class="headerlink" title="CAS缺陷"></a>CAS缺陷</h3><p>CAS虽然高效地解决了原子操作，但是还是存在一些缺陷的，主要表现在三个方面：循环时间太长、只能保证一个共性变量原子操作、ABA问题。</p>
-<h5 id="1-循环时间太长"><a href="#1-循环时间太长" class="headerlink" title="1) 循环时间太长"></a>1) 循环时间太长</h5><p>如果CAS一直不成功呢？这种情况绝对有可能发生，如果自旋CAS长时间地不成功，则会给CPU带来非常大的开销。在JUC有些地方就限制了CAS自旋的次数，例如BlockQueue的SynchronousQueue。</p>
-<h5 id="2-只能保证一个共享变量原子操作"><a href="#2-只能保证一个共享变量原子操作" class="headerlink" title="2) 只能保证一个共享变量原子操作"></a>2) 只能保证一个共享变量原子操作</h5><p>看了CAS的实现就知道它只能针对一个共享变量，如果是多个共享变量就只能使用锁了。当然如果你有办法把多个变量整成一个变量，利用CAS也不错。例如读写锁中state的高位</p>
-<h5 id="3-ABA问题"><a href="#3-ABA问题" class="headerlink" title="3) ABA问题"></a>3) ABA问题</h5><p>CAS需要检查操作值有没有发生改变，如果没有发生改变则更新。但是存在这样一种情况：如果一个值原来是A，变成B，然后又变成了A，那么在CAS检查的时候会发现没有改变，但是实质上它发生了改变，这就是所谓的ABA问题。对于ABA问题其解决方案是加上版本号，即在每个变量都加上一个版本号，每次改变时加1，即A -&gt; B -&gt; A，变成1A -&gt; 2B -&gt; 3A。</p>
-<h5 id="ABA解决方案"><a href="#ABA解决方案" class="headerlink" title="ABA解决方案"></a>ABA解决方案</h5><p>CAS的ABA隐患问题，解决方案则是加上版本号，Java提供了AtomicStampedReference来解决。AtomicStampedReference通过包装[E,Integer]的元组来对对象标记版本戳stamp，从而避免ABA问题。</p>
-<p>AtomicStampedReference的compareAndSet()方法定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public boolean compareAndSet(V   expectedReference,</div><div class="line">                             V   newReference,</div><div class="line">                             int expectedStamp,</div><div class="line">                             int newStamp) &#123;</div><div class="line">    Pair&lt;V&gt; current = pair;</div><div class="line">    return</div><div class="line">        expectedReference == current.reference &amp;&amp;</div><div class="line">        expectedStamp == current.stamp &amp;&amp;</div><div class="line">        ((newReference == current.reference &amp;&amp;</div><div class="line">          newStamp == current.stamp) ||</div><div class="line">         casPair(current, Pair.of(newReference, newStamp)));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>compareAndSet有四个参数，分别表示：预期引用、更新后的引用、预期标志、更新后的标志。如果更新后的引用和标志和当前引用和标志相等则直接返回true，否则通过Pair生成一个新的pair对象与当前pair CAS替换。Pair为AtomicStampedReference的内部类，主要用于记录引用和版本戳信息，其定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">private static class Pair&lt;T&gt; &#123;</div><div class="line">    final T reference;</div><div class="line">    final int stamp;</div><div class="line">    private Pair(T reference, int stamp) &#123;</div><div class="line">        this.reference = reference;</div><div class="line">        this.stamp = stamp;</div><div class="line">    &#125;</div><div class="line">    static &lt;T&gt; Pair&lt;T&gt; of(T reference, int stamp) &#123;</div><div class="line">        return new Pair&lt;T&gt;(reference, stamp);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Pair记录着对象的引用和版本戳，版本戳为int型，保持自增，同时Pair是一个不可变对象，其所有属性定义都为final，对外提供一个of方法，该方法返回一个新建的Pair对象，pair对象定义为volatile，保证多线程环境下的可见性。在AtomicStampedReference中，大多方法都是通过调用Pair的of方法来产生一个新的Pair对象，然后赋予给变量pair。如set方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public void set(V newReference, int newStamp) &#123;</div><div class="line">    Pair&lt;V&gt; current = pair;</div><div class="line">    if (newReference != current.reference || newStamp != current.stamp)</div><div class="line">        this.pair = Pair.of(newReference, newStamp);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h5><p>下面我们将通过一个例子可以看到AtomicStampedReference和AtomicInteger的区别。我们定义两个线程，线程1负责将100 -&gt; 110 -&gt; 100，线程2执行100 -&gt; 120，看看两者之间的区别。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line">public class AtomicDemo2 &#123;</div><div class="line">    private static AtomicInteger atomicInteger = new AtomicInteger(100);</div><div class="line">    private static AtomicStampedReference atomicStampedReference = new AtomicStampedReference(100,1);</div><div class="line"></div><div class="line">    public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">        // AtomicInteger</div><div class="line">        Thread at1 = new Thread(new Runnable() &#123;</div><div class="line">            @Override</div><div class="line">            public void run() &#123;</div><div class="line">                atomicInteger.compareAndSet(100,110);</div><div class="line">                atomicInteger.compareAndSet(110,100);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        Thread at2 = new Thread(new Runnable() &#123;</div><div class="line">            @Override</div><div class="line">            public void run() &#123;</div><div class="line">                try &#123;</div><div class="line">                    TimeUnit.SECONDS.sleep(2); // at1，执行完</div><div class="line">                &#125; catch (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">                System.out.println(&quot;AtomicInteger: &quot; + atomicInteger.compareAndSet(100,120));</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        at1.start();</div><div class="line">        at2.start();</div><div class="line">        at1.join();</div><div class="line">        at2.join();</div><div class="line"></div><div class="line">        // AtomicStampedReference</div><div class="line">        Thread tsf1 = new Thread(new Runnable() &#123;</div><div class="line">            @Override</div><div class="line">            public void run() &#123;</div><div class="line">                try &#123;</div><div class="line">                    // 让tsf2先获取stamp，导致预期时间戳不一致</div><div class="line">                    TimeUnit.SECONDS.sleep(2);</div><div class="line">                &#125; catch (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                // 预期引用：100， 更新后的引用110，预期表示getStamp(), 更新后表示：getStamp() + 1</div><div class="line">                atomicStampedReference.compareAndSet(100,110,atomicStampedReference.getStamp(),atomicStampedReference.getStamp() +1);</div><div class="line">                System.out.println(&quot;100 -&gt; 110: &quot; + atomicStampedReference.getStamp());</div><div class="line">                atomicStampedReference.compareAndSet(110,100,atomicStampedReference.getStamp(),atomicStampedReference.getStamp() +1);</div><div class="line">                System.out.println(&quot;110 -&gt; 100: &quot; + atomicStampedReference.getStamp());</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        Thread tsf2 = new Thread(new Runnable() &#123;</div><div class="line">            @Override</div><div class="line">            public void run() &#123;</div><div class="line">                int stamp = atomicStampedReference.getStamp();</div><div class="line">                System.out.println(&quot;100 -&gt; 120: &quot; + stamp);</div><div class="line">                </div><div class="line">                // 此处线程休眠，是为了让线程tsf1执行，从而改变版本戳，最后导致atomicStampedReference.compareAndSet()因版本对不上而更新失败；</div><div class="line">                try &#123;</div><div class="line">                    TimeUnit.SECONDS.sleep(5);</div><div class="line">                &#125; catch (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">                System.out.println(&quot;AtomicStampedReference: &quot; + atomicStampedReference.compareAndSet(100,120,stamp,stamp+1));</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        tsf1.start();</div><div class="line">        tsf2.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">AtomicInteger: true</div><div class="line">100 -&gt; 120: 1</div><div class="line">100 -&gt; 110: 2</div><div class="line">110 -&gt; 100: 3</div><div class="line">AtomicStampedReference: false</div></pre></td></tr></table></figure>
-<p>运行结果充分展示了AtomicInteger的ABA问题和AtomicStampedReference解决ABA问题。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;CAS, Compare And Swap，即比较并交换。Doug lea大神在同步组价中大量使用CAS技术鬼斧神工地实现了Java多线程的
-    
-    </summary>
-    
-      <category term="JDK源码学习专题" scheme="http://jianwl.com/categories/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
-    
-    
-      <category term="JDK源码学习专题" scheme="http://jianwl.com/tags/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
     
   </entry>
   
