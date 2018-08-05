@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-08-04T05:12:48.122Z</updated>
+  <updated>2018-08-05T02:24:33.217Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>8.外观模式</title>
+    <link href="http://jianwl.com/2018/08/05/8-%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/08/05/8-外观模式/</id>
+    <published>2018-08-05T02:05:58.000Z</published>
+    <updated>2018-08-05T02:24:33.217Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>一个矮人金矿工厂包含着几个子系统，如金矿系统、矿车系统、轨道系统。每个系统都会雇佣工人使得这个系统运作起来，请描述每类系统工人一天的工作流程。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-DwarvenMineWorker"><a href="#1-DwarvenMineWorker" class="headerlink" title="1. DwarvenMineWorker"></a>1. DwarvenMineWorker</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">public abstract class DwarvenMineWorker &#123;</div><div class="line"></div><div class="line">    public void goToSleep() &#123;</div><div class="line">        System.out.println(String.format(&quot;%s go to sleep&quot;, name()));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void wakeUp() &#123;</div><div class="line">        System.out.println(String.format(&quot;%s go to wake up&quot;, name()));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void goHome() &#123;</div><div class="line">        System.out.println(String.format(&quot;%s go home&quot;, name()));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void goToMine() &#123;</div><div class="line">        System.out.println(String.format(&quot;%s go to mine&quot;, name()));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void action(Action action) &#123;</div><div class="line">        switch (action)&#123;</div><div class="line">            case GO_TO_SLEEP:</div><div class="line">                goToSleep();</div><div class="line">                break;</div><div class="line">            case WAKE_UP:</div><div class="line">                wakeUp();</div><div class="line">                break;</div><div class="line">            case GO_HOME:</div><div class="line">                goHome();</div><div class="line">                break;</div><div class="line">            case GO_TO_MINE:</div><div class="line">                goToMine();</div><div class="line">                break;</div><div class="line">            case WORK:</div><div class="line">                work();</div><div class="line">                break;</div><div class="line">            default:</div><div class="line">                throw new IllegalArgumentException(&quot;undefined action.&quot;);</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void action(Action... actions)&#123;</div><div class="line">        for(Action action: actions)&#123;</div><div class="line">            action(action);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    static enum Action &#123;</div><div class="line">        GO_TO_SLEEP, WAKE_UP, GO_HOME, GO_TO_MINE, WORK;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    protected abstract void work();</div><div class="line"></div><div class="line">    protected abstract String name();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-DwarvenTunnelDigger"><a href="#2-DwarvenTunnelDigger" class="headerlink" title="2. DwarvenTunnelDigger"></a>2. DwarvenTunnelDigger</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class DwarvenTunnelDigger extends DwarvenMineWorker&#123;</div><div class="line">    @Override</div><div class="line">    protected void work() &#123;</div><div class="line">        System.out.println(String.format(&quot;%s creates another promising tunnel.&quot;,name()));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected String name() &#123;</div><div class="line">        return &quot;Dwarven tunnel digger&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-DwarvenGoldDigger"><a href="#3-DwarvenGoldDigger" class="headerlink" title="3. DwarvenGoldDigger"></a>3. DwarvenGoldDigger</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class DwarvenGoldDigger extends DwarvenMineWorker &#123;</div><div class="line">    @Override</div><div class="line">    protected void work() &#123;</div><div class="line">        System.out.println(String.format(&quot;%s digger for gold.&quot;,name()));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected String name() &#123;</div><div class="line">        return &quot;Dwarf gold digger&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-DwarvenCartOperator"><a href="#4-DwarvenCartOperator" class="headerlink" title="4. DwarvenCartOperator"></a>4. DwarvenCartOperator</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class DwarvenCartOperator extends DwarvenMineWorker &#123;</div><div class="line">    @Override</div><div class="line">    protected void work() &#123;</div><div class="line">        System.out.println(String.format(&quot;%s moves gold chunks out of the mine.&quot;, name()));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected String name() &#123;</div><div class="line">        return &quot;Dwarf cart operator&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-DwarvenGoldMineFacade"><a href="#5-DwarvenGoldMineFacade" class="headerlink" title="5. DwarvenGoldMineFacade"></a>5. DwarvenGoldMineFacade</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public class DwarvenGoldMineFacade &#123;</div><div class="line">    private List&lt;DwarvenMineWorker&gt; workers;</div><div class="line"></div><div class="line">    public DwarvenGoldMineFacade() &#123;</div><div class="line">        workers = new ArrayList&lt;&gt;();</div><div class="line">        workers.add(new DwarvenGoldDigger());</div><div class="line">        workers.add(new DwarvenTunnelDigger());</div><div class="line">        workers.add(new DwarvenCartOperator());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void startNewDay()&#123;</div><div class="line">        makeActions(workers, DwarvenMineWorker.Action.WAKE_UP, DwarvenMineWorker.Action.GO_TO_MINE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void digOutGold()&#123;</div><div class="line">        makeActions(workers, DwarvenMineWorker.Action.WORK);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void endDay()&#123;</div><div class="line">        makeActions(workers, DwarvenMineWorker.Action.GO_HOME,DwarvenMineWorker.Action.GO_TO_SLEEP);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static void makeActions(Collection&lt;DwarvenMineWorker&gt; workers, DwarvenMineWorker.Action... actions)&#123;</div><div class="line">        for(DwarvenMineWorker work: workers)&#123;</div><div class="line">            work.action(actions);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="6-App-启动类"><a href="#6-App-启动类" class="headerlink" title="6. App(启动类)"></a>6. App(启动类)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class App &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        DwarvenGoldMineFacade facade = new DwarvenGoldMineFacade();</div><div class="line">        facade.startNewDay();</div><div class="line">        facade.digOutGold();</div><div class="line">        facade.endDay();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>当系统非常复杂或难以理解时，经常使用Facade设计模式,因为系统有大量相互依赖的类或其源代码是不可用。这种模式隐藏了较大系统的复杂性，并提供了更简单的方案与客户端的接口。 </p>
+<h4 id="2-UML"><a href="#2-UML" class="headerlink" title="2. UML"></a>2. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-5/57716443.jpg" alt=""></p>
+<h4 id="3-优点"><a href="#3-优点" class="headerlink" title="3. 优点"></a>3. 优点</h4><p>增加外观Facade可以提供一个简单的接口，减少它们之间的依赖。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;一个矮人金矿工厂包含着几个子系统，如金矿系统、矿车系统、轨道系统。每个系统都会雇佣工人使得这个系统运作起来，请描述每类系统工
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>7.模板方法模式</title>
@@ -318,7 +350,7 @@
     <link href="http://jianwl.com/2018/07/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83/"/>
     <id>http://jianwl.com/2018/07/22/设计模式专题训练/</id>
     <published>2018-07-22T13:52:33.000Z</published>
-    <updated>2018-08-04T05:19:47.763Z</updated>
+    <updated>2018-08-05T02:24:50.034Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>设计模式有四境界：</p>
 <ol>
@@ -336,7 +368,7 @@
 <li>工厂方法模式「√」</li>
 <li>原型模式「√」</li>
 <li>模板方法模式「√」</li>
-<li>外观模式</li>
+<li>外观模式「√」</li>
 <li>建造者模式</li>
 <li>观察者模式</li>
 <li>抽象工厂模式</li>
@@ -724,66 +756,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;Java语言中有一个“先行发生”的原则，它是判断数据是否存在竞争、线程是否安全的主要依据。下面是Java内存模型一些“天然”先行发生关系，这
-    
-    </summary>
-    
-      <category term="Java进阶" scheme="http://jianwl.com/categories/Java%E8%BF%9B%E9%98%B6/"/>
-    
-    
-      <category term="Java进阶" scheme="http://jianwl.com/tags/Java%E8%BF%9B%E9%98%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java内存模型</title>
-    <link href="http://jianwl.com/2018/05/20/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/"/>
-    <id>http://jianwl.com/2018/05/20/Java内存模型/</id>
-    <published>2018-05-20T08:10:13.000Z</published>
-    <updated>2018-05-20T10:10:15.617Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Java内存模型有什么用？"><a href="#Java内存模型有什么用？" class="headerlink" title="Java内存模型有什么用？"></a>Java内存模型有什么用？</h3><p>JVM规范定义Java内存模型主要是为了屏蔽各种硬件和操作系统的内存访问差异，以实现让Java程序在各个平台下都能达到一致的内存访问效果。</p>
-<p>在此之前，主流程序语言如<code>C/C++</code>直接使用物理硬件和操作系统的内存模型，因此，会由于不同内存模型的差异，有可能导致在平台A能运行，平台B却不能运行的情况。</p>
-<h3 id="什么是内存模型"><a href="#什么是内存模型" class="headerlink" title="什么是内存模型"></a>什么是内存模型</h3><p>在多CPU的系统中，每个CPU都有多级缓存，一般分为L1、L2、L3缓存，因为这些缓存的存在，提供了数据的访问性能，也减轻了数据总线上数据传输的压力，同时也带来了很多新的挑战，比如两个CPU同时去操作同一个内存地址，会发生什么？在什么条件下，它们可以看到相同的结果？这些都是需要解决的。</p>
-<p>所以在CPU的层面，内存模型定义了一个充分必要条件，保证其他CPU的写入动作对该CPU是可见的，而且该CPU的写入动作对其他CPU也是可见的，那这种可见性，应该如何实现呢？</p>
-<p>有些处理器提供了强内存模型，所有CPU在任何时候都能看到内存中任意位置相同的值，这种完全是硬件提供的支持。</p>
-<p>其他处理器，提供了弱内存模型，需要执行一些特殊指令(就是经常看到货听到的，Memory Barries内存屏障)，刷新CPU缓存的数据到内存中，保证这个写操作能够被其他CPU可见，或者将CPU缓存的数据设置为无效状态，保证其他CPU的写操作对本CPU可见。通过这些内存屏障的行为由底层实现，对于上层语言的程序员来说是透明的。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-5-20/9953164.jpg" alt=""></p>
-<p>前面说到的内存屏障，除了实现CPU之外的数据可见性之外，还有一个重要的职责，可以禁止指令的重排序。</p>
-<p>这里说的重排序可以发生在好几个地方：编译器、运行时、JIT等，比如编译器会觉得把一个变量的写操作放在最后更有效率，编译后，这个指令就是在最后了(前提是只要不改变程序的语义，编译器、执行器就可以这样自由的随意优化)，一旦编译器对某个变量的写操作进行优化(放到最后)，那么执行之前，另一个线程将不会看到这个执行结果。</p>
-<p>当然了，写入动作可能被移到后面，那么也有可能挪到前面，这样的优化有什么影响呢？这种情况下，其他线程可能会在程序实现“发生”之前，看到这个写入动作(这里怎么理解，指令已经执行了，但是在代码层面还没执行到)，通过内存屏障的功能，我们可以禁止一些不必要、或者会带来负面影响的重排序优化，在内存模型的范围内，实现更高性能，同时保证程序的正确性。</p>
-<p>下面看一个重排序的例子:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Class Reordering &#123;</div><div class="line">  int x = 0, y = 0;</div><div class="line">  public void writer() &#123;</div><div class="line">    x = 1;</div><div class="line">    y = 2;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public void reader() &#123;</div><div class="line">    int r1 = y;</div><div class="line">    int r2 = x;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>假设这段代码有2个线程并发执行，线程A执行writer方法，线程B执行reader方法，线程B看到y的值为2，因为把y设置成2发生在变量x的写入之后，所以能断定线程B这时看到的x就是1吗？</p>
-<p>在Java内存模型中，描述了在多线程代码中，哪些行为是正确的、合法的、以及多线程之间如何进行通信，代码中变量的读写行为如何反应到内存、CPU缓存的底层细节。</p>
-<p>在Java中包含了几个关键字：volatile、final和synchronized，帮助程序员把代码中的并发需求描述给编译器，Java内存模型中定义了他们的行为，确保正确同步的Java代码在所有的处理器上都能正确执行。</p>
-<h3 id="synchronization可以实现什么"><a href="#synchronization可以实现什么" class="headerlink" title="synchronization可以实现什么"></a>synchronization可以实现什么</h3><p>Synchronizeation有多中语义，其中最容易理解的是互斥，对于一个monitor对象，只能够被一个线程持有，意味着一旦有线程进入了同步代码块，那么其他线程就不能进入直到第一个进入的线程退出代码块。</p>
-<p>但是更多的时候，使用synchronization并非单单互斥功能，synchronization保证了线程在同步块之前或者期间写入动作，对于后续进入该代码块的线程是可见的(又是可见性，不过这里需要注意的是对同一个monitor对象而言)。在一个线程退出同步块时，线程释放monitor对象，它的作用是把CPU缓存数据(本地缓存数据)刷新到主内存中，从而实现该线程的行为可以被其他线程看到。在其他线程进入到该代码块时，需要获得monitor对象，它的作用是使CPU缓存失效，从而使变量从主内存中重新加载，然后就可以看到之前线程对该变量的修改。</p>
-<p>但从缓存的角度看，似乎这个问题只会影响多处理器的机器，对于单核来说没什么问题，但是别忘了，它还有一个语义是禁止指令的重排序，对于编译器来说，同步块中的代码不会移动到获取和释放monitor外面。</p>
-<p>下面这种代码，千万别写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">synchronized(new Object()) 「×」</div></pre></td></tr></table></figure>
-<p>编译器完全可以删除这个同步语义，因为编译器知道没有其他线程会在同一个monitor对象上同步。</p>
-<p>所以，请注意：对于两个线程来说，在相同的monitor对象上同步是很重要的，以便正确的设置happens-before关系。</p>
-<h3 id="final可以影响什么"><a href="#final可以影响什么" class="headerlink" title="final可以影响什么"></a>final可以影响什么</h3><p>如果一个类包含final字段，且在构造器中初始化，那么正确的构造一个对象后，final字段被设置后对于其他线程是可见的。</p>
-<p>这里所说的正确构造对象，意思是在对象的构造过程中，不允许对该对象进行引用，不然的话，可能存在其他线程在对象还没构造完成时就对该对象进行访问，造成不必要的麻烦。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">final int x;</div><div class="line">  int y;</div><div class="line">  static FinalFieldExample f;</div><div class="line">  public FinalFieldExample() &#123;</div><div class="line">    x = 3;</div><div class="line">    y = 4;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  static void writer() &#123;</div><div class="line">    f = new FinalFieldExample();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  static void reader() &#123;</div><div class="line">    if (f != null) &#123;</div><div class="line">      int i = f.x;</div><div class="line">      int j = f.y;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面这个例子描述了应该如何使用final字段，一个线程A执行reader方法，如果f已经在线程B初始化好了，那么可以确保线程A看到x值是3，因为final它是final修饰的，而不能确保看到y的值是4.</p>
-<h3 id="volatile可以做什么"><a href="#volatile可以做什么" class="headerlink" title="volatile可以做什么"></a>volatile可以做什么</h3><p>volatile字段主要用于线程之间进行通信，volatile字段的每次读行为都能看到其他线程最后一次对该字段的写行为，通过它就可以避免拿到缓存中陈旧数据。它们必须保证在被写入之后，会被刷新到主内存中，这样就可以立即对其他线程可以见。类似的，在读取volatile字段之前，缓存必须是无效的，以保证每次拿到的都是主内存的值，都是最新的值。volatile的内存语义和synchronized获取和释放monitor的实现目的差不多。</p>
-<p>对于重排序，volatile也有额外的限制。</p>
-<p>下面看一个例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">class VolatileExample &#123;</div><div class="line">  int x = 0;</div><div class="line">  volatile boolean v = false;</div><div class="line">  public void writer() &#123;</div><div class="line">    x = 42;</div><div class="line">    v = true;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public void reader() &#123;</div><div class="line">    if (v == true) &#123;</div><div class="line">      //uses x - guaranteed to see 42.</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>同样的，假设一个线程A执行writer，另一个线程B执行reader，writer中对变量v的写入把x的写入也刷新到主内存中。reader方法会从主内存重新获取v的值，所以如果线程B看到v的值为true，就能保证拿到的x是42.（因为把x设置成42发生在把v设置成true之前，volatile禁止这两个写入行为的重排序）</p>
-<p>如果变量v不是volatile，那么以上描述就不成立了，因为执行顺序可能是v=true，x=42,或者对于线程B来说，根本看不到v被设置为true。</p>
-<h3 id="double-checked-locking的问题"><a href="#double-checked-locking的问题" class="headerlink" title="double-checked locking的问题"></a>double-checked locking的问题</h3><p>臭名昭著的双重检查(单例模式的一种)，是一种延时初始化的实现技巧，避免了同步的开销，因为在早起的JVM，同步操作性能很差，所以才出现了这样的小技巧。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">private static Something instance = null;</div><div class="line"></div><div class="line">public Something getInstance() &#123;</div><div class="line">  if (instance == null) &#123;</div><div class="line">    synchronized (this) &#123;</div><div class="line">      if (instance == null)</div><div class="line">        instance = new Something();</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  return instance;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这个技巧看起来很聪明，避免了同步的开销，但是有一个问题，它可能不起作用，为什么呢？因为实例的初始化和实例字段的写入可能被编译器重排序，这样可能读到一个未初始化完成的对象。</p>
-<p>当然，这种bug可以通过使用volatile修饰instance字段进行修复，但是我觉得这种代码格式实在太丑陋了，如果真要延时初始化，不妨使用下面这种方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">private static class LazySomethingHolder &#123;</div><div class="line">  public static Something something = new Something();</div><div class="line">&#125;</div><div class="line"></div><div class="line">public static Something getInstance() &#123;</div><div class="line">  return LazySomethingHolder.something;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>由于是静态字段的初始化，可以确保对访问该类的所有线程都是可见的。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;Java内存模型有什么用？&quot;&gt;&lt;a href=&quot;#Java内存模型有什么用？&quot; class=&quot;headerlink&quot; title=&quot;Java内存模型有什么用？&quot;&gt;&lt;/a&gt;Java内存模型有什么用？&lt;/h3&gt;&lt;p&gt;JVM规范定义Java内存模型主要是为了屏蔽各种硬件
     
     </summary>
     
