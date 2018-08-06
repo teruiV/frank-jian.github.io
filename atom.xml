@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-08-06T14:25:13.232Z</updated>
+  <updated>2018-08-06T15:24:19.196Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>11.抽象工厂模式</title>
+    <link href="http://jianwl.com/2018/08/06/11-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/08/06/11-抽象工厂模式/</id>
+    <published>2018-08-06T14:27:10.000Z</published>
+    <updated>2018-08-06T15:24:19.196Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>一个王国拥有国王、城堡和军队，请描述兽人和精灵这两类王国。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-King"><a href="#1-King" class="headerlink" title="1. King"></a>1. King</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface King &#123;</div><div class="line">    String getDescription();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-Army"><a href="#2-Army" class="headerlink" title="2. Army"></a>2. Army</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface Army &#123;</div><div class="line">    String getDescription();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-Castle"><a href="#3-Castle" class="headerlink" title="3. Castle"></a>3. Castle</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface Castle &#123;</div><div class="line">    String getDescription();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-KingdomFactory"><a href="#4-KingdomFactory" class="headerlink" title="4. KingdomFactory"></a>4. KingdomFactory</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public interface KingdomFactory &#123;</div><div class="line">    Castle createCastle();</div><div class="line"></div><div class="line">    King createKing();</div><div class="line"></div><div class="line">    Army createArmy();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-ElfArmy"><a href="#5-ElfArmy" class="headerlink" title="5. ElfArmy"></a>5. ElfArmy</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class ElfArmy implements Army &#123;</div><div class="line">    static final String DESCRIPTION = &quot;This is the Elven Army!&quot;;</div><div class="line"></div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String getDescription() &#123;</div><div class="line">        return DESCRIPTION;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="6-OrcArmy"><a href="#6-OrcArmy" class="headerlink" title="6. OrcArmy"></a>6. OrcArmy</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class OrcArmy implements Army &#123;</div><div class="line">    static final String DESCRIPTION = &quot;This is the Orc Army!&quot;;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String getDescription() &#123;</div><div class="line">        return DESCRIPTION;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="7-ElfCastle"><a href="#7-ElfCastle" class="headerlink" title="7. ElfCastle"></a>7. ElfCastle</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class ElfCastle implements Castle &#123;</div><div class="line">    static final String DESCRIPTION = &quot;This is the Elven castle!&quot;;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String getDescription() &#123;</div><div class="line">        return DESCRIPTION;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="8-OrcCastle"><a href="#8-OrcCastle" class="headerlink" title="8. OrcCastle"></a>8. OrcCastle</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class OrcCastle implements Castle &#123;</div><div class="line">    static final String DESCRIPTION = &quot;This is the Orc castle!&quot;;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String getDescription() &#123;</div><div class="line">        return DESCRIPTION;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="9-ElfKingdomFactory"><a href="#9-ElfKingdomFactory" class="headerlink" title="9. ElfKingdomFactory"></a>9. ElfKingdomFactory</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public class ElfKingdomFactory implements KingdomFactory &#123;</div><div class="line">    @Override</div><div class="line">    public Castle createCastle() &#123;</div><div class="line">        return new ElfCastle();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public King createKing() &#123;</div><div class="line">        return new ElfKing();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Army createArmy() &#123;</div><div class="line">        return new ElfArmy();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h4 id="10-OrcKingdomFactory"><a href="#10-OrcKingdomFactory" class="headerlink" title="10. OrcKingdomFactory"></a>10. OrcKingdomFactory</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class OrcKingdomFactory implements KingdomFactory &#123;</div><div class="line">    @Override</div><div class="line">    public Castle createCastle() &#123;</div><div class="line">        return new OrcCastle();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public King createKing() &#123;</div><div class="line">        return new OrcKing();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Army createArmy() &#123;</div><div class="line">        return new OrcArmy();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="11-App-启动类"><a href="#11-App-启动类" class="headerlink" title="11. App(启动类)"></a>11. App(启动类)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">@Data</div><div class="line">public class App &#123;</div><div class="line">    private King king;</div><div class="line">    private Castle castle;</div><div class="line">    private Army army;</div><div class="line"></div><div class="line">    public void createKingdom(final KingdomFactory factory)&#123;</div><div class="line">        setKing(factory.createKing());</div><div class="line">        setCastle(factory.createCastle());</div><div class="line">        setArmy(factory.createArmy());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        App app = new App();</div><div class="line">        app.createKingdom(new ElfKingdomFactory());</div><div class="line">        System.out.println(String.format(&quot;army = %s, castle = %s, king = %s\n&quot;, app.getArmy().getDescription(),app.getCastle().getDescription(),app.getKing().getDescription()));</div><div class="line">        app.createKingdom(new OrcKingdomFactory());</div><div class="line">        System.out.println(String.format(&quot;army = %s, castle = %s, king = %s&quot;, app.getArmy().getDescription(),app.getCastle().getDescription(),app.getKing().getDescription()));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="抽象工厂"><a href="#抽象工厂" class="headerlink" title="抽象工厂"></a>抽象工厂</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>抽象工厂模式，提供一个创建一系列相关或相互依赖对象的接口，而不需指定它们具体的类。</p>
+<h4 id="2-UML"><a href="#2-UML" class="headerlink" title="2. UML"></a>2. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-6/16534295.jpg" alt=""></p>
+<h4 id="3-优点"><a href="#3-优点" class="headerlink" title="3. 优点"></a>3. 优点</h4><ol>
+<li>易于交换产品系列，改变一个应用的具体工厂非常容易，只需要改变具体工厂即可实现不同的产品的配置。</li>
+<li>让具体的创建实例过程与客户端分离，客户端是通过他们的抽象接口操纵实例，产品的具体类名也被具体工厂实现分离，不会出现在客户端代码中。</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;一个王国拥有国王、城堡和军队，请描述兽人和精灵这两类王国。&lt;/p&gt;
+&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; cl
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>10.观察者模式</title>
@@ -418,7 +459,7 @@
     <link href="http://jianwl.com/2018/07/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83/"/>
     <id>http://jianwl.com/2018/07/22/设计模式专题训练/</id>
     <published>2018-07-22T13:52:33.000Z</published>
-    <updated>2018-08-06T14:25:42.550Z</updated>
+    <updated>2018-08-06T15:24:37.110Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>设计模式有四境界：</p>
 <ol>
@@ -439,7 +480,7 @@
 <li>外观模式「√」</li>
 <li>建造者模式「√」</li>
 <li>观察者模式「√」</li>
-<li>抽象工厂模式</li>
+<li>抽象工厂模式「√」</li>
 <li>状态模式</li>
 <li>适配器模式</li>
 <li>备忘录模式</li>
@@ -739,37 +780,6 @@
     
     
       <category term="Git" scheme="http://jianwl.com/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring容器的基本实现</title>
-    <link href="http://jianwl.com/2018/06/04/Spring%E5%AE%B9%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%AE%9E%E7%8E%B0/"/>
-    <id>http://jianwl.com/2018/06/04/Spring容器的基本实现/</id>
-    <published>2018-06-04T00:14:01.000Z</published>
-    <updated>2018-06-11T23:48:14.893Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这一节从实战到理论学习Spring容器的实现。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-核心依赖"><a href="#1-核心依赖" class="headerlink" title="1) 核心依赖"></a>1) 核心依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;parent&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;2.0.2.RELEASE&lt;/version&gt;</div><div class="line">	&lt;relativePath/&gt; </div><div class="line">&lt;/parent&gt;</div><div class="line"></div><div class="line">&lt;dependencies&gt;</div><div class="line">	&lt;dependency&gt;</div><div class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;</div><div class="line">	&lt;/dependency&gt;</div><div class="line">	</div><div class="line">	&lt;dependency&gt;</div><div class="line">		&lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;spring-beans&lt;/artifactId&gt;</div><div class="line">		&lt;version&gt;5.0.6.RELEASE&lt;/version&gt;</div><div class="line">	&lt;/dependency&gt;</div><div class="line">&lt;/dependencies&gt;</div></pre></td></tr></table></figure>
-<h4 id="2）在容器中注册Bean-amp-获取Bean"><a href="#2）在容器中注册Bean-amp-获取Bean" class="headerlink" title="2）在容器中注册Bean &amp; 获取Bean"></a>2）在容器中注册Bean &amp; 获取Bean</h4><p>运行类：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class MainBootstrap &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        BeanFactory bf = new XmlBeanFactory(new ClassPathResource(&quot;beanFactoryTest.xml&quot;));</div><div class="line">        MyTestBean bean = (MyTestBean) bf.getBean(&quot;myTestBean&quot;);</div><div class="line">        System.out.println(String.format(&quot;测试是否加载xml: %s&quot;,bean.getTestStr()));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>beanFactoryTest.xml文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">       xmlns:p=&quot;http://www.springframework.org/schema/p&quot; xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</div><div class="line">       xmlns:task=&quot;http://www.springframework.org/schema/task&quot;</div><div class="line">       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; xmlns:util=&quot;http://www.springframework.org/schema/util&quot;</div><div class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd</div><div class="line">		http://www.springframework.org/schema/task</div><div class="line">        http://www.springframework.org/schema/task/spring-task-3.0.xsd</div><div class="line">		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd&quot;</div><div class="line">&gt;</div><div class="line">    &lt;bean id=&quot;myTestBean&quot; class=&quot;com.frank.springlearning.domain.MyTestBean&quot;/&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
-<p>以上完成了，Bean的注册和使用；</p>
-<h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><p>未完待续…</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;这一节从实战到理论学习Spring容器的实现。&lt;/p&gt;
-&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; class=&quot;headerlin
-    
-    </summary>
-    
-      <category term="Spring源码学习专题" scheme="http://jianwl.com/categories/Spring%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
-    
-    
-      <category term="Spring源码学习专题" scheme="http://jianwl.com/tags/Spring%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
     
   </entry>
   
