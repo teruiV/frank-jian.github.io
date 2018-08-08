@@ -1,0 +1,718 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="consul," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oc5a5l0a0.bkt.clouddn.com/17-9-15/12958638.jpg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Consul环境描述1、本地启动Consul Server, 本地IP 192.168.85.160, Consul Node Name: server@160
+2、虚拟机启动Consul Agent，虚拟机IP172.20.20.12, Consul Node Name: agent@12
+3、consul server 主动加入 agent，使得 Server和Agent实现通信。在本地IP为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="consul常用API梳理">
+<meta property="og:url" content="http://jianwl.com/2018/08/08/consul常用API梳理/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="Consul环境描述1、本地启动Consul Server, 本地IP 192.168.85.160, Consul Node Name: server@160
+2、虚拟机启动Consul Agent，虚拟机IP172.20.20.12, Consul Node Name: agent@12
+3、consul server 主动加入 agent，使得 Server和Agent实现通信。在本地IP为">
+<meta property="og:updated_time" content="2018-08-08T07:27:28.109Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="consul常用API梳理">
+<meta name="twitter:description" content="Consul环境描述1、本地启动Consul Server, 本地IP 192.168.85.160, Consul Node Name: server@160
+2、虚拟机启动Consul Agent，虚拟机IP172.20.20.12, Consul Node Name: agent@12
+3、consul server 主动加入 agent，使得 Server和Agent实现通信。在本地IP为">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> consul常用API梳理 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/08/08/consul常用API梳理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                consul常用API梳理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-08T11:09:39+08:00">
+                2018-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/consul/" itemprop="url" rel="index">
+                    <span itemprop="name">consul</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/08/consul常用API梳理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/08/consul常用API梳理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Consul环境描述"><a href="#Consul环境描述" class="headerlink" title="Consul环境描述"></a>Consul环境描述</h3><p>1、本地启动Consul Server, 本地IP <code>192.168.85.160</code>, Consul Node Name: <code>server@160</code></p>
+<p>2、虚拟机启动Consul Agent，虚拟机IP<code>172.20.20.12</code>, Consul Node Name: <code>agent@12</code></p>
+<p>3、consul server 主动加入 agent，使得 Server和Agent实现通信。在本地IP为<code>192.168.85.160</code>的服务器上执行以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul join 172.20.20.12</div></pre></td></tr></table></figure>
+<p>4、 本地(IP<code>192.168.85.160</code>)启动一个测试服务springLearning,端口为<code>1111</code>，将测试服务(springLearning)注册在consul上。</p>
+<p>5、 以下是基于此环境下做的Consul API测试</p>
+<h3 id="1-Agent"><a href="#1-Agent" class="headerlink" title="1. Agent"></a>1. Agent</h3><h4 id="1-注册服务"><a href="#1-注册服务" class="headerlink" title="1) 注册服务"></a>1) 注册服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">curl -X PUT \</div><div class="line">  http://172.20.20.12:8500/v1/agent/service/register \</div><div class="line">  -H &apos;Content-Type: application/json&apos; \</div><div class="line">  -d &apos;  &#123;</div><div class="line">  &quot;ID&quot;: &quot;spring&quot;,</div><div class="line">  &quot;Name&quot;: &quot;springLearning&quot;,</div><div class="line">  &quot;Tags&quot;: [</div><div class="line">    &quot;primary&quot;,</div><div class="line">    &quot;v1&quot;</div><div class="line">  ],</div><div class="line">  &quot;Address&quot;: &quot;192.168.85.160&quot;,</div><div class="line">  &quot;Port&quot;: 1111,</div><div class="line">  &quot;Meta&quot;: &#123;</div><div class="line">    &quot;strongValid&quot;: &quot;0&quot;</div><div class="line">  &#125;,</div><div class="line">  &quot;EnableTagOverride&quot;: true,</div><div class="line">  &quot;Check&quot;: &#123;</div><div class="line">    &quot;HTTP&quot;: &quot;http://192.168.85.160:1111/health&quot;,</div><div class="line">    &quot;Interval&quot;: &quot;3s&quot;</div><div class="line">  &#125;</div><div class="line">&#125;&apos;</div></pre></td></tr></table></figure>
+<h4 id="2）注销服务"><a href="#2）注销服务" class="headerlink" title="2）注销服务"></a>2）注销服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X PUT  http://172.20.20.12:8500/v1/agent/service/deregister/spring</div></pre></td></tr></table></figure>
+<h4 id="3-服务开启维护模式"><a href="#3-服务开启维护模式" class="headerlink" title="3) 服务开启维护模式"></a>3) 服务开启维护模式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X PUT  &apos;http://172.20.20.12:8500/v1/agent/service/maintenance/spring?enable=false&apos;</div></pre></td></tr></table></figure>
+<h4 id="4-获取所有健康检查"><a href="#4-获取所有健康检查" class="headerlink" title="4) 获取所有健康检查"></a>4) 获取所有健康检查</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET http://172.20.20.12:8500/v1/agent/checks</div></pre></td></tr></table></figure>
+<h4 id="5-注册健康检查"><a href="#5-注册健康检查" class="headerlink" title="5) 注册健康检查"></a>5) 注册健康检查</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">curl -X PUT \</div><div class="line">  http://172.20.20.12:8500/v1/agent/check/register \</div><div class="line">  -H &apos;Content-Type: application/json&apos; \</div><div class="line">  -d &apos;&#123;</div><div class="line">  &quot;ID&quot;: &quot;spring_checks&quot;,</div><div class="line">  &quot;Name&quot;: &quot;springChecks&quot;,</div><div class="line">  &quot;Notes&quot;: &quot;spring learning add checkes&quot;,</div><div class="line">  &quot;DeregisterCriticalServiceAfter&quot;: &quot;1m&quot;,</div><div class="line">  &quot;AliasNode&quot;: &quot;6b045305-aacc-07e1-2b2a-749187c4e76b&quot;,</div><div class="line">  &quot;AliasService&quot;: &quot;spring&quot;,</div><div class="line">  &quot;HTTP&quot;: &quot;http://192.168.85.160:1111/check&quot;,</div><div class="line">  &quot;Method&quot;: &quot;GET&quot;,</div><div class="line">  &quot;Interval&quot;: &quot;2s&quot;</div><div class="line">&#125;&apos;</div></pre></td></tr></table></figure>
+<h4 id="6-注销健康检查"><a href="#6-注销健康检查" class="headerlink" title="6) 注销健康检查"></a>6) 注销健康检查</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X PUT  http://172.20.20.12:8500/v1/agent/check/deregister/spring_checks</div></pre></td></tr></table></figure>
+<h3 id="2-Catalog"><a href="#2-Catalog" class="headerlink" title="2. Catalog"></a>2. Catalog</h3><h4 id="1）注册服务"><a href="#1）注册服务" class="headerlink" title="1）注册服务"></a>1）注册服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">curl -X PUT http://172.20.20.12:8500/v1/catalog/register \</div><div class="line">  -H &apos;Content-Type: application/json&apos; \</div><div class="line">  -d &apos;&#123;</div><div class="line">	&quot;ID&quot;: &quot;6b045305-aacc-07e1-2b2a-749187c4e76b&quot;,</div><div class="line">	&quot;Node&quot;: &quot;agent@12&quot;,</div><div class="line">	&quot;Address&quot;: &quot;172.20.20.12&quot;,</div><div class="line">	&quot;Datacenter&quot;: &quot;dc1&quot;,</div><div class="line">	&quot;TaggedAddresses&quot;: &#123;</div><div class="line">		&quot;lan&quot;: &quot;172.20.20.12&quot;,</div><div class="line">		&quot;wan&quot;: &quot;172.20.20.12&quot;</div><div class="line">	&#125;,</div><div class="line">	&quot;NodeMeta&quot;: &#123;</div><div class="line">		&quot;consul-network-segment&quot;: &quot;&quot;</div><div class="line">	&#125;,</div><div class="line">	&quot;Service&quot;: &#123;</div><div class="line">		&quot;ID&quot;: &quot;spring&quot;,</div><div class="line">		&quot;Service&quot;: &quot;springLearning&quot;,</div><div class="line">		&quot;Tags&quot;: [</div><div class="line">			&quot;primary&quot;,</div><div class="line">			&quot;v1&quot;</div><div class="line">		],</div><div class="line">		&quot;Address&quot;: &quot;192.168.85.160&quot;,</div><div class="line">		&quot;Meta&quot;: &#123;</div><div class="line">			&quot;strongValid&quot;: &quot;0&quot;</div><div class="line">		&#125;,</div><div class="line">		&quot;Port&quot;: 1111</div><div class="line">	&#125;,</div><div class="line">	&quot;Check&quot;: &#123;</div><div class="line">		&quot;Node&quot;: &quot;agent@12&quot;,</div><div class="line">		&quot;CheckID&quot;: &quot;service:spring&quot;,</div><div class="line">		&quot;Name&quot;: &quot;checks-springLearning&quot;,</div><div class="line">		&quot;Notes&quot;: &quot;add checks&quot;,</div><div class="line">		&quot;Status&quot;: &quot;passing&quot;,</div><div class="line">		&quot;ServiceID&quot;: &quot;spring&quot;,</div><div class="line">		&quot;Definition&quot;: &#123;</div><div class="line">			&quot;HTTP&quot;: &quot;192.168.85.160:1111/health&quot;,</div><div class="line">			&quot;Interval&quot;: &quot;5s&quot;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;&apos;</div></pre></td></tr></table></figure>
+<h4 id="2-注销服务"><a href="#2-注销服务" class="headerlink" title="2)  注销服务"></a>2)  注销服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">curl -X PUT http://172.20.20.12:8500/v1/catalog/deregister \</div><div class="line">  -H &apos;Content-Type: application/json&apos; \</div><div class="line">  -d &apos;&#123;</div><div class="line">	&quot;Datacenter&quot;: &quot;dc1&quot;,</div><div class="line">	&quot;Node&quot;: &quot;agent@12&quot;,</div><div class="line">	&quot;ServiceID&quot;: &quot;spring&quot;</div><div class="line">&#125;&apos;</div></pre></td></tr></table></figure>
+<h4 id="3-获取所有服务"><a href="#3-获取所有服务" class="headerlink" title="3) 获取所有服务"></a>3) 获取所有服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET  http://172.20.20.12:8500/v1/catalog/services</div></pre></td></tr></table></figure>
+<h4 id="4-获取所有数据中心"><a href="#4-获取所有数据中心" class="headerlink" title="4) 获取所有数据中心"></a>4) 获取所有数据中心</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET http://172.20.20.12:8500/v1/catalog/datacenters</div></pre></td></tr></table></figure>
+<h4 id="5-获取数据中心的所有节点"><a href="#5-获取数据中心的所有节点" class="headerlink" title="5) 获取数据中心的所有节点"></a>5) 获取数据中心的所有节点</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET  &apos;http://172.20.20.12:8500/v1/catalog/nodes?datacenter=%22dc1%22&apos;</div></pre></td></tr></table></figure>
+<h4 id="6-获取某服务的所有节点"><a href="#6-获取某服务的所有节点" class="headerlink" title="6) 获取某服务的所有节点"></a>6) 获取某服务的所有节点</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET http://172.20.20.12:8500/v1/catalog/service/springLearning</div></pre></td></tr></table></figure>
+<h4 id="7）获取某节点注册的所有服务"><a href="#7）获取某节点注册的所有服务" class="headerlink" title="7）获取某节点注册的所有服务"></a>7）获取某节点注册的所有服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET  http://172.20.20.12:8500/v1/catalog/node/agent@12</div></pre></td></tr></table></figure>
+<h3 id="3-Health"><a href="#3-Health" class="headerlink" title="3. Health"></a>3. Health</h3><h4 id="1-获取节点上所有健康检查"><a href="#1-获取节点上所有健康检查" class="headerlink" title="1) 获取节点上所有健康检查"></a>1) 获取节点上所有健康检查</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET  http://172.20.20.12:8500/v1/health/node/agent@12</div></pre></td></tr></table></figure>
+<h4 id="2-获取某服务相关的健康检查"><a href="#2-获取某服务相关的健康检查" class="headerlink" title="2) 获取某服务相关的健康检查"></a>2) 获取某服务相关的健康检查</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET http://172.20.20.12:8500/v1/health/checks/springLearning</div></pre></td></tr></table></figure>
+<h4 id="3-获取某服务的所有节点及运行状态"><a href="#3-获取某服务的所有节点及运行状态" class="headerlink" title="3) 获取某服务的所有节点及运行状态"></a>3) 获取某服务的所有节点及运行状态</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET  http://172.20.20.12:8500/v1/health/service/springLearning</div></pre></td></tr></table></figure>
+<h4 id="4-获取数据中心中某种健康检查状态的节点和服务"><a href="#4-获取数据中心中某种健康检查状态的节点和服务" class="headerlink" title="4) 获取数据中心中某种健康检查状态的节点和服务"></a>4) 获取数据中心中某种健康检查状态的节点和服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET  http://172.20.20.12:8500/v1/health/state/passing</div></pre></td></tr></table></figure>
+<h3 id="4-KV"><a href="#4-KV" class="headerlink" title="4. KV"></a>4. KV</h3><h4 id="1-创建key"><a href="#1-创建key" class="headerlink" title="1) 创建key"></a>1) 创建key</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X PUT  &apos;http://172.20.20.12:8500/v1/kv/spring-key?cas=0&apos;  -H &apos;Content-Type: application/json&apos;  -d &apos;[1,2,3]&apos;</div></pre></td></tr></table></figure>
+<h4 id="2）获取前缀为「spring」的key的值"><a href="#2）获取前缀为「spring」的key的值" class="headerlink" title="2）获取前缀为「spring」的key的值"></a>2）获取前缀为「spring」的key的值</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET &apos;http://172.20.20.12:8500/v1/kv/spring?recurse=true&apos;</div></pre></td></tr></table></figure>
+<h4 id="3-删除前缀为「spring」的key"><a href="#3-删除前缀为「spring」的key" class="headerlink" title="3)  删除前缀为「spring」的key"></a>3)  删除前缀为「spring」的key</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X DELETE  &apos;http://172.20.20.12:8500/v1/kv/spring?recurse=true&apos;</div></pre></td></tr></table></figure>
+<h3 id="5-Status"><a href="#5-Status" class="headerlink" title="5. Status"></a>5. Status</h3><h4 id="1-获取数据中心中RAFT选举的Leader"><a href="#1-获取数据中心中RAFT选举的Leader" class="headerlink" title="1) 获取数据中心中RAFT选举的Leader"></a>1) 获取数据中心中RAFT选举的Leader</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET http://172.20.20.12:8500/v1/status/leader</div></pre></td></tr></table></figure>
+<h4 id="2-获取数据中心中RAFT-Peers列表"><a href="#2-获取数据中心中RAFT-Peers列表" class="headerlink" title="2) 获取数据中心中RAFT Peers列表"></a>2) 获取数据中心中RAFT Peers列表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET http://172.20.20.12:8500/v1/status/peers</div></pre></td></tr></table></figure>
+<h3 id="6-Session"><a href="#6-Session" class="headerlink" title="6. Session"></a>6. Session</h3><h4 id="1-创建session"><a href="#1-创建session" class="headerlink" title="1) 创建session"></a>1) 创建session</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">curl -X PUT http://172.20.20.12:8500/v1/session/create  -H &apos;Content-Type: application/json&apos; \</div><div class="line">-d &apos;&#123;</div><div class="line">  &quot;LockDelay&quot;: &quot;150s&quot;,</div><div class="line">  &quot;Name&quot;: &quot;springLearning-lock&quot;,</div><div class="line">  &quot;Node&quot;: &quot;agent@12&quot;,</div><div class="line">  &quot;Checks&quot;: [&quot;service:spring&quot;],</div><div class="line">  &quot;Behavior&quot;: &quot;release&quot;,</div><div class="line">  &quot;TTL&quot;: &quot;300s&quot;</div><div class="line">&#125;&apos;</div></pre></td></tr></table></figure>
+<h4 id="2-根据session-id获取详情"><a href="#2-根据session-id获取详情" class="headerlink" title="2) 根据session_id获取详情"></a>2) 根据session_id获取详情</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET  http://172.20.20.12:8500/v1/session/info/61b80a19-dc92-00f8-e8f5-1bd33b840c3a</div></pre></td></tr></table></figure>
+<h4 id="3-根据sesssion-id删除session"><a href="#3-根据sesssion-id删除session" class="headerlink" title="3) 根据sesssion_id删除session"></a>3) 根据sesssion_id删除session</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X PUT http://172.20.20.12:8500/v1/session/destroy/61b80a19-dc92-00f8-e8f5-1bd33b840c3a</div></pre></td></tr></table></figure>
+<h4 id="4-获取当前节点存活的session"><a href="#4-获取当前节点存活的session" class="headerlink" title="4) 获取当前节点存活的session"></a>4) 获取当前节点存活的session</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET http://172.20.20.12:8500/v1/session/node/agent@12</div></pre></td></tr></table></figure>
+<h4 id="5-获取数据中心中所有存活的session"><a href="#5-获取数据中心中所有存活的session" class="headerlink" title="5) 获取数据中心中所有存活的session"></a>5) 获取数据中心中所有存活的session</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X GET  http://172.20.20.12:8500/v1/session/list</div></pre></td></tr></table></figure>
+<h4 id="6）刷新session的过期时间"><a href="#6）刷新session的过期时间" class="headerlink" title="6）刷新session的过期时间"></a>6）刷新session的过期时间</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X PUT  http://172.20.20.12:8500/v1/session/renew/61b80a19-dc92-00f8-e8f5-1bd33b840c3a</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/consul/" rel="tag"># consul</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/06/11-抽象工厂模式/" rel="next" title="11.抽象工厂模式">
+                <i class="fa fa-chevron-left"></i> 11.抽象工厂模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/08/08/consul常用API梳理/"
+           data-title="consul常用API梳理" data-url="http://jianwl.com/2018/08/08/consul常用API梳理/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">304</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Consul环境描述"><span class="nav-text">Consul环境描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Agent"><span class="nav-text">1. Agent</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-注册服务"><span class="nav-text">1) 注册服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2）注销服务"><span class="nav-text">2）注销服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-服务开启维护模式"><span class="nav-text">3) 服务开启维护模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-获取所有健康检查"><span class="nav-text">4) 获取所有健康检查</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-注册健康检查"><span class="nav-text">5) 注册健康检查</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-注销健康检查"><span class="nav-text">6) 注销健康检查</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Catalog"><span class="nav-text">2. Catalog</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1）注册服务"><span class="nav-text">1）注册服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-注销服务"><span class="nav-text">2)  注销服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-获取所有服务"><span class="nav-text">3) 获取所有服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-获取所有数据中心"><span class="nav-text">4) 获取所有数据中心</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-获取数据中心的所有节点"><span class="nav-text">5) 获取数据中心的所有节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-获取某服务的所有节点"><span class="nav-text">6) 获取某服务的所有节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7）获取某节点注册的所有服务"><span class="nav-text">7）获取某节点注册的所有服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Health"><span class="nav-text">3. Health</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-获取节点上所有健康检查"><span class="nav-text">1) 获取节点上所有健康检查</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-获取某服务相关的健康检查"><span class="nav-text">2) 获取某服务相关的健康检查</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-获取某服务的所有节点及运行状态"><span class="nav-text">3) 获取某服务的所有节点及运行状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-获取数据中心中某种健康检查状态的节点和服务"><span class="nav-text">4) 获取数据中心中某种健康检查状态的节点和服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-KV"><span class="nav-text">4. KV</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-创建key"><span class="nav-text">1) 创建key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2）获取前缀为「spring」的key的值"><span class="nav-text">2）获取前缀为「spring」的key的值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-删除前缀为「spring」的key"><span class="nav-text">3)  删除前缀为「spring」的key</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Status"><span class="nav-text">5. Status</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-获取数据中心中RAFT选举的Leader"><span class="nav-text">1) 获取数据中心中RAFT选举的Leader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-获取数据中心中RAFT-Peers列表"><span class="nav-text">2) 获取数据中心中RAFT Peers列表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Session"><span class="nav-text">6. Session</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-创建session"><span class="nav-text">1) 创建session</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-根据session-id获取详情"><span class="nav-text">2) 根据session_id获取详情</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-根据sesssion-id删除session"><span class="nav-text">3) 根据sesssion_id删除session</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-获取当前节点存活的session"><span class="nav-text">4) 获取当前节点存活的session</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-获取数据中心中所有存活的session"><span class="nav-text">5) 获取数据中心中所有存活的session</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6）刷新session的过期时间"><span class="nav-text">6）刷新session的过期时间</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
