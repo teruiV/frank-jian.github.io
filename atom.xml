@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-08-09T15:32:13.144Z</updated>
+  <updated>2018-08-11T06:19:31.004Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,363 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mac终端崩溃</title>
+    <link href="http://jianwl.com/2018/08/11/mac%E7%BB%88%E7%AB%AF%E5%B4%A9%E6%BA%83/"/>
+    <id>http://jianwl.com/2018/08/11/mac终端崩溃/</id>
+    <published>2018-08-11T06:07:15.000Z</published>
+    <updated>2018-08-11T06:19:31.004Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>执行<code>brew update</code>，在更新过程中，手动退出更新进程，导致Mac的终端崩溃，每次打开终端时都出现以下界面：</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/91155821.jpg" alt=""></p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="1-打开「自动操作」应用"><a href="#1-打开「自动操作」应用" class="headerlink" title="1. 打开「自动操作」应用"></a>1. 打开「自动操作」应用</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/91467398.jpg" alt=""></p>
+<h4 id="2-在「自动操作」中选择：编辑-gt-新建-gt-工作流程-gt-shell脚本"><a href="#2-在「自动操作」中选择：编辑-gt-新建-gt-工作流程-gt-shell脚本" class="headerlink" title="2. 在「自动操作」中选择：编辑 -&gt; 新建 -&gt; 工作流程 -&gt; shell脚本"></a>2. 在「自动操作」中选择：编辑 -&gt; 新建 -&gt; 工作流程 -&gt; shell脚本</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/31642310.jpg" alt=""></p>
+<h4 id="3-shell脚本，选择-bin-bash并执行以下命令"><a href="#3-shell脚本，选择-bin-bash并执行以下命令" class="headerlink" title="3. shell脚本，选择/bin/bash并执行以下命令"></a>3. shell脚本，选择<code>/bin/bash</code>并执行以下命令</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/27114106.jpg" alt=""></p>
+<p>至此完成终端的修复。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h3&gt;&lt;p&gt;执行&lt;code&gt;brew update&lt;/code&gt;，在更新过程中，手动退出更新进程，导致Mac的终端崩溃，每次打开终端时都出现以下界面：&lt;
+    
+    </summary>
+    
+      <category term="Mac" scheme="http://jianwl.com/categories/Mac/"/>
+    
+    
+      <category term="Mac" scheme="http://jianwl.com/tags/Mac/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>23.访问者模式</title>
+    <link href="http://jianwl.com/2018/08/10/23-%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/08/10/23-访问者模式/</id>
+    <published>2018-08-10T00:32:45.000Z</published>
+    <updated>2018-08-11T10:27:40.612Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>军营里，有指挥官的访问者、有中士的访问者、也有军士的访问者。</p>
+<h3 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a>访问者模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>表示一个作用于某对象结构中的各元素的操作，它使你可以在不改变各元素的类的前提下定义这些元素的新操作。</p>
+<h4 id="2-使用场景"><a href="#2-使用场景" class="headerlink" title="2. 使用场景"></a>2. 使用场景</h4><p>访问者模式的目的是要把处理从数据结构分离出来。很多系统按照算法和数据结构分开，如果系统有稳定的数据结构，又有易于变化的算法，使用访问者模式比较合适。</p>
+<h4 id="3-优点"><a href="#3-优点" class="headerlink" title="3. 优点"></a>3. 优点</h4><p>增加新的操作很容易，因为增加新的操作就以为这增加一个新的访问者。访问模式将有关的行为集中到一个访问者对象中。</p>
+<h4 id="4-UML"><a href="#4-UML" class="headerlink" title="4. UML"></a>4. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/25786652.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/visitor" target="_blank" rel="external">访问者模式，请移步源码</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;军营里，有指挥官的访问者、有中士的访问者、也有军士的访问者。&lt;/p&gt;
+&lt;h3 id=&quot;访问者模式&quot;&gt;&lt;a href=&quot;#访问者模式&quot;
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>22.解释器模式</title>
+    <link href="http://jianwl.com/2018/08/10/22-%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/08/10/22-解释器模式/</id>
+    <published>2018-08-10T00:32:35.000Z</published>
+    <updated>2018-08-11T10:02:57.042Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>实现一个计算器，实现加减法。</p>
+<h3 id="解释器模式"><a href="#解释器模式" class="headerlink" title="解释器模式"></a>解释器模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>给定一个语言，定义它的语法的一种表示并定义一个解释器。</p>
+<h4 id="2-使用场景"><a href="#2-使用场景" class="headerlink" title="2. 使用场景"></a>2. 使用场景</h4><ol>
+<li>如果一个特定类型的问题发生的频率足够高，那么可能就值得将该问题的各个实例表述为一个简单语言中的句子。</li>
+</ol>
+<h4 id="3-不足"><a href="#3-不足" class="headerlink" title="3. 不足"></a>3. 不足</h4><p>解释器模式为语法的每一条规则至少定义了一个类，因此包含许多规则的语法可能难以管理和维护。</p>
+<h4 id="4-UML"><a href="#4-UML" class="headerlink" title="4. UML"></a>4. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/45885692.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/interpreter" target="_blank" rel="external">解释器模式，请移步源码</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;实现一个计算器，实现加减法。&lt;/p&gt;
+&lt;h3 id=&quot;解释器模式&quot;&gt;&lt;a href=&quot;#解释器模式&quot; class=&quot;headerli
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>21.享元模式</title>
+    <link href="http://jianwl.com/2018/08/10/21-%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/08/10/21-享元模式/</id>
+    <published>2018-08-10T00:32:26.000Z</published>
+    <updated>2018-08-11T09:57:56.583Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>炼金术商铺的货架上摆满了药水，每种药水都有多瓶。为了实现对象的复用，每种药水可以返回同一对象，实现对象的复用。</p>
+<h3 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>运用共享技术有效地支持大量细粒度的对象</p>
+<h4 id="2-适用场景"><a href="#2-适用场景" class="headerlink" title="2. 适用场景"></a>2. 适用场景</h4><p>如果有一个应用程序使用了大量的对象，而大量的这些对象造成了很大的存储开销就应该考虑使用；</p>
+<h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/90836786.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/flyweight" target="_blank" rel="external">享元模式，请移步源码</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;炼金术商铺的货架上摆满了药水，每种药水都有多瓶。为了实现对象的复用，每种药水可以返回同一对象，实现对象的复用。&lt;/p&gt;
+&lt;h3 id
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>20.中介者模式</title>
+    <link href="http://jianwl.com/2018/08/10/20-%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/08/10/20-中介者模式/</id>
+    <published>2018-08-10T00:32:19.000Z</published>
+    <updated>2018-08-11T09:50:20.890Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>举办一个相亲的Party，所有人并不知道有谁会参加，只知道来参加这个Party即可。</p>
+<h3 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>用一个中介对象来封装一系列的对象交互。中介者使各对象不需要显式地相互引用，从而使其耦合松散，而且可以独立地改变他们之间的交互。</p>
+<h4 id="2-使用场景"><a href="#2-使用场景" class="headerlink" title="2. 使用场景"></a>2. 使用场景</h4><p>中介者模式一般用于一组对象以定义良好但是复杂的方式进行通信的场合。</p>
+<h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/27571060.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/mediator" target="_blank" rel="external">中介者模式，请移步源码</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;举办一个相亲的Party，所有人并不知道有谁会参加，只知道来参加这个Party即可。&lt;/p&gt;
+&lt;h3 id=&quot;中介者模式&quot;&gt;&lt;a h
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>19.责任链模式</title>
+    <link href="http://jianwl.com/2018/08/10/19-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/08/10/19-责任链模式/</id>
+    <published>2018-08-10T00:32:07.000Z</published>
+    <updated>2018-08-11T09:43:41.741Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>国王发出指令：保卫城堡、释放囚犯、多征税收，这一些列的指令都会有特定的人来处理。</p>
+<h3 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a>责任链模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>使多个对象都有机会处理请求，从而避免请求的发送者和接收者之前的耦合关系。将这个对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止。</p>
+<h4 id="2-使用场景"><a href="#2-使用场景" class="headerlink" title="2. 使用场景"></a>2. 使用场景</h4><ol>
+<li>接收者和发送者都没有对方的明确信息，且链中的对象也不知道链的结构，结果是职责链可简化对象的相互连接，它们仅需保持一个指向其后继者的引用，而不需要保持它所有的候选者的引用。</li>
+</ol>
+<h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/99125541.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/chain" target="_blank" rel="external">责任链模式，请移步源码</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;国王发出指令：保卫城堡、释放囚犯、多征税收，这一些列的指令都会有特定的人来处理。&lt;/p&gt;
+&lt;h3 id=&quot;责任链模式&quot;&gt;&lt;a hre
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>18.命令模式</title>
+    <link href="http://jianwl.com/2018/08/10/18-%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/08/10/18-命令模式/</id>
+    <published>2018-08-10T00:31:59.000Z</published>
+    <updated>2018-08-11T09:33:18.937Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>巫师对妖精，使用了收缩咒和隐身咒。</p>
+<h3 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化。对请求排队或记录请求记录，以及支持可撤销的操作。</p>
+<h4 id="2-优点"><a href="#2-优点" class="headerlink" title="2. 优点"></a>2. 优点</h4><ol>
+<li>它能容易地设计一个命令队列</li>
+<li>在需要的情况下，可以较容易地将命令记入日志。</li>
+<li>允许接受请求的一方决定是否要否决请求</li>
+<li>较为容易实现对请求的撤销或重做</li>
+<li>由于加进新的命令模式类不影响其他类。</li>
+</ol>
+<h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/52368763.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/command" target="_blank" rel="external">命令模式，请移步源码</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;巫师对妖精，使用了收缩咒和隐身咒。&lt;/p&gt;
+&lt;h3 id=&quot;命令模式&quot;&gt;&lt;a href=&quot;#命令模式&quot; class=&quot;headerl
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>17.桥接模式</title>
+    <link href="http://jianwl.com/2018/08/10/17-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/08/10/17-桥接模式/</id>
+    <published>2018-08-10T00:31:51.000Z</published>
+    <updated>2018-08-11T09:18:48.036Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>需要对武器进行附魔，武器和魔力属性是通过某种方式桥接在一起。</p>
+<h3 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>将抽象部分与它的实现部分分离，使他们都可以独立的变化。</p>
+<h4 id="2-使用场景"><a href="#2-使用场景" class="headerlink" title="2. 使用场景"></a>2. 使用场景</h4><ol>
+<li>使用聚合的关系，将两种对象聚合在一起形成一个整体。</li>
+</ol>
+<h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/99073982.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/bridge" target="_blank" rel="external">桥接模式，请移步源码</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;需要对武器进行附魔，武器和魔力属性是通过某种方式桥接在一起。&lt;/p&gt;
+&lt;h3 id=&quot;桥接模式&quot;&gt;&lt;a href=&quot;#桥接模式&quot; c
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>16.单例模式</title>
+    <link href="http://jianwl.com/2018/08/10/16-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/08/10/16-单例模式/</id>
+    <published>2018-08-10T00:31:42.000Z</published>
+    <updated>2018-08-11T09:01:39.567Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>保证一个类仅有一个实例，有多种实现方式，理解每种方式的优缺点。</p>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>保证一个类仅有一个实例，并提供一个访问它的全局访问点。</p>
+<h4 id="2-使用场景"><a href="#2-使用场景" class="headerlink" title="2. 使用场景"></a>2. 使用场景</h4><ol>
+<li>保证类只有唯一实例</li>
+</ol>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/singleton" target="_blank" rel="external">单例模式，请移步源码</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;保证一个类仅有一个实例，有多种实现方式，理解每种方式的优缺点。&lt;/p&gt;
+&lt;h3 id=&quot;单例模式&quot;&gt;&lt;a href=&quot;#单例模式&quot; 
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>15.迭代器模式</title>
+    <link href="http://jianwl.com/2018/08/10/15-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/08/10/15-迭代器模式/</id>
+    <published>2018-08-10T00:31:31.000Z</published>
+    <updated>2018-08-11T08:56:51.160Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>有个宝库，里面有很多宝箱，每个宝箱都能爆出不同的装备。可能是首饰类、武器、药剂。请遍历宝库里所有的宝箱里装备。</p>
+<h3 id="迭代模式"><a href="#迭代模式" class="headerlink" title="迭代模式"></a>迭代模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>提供一种方法顺序访问一个聚合对象中各个元素，而又不暴露该对象内部表示。</p>
+<h4 id="2-使用场景"><a href="#2-使用场景" class="headerlink" title="2. 使用场景"></a>2. 使用场景</h4><ol>
+<li>迭代器模式就是分离了集合对象的遍历行为，抽象出一个迭代器类来负责，这样即可以不暴露集合的内部结构，又可让外部代码透明地访问集合内部数据。</li>
+</ol>
+<h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/35337447.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/Iterator" target="_blank" rel="external">迭代模式，请移步源码</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;有个宝库，里面有很多宝箱，每个宝箱都能爆出不同的装备。可能是首饰类、武器、药剂。请遍历宝库里所有的宝箱里装备。&lt;/p&gt;
+&lt;h3 id
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>14.组合模式</title>
+    <link href="http://jianwl.com/2018/08/10/14-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/08/10/14-组合模式/</id>
+    <published>2018-08-10T00:31:16.000Z</published>
+    <updated>2018-08-11T08:41:51.657Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>多个字母组成一个单词，多个单词组成一句话。</p>
+<h3 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a>组合模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>将对象组合成树状结构以表示’部分-整体’的层次结构，组合模式使得用户对单个对象和组合对象的使用具有一致性。</p>
+<h4 id="2-适用场景"><a href="#2-适用场景" class="headerlink" title="2. 适用场景"></a>2. 适用场景</h4><ol>
+<li>需求中是体现部分与整体层次的结构时，以及你希望用户可以忽略组合对象与单个对象的不同，统一地使用组合结构中的所有对象时，就应该考虑使用组合模式了。</li>
+</ol>
+<h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/63835290.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/composite" target="_blank" rel="external">组合模式，请移步源码</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;多个字母组成一个单词，多个单词组成一句话。&lt;/p&gt;
+&lt;h3 id=&quot;组合模式&quot;&gt;&lt;a href=&quot;#组合模式&quot; class=&quot;hea
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>13.适配器模式</title>
+    <link href="http://jianwl.com/2018/08/09/13-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jianwl.com/2018/08/09/13-适配器模式/</id>
+    <published>2018-08-09T15:33:38.000Z</published>
+    <updated>2018-08-10T00:51:39.040Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>一群人在海上遇到了海盗，大船搁浅了，刚好这群人中有个舰长，还有个渔船。舰长需要适配掌控这个渔船带着所有人逃生。</p>
+<h3 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>将一个类的接口转换成客户希望的另外一个接口。Adapter模式使得原本由于接口模式不兼容而不能一起工作的接口的那些类可以一起工作。</p>
+<h4 id="2-适用场景"><a href="#2-适用场景" class="headerlink" title="2. 适用场景"></a>2. 适用场景</h4><ol>
+<li>两个类所作的事情相同或相似，但是使用它时，需要调用不同的接口。这种情况应该用适配器模式，调用一个接口即可。</li>
+</ol>
+<h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-10/98252317.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/adapter" target="_blank" rel="external">适配器模式实战，请移步看源码</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;一群人在海上遇到了海盗，大船搁浅了，刚好这群人中有个舰长，还有个渔船。舰长需要适配掌控这个渔船带着所有人逃生。&lt;/p&gt;
+&lt;h3 id
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>12.状态模式</title>
@@ -297,511 +654,6 @@
     
     
       <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>解决ElasticSearch分页机制中Result window is too large的问题</title>
-    <link href="http://jianwl.com/2018/08/02/%E8%A7%A3%E5%86%B3ElasticSearch%E5%88%86%E9%A1%B5%E6%9C%BA%E5%88%B6%E4%B8%ADResult-window-is-too-large%E7%9A%84%E9%97%AE%E9%A2%98/"/>
-    <id>http://jianwl.com/2018/08/02/解决ElasticSearch分页机制中Result-window-is-too-large的问题/</id>
-    <published>2018-08-02T10:03:47.000Z</published>
-    <updated>2018-08-02T10:18:26.491Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>今天在用ES的时候，遇到一个奇怪的问题，获取100百万批量数据总是报异常，Review代码，没发现什么问题。本地调试之后发现以下异常日志：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[Result window is too large, from + size must be less than or equal to: [10000] but was [1000000]</div></pre></td></tr></table></figure>
-<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>在index中配置，提高窗口大小的上限</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -XPUT &quot;http://localhost:9200/my_index/_settings&quot; -d &apos;&#123; &quot;index&quot; : &#123; &quot;max_result_window&quot; : 100000000 &#125; &#125;&apos;</div></pre></td></tr></table></figure>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.4/search-request-search-after.html" target="_blank" rel="external">search-api</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h3&gt;&lt;p&gt;今天在用ES的时候，遇到一个奇怪的问题，获取100百万批量数据总是报异常，Review代码，没发现什么问题。本地调试之后发现以下异常日志：&lt;
-    
-    </summary>
-    
-      <category term="Elasticsearch" scheme="http://jianwl.com/categories/Elasticsearch/"/>
-    
-    
-      <category term="Elasticsearch" scheme="http://jianwl.com/tags/Elasticsearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring自定义注解与AOP获取注解</title>
-    <link href="http://jianwl.com/2018/08/01/Spring%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E4%B8%8EAOP%E8%8E%B7%E5%8F%96%E6%B3%A8%E8%A7%A3/"/>
-    <id>http://jianwl.com/2018/08/01/Spring自定义注解与AOP获取注解/</id>
-    <published>2018-08-01T10:34:22.000Z</published>
-    <updated>2018-08-04T02:59:33.933Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>需要对consul的节点上下线的操作日志集中管理，且尽可能减少对业务代码的侵入性。</p>
-<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><ol>
-<li>通过AOP的方式，对指定的方法进行切面</li>
-<li>通过AOP的方式，对指定的注解进行切面</li>
-</ol>
-<p>两个方案对比，方案一，如果预先不知道这个AOP的存在，在写代码是，可能会出现一些suprise。而方案二，扫描自定义注解的方式，对于使用方会更友好一些。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-引入AOP需要引入核心依赖"><a href="#1-引入AOP需要引入核心依赖" class="headerlink" title="1. 引入AOP需要引入核心依赖"></a>1. 引入AOP需要引入核心依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<h4 id="2-CreateRouteLog-自定义注解"><a href="#2-CreateRouteLog-自定义注解" class="headerlink" title="2. CreateRouteLog(自定义注解)"></a>2. CreateRouteLog(自定义注解)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">package com.frank.springlearning.annotation;</div><div class="line"></div><div class="line">import java.lang.annotation.*;</div><div class="line"></div><div class="line">@Target(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</div><div class="line">@Retention(RetentionPolicy.RUNTIME)</div><div class="line">@Inherited</div><div class="line">@Documented</div><div class="line">public @interface CreateRouteLog &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="3-声明切面-OperateLogAspect"><a href="#3-声明切面-OperateLogAspect" class="headerlink" title="3. 声明切面(OperateLogAspect)"></a>3. 声明切面(OperateLogAspect)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">@Component</div><div class="line">@Aspect</div><div class="line">@Slf4j</div><div class="line">public class OperateLogAspect &#123;</div><div class="line">    @Pointcut(&quot;@annotation(com.frank.springlearning.annotation.CreateRouteLog)&quot;)</div><div class="line">    public void createRouteLog() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @AfterReturning(value = &quot;createRouteLog()&quot;, argNames = &quot;joinPoint,response&quot;, returning = &quot;response&quot;)</div><div class="line">    public void createRouteLog(JoinPoint joinPoint, Object response) &#123;</div><div class="line">        log.info(&quot;&gt;&gt;&gt;&gt; aspect create route log &gt;&gt;&gt;&gt;&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="4-LogService"><a href="#4-LogService" class="headerlink" title="4. LogService"></a>4. LogService</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Service</div><div class="line">@Slf4j</div><div class="line">public class LogService &#123;</div><div class="line">    @CreateRouteLog</div><div class="line">    public void createRoute(String content) &#123;</div><div class="line">        log.info(&quot;has a node create route! content: &#123;&#125;&quot;, content);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="5-LogController"><a href="#5-LogController" class="headerlink" title="5. LogController"></a>5. LogController</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@RestController</div><div class="line">@Slf4j</div><div class="line">public class LogController &#123;</div><div class="line">	@Autowire</div><div class="line">	private LogService logService;</div><div class="line">	</div><div class="line">    @RequestMapping(&quot;/create/node&quot;)</div><div class="line">    public String createNode()&#123;</div><div class="line">        logService.createRoute(&quot;Hello World!&quot;);</div><div class="line">        return &quot;create node&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;需要对consul的节点上下线的操作日志集中管理，且尽可能减少对业务代码的侵入性。&lt;/p&gt;
-&lt;h3 id=&quot;方案&quot;&gt;&lt;a h
-    
-    </summary>
-    
-      <category term="Spring" scheme="http://jianwl.com/categories/Spring/"/>
-    
-    
-      <category term="Spring" scheme="http://jianwl.com/tags/Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>5.工厂方法模式</title>
-    <link href="http://jianwl.com/2018/07/31/5-%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://jianwl.com/2018/07/31/5-工厂方法模式/</id>
-    <published>2018-07-31T14:53:21.000Z</published>
-    <updated>2018-08-04T05:07:00.009Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>有两类铁匠师，精灵铁匠师和兽人铁匠师，精灵铁匠师专门做精灵类的武器，兽人铁匠师专门做兽人的武器。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-Weapon-product"><a href="#1-Weapon-product" class="headerlink" title="1. Weapon(product)"></a>1. Weapon(product)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface Weapon &#123;</div><div class="line">    WeaponType getWeaponType();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="2-WeaponType"><a href="#2-WeaponType" class="headerlink" title="2. WeaponType"></a>2. WeaponType</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public enum WeaponType &#123;</div><div class="line">    SHORT_SWORD(&quot;short sword&quot;),</div><div class="line">    SPEAR(&quot;spear&quot;),</div><div class="line">    AXE(&quot;axe&quot;),</div><div class="line">    UNDEFINE(&quot;&quot;);</div><div class="line">    private String title;</div><div class="line"></div><div class="line">    WeaponType(String title) &#123;</div><div class="line">        this.title = title;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getTitle() &#123;</div><div class="line">        return title;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="3-OrcWeapon-concret-product"><a href="#3-OrcWeapon-concret-product" class="headerlink" title="3. OrcWeapon(concret product)"></a>3. OrcWeapon(concret product)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class OrcWeapon implements Weapon &#123;</div><div class="line">    private WeaponType weaponType;</div><div class="line"></div><div class="line">    public OrcWeapon(WeaponType weaponType) &#123;</div><div class="line">        this.weaponType = weaponType;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public WeaponType getWeaponType() &#123;</div><div class="line">        return weaponType;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return &quot;Orcish: &quot; + weaponType;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="4-ElfWeapon-concret-product"><a href="#4-ElfWeapon-concret-product" class="headerlink" title="4. ElfWeapon(concret product)"></a>4. ElfWeapon(concret product)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class ElfWeapon implements Weapon &#123;</div><div class="line">    private WeaponType weaponType;</div><div class="line"></div><div class="line">    public ElfWeapon(WeaponType weaponType) &#123;</div><div class="line">        this.weaponType = weaponType;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public WeaponType getWeaponType() &#123;</div><div class="line">        return weaponType;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return &quot;Elf: &quot; + weaponType;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="5-Blacksmith-factory"><a href="#5-Blacksmith-factory" class="headerlink" title="5. Blacksmith(factory)"></a>5. Blacksmith(factory)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface Blacksmith &#123;</div><div class="line">    Weapon manufactureWeapon(WeaponType weaponType);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="6-OrcBlacksmith-concret-factory"><a href="#6-OrcBlacksmith-concret-factory" class="headerlink" title="6. OrcBlacksmith(concret factory)"></a>6. OrcBlacksmith(concret factory)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class OrcBlacksmith implements Blacksmith &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Weapon manufactureWeapon(WeaponType weaponType) &#123;</div><div class="line">        return new OrcWeapon(weaponType);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="7-ElfBlacksmith-concret-factory"><a href="#7-ElfBlacksmith-concret-factory" class="headerlink" title="7. ElfBlacksmith(concret factory)"></a>7. ElfBlacksmith(concret factory)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class ElfBlacksmith implements Blacksmith&#123;</div><div class="line">    @Override</div><div class="line">    public Weapon manufactureWeapon(WeaponType weaponType) &#123;</div><div class="line">        return new ElfWeapon(weaponType);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="8-App-启动类"><a href="#8-App-启动类" class="headerlink" title="8. App(启动类)"></a>8. App(启动类)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class App &#123;</div><div class="line">    private final Blacksmith blacksmith;</div><div class="line"></div><div class="line">    public App(Blacksmith blacksmith) &#123;</div><div class="line">        this.blacksmith = blacksmith;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        App app = new App(new OrcBlacksmith());</div><div class="line">        app.manufactureWeapons();</div><div class="line">        app = new App(new ElfBlacksmith());</div><div class="line">        app.manufactureWeapons();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void manufactureWeapons()&#123;</div><div class="line">        Weapon weapon;</div><div class="line">        weapon = blacksmith.manufactureWeapon(SHORT_SWORD);</div><div class="line">        System.out.println(weapon.toString());</div><div class="line">        weapon = blacksmith.manufactureWeapon(AXE);</div><div class="line">        System.out.println(weapon.toString());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>工厂方法模式：定义了一个用于创建对象的接口，让子类决定实例化哪一个类，工厂方法使一个类的实例化延迟到其子类。</p>
-<h4 id="2-UML"><a href="#2-UML" class="headerlink" title="2. UML"></a>2. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-4/35555791.jpg" alt=""></p>
-<h4 id="3-简单工厂-VS-工厂模式"><a href="#3-简单工厂-VS-工厂模式" class="headerlink" title="3. 简单工厂 VS 工厂模式"></a>3. 简单工厂 VS 工厂模式</h4><p>简单工厂模式的最大优点杂鱼工厂类中包含了必要的逻辑判断，根据客户端的条件选择动态实例化相关的类，对于客户端来说，去除了具体产品的依赖。但如果要新增一个产品，需要修改原有的工厂类，增加一个CASE用例。违背了开放-封闭模式。</p>
-<p>使用工厂模式，<strong>整个工厂和产品体系都没有修改的变化，只有扩展的变化符合了开放-封闭原则</strong>，客户端需要决定实例化哪一个工厂来实现运算类，即 工厂方法把简单工厂的内部逻辑判断移到了客户端进行。</p>
-<h4 id="4-缺点"><a href="#4-缺点" class="headerlink" title="4. 缺点"></a>4. 缺点</h4><p>每加一个产品，就需要加一个产品工厂的类，增加了额外的开发量。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;有两类铁匠师，精灵铁匠师和兽人铁匠师，精灵铁匠师专门做精灵类的武器，兽人铁匠师专门做兽人的武器。&lt;/p&gt;
-&lt;h3 id=&quot;实
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>4.代理模式</title>
-    <link href="http://jianwl.com/2018/07/30/4-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://jianwl.com/2018/07/30/4-代理模式/</id>
-    <published>2018-07-30T15:13:25.000Z</published>
-    <updated>2018-07-30T15:48:20.018Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>有个暗恋”李娇娇”同学的男生雇佣快递员“威廉”，把礼物送给这个女生。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-IGiveGift-Subject"><a href="#1-IGiveGift-Subject" class="headerlink" title="1. IGiveGift(Subject)"></a>1. IGiveGift(Subject)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface IGiveGift &#123;</div><div class="line">    void giveDolls();</div><div class="line">    void giveFlowers();</div><div class="line">    void giveChocolate();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="2-SchoolGirl"><a href="#2-SchoolGirl" class="headerlink" title="2. SchoolGirl"></a>2. SchoolGirl</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public class SchoolGirl &#123;</div><div class="line">    private String name;</div><div class="line"></div><div class="line">    public SchoolGirl(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="3-Pursuit-RealSubject"><a href="#3-Pursuit-RealSubject" class="headerlink" title="3. Pursuit(RealSubject)"></a>3. Pursuit(RealSubject)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class Pursuit implements IGiveGift &#123;</div><div class="line">    private SchoolGirl girl;</div><div class="line"></div><div class="line">    public Pursuit(SchoolGirl girl) &#123;</div><div class="line">        this.girl = girl;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveDolls() &#123;</div><div class="line">        System.out.println(girl.getName() + &quot;送你洋娃娃~&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveFlowers() &#123;</div><div class="line">        System.out.println(girl.getName() + &quot;送你花~&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveChocolate() &#123;</div><div class="line">        System.out.println(girl.getName() + &quot;送你巧克力~&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="4-Proxy"><a href="#4-Proxy" class="headerlink" title="4. Proxy"></a>4. Proxy</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class Proxy implements IGiveGift&#123;</div><div class="line">    private Pursuit man;</div><div class="line"></div><div class="line">    public Proxy(SchoolGirl girl) &#123;</div><div class="line">        this.man = new Pursuit(girl);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveDolls() &#123;</div><div class="line">        man.giveDolls();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveFlowers() &#123;</div><div class="line">        man.giveFlowers();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveChocolate() &#123;</div><div class="line">        man.giveChocolate();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="5-App-启动类"><a href="#5-App-启动类" class="headerlink" title="5. App(启动类)"></a>5. App(启动类)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class App &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        SchoolGirl girl = new SchoolGirl(&quot;李娇娇&quot;);</div><div class="line">        Proxy william = new Proxy(girl);</div><div class="line">        william.giveDolls();</div><div class="line">        william.giveFlowers();</div><div class="line">        william.giveChocolate();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>为其他对象提供一种代理以控制这个对象的访问</p>
-<h4 id="2-使用场景"><a href="#2-使用场景" class="headerlink" title="2. 使用场景"></a>2. 使用场景</h4><ol>
-<li>远程代理，即一个对象在不同的地址空间提供局部代表，这样可以隐藏一个对象存在于不同空间地址的事实。</li>
-<li>虚拟代理，是根据需要创建开销很大的对象。通过它来存放实例化需要很长时间的真实对象。比如说打开一个很大的HTML网页时，里面可能需要很多的文字和图片，但是你还是可以很快打开它，此时你看到的是所有的文字，但图片还是一张一张地下载后才能看到。那些未打开的图片库，通过虚拟代理来替代真实的图片，此时代理存储了真实图片的路径和尺寸。</li>
-<li>安全代理，用来控制真实对象访问是的权限。</li>
-<li>智能指引，当调用真实对象时，代理处理另外一些事。</li>
-</ol>
-<h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-30/12731914.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;有个暗恋”李娇娇”同学的男生雇佣快递员“威廉”，把礼物送给这个女生。&lt;/p&gt;
-&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>3.装饰模式</title>
-    <link href="http://jianwl.com/2018/07/29/3-%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://jianwl.com/2018/07/29/3-装饰模式/</id>
-    <published>2018-07-29T01:52:22.000Z</published>
-    <updated>2018-07-29T03:56:43.402Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>写一个可以给人搭配不同的服饰的系统，比如类似QQ、网络游戏或论坛都有的Avatar系统，你会怎么开发？</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-Person-concreteComponent"><a href="#1-Person-concreteComponent" class="headerlink" title="1. Person(concreteComponent)"></a>1. Person(concreteComponent)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class Person &#123;</div><div class="line">    private String name;</div><div class="line"></div><div class="line">    public Person() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Person(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void show()&#123;</div><div class="line">        System.out.println(&quot;light up the body,just wear clothes,please!&quot;);</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="2-Finery-Decorator"><a href="#2-Finery-Decorator" class="headerlink" title="2. Finery(Decorator)"></a>2. Finery(Decorator)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class Finery extends Person &#123;</div><div class="line">    private Person component;</div><div class="line"></div><div class="line">    public void setComponent(Person component) &#123;</div><div class="line">        this.component = component;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void show() &#123;</div><div class="line">        if(component != null)&#123;</div><div class="line">            component.show();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="3-TShirts-ConcreteDecorator"><a href="#3-TShirts-ConcreteDecorator" class="headerlink" title="3. TShirts(ConcreteDecorator)"></a>3. TShirts(ConcreteDecorator)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class TShirts extends Finery &#123;</div><div class="line">    @Override</div><div class="line">    public void show() &#123;</div><div class="line">        super.show();</div><div class="line">        System.out.println(&quot;wear TShirts&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="4-BigTrouser-ConcreteDecorator"><a href="#4-BigTrouser-ConcreteDecorator" class="headerlink" title="4. BigTrouser(ConcreteDecorator)"></a>4. BigTrouser(ConcreteDecorator)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class BigTrouser extends Finery &#123;</div><div class="line">    @Override</div><div class="line">    public void show() &#123;</div><div class="line">        super.show();</div><div class="line">        System.out.println(&quot;wear bigTrouser&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="5-App-启动类"><a href="#5-App-启动类" class="headerlink" title="5. App(启动类)"></a>5. App(启动类)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class App &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Person component = new Person(&quot;William&quot;);</div><div class="line">        TShirts tShirts = new TShirts();</div><div class="line">        BigTrouser trouser = new BigTrouser();</div><div class="line"></div><div class="line">        tShirts.setComponent(component);</div><div class="line">        trouser.setComponent(tShirts);</div><div class="line">        trouser.show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="装饰模式"><a href="#装饰模式" class="headerlink" title="装饰模式"></a>装饰模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>动态给一个对象添加一些额外的职责，就增加功能来说，装饰模式比生成子类更为灵活。</p>
-<h4 id="2-适用场景"><a href="#2-适用场景" class="headerlink" title="2. 适用场景"></a>2. 适用场景</h4><p>当系统需要新功能的时候，是向旧的类中添加新的代码，这些新加的代码通常修饰了原有类的核心职责或主要行为，他们在主类中加入新的字段、新的方法和新的逻辑，从而增加了主类的复杂度，而这些新加入的东西仅仅是为了满足一些只在某种特定情况下才会执行的特殊行为的需要。装饰模式提供了一个很好的解决方案，它把每个要装饰的功能都放在单独的类中，并让这个类包装它所要修饰的类，因为当需要执行特殊行为时，客户代码就可以在运行时，根据需要有选择地、按顺序使用装饰功能包装对象。</p>
-<h4 id="3-优点"><a href="#3-优点" class="headerlink" title="3. 优点"></a>3. 优点</h4><p>有效地把核心职责和装饰功能去分开了，去除相关的重复修饰逻辑；</p>
-<h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-29/12012511.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;写一个可以给人搭配不同的服饰的系统，比如类似QQ、网络游戏或论坛都有的Avatar系统，你会怎么开发？&lt;/p&gt;
-&lt;h3 id
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2.策略模式</title>
-    <link href="http://jianwl.com/2018/07/28/2-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://jianwl.com/2018/07/28/2-策略模式/</id>
-    <published>2018-07-28T04:21:20.000Z</published>
-    <updated>2018-07-28T06:38:43.882Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>做一个商场收银软件，营业员可以记录客户所购买商品的单价和数量，有个列表框来记录商品的清单，一个标签来记录总计, 同时支持商场有此促销策略，比如全场打折活动。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-RecvCash接口"><a href="#1-RecvCash接口" class="headerlink" title="1. RecvCash接口"></a>1. RecvCash接口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface RecvCash &#123;</div><div class="line"></div><div class="line">    double returnCash(double totalPrice);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="2-NormalCash-促销手段"><a href="#2-NormalCash-促销手段" class="headerlink" title="2. NormalCash(促销手段)"></a>2. NormalCash(促销手段)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class NormalCash implements RecvCash &#123;</div><div class="line">    private double discount;</div><div class="line"></div><div class="line">    public NormalCash( double discount) &#123;</div><div class="line">        this.discount = discount;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public double returnCash(double totalPrice) &#123;</div><div class="line">        return totalPrice * discount;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="3-Point8Cash-促销手段"><a href="#3-Point8Cash-促销手段" class="headerlink" title="3. Point8Cash(促销手段)"></a>3. Point8Cash(促销手段)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class Point8Cash implements RecvCash &#123;</div><div class="line">    private double discount;</div><div class="line"></div><div class="line">    public Point8Cash(double discount) &#123;</div><div class="line">        this.discount = discount;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public double returnCash(double totalPrice) &#123;</div><div class="line">        return totalPrice * discount;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="4-Point7Cash-促销手段"><a href="#4-Point7Cash-促销手段" class="headerlink" title="4. Point7Cash(促销手段)"></a>4. Point7Cash(促销手段)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class Point7Cash implements RecvCash &#123;</div><div class="line">    private double discount;</div><div class="line"></div><div class="line">    public Point7Cash( double discount) &#123;</div><div class="line">        this.discount = discount;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public double returnCash(double totalPrice) &#123;</div><div class="line">        return discount * totalPrice;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="5-Point5Cash-促销手段"><a href="#5-Point5Cash-促销手段" class="headerlink" title="5. Point5Cash(促销手段)"></a>5. Point5Cash(促销手段)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class Point5Cash implements RecvCash &#123;</div><div class="line">    private double discount;</div><div class="line"></div><div class="line">    public Point5Cash(double discount) &#123;</div><div class="line">        this.discount = discount;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public double returnCash(double totalPrice) &#123;</div><div class="line">        return discount * totalPrice;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="6-Discount-枚举"><a href="#6-Discount-枚举" class="headerlink" title="6. Discount(枚举)"></a>6. Discount(枚举)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">public enum Discount &#123;</div><div class="line">    NORMAL(1, 1, &quot;正常&quot;),</div><div class="line">    POINT_8(2, 0.8, &quot;8折&quot;),</div><div class="line">    POINT_7(3, 0.7, &quot;7折&quot;),</div><div class="line">    POINT_5(4, 0.5, &quot;5折&quot;);</div><div class="line">    private int lab;</div><div class="line">    private double discountPoint;</div><div class="line">    private String desc;</div><div class="line"></div><div class="line">    Discount(int lab, double discountPoint, String desc) &#123;</div><div class="line">        this.lab = lab;</div><div class="line">        this.discountPoint = discountPoint;</div><div class="line">        this.desc = desc;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getLab() &#123;</div><div class="line">        return lab;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public double getDiscountPoint() &#123;</div><div class="line">        return discountPoint;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getDesc() &#123;</div><div class="line">        return desc;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="7-Strategy-策略封装"><a href="#7-Strategy-策略封装" class="headerlink" title="7. Strategy(策略封装)"></a>7. Strategy(策略封装)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">public class Strategy &#123;</div><div class="line">    private RecvCash recvCash;</div><div class="line"></div><div class="line">    public Strategy(int label) &#123;</div><div class="line">        switch (label) &#123;</div><div class="line">            case 1:</div><div class="line">                recvCash = new NormalCash(Discount.NORMAL.getDiscountPoint());</div><div class="line">                break;</div><div class="line">            case 2:</div><div class="line">                recvCash = new Point8Cash(Discount.POINT_8.getDiscountPoint());</div><div class="line">                break;</div><div class="line">            case 3:</div><div class="line">                recvCash = new Point7Cash(Discount.POINT_7.getDiscountPoint());</div><div class="line">                break;</div><div class="line">            case 4:</div><div class="line">                recvCash = new Point5Cash(Discount.POINT_5.getDiscountPoint());</div><div class="line">                break;</div><div class="line">            default:</div><div class="line">                recvCash = new NormalCash(Discount.NORMAL.getDiscountPoint());</div><div class="line">                break;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public RecvCash getRecvCash() &#123;</div><div class="line">        return recvCash;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="8-App-启动类"><a href="#8-App-启动类" class="headerlink" title="8. App(启动类)"></a>8. App(启动类)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">private List&lt;String&gt; result;</div><div class="line">private static final String DESC_PATTRN = &quot;单价：%.2f 数量:%d %s 合计: %.2f&quot;;</div><div class="line"></div><div class="line">public App() &#123;</div><div class="line">    result = new ArrayList&lt;&gt;();</div><div class="line">&#125;</div><div class="line"></div><div class="line">public void initInstance(double price, int count, Discount discount)&#123;</div><div class="line">    double realCash = new Strategy(discount.getLab()).getRecvCash().returnCash(price * count);</div><div class="line">    result.add(String.format(DESC_PATTRN, price,count,discount.getDesc(),realCash));</div><div class="line">&#125;</div><div class="line"></div><div class="line">public static void main(String[] args) &#123;</div><div class="line">    App app = new App();</div><div class="line">    app.initInstance(10,10,Discount.NORMAL);</div><div class="line">    app.initInstance(10,10,Discount.POINT_8);</div><div class="line">    app.initInstance(10,10,Discount.POINT_7);</div><div class="line">    app.initInstance(10,10,Discount.POINT_5);</div><div class="line">    System.out.println(JSON.toJSONString(app.result));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="策略模式介绍"><a href="#策略模式介绍" class="headerlink" title="策略模式介绍"></a>策略模式介绍</h3><h4 id="1-UML"><a href="#1-UML" class="headerlink" title="1. UML"></a>1. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-28/49505014.jpg" alt=""></p>
-<h4 id="2-定义"><a href="#2-定义" class="headerlink" title="2. 定义"></a>2. 定义</h4><p>策略模式是一个定义一系列算法的方法，从概念上看，所有这些算法完成的都是相同的工作，只是实现不同，它可以以相同的方式调用所有的算法，减少了<strong>各种算法类</strong>与<strong>使用算法类</strong>之间的耦合。</p>
-<h4 id="3-优点"><a href="#3-优点" class="headerlink" title="3. 优点"></a>3. 优点</h4><ol>
-<li>将选择所用具体实现的职责由客户端对象承担转移给策略模式的Context对象，最大化地减轻了客户端的职责。</li>
-<li>策略模式的Strategy类层次为Context定义了一系列的可供<strong>重用</strong>的算法和行为。</li>
-<li>简化测试，每个算法都有自己的类</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;做一个商场收银软件，营业员可以记录客户所购买商品的单价和数量，有个列表框来记录商品的清单，一个标签来记录总计, 同时支持商场
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>1.简单工厂模式</title>
-    <link href="http://jianwl.com/2018/07/22/1-%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://jianwl.com/2018/07/22/1-简单工厂模式/</id>
-    <published>2018-07-22T14:12:37.000Z</published>
-    <updated>2018-07-28T06:57:38.738Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>文章用小故事的形式引出设计模式，让读者相对轻松地进入设计模式的学习。</p>
-<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>小菜今年计算机专业大四了，学了不少软件开发方面的东西，也学着编了些小程序，踌躇满志，一心找到一个好单位，当投递了无数份简历后，终于收到了一个单位的面试通知，小菜欣喜若狂。</p>
-<p>到了人家单位，前台小姐姐给他一份题目，上面写着: 请用Java面向对象语言实现<strong>一个计算器控制台程序，要求输入两个数和运算符，得到结果</strong></p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-Operation"><a href="#1-Operation" class="headerlink" title="1. Operation"></a>1. Operation</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface Operation &#123;</div><div class="line">    double getResult(int numa,int numb);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="2-AddOperation"><a href="#2-AddOperation" class="headerlink" title="2. AddOperation"></a>2. AddOperation</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class AddOperation implements Operation &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public double getResult(int numa,int numb) &#123;</div><div class="line">        return numa + numb ;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="3-SubOperation"><a href="#3-SubOperation" class="headerlink" title="3. SubOperation"></a>3. SubOperation</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class SubOperation implements Operation &#123;</div><div class="line">    @Override</div><div class="line">    public double getResult(int numa,int numb) &#123;</div><div class="line">        return numa - numb;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="4-MulOperation"><a href="#4-MulOperation" class="headerlink" title="4. MulOperation"></a>4. MulOperation</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class MulOperation implements Operation &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public double getResult(int numa,int numb) &#123;</div><div class="line">        return numa * numb;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="5-DivOperation"><a href="#5-DivOperation" class="headerlink" title="5. DivOperation"></a>5. DivOperation</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class DivOperation implements Operation &#123;</div><div class="line">    @Override</div><div class="line">    public double getResult(int numa,int numb) &#123;</div><div class="line"></div><div class="line">        if (numb == 0) &#123;</div><div class="line">            throw new IllegalArgumentException(&quot;除数不能为0&quot;);</div><div class="line">        &#125;</div><div class="line">        return numa / numb;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="6-启动类App"><a href="#6-启动类App" class="headerlink" title="6. 启动类App"></a>6. 启动类App</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public class App &#123;</div><div class="line">    public static Operation createOperation(String operate)&#123;</div><div class="line">        switch (operate)&#123;</div><div class="line">            case &quot;+&quot;:</div><div class="line">                return new AddOperation();</div><div class="line">            case &quot;-&quot;:</div><div class="line">                return new SubOperation();</div><div class="line">            case &quot;*&quot;:</div><div class="line">                return new MulOperation();</div><div class="line">            case &quot;/&quot;:</div><div class="line">                return new DivOperation();</div><div class="line">            default:</div><div class="line">                throw new IllegalArgumentException(&quot;没有此运算符&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Operation oper = createOperation(&quot;+&quot;);</div><div class="line">        System.out.println(oper.getResult(1,2));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h3><h4 id="1-UML"><a href="#1-UML" class="headerlink" title="1. UML"></a>1. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-28/83812847.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;文章用小故事的形式引出设计模式，让读者相对轻松地进入设计模式的学习。&lt;/p&gt;
-&lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; cla
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式专题训练</title>
-    <link href="http://jianwl.com/2018/07/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83/"/>
-    <id>http://jianwl.com/2018/07/22/设计模式专题训练/</id>
-    <published>2018-07-22T13:52:33.000Z</published>
-    <updated>2018-08-06T15:28:24.130Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>设计模式有四境界：</p>
-<ol>
-<li>没学前一点不懂，根本想不到用设计模式，设计的代码很糟糕。</li>
-<li>学了几个设计模式后，很开心，于是导出想着要用自己学过的模式，于是时常造成误用模式而不自知。</li>
-<li>学完全部设计模式时，感觉诸多模式极其相似，无法分清模式之间的差异，有困惑，但深知误用之害，应用之时有所犹豫。</li>
-<li>灵活应用模式，甚至不应用具体的某种模式也能设计出优秀的代码，以达到无剑胜有剑的境界。</li>
-</ol>
-<p>通过学习设计模式，让你找到封装变化、对象间松散耦合、针对接口编程的感觉，从而设计出易维护、易扩展、易复用、灵活性好的程序。</p>
-<h3 id="学习计划"><a href="#学习计划" class="headerlink" title="学习计划"></a>学习计划</h3><ol>
-<li>简单工厂模式 「√」</li>
-<li>策略模式 「√」</li>
-<li>装饰模式「√」</li>
-<li>代理模式「√」</li>
-<li>工厂方法模式「√」</li>
-<li>原型模式「√」</li>
-<li>模板方法模式「√」</li>
-<li>外观模式「√」</li>
-<li>建造者模式「√」</li>
-<li>观察者模式「√」</li>
-<li>抽象工厂模式「√」</li>
-<li>状态模式</li>
-<li>适配器模式</li>
-<li>备忘录模式</li>
-<li>组合模式</li>
-<li>迭代器模式</li>
-<li>单例模式</li>
-<li>桥接模式</li>
-<li>命令模式</li>
-<li>责任链模式</li>
-<li>中介者模式</li>
-<li>享元模式</li>
-<li>解释器模式</li>
-<li>访问者模式</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;设计模式有四境界：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;没学前一点不懂，根本想不到用设计模式，设计的代码很糟糕。&lt;/li&gt;
-&lt;li&gt;学了几个设计模式后
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>consul实现服务注册与发现</title>
-    <link href="http://jianwl.com/2018/07/22/consul%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/"/>
-    <id>http://jianwl.com/2018/07/22/consul实现服务注册与发现/</id>
-    <published>2018-07-22T07:06:08.000Z</published>
-    <updated>2018-07-22T07:37:43.508Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这个章节旨在梳理consul服务注册与发现的实战细节。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-启动consul-agent"><a href="#1-启动consul-agent" class="headerlink" title="1. 启动consul agent"></a>1. 启动consul agent</h4><p>如果没有安装consul，请移步<a href="https://www.consul.io/downloads.html" target="_blank" rel="external">consul install</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir /etc/consul.d</div><div class="line">consul agent -dev -config-dir=/etc/consul.d</div></pre></td></tr></table></figure>
-<p>启动consul后，在另外一个控制台输入：</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-22/83511450.jpg" alt=""></p>
-<p>可以看到consul agent已经正常启动了。</p>
-<h4 id="2-注册一个服务"><a href="#2-注册一个服务" class="headerlink" title="2. 注册一个服务"></a>2. 注册一个服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl --request PUT --data @payload.json &quot;http://localhost:8500/v1/agent/service/register&quot;</div></pre></td></tr></table></figure>
-<p>payload.json文件内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;ID&quot;: &quot;spring-learning&quot;,</div><div class="line">  &quot;Name&quot;: &quot;springLearning&quot;,</div><div class="line">  &quot;Tags&quot;: [</div><div class="line">    &quot;primary&quot;,</div><div class="line">    &quot;v1&quot;</div><div class="line">  ],</div><div class="line">  &quot;Address&quot;: &quot;127.0.0.1&quot;,</div><div class="line">  &quot;Port&quot;: 1111,</div><div class="line">  &quot;Meta&quot;: &#123;</div><div class="line">    &quot;spring-learning&quot;: &quot;1.0.0&quot;</div><div class="line">  &#125;,</div><div class="line">  &quot;EnableTagOverride&quot;: false,</div><div class="line">  &quot;Check&quot;: &#123;</div><div class="line">    &quot;HTTP&quot;: &quot;http://localhost:1111/health&quot;,</div><div class="line">    &quot;Interval&quot;: &quot;10s&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>注册一个服务，包含这些参数(服务名、服务标签、IP、端口、健康检查)；IP为<code>127.0.0.1</code>，端口<code>1111</code>，这个服务是本地写的一个服务，可以根据自己的情况，去注册服务。</p>
-<h4 id="3-查看所有服务列表"><a href="#3-查看所有服务列表" class="headerlink" title="3. 查看所有服务列表"></a>3. 查看所有服务列表</h4><p>请求：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl &quot;localhost:8500/v1/catalog/services&quot;</div></pre></td></tr></table></figure>
-<p>响应：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;consul&quot;: [],</div><div class="line">    &quot;springLearning&quot;: [</div><div class="line">        &quot;primary&quot;,</div><div class="line">        &quot;v1&quot;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="4-查看某个服务信息"><a href="#4-查看某个服务信息" class="headerlink" title="4. 查看某个服务信息"></a>4. 查看某个服务信息</h4><p>请求:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl &quot;localhost:8500/v1/catalog/service/springLearning&quot;</div></pre></td></tr></table></figure>
-<p>响应：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">    &#123;</div><div class="line">        &quot;ID&quot;: &quot;a6db682e-fb44-2af6-63f8-83c43cb7824c&quot;,</div><div class="line">        &quot;Node&quot;: &quot;jianweilindeMacBook-Pro.local&quot;,</div><div class="line">        &quot;Address&quot;: &quot;127.0.0.1&quot;,</div><div class="line">        &quot;Datacenter&quot;: &quot;dc1&quot;,</div><div class="line">        &quot;TaggedAddresses&quot;: &#123;</div><div class="line">            &quot;lan&quot;: &quot;127.0.0.1&quot;,</div><div class="line">            &quot;wan&quot;: &quot;127.0.0.1&quot;</div><div class="line">        &#125;,</div><div class="line">        &quot;NodeMeta&quot;: &#123;</div><div class="line">            &quot;consul-network-segment&quot;: &quot;&quot;</div><div class="line">        &#125;,</div><div class="line">        &quot;ServiceID&quot;: &quot;spring-learning&quot;,</div><div class="line">        &quot;ServiceName&quot;: &quot;springLearning&quot;,</div><div class="line">        &quot;ServiceTags&quot;: [</div><div class="line">            &quot;primary&quot;,</div><div class="line">            &quot;v1&quot;</div><div class="line">        ],</div><div class="line">        &quot;ServiceAddress&quot;: &quot;127.0.0.1&quot;,</div><div class="line">        &quot;ServiceMeta&quot;: &#123;</div><div class="line">            &quot;spring-learning&quot;: &quot;1.0.0&quot;</div><div class="line">        &#125;,</div><div class="line">        &quot;ServicePort&quot;: 1111,</div><div class="line">        &quot;ServiceEnableTagOverride&quot;: false,</div><div class="line">        &quot;CreateIndex&quot;: 40,</div><div class="line">        &quot;ModifyIndex&quot;: 40</div><div class="line">    &#125;</div><div class="line">]</div></pre></td></tr></table></figure>
-<h4 id="5-获取健康的服务节点列表"><a href="#5-获取健康的服务节点列表" class="headerlink" title="5. 获取健康的服务节点列表"></a>5. 获取健康的服务节点列表</h4><p>请求：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl &quot;localhost:8500/v1/health/service/springLearning?passing&quot;</div></pre></td></tr></table></figure>
-<p>响应：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">    &#123;</div><div class="line">        &quot;Node&quot;: &#123;</div><div class="line">            &quot;ID&quot;: &quot;a6db682e-fb44-2af6-63f8-83c43cb7824c&quot;,</div><div class="line">            &quot;Node&quot;: &quot;jianweilindeMacBook-Pro.local&quot;,</div><div class="line">            &quot;Address&quot;: &quot;127.0.0.1&quot;,</div><div class="line">            &quot;Datacenter&quot;: &quot;dc1&quot;,</div><div class="line">            &quot;TaggedAddresses&quot;: &#123;</div><div class="line">                &quot;lan&quot;: &quot;127.0.0.1&quot;,</div><div class="line">                &quot;wan&quot;: &quot;127.0.0.1&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;Meta&quot;: &#123;</div><div class="line">                &quot;consul-network-segment&quot;: &quot;&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;CreateIndex&quot;: 5,</div><div class="line">            &quot;ModifyIndex&quot;: 6</div><div class="line">        &#125;,</div><div class="line">        &quot;Service&quot;: &#123;</div><div class="line">            &quot;ID&quot;: &quot;spring-learning&quot;,</div><div class="line">            &quot;Service&quot;: &quot;springLearning&quot;,</div><div class="line">            &quot;Tags&quot;: [</div><div class="line">                &quot;primary&quot;,</div><div class="line">                &quot;v1&quot;</div><div class="line">            ],</div><div class="line">            &quot;Address&quot;: &quot;127.0.0.1&quot;,</div><div class="line">            &quot;Meta&quot;: &#123;</div><div class="line">                &quot;spring-learning&quot;: &quot;1.0.0&quot;</div><div class="line">            &#125;,</div><div class="line">            &quot;Port&quot;: 1111,</div><div class="line">            &quot;EnableTagOverride&quot;: false,</div><div class="line">            &quot;CreateIndex&quot;: 40,</div><div class="line">            &quot;ModifyIndex&quot;: 40</div><div class="line">        &#125;,</div><div class="line">        &quot;Checks&quot;: [</div><div class="line">            &#123;</div><div class="line">                &quot;Node&quot;: &quot;jianweilindeMacBook-Pro.local&quot;,</div><div class="line">                &quot;CheckID&quot;: &quot;serfHealth&quot;,</div><div class="line">                &quot;Name&quot;: &quot;Serf Health Status&quot;,</div><div class="line">                &quot;Status&quot;: &quot;passing&quot;,</div><div class="line">                &quot;Notes&quot;: &quot;&quot;,</div><div class="line">                &quot;Output&quot;: &quot;Agent alive and reachable&quot;,</div><div class="line">                &quot;ServiceID&quot;: &quot;&quot;,</div><div class="line">                &quot;ServiceName&quot;: &quot;&quot;,</div><div class="line">                &quot;ServiceTags&quot;: [],</div><div class="line">                &quot;Definition&quot;: &#123;&#125;,</div><div class="line">                &quot;CreateIndex&quot;: 5,</div><div class="line">                &quot;ModifyIndex&quot;: 5</div><div class="line">            &#125;,</div><div class="line">            &#123;</div><div class="line">                &quot;Node&quot;: &quot;jianweilindeMacBook-Pro.local&quot;,</div><div class="line">                &quot;CheckID&quot;: &quot;service:spring-learning&quot;,</div><div class="line">                &quot;Name&quot;: &quot;Service &apos;springLearning&apos; check&quot;,</div><div class="line">                &quot;Status&quot;: &quot;passing&quot;,</div><div class="line">                &quot;Notes&quot;: &quot;&quot;,</div><div class="line">                &quot;Output&quot;: &quot;HTTP GET http://localhost:1111/health: 200  Output: services is healthy!&quot;,</div><div class="line">                &quot;ServiceID&quot;: &quot;spring-learning&quot;,</div><div class="line">                &quot;ServiceName&quot;: &quot;springLearning&quot;,</div><div class="line">                &quot;ServiceTags&quot;: [</div><div class="line">                    &quot;primary&quot;,</div><div class="line">                    &quot;v1&quot;</div><div class="line">                ],</div><div class="line">                &quot;Definition&quot;: &#123;&#125;,</div><div class="line">                &quot;CreateIndex&quot;: 40,</div><div class="line">                &quot;ModifyIndex&quot;: 42</div><div class="line">            &#125;</div><div class="line">        ]</div><div class="line">    &#125;</div><div class="line">]</div></pre></td></tr></table></figure>
-<h4 id="5-注销服务"><a href="#5-注销服务" class="headerlink" title="5. 注销服务"></a>5. 注销服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl --request PUT &quot;localhost:8500/v1/agent/service/deregister/spring-learning</div></pre></td></tr></table></figure>
-<p>查看服务列表，可知服务已经被注销了。</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-22/66291532.jpg" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://www.consul.io/api/agent/service.html" target="_blank" rel="external">Agent HTTP API</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;这个章节旨在梳理consul服务注册与发现的实战细节。&lt;/p&gt;
-&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; class=&quot;heade
-    
-    </summary>
-    
-      <category term="consul" scheme="http://jianwl.com/categories/consul/"/>
-    
-    
-      <category term="consul" scheme="http://jianwl.com/tags/consul/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>consul核心概念梳理</title>
-    <link href="http://jianwl.com/2018/07/22/consul%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E6%A2%B3%E7%90%86/"/>
-    <id>http://jianwl.com/2018/07/22/consul核心概念梳理/</id>
-    <published>2018-07-22T06:00:30.000Z</published>
-    <updated>2018-07-22T07:38:28.765Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="1-什么是consul"><a href="#1-什么是consul" class="headerlink" title="1. 什么是consul"></a>1. 什么是consul</h3><p>Consul是一种服务网格(service mesh)解决方案，提供<strong>服务发现、配置和分段功能</strong>的全功能控制平面。每个功能可以单独使用，也可以一起使用以构建全服务网格。consul附带一个简单的内建代理，所以可以开箱即用，也支持第三方代理如Envoy。</p>
-<h3 id="2-consul的核心特性"><a href="#2-consul的核心特性" class="headerlink" title="2. consul的核心特性"></a>2. consul的核心特性</h3><h4 id="1-服务发现"><a href="#1-服务发现" class="headerlink" title="1) 服务发现"></a>1) 服务发现</h4><p>consul客户端注册一个服务，如api或mysql，其他客户端可以使用consul发现服务提供者。使用DNS或HTTP可以很简单的找到它们依赖的服务。</p>
-<h4 id="2）健康检查"><a href="#2）健康检查" class="headerlink" title="2）健康检查"></a>2）健康检查</h4><p>consul客户端提供任意数量的健康检查，这些运行检查可以与服务相关联(如服务健康检查)，也可以与本地节点相关联(如内存利用率低于90%)。使用方可以使用此信息来监控集群运行状态，服务发现组件使用此信息将流量路由远离不健康的主机。</p>
-<h4 id="3-KV存储"><a href="#3-KV存储" class="headerlink" title="3) KV存储"></a>3) KV存储</h4><p>应用程序可以将consul的分层<strong>键/值存储</strong>用于任何用途，包括动态配置，功能标记，协调、领导者选举等。简单的HTTP API 使其易于使用。</p>
-<h4 id="4）安全的服务通信"><a href="#4）安全的服务通信" class="headerlink" title="4）安全的服务通信"></a>4）安全的服务通信</h4><p>consul可以为服务生成和分发TLS证书，以建立互相的TLS连接。可以使用<strong>intentions</strong>来定义允许哪些服务进行通信。可以实时更改的<strong>intentions</strong>轻松管理服务分段，而不是使用复杂的网络拓扑和静态防火墙规则。</p>
-<h4 id="5）多数据中心"><a href="#5）多数据中心" class="headerlink" title="5）多数据中心"></a>5）多数据中心</h4><p>consul支持开箱即用的多个数据中心，这意味着consul用户不必担心构建额外的抽象层以扩展到多个区域。</p>
-<h3 id="3-consul的常用术语"><a href="#3-consul的常用术语" class="headerlink" title="3. consul的常用术语"></a>3. consul的常用术语</h3><h4 id="1）Agent"><a href="#1）Agent" class="headerlink" title="1）Agent"></a>1）Agent</h4><p>代理是consul集群的每个成员的长时间运行的守护进程，它是通过运行<code>consul agent</code>来启动的，代理能够以客户端或服务器模式运行，由于所有节点都必须运行代理，因此将节点成为客户端或服务器更简单，但代理的其他实例也是如此。所有代理都可以运行DNS或HTTP接口，并负责<strong>运行检查并保持服务同步</strong></p>
-<h4 id="2）Client"><a href="#2）Client" class="headerlink" title="2）Client"></a>2）Client</h4><p>客户端是将所有RPC请求转发到服务器的代理，客户端是无状态的，客户端执行的唯一后台活动是参与局域gossip，这个活动的资源开销非常小，并且仅消耗少量的网络带宽。</p>
-<h4 id="3-Server"><a href="#3-Server" class="headerlink" title="3) Server"></a>3) Server</h4><p>服务器是具有扩展责任的代理，包括参与Raft仲裁、维护集群状态，响应RPC查询，与其他数据中心交换广域gossip以及将查询转发给领导者或远程数据中心。</p>
-<h4 id="4）Datacenter"><a href="#4）Datacenter" class="headerlink" title="4）Datacenter"></a>4）Datacenter</h4><p>虽然数据中心的定义似乎很明显，但必须考虑细微的细节。例如，在EC2中，多个可用区域是否被视为包含单个数据中心？我们将数据中心定义为专用、低延迟和高带宽的网络环境。这排除了通过公共互联网通信，但出于我们的目的，单个EC2区域内的多个可用区域将被视为单个数据中心的一部分。</p>
-<h4 id="5）Consensus"><a href="#5）Consensus" class="headerlink" title="5）Consensus"></a>5）Consensus</h4><p>我们使用共识来表示对当选领导者的协议以及对事务顺序的协议，由于这些事务应用于有限状态机，因此我们对共识的定义意味着复制状态机的一致性。</p>
-<h4 id="6）Gossip"><a href="#6）Gossip" class="headerlink" title="6）Gossip"></a>6）Gossip</h4><p>Consul建立在Serf之上，它提供了一个完整的gossip协议，可用于多种用途，Serf提供<strong>会员资格、故障检测和事件广播</strong>，gossip涉及随机节点间的通信，主要是通过UDP</p>
-<h4 id="7）LAN-Gossip"><a href="#7）LAN-Gossip" class="headerlink" title="7）LAN Gossip"></a>7）LAN Gossip</h4><p>包含全部位于同一局域网或数据中心的节点</p>
-<h4 id="8）WAN-Gossip"><a href="#8）WAN-Gossip" class="headerlink" title="8）WAN Gossip"></a>8）WAN Gossip</h4><p>服务器位于不同数据中心，通常通过广域网进行通信。</p>
-<h4 id="9）RPC"><a href="#9）RPC" class="headerlink" title="9）RPC"></a>9）RPC</h4><p>远程过程调用，这是一种请求/响应机制，允许客户端想服务端发出请求。</p>
-<h3 id="4-consul架构"><a href="#4-consul架构" class="headerlink" title="4. consul架构"></a>4. consul架构</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-22/94003551.jpg" alt=""></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://www.consul.io/docs/internals/architecture.html" target="_blank" rel="external">Consul Guides</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;1-什么是consul&quot;&gt;&lt;a href=&quot;#1-什么是consul&quot; class=&quot;headerlink&quot; title=&quot;1. 什么是consul&quot;&gt;&lt;/a&gt;1. 什么是consul&lt;/h3&gt;&lt;p&gt;Consul是一种服务网格(service mesh)解决方案，
-    
-    </summary>
-    
-      <category term="consul" scheme="http://jianwl.com/categories/consul/"/>
-    
-    
-      <category term="consul" scheme="http://jianwl.com/tags/consul/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>初识zookeeper</title>
-    <link href="http://jianwl.com/2018/07/05/%E5%88%9D%E8%AF%86zookeeper/"/>
-    <id>http://jianwl.com/2018/07/05/初识zookeeper/</id>
-    <published>2018-07-05T00:41:49.000Z</published>
-    <updated>2018-07-05T00:50:01.642Z</updated>
-    
-    <content type="html"><![CDATA[<p>Zookeeper是一个开源的分布式协调服务，由雅虎创建，是google chubby的开源实现。zookeeper的设计目标是将哪些复杂且容易出错的分布式一致性服务封装起来，构成一个高效可靠的原语集，并以一系列简单易用的接口提供给用户使用。</p>
-<h3 id="Zookeeper是什么"><a href="#Zookeeper是什么" class="headerlink" title="Zookeeper是什么"></a>Zookeeper是什么</h3><p>zookeeper是典型的分布式数据一致性的解决方案，分布式应用程序可以基于它实现如数据发布/订阅，负载均衡，命名服务，分布式协调/通知，集群管理，Master选举，分布式锁和分布式队列等功能。zookeeper可以保证如下分布式一致性特性：</p>
-<p><strong>顺序一致性</strong></p>
-<p>从同一个客户端发起的事务请求，最终将会严格地按照其发起顺序被应用到Zookeeper中去。</p>
-<p><strong>原子性</strong></p>
-<p>所有事务请求的处理结果在整个集群中所有机器上的应用情况是一致的，也就是说，要么整个集群所有机器都成功应用了某个事务，要么都没有应用，一定不会出现集群中部分机器应用了事务，另外一部分没有应用事务。</p>
-<p><strong>单一视图</strong></p>
-<p>无论客户端连接的是哪个zookeeper服务器，其看到的服务端数据模型都是一致的</p>
-<p><strong>可靠性</strong></p>
-<p>一旦服务端成功地应用了一个事务，并完成对客户端的响应，那么该事务所引起的服务端状态变更将会被一直保留下来，除非有另一个事务又对其进行了变更。</p>
-<p><strong>实时性</strong></p>
-<p>通常人们看到实时性的第一反应是，一旦一个事务被成功应用，那么客户端能够立即从服务端读取到这个事务变更后的最新数据状态。这里需要注意的是，zookeeper仅仅保证在一定时间内，客户端最终一定能够从服务器上读取到最新的数据状态。</p>
-<h3 id="Zookeeper的设计目标"><a href="#Zookeeper的设计目标" class="headerlink" title="Zookeeper的设计目标"></a>Zookeeper的设计目标</h3><p>zookeeper致力于提供一个高性能、高可用、且具有严格的顺序访问控制能力(主要是写操作的严格顺序性)的分布式协调服务。高性能使得zookeeper能够应用于那些对系统吞吐有明确要求的大型分布式系统中，高可用使得分布式的单点问题得到了很好的解决，而严格的顺序访问控制使得客户端能够基于Zookeeper实现一些复杂的同步原语。下面看下zk的四个设计目标。</p>
-<h4 id="目标1：简单的数据模型"><a href="#目标1：简单的数据模型" class="headerlink" title="目标1：简单的数据模型"></a>目标1：简单的数据模型</h4><p>zookeeper使得分布式程序能够通过一个共享的、树形结构的名字空间来进行相互协调。这里所说的树形结构的名字空间，是指zookeeper服务器内存中的一个数据模型，是由一些列被称为znode的数据节点组成，总的来说，其数据模型类似于一个文件系统，而znode之间的层级关系，就想文件系统的目录结构一样。不过和传统的磁盘文件系统不同的是，zookeeper将全量数据存储在内存中，以此实现提高服务器吞吐，减少延迟的目的。</p>
-<h4 id="目标2：可以构建集群"><a href="#目标2：可以构建集群" class="headerlink" title="目标2：可以构建集群"></a>目标2：可以构建集群</h4><p>一个zookeeper集群通常由一组机器组成，一般3 ~ 5台机器组成一个可用的zookeeper集群了，组成zookeeper集群的每台机器都会在内存中维护当前的服务器状态，并且每台机器之间都互相保持通信。值得一提的是，只要集群中存在超过一半的机器能够正常工作，那么整个集群就能够正常对外服务。</p>
-<p>zookeeper的客户端程序会选择和集群中任意一台机器共同来床架一个TCP连接，而一旦客户端和某台zookeeper服务器之间的连接断开之后，客户端会自动连接到集群中的其他机器。</p>
-<h4 id="目标3：顺序访问"><a href="#目标3：顺序访问" class="headerlink" title="目标3：顺序访问"></a>目标3：顺序访问</h4><p>对于来自客户端的每个更新请求，zookeeper都会分配一个全局唯一的递增编号，这个编号反映了所有事务操作的先后顺序，应用程序可以使用zookeeper的这个特性来实现更高层次的同步原语。</p>
-<h4 id="目标4：高性能"><a href="#目标4：高性能" class="headerlink" title="目标4：高性能"></a>目标4：高性能</h4><p>由于zookeeper将全量数据存储在内存中，并直接服务于客户端的所有非事务请求，因此它尤其适用于以读操作为主的应用场景。</p>
-<h3 id="zookeeper的基本概念"><a href="#zookeeper的基本概念" class="headerlink" title="zookeeper的基本概念"></a>zookeeper的基本概念</h3><h4 id="1-集群角色"><a href="#1-集群角色" class="headerlink" title="1) 集群角色"></a>1) 集群角色</h4><p>通常在分布式系统中，构成一个集群的每一台机器都有自己的角色，最经典的集群模式就是Master/Slave模式(主备模式)，在这种模式中，我们把能够处理所有写操作的机器成为master机器，把所有通过异步复制方式获取最新数据，并提供读服务的机器成为Slave.</p>
-<p>而在zookeeper中，这些概念被颠覆了，它没有沿用传统的Master/Slave概念，而是引入了Leader、Follower和Observe三种角色。Zookeeper集群中的所有机器通过一个Leader选举过程来选定一台机器被称为Leader的机器，Leader服务器为客户端提供读和写服务。除Leader外，其他机器包括Follower和Observer。Follower和Observer都能够提供读服务，唯一的区别在于，Observer机器不参与Leader选举过程，也不参加写操作的过半写成功策略，因此Observer可以在不影响写性能的情况下提升集群的读性能。</p>
-<h4 id="2-会话-Session"><a href="#2-会话-Session" class="headerlink" title="2) 会话(Session)"></a>2) 会话(Session)</h4><p>session是指客户端会话，在讲解会话之前，我们首先来了解以下客户端连接。在zookeeper中，一个客户端连接是指客户端和服务器之间的一个TCP长连接。zookeeper对外的服务端口默认是2181，客户端启动的时候，首先会与服务器建立一个TCP连接，从第一次连接建立开始，客户端会话的生命周期也开始了，通过这个链接，客户端能够通过心跳检测与服务器保持有效的会话，也能够向zookeeper服务器发送请求并接受响应，同时还能通过该连接接受来自服务器的Watch事件通知。Session的sessionTimeout值用来设置一个客户端会话的超时时间，当由于服务器压力太大、网络故障或是客户端主动断开连接等各种原因导致客户端连接断开时，只要在sessionTimeout规定的时间内能够重新连接上集群中任意一台服务器，那么之前创建的会话仍然有效。</p>
-<h4 id="3-数据节点-Znode"><a href="#3-数据节点-Znode" class="headerlink" title="3) 数据节点(Znode)"></a>3) 数据节点(Znode)</h4><p>在谈到分布式的时候，我们通常说的节点是指组成集群的每一台机器。然而，在zookeeper中，节点分为两类，第一类同样是指构成集群的机器，我们称之为机器节点；第二类则是指数据模型中的数据单元，我们称之为数据节点 - ZNode。zookeeper将所有数据存储在内存中，数据模型是一棵树(znode tree)，由斜杠「/」进行分割路径，就是一个znode，例如「/foo/path1」，每个znode上都会保存自己的数据内容同事还会保存一些列属性信息。</p>
-<p>在zookeeper中，znode可以分为持久节点和临时节点两类。所谓持久节点是指一旦这个znode被创建了，除非主动进行znode的移除操作，否则这个znode将一直保存在zookeeper上。而临时节点就不一样了，它的声明周期和客户端会话绑定，一旦客户端会话失效，那么这个客户端创建的所有临时节点都会被移除。另外，zookeeper还允许用户为每个节点添加一个特殊的属性：SEQUENTIAL。一旦节点被标记上这个属性，那么在这个节点被创建的时候，zookeeper会自动在其节点名后面追加上一个整型数字，这个整型数字是一个由父节点维护的自增数字。</p>
-<h4 id="4）版本"><a href="#4）版本" class="headerlink" title="4）版本"></a>4）版本</h4><p>在前面我们已经提到，zookeeper的每个znode都会存储数据，对应于每个znode，zookeeper都会维护一个叫做stat的数据结构，stat中记录了这个znode的三个数据版本，分别是version(当前znode的版本)、cversion(当前znode子节点的版本)和aversion(当前znode的acl版本)</p>
-<h4 id="5-watcher"><a href="#5-watcher" class="headerlink" title="5) watcher"></a>5) watcher</h4><p>watcher(事件监听器)，是zookeeper中的一个很重要的特性。zookeeper允许用户在指定节点上注册一些watcher，并且在一些特定事件触发的时候，zookeeper服务器会将事件通知到感兴趣的客户端上去，该机制是zookeeper实现分布式协调服务的重要特性。</p>
-<h4 id="6-ACL"><a href="#6-ACL" class="headerlink" title="6) ACL"></a>6) ACL</h4><p>Zookeeper采用ACL(Access Control Lists)策略来进行权限控制，类似UNIX文件系统的权限控制。zookeeper定义了如下5中权限。</p>
-<ul>
-<li>create: 创建子节点的权限</li>
-<li>read: 获取节点数据和子节点列表的权限</li>
-<li>write: 更新节点数据的权限</li>
-<li>delete: 删除子节点的权限</li>
-<li>admin: 设置节点acl的权限</li>
-</ul>
-<p>其中尤其需要注意的是，create和delete这两种权限都是针对子节点的权限控制。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Zookeeper是一个开源的分布式协调服务，由雅虎创建，是google chubby的开源实现。zookeeper的设计目标是将哪些复杂且容易出错的分布式一致性服务封装起来，构成一个高效可靠的原语集，并以一系列简单易用的接口提供给用户使用。&lt;/p&gt;
-&lt;h3 id=&quot;Zoo
-    
-    </summary>
-    
-      <category term="zookeeper" scheme="http://jianwl.com/categories/zookeeper/"/>
-    
-    
-      <category term="zookeeper" scheme="http://jianwl.com/tags/zookeeper/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用vagrant搭建consul集群</title>
-    <link href="http://jianwl.com/2018/07/04/%E4%BD%BF%E7%94%A8vagrant%E6%90%AD%E5%BB%BAconsul%E9%9B%86%E7%BE%A4/"/>
-    <id>http://jianwl.com/2018/07/04/使用vagrant搭建consul集群/</id>
-    <published>2018-07-04T14:58:44.000Z</published>
-    <updated>2018-07-04T15:57:03.721Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="1-软件下载"><a href="#1-软件下载" class="headerlink" title="1. 软件下载"></a>1. 软件下载</h3><ol>
-<li><a href="https://www.vagrantup.com/downloads.html" target="_blank" rel="external">vagrant下载</a></li>
-<li><a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="external">virtualbox下载</a></li>
-</ol>
-<p>Vagrant是Hashi Corp公司的产品，用于创建和部署虚拟化开发环境，支持创建的操作系统。在部署虚拟开发环境需要用到virtualbox虚拟机软件，所以以上两个软件需要提前下载好。</p>
-<h3 id="2-用vagrant创建虚拟机"><a href="#2-用vagrant创建虚拟机" class="headerlink" title="2. 用vagrant创建虚拟机"></a>2. 用vagrant创建虚拟机</h3><p>在安装好，virtualBox和vagrant的前提下，我们创建文件夹consul_cluster,在consul_cluster文件夹下创建一个文件<code>VagrantFile</code>,内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"># -*- mode: ruby -*-</div><div class="line"># vi: set ft=ruby :</div><div class="line"></div><div class="line">$script = &lt;&lt;SCRIPT</div><div class="line">echo &quot;Installing dependencies ...&quot;</div><div class="line"># 使用阿里云镜像</div><div class="line">sudo sed -i &apos;s/archive.ubuntu.com/mirrors.aliyun.com/g&apos; /etc/apt/sources.list</div><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install -y unzip curl jq</div><div class="line">SCRIPT</div><div class="line"></div><div class="line"># Specify a custom Vagrant box for the demo</div><div class="line">DEMO_BOX_NAME = &quot;ubuntu/xenial64&quot;</div><div class="line"></div><div class="line"># Vagrantfile API/syntax version.</div><div class="line"># NB: Don&apos;t touch unless you know what you&apos;re doing!</div><div class="line">VAGRANTFILE_API_VERSION = &quot;2&quot;</div><div class="line"></div><div class="line">Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|</div><div class="line">  config.vm.box = DEMO_BOX_NAME</div><div class="line"></div><div class="line">  config.vm.provision &quot;shell&quot;,</div><div class="line">                          inline: $script</div><div class="line"></div><div class="line">  config.vm.define &quot;n1&quot; do |n1|</div><div class="line">      n1.vm.hostname = &quot;n1&quot;</div><div class="line">      n1.vm.network &quot;private_network&quot;, ip: &quot;172.20.20.10&quot;</div><div class="line">  end</div><div class="line"></div><div class="line">  config.vm.define &quot;n2&quot; do |n2|</div><div class="line">      n2.vm.hostname = &quot;n2&quot;</div><div class="line">      n2.vm.network &quot;private_network&quot;, ip: &quot;172.20.20.11&quot;</div><div class="line">  end</div><div class="line"></div><div class="line">  config.vm.define &quot;n3&quot; do |n3|</div><div class="line">      n3.vm.hostname = &quot;n3&quot;</div><div class="line">      n3.vm.network &quot;private_network&quot;, ip: &quot;172.20.20.12&quot;</div><div class="line">  end</div><div class="line">end</div></pre></td></tr></table></figure>
-<p>这里我们创建了三个虚拟机，hostname为 n1，n2，n3；ip分别为 172.20.20.10，172.20.20.11，172.20.20.10，使用镜像 ubuntu/xenial64，并且将镜像更新为了阿里云，安装了一些必须的软件。</p>
-<p>编辑好文件，在consul_cluster文件夹的路径下执行<code>vagrant up</code>,会下载ubuntu操作系统，并启动三台虚拟机，这个过程耗时比较长，我用了5个小时。</p>
-<h3 id="3-登录3台虚拟机"><a href="#3-登录3台虚拟机" class="headerlink" title="3. 登录3台虚拟机"></a>3. 登录3台虚拟机</h3><p>在使用<code>vagrant up</code>命令初始化完成之后，在consul_cluster文件夹路径下，使用以下命令分别登录n1、n2、n3虚拟机:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 登录n1虚拟机</div><div class="line">vagrant ssh n1</div><div class="line"></div><div class="line"># 登录n2虚拟机</div><div class="line">vagrant ssh n2</div><div class="line"></div><div class="line"># 登录n3虚拟机</div><div class="line">vagrant ssh n3</div></pre></td></tr></table></figure>
-<h3 id="4-搭建consul环境-三台虚拟机都需要执行一遍以下操作"><a href="#4-搭建consul环境-三台虚拟机都需要执行一遍以下操作" class="headerlink" title="4. 搭建consul环境(三台虚拟机都需要执行一遍以下操作)"></a>4. 搭建consul环境(三台虚拟机都需要执行一遍以下操作)</h3><h4 id="1-下载consul"><a href="#1-下载consul" class="headerlink" title="1. 下载consul"></a>1. 下载consul</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 下载consul</div><div class="line">wget https://releases.hashicorp.com/consul/1.2.0/consul_1.2.0_linux_amd64.zip</div><div class="line"></div><div class="line"># 解压</div><div class="line">unzip consul_1.2.0_linux_amd64.zip</div></pre></td></tr></table></figure>
-<h4 id="2-创建以下两个文件夹"><a href="#2-创建以下两个文件夹" class="headerlink" title="2. 创建以下两个文件夹"></a>2. 创建以下两个文件夹</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /tmp/consul</div><div class="line"></div><div class="line">sudo mkdir /etc/consul.d</div></pre></td></tr></table></figure>
-<h3 id="5-consul集群搭建"><a href="#5-consul集群搭建" class="headerlink" title="5. consul集群搭建"></a>5. consul集群搭建</h3><h4 id="1-虚拟机n1，启动consul服务"><a href="#1-虚拟机n1，启动consul服务" class="headerlink" title="1. 虚拟机n1，启动consul服务;"></a>1. 虚拟机n1，启动consul服务;</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul agent -server -bootstrap-expect=1 -data-dir=/tmp/consul -node=agent-one -bind=当前虚拟机IP -enable-script-checks=true -config-dir=/etc/consul.d</div></pre></td></tr></table></figure>
-<h4 id="2-虚拟机n2，启动consul服务"><a href="#2-虚拟机n2，启动consul服务" class="headerlink" title="2. 虚拟机n2，启动consul服务;"></a>2. 虚拟机n2，启动consul服务;</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul agent -data-dir=/tmp/consul -node=agent-two -bind=当前虚拟机IP -enable-script-checks=true -config-dir=/etc/consul.d</div></pre></td></tr></table></figure>
-<h4 id="3-在n1虚拟机的consul服务中，添加n2节点。"><a href="#3-在n1虚拟机的consul服务中，添加n2节点。" class="headerlink" title="3. 在n1虚拟机的consul服务中，添加n2节点。"></a>3. 在n1虚拟机的consul服务中，添加n2节点。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul join 虚拟机n2的IP</div></pre></td></tr></table></figure>
-<h4 id="4-虚拟机n3，启动consul服务"><a href="#4-虚拟机n3，启动consul服务" class="headerlink" title="4. 虚拟机n3，启动consul服务;"></a>4. 虚拟机n3，启动consul服务;</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul agent -data-dir=/tmp/consul -node=agent-three -bind=当前虚拟机IP -enable-script-checks=true -config-dir=/etc/consul.d</div></pre></td></tr></table></figure>
-<h4 id="5-在n1虚拟机的consul服务中，添加n3节点。"><a href="#5-在n1虚拟机的consul服务中，添加n3节点。" class="headerlink" title="5. 在n1虚拟机的consul服务中，添加n3节点。"></a>5. 在n1虚拟机的consul服务中，添加n3节点。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">consul join 虚拟机n3的IP</div></pre></td></tr></table></figure>
-<h3 id="6-consul集群搭建实战"><a href="#6-consul集群搭建实战" class="headerlink" title="6. consul集群搭建实战"></a>6. consul集群搭建实战</h3><h3 id="1-登录n1虚拟机"><a href="#1-登录n1虚拟机" class="headerlink" title="1. 登录n1虚拟机"></a>1. 登录n1虚拟机</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/42241770.jpg" alt=""></p>
-<h3 id="2-启动consul服务"><a href="#2-启动consul服务" class="headerlink" title="2. 启动consul服务"></a>2. 启动consul服务</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/50184269.jpg" alt=""></p>
-<h3 id="3-查看n1集群状态"><a href="#3-查看n1集群状态" class="headerlink" title="3. 查看n1集群状态"></a>3. 查看n1集群状态</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/36062811.jpg" alt=""></p>
-<h3 id="4-登录n2虚拟机"><a href="#4-登录n2虚拟机" class="headerlink" title="4. 登录n2虚拟机"></a>4. 登录n2虚拟机</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/68487932.jpg" alt=""></p>
-<h3 id="5-启动consul服务"><a href="#5-启动consul服务" class="headerlink" title="5. 启动consul服务"></a>5. 启动consul服务</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/89679832.jpg" alt=""></p>
-<h3 id="6-查看n2集群状态"><a href="#6-查看n2集群状态" class="headerlink" title="6. 查看n2集群状态"></a>6. 查看n2集群状态</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/70512094.jpg" alt=""></p>
-<p>通过步骤3和步骤6的对比，我们发现，n1和n2两个节点并没有直接的关联。</p>
-<h3 id="7-在n1节点中，加入节点2，节点间实现互相通信"><a href="#7-在n1节点中，加入节点2，节点间实现互相通信" class="headerlink" title="7. 在n1节点中，加入节点2，节点间实现互相通信"></a>7. 在n1节点中，加入节点2，节点间实现互相通信</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/86438059.jpg" alt=""></p>
-<h3 id="8-查看集群状态"><a href="#8-查看集群状态" class="headerlink" title="8. 查看集群状态"></a>8. 查看集群状态</h3><p>n1节点查看集群状态</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/28819181.jpg" alt=""></p>
-<p>n2节点查看集群状态</p>
-<p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-7-4/9956699.jpg" alt=""></p>
-<p>由此看出n1节点和n2节点已经互相通信。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://www.consul.io/intro/getting-started/join.html" target="_blank" rel="external">Consul Cluster官方文档</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;1-软件下载&quot;&gt;&lt;a href=&quot;#1-软件下载&quot; class=&quot;headerlink&quot; title=&quot;1. 软件下载&quot;&gt;&lt;/a&gt;1. 软件下载&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.vagrantup.com/downloads.h
-    
-    </summary>
-    
-      <category term="consul" scheme="http://jianwl.com/categories/consul/"/>
-    
-    
-      <category term="consul" scheme="http://jianwl.com/tags/consul/"/>
     
   </entry>
   

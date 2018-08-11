@@ -245,7 +245,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/07/31/5-工厂方法模式/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/08/10/14-组合模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -267,8 +267,8 @@
             
               
                 
-                <a class="post-title-link" href="/2018/07/31/5-工厂方法模式/" itemprop="url">
-                  5.工厂方法模式
+                <a class="post-title-link" href="/2018/08/10/14-组合模式/" itemprop="url">
+                  14.组合模式
                 </a>
               
             
@@ -284,8 +284,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-31T22:53:21+08:00">
-                2018-07-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T08:31:16+08:00">
+                2018-08-10
               </time>
             
 
@@ -325,8 +325,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/07/31/5-工厂方法模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/31/5-工厂方法模式/" itemprop="commentCount"></span>
+                <a href="/2018/08/10/14-组合模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/10/14-组合模式/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -354,13 +354,14 @@
       
         
           
-          需求场景有两类铁匠师，精灵铁匠师和兽人铁匠师，精灵铁匠师专门做精灵类的武器，兽人铁匠师专门做兽人的武器。
-实战1. Weapon(product)123public interface Weapon &#123;    WeaponType getWeaponType();&#125;
-2. Wea
+          小故事多个字母组成一个单词，多个单词组成一句话。
+组合模式1. 定义将对象组合成树状结构以表示’部分-整体’的层次结构，组合模式使得用户对单个对象和组合对象的使用具有一致性。
+2. 适用场景
+需求中是体现部分与整体层次的结构时，以及你希望用户可以忽略组合对象与单个对象的不同，统一地使用组合结构中的所
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/07/31/5-工厂方法模式/#more" rel="contents">
+            <a class="btn" href="/2018/08/10/14-组合模式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -403,7 +404,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/07/30/4-代理模式/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/08/09/13-适配器模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -425,8 +426,8 @@
             
               
                 
-                <a class="post-title-link" href="/2018/07/30/4-代理模式/" itemprop="url">
-                  4.代理模式
+                <a class="post-title-link" href="/2018/08/09/13-适配器模式/" itemprop="url">
+                  13.适配器模式
                 </a>
               
             
@@ -442,8 +443,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-30T23:13:25+08:00">
-                2018-07-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-09T23:33:38+08:00">
+                2018-08-09
               </time>
             
 
@@ -483,8 +484,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/07/30/4-代理模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/30/4-代理模式/" itemprop="commentCount"></span>
+                <a href="/2018/08/09/13-适配器模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/09/13-适配器模式/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -512,12 +513,14 @@
       
         
           
-          需求场景有个暗恋”李娇娇”同学的男生雇佣快递员“威廉”，把礼物送给这个女生。
-实战1. IGiveGift(Subject)12345public interface IGiveGift &#123;    void giveDolls();    void giveFlowers();    vo
+          小故事一群人在海上遇到了海盗，大船搁浅了，刚好这群人中有个舰长，还有个渔船。舰长需要适配掌控这个渔船带着所有人逃生。
+适配器模式1. 定义将一个类的接口转换成客户希望的另外一个接口。Adapter模式使得原本由于接口模式不兼容而不能一起工作的接口的那些类可以一起工作。
+2. 适用场景
+两个类所作的事
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/07/30/4-代理模式/#more" rel="contents">
+            <a class="btn" href="/2018/08/09/13-适配器模式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -560,7 +563,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/07/29/3-装饰模式/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/08/09/12-状态模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -582,8 +585,8 @@
             
               
                 
-                <a class="post-title-link" href="/2018/07/29/3-装饰模式/" itemprop="url">
-                  3.装饰模式
+                <a class="post-title-link" href="/2018/08/09/12-状态模式/" itemprop="url">
+                  12.状态模式
                 </a>
               
             
@@ -599,8 +602,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T09:52:22+08:00">
-                2018-07-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-09T23:24:07+08:00">
+                2018-08-09
               </time>
             
 
@@ -640,8 +643,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/07/29/3-装饰模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/29/3-装饰模式/" itemprop="commentCount"></span>
+                <a href="/2018/08/09/12-状态模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/09/12-状态模式/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -669,12 +672,13 @@
       
         
           
-          需求场景写一个可以给人搭配不同的服饰的系统，比如类似QQ、网络游戏或论坛都有的Avatar系统，你会怎么开发？
-实战1. Person(concreteComponent)1234567891011121314public class Person &#123;    private String 
+          小故事长毛象的情绪状态是变化的，有时候是生气状态，有时候是平和状态。
+状态模式1. 定义当一个对象的内在状态改变时允许改变其行为，这个对象看起来像是改变了其类。
+2. 适用场景状态模式主要解决的是当控制一个对象状态转换的条件表达式过于复杂的情况，把状态的判断逻辑转移到表示不同状态的一系列类当中，可以
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/07/29/3-装饰模式/#more" rel="contents">
+            <a class="btn" href="/2018/08/09/12-状态模式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -717,7 +721,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/07/28/2-策略模式/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/08/08/consul常用API梳理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -739,8 +743,8 @@
             
               
                 
-                <a class="post-title-link" href="/2018/07/28/2-策略模式/" itemprop="url">
-                  2.策略模式
+                <a class="post-title-link" href="/2018/08/08/consul常用API梳理/" itemprop="url">
+                  consul常用API梳理
                 </a>
               
             
@@ -756,484 +760,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-28T12:21:20+08:00">
-                2018-07-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/28/2-策略模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/28/2-策略模式/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          需求场景做一个商场收银软件，营业员可以记录客户所购买商品的单价和数量，有个列表框来记录商品的清单，一个标签来记录总计, 同时支持商场有此促销策略，比如全场打折活动。
-实战1. RecvCash接口1234public interface RecvCash &#123;    double retur
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/07/28/2-策略模式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/07/22/1-简单工厂模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="流云">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="记录点滴成长">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/07/22/1-简单工厂模式/" itemprop="url">
-                  1.简单工厂模式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-22T22:12:37+08:00">
-                2018-07-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/22/1-简单工厂模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/22/1-简单工厂模式/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          前言文章用小故事的形式引出设计模式，让读者相对轻松地进入设计模式的学习。
-小故事小菜今年计算机专业大四了，学了不少软件开发方面的东西，也学着编了些小程序，踌躇满志，一心找到一个好单位，当投递了无数份简历后，终于收到了一个单位的面试通知，小菜欣喜若狂。
-到了人家单位，前台小姐姐给他一份题目，上面写着:
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/07/22/1-简单工厂模式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/07/22/设计模式专题训练/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="流云">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="记录点滴成长">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/07/22/设计模式专题训练/" itemprop="url">
-                  设计模式专题训练
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-22T21:52:33+08:00">
-                2018-07-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/22/设计模式专题训练/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/22/设计模式专题训练/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          前言设计模式有四境界：
-
-没学前一点不懂，根本想不到用设计模式，设计的代码很糟糕。
-学了几个设计模式后，很开心，于是导出想着要用自己学过的模式，于是时常造成误用模式而不自知。
-学完全部设计模式时，感觉诸多模式极其相似，无法分清模式之间的差异，有困惑，但深知误用之害，应用之时有所犹豫。
-灵活应用模式，
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/07/22/设计模式专题训练/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/07/22/consul实现服务注册与发现/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="流云">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="记录点滴成长">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/07/22/consul实现服务注册与发现/" itemprop="url">
-                  consul实现服务注册与发现
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-22T15:06:08+08:00">
-                2018-07-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-08T11:09:39+08:00">
+                2018-08-08
               </time>
             
 
@@ -1273,8 +801,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/07/22/consul实现服务注册与发现/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/22/consul实现服务注册与发现/" itemprop="commentCount"></span>
+                <a href="/2018/08/08/consul常用API梳理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/08/consul常用API梳理/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1302,14 +830,14 @@
       
         
           
-          前言这个章节旨在梳理consul服务注册与发现的实战细节。
-实战1. 启动consul agent如果没有安装consul，请移步consul install
-12mkdir /etc/consul.dconsul agent -dev -config-dir=/etc/consul.d
-启动con
+          Consul环境描述
+本地启动Consul Server, 本地IP 192.168.85.160, Consul Node Name: server@160
+虚拟机启动Consul Agent，虚拟机IP172.20.20.12, Consul Node Name: agent@12
+consul
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/07/22/consul实现服务注册与发现/#more" rel="contents">
+            <a class="btn" href="/2018/08/08/consul常用API梳理/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1352,7 +880,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/07/22/consul核心概念梳理/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/08/06/11-抽象工厂模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -1374,8 +902,8 @@
             
               
                 
-                <a class="post-title-link" href="/2018/07/22/consul核心概念梳理/" itemprop="url">
-                  consul核心概念梳理
+                <a class="post-title-link" href="/2018/08/06/11-抽象工厂模式/" itemprop="url">
+                  11.抽象工厂模式
                 </a>
               
             
@@ -1391,8 +919,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-22T14:00:30+08:00">
-                2018-07-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-06T22:27:10+08:00">
+                2018-08-06
               </time>
             
 
@@ -1414,8 +942,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/consul/" itemprop="url" rel="index">
-                    <span itemprop="name">consul</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
 
@@ -1432,8 +960,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/07/22/consul核心概念梳理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/22/consul核心概念梳理/" itemprop="commentCount"></span>
+                <a href="/2018/08/06/11-抽象工厂模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/06/11-抽象工厂模式/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1461,12 +989,13 @@
       
         
           
-          1. 什么是consulConsul是一种服务网格(service mesh)解决方案，提供服务发现、配置和分段功能的全功能控制平面。每个功能可以单独使用，也可以一起使用以构建全服务网格。consul附带一个简单的内建代理，所以可以开箱即用，也支持第三方代理如Envoy。
-2. consul的核心特
+          需求场景一个王国拥有国王、城堡和军队，请描述兽人和精灵这两类王国。
+实战1. King123public interface King &#123;    String getDescription();&#125;
+2. Army123public interface Army &#123;   
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/07/22/consul核心概念梳理/#more" rel="contents">
+            <a class="btn" href="/2018/08/06/11-抽象工厂模式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1509,7 +1038,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/07/05/初识zookeeper/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/08/06/10-观察者模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -1531,8 +1060,8 @@
             
               
                 
-                <a class="post-title-link" href="/2018/07/05/初识zookeeper/" itemprop="url">
-                  初识zookeeper
+                <a class="post-title-link" href="/2018/08/06/10-观察者模式/" itemprop="url">
+                  10.观察者模式
                 </a>
               
             
@@ -1548,8 +1077,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-05T08:41:49+08:00">
-                2018-07-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-06T08:41:29+08:00">
+                2018-08-06
               </time>
             
 
@@ -1571,8 +1100,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/zookeeper/" itemprop="url" rel="index">
-                    <span itemprop="name">zookeeper</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
 
@@ -1589,8 +1118,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/07/05/初识zookeeper/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/05/初识zookeeper/" itemprop="commentCount"></span>
+                <a href="/2018/08/06/10-观察者模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/06/10-观察者模式/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1618,12 +1147,13 @@
       
         
           
-          Zookeeper是一个开源的分布式协调服务，由雅虎创建，是google chubby的开源实现。zookeeper的设计目标是将哪些复杂且容易出错的分布式一致性服务封装起来，构成一个高效可靠的原语集，并以一系列简单易用的接口提供给用户使用。
-Zookeeper是什么zookeeper是典型的分布式
+          需求场景天气一旦发生变化，就要通知霍比特人和兽人。
+实战1. WeatherObserver(observer)123public interface WeatherObserver &#123;    void update(WeatherType weatherType);&#125;
+2. H
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/07/05/初识zookeeper/#more" rel="contents">
+            <a class="btn" href="/2018/08/06/10-观察者模式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1666,7 +1196,7 @@ Zookeeper是什么zookeeper是典型的分布式
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/07/04/使用vagrant搭建consul集群/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/08/05/9-建造者模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -1688,8 +1218,8 @@ Zookeeper是什么zookeeper是典型的分布式
             
               
                 
-                <a class="post-title-link" href="/2018/07/04/使用vagrant搭建consul集群/" itemprop="url">
-                  使用vagrant搭建consul集群
+                <a class="post-title-link" href="/2018/08/05/9-建造者模式/" itemprop="url">
+                  9.建造者模式
                 </a>
               
             
@@ -1705,8 +1235,8 @@ Zookeeper是什么zookeeper是典型的分布式
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-04T22:58:44+08:00">
-                2018-07-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-05T10:30:15+08:00">
+                2018-08-05
               </time>
             
 
@@ -1728,8 +1258,8 @@ Zookeeper是什么zookeeper是典型的分布式
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/consul/" itemprop="url" rel="index">
-                    <span itemprop="name">consul</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
 
@@ -1746,8 +1276,8 @@ Zookeeper是什么zookeeper是典型的分布式
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/07/04/使用vagrant搭建consul集群/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/04/使用vagrant搭建consul集群/" itemprop="commentCount"></span>
+                <a href="/2018/08/05/9-建造者模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/05/9-建造者模式/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1775,16 +1305,483 @@ Zookeeper是什么zookeeper是典型的分布式
       
         
           
-          1. 软件下载
-vagrant下载
-virtualbox下载
-
-Vagrant是Hashi Corp公司的产品，用于创建和部署虚拟化开发环境，支持创建的操作系统。在部署虚拟开发环境需要用到virtualbox虚拟机软件，所以以上两个软件需要提前下载好。
-2. 用vagrant创建虚拟机在安装好，vi
+          需求场景构建一个英雄的形象，声明：名字，头发以及拿的武器等属性。
+实战1. HairColor(枚举)1234567public enum  HairColor &#123;    BLUE, BLACK, RED;    @Override    public String toString() 
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/07/04/使用vagrant搭建consul集群/#more" rel="contents">
+            <a class="btn" href="/2018/08/05/9-建造者模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/08/05/8-外观模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/08/05/8-外观模式/" itemprop="url">
+                  8.外观模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-05T10:05:58+08:00">
+                2018-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/05/8-外观模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/05/8-外观模式/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          需求场景一个矮人金矿工厂包含着几个子系统，如金矿系统、矿车系统、轨道系统。每个系统都会雇佣工人使得这个系统运作起来，请描述每类系统工人一天的工作流程。
+实战1. DwarvenMineWorker1234567891011121314151617181920212223242526272829303
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/05/8-外观模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/08/04/7-模板方法模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/08/04/7-模板方法模式/" itemprop="url">
+                  7.模板方法模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-04T11:49:53+08:00">
+                2018-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/04/7-模板方法模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/04/7-模板方法模式/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          需求场景期末考，所有人拿到的考卷题目都是一样的，但是每个人答题的答案都不一样。
+实战1. TestPaper123456789101112131415161718192021222324252627282930313233343536public abstract class TestPaper &
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/04/7-模板方法模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/08/04/6-原型模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/08/04/6-原型模式/" itemprop="url">
+                  6.原型模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-04T11:01:02+08:00">
+                2018-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/04/6-原型模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/04/6-原型模式/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          需求场景实现简历的复印，即，实现简历内容的复制，且如果内容中的属性是引用对象，修改引用对象，不能影响其他简历的内容,即需要实现深度拷贝。
+实战1. Resume1234567891011121314151617181920212223242526272829303132333435363738394
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/04/6-原型模式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1822,7 +1819,7 @@ Vagrant是Hashi Corp公司的产品，用于创建和部署虚拟化开发环境
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1867,7 +1864,7 @@ Vagrant是Hashi Corp公司的产品，用于创建和部署虚拟化开发环境
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">305</span>
+                <span class="site-state-item-count">317</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

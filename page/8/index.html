@@ -245,7 +245,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/06/18/JAVA观察者模式/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/09/01/Java8之HashMap源码学习/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -267,8 +267,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/06/18/JAVA观察者模式/" itemprop="url">
-                  JAVA观察者模式
+                <a class="post-title-link" href="/2017/09/01/Java8之HashMap源码学习/" itemprop="url">
+                  Java8之HashMap源码学习
                 </a>
               
             
@@ -284,8 +284,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-18T22:27:32+08:00">
-                2017-06-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T15:20:01+08:00">
+                2017-09-01
               </time>
             
 
@@ -325,8 +325,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/06/18/JAVA观察者模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/18/JAVA观察者模式/" itemprop="commentCount"></span>
+                <a href="/2017/09/01/Java8之HashMap源码学习/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/01/Java8之HashMap源码学习/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -354,11 +354,13 @@
       
         
           
-          1. 前言观察者模式是非常常用的一种设计模式，在软件系统中，当一个对象的行为依赖另一个对象的状态时，观察者模式相当有用。若不使用观察者模式提供的通用结构，而需要实现其类似的功能，则只能在另一个线程中不停监听对象所依赖的状态。在一个复杂系统中，可能会因此开启很多线程来实现这一功能，这将使系统的性能产生
+          摘要随着JDK的更新，JDK1.8对HashMap底层的实现进行了优化，本文想深入探讨HashMap的结构实现和功能原理。
+类图
+Java为数据结构中的映射定义了一个接口java.util.Map，此接口有四个常用的实现类，分别为HashMap、LinkedHashMap和TreeMap，类继承关系
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/18/JAVA观察者模式/#more" rel="contents">
+            <a class="btn" href="/2017/09/01/Java8之HashMap源码学习/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -401,7 +403,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/06/17/JAVA之享元模式/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/08/27/java基础-异常/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -423,8 +425,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/06/17/JAVA之享元模式/" itemprop="url">
-                  JAVA之享元模式
+                <a class="post-title-link" href="/2017/08/27/java基础-异常/" itemprop="url">
+                  java基础-异常
                 </a>
               
             
@@ -440,8 +442,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-17T18:05:18+08:00">
-                2017-06-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-27T22:12:18+08:00">
+                2017-08-27
               </time>
             
 
@@ -481,8 +483,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/06/17/JAVA之享元模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/17/JAVA之享元模式/" itemprop="commentCount"></span>
+                <a href="/2017/08/27/java基础-异常/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/27/java基础-异常/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -510,16 +512,17 @@
       
         
           
-          1. 前言享元模式是设计模式中少数几个以提高系统性能为目的的模式之一；它的核心思想是：如果在一个系统中存在多个相同的对象，那么只需要共享一份对象的拷贝，而不必为每一次使用都创建新的对象。
-优点
-可以节省重复创建对象的开销；
-创建对象的数量减少，对系统的内存需求也减小，使得GC的压力降低；
+          1. 异常类图
+2. 受检异常 VS 非受检异常
+受检异常：继承Exception的子类，需要明确去处理异常；
+非受检异常：继承RuntimeException的子类，不需要明确去处理异常；
 
-2. 享
+非受检异常：继承RuntimeException的子类
+123456789101112public cla
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/17/JAVA之享元模式/#more" rel="contents">
+            <a class="btn" href="/2017/08/27/java基础-异常/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -562,7 +565,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/06/09/JAVA之装饰者模式/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/08/27/java基础-集合梳理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -584,8 +587,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/06/09/JAVA之装饰者模式/" itemprop="url">
-                  JAVA之装饰者模式
+                <a class="post-title-link" href="/2017/08/27/java基础-集合梳理/" itemprop="url">
+                  java基础-集合梳理
                 </a>
               
             
@@ -601,8 +604,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-09T08:31:39+08:00">
-                2017-06-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-27T14:58:37+08:00">
+                2017-08-27
               </time>
             
 
@@ -642,8 +645,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/06/09/JAVA之装饰者模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/09/JAVA之装饰者模式/" itemprop="commentCount"></span>
+                <a href="/2017/08/27/java基础-集合梳理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/27/java基础-集合梳理/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -671,11 +674,15 @@
       
         
           
-          1. 前言装饰者模式拥有一个设计非常精巧的结构，它可以动态添加对象功能，在基本的设计原则中，有一条重要的设计准则叫做合成/聚合复用原则。根据该原则的思想，代码复用应该尽可能使用委托，而不是使用继承。因为继承是一种紧密耦合，任何父类的改动都会影响其子类，不利于系统维护。而委托则是松散耦合，只要接口不变
-          ...
+          1. Map类图(不包含java.util.concurrent包的类)
+2. List类图(整理部分常用)
+3. Set类图整理(不包含java.util.concurrent包的类)
+4. 集合类图整理
+
+          
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/09/JAVA之装饰者模式/#more" rel="contents">
+            <a class="btn" href="/2017/08/27/java基础-集合梳理/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -718,7 +725,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/06/08/单例模式之性能比较/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/08/27/泛型中extends和super的区别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -740,8 +747,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/06/08/单例模式之性能比较/" itemprop="url">
-                  单例模式之性能比较
+                <a class="post-title-link" href="/2017/08/27/泛型中extends和super的区别/" itemprop="url">
+                  泛型中extends和super的区别?
                 </a>
               
             
@@ -757,8 +764,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-08T22:00:55+08:00">
-                2017-06-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-27T13:10:19+08:00">
+                2017-08-27
               </time>
             
 
@@ -798,8 +805,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/06/08/单例模式之性能比较/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/08/单例模式之性能比较/" itemprop="commentCount"></span>
+                <a href="/2017/08/27/泛型中extends和super的区别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/27/泛型中extends和super的区别/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -827,13 +834,14 @@
       
         
           
-          1. 前言设计模式是前人工作的总结和提炼，通常，被人们广泛流传的设计模式都是对某一特定问题的成熟解决方案。如果能合理地使用设计模式，不仅能使系统更容易被他人理解，同时也能使系统拥有更加合理的结构。本节将对单例模式多种实现进行性能分析。
-2. 单例模式的好处
-对于频繁使用的对象，可以省略创建对象所花费
-          ...
+          参考资料
+【Java】泛型中 extends 和 super 的区别？
+
+
+          
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/08/单例模式之性能比较/#more" rel="contents">
+            <a class="btn" href="/2017/08/27/泛型中extends和super的区别/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -876,7 +884,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/06/04/Java之异常-0/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/08/22/高效实用Python字典的清单/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -898,8 +906,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/06/04/Java之异常-0/" itemprop="url">
-                  Java之异常
+                <a class="post-title-link" href="/2017/08/22/高效实用Python字典的清单/" itemprop="url">
+                  高效实用Python字典的清单
                 </a>
               
             
@@ -915,8 +923,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-04T12:26:45+08:00">
-                2017-06-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-22T22:22:12+08:00">
+                2017-08-22
               </time>
             
 
@@ -938,8 +946,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
                   </a>
                 </span>
 
@@ -956,8 +964,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/06/04/Java之异常-0/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/04/Java之异常-0/" itemprop="commentCount"></span>
+                <a href="/2017/08/22/高效实用Python字典的清单/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/22/高效实用Python字典的清单/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -985,16 +993,14 @@
       
         
           
-          1. 基本概念
-在Java程序运行时，常常会出现一些非正常现象，根据其性质分为错误和异常。 Java程序中，所有抛出的异常都必须从Throwable派生而来。Throwable有两个直接子类：Error和Exception。
-Error
-常见的错误有程序进入死循环、内存泄露等
-Exception
-异
+          前言字典(dict)对象是Python最常用的数据结构，这里整理了几个关于高效实用字典的清单，希望Python开发者可以在日常应用开发中合理利用，让代码更加Pythonic。
+1、用in关键字检查key是否存在Python之禅中有一句开发哲学是:
+
+There should be one – and
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/04/Java之异常-0/#more" rel="contents">
+            <a class="btn" href="/2017/08/22/高效实用Python字典的清单/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1037,7 +1043,7 @@ Exception
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/06/03/Java之ClassLoader/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/08/16/cp-r-without-hidden-files/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -1059,8 +1065,8 @@ Exception
             
               
                 
-                <a class="post-title-link" href="/2017/06/03/Java之ClassLoader/" itemprop="url">
-                  Java之ClassLoader
+                <a class="post-title-link" href="/2017/08/16/cp-r-without-hidden-files/" itemprop="url">
+                  cp -r without hidden files
                 </a>
               
             
@@ -1076,8 +1082,8 @@ Exception
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-03T09:44:51+08:00">
-                2017-06-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-16T11:56:14+08:00">
+                2017-08-16
               </time>
             
 
@@ -1099,8 +1105,8 @@ Exception
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -1117,8 +1123,8 @@ Exception
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/06/03/Java之ClassLoader/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/03/Java之ClassLoader/" itemprop="commentCount"></span>
+                <a href="/2017/08/16/cp-r-without-hidden-files/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/16/cp-r-without-hidden-files/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1146,12 +1152,14 @@ Exception
       
         
           
-          1. ClassLoader基本概念Java程序是由许多独立的类文件组成的，每一个文件对应一个Java类。此外，这些类文件并非全部装入内存，而是根据程序需要逐渐载入。 
-ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(启动类加载器
-          ...
+          参考链接
+cp-r-without-hidden-files
+
+
+          
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/03/Java之ClassLoader/#more" rel="contents">
+            <a class="btn" href="/2017/08/16/cp-r-without-hidden-files/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1194,7 +1202,7 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/05/21/数据库读写分离-水分拆分-垂直拆分/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/08/15/Webpack入门篇/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -1216,8 +1224,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
             
               
                 
-                <a class="post-title-link" href="/2017/05/21/数据库读写分离-水分拆分-垂直拆分/" itemprop="url">
-                  数据库读写分离&水分拆分&垂直拆分
+                <a class="post-title-link" href="/2017/08/15/Webpack入门篇/" itemprop="url">
+                  Webpack入门篇
                 </a>
               
             
@@ -1233,8 +1241,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-21T15:14:15+08:00">
-                2017-05-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-15T17:16:19+08:00">
+                2017-08-15
               </time>
             
 
@@ -1256,8 +1264,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
+                  <a href="/categories/Webpack/" itemprop="url" rel="index">
+                    <span itemprop="name">Webpack</span>
                   </a>
                 </span>
 
@@ -1274,8 +1282,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/05/21/数据库读写分离-水分拆分-垂直拆分/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/21/数据库读写分离-水分拆分-垂直拆分/" itemprop="commentCount"></span>
+                <a href="/2017/08/15/Webpack入门篇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/15/Webpack入门篇/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1303,13 +1311,14 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
       
         
           
-          1. 数据库读写分离随着业务的发展，我们的数据量和访问量都在增长，对于大型网站来说，有不少业务是读多写少的，这个状况也会直接反应到数据库上，那么对于这样的情况，我们可以考虑使用读写分离的方式。
+          参考链接
+入门Webpack，看这篇就够了
 
-通过读库来分担主库上读的压力，数据库提供了数据复制的功能，我们可以直接使用数据库系统自身的功能，但对于数
-          ...
+
+          
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/21/数据库读写分离-水分拆分-垂直拆分/#more" rel="contents">
+            <a class="btn" href="/2017/08/15/Webpack入门篇/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1352,7 +1361,7 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/05/21/应用服务器变为集群后的Session问题/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/07/22/Java服务化系统线上应急和技术攻关，你必须掌握的Linux命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -1374,8 +1383,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
             
               
                 
-                <a class="post-title-link" href="/2017/05/21/应用服务器变为集群后的Session问题/" itemprop="url">
-                  应用服务器变为集群后的Session问题
+                <a class="post-title-link" href="/2017/07/22/Java服务化系统线上应急和技术攻关，你必须掌握的Linux命令/" itemprop="url">
+                  Java服务化系统线上应急和技术攻关，你必须掌握的Linux命令
                 </a>
               
             
@@ -1391,8 +1400,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-21T12:17:24+08:00">
-                2017-05-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-22T20:51:16+08:00">
+                2017-07-22
               </time>
             
 
@@ -1414,8 +1423,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -1432,8 +1441,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/05/21/应用服务器变为集群后的Session问题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/21/应用服务器变为集群后的Session问题/" itemprop="commentCount"></span>
+                <a href="/2017/07/22/Java服务化系统线上应急和技术攻关，你必须掌握的Linux命令/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/22/Java服务化系统线上应急和技术攻关，你必须掌握的Linux命令/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1461,11 +1470,13 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
       
         
           
-          什么是session用户使用网站的服务，基本上需要浏览器与Web服务器的多次交互，HTTP协议本身是无状态的，需要基于HTTP协议支持会话状态(Session State)机制。而这样的机制应该可以使Web服务器从多次单独的HTTP请求中看到”会话”，也就是知道哪些请求是来自哪个会话。具体实现方式为
+          前言本文并不是Linux命令的手册，而是侧重于命令在特定场景如何帮助应急人员和攻关人员定位问题并解决问题，因此，对于每个命令的介绍将直切主题，直接介绍命令的具体场景，而不是介绍命令的详细使用格式。
+1. 必不可少的基础命令和工具1.1 grepgrep是Linux下通用的文本内容查找命令。
+也可以利
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/21/应用服务器变为集群后的Session问题/#more" rel="contents">
+            <a class="btn" href="/2017/07/22/Java服务化系统线上应急和技术攻关，你必须掌握的Linux命令/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1508,7 +1519,7 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/05/21/分布式系统的基础知识/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/07/20/Flask-SQLAlchemy-Can-t-reconnect-until-invalid-transaction-is-rolled-back/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -1530,8 +1541,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
             
               
                 
-                <a class="post-title-link" href="/2017/05/21/分布式系统的基础知识/" itemprop="url">
-                  分布式系统的基础知识
+                <a class="post-title-link" href="/2017/07/20/Flask-SQLAlchemy-Can-t-reconnect-until-invalid-transaction-is-rolled-back/" itemprop="url">
+                  Flask-SQLAlchemy: Can't reconnect until invalid transaction is rolled back
                 </a>
               
             
@@ -1547,8 +1558,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-21T09:21:40+08:00">
-                2017-05-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-20T21:17:45+08:00">
+                2017-07-20
               </time>
             
 
@@ -1570,8 +1581,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index">
-                    <span itemprop="name">JAVA</span>
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
                   </a>
                 </span>
 
@@ -1588,8 +1599,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/05/21/分布式系统的基础知识/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/21/分布式系统的基础知识/" itemprop="commentCount"></span>
+                <a href="/2017/07/20/Flask-SQLAlchemy-Can-t-reconnect-until-invalid-transaction-is-rolled-back/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/20/Flask-SQLAlchemy-Can-t-reconnect-until-invalid-transaction-is-rolled-back/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1617,14 +1628,19 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
       
         
           
-          1. 用户访问网站1） 用户访问单台服务器的场景
-随着压力增大，我们需要变为多台服务器，例如从一台变为两台。两台服务器一起完成工作，这里面就有一个问题，用户应该去访问哪个服务器呢？
-2）用户访问集群服务器的场景(一)
-通过DNS服务器进行调度和控制，在用户解析DNS的时候，就会被给予一个服务器的地址
+          前言近来在做些Python的重构工作，今日屡次出现这个错误；
+ 
+由日志可知，在查询bd_charge_info这张表时，由于存在没有提交的事务，导致了查询失败；于是查了MYSQL数据库的事务状态：
+1SHOW ENGINE INNODB STATUS
+查询结果：
+
+至此确认了问题所在。
+参考资料
+
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/21/分布式系统的基础知识/#more" rel="contents">
+            <a class="btn" href="/2017/07/20/Flask-SQLAlchemy-Can-t-reconnect-until-invalid-transaction-is-rolled-back/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1667,7 +1683,7 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/05/17/在工作的前三年里快速成长/">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2017/07/19/2017的小目标/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="流云">
@@ -1689,8 +1705,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
             
               
                 
-                <a class="post-title-link" href="/2017/05/17/在工作的前三年里快速成长/" itemprop="url">
-                  在工作的前三年里快速成长
+                <a class="post-title-link" href="/2017/07/19/2017的小目标/" itemprop="url">
+                  2017的小目标
                 </a>
               
             
@@ -1706,8 +1722,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T20:19:24+08:00">
-                2017-05-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-19T22:58:27+08:00">
+                2017-07-19
               </time>
             
 
@@ -1729,8 +1745,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/思绪/" itemprop="url" rel="index">
-                    <span itemprop="name">思绪</span>
+                  <a href="/categories/小目标/" itemprop="url" rel="index">
+                    <span itemprop="name">小目标</span>
                   </a>
                 </span>
 
@@ -1747,8 +1763,8 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/05/17/在工作的前三年里快速成长/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/17/在工作的前三年里快速成长/" itemprop="commentCount"></span>
+                <a href="/2017/07/19/2017的小目标/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/19/2017的小目标/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1776,12 +1792,17 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
       
         
           
-          有人可以靠中彩票，然后一夜暴富；有人随随便便发几张自拍，就一不小心一夜成名。可技术成长，要一步一个脚印地练习，才能掌握某项特定技术。等到我们掌握了学习的技巧，才能用更短的时间，来掌握某项特定的技术。
-而练习也不是一天里写一万行代码，也不是重复写一百行代码，而是在一百天里，每天写下一百行代码。它需要一
+          已经到年中了，给后半年设定一些小目标；
+小目标制定
+
+7月份小目标7月份的学习主要以巩固基础为主，熟悉JVM参数配置 &amp; 泛读JVM官方文档
+【10h】泛读The Java Virtual Machine Specification
+【20h】精读《深入理解JAVA虚拟机》并输出笔记
+7月份
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/17/在工作的前三年里快速成长/#more" rel="contents">
+            <a class="btn" href="/2017/07/19/2017的小目标/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1819,7 +1840,7 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1864,7 +1885,7 @@ ClassLoader是JVM实现的一部分，ClassLoader 包括 bootstrap classloader(�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">305</span>
+                <span class="site-state-item-count">317</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
