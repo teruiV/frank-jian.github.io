@@ -355,7 +355,7 @@
         
           
           实战1. ReentrantLock实现同步主函数
-1234567891011121314public class Run &#123;    public static void main(String[] args) &#123;        MyService myService = new
+1234567891011121314publi
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -511,8 +511,7 @@
       
         
           
-          前言线程是操作系统中独立的个体，但这些个体如果不经过特殊的处理就不能成为一个整体。本文将会来学习使用wait/notify实现线程间的通信。
-1. wait/notify机制的实现方法wait的作用是使当前执行代码的线程进行等待，wait方法是Object类的方法，该方法用来将当前线程置入“预执行队
+          前言线程是操作系统中独立的个体，但这些个体如果不经过特殊的处理就不能成为一个整体。本文将会来学习使用
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -669,7 +668,7 @@
         
           
           实战1) 线程不安全共享变量
-123456789101112131415161718public class HasSelfPrivateNum &#123;    private int num = 0;    public void addI(String username) &#123;   
+123456789101112131415161718public c
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -825,8 +824,7 @@
       
         
           
-          thread.join把指定线程加入到当前线程，可以将两个交替执行的线程合并为顺序执行的线程，比如在线程B中调用线程A的join方法，直到线程A执行完毕后，才会继续执行线程B。
-12t.join(); // 线程t执行完毕之后，再执行B线程，假设当前为线程B；t.join(1000); // 等待t
+          thread.join把指定线程加入到当前线程，可以将两个交替执行的线程合并为顺序执行的线程，比如在
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -983,13 +981,7 @@
         
           
           前言上一篇文章介绍了Flex布局的语法，今天介绍常见布局的Flex写法。
-你会看到，不管是什么布局，Flex往往都可以几行命令搞定。
-
-骰子的布局骰子的一面，最多可以放置9个点。
-
-下面，就来看看Flex如何实现，从1个点到9个点的布局，你可以到codepen查看Demo.
-
-如果不加说明，本机的H
+你会看到，不管是什么布局，
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1147,8 +1139,7 @@
           
           前言网页布局(layout)是CSS的一个重点应用
 
-布局的传统解决方案，基于盒状模型，依赖display属性 + position属性 + float属性。它对于那些特殊布局非常不方便。比如，垂直居中就不容易实现。
-2009年，W3C提出一种新的方案 – Flex布局，可以简便、完整、响应式地实现
+布局的传统解决方案，基于盒状模型，依赖disp
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1304,9 +1295,7 @@
       
         
           
-          1. 什么是CSSCSS是一门指定文档该如何呈现给用户的语言。当你的浏览器请求页面时，服务器会查询数据库生成文档，将散落在众多文件中的文档碎片搜集起来。 
-创建一个文档范例：
-12345678910&lt;!DOCTYPE html&gt;&lt;html&gt;	&lt;head&gt;		&lt
+          1. 什么是CSSCSS是一门指定文档该如何呈现给用户的语言。当你的浏览器请求页面时，服务器会查询数
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1464,9 +1453,7 @@
           
           1. 使用规则
 尽量不要强依赖缓存「除非有特殊需求」，参考下面的缓存使用基本方法
-如果缓存更新丢失会导致缓存与DB中的数据不一致，如果允许数据出现短期不一致，通过设置缓存的超时时间
-如果缓存采用的Redis，由于Redis是单线程，要特别注意不要放置特别大的对象「超过1K」，避免引起堵塞。
-在极端高
+如果缓存更新丢失会
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1623,8 +1610,7 @@
         
           
           1. 命名规范1）表名、字段名、索引名使用小写字母、数字，名称偏长的采用下划线分割
-MYSQL有配置参数lower_case_table_names,不可动态更改，linux默认为0，即库表名以实际情况存储，大小写敏感。如果是1，以小写存储，大小写不敏感。如果是2，以实际情况存储，但以小写比较；
-如
+MYSQL有配置
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1780,7 +1766,7 @@ MYSQL有配置参数lower_case_table_names,不可动态更改，linux默认为0�
       
         
           
-          1. ls命令1) 显示长格式的输出12345678910111213141516171819### -R 递归显示### -A almost-all，类似「-a」，不含「.」、「..」 目录### -h --human-readable### -r --reverse$ ls -ltotal 48
+          1. ls命令1) 显示长格式的输出12345678910111213141516171819###
           ...
           <!--noindex-->
           <div class="post-button text-center">

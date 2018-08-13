@@ -355,8 +355,7 @@
         
           
           引言
-JVM内存模型分为两部分私有内存和共享内存；如图所示，堆和方法区是所有线程共有的，而虚拟栈、本地方法栈、程序计数器则是线程私有的。接下来我们来一一分析不同区域的作用。
-堆内存堆内存是所有线程共有的，可分为两部分：年轻代和老年代。下图中的Perm代表的永久代，但是永久代并不属于堆内存中的一部分，
+JVM内存模型分为两部分私有内存和共享内存；如图所示，堆和方法区是所有线程共有的，而虚拟栈、本
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -512,9 +511,7 @@ JVM内存模型分为两部分私有内存和共享内存；如图所示，堆�
       
         
           
-          摘要随着JDK的更新，JDK1.8对HashMap底层的实现进行了优化，本文想深入探讨HashMap的结构实现和功能原理。
-类图
-Java为数据结构中的映射定义了一个接口java.util.Map，此接口有四个常用的实现类，分别为HashMap、LinkedHashMap和TreeMap，类继承关系
+          摘要随着JDK的更新，JDK1.8对HashMap底层的实现进行了优化，本文想深入探讨HashMap
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -672,11 +669,7 @@ Java为数据结构中的映射定义了一个接口java.util.Map，此接口有
           
           1. 异常类图
 2. 受检异常 VS 非受检异常
-受检异常：继承Exception的子类，需要明确去处理异常；
-非受检异常：继承RuntimeException的子类，不需要明确去处理异常；
-
-非受检异常：继承RuntimeException的子类
-123456789101112public cla
+受检异常：继承Exception的子类，需要明确去
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -833,11 +826,8 @@ Java为数据结构中的映射定义了一个接口java.util.Map，此接口有
         
           
           1. Map类图(不包含java.util.concurrent包的类)
-2. List类图(整理部分常用)
-3. Set类图整理(不包含java.util.concurrent包的类)
-4. 集合类图整理
-
-          
+2. List类图(整理部
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/08/27/java基础-集合梳理/#more" rel="contents">
@@ -1151,10 +1141,7 @@ Java为数据结构中的映射定义了一个接口java.util.Map，此接口有
       
         
           
-          前言字典(dict)对象是Python最常用的数据结构，这里整理了几个关于高效实用字典的清单，希望Python开发者可以在日常应用开发中合理利用，让代码更加Pythonic。
-1、用in关键字检查key是否存在Python之禅中有一句开发哲学是:
-
-There should be one – and
+          前言字典(dict)对象是Python最常用的数据结构，这里整理了几个关于高效实用字典的清单，希望P
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1628,9 +1615,7 @@ cp-r-without-hidden-files
       
         
           
-          前言本文并不是Linux命令的手册，而是侧重于命令在特定场景如何帮助应急人员和攻关人员定位问题并解决问题，因此，对于每个命令的介绍将直切主题，直接介绍命令的具体场景，而不是介绍命令的详细使用格式。
-1. 必不可少的基础命令和工具1.1 grepgrep是Linux下通用的文本内容查找命令。
-也可以利
+          前言本文并不是Linux命令的手册，而是侧重于命令在特定场景如何帮助应急人员和攻关人员定位问题并解决
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1788,13 +1773,7 @@ cp-r-without-hidden-files
           
           前言近来在做些Python的重构工作，今日屡次出现这个错误；
  
-由日志可知，在查询bd_charge_info这张表时，由于存在没有提交的事务，导致了查询失败；于是查了MYSQL数据库的事务状态：
-1SHOW ENGINE INNODB STATUS
-查询结果：
-
-至此确认了问题所在。
-参考资料
-
+由日志可知，在查询bd_charg
           ...
           <!--noindex-->
           <div class="post-button text-center">

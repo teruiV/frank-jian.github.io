@@ -354,9 +354,7 @@
       
         
           
-          MYSQL无法插入中文，报Incorrect string value: ‘\xD5\xC5\xC8\xFD’错误mysql&gt; status;
-使用的库的字符集是latin1，该字符集不支持中文字符mysql&gt; show CREATE TABLE person1;
-修改表字符集mysql
+          MYSQL无法插入中文，报Incorrect string value: ‘\xD5\xC5\xC8
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -512,7 +510,7 @@
       
         
           
-          常用文本处理函数12345678910Concat(str1,str2,str3)拼接字符串Ltrim()	去掉左边的空格Trim()	去掉所有的空格Left()	返回串左边的字符Locate() 找出串的一个子串Lower() 将串转换为小写Right() 返回串右边的字符Soundex() 返回
+          常用文本处理函数12345678910Concat(str1,str2,str3)拼接字符串Ltri
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -669,7 +667,7 @@
         
           
           SQL注释12  --    行内注释/* */   多行注释
-SELECT1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606
+SELECT123456789101
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -825,7 +823,7 @@ SELECT12345678910111213141516171819202122232425262728293031323334353637383940414
       
         
           
-          应用层面优化技巧1、注意LIKE模糊查询的使用，避免%%，可以使用后面带% ，双%是不走索引的。123原来语句： select * from admin where admin_name like ‘%de%&apos;优化为： select * from admin where admin_nam
+          应用层面优化技巧1、注意LIKE模糊查询的使用，避免%%，可以使用后面带% ，双%是不走索引的。12
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -986,7 +984,7 @@ SELECT12345678910111213141516171819202122232425262728293031323334353637383940414
 主动攻击
 被动攻击
 
-主动攻击攻击者通过直接访问Web应用，把攻击代码传入的攻击模式。由于该模式是直接针对服务器上的资源进行攻击，因此攻击者需要能够访问这些资源。主动攻击力最具代表性的就是SQL注入攻击和OS命令注入工具。12345//跨站脚本攻击比如修改用户信息时
+主动攻击攻击者通过直接访问Web应用，把攻击
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1142,7 +1140,7 @@ SELECT12345678910111213141516171819202122232425262728293031323334353637383940414
       
         
           
-          WebSocket技术为何出现？WebSocket技术的出现是为了解决HTTP协议的瓶颈123451、一条连接只可发送一个请求2、请求只能从客户端开始，客户端不能接收除响应以外的指令。3、请求/响应首部未经压缩就发送，首部信息越大，延时越高。4、发送冗长的首部，每次互相发送相同的首部造成资源的浪费。
+          WebSocket技术为何出现？WebSocket技术的出现是为了解决HTTP协议的瓶颈123451
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1303,9 +1301,7 @@ SELECT12345678910111213141516171819202122232425262728293031323334353637383940414
 BASIC认证
 DIGEST认证
 SSL客户端认证
-基于表单的认证
-
-BASIC认证1、当请求资源需要BASIC认证时，服务器会随状态码401，返回带WWW-Authenticate首部字段响应2、接收到状态码401，需要将用户ID和密码发送给服务器。发送密码由用
+基于表单的认
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1462,8 +1458,7 @@ BASIC认证1、当请求资源需要BASIC认证时，服务器会随状态码401
         
           
           为了更好的理解HTTPS，总结一下HTTPS的通信步骤。
-1、客户端通过发送Client Hello报文开始SSL通信，报文中包含客户端支持的SSL的指定版本，加密组件（Cipher Suite）列表
-2、服务端进行SSL通信时，会以Server Hello报文作为应答，和客户端一样，在报文中包含S
+1、客户端通过发送Client Hello
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1620,7 +1615,7 @@ BASIC认证1、当请求资源需要BASIC认证时，服务器会随状态码401
         
           
           1、HTTP协议规定，先从客户端开始建立通信，服务端在没有收到请求之前不会发送响应。
-2、请求报文由请求方法，请求URI、协议版本、可选的请求首部字段和内容实体构成的12345678910POST(请求方法)    /form/query(请求URI)   HTTP/1.1(协议版本)(请求首部字段
+2、请求报文由
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1777,9 +1772,7 @@ BASIC认证1、当请求资源需要BASIC认证时，服务器会随状态码401
         
           
           HTTP 的方法中GET和POST方法的区别？
-GET 用于从服务器获得资源，POST用于向服务器发送数据的，
-GET 提交请求时，将参数放到URL中，用户可以从URL中看到传输的参数，POST是将参数填到一个表单中，然后发送给服务器，参数在URL中不可见。
-GET 提交的数据上限是1024字节，P
+GET 用于从服务器获得资源，POST用于向服务器发
           ...
           <!--noindex-->
           <div class="post-button text-center">

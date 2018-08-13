@@ -354,8 +354,7 @@
       
         
           
-          前言HashMap是我们平时开发过程中用的比较多的集合，它是非线程安全的，涉及到多线程并发的情况，进行get操作有可能会引起死循环「JDK1.8以前」，导致CPU利用率接近100%。
-1234567891011@Testpublic void test_001()&#123;    final Ma
+          前言HashMap是我们平时开发过程中用的比较多的集合，它是非线程安全的，涉及到多线程并发的情况，进
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -511,9 +510,7 @@
       
         
           
-          前言部门技术分享，选了个数据库专题，做完KeyNote，顺便整理成文，方便后续查阅和补充；本次分享囊括数据库架构、存储引擎功能对比、常用InnoDB日志以及InnoDB逻辑储存结构、索引相关和模拟线上并发问题；
-1. MySQL体系结构 
- MySQL由以下几部分组成： 连接池组件、管理服务和工具组
+          前言部门技术分享，选了个数据库专题，做完KeyNote，顺便整理成文，方便后续查阅和补充；本次分享囊
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -671,9 +668,7 @@
           
           1、Thread内部有个State枚举，表示线程的状态
 NEW, 新建未开始
-RUNNABLE，可执行，但他可能处于等待系统资源状态，因为CPU此时别其他线程占用；
-BLOCKED，阻塞状态，等待一个monitor lock，在调用wait方法后，进入synchronized同步块或方法
-WAITI
+RUNNABLE，可执
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -829,7 +824,7 @@ WAITI
       
         
           
-          1. 索引目的索引的目的在于提高查询效率，可以类比字典，如果要查mysql这个单词，我们肯定需要定位到m字母，然后从往下找到y字母，再找到剩下的sql。如果没有索引，那么你很可能需要把所有单词看一遍才能找到你想要的，如果我想找到m开头的单词呢？或者ze开头的单词呢？是不是觉得如果没有索引，这个事情根
+          1. 索引目的索引的目的在于提高查询效率，可以类比字典，如果要查mysql这个单词，我们肯定需要定位
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -986,8 +981,7 @@ WAITI
         
           
           常用方法 &amp; 字段
-1、使用ThreadLocal的好处可以实现多线程，变量间互不干扰；举个例子:
-12345678910111213141516public class ThreadLocalDemo &#123;    public static class MyTask impleme
+1、使用ThreadLocal的好处可以实现多线程，变量间互不干扰；举个
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1144,9 +1138,7 @@ WAITI
         
           
           1. 使用线程池的好处合理利用线程池能够带来三个好处。
-① 降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗；
-② 提高响应速度，当任务到达时，任务可以不需要等到线程创建就能立即执行。
-③ 提高线程的可管理性。线程时稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定
+① 降低资源消耗。通过重复利用已创建的线程降
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1303,10 +1295,7 @@ WAITI
         
           
           常用方法 &amp; 字段
-StringBuilder常用于单线程字符串的拼接，可以减小堆内存的开销；
-StringBuilder继承AbstractStringBuilder抽象类，且实现了CharSequence、Serializable接口
-问题
-通过append方法拼接字符串，为什么能够减少
+StringBuilder常用于单线程字符串的拼接，可以减小堆内存的开销
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1463,7 +1452,7 @@ StringBuilder继承AbstractStringBuilder抽象类，且实现了CharSequence、S
         
           
           引言从一段代码说起
-12345public static void stringTest()&#123;    String str1 = &quot;a&quot; + &quot;b&quot; + 1;    String str2 = &quot;ab1&quot;;    System.o
+12345public static void stringTest()&#12
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1620,9 +1609,7 @@ StringBuilder继承AbstractStringBuilder抽象类，且实现了CharSequence、S
         
           
           常用方法 &amp; 字段
-Hashtable底层是一个数组 + 链表的数据结构，与HashMap的区别在于，其是线程安全、插入的键值对均不能为空、插入元素时，若发生哈希碰撞，Hashtable是从头结点插入，而HashMap1.8版本是从尾部插入；
-提问
-新增元素时，如何保证线程安全, put()
+Hashtable底层是一个数组 + 链表的数据结构，与HashMap的
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1779,11 +1766,7 @@ Hashtable底层是一个数组 + 链表的数据结构，与HashMap的区别在�
         
           
           常用方法
-HashSet是以HashMap为基础类封装的对象，在新增元素E时，往HashMap中插入(E,Object)的键值对，因为在HashMap中Key是不存在重复的，所以保证了HashSet的唯一性。
-提问
-如何保证唯一性；
-
-如何保证唯一性1234567public HashSet() &
+HashSet是以HashMap为基础类封装的对象，在新增元素E时，往HashMap中插入
           ...
           <!--noindex-->
           <div class="post-button text-center">
