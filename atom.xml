@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-08-13T14:37:36.462Z</updated>
+  <updated>2018-08-20T00:26:37.146Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SpringBoot使用Converter实现类型转换</title>
+    <link href="http://jianwl.com/2018/08/20/SpringBoot%E4%BD%BF%E7%94%A8Converter%E5%AE%9E%E7%8E%B0%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/"/>
+    <id>http://jianwl.com/2018/08/20/SpringBoot使用Converter实现类型转换/</id>
+    <published>2018-08-20T00:07:10.000Z</published>
+    <updated>2018-08-20T00:26:37.146Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在Spring3引入了Converter，实现从一个Object转为另外一个Object；</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-注册Convert实现"><a href="#1-注册Convert实现" class="headerlink" title="1. 注册Convert实现"></a>1. 注册Convert实现</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">@Component</div><div class="line">public class StringToDateConverter implements Converter&lt;String,Date&gt;&#123;</div><div class="line">    private SimpleDateFormat sdf;</div><div class="line"></div><div class="line">    public StringToDateConverter() &#123;</div><div class="line">        sdf = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Nullable</div><div class="line">    @Override</div><div class="line">    public Date convert(String s) &#123;</div><div class="line">        Date date = null;</div><div class="line">        try &#123;</div><div class="line">            date = sdf.parse(s);</div><div class="line">        &#125; catch (ParseException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        return date;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-HelloController-API层"><a href="#2-HelloController-API层" class="headerlink" title="2. HelloController(API层)"></a>2. HelloController(API层)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@RestController</div><div class="line">public class HelloController &#123;</div><div class="line">    @RequestMapping(value = &quot;/date&quot;)</div><div class="line">    public String date(@RequestParam Date dateTime)&#123;</div><div class="line">        return &quot;hello: &quot; + dateTime.getTime();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-调用层"><a href="#3-调用层" class="headerlink" title="3. 调用层"></a>3. 调用层</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 启动SpringBoot服务，端口为1111</div><div class="line"></div><div class="line"># 使用CURL命令调用</div><div class="line">curl &quot;localhost:1111/date?dateTime=2018-08-10&quot;</div><div class="line"></div><div class="line"># 得到结果</div><div class="line">hello: 1533830400000</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;在Spring3引入了Converter，实现从一个Object转为另外一个Object；&lt;/p&gt;
+&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=
+    
+    </summary>
+    
+      <category term="SpringBoot" scheme="http://jianwl.com/categories/SpringBoot/"/>
+    
+    
+      <category term="SpringBoot" scheme="http://jianwl.com/tags/SpringBoot/"/>
+    
+  </entry>
   
   <entry>
     <title>java8之Funtion学习</title>
@@ -618,37 +644,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;一个矮人金矿工厂包含着几个子系统，如金矿系统、矿车系统、轨道系统。每个系统都会雇佣工人使得这个系统运作起来，请描述每类系统工
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>7.模板方法模式</title>
-    <link href="http://jianwl.com/2018/08/04/7-%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://jianwl.com/2018/08/04/7-模板方法模式/</id>
-    <published>2018-08-04T03:49:53.000Z</published>
-    <updated>2018-08-04T05:12:48.122Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>期末考，所有人拿到的考卷题目都是一样的，但是每个人答题的答案都不一样。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-TestPaper"><a href="#1-TestPaper" class="headerlink" title="1. TestPaper"></a>1. TestPaper</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">public abstract class TestPaper &#123;</div><div class="line">    private String studentName;</div><div class="line"></div><div class="line">    public TestPaper(String studentName) &#123;</div><div class="line">        this.studentName = studentName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void testQuestion1() &#123;</div><div class="line">        System.out.println(&quot;试题1：1+2=?&quot;);</div><div class="line">        System.out.println(&quot;试题1答案：&quot; + testAnswer1());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void testQuestion2() &#123;</div><div class="line">        System.out.println(&quot;试题2：3*4=？&quot;);</div><div class="line">        System.out.println(&quot;试题2答案：&quot; + testAnswer2());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void testQuestion3() &#123;</div><div class="line">        System.out.println(&quot;试题3：(5+1)*7=?&quot;);</div><div class="line">        System.out.println(&quot;试题3答案：&quot; + testAnswer3());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void dispaly() &#123;</div><div class="line">        System.out.println(String.format(&quot;学生%s的答卷情况:&quot;, this.studentName));</div><div class="line">        testQuestion1();</div><div class="line">        testQuestion2();</div><div class="line">        testQuestion3();</div><div class="line">        System.out.println(&quot;\n&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public abstract String testAnswer1();</div><div class="line"></div><div class="line">    public abstract String testAnswer2();</div><div class="line"></div><div class="line">    public abstract String testAnswer3();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="2-TestPaperA"><a href="#2-TestPaperA" class="headerlink" title="2. TestPaperA"></a>2. TestPaperA</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public class TestPaperA extends TestPaper &#123;</div><div class="line"></div><div class="line">    public TestPaperA(String studentName) &#123;</div><div class="line">        super(studentName);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String testAnswer1() &#123;</div><div class="line">        return &quot;3&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String testAnswer2() &#123;</div><div class="line">        return &quot;6&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String testAnswer3() &#123;</div><div class="line">        return &quot;7&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="3-TestPaperB"><a href="#3-TestPaperB" class="headerlink" title="3. TestPaperB"></a>3. TestPaperB</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class TestPaperB extends TestPaper &#123;</div><div class="line">    public TestPaperB(String studentName) &#123;</div><div class="line">        super(studentName);</div><div class="line">    &#125;</div><div class="line">    @Override</div><div class="line">    public String testAnswer1() &#123;</div><div class="line">        return &quot;5&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String testAnswer2() &#123;</div><div class="line">        return &quot;9&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String testAnswer3() &#123;</div><div class="line">        return &quot;1&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="4-App-启动类"><a href="#4-App-启动类" class="headerlink" title="4. App(启动类)"></a>4. App(启动类)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class App &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        TestPaperA a = new TestPaperA(&quot;刘鹏&quot;);</div><div class="line">        a.dispaly();</div><div class="line"></div><div class="line">        TestPaperB b= new TestPaperB(&quot;未央&quot;);</div><div class="line">        b.dispaly();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>模板方法模式，定义一个操作中的算法的骨架，而将一些步骤延迟到子类中，模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</p>
-<h4 id="2-UML"><a href="#2-UML" class="headerlink" title="2. UML"></a>2. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-4/82380842.jpg" alt=""></p>
-<h4 id="3-优点"><a href="#3-优点" class="headerlink" title="3. 优点"></a>3. 优点</h4><p>模板方法模式通过把不变行为搬到超类，去除子类中的重复代码来体现它的优势。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;期末考，所有人拿到的考卷题目都是一样的，但是每个人答题的答案都不一样。&lt;/p&gt;
-&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#
     
     </summary>
     
