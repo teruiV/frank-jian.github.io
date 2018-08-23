@@ -4,6 +4,18 @@
   
     
     <entry>
+      <title><![CDATA[Mockito入门与实战]]></title>
+      <url>http://jianwl.com/2018/08/23/Mockito%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E6%88%98/</url>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在本地环境下，如果某个接口依赖第三方接口，在做单元测试时，如果本地环境没有第三方接口，那么该怎么办呢？这个场景下，Mock框架就非常有用了。当调用第三方接口时，直接返回模拟的数据。这样可以绕过第三方接口的阻断，实现整个流程的测试。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/spring-learning/blob/master/src/test/java/com/frank/springlearning/MockApiTest.java" target="_blank" rel="external">Mockito常用特性实战 - 请移步源码</a></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://static.javadoc.io/org.mockito/mockito-core/2.21.0/org/mockito/Mockito.html" target="_blank" rel="external">Mockito官方快速入门文档</a></li>
+<li><a href="https://site.mockito.org/" target="_blank" rel="external">Mockito官方介绍</a></li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[SpringBoot使用Converter实现类型转换]]></title>
       <url>http://jianwl.com/2018/08/20/SpringBoot%E4%BD%BF%E7%94%A8Converter%E5%AE%9E%E7%8E%B0%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/</url>
       <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在Spring3引入了Converter，实现从一个Object转为另外一个Object；</p>
