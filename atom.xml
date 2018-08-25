@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-08-23T15:23:51.265Z</updated>
+  <updated>2018-08-25T14:42:21.990Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -14,6 +14,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>spring bean lifecycle</title>
+    <link href="http://jianwl.com/2018/08/25/spring-bean-lifecycle/"/>
+    <id>http://jianwl.com/2018/08/25/spring-bean-lifecycle/</id>
+    <published>2018-08-25T13:08:14.000Z</published>
+    <updated>2018-08-25T14:42:21.990Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>传统java对象的生命始于调用实例化对象的new运算符，并且当对象符合垃圾收集条件时调用finalize()方法。与传统的java对象相比，spring bean的生命周期不同。Spring框架提供了一下可用于控制bean生命周期的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">InitializingBean和DisposableBean接口分别用于初始化Bean前和销毁Bean前调用方法。</div><div class="line"></div><div class="line">BeanNameAware、BeanFactoryAware和ApplicationContextAware用于特定行为的接口</div></pre></td></tr></table></figure>
+<h3 id="生命周期流程图"><a href="#生命周期流程图" class="headerlink" title="生命周期流程图"></a>生命周期流程图</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-25/58356701.jpg" alt=""></p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/spring-learning/blob/master/src/test/java/com/frank/springlearning/SpringLearningApplicationTests.java" target="_blank" rel="external">Bean生命周期测试 - 请移步源码 SpringLearningApplicationTests#test_002</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;传统java对象的生命始于调用实例化对象的new运算符，并且当对象符合垃圾收集条件时调用finalize()方法。与传统的java对象相比，
+    
+    </summary>
+    
+      <category term="Spring" scheme="http://jianwl.com/categories/Spring/"/>
+    
+    
+      <category term="Spring" scheme="http://jianwl.com/tags/Spring/"/>
+    
+  </entry>
   
   <entry>
     <title>Mockito入门与实战</title>
@@ -611,36 +637,6 @@
     
       &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;天气一旦发生变化，就要通知霍比特人和兽人。&lt;/p&gt;
 &lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; class=&quot;hea
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>9.建造者模式</title>
-    <link href="http://jianwl.com/2018/08/05/9-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://jianwl.com/2018/08/05/9-建造者模式/</id>
-    <published>2018-08-05T02:30:15.000Z</published>
-    <updated>2018-08-05T08:00:30.766Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>构建一个英雄的形象，声明：名字，头发以及拿的武器等属性。</p>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h4 id="1-HairColor-枚举"><a href="#1-HairColor-枚举" class="headerlink" title="1. HairColor(枚举)"></a>1. HairColor(枚举)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public enum  HairColor &#123;</div><div class="line">    BLUE, BLACK, RED;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return name().toLowerCase();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<h4 id="2-Profession-枚举"><a href="#2-Profession-枚举" class="headerlink" title="2. Profession(枚举)"></a>2. Profession(枚举)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public enum  Profession &#123;</div><div class="line">    WARRIOR,MAGE,PRIEST;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return  name().toLowerCase();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="3-Weapon-枚举"><a href="#3-Weapon-枚举" class="headerlink" title="3. Weapon(枚举)"></a>3. Weapon(枚举)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public enum  Weapon &#123;</div><div class="line">    DAGGER, SWORD, AXE, BOW;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return name().toLowerCase();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="4-Hero"><a href="#4-Hero" class="headerlink" title="4. Hero"></a>4. Hero</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">@AllArgsConstructor</div><div class="line">@NoArgsConstructor</div><div class="line">@Getter</div><div class="line">public final class Hero &#123;</div><div class="line">    private Profession profession;</div><div class="line">    private HairColor hairColor;</div><div class="line">    private Weapon weapon;</div><div class="line">    private Armor armor;</div><div class="line"></div><div class="line">    @Data</div><div class="line">    static class Builder&#123;</div><div class="line">        private Profession profession;</div><div class="line">        private HairColor hairColor;</div><div class="line">        private Weapon weapon;</div><div class="line">        private Armor armor;</div><div class="line"></div><div class="line">        public Builder profession(Profession profession)&#123;</div><div class="line">            this.setProfession(profession);</div><div class="line">            return this;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public Builder hairColor(HairColor hairColor)&#123;</div><div class="line">            this.setHairColor(hairColor);</div><div class="line">            return this;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public Builder weapon(Weapon weapon)&#123;</div><div class="line">            this.setWeapon(weapon);</div><div class="line">            return this;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public Builder armor(Armor armor)&#123;</div><div class="line">            this.setArmor(armor);</div><div class="line">            return this;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public Hero build()&#123;</div><div class="line">            return new Hero(this.profession,this.hairColor,this.weapon,this.armor);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="5-App-启动类"><a href="#5-App-启动类" class="headerlink" title="5. App(启动类)"></a>5. App(启动类)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class App &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">       Hero hero = new Hero.Builder().armor(CLOTHES).hairColor(HairColor.RED)</div><div class="line">               .profession(Profession.PRIEST).weapon(Weapon.AXE).build();</div><div class="line"></div><div class="line">        System.out.println(String.format(&quot;my hero is %s&quot;, JSON.toJSONString(hero)));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="构建者模式"><a href="#构建者模式" class="headerlink" title="构建者模式"></a>构建者模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;需求场景&quot;&gt;&lt;a href=&quot;#需求场景&quot; class=&quot;headerlink&quot; title=&quot;需求场景&quot;&gt;&lt;/a&gt;需求场景&lt;/h3&gt;&lt;p&gt;构建一个英雄的形象，声明：名字，头发以及拿的武器等属性。&lt;/p&gt;
-&lt;h3 id=&quot;实战&quot;&gt;&lt;a href=&quot;#实战&quot; cla
     
     </summary>
     
