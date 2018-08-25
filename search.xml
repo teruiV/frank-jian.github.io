@@ -4,6 +4,15 @@
   
     
     <entry>
+      <title><![CDATA[spring bean scope]]></title>
+      <url>http://jianwl.com/2018/08/25/spring-bean-scope/</url>
+      <content type="html"><![CDATA[<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-factory-scopes" target="_blank" rel="external">Spring官方文档 bean scope</a></li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[spring bean lifecycle]]></title>
       <url>http://jianwl.com/2018/08/25/spring-bean-lifecycle/</url>
       <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>传统java对象的生命始于调用实例化对象的new运算符，并且当对象符合垃圾收集条件时调用finalize()方法。与传统的java对象相比，spring bean的生命周期不同。Spring框架提供了一下可用于控制bean生命周期的方法：</p>
