@@ -1,68 +1,102 @@
-extends base
-
-block title
-  title= page.title + ' | ' + config.title
-
-block content
-  .post
-    h1.post-title= page.title
-    .post-meta= page.date.format('ll')
-      if page.categories.length > 0
-        span= ' | '
-        span.category
-          for category in page.categories.toArray()
-            a(href=url_for(category.path))= category.name
-      if theme.busuanzi == true
-        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
-        span#busuanzi_container_page_pv= ' | '
-          span#busuanzi_value_page_pv
-          span= ' ' + __('Hits')
-      if theme.wordcount == true
-        include _partial/wordcount.pug
-    if theme.disqus
-      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
-    if theme.changyan
-      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
-        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
-        span= ' ' + __('Comment')
-      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
-    if theme.valine.enable
-      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
-        span.valine-comment-count(data-xid=url_for(page.path))
-        span= ' ' + __('Comment')
-    if page.toc
-      div(class='clear')
-        div(id='toc' class='toc-article')
-          div(class='toc-title')= __('contents')
-          != toc(page.content, {list_number: theme.toc_number})
-    .post-content
-      != page.content
-    if theme.donate.enable == true
-      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
-
-    if theme.post_copyright.enable == true
-      div
-        ul.post-copyright
-          li.post-copyright-author
-            strong= __('copyright_author_prefix')
-            = theme.post_copyright.author
-          li.post-copyright-link
-            strong= __('copyright_link_prefix')
-            a(href='/' + page.path)= page.permalink
-          li.post-copyright-license
-            strong= __('copyright_declare_prefix')
-            if theme.post_copyright.copyright_text
-              != theme.post_copyright.copyright_text
-            else
-              != __('copyright_default_text')
-      br
-
-    if theme.shareto == true
-      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
-      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
-
-    include _partial/tag.pug
-    include _partial/post_nav.pug
-
-    if page.comments
-      include _partial/comments.pug
+<!DOCTYPE html><html lang="zh-Hans"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="每天进步一点"><title>JAVA代码规范 | 记录点滴成长</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">JAVA代码规范</h1><a id="logo" href="/.">记录点滴成长</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">JAVA代码规范</h1><div class="post-meta">Sep 14, 2016<span> | </span><span class="category"><a href="/categories/JAVA/">JAVA</a></span></div><div class="post-content"><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p> 代码是写给人看的，顺便在计算机上运行而已。把常用的标准记录下来，时常检验自己的代码是否符合规范，避免写烂代码。</p>
+<h3 id="烂代码是如何出现？"><a href="#烂代码是如何出现？" class="headerlink" title="烂代码是如何出现？"></a>烂代码是如何出现？</h3><blockquote>
+<ol>
+<li>未经思考就开始编码</li>
+<li>功能完成就结束编码</li>
+<li>修改已有代码</li>
+</ol>
+</blockquote>
+<h3 id="Java代码的一些规范"><a href="#Java代码的一些规范" class="headerlink" title="Java代码的一些规范"></a>Java代码的一些规范</h3><p><strong>命名</strong></p>
+<ol>
+<li>私有方法以「_ 」作为前缀</li>
+<li>以获取为目的的数据库查询方法以get作为前缀，以搜索为目的的数据库查询方法以find作为前缀。</li>
+<li>测试方法以test最为前缀</li>
+<li>类名一般以名词结尾，方法名应该是动词或者动词短语</li>
+<li>接口类以字母I作为前缀(常量类除外)</li>
+<li>抽象父类以Base作为前缀</li>
+<li>普通父类以类别作为后缀，比如xxxController,xxxService,xxxConstants,xxxVO(页面模型)、xxxQO(查询模型)、xxxHelper(带状态工具类),xxxUtils(无状态工具类)等</li>
+<li>测试类以Test作为后缀，与被测试类使用同一包名</li>
+<li>VO、QO的成员同一命名(包括大小写)</li>
+<li>增加重要细节，比如时间变量的单位</li>
+<li>对于作用域大的变量使用较长的名字。</li>
+</ol>
+<p><strong>代码</strong></p>
+<ol>
+<li>尽量编码使用NULL、使用Optional.ofNullable替代</li>
+<li>不要使用Optional作为默认参数，使用重载或者拆分方法</li>
+<li>Stream仅限于方法内部使用，接口层面使用List或Set</li>
+<li>循环流程中尽量避免自动装箱，显式调用Integer.intValue()或Integer.valueOf()</li>
+<li>工具类不应该捕获异常，而应将异常抛出由调用方处理</li>
+<li>使用JAVA8的DateTime，不要用JodaTime.</li>
+<li>除非会有多个实现，或者有解耦需求，不要使用Inteface.</li>
+<li>与常量做比较时，应该把常量放在前面避免空指针异常</li>
+<li>私有常量直接定义在类层面，而非方法层面。</li>
+</ol>
+<h3 id="抽象-amp-分类"><a href="#抽象-amp-分类" class="headerlink" title="抽象 &amp; 分类"></a>抽象 &amp; 分类</h3><p><code>抽象和分类是程序员/架构师最重要的能力</code></p>
+<p>架构和编程都是一个不断抽象的过程，我们把业务需求抽象成数据模型、服务和应用，面向对象就是抽象出类和对象，面向过程就是抽象出方法和函数。</p>
+<p>抽象出模块后，需要合理的将功能分到不同的模块，清楚的定义模块的边界，才能保证模块的可维护性和健壮性。</p>
+<p>抽象和分类是将复杂的东西简单化的过程。对于司机，汽车是一个抽象，它的接口是方向盘、档位、刹车和油门。 对于汽车，轮胎是一个抽象，轮胎的规格都是固定的几种，可以安装在不同的汽车上。</p>
+<h3 id="单一职责原则-Simple-Responsibility-Principle-SRP"><a href="#单一职责原则-Simple-Responsibility-Principle-SRP" class="headerlink" title="单一职责原则 Simple Responsibility Principle SRP"></a>单一职责原则 Simple Responsibility Principle SRP</h3><p><code>一个模块，只应该做一件事，并把这件事做好，或者只有一个引起该模块变化的原因。</code></p>
+<h3 id="开放封闭原则-Open-Closed-Principle-OCP"><a href="#开放封闭原则-Open-Closed-Principle-OCP" class="headerlink" title="开放封闭原则 Open/Closed Principle,OCP"></a>开放封闭原则 Open/Closed Principle,OCP</h3><p>对扩展开放，对修改封闭。当需求改变时，我们可以扩展模块以满足新的需求，但扩展时，不应该需要修改原模块的实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public class Square &#123; </span><br><span class="line">    public double side;</span><br><span class="line">&#125;</span><br><span class="line">public class Rectangle &#123; </span><br><span class="line">    public double height;</span><br><span class="line">    public double width;</span><br><span class="line">&#125;</span><br><span class="line">public class Circle &#123; </span><br><span class="line">    public double radius;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Geometry &#123;</span><br><span class="line">    public double area(Object shape) &#123;</span><br><span class="line">        if (shape instanceof Square) &#123;</span><br><span class="line">            Square s = (Square)shape;</span><br><span class="line">            return s.side * s.side;</span><br><span class="line">        &#125; else if (shape instanceof Rectangle) &#123;</span><br><span class="line">            Rectangle r = (Rectangle)shape;</span><br><span class="line">            return r.height * r.width;</span><br><span class="line">        &#125; else if (shape instanceof Square) &#123;</span><br><span class="line">            Circle c = (Circle)shape;</span><br><span class="line">            return PI * c.radius * c.radius;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            throw new NoSuchShareException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class Square implements Share &#123; </span><br><span class="line">    public double side;</span><br><span class="line">    </span><br><span class="line">    public double area() &#123;</span><br><span class="line">        return side * side;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Rectangle implements Share &#123; </span><br><span class="line">    public double height;</span><br><span class="line">    public double width;</span><br><span class="line">    </span><br><span class="line">    public double area() &#123;</span><br><span class="line">        return height * width;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Circle implements Share &#123; </span><br><span class="line">    public double radius;</span><br><span class="line">    </span><br><span class="line">    public double area() &#123;</span><br><span class="line">        return PI * radius * radius;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>过程式代码难以添加新数据结构，面向对象代码难以添加新方法。</p>
+<p>如果要添加一个新的形状(比如椭圆)，那面向对象的实现会方便些；</p>
+<p>如果要添加一个新的方法(比如计算周长)，那过程式的实现会方便些。</p>
+<h3 id="依赖倒置原则-Dependency-Inversion-Principle，DIP"><a href="#依赖倒置原则-Dependency-Inversion-Principle，DIP" class="headerlink" title="依赖倒置原则(Dependency Inversion Principle，DIP)"></a>依赖倒置原则(Dependency Inversion Principle，DIP)</h3><p>高层模块不应该依赖于底层模块的实现，两者都应该依赖于抽象，抽象不应该依赖于细节，细节应该依赖于抽象。</p>
+<p><code>所有的协议和标准化都是DIP的一种实现</code></p>
+<ol>
+<li>TCP、HTTP等网络协议</li>
+<li>JDBC和SQL</li>
+<li>操作系统、JVM</li>
+<li>Spring框架及各种设计模式</li>
+<li>编程语言 </li>
+</ol>
+<p><code>生活中也有很多例子</code></p>
+<ol>
+<li>汽车和轮胎</li>
+<li>铅笔和笔芯</li>
+<li>电源插座</li>
+<li>USB接口</li>
+</ol>
+<h3 id="里氏替换原则-Liskov-Substitution-Principle-LSP"><a href="#里氏替换原则-Liskov-Substitution-Principle-LSP" class="headerlink" title="里氏替换原则 Liskov Substitution Principle,LSP"></a>里氏替换原则 Liskov Substitution Principle,LSP</h3><p>子类必须能够替换他们的基类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class Rectangle &#123; </span><br><span class="line">    public double height;</span><br><span class="line">    public double width;</span><br><span class="line">    </span><br><span class="line">    public void setHeight(int height) &#123; ... &#125;</span><br><span class="line">    public void setWidth(int width) &#123; ... &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Square extends Rectangle &#123; </span><br><span class="line">    ???</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>正方形是一个特殊的长方形，那么，正方形可以是长方形的子类吗？</p>
+<h3 id="接口隔离原则-Interface-Segregation-Principle-ISP"><a href="#接口隔离原则-Interface-Segregation-Principle-ISP" class="headerlink" title="接口隔离原则(Interface Segregation Principle, ISP)"></a>接口隔离原则(Interface Segregation Principle, ISP)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">interface Shape &#123;</span><br><span class="line">    public function area();</span><br><span class="line">    public function volume();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Square extends Shape &#123; </span><br><span class="line">    ???</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果正方形继承了Shape接口，该如何计算体积以实现volume方法？</p>
+<h3 id="迪米特法则-Law-of-Demeter"><a href="#迪米特法则-Law-of-Demeter" class="headerlink" title="迪米特法则(Law of Demeter)"></a>迪米特法则(Law of Demeter)</h3><p>模块不应该了解它所操作的对象的内部情况。</p>
+<p><code>生活中案例</code></p>
+<p>如果你想让你的狗跑的话，你会对狗狗说，还是对四条狗腿说？<br>如果你去店里买东西，你会把钱交给店员，还是会把钱包交给店员让他自己拿？</p>
+<p><code>代码例子</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">final String outputDir = ctxt.getOptions().getScratchDir().getAbsolutePath();</span><br></pre></td></tr></table></figure>
+<p>这样的代码把对象内部实现暴露了出来，应该考虑讲该功能直接暴露为接口，或者合理使用设计模式（如Facade）。</p>
+<h3 id="其他原则"><a href="#其他原则" class="headerlink" title="其他原则"></a>其他原则</h3><ul>
+<li>Don’t Repeat Yourself (DRY)</li>
+<li>Keep It Simple, Stupid (KISS)</li>
+<li>You Ain’t Gonna Need It (YAGNI)</li>
+<li>命令/查询分离原则(Command-Query Separation, CQS)</li>
+<li>惯例优于配置原则(Convention over Configuration, CoC)</li>
+<li>高内聚/低耦合(High Cohesion &amp; Loose Coupling)</li>
+</ul>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://www.devtf.cn/?p=1134" target="_blank" rel="noopener">http://www.devtf.cn/?p=1134</a></li>
+<li><a href="http://www.jianshu.com/p/7645a5ea7f46" target="_blank" rel="noopener">http://www.jianshu.com/p/7645a5ea7f46</a></li>
+<li><a href="http://blog.2baxb.me/archives/1343" target="_blank" rel="noopener">http://blog.2baxb.me/archives/1343</a></li>
+<li><a href="http://blog.2baxb.me/archives/1378" target="_blank" rel="noopener">http://blog.2baxb.me/archives/1378</a></li>
+<li><a href="http://blog.2baxb.me/archives/1499" target="_blank" rel="noopener">http://blog.2baxb.me/archives/1499</a></li>
+<li><a href="http://beiyuu.com/readable-code/" target="_blank" rel="noopener">http://beiyuu.com/readable-code/</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html</a></li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzA5Nzc4OTA1Mw==&amp;mid=408703236&amp;idx=1&amp;sn=3f78abcca906d5edee06ff85b2d22416&amp;scene=0#wechat_redirect" target="_blank" rel="noopener">http://mp.weixin.qq.com/s?__biz=MzA5Nzc4OTA1Mw==&amp;mid=408703236&amp;idx=1&amp;sn=3f78abcca906d5edee06ff85b2d22416&amp;scene=0#wechat_redirect</a></li>
+<li><a href="http://coolshell.cn/articles/4535.html" target="_blank" rel="noopener">http://coolshell.cn/articles/4535.html</a></li>
+<li><a href="http://blog.jobbole.com/86267/" target="_blank" rel="noopener">http://blog.jobbole.com/86267/</a></li>
+<li><a href="http://www.importnew.com/10656.html" target="_blank" rel="noopener">http://www.importnew.com/10656.html</a></li>
+<li><a href="http://luopq.com/2016/02/21/write-good-function/" target="_blank" rel="noopener">http://luopq.com/2016/02/21/write-good-function/</a></li>
+</ul>
+<hr>
+<ul>
+<li><a href="http://book.douban.com/subject/4199741/" target="_blank" rel="noopener">「代码整洁之道」</a></li>
+<li><a href="https://book.douban.com/subject/10797189/" target="_blank" rel="noopener">「编写可读代码的艺术」</a></li>
+<li><a href="http://book.douban.com/subject/1140457/" target="_blank" rel="noopener">「敏捷软件开发：原则、模式与实践」</a></li>
+<li><a href="http://book.douban.com/subject/1467587/" target="_blank" rel="noopener">「UNIX编程艺术」</a></li>
+</ul>
+</div><div class="tags"><a href="/tags/JAVA/">JAVA</a></div><div class="post-nav"><a class="pre" href="/2016/09/14/Spring数据校验/">Spring数据校验</a><a class="next" href="/2016/09/14/MySQL之查询性能优化/">MySQL之查询性能优化</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://jianwl.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticJob/">ElasticJob</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码学习专题/">JDK源码学习专题</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM专题/">JVM专题</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java进阶/">Java进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mock/">Mock</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/">MongoDB</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring源码学习专题/">Spring源码学习专题</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web服务器/">Web服务器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/consul/">consul</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/书单/">书单</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/小目标/">小目标</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Mock/" style="font-size: 15px;">Mock</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/思绪/" style="font-size: 15px;">思绪</a> <a href="/tags/小目标/" style="font-size: 15px;">小目标</a> <a href="/tags/JDK源码学习专题/" style="font-size: 15px;">JDK源码学习专题</a> <a href="/tags/CSS/" style="font-size: 15px;">CSS</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/JavaScirpt/" style="font-size: 15px;">JavaScirpt</a> <a href="/tags/ElasticJob/" style="font-size: 15px;">ElasticJob</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Go/" style="font-size: 15px;">Go</a> <a href="/tags/HTTP/" style="font-size: 15px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 15px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 15px;">Intellij IDEA</a> <a href="/tags/MYSQL/" style="font-size: 15px;">MYSQL</a> <a href="/tags/JOOQ/" style="font-size: 15px;">JOOQ</a> <a href="/tags/JVM专题/" style="font-size: 15px;">JVM专题</a> <a href="/tags/Java进阶/" style="font-size: 15px;">Java进阶</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/JAVA/" style="font-size: 15px;">JAVA</a> <a href="/tags/MongoDB/" style="font-size: 15px;">MongoDB</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Web服务器/" style="font-size: 15px;">Web服务器</a> <a href="/tags/Play/" style="font-size: 15px;">Play</a> <a href="/tags/中间件/" style="font-size: 15px;">中间件</a> <a href="/tags/React/" style="font-size: 15px;">React</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 15px;">Retrofit</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Sprng-MVC/" style="font-size: 15px;">Sprng MVC</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Elasticsearch/" style="font-size: 15px;">Elasticsearch</a> <a href="/tags/SpringCloud/" style="font-size: 15px;">SpringCloud</a> <a href="/tags/Spring源码学习专题/" style="font-size: 15px;">Spring源码学习专题</a> <a href="/tags/Thymeleaf/" style="font-size: 15px;">Thymeleaf</a> <a href="/tags/WebSocket/" style="font-size: 15px;">WebSocket</a> <a href="/tags/consul/" style="font-size: 15px;">consul</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Retrofit2/" style="font-size: 15px;">Retrofit2</a> <a href="/tags/书单/" style="font-size: 15px;">书单</a> <a href="/tags/zookeeper/" style="font-size: 15px;">zookeeper</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/VPS/" style="font-size: 15px;">VPS</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/28/spring-bean加载/">spring bean加载</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/25/spring-bean-scope/">spring bean scope</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/25/spring-bean-lifecycle/">spring bean lifecycle</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/23/Mockito入门与实战/">Mockito入门与实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/20/SpringBoot使用Converter实现类型转换/">SpringBoot使用Converter实现类型转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/13/java8之Funtion学习/">java8之Funtion学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/11/mac终端崩溃/">mac终端崩溃</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/10/23-访问者模式/">23.访问者模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/10/22-解释器模式/">22.解释器模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/10/21-享元模式/">21.享元模式</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">记录点滴成长.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

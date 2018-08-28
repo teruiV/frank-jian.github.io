@@ -1,68 +1,23 @@
-extends base
-
-block title
-  title= page.title + ' | ' + config.title
-
-block content
-  .post
-    h1.post-title= page.title
-    .post-meta= page.date.format('ll')
-      if page.categories.length > 0
-        span= ' | '
-        span.category
-          for category in page.categories.toArray()
-            a(href=url_for(category.path))= category.name
-      if theme.busuanzi == true
-        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
-        span#busuanzi_container_page_pv= ' | '
-          span#busuanzi_value_page_pv
-          span= ' ' + __('Hits')
-      if theme.wordcount == true
-        include _partial/wordcount.pug
-    if theme.disqus
-      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
-    if theme.changyan
-      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
-        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
-        span= ' ' + __('Comment')
-      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
-    if theme.valine.enable
-      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
-        span.valine-comment-count(data-xid=url_for(page.path))
-        span= ' ' + __('Comment')
-    if page.toc
-      div(class='clear')
-        div(id='toc' class='toc-article')
-          div(class='toc-title')= __('contents')
-          != toc(page.content, {list_number: theme.toc_number})
-    .post-content
-      != page.content
-    if theme.donate.enable == true
-      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
-
-    if theme.post_copyright.enable == true
-      div
-        ul.post-copyright
-          li.post-copyright-author
-            strong= __('copyright_author_prefix')
-            = theme.post_copyright.author
-          li.post-copyright-link
-            strong= __('copyright_link_prefix')
-            a(href='/' + page.path)= page.permalink
-          li.post-copyright-license
-            strong= __('copyright_declare_prefix')
-            if theme.post_copyright.copyright_text
-              != theme.post_copyright.copyright_text
-            else
-              != __('copyright_default_text')
-      br
-
-    if theme.shareto == true
-      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
-      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
-
-    include _partial/tag.pug
-    include _partial/post_nav.pug
-
-    if page.comments
-      include _partial/comments.pug
+<!DOCTYPE html><html lang="zh-Hans"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="每天进步一点"><title>关于代码阅读的思考 | 记录点滴成长</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">关于代码阅读的思考</h1><a id="logo" href="/.">记录点滴成长</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">关于代码阅读的思考</h1><div class="post-meta">Apr 1, 2017<span> | </span><span class="category"><a href="/categories/思绪/">思绪</a></span></div><div class="post-content"><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>作为一个工程师，你的价值如何体现？不是掌握了多少知识，而是体现在创造出的系统，否则空有满腹经纶，最后也只是纸上谈兵。学习编写优秀代码的最佳方式，就是阅读高品质的代码，学习别人的高明之处。这一节我们将来学习阅读优秀源码的技巧。</p>
+<h3 id="阅读代码"><a href="#阅读代码" class="headerlink" title="阅读代码"></a>阅读代码</h3><h4 id="1-为什么阅读代码"><a href="#1-为什么阅读代码" class="headerlink" title="1. 为什么阅读代码"></a>1. 为什么阅读代码</h4><p>经常花时间阅读别人编写的高质量代码，就像阅读高品质的散文能够丰富词汇，激发想象力，扩展思维一样，分析设计良好的软件系统的内部结构可以学到<code>新的架构模式</code>、<code>数据结构</code>、<code>编码方法</code>、<code>算法</code>、<code>风格</code>和<code>文档规范</code>、<code>应用程序编程接口(API)</code>，同时可以提高编写代码的水准。</p>
+<p>阅读代码的过程中，不可避免地会遇到一些在实践中应该尽量避免的代码，能够快速地从坏代码中区分出好代码是一项有价值的技能；接触一些编码的反面例子有助于提高这种能力，通过下面这些征兆，可以很容易识别出低品质的代码：1️⃣ 编码风格不一致 2️⃣ 结构不必要地复杂或难以理解 3️⃣ 明显的逻辑错误或疏忽 4️⃣ 过度使用不可移植的构造 5️⃣ 缺乏维护</p>
+<p>大型、有组织体制之下的项目都会采纳一套编码规范、指导原则或约定，代码规范提供风格上的指导，目标是增强代码的可靠性、易读性和可维护性。关注优秀源码的<code>类命名</code>、<code>变量命名</code>、<code>代码缩进</code>、<code>代码编排</code>、<code>命名约定</code>、<code>文档</code>；</p>
+<p>通过阅读优秀源码，我们可以学习到<code>分层架构的设计</code>、<code>更加合理的抽象面向对象的结构</code>、<code>如何更加合理的拆分模块</code>、<code>代码重用</code></p>
+<h4 id="2-如何阅读代码"><a href="#2-如何阅读代码" class="headerlink" title="2. 如何阅读代码"></a>2. 如何阅读代码</h4><p>有选择地阅读代码，同时还有<code>有自己的目标</code>。想学习新的模式、编码风格还是满足某些需求的方法？或者只是浏览代码，获取其中的某些亮点。</p>
+<p>从小型的程序开始阅读，不要立即陷入对大型系统的研究中，编译研究的程序并运行他们，这样可以得到即时的反馈，了解代码预想的工作方式，同时可以获得成就感。</p>
+<p>积极介入现实的代码，能够快速从中了解到一些情况，当觉得已经掌握了他们之后，再采取更有组织的方式来学习，比如：阅读相关书籍、文档、手册、参加培训课程。</p>
+<h4 id="3-实战"><a href="#3-实战" class="headerlink" title="3. 实战"></a>3. 实战</h4><p>比如：想要了解一个特定的功能是如何实现的。首先使用该系统，得到他的外部接口，根据外部接口，定位目标代码，针对它进行研究分析，忽略不相关的部分。如果觉得在原来的上下文中，理解代码有困难，就将他复制到一个历史文件中，删除所有不相关的部分。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>1、养成一个习惯，经常花时间阅读别人编写的高品质代码</p>
+<p>2、要有选择地阅读代码，同时还要有自己的目标，想学习新的模式、编码风格、还是满足某些需求的方法</p>
+<p>3、对于那些大型且组织良好的系统，只需要最低限度地了解它的全部功能，就能够对它做出修改。</p>
+<p>4、向系统中增加新功能时，首先的任务就是找到类似特性的代码，将它作为待实现功能的模板。</p>
+<p>5、阅读代码寻找重构机会时，先从系统的架构开始，然后逐步细化，能够获得最大的效益。</p>
+<p>6、不需要为了效率，牺牲代码的可读性</p>
+<p>7、通过浏览项目的源代码树 – 包含项目源代码的层次目录结构，来分析一个项目的组织方式，源码树常常能够反映出项目在架构和软件过程上的结构。</p>
+<p>8、<strong>阅读代码时，应该尽可能利用任何能够得到的文档。</strong></p>
+<p>9、<strong>阅读一个小时代码所得到的信息只不过相当于阅读一分钟文档</strong></p>
+<p>10、可以将系统的设计规格说明作为认知代码结构的路线图，阅读具体代码的指引</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li>代码阅读方法与实践</li>
+</ol>
+</div><div class="tags"><a href="/tags/思绪/">思绪</a></div><div class="post-nav"><a class="pre" href="/2017/04/01/Mac下效率神器之autojump/">Mac下效率神器之autojump</a><a class="next" href="/2017/03/31/Python之易出错语法/">Python之易出错语法</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://jianwl.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticJob/">ElasticJob</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码学习专题/">JDK源码学习专题</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM专题/">JVM专题</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java进阶/">Java进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mock/">Mock</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/">MongoDB</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring源码学习专题/">Spring源码学习专题</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web服务器/">Web服务器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/consul/">consul</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/书单/">书单</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/小目标/">小目标</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Mock/" style="font-size: 15px;">Mock</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/思绪/" style="font-size: 15px;">思绪</a> <a href="/tags/小目标/" style="font-size: 15px;">小目标</a> <a href="/tags/JDK源码学习专题/" style="font-size: 15px;">JDK源码学习专题</a> <a href="/tags/CSS/" style="font-size: 15px;">CSS</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/JavaScirpt/" style="font-size: 15px;">JavaScirpt</a> <a href="/tags/ElasticJob/" style="font-size: 15px;">ElasticJob</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Go/" style="font-size: 15px;">Go</a> <a href="/tags/HTTP/" style="font-size: 15px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 15px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 15px;">Intellij IDEA</a> <a href="/tags/MYSQL/" style="font-size: 15px;">MYSQL</a> <a href="/tags/JOOQ/" style="font-size: 15px;">JOOQ</a> <a href="/tags/JVM专题/" style="font-size: 15px;">JVM专题</a> <a href="/tags/Java进阶/" style="font-size: 15px;">Java进阶</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/JAVA/" style="font-size: 15px;">JAVA</a> <a href="/tags/MongoDB/" style="font-size: 15px;">MongoDB</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Web服务器/" style="font-size: 15px;">Web服务器</a> <a href="/tags/Play/" style="font-size: 15px;">Play</a> <a href="/tags/中间件/" style="font-size: 15px;">中间件</a> <a href="/tags/React/" style="font-size: 15px;">React</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 15px;">Retrofit</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Sprng-MVC/" style="font-size: 15px;">Sprng MVC</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Elasticsearch/" style="font-size: 15px;">Elasticsearch</a> <a href="/tags/SpringCloud/" style="font-size: 15px;">SpringCloud</a> <a href="/tags/Spring源码学习专题/" style="font-size: 15px;">Spring源码学习专题</a> <a href="/tags/Thymeleaf/" style="font-size: 15px;">Thymeleaf</a> <a href="/tags/WebSocket/" style="font-size: 15px;">WebSocket</a> <a href="/tags/consul/" style="font-size: 15px;">consul</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Retrofit2/" style="font-size: 15px;">Retrofit2</a> <a href="/tags/书单/" style="font-size: 15px;">书单</a> <a href="/tags/zookeeper/" style="font-size: 15px;">zookeeper</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/VPS/" style="font-size: 15px;">VPS</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/28/spring-bean加载/">spring bean加载</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/25/spring-bean-scope/">spring bean scope</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/25/spring-bean-lifecycle/">spring bean lifecycle</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/23/Mockito入门与实战/">Mockito入门与实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/20/SpringBoot使用Converter实现类型转换/">SpringBoot使用Converter实现类型转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/13/java8之Funtion学习/">java8之Funtion学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/11/mac终端崩溃/">mac终端崩溃</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/10/23-访问者模式/">23.访问者模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/10/22-解释器模式/">22.解释器模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/10/21-享元模式/">21.享元模式</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">记录点滴成长.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

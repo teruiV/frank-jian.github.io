@@ -1,68 +1,33 @@
-extends base
-
-block title
-  title= page.title + ' | ' + config.title
-
-block content
-  .post
-    h1.post-title= page.title
-    .post-meta= page.date.format('ll')
-      if page.categories.length > 0
-        span= ' | '
-        span.category
-          for category in page.categories.toArray()
-            a(href=url_for(category.path))= category.name
-      if theme.busuanzi == true
-        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
-        span#busuanzi_container_page_pv= ' | '
-          span#busuanzi_value_page_pv
-          span= ' ' + __('Hits')
-      if theme.wordcount == true
-        include _partial/wordcount.pug
-    if theme.disqus
-      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
-    if theme.changyan
-      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
-        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
-        span= ' ' + __('Comment')
-      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
-    if theme.valine.enable
-      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
-        span.valine-comment-count(data-xid=url_for(page.path))
-        span= ' ' + __('Comment')
-    if page.toc
-      div(class='clear')
-        div(id='toc' class='toc-article')
-          div(class='toc-title')= __('contents')
-          != toc(page.content, {list_number: theme.toc_number})
-    .post-content
-      != page.content
-    if theme.donate.enable == true
-      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
-
-    if theme.post_copyright.enable == true
-      div
-        ul.post-copyright
-          li.post-copyright-author
-            strong= __('copyright_author_prefix')
-            = theme.post_copyright.author
-          li.post-copyright-link
-            strong= __('copyright_link_prefix')
-            a(href='/' + page.path)= page.permalink
-          li.post-copyright-license
-            strong= __('copyright_declare_prefix')
-            if theme.post_copyright.copyright_text
-              != theme.post_copyright.copyright_text
-            else
-              != __('copyright_default_text')
-      br
-
-    if theme.shareto == true
-      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
-      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
-
-    include _partial/tag.pug
-    include _partial/post_nav.pug
-
-    if page.comments
-      include _partial/comments.pug
+<!DOCTYPE html><html lang="zh-Hans"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="每天进步一点"><title>ES6之数组的扩展 | 记录点滴成长</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">ES6之数组的扩展</h1><a id="logo" href="/.">记录点滴成长</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">ES6之数组的扩展</h1><div class="post-meta">Sep 7, 2016<span> | </span><span class="category"><a href="/categories/JavaScript/">JavaScript</a></span></div><div class="post-content"><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上篇文章介绍了<a href="http://jianwl.com/2016/09/06/ES6%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%89%A9%E5%B1%95/">ES6之字符串的扩展</a>，本文将学习ES6中数组的扩展，数组在实际项目中比较常用，所以非常有必要了解一下。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><strong>将数组对象转化为真正的数组：<code>Array.from</code></strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/44455334.jpg" alt=""></p>
+<p><strong>将一组值转化为数组：Array.of</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/42839910.jpg" alt=""></p>
+<p><strong>将当前数组内部指定位置的成员复制到其他的位置：copyWithin</strong></p>
+<p>具体语法为<code>Array.prototype.copyWithin(target,start = 0, end = this.length)</code>,接受三个参数，target(必选)，从当前位置开始替换数据，start(可选)，从该位置开始读取数据，负数表示倒数，end(可选)，默认为数组长度；</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/3645079.jpg" alt=""></p>
+<p><strong>寻找数组中符合条件的元素：find和findIndex</strong></p>
+<p><code>find</code>方法，数组中每个元素都会执行回调函数，若找到返回这个元素，没找到则返回<code>undefine</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/91334943.jpg" alt=""></p>
+<p><code>findIndex</code>，数组中每个元素都会执行回调函数，找到返回具体的索引位置，找不到返回 -1</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/86472470.jpg" alt=""></p>
+<p><strong>定值填充数组</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/35563292.jpg" alt=""></p>
+<p><strong>数组实例的entries、keys、values</strong></p>
+<p><code>keys</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/20213197.jpg" alt=""></p>
+<p><code>values:报错，暂时不清楚什么原因？后续解决🤔</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/67413393.jpg" alt=""></p>
+<p><code>entries</code></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/89340245.jpg" alt=""></p>
+<p><strong>数组实例includes</strong></p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/36818030.jpg" alt=""></p>
+<p><strong>数组空位</strong><br><code>比如Array构造函数返回的数组都是空位 Array[3] // [,,,]</code>；空位没有任何值，一个位置的值等于undefined仍是有值得。</p>
+<p><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/68402315.jpg" alt=""></p>
+<p><strong>数组推导</strong></p>
+<p>数组推导允许直接通过现有数组生成新数组。</p>
+<p><code>案例1：暂时不清楚其为何报错，后续解决🤔</code><br><img src="http://oc5a5l0a0.bkt.clouddn.com/16-9-7/18821221.jpg" alt=""></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>ES6标准入门 – 阮一峰</li>
+</ul>
+</div><div class="tags"><a href="/tags/JavaScirpt/">JavaScirpt</a></div><div class="post-nav"><a class="pre" href="/2016/09/08/Mysql服务启动错误-The-server-quit-without-updating-PID-file/">Mysql服务启动错误 The server quit without updating PID file</a><a class="next" href="/2016/09/06/ES6之字符串的扩展/">ES6之字符串的扩展</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://jianwl.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticJob/">ElasticJob</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码学习专题/">JDK源码学习专题</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM专题/">JVM专题</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java进阶/">Java进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mock/">Mock</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/">MongoDB</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring源码学习专题/">Spring源码学习专题</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web服务器/">Web服务器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/consul/">consul</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/书单/">书单</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/小目标/">小目标</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Mock/" style="font-size: 15px;">Mock</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/思绪/" style="font-size: 15px;">思绪</a> <a href="/tags/小目标/" style="font-size: 15px;">小目标</a> <a href="/tags/JDK源码学习专题/" style="font-size: 15px;">JDK源码学习专题</a> <a href="/tags/CSS/" style="font-size: 15px;">CSS</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/JavaScirpt/" style="font-size: 15px;">JavaScirpt</a> <a href="/tags/ElasticJob/" style="font-size: 15px;">ElasticJob</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Go/" style="font-size: 15px;">Go</a> <a href="/tags/HTTP/" style="font-size: 15px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 15px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 15px;">Intellij IDEA</a> <a href="/tags/MYSQL/" style="font-size: 15px;">MYSQL</a> <a href="/tags/JOOQ/" style="font-size: 15px;">JOOQ</a> <a href="/tags/JVM专题/" style="font-size: 15px;">JVM专题</a> <a href="/tags/Java进阶/" style="font-size: 15px;">Java进阶</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/JAVA/" style="font-size: 15px;">JAVA</a> <a href="/tags/MongoDB/" style="font-size: 15px;">MongoDB</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Web服务器/" style="font-size: 15px;">Web服务器</a> <a href="/tags/Play/" style="font-size: 15px;">Play</a> <a href="/tags/中间件/" style="font-size: 15px;">中间件</a> <a href="/tags/React/" style="font-size: 15px;">React</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 15px;">Retrofit</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Sprng-MVC/" style="font-size: 15px;">Sprng MVC</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Elasticsearch/" style="font-size: 15px;">Elasticsearch</a> <a href="/tags/SpringCloud/" style="font-size: 15px;">SpringCloud</a> <a href="/tags/Spring源码学习专题/" style="font-size: 15px;">Spring源码学习专题</a> <a href="/tags/Thymeleaf/" style="font-size: 15px;">Thymeleaf</a> <a href="/tags/WebSocket/" style="font-size: 15px;">WebSocket</a> <a href="/tags/consul/" style="font-size: 15px;">consul</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Retrofit2/" style="font-size: 15px;">Retrofit2</a> <a href="/tags/书单/" style="font-size: 15px;">书单</a> <a href="/tags/zookeeper/" style="font-size: 15px;">zookeeper</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/VPS/" style="font-size: 15px;">VPS</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/28/spring-bean加载/">spring bean加载</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/25/spring-bean-scope/">spring bean scope</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/25/spring-bean-lifecycle/">spring bean lifecycle</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/23/Mockito入门与实战/">Mockito入门与实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/20/SpringBoot使用Converter实现类型转换/">SpringBoot使用Converter实现类型转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/13/java8之Funtion学习/">java8之Funtion学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/11/mac终端崩溃/">mac终端崩溃</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/10/23-访问者模式/">23.访问者模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/10/22-解释器模式/">22.解释器模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/10/21-享元模式/">21.享元模式</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">记录点滴成长.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

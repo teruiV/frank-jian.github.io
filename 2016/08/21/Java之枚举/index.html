@@ -1,68 +1,84 @@
-extends base
-
-block title
-  title= page.title + ' | ' + config.title
-
-block content
-  .post
-    h1.post-title= page.title
-    .post-meta= page.date.format('ll')
-      if page.categories.length > 0
-        span= ' | '
-        span.category
-          for category in page.categories.toArray()
-            a(href=url_for(category.path))= category.name
-      if theme.busuanzi == true
-        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
-        span#busuanzi_container_page_pv= ' | '
-          span#busuanzi_value_page_pv
-          span= ' ' + __('Hits')
-      if theme.wordcount == true
-        include _partial/wordcount.pug
-    if theme.disqus
-      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
-    if theme.changyan
-      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
-        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
-        span= ' ' + __('Comment')
-      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
-    if theme.valine.enable
-      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
-        span.valine-comment-count(data-xid=url_for(page.path))
-        span= ' ' + __('Comment')
-    if page.toc
-      div(class='clear')
-        div(id='toc' class='toc-article')
-          div(class='toc-title')= __('contents')
-          != toc(page.content, {list_number: theme.toc_number})
-    .post-content
-      != page.content
-    if theme.donate.enable == true
-      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
-
-    if theme.post_copyright.enable == true
-      div
-        ul.post-copyright
-          li.post-copyright-author
-            strong= __('copyright_author_prefix')
-            = theme.post_copyright.author
-          li.post-copyright-link
-            strong= __('copyright_link_prefix')
-            a(href='/' + page.path)= page.permalink
-          li.post-copyright-license
-            strong= __('copyright_declare_prefix')
-            if theme.post_copyright.copyright_text
-              != theme.post_copyright.copyright_text
-            else
-              != __('copyright_default_text')
-      br
-
-    if theme.shareto == true
-      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
-      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
-
-    include _partial/tag.pug
-    include _partial/post_nav.pug
-
-    if page.comments
-      include _partial/comments.pug
+<!DOCTYPE html><html lang="zh-Hans"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="每天进步一点"><title>Java之枚举 | 记录点滴成长</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Java之枚举</h1><a id="logo" href="/.">记录点滴成长</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Java之枚举</h1><div class="post-meta">Aug 21, 2016<span> | </span><span class="category"><a href="/categories/JAVA/">JAVA</a></span></div><div class="post-content"><h3 id="引入枚举的背景"><a href="#引入枚举的背景" class="headerlink" title="引入枚举的背景"></a>引入枚举的背景</h3><p><strong>场景</strong></p>
+<p>为彩虹描绘出其中颜色，通常可以通过定义常量的方式来实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class RainbowColor &#123;</span><br><span class="line">    public static final int RED = 0;</span><br><span class="line">    public static final int ORANGE = 1;</span><br><span class="line">    public static final int YELLOW = 2;</span><br><span class="line">    public static final int GREEN = 3;</span><br><span class="line">    public static final int CYAN = 4;</span><br><span class="line">    public static final int BLUE = 5;</span><br><span class="line">    public static final int PURPLE = 6;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但这种方式会存在以下这几个问题：</p>
+<p><strong>类型不安全</strong></p>
+<p>由于颜色常量的对应值是整数型，所以程序执行过程中很有可能给颜色变量传入一个任意的整数值，导致出现错误。</p>
+<p><strong>类型无指意性</strong></p>
+<p>由于颜色变量值仅仅是一些无包含任何含义的整数值，如果在运行期调试时候，你就会发现日志中有很多魔术数字，但除了程序员本身，其他人很难明白其中奥秘。</p>
+<h3 id="枚举类型"><a href="#枚举类型" class="headerlink" title="枚举类型"></a>枚举类型</h3><p>为了改进Java语言在这方面的不足，<code>JDK1.5</code>之后，增加了枚举类型。<code>枚举是限定有限种可能值的一种手段，使用枚举可以降低程序出错的几率，并可以提高代码的可读性和可维护性</code></p>
+<p><strong>枚举定义</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public enum  RainbowEnum &#123;</span><br><span class="line">    RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PURPLE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>常规用法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class EnumDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        RainbowEnum color = RainbowEnum.GREEN;</span><br><span class="line">        switch (color)&#123;</span><br><span class="line">            case GREEN:</span><br><span class="line">                System.out.println(&quot;this is GREEN&quot;);</span><br><span class="line">                break;</span><br><span class="line">            case CYAN:</span><br><span class="line">                System.out.println(&quot;this is CYAN&quot;);</span><br><span class="line">                break;</span><br><span class="line">            default:</span><br><span class="line">                System.out.println(&quot;other color&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>枚举提供了几个方法供开发者在需要时调用。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vlaues()</td>
+<td><code>返回当前枚举中所有枚举项的集合</code></td>
+</tr>
+<tr>
+<td>oridinal()</td>
+<td><code>返回枚举项在枚举对象中的序号</code></td>
+</tr>
+<tr>
+<td>name()</td>
+<td><code>返回枚举项的名称，与toString()效果相同</code></td>
+</tr>
+<tr>
+<td>getDeclaringClass()</td>
+<td><code>取得当前枚举值所在类的完整名称</code></td>
+</tr>
+<tr>
+<td>valueOf(“xx”)</td>
+<td><code>返回名称为xx的枚举项</code></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class EnumDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        for (RainbowEnum colorEnum : RainbowEnum.values()) &#123;</span><br><span class="line">            System.out.println(colorEnum);</span><br><span class="line">            System.out.println(colorEnum.ordinal());</span><br><span class="line">            System.out.println(colorEnum.name());</span><br><span class="line">            System.out.println(colorEnum.getDeclaringClass() + &quot;\n&quot;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;&lt;h5&gt;BLUE&lt;/h5&gt;&quot;);</span><br><span class="line">        RainbowEnum red = RainbowEnum.valueOf(&quot;BLUE&quot;);</span><br><span class="line">        System.out.println(red.ordinal());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>为枚举添加构造器和成员方法</strong></p>
+<p><code>RainBowEnum.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public enum RainbowEnum &#123;</span><br><span class="line">    RED(1, &quot;red&quot;),</span><br><span class="line">    ORANGE(2, &quot;orange&quot;),</span><br><span class="line">    YELLOW(3, &quot;yellow&quot;),</span><br><span class="line">    GREEN(4, &quot;green&quot;),</span><br><span class="line">    CYAN(5, &quot;cyan&quot;),</span><br><span class="line">    BLUE(6, &quot;blue&quot;),</span><br><span class="line">    PURPLE(7, &quot;purple&quot;);</span><br><span class="line"></span><br><span class="line">    private Integer code;</span><br><span class="line">    private String desc;</span><br><span class="line"></span><br><span class="line">    RainbowEnum(Integer code, String desc) &#123;</span><br><span class="line">        this.code = code;</span><br><span class="line">        this.desc = desc;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Integer getCode() &#123;</span><br><span class="line">        return code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setCode(Integer code) &#123;</span><br><span class="line">        this.code = code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getDesc() &#123;</span><br><span class="line">        return desc;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setDesc(String desc) &#123;</span><br><span class="line">        this.desc = desc;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>EnumDemo.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class EnumDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        for (RainbowEnum colorEnum : RainbowEnum.values()) &#123;</span><br><span class="line">            System.out.println(&quot;code = &quot; + colorEnum.getCode());</span><br><span class="line">            System.out.println(&quot;desc = &quot; + colorEnum.getDesc());</span><br><span class="line">        &#125;</span><br><span class="line">        RainbowEnum color = RainbowEnum.valueOf(&quot;RED&quot;); //非red,故valueOf(&quot;枚举名称&quot;)</span><br><span class="line">        System.out.println(&quot;code = &quot; + color.getCode());</span><br><span class="line">        System.out.println(&quot;desc = &quot; + color.getDesc());</span><br><span class="line">        System.out.println(&quot;name = &quot; + color.name());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="枚举集合"><a href="#枚举集合" class="headerlink" title="枚举集合"></a>枚举集合</h3><table>
+<thead>
+<tr>
+<th>集合对象</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EnumSet</code></td>
+<td><code>EnumSet用于保存枚举项的集合，在枚举项本身并不互斥的情况下特别有用。例如，一个应用系统通常会有多种角色，而某些人在系统中可能承担不止一种角色。如果这些角色是通过枚举定义的，则此时EnumSet将可以将多种角色保存在一起，标识特定用户承担的全部角色</code></td>
+</tr>
+<tr>
+<td><code>EnumMap</code></td>
+<td><code>EnumMap是必须使用枚举项作为其KEY的Map，其法与普通Map类似</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>EnumSet</strong></p>
+<p><code>RoleEnum.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public enum RoleEnum &#123;</span><br><span class="line">    SYSADMIN,ROLEA,ROLEB;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>EnumSetDemo.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class EnumSetDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        EnumSet&lt;RoleEnum&gt; es = EnumSet.of(RoleEnum.ROLEA,RoleEnum.ROLEB);</span><br><span class="line">        es.add(RoleEnum.SYSADMIN);</span><br><span class="line">        es.add(RoleEnum.ROLEA); // 重复元素自动去重</span><br><span class="line">        for(RoleEnum role: es)&#123;</span><br><span class="line">            System.out.println(role);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>EnumMap</strong></p>
+<p><code>RoleEnum.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public enum RoleEnum &#123;</span><br><span class="line">    SYSADMIN,ROLEA,ROLEB;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>EnumMapDemo.class</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class EnumMapDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        EnumMap&lt;RoleEnum,String&gt; em = new EnumMap&lt;RoleEnum, String&gt;(RoleEnum.class);</span><br><span class="line">        em.put(RoleEnum.SYSADMIN,&quot;系统管理员&quot;);</span><br><span class="line">        em.put(RoleEnum.ROLEA,&quot;角色A&quot;);</span><br><span class="line">        System.out.println(&quot; size = &quot;+em.size());</span><br><span class="line">        System.out.println(em.get(RoleEnum.SYSADMIN));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://blog.csdn.net/ishallwin/article/details/9440251" target="_blank" rel="noopener">Java枚举</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-enum/" target="_blank" rel="noopener">Java 语言中 Enum 类型的使用介绍</a></li>
+</ul>
+</div><div class="tags"><a href="/tags/JAVA/">JAVA</a></div><div class="post-nav"><a class="pre" href="/2016/08/22/ES6常见的坑/">ES6常见的坑</a><a class="next" href="/2016/08/21/Mac技巧之指令篇/">Mac技巧之指令篇</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://jianwl.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticJob/">ElasticJob</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hystrix/">Hystrix</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intellij-IDEA/">Intellij IDEA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JDK源码学习专题/">JDK源码学习专题</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JOOQ/">JOOQ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM专题/">JVM专题</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java进阶/">Java进阶</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MYSQL/">MYSQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mock/">Mock</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/">MongoDB</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Play/">Play</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retrofit/">Retrofit</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringCloud/">SpringCloud</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring源码学习专题/">Spring源码学习专题</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thymeleaf/">Thymeleaf</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VPS/">VPS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web服务器/">Web服务器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/consul/">consul</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/书单/">书单</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/小目标/">小目标</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/思绪/">思绪</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/正则表达式/">正则表达式</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Mock/" style="font-size: 15px;">Mock</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/思绪/" style="font-size: 15px;">思绪</a> <a href="/tags/小目标/" style="font-size: 15px;">小目标</a> <a href="/tags/JDK源码学习专题/" style="font-size: 15px;">JDK源码学习专题</a> <a href="/tags/CSS/" style="font-size: 15px;">CSS</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/JavaScirpt/" style="font-size: 15px;">JavaScirpt</a> <a href="/tags/ElasticJob/" style="font-size: 15px;">ElasticJob</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Go/" style="font-size: 15px;">Go</a> <a href="/tags/HTTP/" style="font-size: 15px;">HTTP</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Hystrix/" style="font-size: 15px;">Hystrix</a> <a href="/tags/Intellij-IDEA/" style="font-size: 15px;">Intellij IDEA</a> <a href="/tags/MYSQL/" style="font-size: 15px;">MYSQL</a> <a href="/tags/JOOQ/" style="font-size: 15px;">JOOQ</a> <a href="/tags/JVM专题/" style="font-size: 15px;">JVM专题</a> <a href="/tags/Java进阶/" style="font-size: 15px;">Java进阶</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/JAVA/" style="font-size: 15px;">JAVA</a> <a href="/tags/MongoDB/" style="font-size: 15px;">MongoDB</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Web服务器/" style="font-size: 15px;">Web服务器</a> <a href="/tags/Play/" style="font-size: 15px;">Play</a> <a href="/tags/中间件/" style="font-size: 15px;">中间件</a> <a href="/tags/React/" style="font-size: 15px;">React</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/Retrofit/" style="font-size: 15px;">Retrofit</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Sprng-MVC/" style="font-size: 15px;">Sprng MVC</a> <a href="/tags/Spring/" style="font-size: 15px;">Spring</a> <a href="/tags/Elasticsearch/" style="font-size: 15px;">Elasticsearch</a> <a href="/tags/SpringCloud/" style="font-size: 15px;">SpringCloud</a> <a href="/tags/Spring源码学习专题/" style="font-size: 15px;">Spring源码学习专题</a> <a href="/tags/Thymeleaf/" style="font-size: 15px;">Thymeleaf</a> <a href="/tags/WebSocket/" style="font-size: 15px;">WebSocket</a> <a href="/tags/consul/" style="font-size: 15px;">consul</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Retrofit2/" style="font-size: 15px;">Retrofit2</a> <a href="/tags/书单/" style="font-size: 15px;">书单</a> <a href="/tags/zookeeper/" style="font-size: 15px;">zookeeper</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/VPS/" style="font-size: 15px;">VPS</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/28/spring-bean加载/">spring bean加载</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/25/spring-bean-scope/">spring bean scope</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/25/spring-bean-lifecycle/">spring bean lifecycle</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/23/Mockito入门与实战/">Mockito入门与实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/20/SpringBoot使用Converter实现类型转换/">SpringBoot使用Converter实现类型转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/13/java8之Funtion学习/">java8之Funtion学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/11/mac终端崩溃/">mac终端崩溃</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/10/23-访问者模式/">23.访问者模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/10/22-解释器模式/">22.解释器模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/10/21-享元模式/">21.享元模式</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">记录点滴成长.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
