@@ -1,0 +1,692 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Spring," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oc5a5l0a0.bkt.clouddn.com/17-9-15/12958638.jpg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1. Bean获取时序图
+1. 尝试从缓存中加载单例(P.1.1)单例在Spring的同一个容器内只会被创建一次，后续再获取bean，就直接从单例缓存中获取了。当然这里也只是尝试加载，首先尝试从缓存中加载，如果加载不成功则再次尝试从singletonFactories中加载。因为在创建单例bean的时候会存在依赖注入的情况，而在创建依赖的时候为了避免循环依赖，在spring中创建bean的原则是不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring bean加载">
+<meta property="og:url" content="http://jianwl.com/2018/08/28/spring-bean加载/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="1. Bean获取时序图
+1. 尝试从缓存中加载单例(P.1.1)单例在Spring的同一个容器内只会被创建一次，后续再获取bean，就直接从单例缓存中获取了。当然这里也只是尝试加载，首先尝试从缓存中加载，如果加载不成功则再次尝试从singletonFactories中加载。因为在创建单例bean的时候会存在依赖注入的情况，而在创建依赖的时候为了避免循环依赖，在spring中创建bean的原则是不">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-8-28/85819316.jpg">
+<meta property="og:updated_time" content="2018-08-28T13:39:48.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring bean加载">
+<meta name="twitter:description" content="1. Bean获取时序图
+1. 尝试从缓存中加载单例(P.1.1)单例在Spring的同一个容器内只会被创建一次，后续再获取bean，就直接从单例缓存中获取了。当然这里也只是尝试加载，首先尝试从缓存中加载，如果加载不成功则再次尝试从singletonFactories中加载。因为在创建单例bean的时候会存在依赖注入的情况，而在创建依赖的时候为了避免循环依赖，在spring中创建bean的原则是不">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-8-28/85819316.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> spring bean加载 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/08/28/spring-bean加载/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                spring bean加载
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-28T21:09:16+08:00">
+                2018-08-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/28/spring-bean加载/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/28/spring-bean加载/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-Bean获取时序图"><a href="#1-Bean获取时序图" class="headerlink" title="1. Bean获取时序图"></a>1. Bean获取时序图</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-28/85819316.jpg" alt=""></p>
+<h5 id="1-尝试从缓存中加载单例-P-1-1"><a href="#1-尝试从缓存中加载单例-P-1-1" class="headerlink" title="1. 尝试从缓存中加载单例(P.1.1)"></a>1. 尝试从缓存中加载单例(P.1.1)</h5><p>单例在Spring的同一个容器内只会被创建一次，后续再获取bean，就直接从单例缓存中获取了。当然这里也只是尝试加载，首先尝试从缓存中加载，如果加载不成功则再次尝试从singletonFactories中加载。因为在创建单例bean的时候会存在依赖注入的情况，而在创建依赖的时候为了避免循环依赖，在spring中创建bean的原则是不等bean创建完成就会将创建bean的ObjectFactory提早曝光加入到缓存中，一旦下一个bean创建时候需要依赖上一个bean则直接使用ObjectFactory。</p>
+<h5 id="2-bean的实例化-P-1-2"><a href="#2-bean的实例化-P-1-2" class="headerlink" title="2. bean的实例化(P.1.2)"></a>2. bean的实例化(P.1.2)</h5><p>如果从缓存中得到了bean的原始状态，则需要对bean进行实例化，这里有必要强调下，缓存中记录的只是原始的bean状态，并不一定是我们最终想要的bean。举个例子，假如我们需要对工厂bean进行处理，那么这里得到的其实是工厂bean的初始状态，但是我们真正需要的是工厂中定义的factory-method方法中返回的bean，而getObjectForBeanInstance就是完成这个工作的。</p>
+<h5 id="3-原型模式的依赖检查"><a href="#3-原型模式的依赖检查" class="headerlink" title="3. 原型模式的依赖检查"></a>3. 原型模式的依赖检查</h5><p>只有在单例情况下才会尝试解决循环依赖，如果存在A中有B的属性，B中有A的属性，那么当依赖注入的时候，就会产生当A还未创建完的时候，因为对B的依赖的创建再次返回创建A，造成循环依赖，也就是情况：isPrototypeCurrentlyInCreation(beanName)判断为true。</p>
+<h5 id="4-检测parentBeanFactory-P-3"><a href="#4-检测parentBeanFactory-P-3" class="headerlink" title="4. 检测parentBeanFactory(P.3)"></a>4. 检测parentBeanFactory(P.3)</h5><p>从代码上看，如果缓存没有数据的话直接转到工厂上去加载了，这是为什么呢？可能读者忽略了一个很重要的判断条件：!constainsBeanDefinition(beanName),当前加载的XML配置文件中不包含beanName所对应的配置，就只能到parentBeanFactory去尝试下了，然后再去递归的调用getBean方法。</p>
+<h5 id="5-将存储XML配置文件的GenericBeanDefinition转换为RootBeanDefinition。-P-4"><a href="#5-将存储XML配置文件的GenericBeanDefinition转换为RootBeanDefinition。-P-4" class="headerlink" title="5. 将存储XML配置文件的GenericBeanDefinition转换为RootBeanDefinition。(P.4)"></a>5. 将存储XML配置文件的GenericBeanDefinition转换为RootBeanDefinition。(P.4)</h5><p>因为XML配置文件中读取到的Bean信息是存储在GenericBeanDefinition中的，但是所有Bean后续处理都是针对RootBeanDefinition的，所以这里需要进行一个转换，转换的同时，如果父类bean不为空的话，则会合并父类的属性。</p>
+<h5 id="6-寻找依赖"><a href="#6-寻找依赖" class="headerlink" title="6. 寻找依赖"></a>6. 寻找依赖</h5><p>因为bean的初始化过程很可能会用到某些属性，而某些属性很可能是动态配置的，并且配置成依赖于其他的bean，那么这个时候就有必要先加载依赖的bean，所以在spring的加载顺序中，在初始化某一个bean的时候，首先会初始化这个bean所对应的依赖</p>
+<h5 id="7-针对不同的scope进行bean的创建-P-6"><a href="#7-针对不同的scope进行bean的创建-P-6" class="headerlink" title="7. 针对不同的scope进行bean的创建(P.6)"></a>7. 针对不同的scope进行bean的创建(P.6)</h5><p>在Spring中存在不同的scope，其中默认的是singleton,但是还有些其他的配置诸如prototype、request之类的，在这个步骤中，Spring会根据不同的配置进行不同的初始化策略。</p>
+<h5 id="8-类型转换-P-7"><a href="#8-类型转换-P-7" class="headerlink" title="8. 类型转换(P.7)"></a>8. 类型转换(P.7)</h5><p>程序到这里返回bean已经基本结束，通常对方法调用参数requiredType是为空的，但是可能存在这种情况，返回的bean其实是个String,但是requiredType却传入Integer类型，那么这个时候，这个步骤就会起作用，它的功能是将返回的bean转换为requiredType所指定的类型。在Spring中提供了各种各样的转换器，用户也可以自己扩展转换器来满足需求。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/25/spring-bean-scope/" rel="next" title="spring bean scope">
+                <i class="fa fa-chevron-left"></i> spring bean scope
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/08/28/spring-bean加载/"
+           data-title="spring bean加载" data-url="http://jianwl.com/2018/08/28/spring-bean加载/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">323</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Bean获取时序图"><span class="nav-text">1. Bean获取时序图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-尝试从缓存中加载单例-P-1-1"><span class="nav-text">1. 尝试从缓存中加载单例(P.1.1)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-bean的实例化-P-1-2"><span class="nav-text">2. bean的实例化(P.1.2)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-原型模式的依赖检查"><span class="nav-text">3. 原型模式的依赖检查</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-检测parentBeanFactory-P-3"><span class="nav-text">4. 检测parentBeanFactory(P.3)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-将存储XML配置文件的GenericBeanDefinition转换为RootBeanDefinition。-P-4"><span class="nav-text">5. 将存储XML配置文件的GenericBeanDefinition转换为RootBeanDefinition。(P.4)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-寻找依赖"><span class="nav-text">6. 寻找依赖</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-针对不同的scope进行bean的创建-P-6"><span class="nav-text">7. 针对不同的scope进行bean的创建(P.6)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-类型转换-P-7"><span class="nav-text">8. 类型转换(P.7)</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
