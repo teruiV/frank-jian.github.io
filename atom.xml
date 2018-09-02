@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-09-01T10:28:28.792Z</updated>
+  <updated>2018-09-02T03:41:42.963Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Astah之时序图教程</title>
+    <link href="http://jianwl.com/2018/09/02/Astah%E4%B9%8B%E6%97%B6%E5%BA%8F%E5%9B%BE%E6%95%99%E7%A8%8B/"/>
+    <id>http://jianwl.com/2018/09/02/Astah之时序图教程/</id>
+    <published>2018-09-02T03:38:31.000Z</published>
+    <updated>2018-09-02T03:41:42.963Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol><li><a href="http://astah.net/manual/434-sequence-diagram" target="_blank" rel="noopener">时序图 - Astah官方教程</a></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://astah.net/manual/434-sequence-diagram&quot; t
+      
+    
+    </summary>
+    
+      <category term="UML" scheme="http://jianwl.com/categories/UML/"/>
+    
+    
+      <category term="UML" scheme="http://jianwl.com/tags/UML/"/>
+    
+  </entry>
   
   <entry>
     <title>声明不可变类的策略</title>
@@ -496,32 +522,6 @@
       
         &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;一群人在海上遇到了海盗，大船搁浅了，刚好这群人中有个舰长，还有个渔船。舰长需要适配掌控这个渔船带着所有人逃生。&lt;/p&gt;
 &lt;h3 id
-      
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>12.状态模式</title>
-    <link href="http://jianwl.com/2018/08/09/12-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://jianwl.com/2018/08/09/12-状态模式/</id>
-    <published>2018-08-09T15:24:07.000Z</published>
-    <updated>2018-08-09T15:32:13.144Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>长毛象的情绪状态是变化的，有时候是生气状态，有时候是平和状态。</p><h3 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>当一个对象的内在状态改变时允许改变其行为，这个对象看起来像是改变了其类。</p><h4 id="2-适用场景"><a href="#2-适用场景" class="headerlink" title="2. 适用场景"></a>2. 适用场景</h4><p>状态模式主要解决的是当控制一个对象状态转换的条件表达式过于复杂的情况，把状态的判断逻辑转移到表示不同状态的一系列类当中，可以把复杂的判断逻辑简化。</p><h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-9/14716250.jpg" alt=""></p><h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/state" target="_blank" rel="noopener">状态模式实战，请移步源码链接</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;长毛象的情绪状态是变化的，有时候是生气状态，有时候是平和状态。&lt;/p&gt;
-&lt;h3 id=&quot;状态模式&quot;&gt;&lt;a href=&quot;#状态模式&quot; 
       
     
     </summary>
