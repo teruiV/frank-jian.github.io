@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-09-02T03:41:42.963Z</updated>
+  <updated>2018-09-08T02:19:37.582Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用Charles抓Https包</title>
+    <link href="http://jianwl.com/2018/09/08/%E4%BD%BF%E7%94%A8Charles%E6%8A%93Https%E5%8C%85/"/>
+    <id>http://jianwl.com/2018/09/08/使用Charles抓Https包/</id>
+    <published>2018-09-08T01:29:54.000Z</published>
+    <updated>2018-09-08T02:19:37.582Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Charles是一个HTTP代理/ HTTP监视器/反向代理，使开发人员能够查看其机器和Internet之间的所有HTTP和SSL / HTTPS流量。 这包括请求，响应和HTTP标头（包含cookie和缓存信息）。这篇文章将会介绍如何抓取手机App上的请求。</p><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p><a href="https://www.charlesproxy.com/download/" target="_blank" rel="noopener">Charles下载链接</a></p><h3 id="使用教程"><a href="#使用教程" class="headerlink" title="使用教程"></a>使用教程</h3><p>1、 打开charles, 设置proxy settings，记下端口号，默认8888</p><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-9-8/30793892.jpg" alt=""></p><p>2、查看本地电脑IP</p><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-9-8/22283825.jpg" alt=""></p><p>3、打开手机的wifi详情,选择http代理,选择手动，填入刚刚记下的电脑的ip地址,还有上面记下的charles的端口号(例如,默认的8888)</p><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-9-8/95234717.jpg" alt=""></p><p>4、打开Safari,输入chls.pro/ssl,安装charles证书</p><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-9-8/53294009.jpg" alt=""></p><p>5、在设置-通用-关于本机-证书信任，查看下载的证书是否已信任(PS：通用 - 描述文件与设备管理, 也需要设置证书信任)</p><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-9-8/48914902.jpg" alt=""></p><p>6、在手机上进行网络访问,这样charles会出现一个提示,大体上意思是,是否允许charles作为手机的网络请求代理，选择Allow</p><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-9-8/91391446.jpg" alt=""></p><p>7、在Proxy下，勾选macOS Proxy</p><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-9-8/19859492.jpg" alt=""></p><p>8、这样我们就可以愉快的抓包了，但打开的链接很多是左边是有锁的，点击下面都是<unknown>怎么办呢</unknown></p><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-9-8/7691650.jpg" alt=""></p><p>9、右键该链接，选择”Enable SSL Proxying”</p><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-9-8/21501010.jpg" alt=""></p><p>10、关闭charles，再打开，神奇的一幕出现了，请求报文可以看见了</p><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-9-8/2689691.jpg" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;Charles是一个HTTP代理/ HTTP监视器/反向代理，使开发人员能够查看其机器和Internet之间的所有HTTP和SSL / HT
+      
+    
+    </summary>
+    
+      <category term="Mac" scheme="http://jianwl.com/categories/Mac/"/>
+    
+    
+      <category term="Mac" scheme="http://jianwl.com/tags/Mac/"/>
+    
+  </entry>
   
   <entry>
     <title>Astah之时序图教程</title>
@@ -496,32 +521,6 @@
       
         &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;多个字母组成一个单词，多个单词组成一句话。&lt;/p&gt;
 &lt;h3 id=&quot;组合模式&quot;&gt;&lt;a href=&quot;#组合模式&quot; class=&quot;hea
-      
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>13.适配器模式</title>
-    <link href="http://jianwl.com/2018/08/09/13-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://jianwl.com/2018/08/09/13-适配器模式/</id>
-    <published>2018-08-09T15:33:38.000Z</published>
-    <updated>2018-08-10T00:51:39.040Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>一群人在海上遇到了海盗，大船搁浅了，刚好这群人中有个舰长，还有个渔船。舰长需要适配掌控这个渔船带着所有人逃生。</p><h3 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>将一个类的接口转换成客户希望的另外一个接口。Adapter模式使得原本由于接口模式不兼容而不能一起工作的接口的那些类可以一起工作。</p><h4 id="2-适用场景"><a href="#2-适用场景" class="headerlink" title="2. 适用场景"></a>2. 适用场景</h4><ol><li>两个类所作的事情相同或相似，但是使用它时，需要调用不同的接口。这种情况应该用适配器模式，调用一个接口即可。</li></ol><h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-10/98252317.jpg" alt=""></p><h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/adapter" target="_blank" rel="noopener">适配器模式实战，请移步看源码</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;一群人在海上遇到了海盗，大船搁浅了，刚好这群人中有个舰长，还有个渔船。舰长需要适配掌控这个渔船带着所有人逃生。&lt;/p&gt;
-&lt;h3 id
       
     
     </summary>
