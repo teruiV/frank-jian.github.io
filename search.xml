@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title><![CDATA[使用RAP,Mock第三方服务]]></title>
+      <url>http://jianwl.com/2018/09/08/%E4%BD%BF%E7%94%A8RAP-Mock%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9C%8D%E5%8A%A1/</url>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>RAP是一个可视化接口管理工具 通过分析接口结构，动态生成模拟数据，校验真实接口正确性， 围绕接口定义，通过一系列自动化工具提升我们的协作效率。</p>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>DEV环境的服务A，某个接口依赖第三方的服务。但DEV环境并没有部署第三方服务，那么要测试这个接口「除第三方之外的逻辑」，必须要Mock第三方服务。这个此时就可以使用RAP。具体使用详情，可以查看官网教程。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://rap2.taobao.org/" target="_blank" rel="noopener">RAP官网</a></li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> Mock </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Mock </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[使用Charles抓Https包]]></title>
       <url>http://jianwl.com/2018/09/08/%E4%BD%BF%E7%94%A8Charles%E6%8A%93Https%E5%8C%85/</url>
       <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Charles是一个HTTP代理/ HTTP监视器/反向代理，使开发人员能够查看其机器和Internet之间的所有HTTP和SSL / HTTPS流量。 这包括请求，响应和HTTP标头（包含cookie和缓存信息）。这篇文章将会介绍如何抓取手机App上的请求。</p>
