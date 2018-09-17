@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-09-08T02:32:12.769Z</updated>
+  <updated>2018-09-17T13:26:38.198Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java并发源码学习系列</title>
+    <link href="http://jianwl.com/2018/09/17/Java%E5%B9%B6%E5%8F%91%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%97/"/>
+    <id>http://jianwl.com/2018/09/17/Java并发源码学习系列/</id>
+    <published>2018-09-17T13:07:42.000Z</published>
+    <updated>2018-09-17T13:26:38.198Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>第二期源码刻意练习，本专题针对 锁、线程池、队列、并发容器，这个四个方面进行学习和梳理。以下会列出每个主题需要学习的内容</p><h3 id="训练计划"><a href="#训练计划" class="headerlink" title="训练计划"></a>训练计划</h3><p>锁</p><blockquote><p>1 ReentrantLock </p><p>2 ReentrantReadWriteLock </p><p>3 Condition </p><p>4 CAS </p><p>5 CountDownLatch</p><p>6 CycliBarrier </p><p>7 Semaphore  </p><p>8 Exchanger </p></blockquote><p>多线程</p><blockquote><p>ScheduledThreadPoolExecutor</p><p>ThreadPoolExecutor</p><p>Executors</p></blockquote><p>队列</p><blockquote><p>ArrayBlockingQueue</p><p>LinkedBlockingQueue</p><p>DelayQueue</p><p>PriorityBlockingQueue</p><p>SynchronousQueue</p></blockquote><p>并发容器</p><blockquote><p>ConcurrentHashMap</p><p>ConcurrentLinkedQueue</p><p>ConcurrentSkipListMap</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;第二期源码刻意练习，本专题针对 锁、线程池、队列、并发容器，这个四个方面进行学习和梳理。以下会列出每个主题需要学习的内容&lt;/p&gt;
+&lt;h3 i
+      
+    
+    </summary>
+    
+      <category term="JDK源码学习专题" scheme="http://jianwl.com/categories/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
+    
+    
+      <category term="JDK源码学习专题" scheme="http://jianwl.com/tags/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title>使用RAP,Mock第三方服务</title>
@@ -494,32 +520,6 @@
       
         &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;保证一个类仅有一个实例，有多种实现方式，理解每种方式的优缺点。&lt;/p&gt;
 &lt;h3 id=&quot;单例模式&quot;&gt;&lt;a href=&quot;#单例模式&quot; 
-      
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>15.迭代器模式</title>
-    <link href="http://jianwl.com/2018/08/10/15-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://jianwl.com/2018/08/10/15-迭代器模式/</id>
-    <published>2018-08-10T00:31:31.000Z</published>
-    <updated>2018-08-11T08:56:51.160Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>有个宝库，里面有很多宝箱，每个宝箱都能爆出不同的装备。可能是首饰类、武器、药剂。请遍历宝库里所有的宝箱里装备。</p><h3 id="迭代模式"><a href="#迭代模式" class="headerlink" title="迭代模式"></a>迭代模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>提供一种方法顺序访问一个聚合对象中各个元素，而又不暴露该对象内部表示。</p><h4 id="2-使用场景"><a href="#2-使用场景" class="headerlink" title="2. 使用场景"></a>2. 使用场景</h4><ol><li>迭代器模式就是分离了集合对象的遍历行为，抽象出一个迭代器类来负责，这样即可以不暴露集合的内部结构，又可让外部代码透明地访问集合内部数据。</li></ol><h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/35337447.jpg" alt=""></p><h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/Iterator" target="_blank" rel="noopener">迭代模式，请移步源码</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;有个宝库，里面有很多宝箱，每个宝箱都能爆出不同的装备。可能是首饰类、武器、药剂。请遍历宝库里所有的宝箱里装备。&lt;/p&gt;
-&lt;h3 id
       
     
     </summary>
