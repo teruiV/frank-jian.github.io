@@ -4,6 +4,176 @@
   
     
     <entry>
+      <title><![CDATA[ReentrantLock源码学习]]></title>
+      <url>http://jianwl.com/2018/09/17/ReentrantLock%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</url>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>ReentrantLock是一个重入锁，提供了公平锁和非公平锁的选择，通过构造方法接受参数fair，为true为公平锁，反之为非公平锁。默认为非公平锁。</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在进行源码阅读之前，我有几个问题，带着问题，我们来进一步学习源码，会更加有目的性。</p>
+<blockquote>
+<p>1 如何实现加锁的，lock()方法都做了些什么？</p>
+<p>2 是如何实现公平锁的，如何让等待更久的线程，可以优先获取锁呢？好奇</p>
+<p>3 lock()、tryLock()、lockInterruptibly()这三个方法有什么区别呢？</p>
+</blockquote>
+<h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-9-17/47777084.jpg" alt=""></p>
+<p>ReentrantLock实现了Lock接口，Sync抽象类继承了AQS，公平锁类和非公平锁类继承了Sync抽象类。</p>
+<h3 id="分析思路"><a href="#分析思路" class="headerlink" title="分析思路"></a>分析思路</h3><p>从使用的角度来分析，每一步它都是怎么实现的，抽丝剥茧那么整个流程通了。而后再重点分析核心类。即「构造方法」-&gt; 「lock」-&gt; 「unlock」-&gt; 「Sync」</p>
+<h3 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private final Sync sync;</span><br><span class="line">// 默认为非公平锁</span><br><span class="line">    public ReentrantLock() &#123;</span><br><span class="line">        sync = new NonfairSync();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">// fair == true,为公平锁</span><br><span class="line">    public ReentrantLock(boolean fair) &#123;</span><br><span class="line">        sync = fair ? new FairSync() : new NonfairSync();</span><br><span class="line">    &#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">### lock()</span><br><span class="line"></span><br><span class="line">若初始化为非公平锁，调用lock方法，其实是调用了NonfairSync的lock方法。</span><br><span class="line"></span><br><span class="line">&gt; ReetrantLock#lock</span><br></pre></td></tr></table></figure>
+<pre><code>public void lock() {
+    sync.lock();
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">compareAndSetState为CAS操作，即：如果同步状态state的值为0，就更新为1，此操作是原子性的。如果更新成功，则设置当前线程为同步锁的独占线程。反之，则执行#acquire(1)操作。</span><br><span class="line"></span><br><span class="line">&gt; NonfairSync#lock</span><br></pre></td></tr></table></figure>
+<pre><code>final void lock() {
+    if (compareAndSetState(0, 1))
+        setExclusiveOwnerThread(Thread.currentThread());
+    else
+        acquire(1);
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">NonfairSync#tryAcquire，重载了AQS中的tryAcquire方法，而其实现为抽象类Sync#nonfairTryAcquire，NonfairSync非公平锁继承了Sync抽象类。</span><br><span class="line"></span><br><span class="line">通过tryAcquire尝试获取锁，如果获取失败，将当前线程封装为Node，放到同步队列里去，如果此过程没有发生中断操作，则返回false。反之为true，自身需要再中断一次。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; AbstractQueuedSynchronizer#acquire</span><br></pre></td></tr></table></figure>
+<pre><code>public final void acquire(int arg) {
+    if (!tryAcquire(arg) &amp;&amp;
+        acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
+        selfInterrupt();
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; NonfairTryAcquire#tryAcquire</span><br></pre></td></tr></table></figure>
+<pre><code>protected final boolean tryAcquire(int acquires) {
+    return nonfairTryAcquire(acquires);
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">获取当前同步状态state，如果state == 0, 没有线程独占同步对象Sync，更新当前同步状态由0 -&gt; acquires,成功则设置同步对象的独占线程为当前线程。如果当前线程 == 同步对象Sync的独占线程，则当前设置同步状态为「当前值 + acquires」,如果重入的次数溢出，则抛出异常。</span><br><span class="line"></span><br><span class="line">&gt; Sync#nonfairTryAcquire</span><br></pre></td></tr></table></figure>
+<pre><code>final boolean nonfairTryAcquire(int acquires) {
+    final Thread current = Thread.currentThread();
+    int c = getState();
+    if (c == 0) {
+        if (compareAndSetState(0, acquires)) {
+            setExclusiveOwnerThread(current);
+            return true;
+        }
+    }
+    else if (current == getExclusiveOwnerThread()) {
+        int nextc = c + acquires;
+        if (nextc &lt; 0) // overflow
+            throw new Error(&quot;Maximum lock count exceeded&quot;);
+        setState(nextc);
+        return true;
+    }
+    return false;
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; AbstractQueuedSynchronizer#acquireQueued</span><br></pre></td></tr></table></figure>
+<pre><code>final boolean acquireQueued(final Node node, int arg) {
+    boolean failed = true;
+    try {
+        boolean interrupted = false;
+        for (;;) {
+        // 获取前继节点「① 前继节点可能为空的吧，假设队列里没有节点呢，添加一个节点不就是首节点？」
+            final Node p = node.predecessor();
+            // 前继节点为首节点，那么当前节点可以尝试获取锁，采用自旋的方式
+            if (p == head &amp;&amp; tryAcquire(arg)) {
+                setHead(node);
+                p.next = null; // help GC
+                failed = false;
+                return interrupted;
+            }
+            // 如果前继节点状态为SIGNAL，表示lock被其他线程占用，需要调用parkAndCheckInterrupt方法来中断当前线程，休息下。
+            if (shouldParkAfterFailedAcquire(p, node) &amp;&amp;
+                    parkAndCheckInterrupt()) 
+                interrupted = true;
+        }
+    } finally {
+        if (failed)
+                // 清除node节点(清除过程是先给节点打上Node标签，再移除节点)
+            cancelAcquire(node);
+    }
+}  
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shouldParkAfterFailedAcquire方法用于判断是否需要中断，如果前继节点处于SIGNA状态则需要唤醒。</span><br><span class="line"></span><br><span class="line">&gt; AbstractQueuedSynchronizer#shouldParkAfterFailedAcquire</span><br></pre></td></tr></table></figure>
+<p>private static boolean shouldParkAfterFailedAcquire(Node pred, Node node) {<br>        int ws = pred.waitStatus;<br>        if (ws == Node.SIGNAL)<br>            return true;<br>            // ① ws &gt; 0 的状态只有取消状态；<br>        if (ws &gt; 0) {<br>              // 跳过「直接」前继节点，往前遍历直到找到队列等待状态为SIGNAL的「间接」前继节点。<br>            do {<br>                node.prev = pred = pred.prev;<br>            } while (pred.waitStatus &gt; 0);<br>            pred.next = node;<br>        } else {<br>            // 前继节点为其他的状态时(非取消、非唤醒状态)，CAS设置为唤醒状态。<br>            compareAndSetWaitStatus(pred, ws, Node.SIGNAL);<br>        }<br>        return false;<br>    }<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### unlock()</span><br><span class="line"></span><br><span class="line">若同步锁初始化为非公平锁，即调用NonfairSync的unlock方法，NonfairSync本身没有这个方法，使用继承抽象类Sync的继承抽象类AbstractQueuedSynchronizer的unlock方法。</span><br><span class="line"></span><br><span class="line">&gt; ReentrantLock#unlock</span><br></pre></td></tr></table></figure></p>
+<pre><code>public void unlock() {
+    sync.release(1);
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">tryRelease方法,被继承的父类Sync重载了。通过tryRelease方法释放锁，如果返回true，表示锁表成功释放。</span><br><span class="line"></span><br><span class="line">&gt; AbstractQueuedSynchronizer#release</span><br></pre></td></tr></table></figure>
+<pre><code>public final boolean release(int arg) {
+    if (tryRelease(arg)) {
+        Node h = head;
+        if (h != null &amp;&amp; h.waitStatus != 0)
+        // 唤醒头节点的后继节点
+            unparkSuccessor(h);
+        return true;
+    }
+    return false;
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">此处是为了唤醒头节点的后继节点</span><br><span class="line"></span><br><span class="line">&gt; AbstractQueuedSynchronizer#unparkSuccessor</span><br></pre></td></tr></table></figure>
+<pre><code>private void unparkSuccessor(Node node) {
+    int ws = node.waitStatus;
+    if (ws &lt; 0)
+        compareAndSetWaitStatus(node, ws, 0);
+
+   // 后继节点
+    Node s = node.next; 
+    if (s == null || s.waitStatus &gt; 0) {
+        s = null;
+        for (Node t = tail; t != null &amp;&amp; t != node; t = t.prev)
+            if (t.waitStatus &lt;= 0)
+                s = t;
+    }
+    if (s != null)
+    // 唤醒后继节点线程
+        LockSupport.unpark(s.thread);
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">获取当前同步状态state，如果当前线程不是lock对象的独占线程则抛错。若「state - releases == 0」,设置释放lock的独占线程并更新同步状态state为「state - releases」并返回true，表示锁已被释放，反之返回false，表示当前锁未被释放。</span><br><span class="line"></span><br><span class="line">&gt; Sync#tryRelease</span><br></pre></td></tr></table></figure>
+<pre><code>protected final boolean tryRelease(int releases) {
+    int c = getState() - releases;
+    if (Thread.currentThread() != getExclusiveOwnerThread())
+        throw new IllegalMonitorStateException();
+    boolean free = false;
+    if (c == 0) {
+        free = true;
+        setExclusiveOwnerThread(null);
+    }
+    setState(c);
+    return free;
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 如何实现公平锁的？</span><br><span class="line"></span><br><span class="line">&gt; FairSync#lock</span><br></pre></td></tr></table></figure>
+<pre><code>final void lock() {
+    acquire(1);
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; FairSync#tryAcquire</span><br></pre></td></tr></table></figure>
+<pre><code>protected final boolean tryAcquire(int acquires) {
+    final Thread current = Thread.currentThread();
+    int c = getState();
+    if (c == 0) {
+    // hasQueuedPredecessors判断是否有前继节点，如果没有才能获取锁
+        if (!hasQueuedPredecessors() &amp;&amp;
+                compareAndSetState(0, acquires)) {
+            setExclusiveOwnerThread(current);
+            return true;
+        }
+    }
+    else if (current == getExclusiveOwnerThread()) {
+        int nextc = c + acquires;
+        if (nextc &lt; 0)
+            throw new Error(&quot;Maximum lock count exceeded&quot;);
+        setState(nextc);
+        return true;
+    }
+    return false;
+}
+</code></pre><p><code>`</code></p>
+<h3 id="lock-、tryLock-、lockInterruptibly-的区别"><a href="#lock-、tryLock-、lockInterruptibly-的区别" class="headerlink" title="lock()、tryLock()、lockInterruptibly()的区别"></a>lock()、tryLock()、lockInterruptibly()的区别</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-9-18/95738650.jpg" alt=""></p>
+]]></content>
+      
+        <categories>
+            
+            <category> JDK源码学习专题 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> JDK源码学习专题 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Java并发源码学习系列]]></title>
       <url>http://jianwl.com/2018/09/17/Java%E5%B9%B6%E5%8F%91%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%97/</url>
       <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>第二期源码刻意练习，本专题针对 锁、线程池、队列、并发容器，这个四个方面进行学习和梳理。以下会列出每个主题需要学习的内容</p>
@@ -17000,37 +17170,6 @@ tee – the output of write (:w) command is redirected using tee
     </entry>
     
     <entry>
-      <title><![CDATA[MYSQL存储引擎]]></title>
-      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
-      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
-<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
-<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
-<p><strong>其他</strong></p>
-<ul>
-<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
-<li>支持热备份，MySQL其他存储引擎不支持。</li>
-</ul>
-<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
-<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
-<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
-]]></content>
-      
-        <categories>
-            
-            <category> MYSQL </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> MYSQL </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[MYSQL存储引擎优化]]></title>
       <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96/</url>
       <content type="html"><![CDATA[<h5 id="MySQL常用的搜索引擎"><a href="#MySQL常用的搜索引擎" class="headerlink" title="MySQL常用的搜索引擎"></a>MySQL常用的搜索引擎</h5><ul>
@@ -17055,6 +17194,37 @@ tee – the output of write (:w) command is redirected using tee
 <h6 id="一致性-Consistency"><a href="#一致性-Consistency" class="headerlink" title="一致性(Consistency)"></a>一致性(Consistency)</h6><p>事务操作成功后数据库所处的状态和它的业务规则是一致的；（即数据总额不会被破坏。如A账户转账100到B账户，无论操作成功与否，A和B的存款总额是不变的）</p>
 <h6 id="隔离性（Isolation"><a href="#隔离性（Isolation" class="headerlink" title="隔离性（Isolation)"></a>隔离性（Isolation)</h6><p>在并发数据操作时，不同的事务拥有各自的数据空间，它们的操作不会对彼此产生干扰。（并非是完全无干扰，<br>根据数据库的隔离级别，会产生不同程度的干扰）</p>
 <h6 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h6><p>一旦事务提交成功，事务中的数据操作都必须持久化到数据库中；就算数据库崩溃，也必须保证有某种机制恢复。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> MYSQL </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> MYSQL </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[MYSQL存储引擎]]></title>
+      <url>http://jianwl.com/2016/05/17/MYSQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</url>
+      <content type="html"><![CDATA[<p>MySQL支持很多存储引擎，常用的有InnoDB、MyISAM存储引擎。</p>
+<h3 id="InnoDB概述"><a href="#InnoDB概述" class="headerlink" title="InnoDB概述"></a>InnoDB概述</h3><p><strong>事务</strong><br>InnoDB是MySQL默认事务型引擎，采用MVCC来支持高并发，并且实现了四个标准的隔离级别，其默认级别是REPAEATABLE READ(可重复读)，并且通过间隙锁(next-key locking)策略防止幻读的出现，间隙锁使得InnoDB不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定，以防止幻影行的插入。</p>
+<p><strong>索引</strong><br>InnoDB表是基于聚簇索引建立的，与MySQL其他存储引擎有很大的不同，聚簇索引对主键查询有很高的性能，不过他的二级索引(secondary index,非主键索引)中必须包含主键列，所以主键列很大的话，其他的所有索引都会很大。</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>从磁盘读取数据时，采用的可预测预读，能够自动在内存中创建hash索引以加速读操作的自适应哈希索引。</li>
+<li>支持热备份，MySQL其他存储引擎不支持。</li>
+</ul>
+<h3 id="InnoDB适用场景"><a href="#InnoDB适用场景" class="headerlink" title="InnoDB适用场景"></a>InnoDB适用场景</h3><p>InnoDB具有较好的事务支持，其行级锁定机制对高并发有很好的适应能力，但需要确保查询是通过索引来完成。能够很好地适应于数据更新较为频繁的场景，但是对数据一致性要求较高，如果硬件设备内存较大，可以利用InnoDB较好的缓存能力来提高内存利用率，尽可能减少磁盘IO。</p>
+<h3 id="MyISAM概述"><a href="#MyISAM概述" class="headerlink" title="MyISAM概述"></a>MyISAM概述</h3><p><strong>特性</strong><br>MyISAM提供了大量的特性包括全文索引、压缩、空间函数(GIS)等，但是….MyISAM不支持事务和行级锁，还有一个毫无疑问的缺陷就是崩溃后无法恢复。</p>
+<h3 id="MyISAM适用场景"><a href="#MyISAM适用场景" class="headerlink" title="MyISAM适用场景"></a>MyISAM适用场景</h3><p>MyISAM适用于不需要事务支持，并发性相对较低，数据修改相对较少的场景，一般这类的系统会以读为主，对数据一致性要求不是很高</p>
 ]]></content>
       
         <categories>

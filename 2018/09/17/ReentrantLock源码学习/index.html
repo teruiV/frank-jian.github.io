@@ -1,0 +1,833 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JDK源码学习专题," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="记录点滴成长" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oc5a5l0a0.bkt.clouddn.com/17-9-15/12958638.jpg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言ReentrantLock是一个重入锁，提供了公平锁和非公平锁的选择，通过构造方法接受参数fair，为true为公平锁，反之为非公平锁。默认为非公平锁。 问题在进行源码阅读之前，我有几个问题，带着问题，我们来进一步学习源码，会更加有目的性。  1 如何实现加锁的，lock()方法都做了些什么？ 2 是如何实现公平锁的，如何让等待更久的线程，可以优先获取锁呢？好奇 3 lock()、tryLoc">
+<meta name="keywords" content="JDK源码学习专题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReentrantLock源码学习">
+<meta property="og:url" content="http://jianwl.com/2018/09/17/ReentrantLock源码学习/index.html">
+<meta property="og:site_name" content="记录点滴成长">
+<meta property="og:description" content="前言ReentrantLock是一个重入锁，提供了公平锁和非公平锁的选择，通过构造方法接受参数fair，为true为公平锁，反之为非公平锁。默认为非公平锁。 问题在进行源码阅读之前，我有几个问题，带着问题，我们来进一步学习源码，会更加有目的性。  1 如何实现加锁的，lock()方法都做了些什么？ 2 是如何实现公平锁的，如何让等待更久的线程，可以优先获取锁呢？好奇 3 lock()、tryLoc">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-9-17/47777084.jpg">
+<meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-9-18/95738650.jpg">
+<meta property="og:updated_time" content="2018-09-18T13:39:58.452Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReentrantLock源码学习">
+<meta name="twitter:description" content="前言ReentrantLock是一个重入锁，提供了公平锁和非公平锁的选择，通过构造方法接受参数fair，为true为公平锁，反之为非公平锁。默认为非公平锁。 问题在进行源码阅读之前，我有几个问题，带着问题，我们来进一步学习源码，会更加有目的性。  1 如何实现加锁的，lock()方法都做了些什么？ 2 是如何实现公平锁的，如何让等待更久的线程，可以优先获取锁呢？好奇 3 lock()、tryLoc">
+<meta name="twitter:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-9-17/47777084.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> ReentrantLock源码学习 | 记录点滴成长 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">记录点滴成长</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://jianwl.com/2018/09/17/ReentrantLock源码学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="流云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记录点滴成长">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ReentrantLock源码学习
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-17T22:22:28+08:00">
+                2018-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JDK源码学习专题/" itemprop="url" rel="index">
+                    <span itemprop="name">JDK源码学习专题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/17/ReentrantLock源码学习/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/09/17/ReentrantLock源码学习/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>ReentrantLock是一个重入锁，提供了公平锁和非公平锁的选择，通过构造方法接受参数fair，为true为公平锁，反之为非公平锁。默认为非公平锁。</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在进行源码阅读之前，我有几个问题，带着问题，我们来进一步学习源码，会更加有目的性。</p>
+<blockquote>
+<p>1 如何实现加锁的，lock()方法都做了些什么？</p>
+<p>2 是如何实现公平锁的，如何让等待更久的线程，可以优先获取锁呢？好奇</p>
+<p>3 lock()、tryLock()、lockInterruptibly()这三个方法有什么区别呢？</p>
+</blockquote>
+<h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-9-17/47777084.jpg" alt=""></p>
+<p>ReentrantLock实现了Lock接口，Sync抽象类继承了AQS，公平锁类和非公平锁类继承了Sync抽象类。</p>
+<h3 id="分析思路"><a href="#分析思路" class="headerlink" title="分析思路"></a>分析思路</h3><p>从使用的角度来分析，每一步它都是怎么实现的，抽丝剥茧那么整个流程通了。而后再重点分析核心类。即「构造方法」-&gt; 「lock」-&gt; 「unlock」-&gt; 「Sync」</p>
+<h3 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private final Sync sync;</span><br><span class="line">// 默认为非公平锁</span><br><span class="line">    public ReentrantLock() &#123;</span><br><span class="line">        sync = new NonfairSync();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">// fair == true,为公平锁</span><br><span class="line">    public ReentrantLock(boolean fair) &#123;</span><br><span class="line">        sync = fair ? new FairSync() : new NonfairSync();</span><br><span class="line">    &#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">### lock()</span><br><span class="line"></span><br><span class="line">若初始化为非公平锁，调用lock方法，其实是调用了NonfairSync的lock方法。</span><br><span class="line"></span><br><span class="line">&gt; ReetrantLock#lock</span><br></pre></td></tr></table></figure>
+<pre><code>public void lock() {
+    sync.lock();
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">compareAndSetState为CAS操作，即：如果同步状态state的值为0，就更新为1，此操作是原子性的。如果更新成功，则设置当前线程为同步锁的独占线程。反之，则执行#acquire(1)操作。</span><br><span class="line"></span><br><span class="line">&gt; NonfairSync#lock</span><br></pre></td></tr></table></figure>
+<pre><code>final void lock() {
+    if (compareAndSetState(0, 1))
+        setExclusiveOwnerThread(Thread.currentThread());
+    else
+        acquire(1);
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">NonfairSync#tryAcquire，重载了AQS中的tryAcquire方法，而其实现为抽象类Sync#nonfairTryAcquire，NonfairSync非公平锁继承了Sync抽象类。</span><br><span class="line"></span><br><span class="line">通过tryAcquire尝试获取锁，如果获取失败，将当前线程封装为Node，放到同步队列里去，如果此过程没有发生中断操作，则返回false。反之为true，自身需要再中断一次。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; AbstractQueuedSynchronizer#acquire</span><br></pre></td></tr></table></figure>
+<pre><code>public final void acquire(int arg) {
+    if (!tryAcquire(arg) &amp;&amp;
+        acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
+        selfInterrupt();
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; NonfairTryAcquire#tryAcquire</span><br></pre></td></tr></table></figure>
+<pre><code>protected final boolean tryAcquire(int acquires) {
+    return nonfairTryAcquire(acquires);
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">获取当前同步状态state，如果state == 0, 没有线程独占同步对象Sync，更新当前同步状态由0 -&gt; acquires,成功则设置同步对象的独占线程为当前线程。如果当前线程 == 同步对象Sync的独占线程，则当前设置同步状态为「当前值 + acquires」,如果重入的次数溢出，则抛出异常。</span><br><span class="line"></span><br><span class="line">&gt; Sync#nonfairTryAcquire</span><br></pre></td></tr></table></figure>
+<pre><code>final boolean nonfairTryAcquire(int acquires) {
+    final Thread current = Thread.currentThread();
+    int c = getState();
+    if (c == 0) {
+        if (compareAndSetState(0, acquires)) {
+            setExclusiveOwnerThread(current);
+            return true;
+        }
+    }
+    else if (current == getExclusiveOwnerThread()) {
+        int nextc = c + acquires;
+        if (nextc &lt; 0) // overflow
+            throw new Error(&quot;Maximum lock count exceeded&quot;);
+        setState(nextc);
+        return true;
+    }
+    return false;
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; AbstractQueuedSynchronizer#acquireQueued</span><br></pre></td></tr></table></figure>
+<pre><code>final boolean acquireQueued(final Node node, int arg) {
+    boolean failed = true;
+    try {
+        boolean interrupted = false;
+        for (;;) {
+        // 获取前继节点「① 前继节点可能为空的吧，假设队列里没有节点呢，添加一个节点不就是首节点？」
+            final Node p = node.predecessor();
+            // 前继节点为首节点，那么当前节点可以尝试获取锁，采用自旋的方式
+            if (p == head &amp;&amp; tryAcquire(arg)) {
+                setHead(node);
+                p.next = null; // help GC
+                failed = false;
+                return interrupted;
+            }
+            // 如果前继节点状态为SIGNAL，表示lock被其他线程占用，需要调用parkAndCheckInterrupt方法来中断当前线程，休息下。
+            if (shouldParkAfterFailedAcquire(p, node) &amp;&amp;
+                    parkAndCheckInterrupt()) 
+                interrupted = true;
+        }
+    } finally {
+        if (failed)
+                // 清除node节点(清除过程是先给节点打上Node标签，再移除节点)
+            cancelAcquire(node);
+    }
+}  
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shouldParkAfterFailedAcquire方法用于判断是否需要中断，如果前继节点处于SIGNA状态则需要唤醒。</span><br><span class="line"></span><br><span class="line">&gt; AbstractQueuedSynchronizer#shouldParkAfterFailedAcquire</span><br></pre></td></tr></table></figure>
+<p>private static boolean shouldParkAfterFailedAcquire(Node pred, Node node) {<br>        int ws = pred.waitStatus;<br>        if (ws == Node.SIGNAL)<br>            return true;<br>            // ① ws &gt; 0 的状态只有取消状态；<br>        if (ws &gt; 0) {<br>              // 跳过「直接」前继节点，往前遍历直到找到队列等待状态为SIGNAL的「间接」前继节点。<br>            do {<br>                node.prev = pred = pred.prev;<br>            } while (pred.waitStatus &gt; 0);<br>            pred.next = node;<br>        } else {<br>            // 前继节点为其他的状态时(非取消、非唤醒状态)，CAS设置为唤醒状态。<br>            compareAndSetWaitStatus(pred, ws, Node.SIGNAL);<br>        }<br>        return false;<br>    }<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### unlock()</span><br><span class="line"></span><br><span class="line">若同步锁初始化为非公平锁，即调用NonfairSync的unlock方法，NonfairSync本身没有这个方法，使用继承抽象类Sync的继承抽象类AbstractQueuedSynchronizer的unlock方法。</span><br><span class="line"></span><br><span class="line">&gt; ReentrantLock#unlock</span><br></pre></td></tr></table></figure></p>
+<pre><code>public void unlock() {
+    sync.release(1);
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">tryRelease方法,被继承的父类Sync重载了。通过tryRelease方法释放锁，如果返回true，表示锁表成功释放。</span><br><span class="line"></span><br><span class="line">&gt; AbstractQueuedSynchronizer#release</span><br></pre></td></tr></table></figure>
+<pre><code>public final boolean release(int arg) {
+    if (tryRelease(arg)) {
+        Node h = head;
+        if (h != null &amp;&amp; h.waitStatus != 0)
+        // 唤醒头节点的后继节点
+            unparkSuccessor(h);
+        return true;
+    }
+    return false;
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">此处是为了唤醒头节点的后继节点</span><br><span class="line"></span><br><span class="line">&gt; AbstractQueuedSynchronizer#unparkSuccessor</span><br></pre></td></tr></table></figure>
+<pre><code>private void unparkSuccessor(Node node) {
+    int ws = node.waitStatus;
+    if (ws &lt; 0)
+        compareAndSetWaitStatus(node, ws, 0);
+
+   // 后继节点
+    Node s = node.next; 
+    if (s == null || s.waitStatus &gt; 0) {
+        s = null;
+        for (Node t = tail; t != null &amp;&amp; t != node; t = t.prev)
+            if (t.waitStatus &lt;= 0)
+                s = t;
+    }
+    if (s != null)
+    // 唤醒后继节点线程
+        LockSupport.unpark(s.thread);
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">获取当前同步状态state，如果当前线程不是lock对象的独占线程则抛错。若「state - releases == 0」,设置释放lock的独占线程并更新同步状态state为「state - releases」并返回true，表示锁已被释放，反之返回false，表示当前锁未被释放。</span><br><span class="line"></span><br><span class="line">&gt; Sync#tryRelease</span><br></pre></td></tr></table></figure>
+<pre><code>protected final boolean tryRelease(int releases) {
+    int c = getState() - releases;
+    if (Thread.currentThread() != getExclusiveOwnerThread())
+        throw new IllegalMonitorStateException();
+    boolean free = false;
+    if (c == 0) {
+        free = true;
+        setExclusiveOwnerThread(null);
+    }
+    setState(c);
+    return free;
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 如何实现公平锁的？</span><br><span class="line"></span><br><span class="line">&gt; FairSync#lock</span><br></pre></td></tr></table></figure>
+<pre><code>final void lock() {
+    acquire(1);
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; FairSync#tryAcquire</span><br></pre></td></tr></table></figure>
+<pre><code>protected final boolean tryAcquire(int acquires) {
+    final Thread current = Thread.currentThread();
+    int c = getState();
+    if (c == 0) {
+    // hasQueuedPredecessors判断是否有前继节点，如果没有才能获取锁
+        if (!hasQueuedPredecessors() &amp;&amp;
+                compareAndSetState(0, acquires)) {
+            setExclusiveOwnerThread(current);
+            return true;
+        }
+    }
+    else if (current == getExclusiveOwnerThread()) {
+        int nextc = c + acquires;
+        if (nextc &lt; 0)
+            throw new Error(&quot;Maximum lock count exceeded&quot;);
+        setState(nextc);
+        return true;
+    }
+    return false;
+}
+</code></pre><p><code>`</code></p>
+<h3 id="lock-、tryLock-、lockInterruptibly-的区别"><a href="#lock-、tryLock-、lockInterruptibly-的区别" class="headerlink" title="lock()、tryLock()、lockInterruptibly()的区别"></a>lock()、tryLock()、lockInterruptibly()的区别</h3><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-9-18/95738650.jpg" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JDK源码学习专题/" rel="tag"># JDK源码学习专题</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/17/Java并发源码学习系列/" rel="next" title="Java并发源码学习系列">
+                <i class="fa fa-chevron-left"></i> Java并发源码学习系列
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/09/17/ReentrantLock源码学习/"
+           data-title="ReentrantLock源码学习" data-url="http://jianwl.com/2018/09/17/ReentrantLock源码学习/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oc5a5l0a0.bkt.clouddn.com/17-9-9/9250964.jpg"
+               alt="流云" />
+          <p class="site-author-name" itemprop="name">流云</p>
+           
+              <p class="site-description motion-element" itemprop="description">每天进步一点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">329</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整体结构"><span class="nav-text">整体结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析思路"><span class="nav-text">分析思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造方法"><span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lock-、tryLock-、lockInterruptibly-的区别"><span class="nav-text">lock()、tryLock()、lockInterruptibly()的区别</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">流云</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
