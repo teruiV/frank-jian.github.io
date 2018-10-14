@@ -64,7 +64,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-9-19/89023096.jpg">
 <meta property="og:image" content="http://oc5a5l0a0.bkt.clouddn.com/18-9-18/95738650.jpg">
-<meta property="og:updated_time" content="2018-09-18T23:28:32.671Z">
+<meta property="og:updated_time" content="2018-09-19T00:29:38.396Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ReentrantLock源码学习">
 <meta name="twitter:description" content="前言ReentrantLock是一个重入锁，提供了公平锁和非公平锁的选择，通过构造方法接受参数fair，为true为公平锁，反之为非公平锁。默认为非公平锁。 问题在进行源码阅读之前，我有几个问题，带着问题，我们来进一步学习源码，会更加有目的性。  1 如何实现加锁的，lock()方法都做了些什么？ 2 是如何实现公平锁的，如何让等待更久的线程，可以优先获取锁呢？好奇 3 lock()、tryLoc">
@@ -473,6 +473,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/09/19/ReentrantReadWriteLock源码学习/" rel="prev" title="ReentrantReadWriteLock源码学习">
+                ReentrantReadWriteLock源码学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -547,7 +551,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">329</span>
+                <span class="site-state-item-count">331</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
