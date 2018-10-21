@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jianwl.com/"/>
-  <updated>2018-10-14T04:26:59.590Z</updated>
+  <updated>2018-10-21T03:06:43.147Z</updated>
   <id>http://jianwl.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring @PostConstruct VS init-method</title>
+    <link href="http://jianwl.com/2018/10/21/Spring-PostConstruct-VS-init-method/"/>
+    <id>http://jianwl.com/2018/10/21/Spring-PostConstruct-VS-init-method/</id>
+    <published>2018-10-21T03:04:59.000Z</published>
+    <updated>2018-10-21T03:06:43.147Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol><li><a href="https://stackoverflow.com/questions/8519187/spring-postconstruct-vs-init-method-attribute" target="_blank" rel="noopener">spring-postconstruct-vs-init-method-attribute</a></li><li><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans" target="_blank" rel="noopener">Spring官方文档 - beans</a></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/8519187/spr
+      
+    
+    </summary>
+    
+      <category term="Spring" scheme="http://jianwl.com/categories/Spring/"/>
+    
+    
+      <category term="Spring" scheme="http://jianwl.com/tags/Spring/"/>
+    
+  </entry>
   
   <entry>
     <title>网络是怎样连接的?</title>
@@ -492,32 +518,6 @@
       
         &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;举办一个相亲的Party，所有人并不知道有谁会参加，只知道来参加这个Party即可。&lt;/p&gt;
 &lt;h3 id=&quot;中介者模式&quot;&gt;&lt;a h
-      
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://jianwl.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://jianwl.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>19.责任链模式</title>
-    <link href="http://jianwl.com/2018/08/10/19-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://jianwl.com/2018/08/10/19-责任链模式/</id>
-    <published>2018-08-10T00:32:07.000Z</published>
-    <updated>2018-08-11T09:43:41.741Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="小故事"><a href="#小故事" class="headerlink" title="小故事"></a>小故事</h3><p>国王发出指令：保卫城堡、释放囚犯、多征税收，这一些列的指令都会有特定的人来处理。</p><h3 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a>责任链模式</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>使多个对象都有机会处理请求，从而避免请求的发送者和接收者之前的耦合关系。将这个对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止。</p><h4 id="2-使用场景"><a href="#2-使用场景" class="headerlink" title="2. 使用场景"></a>2. 使用场景</h4><ol><li>接收者和发送者都没有对方的明确信息，且链中的对象也不知道链的结构，结果是职责链可简化对象的相互连接，它们仅需保持一个指向其后继者的引用，而不需要保持它所有的候选者的引用。</li></ol><h4 id="3-UML"><a href="#3-UML" class="headerlink" title="3. UML"></a>3. UML</h4><p><img src="http://oc5a5l0a0.bkt.clouddn.com/18-8-11/99125541.jpg" alt=""></p><h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p><a href="https://github.com/frank-jian/design-pattern-action/tree/master/src/main/java/chain" target="_blank" rel="noopener">责任链模式，请移步源码</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;小故事&quot;&gt;&lt;a href=&quot;#小故事&quot; class=&quot;headerlink&quot; title=&quot;小故事&quot;&gt;&lt;/a&gt;小故事&lt;/h3&gt;&lt;p&gt;国王发出指令：保卫城堡、释放囚犯、多征税收，这一些列的指令都会有特定的人来处理。&lt;/p&gt;
-&lt;h3 id=&quot;责任链模式&quot;&gt;&lt;a hre
       
     
     </summary>
